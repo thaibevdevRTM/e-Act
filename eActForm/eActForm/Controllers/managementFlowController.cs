@@ -255,26 +255,39 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getFlowApproveByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getFlowSwap => " + ex.Message);
             }
 
             return PartialView(flowSubject);
         }
 
 
-        public ActionResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow)
+        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow,string newEmpId)
         {
+            var result = new AjaxResult();
+
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
+                int i = 1;
+                foreach(var item in ApproveIdList)
+                {
+                    if(selectRow[i].ToString() == "false")
+                    {
+                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId , UtilsAppCode.Session.User.empId);
+                    }
+                    i++;
+                }
                 //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getFlowApproveByEmpId => " + ex.Message);
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("insertFlowAddOn => " + ex.Message);
             }
 
-            return PartialView(flowSubject);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

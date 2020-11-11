@@ -22,11 +22,12 @@
 
     @if (typeFlow == Activity_Model.typeFlow.swap.ToString())
     {
-        using (Ajax.BeginForm("getFlowApproveByEmpId", "ManagementFlow"
+        using (Ajax.BeginForm("getFlowSwap", "ManagementFlow"
     , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
     , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
         {
-            <div id="divEmp" class="col-md-3">
+
+            <div id="divEmp" class="col-md-3 form-group">
                 <div class="col-md-12 col-xs-12">
                     <label>EmpId</label>
                 </div>
@@ -35,17 +36,18 @@
                 </div>
             </div>
 
-            <div id="divCompanyMulti" class="col-md-2">
+
+            <div id="divCompanyMulti" class="col-md-2" style="margin-left:-20px; display:none">
                 <div class="col-md-12 col-xs-12">
                     <label>Company</label>
                 </div>
                 <div class="col-md-10 col-xs-12">
-                    @Html.ListBoxFor(m => m.companyList, new MultiSelectList(Model.companyList, "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })
+                    @Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })
                 </div>
             </div>
 
 
-            <div id="divSubmit" class="col-md-3">
+            <div id="divSubmit" class="col-md-3" style="display:none">
                 <div class="col-md-12 col-xs-12">
                     <label></label>
                 </div>
@@ -81,10 +83,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        document.getElementById("divCompanyMulti").style.display = "none";
-        document.getElementById("divSubmit").style.display = "none";
-
-
 
         $("#txtEmpId").autocomplete({
         source: function (request, response) {
@@ -115,7 +113,7 @@
             }, select: function (event, ui) {
                 $("#txtEmpId").val(ui.item.id)
             },
-            close: function (event, ui) { getEmpDetail(); }
+            close: function (event, ui) { /*getEmpDetail();*/ }
         }).focus(function () {
             $(this).data("uiAutocomplete").search($(this).val());
         });
@@ -125,6 +123,7 @@
     function getEmpDetail() {
 
         ddlCompanyMulti = $("#ddlCompanyMulti")
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCompanyByEmpId", "ManagementFlow")',
@@ -132,8 +131,10 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            if (response.Data != null) {
-                $("#ddlCompanyMulti option[value !='']").remove();
+
+            if (response.Data.companyList.length > 0) {
+
+
                 document.getElementById("divCompanyMulti").style.display = "block";
                 document.getElementById("divSubmit").style.display = "block";
 
@@ -143,6 +144,10 @@
                 $('#ddlCompanyMulti').multiselect({
                     includeSelectAllOption: true
                 });
+            }
+            else {
+                var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
+                window.location.href = url;
             }
         });
     }
@@ -167,7 +172,7 @@
     function successQuery_Index(htmlResponse) {
 
         $("#divDrop").html(htmlResponse);
-      
+
     }
 
     function failureQuery_Index(data) {

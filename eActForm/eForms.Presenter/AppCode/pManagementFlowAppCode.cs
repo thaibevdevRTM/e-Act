@@ -13,7 +13,7 @@ namespace eForms.Presenter.AppCode
 {
     public class pManagementFlowAppCode
     {
-        public static List<ManagentFlowModel.flowSubject> getFlowApproveByEmpId(string strCon ,string empId)
+        public static List<ManagentFlowModel.flowSubject> getFlowApproveByEmpId(string strCon, string empId)
         {
             try
             {
@@ -47,6 +47,24 @@ namespace eForms.Presenter.AppCode
             }
         }
 
-      
+        public static int updateSwapByApproveId(string strCon, string approveId, string empId,string updateBy)
+        {
+            try
+            {
+                int result = 0;
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_updateSwapByApproveId"
+                     , new SqlParameter[] {new SqlParameter("@empId",empId)
+                     ,new SqlParameter("@approveId",approveId)
+                     ,new SqlParameter("@updateByUserId",updateBy)
+                     });
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateSwapByApproveId >>" + ex.Message);
+            }
+        }
     }
 }
