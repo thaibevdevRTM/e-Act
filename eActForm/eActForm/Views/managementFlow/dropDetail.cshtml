@@ -8,6 +8,14 @@
 
 <div class="row form-group">
 
+    <div id="divSubject" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Subject</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
+        </div>
+    </div>
     <div id="divCus" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Customer</label>

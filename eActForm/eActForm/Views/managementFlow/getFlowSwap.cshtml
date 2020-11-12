@@ -1,6 +1,5 @@
 ﻿
-@using eActForm.BusinessLayer
-@using System.Configuration;
+@using eActForm.Models
 @model eForms.Models.MasterData.ManagentFlowModel
 
 
@@ -11,9 +10,6 @@
 {
 
     <div class="row">
-
-
-
 
         <div id="divFlowApproveList" class="col-md-12 col-xs-12">
 
@@ -82,13 +78,18 @@
     });
 
     function validateSwap() {
-
-        $("#subInsertSwap").submit();
+        if ($("#txtNewEmpId").val().length > 3) {
+            $("#subInsertSwap").submit();
+        }
+        else {
+            bootbox.alert("กรุณา ระบุรหัสพนักงาน");
+        }
     }
 
     function successQuery_swap(response) {
         if (response.Success) {
-            doMsgSuccess('บันทึกเรียบร้อย');
+             var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
+              doMsgSuccessAction('บันทึกเรียบร้อย', url);
         }
         else {
             $("#WaitDialog").hide();

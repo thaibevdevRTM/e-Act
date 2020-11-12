@@ -42,7 +42,8 @@
                     <label>Company</label>
                 </div>
                 <div class="col-md-10 col-xs-12">
-                    @Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })
+                    @Html.DropDownList("companyList", new SelectList("", "value", "text"), new { @class = "multiselect form-control", multiple = "multiple" , @id = "ddlCompanyMulti" })
+                    @*@Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })*@
                 </div>
             </div>
 
@@ -52,7 +53,7 @@
                     <label></label>
                 </div>
                 <div class="col-md-12 col-xs-12">
-                    <button type="submit" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    <button type="button" onclick="return SubmitDataIndex();" class="btn ink-reaction btn-success" id="btnSubmitIndex"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
                 </div>
 
             </div>
@@ -81,9 +82,15 @@
 
 
 <script type="text/javascript">
+    function SubmitDataIndex() {
+        if ($("#ddlCompanyMulti option:selected").text().length > 1) {
+            $("#btnSubmitIndex").submit();
+        }
+
+    }
 
     $(document).ready(function () {
-
+      
         $("#txtEmpId").autocomplete({
         source: function (request, response) {
                 var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
@@ -121,7 +128,7 @@
 
 
     function getEmpDetail() {
-
+      
         ddlCompanyMulti = $("#ddlCompanyMulti")
 
         $.ajax({
@@ -131,19 +138,23 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-
+            
             if (response.Data.companyList.length > 0) {
-
-
+                $("#ddlCompanyMulti option:selected").prop("selected", false);
+                $("#ddlCompanyMulti option").remove();
+                $('#ddlCompanyMulti').multiselect('rebuild');
                 document.getElementById("divCompanyMulti").style.display = "block";
                 document.getElementById("divSubmit").style.display = "block";
-
+                
                 $.each(response.Data.companyList, function () {
                     ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
-                });
+                }); 
                 $('#ddlCompanyMulti').multiselect({
                     includeSelectAllOption: true
                 });
+
+
+          
             }
             else {
                 var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
@@ -170,9 +181,7 @@
 
 
     function successQuery_Index(htmlResponse) {
-
-        $("#divDrop").html(htmlResponse);
-
+          $("#divDrop").html(htmlResponse);
     }
 
     function failureQuery_Index(data) {
@@ -214,6 +223,7 @@
             document.getElementById("divProductType").style.display = "none";
 
             if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+
                 document.getElementById("divCus").style.display = "none";
                 document.getElementById("divLimit").style.display = "block";
                 document.getElementById("divCate").style.display = "block";

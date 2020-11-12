@@ -278,6 +278,7 @@ namespace eActForm.Controllers
                     }
                     i++;
                 }
+                result.Success = true;
                 //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
             }
             catch (Exception ex)
