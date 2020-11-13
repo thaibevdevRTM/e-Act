@@ -31,24 +31,18 @@
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
                 {
 
-                    <tr>
+                    <tr class="tagTR">
                         <td>
-       
-                                <a href="javascript:" onclick="return checkDelete('@item.id');">
-                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                                </a>
-                            
-
+                            <a href="javascript:" onclick="return checkDelete('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
                             @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
                         </td>
                         <td>
-
                             @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })
-
-
                         </td>
                         <td>
 
@@ -100,7 +94,7 @@
             @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
             @Html.Hidden("Model.p_channelId", Model.p_channelId)
             @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
-</table>
+    </table>
 
 
     <div class="row form-group  hero-container">
@@ -115,7 +109,20 @@
 
 <script type="text/javascript">
     function validateForm() {
-        $("#subUpdate").submit();
+
+        required = "<b>กรุณาระบุ/Please input data :<br></b>";
+        var validate = true;
+        var rowCount = parseInt($('#dtApproveLists tr.tagTR').length);
+        for (i = 0; i < rowCount; i++) {
+            if ($("#txtempId_"+ i).val() == "") { required += "&emsp; ระบุรหัสพนักงาน แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+        }
+
+        if (validate == true) {
+            $("#subUpdate").submit();
+        }
+        else {
+            bootbox.alert(required)
+        }
     }
 
     function changeGetEmp(rowIndex) {
@@ -137,7 +144,7 @@
         $.ajax({
             type: 'POST',
             url: '@Url.Action("addRow", "ManagementFlow")',
-             data: {
+            data: {
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);

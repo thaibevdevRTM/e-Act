@@ -141,6 +141,7 @@ namespace eActForm.Controllers
                 if (management_Model.approveFlow.flowDetail.Any())
                 {
                     flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+
                 }
                 else
                 {
