@@ -145,14 +145,31 @@
     }
 
     function checkDelete(id) {
-         $.ajax({
-            type: 'POST',
-            url: '@Url.Action("delRow", "ManagementFlow")',
-             data: {
-                 id:id,
-             }
-        }).done(function (htmlResponse) {
-            $("#divApprove").html(htmlResponse);
+           bootbox.confirm({
+            message: "ยืนยัน ลบข้อมูล!",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("delRow", "ManagementFlow")',
+                        data: {
+                            id: id,
+                        }
+                    }).done(function (htmlResponse) {
+                        $("#divApprove").html(htmlResponse);
+                    });
+                }
+            }
         });
     }
 
