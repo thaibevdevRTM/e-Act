@@ -29,13 +29,14 @@
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         <th width="50" style="text-align:center;">@Html.CheckBox("checkAll", false)</th>
+                        <th></th>
                         <th>ลำดับ</th>
                         <th>บริษัท</th>
                         <th>เรื่อง</th>
                         <th>รหัส</th>
                         <th>Customer</th>
                         <th>ช่องทาง</th>
-                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -46,17 +47,18 @@
                                 @Html.CheckBox("selectRow", item.selectRow)
                                 @Html.Hidden("ApproveIdList", item.flowApproveId)
                             </td>
+                            <td>
+                                <a href="javascript:" onclick="return checkBeforeDeleteSwap('@item.flowApproveId');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                </a>
+                            </td>
                             <td>@item.rangNo</td>
                             <td>@item.companyName</td>
                             <td>@item.subjectName</td>
                             <td>@item.empId</td>
                             <td>@item.cusNameTH</td>
                             <td>@item.chanelGroup  @item.brandName  @item.cateName</td>
-                            <td>
-                                <a href="javascript:" onclick="return checkBeforeDelete('@item.flowApproveId');">
-                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                                </a>
-                            </td>
+
                         </tr>
                     }
                 </tbody>
@@ -73,6 +75,28 @@
 
 }
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 },
+                { "orderable": false, "targets": 3 },
+                { "orderable": false, "targets": 4 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+    });
+
+
     $("#checkAll").click(function () {
         $('input:checkbox').not(this).prop('checked', this.checked);
     });
@@ -102,6 +126,36 @@
 
     function beginQuery_swap() {
 
+    }
+
+    function checkBeforeDeleteSwap(id) {
+          bootbox.confirm({
+            message: "ยืนยัน ลบข้อมูล!",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("delRowSwap", "ManagementFlow")',
+                        data: {
+                            id: id,
+                        }
+                    }).done(function (htmlResponse) {
+                        $("#btnSubmitIndex").submit();
+                    });
+                }
+            }
+
+        });
     }
 
 

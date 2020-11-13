@@ -185,5 +185,16 @@ namespace eActForm.BusinessLayer.Appcodes
 
             return result;
         }
+
+        public static int delFlowApproveByEmpId(string approveId)
+        {
+
+            var result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApproveByEmpId"
+                   , new SqlParameter[] { new SqlParameter("@approveId", approveId)
+                   ,new SqlParameter("@updateByUser",UtilsAppCode.Session.User.empId)
+                });
+
+            return result;
+        }
     }
 }

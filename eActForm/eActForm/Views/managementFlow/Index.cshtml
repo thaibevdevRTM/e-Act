@@ -36,8 +36,7 @@
                 </div>
             </div>
 
-
-            <div id="divCompanyMulti" class="col-md-2" style="margin-left:-20px; display:none">
+            <div id="divCompanyMulti" class="col-md-3" style="margin-left:-20px; display:none">
                 <div class="col-md-12 col-xs-12">
                     <label>Company</label>
                 </div>
@@ -46,7 +45,6 @@
                     @*@Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })*@
                 </div>
             </div>
-
 
             <div id="divSubmit" class="col-md-3" style="display:none">
                 <div class="col-md-12 col-xs-12">
@@ -61,7 +59,6 @@
     }
     else
     {
-
         <div id="divCompany" class="col-md-3">
             <div class="col-md-12 col-xs-12">
                 <label>Company</label>
@@ -70,8 +67,6 @@
                 @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
             </div>
         </div>
-
-
     }
 </div>
 
@@ -82,15 +77,17 @@
 
 
 <script type="text/javascript">
+
     function SubmitDataIndex() {
         if ($("#ddlCompanyMulti option:selected").text().length > 1) {
             $("#btnSubmitIndex").submit();
         }
-
     }
 
+
+
     $(document).ready(function () {
-      
+
         $("#txtEmpId").autocomplete({
         source: function (request, response) {
                 var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
@@ -128,7 +125,7 @@
 
 
     function getEmpDetail() {
-      
+
         ddlCompanyMulti = $("#ddlCompanyMulti")
 
         $.ajax({
@@ -138,23 +135,22 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            
+
             if (response.Data.companyList.length > 0) {
-                $("#ddlCompanyMulti option:selected").prop("selected", false);
-                $("#ddlCompanyMulti option").remove();
-                $('#ddlCompanyMulti').multiselect('rebuild');
                 document.getElementById("divCompanyMulti").style.display = "block";
                 document.getElementById("divSubmit").style.display = "block";
-                
+
+                $("#ddlCompanyMulti option").remove();
+                $('#ddlCompanyMulti').multiselect('refresh');
+                $('#ddlCompanyMulti').multiselect('destroy');
+
                 $.each(response.Data.companyList, function () {
                     ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
-                }); 
+                });
+
                 $('#ddlCompanyMulti').multiselect({
                     includeSelectAllOption: true
                 });
-
-
-          
             }
             else {
                 var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
