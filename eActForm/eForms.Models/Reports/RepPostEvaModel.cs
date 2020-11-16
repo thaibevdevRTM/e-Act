@@ -7,6 +7,7 @@ namespace eForms.Models.Reports
     public class RepPostEvaModels
     {
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
+        public List<RepPostEvaModel> repPostEvaTopLists { get; set; }
         public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
     }
 
@@ -22,6 +23,8 @@ namespace eForms.Models.Reports
         public double? accuracySpendingBath { get; set; }
         public double? saleActual { get; set; }
         public double? accuracySaleBath { get; set; }
+        public double? tempAPNormalCost { get; set; }
+        public double? estimateSaleBathAll { get; set; }
     }
     public class RepPostEvaModel
     {

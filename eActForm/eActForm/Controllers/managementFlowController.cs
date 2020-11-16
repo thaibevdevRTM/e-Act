@@ -281,10 +281,11 @@ namespace eActForm.Controllers
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
-                int i = 1;
+                int i = 0;
+
                 foreach(var item in ApproveIdList)
                 {
-                    if(selectRow[i].ToString() == "false")
+                    if(selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
                     {
                         result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId , UtilsAppCode.Session.User.empId);
                     }

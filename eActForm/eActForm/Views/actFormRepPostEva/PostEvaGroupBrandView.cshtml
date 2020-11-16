@@ -8,10 +8,10 @@
 
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="x_panel">
             <div class="x_title">
-                <h5>Group Brand and Sum Spending Exp. (MB)</h5>
+                <h2>Group Brand and Sum Spending Exp. (MB)</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -22,15 +22,17 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:150px;">
-                <div id="echartGroupBrandAndSpending" style="height:100%"></div>
+            <div class="x_content" style="height:300px;">
+
+                <div id="echartGroupBrandAndSpending" style="height:300px;"></div>
+
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="x_panel">
             <div class="x_title">
-                <h5>Group Sum Sales-In (MB)</h5>
+                <h2>Group Sum Sales-In (MB)</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -41,7 +43,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:100%">
+            <div class="x_content" style="height:300px;">
 
                 <canvas id="chartGroupSumSaleIn"></canvas>
 
@@ -114,97 +116,38 @@
                 <div class="clearfix"></div>
             </div>
             <div class="chart-container">
-                <div class="row" style="width:80%">
+                <div class="row" style="width:100%;">
                     <canvas id="chartCompare" class="chartjs-render-monitor"></canvas>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Recently Added Products</h3>
+  
 
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div>
+            <div class="x_title">
+                <h2>Top Brand</h2>
+                <div class="clearfix"></div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-                <ul class="products-list product-list-in-card pl-2 pr-2">
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">
-                                Samsung TV
-                                <span class="badge badge-warning float-right">$1800</span>
-                            </a>
-                            <span class="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
-                            </span>
+            <ul class="list-unstyled top_profiles scroll-view">
+
+                @foreach (var item in Model.repPostEvaTopLists)
+                {
+
+                    <li class="media event">
+                        <a class="pull-left border-aero profile_thumb">
+                            <i class="fa fa-user aero"></i>
+                        </a>
+                        <div class="media-body">
+                            <a class="title" href="#">@item.brandName</a>
+                            <p class="text-warning"><strong>@string.Format("{0:n2}", item.actReportQuantity) </strong> </p>
+                            <p class="text-info">Activity Cost Summary</p>
                         </div>
                     </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">
-                                Bicycle
-                                <span class="badge badge-info float-right">$700</span>
-                            </a>
-                            <span class="product-description">
-                                26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                            </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">
-                                Xbox One <span class="badge badge-danger float-right">
-                                    $350
-                                </span>
-                            </a>
-                            <span class="product-description">
-                                Xbox One Console Bundle with Halo Master Chief Collection.
-                            </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">
-                                PlayStation 4
-                                <span class="badge badge-success float-right">$399</span>
-                            </a>
-                            <span class="product-description">
-                                PlayStation 4 500GB Console (PS4)
-                            </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                </ul>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer text-center">
-                <a href="javascript:void(0)" class="uppercase">View All Products</a>
-            </div>
-            <!-- /.card-footer -->
+                }
+
+            </ul>
         </div>
     </div>
 </div>
@@ -272,7 +215,7 @@
 
         jsondata.forEach(function (e) {
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.accuracySaleBath);
+            mybarChart.data.datasets[0].data.push(e.tempAPNormalCost);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
@@ -317,7 +260,7 @@
 
         jsondata.forEach(function (e) {
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.accuracySpendingBath);
+            mybarChart.data.datasets[0].data.push(e.estimateSaleBathAll);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
@@ -667,10 +610,10 @@
                 series: [{
                     name: 'Area Mode',
                     type: 'pie',
-                    radius: [15, 40],
-                    center: ['50%', 60],
+                    radius: [25, 90],
+                    center: ['50%', 170],
                     roseType: 'area',
-                    x: '10%',
+                    x: '50%',
                     max: 40,
                     sort: 'ascending',
                     data: jsondata

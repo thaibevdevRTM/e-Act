@@ -39,7 +39,7 @@
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
-                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
+                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @min = "0", @max = "20", @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
                         </td>
                         <td>
                             @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })

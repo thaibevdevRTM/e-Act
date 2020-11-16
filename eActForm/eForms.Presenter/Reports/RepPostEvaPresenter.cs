@@ -26,7 +26,8 @@ namespace eForms.Presenter.Reports
                                     countGroup = cl.Count().ToString(),
                                     accuracySpendingBath = (cl.Sum(c => c.accuracySpendingBath)),
                                     saleActual = (cl.Sum(c => c.saleActual)),
-                                    accuracySaleBath = (cl.Sum(c => c.accuracySaleBath)),
+                                    tempAPNormalCost = (cl.Sum(c => c.tempAPNormalCost)),
+                                    estimateSaleBathAll = (cl.Sum(c => c.estimateSaleBathAll)),
 
                                 }).ToList();
                 return list;
@@ -136,6 +137,12 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
+                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.actReportQuantity, x.brandName })
+                    .Select((group, index) => new RepPostEvaModel
+                {
+                    brandName = group.First().brandName,
+                     actReportQuantity = (group.Sum(c => c.actReportQuantity)),
+                }).Take(5).ToList();
 
                 return model;
             }

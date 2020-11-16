@@ -24,7 +24,7 @@
     {
         using (Ajax.BeginForm("getFlowSwap", "ManagementFlow"
     , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
-    , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
+    , new { id = "subGetSwap", @class = "form-horizontal form-label-left" }))
         {
 
             <div id="divEmp" class="col-md-3 form-group">
@@ -51,7 +51,7 @@
                     <label></label>
                 </div>
                 <div class="col-md-12 col-xs-12">
-                    <button type="button" onclick="return SubmitDataIndex();" class="btn ink-reaction btn-success" id="btnSubmitIndex"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    <button type="button" onclick="SubmitDataIndex();" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
                 </div>
 
             </div>
@@ -80,13 +80,20 @@
 
     function SubmitDataIndex() {
         if ($("#ddlCompanyMulti option:selected").text().length > 1) {
-            $("#btnSubmitIndex").submit();
+            $("#subGetSwap").submit();
         }
     }
 
 
 
     $(document).ready(function () {
+        $('form input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
 
         $("#txtEmpId").autocomplete({
         source: function (request, response) {

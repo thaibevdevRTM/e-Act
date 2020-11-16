@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace eActForm.Models
 {
