@@ -13,16 +13,20 @@
 <div id="writeHeight"></div>
 <script>
     $(function () {
-
-        var rowCount = parseInt($('table#tbRowCountCheck tr:last').index() + 1);
         @if (Model.list_ObjGetDataLayoutDoc != null)
         {
-            foreach(var data in Model.list_ObjGetDataLayoutDoc)
+            @*var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;*@
+            @:var rowCount = parseInt($('table#tbRowCountCheck tr:last').index() + 1);
+            @:var itBreak = false;
+            foreach (var data in Model.list_ObjGetDataLayoutDoc)
             {
-                @:if (rowCount == @data.valuesUse) {
-                    @:$("#tbSigPage").html('<div style="page-break-after:always;"></div>');
+                @:if (rowCount == parseInt("@data.valuesUse") && itBreak == false) {
+                    @:$("#tbSigPage").attr("style", "page-break-after:always");
+                    @:itBreak = true;
                 @:}
             }
+            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString());*@
+            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString()+ ",ShowDocName: " + "@countLine.ToString()");*@
         }
     });
 </script>

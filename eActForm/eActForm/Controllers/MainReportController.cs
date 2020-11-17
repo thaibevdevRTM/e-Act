@@ -70,17 +70,6 @@ namespace eActForm.Controllers
                 }
                 #endregion
 
-                //=====layout doc===========
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
-                {
-                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
-                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
-                    objGetDataLayoutDoc.activityId = "";
-                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
-                }
-                //=====layout doc===========
-
-
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
@@ -89,6 +78,16 @@ namespace eActForm.Controllers
                     //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
                 }
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+
+                //=====layout doc=============
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
+                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
+                    objGetDataLayoutDoc.activityId = "";
+                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
+                }
+                //===END==layout doc===========
             }
 
             //===========Set Language By Document Dev date 20200310 Peerapop=====================
