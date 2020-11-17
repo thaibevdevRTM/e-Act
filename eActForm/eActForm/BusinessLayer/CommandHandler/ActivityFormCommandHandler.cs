@@ -191,7 +191,8 @@ namespace eActForm.BusinessLayer
                     {
 
                         string getYear = "";
-                        if (getActList.FirstOrDefault().activityPeriodSt != null)
+                        if (getActList.FirstOrDefault().activityPeriodSt != null && 
+                            (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
                             if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
