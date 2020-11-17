@@ -232,7 +232,7 @@ else
     function callApproveList(actId) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("approveLists", "Home")',
+            url: '@Url.Action("approveLists", "Approve")',
             data: {
                 actId: actId
             }

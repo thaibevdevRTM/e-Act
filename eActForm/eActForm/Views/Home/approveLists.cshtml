@@ -1,7 +1,7 @@
 ﻿@using System.Configuration;
 @model eActForm.Models.ApproveModel.approveModels
 @using eActForm.BusinessLayer;
-@{ 
+@{
     DocumentsAppCode.setCulture(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
 }
 <div class="modal-dialog">
@@ -27,10 +27,12 @@
                     <tbody>
                         @if (Model.approveDetailLists.Any())
                         {
+                            int rangNo = 1;
                             foreach (var item in Model.approveDetailLists)
                             {
+
                                 <tr class="gradeX">
-                                    <td>@item.rangNo</td>
+                                    <td>@rangNo</td>
                                     <td>@item.empId</td>
                                     @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureThai"])
                                     {
@@ -54,7 +56,7 @@
 
                                             var status = item.statusId == "" ? Resources.Global.notApprove : valStatusName;
 
-                                            if (item.isApprove == false && item.approveGroupId== ConfigurationManager.AppSettings["approveGroupForProcess"])
+                                            if (item.isApprove == false && item.approveGroupId == ConfigurationManager.AppSettings["approveGroupForProcess"])
                                             {
                                                 status = Resources.Global.dearForProcess;
                                             }
@@ -69,6 +71,7 @@
                                         @item.remark
                                     </td>
                                 </tr>
+                                rangNo++;
                             }
                         }
                     </tbody>
