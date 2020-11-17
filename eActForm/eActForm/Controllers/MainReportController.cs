@@ -32,6 +32,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
 
+
                 #region set viewbag
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
@@ -68,6 +69,16 @@ namespace eActForm.Controllers
                     ViewBag.padding = "paddingFormV1";
                 }
                 #endregion
+
+                //=====layout doc===========
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
+                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
+                    objGetDataLayoutDoc.activityId = "";
+                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
+                }
+                //=====layout doc===========
 
 
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
@@ -137,9 +148,9 @@ namespace eActForm.Controllers
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
-                decimal? vat = 0,vatsum=0;
+                decimal? vat = 0, vatsum = 0;
                 #region "ค่าเดินทางของ NUM"
-                
+
                 model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
                 for (int i = 0; i < model2.costDetailLists.Count; i++)
                 {
@@ -150,13 +161,13 @@ namespace eActForm.Controllers
                         if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
                         {
                             vat = model2.costDetailLists[i].vat;
-                          //  vatsum += model2.costDetailLists[i].vat;
+                            //  vatsum += model2.costDetailLists[i].vat;
 
                         }
                         else
                         {
                             vat = (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
-                          //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                            //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
                         }
                         vatsum += vat;
 
@@ -170,7 +181,7 @@ namespace eActForm.Controllers
                            : model2.costDetailLists[i].productDetail),
                             total = model2.costDetailLists[i].total - (vat),
                             //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
-                            glCode =  QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                            glCode = QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
                         });
                     }
                 }
@@ -203,7 +214,7 @@ namespace eActForm.Controllers
                 activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
             }
-            
+
             int rowAdd = 8 - modelResult.costDetailLists.Count;
             for (int i = 0; i < rowAdd; i++)
             {

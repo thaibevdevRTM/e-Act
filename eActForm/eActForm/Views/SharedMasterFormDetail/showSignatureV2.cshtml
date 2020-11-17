@@ -1,7 +1,6 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
-@*<tr>
-    <td style="height:150px;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">*@
-<div style="height:5px;" id="tbSigPage" ></div>
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+
+<div style="height:5px;" id="tbSigPage"></div>
 <div style="width: 100%;text-align: left;">
     <div style="margin-bottom: 10px;">
         @if (Model.activityFormModel != null)
@@ -10,16 +9,20 @@
         }
     </div>
 </div>
-@*</td>
-    </tr>*@
 
 <div id="writeHeight"></div>
 <script>
     $(function () {
+
         var rowCount = parseInt($('table#tbRowCountCheck tr:last').index() + 1);
-        if (rowCount == 17 || rowCount == 19) {
-            $("#tbSigPage").html('<div style="page-break-after:always;"></div>');
+        @if (Model.list_ObjGetDataLayoutDoc != null)
+        {
+            foreach(var data in Model.list_ObjGetDataLayoutDoc)
+            {
+                @:if (rowCount == @data.valuesUse) {
+                    @:$("#tbSigPage").html('<div style="page-break-after:always;"></div>');
+                @:}
+            }
         }
-        $("#writeHeight").html(rowCount.toString());
     });
 </script>
