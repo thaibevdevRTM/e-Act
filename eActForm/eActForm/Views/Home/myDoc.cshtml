@@ -115,18 +115,33 @@
             });
         }
 
-        function callApproveList(actId) {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("approveLists", "Home")',
-                data: {
-                    actId: actId
-                }
-            }).done(function (response) {
-                $("#divModalApprovelist").html(response)
-                $('#modalApprovelist').modal('show');
-            });
-        }
+    function callApproveList(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveLists", "Home")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#divModalApprovelist").html(response)
+            $('#modalApprovelist').modal('show');
+        });
+    }
+
+    function callPreviewPostEva(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveLists", "Home")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#divModalApprovelist").html(response)
+            $('#modalApprovelist').modal('show');
+        });
+    }
+
+
 
         function resendApprove(actId) {
             $("#WaitDialog").show();
@@ -214,19 +229,19 @@
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
-                            @if (item.statusId == "1" ||  item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()) ||
+                            @if (item.statusId == "1" || item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()) ||
                                                                 (item.statusId == "3" && item.companyId == ConfigurationManager.AppSettings["companyId_MT"])
                                                                 || (item.statusId == "3" && item.companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                                                                 || (item.statusId == "3" && item.companyId == ConfigurationManager.AppSettings["companyId_TBM"]))
-                                        {
+                            {
                                 <a href="javascript:" onclick="return checkBeforeDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                                 </a>
                             }
-                                @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
-                                {
-                                    @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
-                                }
+                            @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
+                            {
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             else if (Model.typeForm == Activity_Model.activityType.SetPrice.ToString())
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
@@ -279,6 +294,9 @@
                                     <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
                                 </a>
                             }
+                            <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
+                                <i class="btn glyphicon glyphicon-stats"></i>&nbsp;
+                            </a>
 
                         </td>
                         <td>@item.statusName</td>
