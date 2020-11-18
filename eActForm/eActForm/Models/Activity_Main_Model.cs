@@ -81,6 +81,8 @@ namespace eActForm.Models
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
         public List<string> listEoInDoc { get; set; }
 
+        public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
+
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -497,5 +499,14 @@ namespace eActForm.Models
         public string languageDoc { get; set; }
 
     }
+
+    public class ObjGetDataLayoutDoc
+    {
+        public string id { get; set; }
+        public string typeKeys { get; set; }
+        public string valuesUse { get; set; }
+        public string activityId { get; set; }
+    }
+
 
 }
