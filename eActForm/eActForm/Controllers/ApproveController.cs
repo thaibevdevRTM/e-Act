@@ -190,10 +190,10 @@ namespace eActForm.Controllers
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 models = setSrcSignature(models, actId);
-                
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
+
+                models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
                 //เพิ่มตัดตำแหน่ง
-                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
+                newlinePosition(models);
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
@@ -217,7 +217,7 @@ namespace eActForm.Controllers
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 //เพิ่มตัดตำแหน่ง
-                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
+                newlinePosition(models);
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
@@ -234,7 +234,7 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ApproveFlowModel.approveFlowModel newlinePosition(ApproveFlowModel.approveFlowModel flowModel)
+        public void newlinePosition(ApproveModel.approveModels model)
         {
 
             List<positionModel> positionList = new List<positionModel>();
@@ -242,25 +242,51 @@ namespace eActForm.Controllers
             if (positionList.Count > 0)
             {
                 int index = 0;
-                foreach (var item in flowModel.flowDetail)
+                int indexDetailLists = 0;
+
+
+                if (model.approveDetailLists.Any())
                 {
-
-                    var positionEN = positionList.Where(x => x.positionName == item.empPositionTitleEN).FirstOrDefault()?.newPositionName;
-                    if (positionEN != null)
+                    foreach (var item in model.approveDetailLists)
                     {
-                        flowModel.flowDetail[index].empPositionTitleEN = positionEN;
-                    }
 
-                    var positionTH = positionList.Where(x => x.positionName == item.empPositionTitleTH).FirstOrDefault()?.newPositionName;
-                    if (positionTH != null)
-                    {
-                        flowModel.flowDetail[index].empPositionTitleTH = positionTH;
-                    }
+                        var positionEN = positionList.Where(x => x.positionName == item.empPositionTitleEN).FirstOrDefault()?.newPositionName;
+                        if (positionEN != null)
+                        {
+                            model.approveDetailLists[indexDetailLists].empPositionTitleEN = positionEN;
+                        }
 
-                    index++;
+                        var positionTH = positionList.Where(x => x.positionName == item.empPositionTitleTH).FirstOrDefault()?.newPositionName;
+                        if (positionTH != null)
+                        {
+                            model.approveDetailLists[indexDetailLists].empPositionTitleTH = positionTH;
+                        }
+
+                        indexDetailLists++;
+                    }
                 }
+                else
+                {
+                    foreach (var item in model.approveFlowDetail)
+                    {
+
+                        var positionEN = positionList.Where(x => x.positionName == item.empPositionTitleEN).FirstOrDefault()?.newPositionName;
+                        if (positionEN != null)
+                        {
+                            model.approveFlowDetail[index].empPositionTitleEN = positionEN;
+                        }
+
+                        var positionTH = positionList.Where(x => x.positionName == item.empPositionTitleTH).FirstOrDefault()?.newPositionName;
+                        if (positionTH != null)
+                        {
+                            model.approveFlowDetail[index].empPositionTitleTH = positionTH;
+                        }
+
+                        index++;
+                    }
+                }
+
             }
-            return flowModel;
         }
 
         public ApproveModel.approveModels setSrcSignature(ApproveModel.approveModels models, string actId)
