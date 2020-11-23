@@ -528,25 +528,14 @@
             url: '@Url.Action("Index", "MainReport")',
             data: { activityId: '@Model.activityFormModel.id' }
         }).done(function (htmlResponse) {
-            setTimeout(1000);
             if (('@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True' ||
                 '@Array.AsReadOnly(AppCode.checkDocTBM).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True') &&
                 '@Model.activityFormModel.mode' == '@AppCode.Mode.edit.ToString()') {
-                $.ajax({
-                    url: '@Url.Action("genPdfApprove", "Documents")',
-                    data: {
-                        GridHtml: htmlResponse,
-                        statusId: '',
-                        activityId: '@Model.activityFormModel.id',
-                    },
-                    dataType: "json",
-                    type: 'POST',
-                }).done(function (response) {
                     console.log('Gen');
                     $("#divPreview").html(htmlResponse);
                     $("#WaitDialog").hide();
                     $('#previewModal').modal('show');
-                });
+                    genPdf('@Model.activityFormModel.id', '', htmlResponse);
             }
             else {
                 console.log('No Gen');
@@ -559,10 +548,23 @@
 
     }
 
-     function genPdf() {
 
+     function genPdf(actId, statusId, htmlResponse) {
+
+        $("#newGenReportFromMaster").html(htmlResponse);
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "Documents")',
+            data: {
+                GridHtml: $("#divForm").html(),
+                statusId: statusId,
+                activityId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+
+        });
     }
-
 
 
 
