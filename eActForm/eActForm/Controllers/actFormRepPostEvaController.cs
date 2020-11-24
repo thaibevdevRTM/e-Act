@@ -62,7 +62,7 @@ namespace eActForm.Controllers
             try
             {
                 ViewBag.mountText = mountText;
-                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId);
+                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId,"");
                 
                 model.repPostEvaLists = RepPostEvaPresenter.filterConditionPostEva(model.repPostEvaLists ,productType, productGroup, productBrand, actType);
                 //model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
@@ -105,5 +105,21 @@ namespace eActForm.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult previewEvaByActId(string actId)
+        {
+            RepPostEvaModels model = null;
+            try
+            {
+                ViewBag.actId = actId;
+                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon,"","","", actId);
+                Session["postEvaModel"] = model;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("previewEvaByActId >> " + ex.Message);
+            }
+            return PartialView(model);
+        }
     }
 }

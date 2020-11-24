@@ -67,16 +67,18 @@ namespace eForms.Presenter.Reports
             return repPostEvaLists;
         }
 
-        public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId)
+        public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId,string actId)
         {
             try
             {
                 RepPostEvaModels model = new RepPostEvaModels();
 
-                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getReportPostEva"
+                 string callStored = string.IsNullOrEmpty(actId) ? "usp_getReportPostEva" : "usp_getReportPostEvaByActId";
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, callStored
                     , new SqlParameter[] {new SqlParameter("@startDate",startDate)
                     , new SqlParameter("@endDate",endDate)
-                    , new SqlParameter("@customerId",customerId)});
+                    , new SqlParameter("@customerId",customerId)
+                    , new SqlParameter("@actId",actId)});
 
                 #region toLists
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -137,12 +139,12 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
-                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.actReportQuantity, x.brandName })
+                model.repPostEvaTopLists = lists.GroupBy(x => new { x.brandName })
                     .Select((group, index) => new RepPostEvaModel
                 {
-                    brandName = group.First().brandName,
+                     brandName = group.First().brandName,
                      actReportQuantity = (group.Sum(c => c.actReportQuantity)),
-                }).Take(5).ToList();
+                }).OrderByDescending(x => x.actReportQuantity).Take(5).ToList();
 
                 return model;
             }

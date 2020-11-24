@@ -131,13 +131,20 @@
     function callPreviewPostEva(actId) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("approveLists", "Home")',
+            url: '@Url.Action("previewEvaByActId", "actFormRepPostEva")',
             data: {
                 actId: actId
             }
         }).done(function (response) {
-            $("#divModalApprovelist").html(response)
-            $('#modalApprovelist').modal('show');
+
+
+            var w = window.open('about:blank');
+            w.document.open();
+            w.document.write(response);
+            w.document.close();
+
+            //$("#divModalApprovelist").html(response)
+            //$('#modalApprovelist').modal('show');
         });
     }
 
@@ -238,6 +245,25 @@
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                                 </a>
                             }
+
+
+                            <a onclick="callApproveList('@item.id');">
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                            </a>
+
+                            @if (item.statusId == "2")
+                            {
+
+                                <a onclick="resendApprove('@item.id');">
+                                    <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
+                                </a>
+                            }
+                        <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
+                            <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
+                        </a>
+                            @*@Html.ActionLink(" ", "previewEvaByActId", "actFormRepPostEva", new { actId = @item.id }, new { @class = "btn glyphicon glyphicon-stats", target = "_blank" })*@
+
+
                             @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
@@ -282,22 +308,6 @@
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
                             }
-
-                            <a onclick="callApproveList('@item.id');">
-                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
-                            </a>
-
-                            @if (item.statusId == "2")
-                            {
-
-                                <a onclick="resendApprove('@item.id');">
-                                    <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
-                                </a>
-                            }
-                            <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
-                                <i class="btn glyphicon glyphicon-stats"></i>&nbsp;
-                            </a>
-
                         </td>
                         <td>@item.statusName</td>
                         <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>

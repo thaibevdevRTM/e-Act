@@ -1,5 +1,7 @@
 ﻿@model eForms.Models.Reports.RepPostEvaModels
 
+
+
 <div class="row" style="width:1100px;overflow-x:scroll;">
     @if (Model != null && Model.repPostEvaLists != null && Model.repPostEvaLists.Count > 0)
     {
@@ -32,176 +34,18 @@
 
                 @using (Html.BeginForm("repExportExcel", "actFormRepPostEva", FormMethod.Post))
                 {
-
-                    <div class="col-md-12 col-xs-12">
-                        <input type="hidden" name="gridHtml" id="gridHtml" />
-                        <button type="submit" class="btn ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
-                            <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
-                        </button>
-                    </div>
-                    <div id="gridDataPostEva"  class="col-md-12 col-xs-12">
-                        <table id="datatable" border="0" class="table table-striped jambo_table bulk_action" style="background-color:#ffffff;">
-                            <thead>
-                                <tr class="headings" style="text-align:center;">
-                                    <th width="50px" rowspan="2">ลำดับที่</th>
-                                    <th width="80px" style="text-align:center; display:none" rowspan="2">ประเภทกิจกรรม</th>
-                                    <th width="80px" style="text-align:center;" rowspan="2">Activity No.</th>
-                                    <th style="text-align:center; display:none" rowspan="2">Name</th>
-                                    <th style="text-align:center;" rowspan="2">Brand Name</th>
-                                    <th style="text-align:center;" rowspan="2">ลูกค้า</th>
-                                    <th style="text-align:center; display:none" rowspan="2">กลุ่มสินค้า</th>
-                                    <th style="text-align:center; display:none" rowspan="2">productCode</th>
-                                    <th style="text-align:center; display:none" rowspan="2">size</th>
-                                    <th style="text-align:center;" rowspan="2">ระยะเวลากิจกรรม</th>
-                                    <th style="text-align:center;" rowspan="2">สิ้นสุดเวลากิจกรรม</th>
-                                    <th style="text-align:center;" rowspan="2">ระยะเวลาการให้ทุน</th>
-                                    <th style="text-align:center;" rowspan="2">สิ้นสุดเวลาให้ทุน</th>
-                                    <th style="text-align:center; display:none" rowspan="2">SE</th>
-                                    <th style="text-align:center; display:none" rowspan="2">Unit</th>
-                                    <th style="text-align:center; display:none" rowspan="2">compensate</th>
-                                    <th style="text-align:center;" rowspan="2">normalCase</th>
-                                    <th style="text-align:center;" rowspan="2">promotionCase</th>
-                                    <th style="text-align:center;" rowspan="2">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
-                                    <th style="text-align:center; display:none" rowspan="2" display:none>Normal Cost PerCase</th>
-                                    <th style="text-align:center;" rowspan="2">ยอดขายข่วงทำกิจกรรม(Baht-ALL)</th>
-                                    <th style="text-align:center; display:none" rowspan="2">%To Sales</th>
-                                    <th style="text-align:center;" colspan="2">Act</th>
-                                    <th style="text-align:center; display:none" colspan="5">Act</th>
-                                    <th style="text-align:center;" colspan="2">Accuracy</th>
-                                    <th style="text-align:center; display:none" colspan="1">Accuracy</th>
-                                    <th style="text-align:center;" rowspan="2">ตัดจ่ายจริง</th>
-                                    <th style="text-align:center; display:none" rowspan="2">%Accu</th>
-                                </tr>
-                                <tr class="headings" style="text-align:center;">
-                                    <th style="text-align:center; display:none">Case</th>
-                                    <th style="text-align:center; display:none">Liter</th>
-                                    <th style="text-align:center; display:none">Bath</th>
-                                    <th style="text-align:center; display:none">SDBath</th>
-                                    <th style="text-align:center; display:none">SE % ToSales</th>
-                                    <th style="text-align:center;">Sales-Parti (Case)</th>
-                                    <th style="text-align:center;">Sales-Parti (Baht)</th>
-                                    <th style="text-align:center;">Sales (Case)</th>
-                                    <th style="text-align:center;">Sales (Baht)</th>
-                                    <th style="text-align:center; display:none;">Spending (Baht)</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{ var index = 1; string strActNo = "";
-                                }
-                                @foreach (var item in Model.repPostEvaLists)
-                                {
-
-
-                                <tr class="even pointer">
-                                    <td>@index</td>
-                                    <td style="display: none">@item.activitySales</td>
-                                    <td>@item.activityNo</td>
-                                    <th style="text-align:center; display:none">@item.activityName</th>
-                                    <td style="text-align:center;">@item.brandName</td>
-                                    <td style="text-align:center;">@item.customerName</td>
-                                    <td style="text-align:center; display:none">@item.groupName</td>
-                                    <td style="text-align:center; display:none">@item.productCode</td>
-                                    <td style="text-align:center; display:none">@item.size</td>
-                                    @if (item.activityPeriodSt != null)
-                                    {
-                                        <td width="100px" style="text-align:center;">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (item.activityPeriodEnd != null)
-                                    {
-                                        <td width="100px" style="text-align:center;">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (item.costPeriodSt != null)
-                                    {
-                                        <td width="100px" style="text-align:center;">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (item.costPeriodEnd != null)
-                                    {
-                                        <td width="100px" style="text-align:center;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-
-                           
-
-                                    <td style="text-align:center; display:none">@string.Format("{0:n2}", item.le)</td>
-                                    <td style="text-align:center; display:none">@string.Format("{0:n2}", item.unit)</td>
-                                    <td style="text-align:center; display:none">@string.Format("{0:n2}", item.compensate)</td>
-                                    <td style="text-align:center;">@string.Format("{0:n2}", item.normalCost)</td>
-                                    <td style="text-align:center;">@string.Format("{0:n2}", item.themeCost)</td>
-                                    <td style="text-align:center;">@string.Format("{0:n2}", item.total)</td>
-                                    <td style="text-align:center; display:none">@string.Format("{0:n2}", item.tempAPNormalCost)</td>
-                                    <td style="text-align:center;">@string.Format("{0:n2}", item.estimateSaleBathAll)</td>
-                                    <td style="text-align:center; display:none">@string.Format("{0:n2}", item.presentToSale)</td>
-
-                                    @if (item.activitySales == "Promotion Support")
-                                    {
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.actReportQuantity)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.actVolumeQuantity)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.actAmount)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none"></td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none"></td>
-                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiCase)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiBath)</td>
-                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleBath)</td>
-                                        <td style="text-align:center;background-color:#beefff;display:none;"></td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", @item.saleActual)</td>
-                                        <td style="text-align:center; display:none">@string.Format("{0:n2}", item.presentAcctual)</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.billedQuantityMT)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.volumeMT)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.netValueMT)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.specialDiscountMT)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.presentSE)</td>
-                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                        <td style="text-align:center;background-color:#beefff;"></td>
-                                        <td style="text-align:center;background-color:#beefff;display:none;">@string.Format("{0:n2}", item.accuracySpendingBath)</td>
-                                        <td style="text-align:center;"></td>
-                                        <td style="text-align:center; display:none;"></td>
-                                    }
-
-                                    @{strActNo = item.activityNo;
-                                        index++;
-                                    }
-                                </tr>
-
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
-
+                    @RenderPage("~/Views/actFormRepPostEva/sharePostEvaViewList.cshtml")
 
                 }
-
-
-
-
 
             </div>
 
         </div>
     }
 </div>
+
+
+
 
 <script>
 

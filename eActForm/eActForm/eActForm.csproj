@@ -3203,6 +3203,8 @@
     <Content Include="Views\ExpenseEstimateReport\reportExpenseEntertain.cshtml" />
     <Content Include="Views\managementFlow\getFlowSwap.cshtml" />
     <Content Include="Views\Shared\chartHorizontalBar.cshtml" />
+    <Content Include="Views\actFormRepPostEva\previewEvaByActId.cshtml" />
+    <Content Include="Views\actFormRepPostEva\sharePostEvaViewList.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
