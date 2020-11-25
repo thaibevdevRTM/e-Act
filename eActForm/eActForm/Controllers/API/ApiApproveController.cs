@@ -40,7 +40,9 @@ namespace eActForm.Controllers
 
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
+
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
+                    bool success = AppCode.stampCancel(activityId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {

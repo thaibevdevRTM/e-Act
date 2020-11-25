@@ -107,7 +107,7 @@ namespace eActForm.Controllers
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }
-                bool success = AppCode.stampCancel(actId);
+               
                 ApproveAppCode.setCountWatingApprove();
 
                 // TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
