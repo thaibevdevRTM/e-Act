@@ -71,9 +71,10 @@ namespace eActForm.Controllers
                 #endregion
 
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
+                    activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
                     //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
                 }
@@ -94,7 +95,7 @@ namespace eActForm.Controllers
             //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
             DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
             //====END=======Set Language By Document Dev date 20200310 Peerapop==================
-
+            
             return PartialView(activity_TBMMKT_Model);
         }
 

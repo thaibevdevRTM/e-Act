@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using WebLibrary;
 using static eActForm.Models.ActUserModel;
 
@@ -19,7 +20,7 @@ namespace eActForm.BusinessLayer
                 //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitById"
                 //     , new SqlParameter("@empId", empId));
 
-                ResponseUserAPI response = AuthenAppCode.doAuthenInfo(empId);
+                ResponseUserAPI response =  AuthenAppCode.doAuthenInfo(empId);
                 
                 var lists = (from User d in response.userModel
                              select new RequestEmpModel()
