@@ -115,7 +115,8 @@
             });
         }
 
-        function callApproveList(actId) {
+    function callApproveList(actId) {
+        $("#WaitDialog").show();
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("approveLists", "Home")',
@@ -123,6 +124,7 @@
                     actId: actId
                 }
             }).done(function (response) {
+                $("#WaitDialog").hide();
                 $("#divModalApprovelist").html(response)
                 $('#modalApprovelist').modal('show');
             });
