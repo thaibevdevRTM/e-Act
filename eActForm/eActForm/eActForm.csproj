@@ -2636,7 +2636,6 @@
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
     <Content Include="images\car-wash-icon-15.jpg" />
-    <Content Include="images\car-wash.png" />
     <Content Include="images\check.png" />
     <Content Include="images\checkmark.gif" />
     <Content Include="images\check_b.png" />
@@ -2647,9 +2646,6 @@
     <Content Include="images\favicon.ico" />
     <Content Include="images\flagEN.png" />
     <Content Include="images\flagTH.png" />
-    <Content Include="images\food.png" />
-    <Content Include="images\highway.png" />
-    <Content Include="images\highwayv2.png" />
     <Content Include="images\horecaLogo.jpg" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
@@ -2659,7 +2655,6 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\noSig.jpg" />
-    <Content Include="images\numan-logo.png" />
     <Content Include="images\pngtree-phone-icon-png-image_1757859.jpg" />
     <Content Include="images\tbmmktLogo.png" />
     <Content Include="images\warning_error.png" />
