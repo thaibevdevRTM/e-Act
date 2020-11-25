@@ -610,11 +610,11 @@ namespace eActForm.Models
                 var loadFont = default(BaseFont);
                 loadFont = BaseFont.CreateFont(HttpContext.Current.Server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-                var useFont = new Font(loadFont, 50);
+                var useFont = new Font(loadFont, 200);
 
-                var red = 225;
-                var green = 40;
-                var blue = 40;
+                var red = 242;
+                var green = 192;
+                var blue = 198;
                 useFont.SetColor(red, green, blue); // ใส่สีฟอนต์
                 useFont.SetStyle(Font.BOLD); // ใส่Style
 
@@ -627,7 +627,9 @@ namespace eActForm.Models
                         int pages = reader.NumberOfPages;
                         for (int i = 1, loopTo = pages; i <= loopTo; i++)
                         {
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
+                            //ColumnText.ShowTextAligned(stamper.GetOverContent(i), Element.ALIGN_RIGHT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 2, pageSize.GetTop(Utilities.MillimetersToPoints(145)), 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(145)), Element.YMARK);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
                         }
                     }
 

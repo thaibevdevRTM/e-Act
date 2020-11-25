@@ -100,148 +100,156 @@ namespace eActForm.Controllers
 
         public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
-            //=============for test=====================
-            //activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
-            //activityId = "0a8517fb-0bc1-4c63-a545-718af4b9095c";
-            //==END===========for test=====================
             Activity_TBMMKT_Model activity_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
+            try
             {
-                activity_Model = activity_TBMMKT_Model;
-                activityId = activity_Model.activityFormModel.id;
-            }
-            else
-            {
-                activity_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-                activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
-                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
-                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-            }
-
-            activity_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-            activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
-            activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
-
-
-            CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
-            {
-                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-            };
-
-            CostDetailOfGroupPriceTBMMKT model2 = new CostDetailOfGroupPriceTBMMKT
-            {
-                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-            };
-
-            #region "ดึงข้อมูล GL "
-            //ฟอร์มที่ใช้เป็นของ saleSupport
-            List<GetDataGL> lstGL = new List<GetDataGL>();
-            lstGL = QueryGetGL.getGLMasterByDivisionId(AppCode.Division.salesSupport);
-            #endregion
-
-            #region form HC
-
-            if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
-            {
-                decimal? vat = 0, vatsum = 0;
-                #region "ค่าเดินทางของ NUM"
-
-                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
-                for (int i = 0; i < model2.costDetailLists.Count; i++)
+                //=============for test=====================
+                //activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
+                //activityId = "0a8517fb-0bc1-4c63-a545-718af4b9095c";
+                //==END===========for test=====================
+              
+                if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
                 {
-                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
+                    activity_Model = activity_TBMMKT_Model;
+                    activityId = activity_Model.activityFormModel.id;
+                }
+                else
+                {
+                    activity_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                    activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                    activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                    //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                    //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                }
+
+                activity_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
+                activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
+                activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
+
+
+                CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
+                {
+                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+                };
+
+                CostDetailOfGroupPriceTBMMKT model2 = new CostDetailOfGroupPriceTBMMKT
+                {
+                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+                };
+
+                #region "ดึงข้อมูล GL "
+                //ฟอร์มที่ใช้เป็นของ saleSupport
+                List<GetDataGL> lstGL = new List<GetDataGL>();
+                lstGL = QueryGetGL.getGLMasterByDivisionId(AppCode.Division.salesSupport);
+                #endregion
+
+                #region form HC
+
+                if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                {
+                    decimal? vat = 0, vatsum = 0;
+                    #region "ค่าเดินทางของ NUM"
+
+                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
+                    for (int i = 0; i < model2.costDetailLists.Count; i++)
                     {
-                        //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
-
-                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                        if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                         {
-                            vat = model2.costDetailLists[i].vat;
-                            //  vatsum += model2.costDetailLists[i].vat;
+                            //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
 
-                        }
-                        else
-                        {
-                            vat = (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
-                            //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
-                        }
-                        vatsum += vat;
+                            if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                            {
+                                vat = model2.costDetailLists[i].vat;
+                                //  vatsum += model2.costDetailLists[i].vat;
 
+                            }
+                            else
+                            {
+                                vat = (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                                //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                            }
+                            vatsum += vat;
+
+                            modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                            {
+                                listChoiceId = model2.costDetailLists[i].listChoiceId,
+                                listChoiceName = model2.costDetailLists[i].listChoiceName,
+                                productDetail = model2.costDetailLists[i].listChoiceName + " " +
+                               (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
+                               ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
+                               : model2.costDetailLists[i].productDetail),
+                                total = model2.costDetailLists[i].total - (vat),
+                                //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
+                                glCode = QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                            });
+                        }
+                    }
+                    if (vatsum > 0)
+                    {
                         modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
-                            listChoiceId = model2.costDetailLists[i].listChoiceId,
-                            listChoiceName = model2.costDetailLists[i].listChoiceName,
-                            productDetail = model2.costDetailLists[i].listChoiceName + " " +
-                           (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
-                           ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
-                           : model2.costDetailLists[i].productDetail),
-                            total = model2.costDetailLists[i].total - (vat),
-                            //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
-                            glCode = QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                            listChoiceId = "",
+                            listChoiceName = "vat",
+                            productDetail = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.groupGL,
+                            total = vatsum,
+                            glCode = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.GL,
                         });
                     }
+
+                    activity_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                    #endregion
                 }
-                if (vatsum > 0)
+                else if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                 {
                     modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                     {
                         listChoiceId = "",
-                        listChoiceName = "vat",
-                        productDetail = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.groupGL,
-                        total = vatsum,
-                        glCode = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.GL,
+                        listChoiceName = "",
+                        productDetail = "ค่ารักษาพยาบาล",
+                        total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
+                        displayType = "",
+                        glCode = QueryGetGL.getGL(lstGL, AppCode.SSGLId.medical, activity_TBMMKT_Model.activityFormModel.empId)//lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
+                    });
+                    activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+
+                }
+
+                int rowAdd = 8 - modelResult.costDetailLists.Count;
+                for (int i = 0; i < rowAdd; i++)
+                {
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = "",
+                        listChoiceName = "",
+                        productDetail = "",
+                        total = 0,
+                        displayType = "",
+                        glCode = "",
                     });
                 }
 
-                activity_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
                 #endregion
+
+                modelResult.costDetailLists = modelResult.costDetailLists.ToList();
+                activity_Model.expensesDetailModel = modelResult;
+
+
+
+                //===========Set Language By Document Dev date 20200310 Peerapop=====================
+                //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
+                DocumentsAppCode.setCulture(activity_Model.activityFormModel.languageDoc);
+                //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+
+                //return View(activity_Model); // test
+                return PartialView(activity_Model);// production
             }
-            else if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+            catch(Exception ex)
             {
-                modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                {
-                    listChoiceId = "",
-                    listChoiceName = "",
-                    productDetail = "ค่ารักษาพยาบาล",
-                    total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
-                    displayType = "",
-                    glCode = QueryGetGL.getGL(lstGL, AppCode.SSGLId.medical, activity_TBMMKT_Model.activityFormModel.empId)//lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
-                });
-                activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
-
+                ExceptionManager.WriteError("ReportPettyCashNum>>"+ ex.Message);
             }
-
-            int rowAdd = 8 - modelResult.costDetailLists.Count;
-            for (int i = 0; i < rowAdd; i++)
-            {
-                modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                {
-                    listChoiceId = "",
-                    listChoiceName = "",
-                    productDetail = "",
-                    total = 0,
-                    displayType = "",
-                    glCode = "",
-                });
-            }
-
-            #endregion
-
-            modelResult.costDetailLists = modelResult.costDetailLists.ToList();
-            activity_Model.expensesDetailModel = modelResult;
-
-
-
-            //===========Set Language By Document Dev date 20200310 Peerapop=====================
-            //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
-            DocumentsAppCode.setCulture(activity_Model.activityFormModel.languageDoc);
-            //====END=======Set Language By Document Dev date 20200310 Peerapop==================
-
-            //return View(activity_Model); // test
-            return PartialView(activity_Model);// production
+            return PartialView(activity_Model);
         }
 
         [HttpPost]
