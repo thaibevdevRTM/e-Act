@@ -139,7 +139,7 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
-                model.repPostEvaTopLists = lists.GroupBy(x => new { x.brandName })
+                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
                     .Select((group, index) => new RepPostEvaModel
                 {
                      brandName = group.First().brandName,

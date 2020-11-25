@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using WebLibrary;
 using static eActForm.Models.ActUserModel;
 
@@ -18,15 +19,36 @@ namespace eActForm.BusinessLayer
             {
                 //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitById"
                 //     , new SqlParameter("@empId", empId));
-
-                ResponseUserAPI response = AuthenAppCode.doAuthenInfo(empId);
-                
+                ResponseUserAPI response = null;
+                try
+                {
+                    if (HttpContext.Current == null || HttpContext.Current.Session[empId] == null)
+                    {
+                        response = AuthenAppCode.doAuthenInfo(empId);
+                    }
+                    else if(HttpContext.Current.Session[empId] != null)
+                    {
+                        response = (ResponseUserAPI)HttpContext.Current.Session[empId];
+                    }
+                        
+                }
+                catch
+                {
+                    response = AuthenAppCode.doAuthenInfo(empId); // fixed case for backgroup process 
+                }
+                finally
+                {
+                    if (HttpContext.Current != null)
+                    {
+                        HttpContext.Current.Session[empId] = response;
+                    }
+                }
                 var lists = (from User d in response.userModel
                              select new RequestEmpModel()
                              {
-                                 empId = d.empId ,
-                                 empName =  d.empFNameTH + " " + d.empLNameTH, 
-                                 position =  d.empPositionTitleTH, 
+                                 empId = d.empId,
+                                 empName = d.empFNameTH + " " + d.empLNameTH,
+                                 position = d.empPositionTitleTH,
                                  level = d.empLevel,
                                  department = d.empDepartmentTH,
                                  bu = d.empDivisionTH,
@@ -60,7 +82,7 @@ namespace eActForm.BusinessLayer
                      , new SqlParameter("@empId", empId)
                       , new SqlParameter("@typeFormId", typeFormId));
 
-                if( ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     return getEmpDetailById(empId);
                 }

@@ -137,7 +137,6 @@ namespace eActForm.Models
 
             public string groupName;
             public string positionCheckGL;
-
             public Expenses()
             {
                 List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);

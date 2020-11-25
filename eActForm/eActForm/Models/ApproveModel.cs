@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using System.Collections.Generic;
+using System.Web;
 namespace eActForm.Models
 {
     public class ApproveModel
@@ -51,11 +52,12 @@ namespace eActForm.Models
             {
                 if (empId != "")
                 {
-                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    List<RequestEmpModel> model =  QueryGet_empDetailById.getEmpDetailById(empId) ;
                     if (model.Count > 0)
                     {
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                        //HttpContext.Current.Session[empId] = model;
                     }
                     else
                     {
