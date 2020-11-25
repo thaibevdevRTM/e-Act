@@ -628,7 +628,7 @@ namespace eActForm.Models
                         int pages = reader.NumberOfPages;
                         for (int i = 1, loopTo = pages; i <= loopTo; i++)
                         {
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Cancel", useFont), 44f, 800f, 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
                         }
                     }
 
