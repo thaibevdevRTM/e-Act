@@ -215,7 +215,7 @@ namespace eActForm.Controllers
             try
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
+                models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
                 //เพิ่มตัดตำแหน่ง
                 newlinePosition(models);
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========

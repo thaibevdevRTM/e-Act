@@ -45,34 +45,34 @@
         }
         else
         {
-            if (Model.approveFlowDetail == null)
+            if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
             {
-                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
+                var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
+                @genSignatureFromApproveDetail(1);
+                if (countLine > 7)
+                {
+                    @genSignatureFromApproveDetail(2);
+                }
+            }
+            else if (Model.approveFlowDetail != null)
+            {
+
+                var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
+                @Grid(1);
+                if (countLine > 7)
+                {
+                    @Grid(2);
+                }
             }
             else
             {
-
-                if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
-                {
-                    var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
-                    @genSignatureFromApproveDetail(1);
-                    if (countLine > 7)
-                    {
-                        @genSignatureFromApproveDetail(2);
-                    }
-                }
-                else
-                {
-                    var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
-                    @Grid(1);
-                    if (countLine > 7)
-                    {
-                        @Grid(2);
-                    }
-                }
+                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
 
             }
+
+
         }
+     
     </div>
     @helper Grid(int line)
     {
@@ -149,7 +149,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png"/>
+                                                    <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png" />
                                                 }
                                             }
                                         </td>
@@ -276,7 +276,7 @@
                                             }
                                             else
                                             {
-                                                <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png"/>
+                                                <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png" />
                                             }
                                         </td>
                                     </tr>
