@@ -595,22 +595,16 @@ namespace eActForm.Models
             }
         }
 
-        public static bool stampCancel(string actId)
+        public static bool stampCancel(HttpServerUtilityBase server,string rootPathMap,string txtStamp)
         {
             bool result = true;
             try
             {
-
-                string rootPath = "", rootPathMap = "";
                 byte[] PreviewBytes = new byte[0];
-                rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
-                rootPathMap = HttpContext.Current.Server.MapPath(string.Format(rootPath, actId));
-                var bytes = File.ReadAllBytes(HttpContext.Current.Server.MapPath(string.Format(rootPath, actId)));
-
+                var bytes = File.ReadAllBytes(rootPathMap);
                 var loadFont = default(BaseFont);
-                loadFont = BaseFont.CreateFont(HttpContext.Current.Server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-
-                var useFont = new Font(loadFont, 200);
+                loadFont = BaseFont.CreateFont(server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                var useFont = new Font(loadFont, 100);
 
                 var red = 242;
                 var green = 192;
@@ -628,14 +622,14 @@ namespace eActForm.Models
                         for (int i = 1, loopTo = pages; i <= loopTo; i++)
                         {
                             //ColumnText.ShowTextAligned(stamper.GetOverContent(i), Element.ALIGN_RIGHT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 2, pageSize.GetTop(Utilities.MillimetersToPoints(145)), 0);
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(145)), Element.YMARK);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(txtStamp, useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(160)), Element.YMARK);
                             //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
                         }
                     }
 
                     PreviewBytes = stream.ToArray();
                 }
-                if (rootPath != "")
+                if (rootPathMap != "")
                 {
                     File.Delete(rootPathMap);
                     File.WriteAllBytes(rootPathMap, PreviewBytes);

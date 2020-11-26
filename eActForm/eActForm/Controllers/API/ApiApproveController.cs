@@ -40,15 +40,16 @@ namespace eActForm.Controllers
 
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
+                    var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    var txtStamp = "เอกสารถูกยกเลิก";
+                    bool success = AppCode.stampCancel(Server , rootPathMap , txtStamp);
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
-                    bool success = AppCode.stampCancel(activityId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
 
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                 }
                 resultAjax.Success = true;

@@ -69,11 +69,10 @@ namespace eActForm.Controllers
                     ViewBag.padding = "paddingFormV1";
                 }
                 #endregion
-
+                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
-                    activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
                     //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
                 }

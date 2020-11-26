@@ -188,28 +188,30 @@ namespace eActForm.Controllers
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = ApproveAppCode.getApproveByActFormId(actId);
-                models = setSrcSignature(models, actId);
-
-                models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
-                //เพิ่มตัดตำแหน่ง
-                newlinePosition(models);
-                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
-                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
-                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
-
-                // BaseAppCodes.WriteSignatureToDisk(models, actId);
-
+                models = getApproveSigList(actId, subId);
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
-                TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
             }
             return PartialView(models);
         }
         public ActionResult approvePositionSignatureListsV2(string actId, string subId)
+        {
+            ApproveModel.approveModels models = new ApproveModel.approveModels();
+            try
+            {
+                models = getApproveSigList(actId,subId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
+            }
+            return PartialView(models);
+        }
+
+
+        public ApproveModel.approveModels getApproveSigList(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
@@ -223,16 +225,15 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-                // BaseAppCodes.WriteSignatureToDisk(models, actId);
-
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
+                ExceptionManager.WriteError("getApproveSigList >>" + ex.Message);
                 TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
             }
-            return PartialView(models);
+            return models;
         }
+
 
         public void newlinePosition(ApproveModel.approveModels model)
         {
