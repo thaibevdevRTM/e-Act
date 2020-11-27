@@ -20,15 +20,54 @@
 <h3>Flow management</h3>
 <div class="row form-group">
 
-    <div id="divSubject" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Company</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
-        </div>
-    </div>
+    @if (typeFlow == Activity_Model.typeFlow.swap.ToString())
+    {
+        using (Ajax.BeginForm("getFlowSwap", "ManagementFlow"
+    , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
+    , new { id = "subGetSwap", @class = "form-horizontal form-label-left" }))
+        {
 
+            <div id="divEmp" class="col-md-3 form-group">
+                <div class="col-md-12 col-xs-12">
+                    <label>EmpId</label>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                    @Html.TextBox("empId", "", new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                </div>
+            </div>
+
+            <div id="divCompanyMulti" class="col-md-3" style="margin-left:-20px; display:none">
+                <div class="col-md-12 col-xs-12">
+                    <label>Company</label>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                    @Html.DropDownList("companyList", new SelectList("", "value", "text"), new { @class = "multiselect form-control", multiple = "multiple" , @id = "ddlCompanyMulti" })
+                    @*@Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })*@
+                </div>
+            </div>
+
+            <div id="divSubmit" class="col-md-3" style="display:none">
+                <div class="col-md-12 col-xs-12">
+                    <label></label>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <button type="button" onclick="SubmitDataIndex();" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                </div>
+
+            </div>
+        }
+    }
+    else
+    {
+        <div id="divCompany" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Company</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+            </div>
+        </div>
+    }
 </div>
 
 <hr />
@@ -37,16 +76,103 @@
 </div>
 
 
-<script>
+<script type="text/javascript">
 
+    function SubmitDataIndex() {
+        if ($("#ddlCompanyMulti option:selected").text().length > 1) {
+            $("#subGetSwap").submit();
+        }
+    }
+
+
+
+    $(document).ready(function () {
+        $('form input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+
+        $("#txtEmpId").autocomplete({
+        source: function (request, response) {
+                var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
+                $.ajax({
+                url: '@Url.Action("getEmpByChannel", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                    subjectId: $("#ddlSubject").val(),
+                        channelId: channel,
+                        filter: $("#txtEmpId").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.empName, value: item.empId, id: item.empId };
+
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+            noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#txtEmpId").val(ui.item.id)
+            },
+            close: function (event, ui) { /*getEmpDetail();*/ }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+    });
+
+
+    function getEmpDetail() {
+
+        ddlCompanyMulti = $("#ddlCompanyMulti")
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCompanyByEmpId", "ManagementFlow")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+
+            if (response.Data.companyList.length > 0) {
+                document.getElementById("divCompanyMulti").style.display = "block";
+                document.getElementById("divSubmit").style.display = "block";
+
+                $("#ddlCompanyMulti option").remove();
+                $('#ddlCompanyMulti').multiselect('refresh');
+                $('#ddlCompanyMulti').multiselect('destroy');
+
+                $.each(response.Data.companyList, function () {
+                    ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+
+                $('#ddlCompanyMulti').multiselect({
+                    includeSelectAllOption: true
+                });
+            }
+            else {
+                var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
+                window.location.href = url;
+            }
+        });
+    }
 
     $("#ddlCompany").change(function () {
         $("#WaitDialog").show();
         $.ajax({
-            type: 'POST',
+        type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
             data: {
-                companyId: $("#ddlCompany").val(),
+            companyId: $("#ddlCompany").val(),
                 typeFlow: '@typeFlow',
             }
         }).done(function (htmlResponse) {
@@ -57,9 +183,20 @@
     });
 
 
-    function setShowDrop() {
-       
+    function successQuery_Index(htmlResponse) {
+          $("#divDrop").html(htmlResponse);
+    }
 
+    function failureQuery_Index(data) {
+        bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+    }
+
+    function beginQuery_Index() {
+
+    }
+
+
+    function setShowDrop() {
 
         if ($("#ddlCompany").val() == '5600') {
             document.getElementById("divBrand").style.display = "none";
@@ -78,11 +215,10 @@
             }
 
         }
-        else if ($("#ddlCompany").val() == '5601')
-        {
+        else if ($("#ddlCompany").val() == '5601') {
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divChanel").style.display = "none";
-             document.getElementById("divEmp").style.display = "none";
+            document.getElementById("divEmp").style.display = "none";
             document.getElementById("divSubject").style.display = "block";
             document.getElementById("divCus").style.display = "block";
             document.getElementById("divLimit").style.display = "none";
@@ -90,6 +226,7 @@
             document.getElementById("divProductType").style.display = "none";
 
             if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+
                 document.getElementById("divCus").style.display = "none";
                 document.getElementById("divLimit").style.display = "block";
                 document.getElementById("divCate").style.display = "block";
@@ -124,8 +261,6 @@
             document.getElementById("divBrand").style.display = "none";
         }
     }
-
-
 
 
 

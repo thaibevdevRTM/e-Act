@@ -1,6 +1,8 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
+using eForms.Models.MasterData;
+using eForms.Presenter.AppCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +27,11 @@ namespace eActForm.Controllers
             {
                 model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
             }
+
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId,string typeFlow)
+        public ActionResult dropDetail(string companyId, string typeFlow)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
@@ -53,7 +56,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public ActionResult genDataApproveList(getDataList_Model model,string typeFlow)
+        public ActionResult genDataApproveList(getDataList_Model model, string typeFlow)
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
@@ -100,7 +103,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 var countRow = 0;
-                if(model.typeFlow == Activity_Model.typeFlow.flowAddOn.ToString())
+                if (model.typeFlow == Activity_Model.typeFlow.flowAddOn.ToString())
                 {
                     countRow = managementFlowAppCode.insertFlowApproveAddOn(model);
                 }
@@ -108,10 +111,10 @@ namespace eActForm.Controllers
                 {
                     countRow = managementFlowAppCode.insertFlowApprove(model);
                 }
-                
-                    
 
-                if(countRow > 0)
+
+
+                if (countRow > 0)
                 {
                     result.Success = true;
                 }
@@ -119,7 +122,7 @@ namespace eActForm.Controllers
                 {
                     result.Message = AppCode.StrMessFail;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -138,11 +141,11 @@ namespace eActForm.Controllers
                 if (management_Model.approveFlow.flowDetail.Any())
                 {
                     flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+
                 }
                 else
                 {
                     flowDetail_Model.rangNo = 1;
-
                 }
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
@@ -162,11 +165,9 @@ namespace eActForm.Controllers
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
             {
-               
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail("");
                 management_Model.approveFlow.flowDetail.RemoveAll(r => r.id == id);
-
                 var result = managementFlowAppCode.delFlowAddOnByEmpId(id);
 
                 TempData.Keep();
@@ -178,7 +179,21 @@ namespace eActForm.Controllers
             return RedirectToAction("approveList");
         }
 
-        public JsonResult getLimitBySubject(string subjectId,string companyId)
+        public ActionResult delRowSwap(string id)
+        {
+            ManagementFlow_Model management_Model = new ManagementFlow_Model();
+            try
+            {
+                var result = managementFlowAppCode.delFlowApproveByEmpId(id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("delRowSwap => " + ex.Message);
+            }
+            return RedirectToAction("approveList");
+        }
+
+        public JsonResult getLimitBySubject(string subjectId, string companyId)
         {
             var result = new AjaxResult();
             try
@@ -207,6 +222,86 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("ManagementFlowController >> getEmp => " + ex.Message);
             }
             return Json(empList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getCompanyByEmpId(string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<ManagentFlowModel.flowSubject> flowSubjectList = new List<ManagentFlowModel.flowSubject>();
+                flowSubjectList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId)
+                    .GroupBy(item => new { item.companyName, item.companyId })
+                    .Select((group, index) => new ManagentFlowModel.flowSubject
+                    {
+                        companyId = group.First().companyId,
+                        companyName = group.First().companyName,
+                    }).ToList();
+
+                var resultData = new
+                {
+                    companyList = flowSubjectList.Select(x => new
+                    {
+                        Value = x.companyId,
+                        Text = x.companyName
+                    }).ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult getFlowSwap(string empId,string[] companyList )
+        {
+            ManagentFlowModel flowSubject = new ManagentFlowModel();
+            try
+            {
+                flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowSwap => " + ex.Message);
+            }
+
+            return PartialView(flowSubject);
+        }
+
+
+        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow,string newEmpId)
+        {
+            var result = new AjaxResult();
+
+            ManagentFlowModel flowSubject = new ManagentFlowModel();
+            try
+            {
+                int i = 0;
+
+                foreach(var item in ApproveIdList)
+                {
+                    if(selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
+                    {
+                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId , UtilsAppCode.Session.User.empId);
+                    }
+                    i++;
+                }
+                result.Success = true;
+                //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("insertFlowAddOn => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

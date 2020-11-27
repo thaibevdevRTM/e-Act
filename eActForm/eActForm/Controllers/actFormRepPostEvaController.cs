@@ -18,7 +18,7 @@ namespace eActForm.Controllers
         public ActionResult index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport("");
-            models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = false, isShowProductGroup = false, isShowProductType = false, isShowMonthText = false };
+            models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = true, isShowProductGroup = true, isShowProductType = true, isShowMonthText = false , isShowProductBrand = true};
             return View(models);
         }
 
@@ -46,7 +46,9 @@ namespace eActForm.Controllers
             try
             {
 
-                return RedirectToAction("postEvaListView", new { startDate = Request.Form["startDate"], endDate = Request.Form["endDate"], customerId = Request.Form["ddlCustomer"], mountText = Request.Form["reportDate"] });
+                return RedirectToAction("postEvaListView", new { startDate = Request.Form["startDate"], endDate = Request.Form["endDate"], customerId = Request.Form["ddlCustomer"], mountText = Request.Form["reportDate"], productType = Request.Form["ddlProductType"]
+                , productGroup = Request.Form["ddlProductGrp"] , productBrand = Request.Form["ddlProductBrand"], actType = Request.Form["ddlTheme"]
+                });
             }
             catch (Exception ex)
             {
@@ -54,13 +56,15 @@ namespace eActForm.Controllers
             }
         }
 
-        public ActionResult postEvaListView(string startDate, string endDate, string customerId, string mountText)
+        public ActionResult postEvaListView(string startDate, string endDate, string customerId, string mountText , string productType,string productGroup,string productBrand,string actType)
         {
             RepPostEvaModels model = null;
             try
             {
                 ViewBag.mountText = mountText;
                 model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId);
+                
+                model.repPostEvaLists = RepPostEvaPresenter.filterConditionPostEva(model.repPostEvaLists ,productType, productGroup, productBrand, actType);
                 //model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
                 Session["postEvaModel"] = model;
             }

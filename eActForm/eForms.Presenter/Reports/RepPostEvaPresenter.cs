@@ -23,7 +23,12 @@ namespace eForms.Presenter.Reports
                                     sumNormalCase = (cl.Sum(c => c.normalCost)),
                                     sumPromotionCase = (cl.Sum(c => c.themeCost)),
                                     sumSalesInCase = (cl.Sum(c => c.actReportQuantity)),
-                                    countGroup = cl.Count().ToString()
+                                    countGroup = cl.Count().ToString(),
+                                    accuracySpendingBath = (cl.Sum(c => c.accuracySpendingBath)),
+                                    saleActual = (cl.Sum(c => c.saleActual)),
+                                    tempAPNormalCost = (cl.Sum(c => c.tempAPNormalCost)),
+                                    estimateSaleBathAll = (cl.Sum(c => c.estimateSaleBathAll)),
+
                                 }).ToList();
                 return list;
 
@@ -33,6 +38,35 @@ namespace eForms.Presenter.Reports
                 throw new Exception("getPostEvaGroupByBrand >> " + ex.Message);
             }
         }
+
+        public static List<RepPostEvaModel> filterConditionPostEva(List<RepPostEvaModel> repPostEvaLists, string productType, string productGroup, string productBrand, string actType)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(productType))
+                {
+                    repPostEvaLists = repPostEvaLists.Where(x => x.productTypeId == productType).ToList();
+                }
+                if (!string.IsNullOrEmpty(productGroup))
+                {
+                    repPostEvaLists = repPostEvaLists.Where(x => x.productGroupId == productGroup).ToList();
+                }
+                if (!string.IsNullOrEmpty(productBrand))
+                {
+                    repPostEvaLists = repPostEvaLists.Where(x => x.productBrandId == productBrand).ToList();
+                }
+                if (!string.IsNullOrEmpty(actType))
+                {
+                    repPostEvaLists = repPostEvaLists.Where(x => x.activityTypeId == actType).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getPostEvaGroupByBrand >> " + ex.Message);
+            }
+            return repPostEvaLists;
+        }
+
         public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId)
         {
             try
@@ -84,6 +118,10 @@ namespace eForms.Presenter.Reports
                                  volumeMT = dr["volumeMT"] is DBNull ? 0 : Convert.ToDouble(dr["volumeMT"].ToString()),
                                  netValueMT = dr["netValueMT"] is DBNull ? 0 : Convert.ToDouble(dr["netValueMT"].ToString()),
                                  specialDiscountMT = dr["specialDiscountMT"] is DBNull ? 0 : Convert.ToDouble(dr["specialDiscountMT"].ToString()),
+                                 activityTypeId = dr["activityTypeId"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 productGroupId = dr["productGroupId"].ToString(),
+                                 productBrandId = dr["productBrandId"].ToString(),
                                  //presentToSale = dr["presentToSale"] is DBNull ? 0 : Convert.ToDouble(dr["presentToSale"].ToString()), 
                                  //bathParti = dr["bathParti"] is DBNull ? 0 : Convert.ToDouble(dr["bathParti"].ToString()),
                                  //presentToSaleParti = dr["presentToSaleParti"] is DBNull ? 0 : Convert.ToDouble(dr["presentToSaleParti"].ToString()),
@@ -99,6 +137,12 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
+                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
+                    .Select((group, index) => new RepPostEvaModel
+                {
+                    brandName = group.First().brandName,
+                     actReportQuantity = (group.Sum(c => c.actReportQuantity)),
+                }).Take(5).ToList();
 
                 return model;
             }

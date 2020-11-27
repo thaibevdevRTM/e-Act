@@ -7,6 +7,7 @@ namespace eForms.Models.Reports
     public class RepPostEvaModels
     {
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
+        public List<RepPostEvaModel> repPostEvaTopLists { get; set; }
         public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
     }
 
@@ -19,6 +20,11 @@ namespace eForms.Models.Reports
         public double? sumPromotionCase { get; set; }
         public double? sumSalesInCase { get; set; }
         public string countGroup { get; set; }
+        public double? accuracySpendingBath { get; set; }
+        public double? saleActual { get; set; }
+        public double? accuracySaleBath { get; set; }
+        public double? tempAPNormalCost { get; set; }
+        public double? estimateSaleBathAll { get; set; }
     }
     public class RepPostEvaModel
     {
@@ -69,12 +75,18 @@ namespace eForms.Models.Reports
                 return obj == null || double.IsNaN(double.Parse(obj.ToString())) || double.IsInfinity(double.Parse(obj.ToString())) ? 0 : double.Parse(obj.ToString());
             }
         }
-        public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount / estimateSaleBathAll) * 100 : 0; } }
+        public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount == 0 ? 1 : actAmount / estimateSaleBathAll == 0 ? 1 : estimateSaleBathAll) * 100 : 0; } }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }
         public double? presentAcctual { get { return (saleActual / total) * 100; } }
         public string dayAddStart { get; set; }
         public string dayAddEnd { get; set; }
         public int countGroup { get; set; }
+        public string activityTypeId { get; set; }
+        public string productTypeId { get; set; }
+        public string productCateId { get; set; }
+        public string productGroupId { get; set; }
+        public string productBrandId { get; set; }
+
     }
 }

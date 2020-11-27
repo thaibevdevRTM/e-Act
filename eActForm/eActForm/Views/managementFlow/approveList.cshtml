@@ -31,25 +31,18 @@
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
                 {
 
-                    <tr>
+                    <tr class="tagTR">
                         <td>
-                            @if (i > 0)
-                            {
-                                <a href="javascript:" onclick="return checkDelete('@item.id');">
-                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                                </a>
-                            }
-
+                            <a href="javascript:" onclick="return checkDelete('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
-                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
+                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @min = "0", @max = "20", @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
                         </td>
                         <td>
-
                             @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })
-
-
                         </td>
                         <td>
 
@@ -84,22 +77,23 @@
                                                  })
                         </td>
 
-                        @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
                         @Html.Hidden("Model.p_flowId", item.flowId)
-                        @Html.Hidden("Model.p_companyId", item.companyId)
                         @Html.Hidden("Model.p_empGroup", item.empGroup)
-                        @Html.Hidden("Model.typeFlow", Model.typeFlow)
-                        @Html.Hidden("Model.p_productType", Model.p_productType)
-                        @Html.Hidden("Model.p_productCateId", Model.p_productCateId)
-                        @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
-                        @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
-                        @Html.Hidden("Model.p_channelId", Model.p_channelId)
-                        @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
                         @Html.Hidden("Model.addOn_Id", item.id)
                     </tr>
                     i++;
                 }
             }
+
+            @Html.Hidden("Model.p_companyId", Model.p_companyId)
+            @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
+            @Html.Hidden("Model.typeFlow", Model.typeFlow)
+            @Html.Hidden("Model.p_productType", Model.p_productType)
+            @Html.Hidden("Model.p_productCateId", Model.p_productCateId)
+            @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
+            @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
+            @Html.Hidden("Model.p_channelId", Model.p_channelId)
+            @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
     </table>
 
 
@@ -115,7 +109,20 @@
 
 <script type="text/javascript">
     function validateForm() {
-        $("#subUpdate").submit();
+
+        required = "<b>กรุณาระบุ/Please input data :<br></b>";
+        var validate = true;
+        var rowCount = parseInt($('#dtApproveLists tr.tagTR').length);
+        for (i = 0; i < rowCount; i++) {
+            if ($("#txtempId_"+ i).val() == "") { required += "&emsp; ระบุรหัสพนักงาน แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+        }
+
+        if (validate == true) {
+            $("#subUpdate").submit();
+        }
+        else {
+            bootbox.alert(required)
+        }
     }
 
     function changeGetEmp(rowIndex) {
@@ -137,7 +144,7 @@
         $.ajax({
             type: 'POST',
             url: '@Url.Action("addRow", "ManagementFlow")',
-             data: {
+            data: {
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);
@@ -145,14 +152,31 @@
     }
 
     function checkDelete(id) {
-         $.ajax({
-            type: 'POST',
-            url: '@Url.Action("delRow", "ManagementFlow")',
-             data: {
-                 id:id,
-             }
-        }).done(function (htmlResponse) {
-            $("#divApprove").html(htmlResponse);
+           bootbox.confirm({
+            message: "ยืนยัน ลบข้อมูล!",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("delRow", "ManagementFlow")',
+                        data: {
+                            id: id,
+                        }
+                    }).done(function (htmlResponse) {
+                        $("#divApprove").html(htmlResponse);
+                    });
+                }
+            }
         });
     }
 

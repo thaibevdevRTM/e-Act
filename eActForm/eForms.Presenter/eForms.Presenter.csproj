@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\pManagementFlowAppCode.cs" />
     <Compile Include="AppCode\pUserAppCode.cs" />
     <Compile Include="BasePresenter.cs" />
     <Compile Include="Forms\activityFormOrderProductPresenter.cs" />
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\eForms.Models\eForms.Models.csproj">
       <Project>{43f0b5dc-e0fb-4330-a1fa-e666ffe7e04b}</Project>
       <Name>eForms.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
+      <Project>{915AE4CE-4607-4E97-9329-2F6D8B5C4569}</Project>
+      <Name>WebLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

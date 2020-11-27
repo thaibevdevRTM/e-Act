@@ -65,7 +65,7 @@
                     Customer<span class="required"></span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
+                    @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss selectpicker", id = "ddlCustomer", Name = "ddlCustomer" })
                     <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 Activity Type<span class="required"></span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })
+                @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss selectpicker", id = "ddlTheme", Name = "ddlTheme" })
             </div>
         </div>
     }
@@ -93,7 +93,7 @@
                     Product Type<span class="required"></span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss selectpicker", id = "ddlProductType", Name = "ddlProductType" })
                 </div>
             </div>
         </div>
@@ -106,12 +106,30 @@
                     Product Group<span class="required"></span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
+                    @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss selectpicker", id = "ddlProductGrp", Name = "ddlProductGrp" })
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="form-group">
+    @if (Model.showUIModel != null && Model.showUIModel.isShowProductBrand)
+    {
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    Product Brand<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control textboxcss selectpicker", id = "ddlProductBrand", Name = "ddlProductBrand" })
                 </div>
             </div>
         </div>
     }
 </div>
+
 @if (Model.showUIModel != null && Model.showUIModel.isShowMonthText)
 {
     <div class="form-group">
@@ -144,7 +162,14 @@
 </div>
 
 
-<script>
+
+<script type="text/javascript">
+
+    $('.selectpicker').selectpicker({
+        liveSearch: true,
+        showSubtext: true
+    });
+
     $(function () {
         $("#startDate").datepicker();
         $("#endDate").datepicker();
