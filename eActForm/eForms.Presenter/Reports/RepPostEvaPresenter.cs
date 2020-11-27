@@ -39,32 +39,40 @@ namespace eForms.Presenter.Reports
             }
         }
 
-        public static List<RepPostEvaModel> filterConditionPostEva(List<RepPostEvaModel> repPostEvaLists, string productType, string productGroup, string productBrand, string actType)
+        public static RepPostEvaModels filterConditionPostEva(RepPostEvaModels model, string productType, string productGroup, string productBrand, string actType)
         {
             try
             {
                 if (!string.IsNullOrEmpty(productType))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productTypeId == productType).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productTypeId == productType).ToList();
                 }
                 if (!string.IsNullOrEmpty(productGroup))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productGroupId == productGroup).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productGroupId == productGroup).ToList();
                 }
                 if (!string.IsNullOrEmpty(productBrand))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productBrandId == productBrand).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productBrandId == productBrand).ToList();
                 }
                 if (!string.IsNullOrEmpty(actType))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.activityTypeId == actType).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.activityTypeId == actType).ToList();
                 }
+
+                model.repPostEvaTopLists = model.repPostEvaLists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
+                    .Select((group, index) => new RepPostEvaModel
+                    {
+                        brandName = group.First().brandName,
+                        actReportQuantity = (group.Sum(c => c.actReportQuantity)),
+                    }).OrderByDescending(x => x.actReportQuantity).Take(5).ToList();
+
             }
             catch (Exception ex)
             {
                 throw new Exception("getPostEvaGroupByBrand >> " + ex.Message);
             }
-            return repPostEvaLists;
+            return model;
         }
 
         public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId,string actId)
@@ -139,12 +147,7 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
-                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
-                    .Select((group, index) => new RepPostEvaModel
-                {
-                     brandName = group.First().brandName,
-                     actReportQuantity = (group.Sum(c => c.actReportQuantity)),
-                }).OrderByDescending(x => x.actReportQuantity).Take(5).ToList();
+                
 
                 return model;
             }

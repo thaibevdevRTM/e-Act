@@ -64,7 +64,9 @@ namespace eActForm.Controllers
                 ViewBag.mountText = mountText;
                 model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId,"");
                 
-                model.repPostEvaLists = RepPostEvaPresenter.filterConditionPostEva(model.repPostEvaLists ,productType, productGroup, productBrand, actType);
+                model = RepPostEvaPresenter.filterConditionPostEva(model ,productType, productGroup, productBrand, actType);
+                
+                
                 //model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
                 Session["postEvaModel"] = model;
             }
