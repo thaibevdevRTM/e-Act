@@ -604,7 +604,7 @@ namespace eActForm.Models
                 var bytes = File.ReadAllBytes(rootPathMap);
                 var loadFont = default(BaseFont);
                 loadFont = BaseFont.CreateFont(server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var useFont = new Font(loadFont, 100);
+                var useFont = new Font(loadFont, 80);
 
                 var red = 242;
                 var green = 192;
@@ -622,7 +622,7 @@ namespace eActForm.Models
                         for (int i = 1, loopTo = pages; i <= loopTo; i++)
                         {
                             //ColumnText.ShowTextAligned(stamper.GetOverContent(i), Element.ALIGN_RIGHT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 2, pageSize.GetTop(Utilities.MillimetersToPoints(145)), 0);
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(txtStamp, useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(160)), Element.YMARK);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(txtStamp, useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(130)), Element.YMARK);
                             //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
                         }
                     }
