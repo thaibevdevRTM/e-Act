@@ -6,7 +6,7 @@
     @if (Model != null && Model.repPostEvaLists != null && Model.repPostEvaLists.Count > 0)
     {
         <div class="col-md-12 col-xs-12">
-            <div class="row">
+            @*<div class="row">
                 <table>
                     <tr>
                         <td>
@@ -24,7 +24,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div>*@
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     @Html.Action("PostEvaGroupBrandView", "actFormRepPostEva", new { model = Model })

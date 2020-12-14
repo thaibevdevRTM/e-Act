@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,7 +50,9 @@
     <Compile Include="MasterData\FiscalYearModel.cs" />
     <Compile Include="MasterData\AmphuresModel.cs" />
     <Compile Include="MasterData\BaseMasterModel.cs" />
+    <Compile Include="MasterData\ImportFlowModel.cs" />
     <Compile Include="MasterData\ManagentFlowModel.cs" />
+    <Compile Include="MasterData\Master_type_form_Model.cs" />
     <Compile Include="MasterData\ProvinceModel.cs" />
     <Compile Include="MasterData\SalesTeamCVMModel.cs" />
     <Compile Include="MasterData\tokenModel.cs" />

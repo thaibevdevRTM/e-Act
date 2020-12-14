@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\ImportFlowPresenter.cs" />
     <Compile Include="AppCode\pManagementFlowAppCode.cs" />
     <Compile Include="AppCode\pUserAppCode.cs" />
     <Compile Include="BasePresenter.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="MasterData\FiscalYearPresenter.cs" />
     <Compile Include="MasterData\AmphuresPresenter.cs" />
     <Compile Include="MasterData\ProvincePresenter.cs" />
+    <Compile Include="MasterData\QueryGetMasterForm.cs" />
     <Compile Include="MasterData\SalesTeamPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\RepPostEvaPresenter.cs" />

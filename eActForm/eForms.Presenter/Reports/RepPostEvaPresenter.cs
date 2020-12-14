@@ -28,6 +28,8 @@ namespace eForms.Presenter.Reports
                                     saleActual = (cl.Sum(c => c.saleActual)),
                                     tempAPNormalCost = (cl.Sum(c => c.tempAPNormalCost)),
                                     estimateSaleBathAll = (cl.Sum(c => c.estimateSaleBathAll)),
+                                    total = (cl.Sum(c => c.total)),
+                                    actAmount = (cl.Sum(c => c.actAmount)),
 
                                 }).ToList();
                 return list;
@@ -122,7 +124,7 @@ namespace eForms.Presenter.Reports
                                  estimateSaleBathAll = dr["estimateSaleBathAll"] is DBNull ? 0 : Convert.ToDouble(dr["estimateSaleBathAll"].ToString()),
                                  actReportQuantity = dr["actReportQuantity"] is DBNull ? 0 : Convert.ToDouble(dr["actReportQuantity"].ToString()),
                                  actVolumeQuantity = dr["actVolumeQuantity"] is DBNull ? 0 : Convert.ToDouble(dr["actVolumeQuantity"].ToString()),
-                                 actAmount = dr["themeCost"] is DBNull ? 0 : Convert.ToDouble(dr["actAmount"].ToString()),
+                                 actAmount = dr["actAmount"] is DBNull ? 0 : Convert.ToDouble(dr["actAmount"].ToString()),
                                  saleActual = dr["saleActual"] is DBNull ? 0 : Convert.ToDouble(dr["saleActual"].ToString()),
                                  billedQuantityMT = dr["billedQuantityMT"] is DBNull ? 0 : Convert.ToDouble(dr["billedQuantityMT"].ToString()),
                                  volumeMT = dr["volumeMT"] is DBNull ? 0 : Convert.ToDouble(dr["volumeMT"].ToString()),

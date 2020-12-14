@@ -171,7 +171,7 @@
 
         jsondata.forEach(function (e) {
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.tempAPNormalCost);
+            mybarChart.data.datasets[0].data.push(e.actAmount);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
@@ -216,7 +216,7 @@
 
         jsondata.forEach(function (e) {
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.estimateSaleBathAll);
+            mybarChart.data.datasets[0].data.push(e.total);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
