@@ -17,7 +17,8 @@ namespace eActForm.BusinessLayer
                     showUIModel = new searchParameterFilterModel(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
-                    customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),
+                    customerslist = typeForm == "mtm" ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() :
+                    QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
                     productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList(),
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm))

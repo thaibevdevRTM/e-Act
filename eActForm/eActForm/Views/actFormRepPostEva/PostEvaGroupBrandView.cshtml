@@ -24,8 +24,7 @@
             </div>
             <div class="x_content" style="height:300px;">
 
-                <div id="echartGroupBrandAndSpending" style="height:300px;"></div>
-
+                <canvas id="echartGroupBrandAndSpending"></canvas>
             </div>
         </div>
     </div>
@@ -226,6 +225,7 @@
     function genMonthlySpending(jsondata) {
 
         var chart_plot_02_data = [];
+        var chart_Spending_data = [];
         var labels = [];
         if ($('#chartCompare').length) {
             var ctxC = document.getElementById("chartCompare");
@@ -278,6 +278,7 @@
         jsondata.forEach(function (e) {
             labels.push([e.name]);
             chart_plot_02_data.push([e.sumActSalesParti]);
+            chart_Spending_data.push([e.value]);
             mybarChart.data.datasets[0].data.push(e.sumSalesInCase);
             mybarChart.data.datasets[1].data.push(e.sumNormalCase);
             mybarChart.data.datasets[2].data.push(e.sumPromotionCase);
@@ -310,14 +311,51 @@
                     pointBackgroundColor: "rgba(255,99,132,1)",
                     pointBorderColor: "#fff",
                     data: chart_plot_02_data,
+                   
                 }]
             },
             // Configuration options go here
             otpions: {
-                legend: false
-            }
+                legend: false,
+            },
+            tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value/100000000000000000 %>",
         });
         //chart.update();
+
+        var ctx = document.getElementById('echartGroupBrandAndSpending').getContext('2d');
+        var chart2 = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Montly Summary',
+                    backgroundColor: [
+                        "#455C73",
+                        "#9B59B6",
+                        "#BDC3C7",
+                        "#26B99A",
+                        "#3498DB",
+                        "#3949AB",
+                        "#006064",
+                        "#827717",
+                        "#FF6F00"
+                    ],
+                    //borderColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    data: chart_Spending_data,
+                }]
+            },
+            
+            // Configuration options go here
+            otpions: {
+                legend: false,
+               
+            }
+
+        });
 
         var theme = {
             color: [
@@ -531,74 +569,8 @@
             }
         };
 
-        if ($('#echartGroupBrandAndSpending').length) {
-
-            var echartPieCollapse = echarts.init(document.getElementById('echartGroupBrandAndSpending'), theme);
-
-            echartPieCollapse.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    x: 'center',
-                    y: 'bottom',
-                    data: labels
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        magicType: {
-                            show: true,
-                            type: ['pie', 'funnel']
-                        },
-                        restore: {
-                            show: true,
-                            title: "Restore"
-                        },
-                        saveAsImage: {
-                            show: true,
-                            title: "Save Image"
-                        }
-                    }
-                },
-                calculable: true,
-                series: [{
-                    name: 'Area Mode',
-                    type: 'pie',
-                    radius: [25, 90],
-                    center: ['50%', 170],
-                    roseType: 'area',
-                    x: '50%',
-                    max: 40,
-                    sort: 'ascending',
-                    data: jsondata
-                    //data: [{
-                    //    value: 10,
-                    //    name: 'rose1'
-                    //}, {
-                    //    value: 5,
-                    //    name: 'rose2'
-                    //}, {
-                    //    value: 15,
-                    //    name: 'rose3'
-                    //}, {
-                    //    value: 25,
-                    //    name: 'rose4'
-                    //}, {
-                    //    value: 20,
-                    //    name: 'rose5'
-                    //}, {
-                    //    value: 35,
-                    //    name: 'rose6'
-                    //}]
-                }]
-            });
-
-        }
 
     }
-
 
 </script>
 
