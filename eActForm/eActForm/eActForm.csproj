@@ -336,6 +336,7 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportBudgetControlController.cs" />
     <Compile Include="Controllers\ImportFlowController.cs" />
     <Compile Include="Controllers\ImportMasterHospitalController.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
@@ -3230,6 +3231,7 @@
     <Folder Include="Views\expenseEntertainReport\" />
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
+    <Folder Include="Views\ImportBudgetControl\" />
     <Folder Include="Views\partailViewDataMaster\" />
     <Folder Include="Views\partialCumulative\" />
     <Folder Include="Views\test\" />
