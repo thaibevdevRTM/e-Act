@@ -2,7 +2,6 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using eForms.Models.MasterData;
 using eForms.Presenter.MasterData;
 using System;
 using System.Collections.Generic;
@@ -614,7 +613,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                List<departmentMasterModel> departmentList = new List<departmentMasterModel>();
+                List<eForms.Models.MasterData.departmentMasterModel> departmentList = new List<eForms.Models.MasterData.departmentMasterModel>();
                 departmentList = departmentMasterPresenter.getdepartmentByCompId(AppCode.StrCon, companyId);
 
                 var resultData = new

@@ -52,7 +52,6 @@ namespace eActForm.Controllers
                 List<ImportFlowModel.ImportFlowModels> modelList = new List<ImportFlowModel.ImportFlowModels>();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                   
                     if (!string.IsNullOrEmpty(dt.Rows[i]["company"].ToString()))
                     {
                         ImportFlowModel.ImportFlowModels modelFlow = new ImportFlowModel.ImportFlowModels();
@@ -85,7 +84,7 @@ namespace eActForm.Controllers
                         modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString();
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
-                        modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false);
+                        modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false,"");
 
 
                        
@@ -106,9 +105,9 @@ namespace eActForm.Controllers
 
         public JsonResult InsertFlow()
         {
-            int result = 0;
+
             var resultAjax = new AjaxResult();
-            string keepFlow = "", strSubject = "";
+            string keepFlow = "", strSubject = "", limitBegin = "", getSubjectId = "" ;
             bool checkSubject = false;
             try
             {
@@ -118,12 +117,23 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.importFlowList)
                     {
-                        if (ImportFlowPresenter.checkFormAddSubject(AppCode.StrCon, model.masterTypeId))
+                        if(model.masterTypeId == MainAppCode.masterTypePaymentVoucher && !string.IsNullOrEmpty(item.productBrandId))
                         {
-                            if (item.subject != strSubject && !string.IsNullOrEmpty(item.subject))
+                            item.flowId = MainAppCode.paymentVoucherFlowId;
+                        }
+                        else if (ImportFlowPresenter.checkFormAddSubject(AppCode.StrCon, model.masterTypeId))
+                        {
+                            if ((item.subject != strSubject && item.limitBegin == limitBegin) || (item.subject != strSubject && item.limitBegin != limitBegin))
                             {
                                 checkSubject = true;
-                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject);
+                                getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject , getSubjectId);
+                                keepFlow = item.flowId;
+                            }
+                            else if(item.subject == strSubject && item.limitBegin != limitBegin)
+                            {
+                                checkSubject = true;
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
                                 keepFlow = item.flowId;
                             }
                             else
@@ -133,17 +143,16 @@ namespace eActForm.Controllers
                         }
                         else
                         {
-                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject);
+                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject,"");
                         }
-                        result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
+                        //result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
                         strSubject = item.subject;
+                        limitBegin = item.limitBegin;
 
                     }
                     resultAjax.Success = true;
                 }
 
-               
-               
             }
             catch(Exception ex)
             {

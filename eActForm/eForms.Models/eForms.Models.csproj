@@ -50,6 +50,7 @@
     <Compile Include="MasterData\FiscalYearModel.cs" />
     <Compile Include="MasterData\AmphuresModel.cs" />
     <Compile Include="MasterData\BaseMasterModel.cs" />
+    <Compile Include="MasterData\ImportBudgetControlModel.cs" />
     <Compile Include="MasterData\ImportFlowModel.cs" />
     <Compile Include="MasterData\ManagentFlowModel.cs" />
     <Compile Include="MasterData\Master_type_form_Model.cs" />

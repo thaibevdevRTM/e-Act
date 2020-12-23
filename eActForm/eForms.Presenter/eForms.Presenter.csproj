@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\ImportBudgetControlAppCode.cs" />
     <Compile Include="AppCode\ImportFlowPresenter.cs" />
+    <Compile Include="AppCode\MainAppCode.cs" />
     <Compile Include="AppCode\pManagementFlowAppCode.cs" />
     <Compile Include="AppCode\pUserAppCode.cs" />
     <Compile Include="BasePresenter.cs" />

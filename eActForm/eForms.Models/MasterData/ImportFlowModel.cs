@@ -43,7 +43,6 @@ namespace eForms.Models.MasterData
             public string company { get; set; }
             public string flowId { get; set; }
 
-
             public List<HttpPostedFileBase> InputFile { get; set; }
             public List<ImportFlowModels> importFlowList { get; set; }
 

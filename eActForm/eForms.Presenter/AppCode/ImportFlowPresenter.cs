@@ -13,18 +13,16 @@ namespace eForms.Presenter.AppCode
 {
     public class ImportFlowPresenter
     {
-        public static string getFlowIdByDetail(string strCon, ImportFlowModel.ImportFlowModels model, bool checkSubject)
+        public static string getFlowIdByDetail(string strCon, ImportFlowModel.ImportFlowModels model, bool checkSubject, string getSubjectId)
         {
             try
             {
-                string getLimitId = "", getFlowId = "", getSubjectId = "";
+                string getLimitId = "", getFlowId = "";
                 //เหลือดัก ไม่ให้ add subject ซ้ำ
                 if (checkSubject)
                 {
-                    getSubjectId = insertSubject(strCon, model);
                     getLimitId = insertLimit(strCon, getSubjectId, model);
                     getFlowId = insertFlowMain(strCon, getSubjectId, getLimitId, model);
-
                 }
 
                 DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowIdByDetail"
@@ -39,13 +37,20 @@ namespace eForms.Presenter.AppCode
                 , new SqlParameter("@departmentId", model.departmentId)
                 , new SqlParameter("@limit", model.limitTo)
                 , new SqlParameter("@empGroup", model.empGroup));
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new ImportFlowModel.ImportFlowModels()
-                             {
-                                 flowId = d["id"].ToString(),
-                             });
-
-                return lists.Any() ? lists.FirstOrDefault().flowId : "";
+                if (ds.Tables.Count > 0)
+                {
+                    var lists = (from DataRow d in ds.Tables[0].Rows
+                                 select new ImportFlowModel.ImportFlowModels()
+                                 {
+                                     flowId = d["id"].ToString(),
+                                 });
+                    return lists.Any() ? lists.FirstOrDefault().flowId : "";
+                }
+                else
+                {
+                    return "";
+                }
+               
             }
             catch (Exception ex)
             {

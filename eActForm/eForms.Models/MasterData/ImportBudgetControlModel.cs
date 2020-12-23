@@ -9,7 +9,9 @@ namespace eForms.Models.MasterData
 {
     public class ImportBudgetControlModel
     {
-        public class BudgetControlModels
+        public List<TB_Act_Other_Model> companyList { get; set; }
+        public BudgetControlModels budgetControlModels { get; set; }
+        public class BudgetControlModels :  DefaultFieldModel
         {
             public string id { get; set; }
             public string budgetNo { get; set; }
@@ -21,19 +23,29 @@ namespace eForms.Models.MasterData
             public string brandId { get; set; }
             public string brandName { get; set; }
             public string companyId { get; set; }
+            public string startDateStr { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
+            public string endDateStr { get; set; }
+            public decimal? amount { get; set; }
             public decimal? amountTT { get; set; }
             public decimal? amountCVM { get; set; }
             public decimal? amountMT { get; set; }
             public decimal? amountONT { get; set; }
             public decimal? amountSSC { get; set; }
             public string description { get; set; }
+            public int LE { get; set; }
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }
 
-        public class BudgetControl_LEModel
+        public class chanelBudgetModel
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+        }
+
+        public class BudgetControl_LEModel : DefaultFieldModel
         {
             public string id { get; set; }
             public string budgetId { get; set; }
@@ -44,8 +56,8 @@ namespace eForms.Models.MasterData
 
         }
 
-        public class BudgetControl_ActType
-        {
+        public class BudgetControl_ActType : DefaultFieldModel
+    {
             public string id { get; set; }
             public string budgetId { get; set; }
             public string budgetLEId { get; set; }
