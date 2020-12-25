@@ -52,6 +52,7 @@
     <Compile Include="AppCode\MainAppCode.cs" />
     <Compile Include="AppCode\pManagementFlowAppCode.cs" />
     <Compile Include="AppCode\pUserAppCode.cs" />
+    <Compile Include="AppCode\SubjectQuery.cs" />
     <Compile Include="BasePresenter.cs" />
     <Compile Include="Forms\activityFormOrderProductPresenter.cs" />
     <Compile Include="MasterData\APPresenter.cs" />

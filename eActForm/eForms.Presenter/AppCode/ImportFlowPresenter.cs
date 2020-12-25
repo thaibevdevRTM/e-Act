@@ -156,7 +156,12 @@ namespace eForms.Presenter.AppCode
                     , new SqlParameter[] { new SqlParameter("@companyId",model.companyId)
                     , new SqlParameter ("@subjectName", model.subject)
                     , new SqlParameter ("@masterTypeId", model.masterTypeId)
-                    , new SqlParameter ("@createBy", model.createdByUserId) });
+                    , new SqlParameter ("@createBy", model.createdByUserId)
+                    , new SqlParameter ("@empGroup", model.empGroup)
+                    , new SqlParameter ("@limit", model.limitBegin)
+                    , new SqlParameter ("@productBrandId", model.productBrandId)
+                    , new SqlParameter ("@channelId", model.channelId)
+                    });
 
 
                 if (ds.Tables[0].Rows.Count > 0)
@@ -190,6 +195,10 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@limitDisplay",model.limitDisplay)
                          ,new SqlParameter("@companyId",model.companyId)
                          ,new SqlParameter("@createBy",model.createdByUserId)
+                         ,new SqlParameter("@masterTypeId",model.masterTypeId)
+                         ,new SqlParameter("@empGroup",model.empGroup)
+                         ,new SqlParameter("@productBrandId",model.productBrandId)
+                         ,new SqlParameter("@channelId",model.channelId)
                          });
 
 
@@ -229,6 +238,8 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@productBrandId",model.productBrandId)
                          ,new SqlParameter("@departmentId",model.departmentId)
                          ,new SqlParameter("@createBy",model.createdByUserId)
+                         ,new SqlParameter("@empGroup",model.empGroup)
+                         ,new SqlParameter("@masterTypeId",model.masterTypeId)
                          });
 
 

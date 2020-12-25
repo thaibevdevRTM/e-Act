@@ -13,7 +13,7 @@
             {
                 if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isSuperAdmin )
                 {
-                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva")</li>
+                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
 
                     <li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>

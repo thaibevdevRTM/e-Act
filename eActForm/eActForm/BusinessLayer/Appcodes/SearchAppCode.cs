@@ -11,13 +11,13 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                typeForm = typeForm == Activity_Model.activityType.SetPrice.ToString() ? "reps" : "mtm";
+                if (typeForm == Activity_Model.activityType.SetPrice.ToString()) typeForm = "reps";
                 SearchActivityModels models = new SearchActivityModels
                 {
                     showUIModel = new searchParameterFilterModel(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
-                    customerslist = typeForm == "mtm" ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() :
+                    customerslist = typeForm == Activity_Model.activityType.MT.ToString() ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() :
                     QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
                     productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList(),

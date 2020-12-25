@@ -15,9 +15,9 @@ namespace eActForm.Controllers
     public class actFormRepPostEvaController : Controller
     {
         // GET: actFormRepPostEva
-        public ActionResult index()
+        public ActionResult index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport("");
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
             models.customerslist = models.customerslist;
             models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = true, isShowProductGroup = true, isShowProductType = true, isShowMonthText = false , isShowProductBrand = true};
             return View(models);

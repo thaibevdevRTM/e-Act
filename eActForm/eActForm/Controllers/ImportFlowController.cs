@@ -48,7 +48,7 @@ namespace eActForm.Controllers
                     model.InputFile[i].SaveAs(resultFilePath);
                 }
                 DataTable dt = new DataTable();
-                dt = ExcelAppCode.ReadExcel(resultFilePath, "Import", "A:Z");
+                dt = ExcelAppCode.ReadExcel(resultFilePath, "Import", "A:AB");
                 List<ImportFlowModel.ImportFlowModels> modelList = new List<ImportFlowModel.ImportFlowModels>();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -59,6 +59,7 @@ namespace eActForm.Controllers
                         modelFlow.masterTypeId = model.masterTypeId;
                         modelFlow.company = dt.Rows[i]["company"].ToString();
                         modelFlow.companyId = dt.Rows[i]["companyId"].ToString();
+                        modelFlow.actType = dt.Rows[i]["actType"].ToString();
                         modelFlow.subject = dt.Rows[i]["subject"].ToString();
                         modelFlow.customer = dt.Rows[i]["customer"].ToString();
                         modelFlow.customerId = ImportFlowPresenter.checkValueForImport(dt.Rows[i]["customerId"].ToString());
@@ -84,10 +85,8 @@ namespace eActForm.Controllers
                         modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString();
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
-                        modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false,"");
+                        modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
 
-
-                       
                         model.importFlowList.Add(modelFlow);
                     }
                 }
@@ -105,9 +104,9 @@ namespace eActForm.Controllers
 
         public JsonResult InsertFlow()
         {
-
+            int result = 0;
             var resultAjax = new AjaxResult();
-            string keepFlow = "", strSubject = "", limitBegin = "", getSubjectId = "" ;
+            string keepFlow = "", strSubject = "", limitBegin = "", getSubjectId = "";
             bool checkSubject = false;
             try
             {
@@ -117,20 +116,29 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.importFlowList)
                     {
-                        if(model.masterTypeId == MainAppCode.masterTypePaymentVoucher && !string.IsNullOrEmpty(item.productBrandId))
+                        if (model.masterTypeId == MainAppCode.masterTypePaymentVoucher && !string.IsNullOrEmpty(item.productBrandId))
                         {
-                            item.flowId = MainAppCode.paymentVoucherFlowId;
+                            //ใบสั่งจ่าย ช่องทาง brand จะมี subjectId แค่อันเดียว
+                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, MainAppCode.subjectPaymentVoucherId);
+                        }
+                        else if (model.masterTypeId == MainAppCode.masterTypeActivityBudget && !string.IsNullOrEmpty(item.productBrandId))
+                        {
+                            //budget TBM สำหรับช่องทาง Brand
+                            var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains("งบประมาณกิจกรรม")).ToList();
+                            getSubjectId = getSubject.Where(x => x.nameTH.Contains(item.actType)).FirstOrDefault().id;
+                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubjectId);
                         }
                         else if (ImportFlowPresenter.checkFormAddSubject(AppCode.StrCon, model.masterTypeId))
                         {
                             if ((item.subject != strSubject && item.limitBegin == limitBegin) || (item.subject != strSubject && item.limitBegin != limitBegin))
                             {
                                 checkSubject = true;
+                                //check insert subject
                                 getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
-                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject , getSubjectId);
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
                                 keepFlow = item.flowId;
                             }
-                            else if(item.subject == strSubject && item.limitBegin != limitBegin)
+                            else if (item.subject == strSubject && item.limitBegin != limitBegin)
                             {
                                 checkSubject = true;
                                 item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
@@ -143,9 +151,9 @@ namespace eActForm.Controllers
                         }
                         else
                         {
-                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject,"");
+                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, "");
                         }
-                        //result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
+                        result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
                         strSubject = item.subject;
                         limitBegin = item.limitBegin;
 
@@ -154,7 +162,7 @@ namespace eActForm.Controllers
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 resultAjax.Message = ex.Message;
             }

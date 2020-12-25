@@ -15,8 +15,9 @@ namespace eForms.Presenter.AppCode
     public class MainAppCode
     {
 
-        public static string paymentVoucherFlowId = "B062F1B4-969E-457B-8559-FE50F2279682";
+        public static string subjectPaymentVoucherId = "B062F1B4-969E-457B-8559-FE50F2279682";
         public static string masterTypePaymentVoucher = "F957F1C0-EF1B-4DD2-B257-83153109726E";
+        public static string masterTypeActivityBudget = "488F7C0D-8B59-4BDE-90E4-F157BFF67829";
         public static DateTime convertStrToDate(string p_date, string formatDate)
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
