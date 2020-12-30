@@ -42,8 +42,7 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formTrvTbmId"],
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["masterEmpExpense"],
-            ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
-            ConfigurationManager.AppSettings["masterEmpExpense"]
+            ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
         };
 
         public static string[] checkDocHC =
@@ -51,7 +50,7 @@ namespace eActForm.Models
            ConfigurationManager.AppSettings["formTrvHcmId"],
            ConfigurationManager.AppSettings["formAdvHcmId"],
            ConfigurationManager.AppSettings["formExpTrvNumId"],
-           ConfigurationManager.AppSettings["formExpMedNumId"],
+           ConfigurationManager.AppSettings["formExpMedNumId"]
 
         };
         public static string[] checkDocIT =

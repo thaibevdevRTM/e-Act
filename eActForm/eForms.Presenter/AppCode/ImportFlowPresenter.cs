@@ -15,40 +15,42 @@ namespace eForms.Presenter.AppCode
     {
         public static string getFlowIdByDetail(string strCon, ImportFlowModel.ImportFlowModels model, bool checkSubject, string getSubjectId)
         {
+            string getLimitId = "", getFlowId = "";
             try
             {
-                string getLimitId = "", getFlowId = "";
                 //เหลือดัก ไม่ให้ add subject ซ้ำ
                 if (checkSubject)
                 {
                     getLimitId = insertLimit(strCon, getSubjectId, model);
-                    getFlowId = insertFlowMain(strCon, getSubjectId, getLimitId, model);
-                }
-
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowIdByDetail"
-                , new SqlParameter("@companyId", model.companyId)
-                , new SqlParameter("@masterTypeId", model.masterTypeId)
-                , new SqlParameter("@subjectId", getSubjectId)
-                , new SqlParameter("@customerId", model.customerId)
-                , new SqlParameter("@productCateId", model.productCateId)
-                , new SqlParameter("@productTypeId", model.productTypeId)
-                , new SqlParameter("@productBrandId", model.productBrandId)
-                , new SqlParameter("@channelId", model.channelId)
-                , new SqlParameter("@departmentId", model.departmentId)
-                , new SqlParameter("@limit", model.limitTo)
-                , new SqlParameter("@empGroup", model.empGroup));
-                if (ds.Tables.Count > 0)
-                {
-                    var lists = (from DataRow d in ds.Tables[0].Rows
-                                 select new ImportFlowModel.ImportFlowModels()
-                                 {
-                                     flowId = d["id"].ToString(),
-                                 });
-                    return lists.Any() ? lists.FirstOrDefault().flowId : "";
+                    return getFlowId = insertFlowMain(strCon, getSubjectId, getLimitId, model);
                 }
                 else
                 {
-                    return "";
+                    DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowIdByDetail"
+                    , new SqlParameter("@companyId", model.companyId)
+                    , new SqlParameter("@masterTypeId", model.masterTypeId)
+                    , new SqlParameter("@subjectId", getSubjectId)
+                    , new SqlParameter("@customerId", model.customerId)
+                    , new SqlParameter("@productCateId", model.productCateId)
+                    , new SqlParameter("@productTypeId", model.productTypeId)
+                    , new SqlParameter("@productBrandId", model.productBrandId)
+                    , new SqlParameter("@channelId", model.channelId)
+                    , new SqlParameter("@departmentId", model.departmentId)
+                    , new SqlParameter("@limit", model.limitTo)
+                    , new SqlParameter("@empGroup", model.empGroup));
+                    if (ds.Tables.Count > 0)
+                    {
+                        var lists = (from DataRow d in ds.Tables[0].Rows
+                                     select new ImportFlowModel.ImportFlowModels()
+                                     {
+                                         flowId = d["id"].ToString(),
+                                     });
+                        return lists.Any() ? lists.FirstOrDefault().flowId : "";
+                    }
+                    else
+                    {
+                        return "";
+                    }
                 }
                
             }
@@ -158,9 +160,11 @@ namespace eForms.Presenter.AppCode
                     , new SqlParameter ("@masterTypeId", model.masterTypeId)
                     , new SqlParameter ("@createBy", model.createdByUserId)
                     , new SqlParameter ("@empGroup", model.empGroup)
-                    , new SqlParameter ("@limit", model.limitBegin)
+                    , new SqlParameter ("@limitBegin", model.limitBegin)
+                    , new SqlParameter ("@limitTo", model.limitTo)
                     , new SqlParameter ("@productBrandId", model.productBrandId)
                     , new SqlParameter ("@channelId", model.channelId)
+                    , new SqlParameter ("@actType", model.actType)
                     });
 
 

@@ -86,7 +86,7 @@ namespace eActForm.Controllers
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
-
+                    
                         model.importFlowList.Add(modelFlow);
                     }
                 }
@@ -123,7 +123,7 @@ namespace eActForm.Controllers
                         }
                         else if (model.masterTypeId == MainAppCode.masterTypeActivityBudget && !string.IsNullOrEmpty(item.productBrandId))
                         {
-                            //budget TBM สำหรับช่องทาง Brand
+                            //budget TBM สำหรับช่องทาง Brand 
                             var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains("งบประมาณกิจกรรม")).ToList();
                             getSubjectId = getSubject.Where(x => x.nameTH.Contains(item.actType)).FirstOrDefault().id;
                             item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubjectId);
