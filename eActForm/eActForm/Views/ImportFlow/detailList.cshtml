@@ -1,0 +1,126 @@
+﻿
+@model eForms.Models.MasterData.ImportFlowModel.ImportFlowModels
+
+
+<style>
+    table.fixed {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+</style>
+
+<div class="row">
+
+    <div class="col-12">
+        <p class="lead">ตรวจสอบ Flow</p>
+    </div>
+    <div class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
+        <table class="table table-striped jambo_table bulk_action fixed" id="tbl_productDetail" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+            <thead>
+                <tr class="headings" style="text-align:center;">
+                    <th></th>
+                    <th class="align-content-center font10">Company</th>
+                    <th class="align-content-center font10" width="120px">Subject</th>
+                    <th class="align-content-center font10">Customer</th>
+                    <th class="align-content-center font10">ProductType</th>
+                    <th class="align-content-center font10">ProductCate</th>
+                    <th class="align-content-center font10">ProductBrand</th>
+                    <th class="align-content-center font10">Channel</th>
+                    <th class="align-content-center font10">Department</th>
+                    <th class="align-content-center font10">Limit</th>
+                    <th class="align-content-center font10">Rank</th>
+                    <th class="align-content-center font10">ApproveGroup</th>
+                    <th class="align-content-center font10">ShowDoc</th>
+                    <th class="align-content-center font10">IsApprove</th>
+                    <th class="align-content-center font10">name</th>
+
+                </tr>
+
+            </thead>
+            @{ string show = "", IsApprove = "";}
+            @if (Model.importFlowList.Any())
+            {
+                foreach (var item in Model.importFlowList)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.flowId))
+                            {
+                                <img src="~/images/check_b.png" height="20px" width="20px" />
+                            }
+                        </td>
+                        <td class="font10 textLeft">@item.company</td>
+                        <td class="font10 textLeft">@item.subject</td>
+                        <td class="font10 textLeft">@item.customer</td>
+                        <td class="font10 textLeft">@item.productType</td>
+                        <td class="font10 textLeft">@item.productCate</td>
+                        <td class="font10 textLeft">@item.productBrand</td>
+                        <td class="font10 textLeft">@item.channel</td>
+                        <td class="font10 textLeft">@item.department</td>
+                        <td class="font10 textLeft">@item.limitDisplay</td>
+                        <td class="font10 textLeft">@item.rang</td>
+                        <td class="font10 textLeft">@item.approveGroup</td>
+                        <td class="font10 textLeft">@if(@item.IsShow == "1") { show = "Show"; } else { show = "No"; }@show</td>
+                        <td class="font10 textLeft">@if(@item.IsApprove == "1") { IsApprove = "Show"; } else { IsApprove = "No"; }@IsApprove</td>
+                        <td class="font10 textLeft">@item.empId (@item.name)</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-5">
+        <button style="width:120px" type="button" id="BtnSubmit" class="btn btn-primary" onclick="submitData();">Submit</button>
+    </div>
+</div>
+
+<script>
+
+
+    function submitData() {
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ บันทึก Flow ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $("#WaitDialog").show();
+
+                    $.ajax({
+                        url: '@Url.Action("InsertFlow", "ImportFlow")',
+                        data: {},
+                        dataType: 'json',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response);
+                            if (response.Success) {
+                                doMsgSuccess('บันทึกเรียบร้อย');
+                                document.getElementById("BtnSubmit").disabled = true;
+                                
+                            }
+                            $("#WaitDialog").hide();
+                        }
+                    });
+                }
+            }
+        });
+    }
+</script>

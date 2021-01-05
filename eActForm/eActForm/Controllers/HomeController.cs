@@ -1,12 +1,17 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using WebLibrary;
+
 
 namespace eActForm.Controllers
 {
@@ -81,11 +86,13 @@ namespace eActForm.Controllers
             AjaxResult result = new AjaxResult();
             try
             {
+                
                 result.Success = false;
                 if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMTOfDocByActId(actId)))
                 {
                     // case delete
                     result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
+
                     if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId(actId))
                     {
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
@@ -100,6 +107,7 @@ namespace eActForm.Controllers
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }
+               
                 ApproveAppCode.setCountWatingApprove();
 
                 // TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];

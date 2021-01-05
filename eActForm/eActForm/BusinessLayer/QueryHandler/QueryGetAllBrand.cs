@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllChanel => " + ex.Message);
+                ExceptionManager.WriteError("GetAllBrand => " + ex.Message);
                 return new List<TB_Act_ProductBrand_Model>();
             }
         }

@@ -405,8 +405,8 @@
             }
 
         </div>
-        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3 && Model.activityFormModel.statusId != 6 && Model.activityFormModel.statusId != 0
-    && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
+        @if (Model.activityFormModel.statusId == 1
+         && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
         {
             <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
