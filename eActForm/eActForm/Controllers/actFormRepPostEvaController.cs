@@ -15,9 +15,10 @@ namespace eActForm.Controllers
     public class actFormRepPostEvaController : Controller
     {
         // GET: actFormRepPostEva
-        public ActionResult index()
+        public ActionResult index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport("");
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
+            models.customerslist = models.customerslist;
             models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = true, isShowProductGroup = true, isShowProductType = true, isShowMonthText = false , isShowProductBrand = true};
             return View(models);
         }
@@ -62,9 +63,11 @@ namespace eActForm.Controllers
             try
             {
                 ViewBag.mountText = mountText;
-                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId);
+                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId,"");
                 
-                model.repPostEvaLists = RepPostEvaPresenter.filterConditionPostEva(model.repPostEvaLists ,productType, productGroup, productBrand, actType);
+                model = RepPostEvaPresenter.filterConditionPostEva(model ,productType, productGroup, productBrand, actType);
+                
+                
                 //model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
                 Session["postEvaModel"] = model;
             }
@@ -105,5 +108,21 @@ namespace eActForm.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult previewEvaByActId(string actId)
+        {
+            RepPostEvaModels model = null;
+            try
+            {
+                ViewBag.actId = actId;
+                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon,"","","", actId);
+                Session["postEvaModel"] = model;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("previewEvaByActId >> " + ex.Message);
+            }
+            return PartialView(model);
+        }
     }
 }

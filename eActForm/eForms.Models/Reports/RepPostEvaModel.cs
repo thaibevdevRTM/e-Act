@@ -25,6 +25,8 @@ namespace eForms.Models.Reports
         public double? accuracySaleBath { get; set; }
         public double? tempAPNormalCost { get; set; }
         public double? estimateSaleBathAll { get; set; }
+        public double? total { get; set; }
+        public double? actAmount { get; set; }
     }
     public class RepPostEvaModel
     {
