@@ -148,5 +148,30 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<ObjGetDataLayoutDoc> GetQueryDataMasterLayoutDoc(ObjGetDataLayoutDoc objGetDataLayoutDoc)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataMasterLayoutDoc", new SqlParameter("@typeKeys", objGetDataLayoutDoc.typeKeys), new SqlParameter("@activityId", objGetDataLayoutDoc.activityId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new ObjGetDataLayoutDoc()
+                             {
+                                 id = d["id"].ToString()
+                                 ,typeKeys = d["typeKeys"].ToString()
+                                  ,
+                                 valuesUse = d["valuesUse"].ToString()
+                                  ,
+                                 activityId = d["activityId"].ToString()
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetQueryDataMasterLayoutDoc => " + ex.Message);
+                return new List<ObjGetDataLayoutDoc>();
+            }
+        }
+
+
     }
 }
