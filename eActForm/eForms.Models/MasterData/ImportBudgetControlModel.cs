@@ -11,7 +11,12 @@ namespace eForms.Models.MasterData
     {
         public List<TB_Act_Other_Model> companyList { get; set; }
         public BudgetControlModels budgetControlModels { get; set; }
-        public class BudgetControlModels :  DefaultFieldModel
+
+        public ImportBudgetControlModel()
+        {
+            budgetControlModels = new BudgetControlModels();
+        }
+        public class BudgetControlModels : DefaultFieldModel
         {
             public string id { get; set; }
             public string budgetNo { get; set; }
@@ -57,7 +62,7 @@ namespace eForms.Models.MasterData
         }
 
         public class BudgetControl_ActType : DefaultFieldModel
-    {
+        {
             public string id { get; set; }
             public string budgetId { get; set; }
             public string budgetLEId { get; set; }

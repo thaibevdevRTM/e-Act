@@ -21,8 +21,15 @@
             วันที่<span class="required">*</span>
         </label>
         <div class="col-md-4 col-sm-4 col-xs-12">
-            @Html.TextBox("startDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateSt", autocomplete = "off" })
-
+            @if (Model.budgetControlModels.startDate.ToString() != "")
+            {
+                @Html.TextBox("startDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateSt", autocomplete = "off" })
+            }
+            else
+            {
+                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, "dd-MM-yyyy")
+                   , new { @class = "form-control textboxcss", @id = "txtdateSt", Style = "text-align:center;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"), autocomplete = "off" })
+            }
         </div>
     </div>
 </div>
