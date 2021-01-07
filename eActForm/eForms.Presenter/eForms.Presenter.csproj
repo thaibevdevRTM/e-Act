@@ -52,6 +52,7 @@
     <Compile Include="AppCode\MainAppCode.cs" />
     <Compile Include="AppCode\pManagementFlowAppCode.cs" />
     <Compile Include="AppCode\pUserAppCode.cs" />
+    <Compile Include="MasterData\QueryGetAllChanel.cs" />
     <Compile Include="AppCode\SubjectQuery.cs" />
     <Compile Include="BasePresenter.cs" />
     <Compile Include="Forms\activityFormOrderProductPresenter.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="MasterData\FiscalYearPresenter.cs" />
     <Compile Include="MasterData\AmphuresPresenter.cs" />
     <Compile Include="MasterData\ProvincePresenter.cs" />
+    <Compile Include="MasterData\QueryGetAllBrand.cs" />
     <Compile Include="MasterData\QueryGetMasterForm.cs" />
     <Compile Include="MasterData\SalesTeamPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

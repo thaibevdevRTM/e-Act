@@ -19,7 +19,7 @@ namespace eForms.Models.MasterData
         public class BudgetControlModels : DefaultFieldModel
         {
             public string id { get; set; }
-            public string budgetNo { get; set; }
+            public int budgetNo { get; set; }
             public string EO { get; set; }
             public string budgetGroupType { get; set; }
             public string customerId { get; set; }

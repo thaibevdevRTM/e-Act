@@ -1,4 +1,5 @@
-﻿using eForms.Models.MasterData;
+﻿using eActForm.Presenter.MasterData;
+using eForms.Models.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebLibrary;
+using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eForms.Presenter.AppCode
 {
     public class ImportBudgetControlAppCode
     {
+        public static string chanel = "chanel";
+        public static string brand = "brand";
+
         public static int InsertBudgetControl(string strCon, ImportBudgetControlModel.BudgetControlModels model)
         {
             int result = 0;
@@ -20,7 +25,10 @@ namespace eForms.Presenter.AppCode
             {
 
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetControl"
-                , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetNo",model.budgetNo)
+                         ,new SqlParameter("@EO",model.EO)
+                         ,new SqlParameter("@companyId",model.companyId)
                          ,new SqlParameter("@budgetGroupType",model.budgetGroupType)
                          ,new SqlParameter("@customerId",model.customerId)
                          ,new SqlParameter("@chanelId",model.chanelId)
@@ -49,12 +57,55 @@ namespace eForms.Presenter.AppCode
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
-                , new SqlParameter[] {new SqlParameter("@companyId",model.budgetId)
-                         ,new SqlParameter("@budgetGroupType",model.startDate)
-                         ,new SqlParameter("@customerId",model.endDate)
-                         ,new SqlParameter("@chanelId",model.amount)
-                         ,new SqlParameter("@brandId",model.descripion)
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE"
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetId",model.budgetId)
+                         ,new SqlParameter("@startDate",model.startDate)
+                         ,new SqlParameter("@endDate",model.endDate)
+                         ,new SqlParameter("@amount",model.amount)
+                         ,new SqlParameter("@description",model.descripion)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetLE => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int InsertBudgetLE_History(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> InsertBudgetLE_History");
+            }
+
+            return result;
+        }
+
+        public static int InsertBudgetActType(string strCon, ImportBudgetControlModel.BudgetControl_ActType model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType"
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetId",model.budgetId)
+                         ,new SqlParameter("@budgetLEId",model.budgetLEId)
+                         ,new SqlParameter("@actTypeId",model.actTypeId)
+                         ,new SqlParameter("@amount",model.amount)
+                         ,new SqlParameter("@description",model.description)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
                          ,new SqlParameter("@updatedByUserId",model.createdByUserId)
                   });
@@ -64,11 +115,41 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("InsertBudgetControl => " + ex.Message);
+                ExceptionManager.WriteError("InsertBudgetActType => " + ex.Message);
+            }
+
+            return result;
+        }
+        public static int InsertBudgetActType_History(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> InsertBudgetActType_History");
             }
 
             return result;
         }
 
+        public static string genEO(string strCon, BudgetControlModels modelBudget)
+        {
+            string result = "";
+            try
+            {
+                result = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
+                result += modelBudget.budgetGroupType == chanel ? "11" : "10";
+                result += ""; //group
+                result += modelBudget.startDate.Value.Year.ToString().Substring(2, 2);
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("genEO Presenter => " + ex.Message);
+            }
+            return result;
+        }
     }
 }
