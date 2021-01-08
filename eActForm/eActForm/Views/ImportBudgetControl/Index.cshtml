@@ -6,14 +6,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="divCompany" class="col-md-3">
+<div class="row form-group">
     <div class="col-md-12 col-xs-12">
-        <label>Company</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            Company<span class="required">*</span>
+        </label>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            @Html.DropDownList("company", new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany"})
+
+        </div>
     </div>
-    @*<div class="col-md-12 col-xs-12">
-        @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
-    </div>*@
 </div>
+
 
 <div class="row form-group">
     <div class="col-md-12 col-xs-12">
@@ -27,8 +31,8 @@
             }
             else
             {
-                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, "dd-MM-yyyy")
-                   , new { @class = "form-control textboxcss", @id = "txtdateSt", Style = "text-align:center;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"), autocomplete = "off" })
+                @Html.TextBox("startDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, "dd-MM-yyyy")
+                   , new { @class = "form-control textboxcss", @id = "txtdateSt", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "dd-MM-yyyy"), autocomplete = "off" })
             }
         </div>
     </div>
@@ -40,7 +44,15 @@
             ถึงวันที่<span class="required">*</span>
         </label>
         <div class="col-md-4 col-sm-4 col-xs-12">
-            @Html.TextBox("endDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.endDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateEnd", autocomplete = "off" })
+            @if (Model.budgetControlModels.startDate.ToString() != "")
+            {
+                @Html.TextBox("endDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateEnd", autocomplete = "off" })
+            }
+            else
+            {
+                @Html.TextBox("endDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, "dd-MM-yyyy")
+                   , new { @class = "form-control textboxcss", @id = "txtdateEnd",  @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "dd-MM-yyyy"), autocomplete = "off" })
+            }
 
         </div>
     </div>
@@ -76,6 +88,7 @@
             data.append("InputFiles", files[0]);
             data.append("startDateStr", $("#txtdateSt").val());
             data.append("endDateStr", $("#txtdateEnd").val());
+            data.append("companyId", $("#ddlCompany").val());
         }
         else {
             bootbox.alert("กรุณา แนบไฟล์ !")
@@ -107,7 +120,8 @@
                         success: function (response) {
                             console.log(response);
                             if (response.Success) {
-                                callPreviewData();
+                                doMsgSuccess('บันทึกเรียบร้อย');
+                               // callPreviewData();
                             }
                             else {
                                 doAlert(response.Message);

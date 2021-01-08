@@ -18,6 +18,31 @@ namespace eForms.Presenter.AppCode
         public static string chanel = "chanel";
         public static string brand = "brand";
 
+
+        public static string getLE_No(string strCon)
+        {
+            string result = "";
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new 
+                             {
+                                 LE = d["LE"].ToString(),
+                             });
+                if(lists.Any())
+                {
+                    result = lists.FirstOrDefault().LE;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getLE_No");
+            }
+
+            return result;
+        }
         public static int InsertBudgetControl(string strCon, ImportBudgetControlModel.BudgetControlModels model)
         {
             int result = 0;
@@ -107,7 +132,6 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@amount",model.amount)
                          ,new SqlParameter("@description",model.description)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
-                         ,new SqlParameter("@updatedByUserId",model.createdByUserId)
                   });
                 result++;
 
