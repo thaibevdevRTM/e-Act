@@ -1,0 +1,141 @@
+﻿@model eForms.Models.MasterData.ImportBudgetControlModel
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="divCompany" class="col-md-3">
+    <div class="col-md-12 col-xs-12">
+        <label>Company</label>
+    </div>
+    @*<div class="col-md-12 col-xs-12">
+        @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+    </div>*@
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            วันที่<span class="required">*</span>
+        </label>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            @Html.TextBox("startDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.startDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateSt", autocomplete = "off" })
+
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            ถึงวันที่<span class="required">*</span>
+        </label>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            @Html.TextBox("endDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.budgetControlModels.endDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateEnd", autocomplete = "off" })
+
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            เลือกไฟล์
+        </label>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <input class="form-control" type="file" id="inputFile" name="inputFile" required accept=".xlsx">
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-5">
+        <button style="width:120px" type="button" id="BtnImport" class="btn btn-primary" onclick="return importData();">Import</button>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    function importData() {
+        console.log($("#ddlMaster").val());
+        var data = new FormData();
+        var files = $("#inputFile").get(0).files;
+        if (files.length > 0) {
+            data.append("InputFiles", files[0]);
+            data.append("startDateStr", $("#txtdateSt").val());
+            data.append("endDateStr", $("#txtdateEnd").val());
+        }
+        else {
+            bootbox.alert("กรุณา แนบไฟล์ !")
+            return false;
+        }
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ Import Flow ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $("#WaitDialog").show();
+
+                    $.ajax({
+                        url: '@Url.Action("ImportFlie_BudgetConttrol", "ImportBudgetControl")',
+                        data: data,
+                        dataType: 'json',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response);
+                            if (response.Success) {
+                                callPreviewData();
+                            }
+                            else {
+                                doAlert(response.Message);
+                            }
+                            $("#WaitDialog").hide();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    function callPreviewData(obj) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("detailList", "ImportFlow")',
+            data: {
+
+            }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divGetDetail").html(htmlResponse)
+        });
+    }
+
+
+
+    $(function () {
+        $("#txtdateSt").datepicker({
+               format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+
+        $("#txtdateEnd").datepicker({
+            format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+    });
+</script>

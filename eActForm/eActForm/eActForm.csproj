@@ -336,6 +336,8 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportBudgetControlController.cs" />
+    <Compile Include="Controllers\ImportFlowController.cs" />
     <Compile Include="Controllers\ImportMasterHospitalController.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
@@ -2655,6 +2657,7 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\noSig.jpg" />
+    <Content Include="images\numan-logo.png" />
     <Content Include="images\pngtree-phone-icon-png-image_1757859.jpg" />
     <Content Include="images\tbmmktLogo.png" />
     <Content Include="images\warning_error.png" />
@@ -2845,6 +2848,7 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <None Include="bundleconfig.json" />
+    <Content Include="Content\fonts\THSarabun_0.ttf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -3198,6 +3202,11 @@
     <Content Include="Views\ExpenseEstimateReport\reportExpenseEntertain.cshtml" />
     <Content Include="Views\managementFlow\getFlowSwap.cshtml" />
     <Content Include="Views\Shared\chartHorizontalBar.cshtml" />
+    <Content Include="Views\actFormRepPostEva\previewEvaByActId.cshtml" />
+    <Content Include="Views\actFormRepPostEva\sharePostEvaViewList.cshtml" />
+    <Content Include="Views\ImportFlow\Index.cshtml" />
+    <Content Include="Views\ImportFlow\detailList.cshtml" />
+    <Content Include="Views\ImportBudgetControl\Index.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

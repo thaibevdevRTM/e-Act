@@ -32,7 +32,7 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] AllForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
-        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"],ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
+        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
 
 
         public static string[] checkDocTBM =
@@ -42,8 +42,7 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formTrvTbmId"],
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["masterEmpExpense"],
-            ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
-            ConfigurationManager.AppSettings["masterEmpExpense"]
+            ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
         };
 
         public static string[] checkDocHC =
@@ -51,7 +50,7 @@ namespace eActForm.Models
            ConfigurationManager.AppSettings["formTrvHcmId"],
            ConfigurationManager.AppSettings["formAdvHcmId"],
            ConfigurationManager.AppSettings["formExpTrvNumId"],
-           ConfigurationManager.AppSettings["formExpMedNumId"],
+           ConfigurationManager.AppSettings["formExpMedNumId"]
 
         };
         public static string[] checkDocIT =
@@ -126,7 +125,7 @@ namespace eActForm.Models
 
         }
 
-        
+
         public class Expenses
         {
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
@@ -592,6 +591,54 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 return server.MapPath(fileName) + ex.Message;
+            }
+        }
+
+        public static bool stampCancel(HttpServerUtilityBase server,string rootPathMap,string txtStamp)
+        {
+            bool result = true;
+            try
+            {
+                byte[] PreviewBytes = new byte[0];
+                var bytes = File.ReadAllBytes(rootPathMap);
+                var loadFont = default(BaseFont);
+                loadFont = BaseFont.CreateFont(server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                var useFont = new Font(loadFont, 80);
+
+                var red = 242;
+                var green = 192;
+                var blue = 198;
+                useFont.SetColor(red, green, blue); // ใส่สีฟอนต์
+                useFont.SetStyle(Font.BOLD); // ใส่Style
+
+                using (var stream = new MemoryStream())
+                {
+                    var reader = new PdfReader(bytes);
+                    Rectangle pageSize = reader.GetPageSize(1); // ดึง Page size
+                    using (var stamper = new PdfStamper(reader, stream))
+                    {
+                        int pages = reader.NumberOfPages;
+                        for (int i = 1, loopTo = pages; i <= loopTo; i++)
+                        {
+                            //ColumnText.ShowTextAligned(stamper.GetOverContent(i), Element.ALIGN_RIGHT, new Phrase("Reject", useFont), (pageSize.Left + pageSize.Right) / 2, pageSize.GetTop(Utilities.MillimetersToPoints(145)), 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(txtStamp, useFont), (pageSize.Left + pageSize.Right) / 3, pageSize.GetTop(Utilities.MillimetersToPoints(130)), Element.YMARK);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase("Reject", useFont), 44f, 800f, 0);
+                        }
+                    }
+
+                    PreviewBytes = stream.ToArray();
+                }
+                if (rootPathMap != "")
+                {
+                    File.Delete(rootPathMap);
+                    File.WriteAllBytes(rootPathMap, PreviewBytes);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result = false;
             }
         }
     }

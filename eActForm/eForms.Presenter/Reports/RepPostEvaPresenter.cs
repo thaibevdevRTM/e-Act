@@ -28,6 +28,8 @@ namespace eForms.Presenter.Reports
                                     saleActual = (cl.Sum(c => c.saleActual)),
                                     tempAPNormalCost = (cl.Sum(c => c.tempAPNormalCost)),
                                     estimateSaleBathAll = (cl.Sum(c => c.estimateSaleBathAll)),
+                                    total = (cl.Sum(c => c.total)),
+                                    actAmount = (cl.Sum(c => c.actAmount)),
 
                                 }).ToList();
                 return list;
@@ -39,44 +41,54 @@ namespace eForms.Presenter.Reports
             }
         }
 
-        public static List<RepPostEvaModel> filterConditionPostEva(List<RepPostEvaModel> repPostEvaLists, string productType, string productGroup, string productBrand, string actType)
+        public static RepPostEvaModels filterConditionPostEva(RepPostEvaModels model, string productType, string productGroup, string productBrand, string actType)
         {
             try
             {
                 if (!string.IsNullOrEmpty(productType))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productTypeId == productType).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productTypeId == productType).ToList();
                 }
                 if (!string.IsNullOrEmpty(productGroup))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productGroupId == productGroup).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productGroupId == productGroup).ToList();
                 }
                 if (!string.IsNullOrEmpty(productBrand))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.productBrandId == productBrand).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.productBrandId == productBrand).ToList();
                 }
                 if (!string.IsNullOrEmpty(actType))
                 {
-                    repPostEvaLists = repPostEvaLists.Where(x => x.activityTypeId == actType).ToList();
+                    model.repPostEvaLists = model.repPostEvaLists.Where(x => x.activityTypeId == actType).ToList();
                 }
+
+                model.repPostEvaTopLists = model.repPostEvaLists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
+                    .Select((group, index) => new RepPostEvaModel
+                    {
+                        brandName = group.First().brandName,
+                        actReportQuantity = (group.Sum(c => c.actReportQuantity)),
+                    }).OrderByDescending(x => x.actReportQuantity).Take(5).ToList();
+
             }
             catch (Exception ex)
             {
                 throw new Exception("getPostEvaGroupByBrand >> " + ex.Message);
             }
-            return repPostEvaLists;
+            return model;
         }
 
-        public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId)
+        public static RepPostEvaModels getDataPostEva(string strConn, string startDate, string endDate, string customerId,string actId)
         {
             try
             {
                 RepPostEvaModels model = new RepPostEvaModels();
 
-                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getReportPostEva"
+                 string callStored = string.IsNullOrEmpty(actId) ? "usp_getReportPostEva" : "usp_getReportPostEvaByActId";
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, callStored
                     , new SqlParameter[] {new SqlParameter("@startDate",startDate)
                     , new SqlParameter("@endDate",endDate)
-                    , new SqlParameter("@customerId",customerId)});
+                    , new SqlParameter("@customerId",customerId)
+                    , new SqlParameter("@actId",actId)});
 
                 #region toLists
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -112,7 +124,7 @@ namespace eForms.Presenter.Reports
                                  estimateSaleBathAll = dr["estimateSaleBathAll"] is DBNull ? 0 : Convert.ToDouble(dr["estimateSaleBathAll"].ToString()),
                                  actReportQuantity = dr["actReportQuantity"] is DBNull ? 0 : Convert.ToDouble(dr["actReportQuantity"].ToString()),
                                  actVolumeQuantity = dr["actVolumeQuantity"] is DBNull ? 0 : Convert.ToDouble(dr["actVolumeQuantity"].ToString()),
-                                 actAmount = dr["themeCost"] is DBNull ? 0 : Convert.ToDouble(dr["actAmount"].ToString()),
+                                 actAmount = dr["actAmount"] is DBNull ? 0 : Convert.ToDouble(dr["actAmount"].ToString()),
                                  saleActual = dr["saleActual"] is DBNull ? 0 : Convert.ToDouble(dr["saleActual"].ToString()),
                                  billedQuantityMT = dr["billedQuantityMT"] is DBNull ? 0 : Convert.ToDouble(dr["billedQuantityMT"].ToString()),
                                  volumeMT = dr["volumeMT"] is DBNull ? 0 : Convert.ToDouble(dr["volumeMT"].ToString()),
@@ -137,12 +149,7 @@ namespace eForms.Presenter.Reports
                 #endregion
 
                 model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
-                model.repPostEvaTopLists = lists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
-                    .Select((group, index) => new RepPostEvaModel
-                {
-                    brandName = group.First().brandName,
-                     actReportQuantity = (group.Sum(c => c.actReportQuantity)),
-                }).Take(5).ToList();
+                
 
                 return model;
             }

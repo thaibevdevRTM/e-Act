@@ -41,7 +41,6 @@ namespace eActForm.Controllers
                 {
                     rootPath = ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"];
                 }
-
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
@@ -55,8 +54,6 @@ namespace eActForm.Controllers
                         actId = "fileNotFound";
                     }
                 }
-
-
 
             }
             catch (Exception ex)

@@ -44,7 +44,7 @@ namespace eActForm.Controllers
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
                 model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains("mtm".ToLower()))
+                    .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 model.typeFlow = typeFlow;
