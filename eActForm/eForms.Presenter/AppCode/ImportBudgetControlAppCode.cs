@@ -43,6 +43,30 @@ namespace eForms.Presenter.AppCode
 
             return result;
         }
+        public static int getBudget_No(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudget_No");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new
+                             {
+                                 bgNo = d["budgetNo"].ToString(),
+                             });
+                if (lists.Any())
+                {
+                    result = int.Parse(lists.FirstOrDefault().bgNo);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getLE_No");
+            }
+
+            return result;
+        }
         public static int InsertBudgetControl(string strCon, ImportBudgetControlModel.BudgetControlModels model)
         {
             int result = 0;
@@ -164,9 +188,26 @@ namespace eForms.Presenter.AppCode
             string result = "";
             try
             {
+                var genGroup = "{0}";
+                if (!string.IsNullOrEmpty(modelBudget.chanelName))
+                {
+                    if (modelBudget.chanelName.Equals("ONT"))
+                    {
+                        genGroup = "B2";
+                    }
+                    else if (modelBudget.chanelName.Equals("TT") || modelBudget.chanelName.Equals("CVM") || modelBudget.chanelName.Equals("SSC"))
+                    {
+                        genGroup = "B3";
+                    }
+                    else if (modelBudget.chanelName.Equals("MT"))
+                    {
+                        genGroup = "B4";
+                    }
+                }
+
                 result = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
                 result += modelBudget.budgetGroupType == chanel ? "11" : "10";
-                result += ""; //group
+                result += genGroup; //group
                 result += modelBudget.startDate.Value.Year.ToString().Substring(2, 2);
             }
             catch(Exception ex)
@@ -175,5 +216,8 @@ namespace eForms.Presenter.AppCode
             }
             return result;
         }
+
+
+
     }
 }

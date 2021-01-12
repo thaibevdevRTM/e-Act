@@ -209,6 +209,7 @@
         <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
         <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
         <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
+        <a class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px" href="#"></a>คือ PostEva
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
@@ -308,7 +309,7 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();" })
                             }
-                            @if (item.statusId == "2" || item.statusId == "3" || 
+                            @if (item.statusId == "2" || item.statusId == "3" ||
                                 (Model.typeForm == Activity_Model.activityType.MT.ToString() || Model.typeForm == Activity_Model.activityType.OMT.ToString() && item.statusId != "1" || Model.typeForm == Activity_Model.activityType.SetPrice.ToString()))
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })

@@ -82,9 +82,7 @@ namespace eForms.Presenter.Reports
             try
             {
                 RepPostEvaModels model = new RepPostEvaModels();
-
-                 string callStored = string.IsNullOrEmpty(actId) ? "usp_getReportPostEva" : "usp_getReportPostEvaByActId";
-                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, callStored
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getReportPostEva"
                     , new SqlParameter[] {new SqlParameter("@startDate",startDate)
                     , new SqlParameter("@endDate",endDate)
                     , new SqlParameter("@customerId",customerId)

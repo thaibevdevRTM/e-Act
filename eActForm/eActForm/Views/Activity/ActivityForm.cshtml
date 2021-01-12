@@ -878,13 +878,14 @@
     function validatesubmit() {
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
+        console.log($("#txtActIO").val());
 
         if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
         {
              if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
              if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
         }
-
+        if ($("input[name='activityFormModel.chkAddIO']:checked").val() == 'true' && $("#txtActIO").val() == "") { required += "IO*<br>"; validate = false; }
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
@@ -1091,6 +1092,7 @@
                             ActivityDetail: $("#txtActivityDetail").val(),
                             regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
+                            activityNoRef: $("#txtActivityNo").val(),
                             id: '@Model.activityFormModel.id',
                             chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
                             actIO: $("#txtActIO").val(),
