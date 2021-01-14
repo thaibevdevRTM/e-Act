@@ -54,3 +54,14 @@ eActForm/eActForm/signatureFile/201c9e61-4cee-433b-9e49-eda2f6345e5a/11016329.pn
 eActForm/eActForm/signatureFile/201c9e61-4cee-433b-9e49-eda2f6345e5a/11026439.png
 *.png
 *.png
+*.exe
+*.exe
+*.pdb
+eActForm/eActConsoleService/bin/Debug/*
+
+eActForm/eActConsoleService/bin/Debug/eActConsoleService.exe
+eActForm/eActConsoleService/bin/Debug/eActConsoleService.pdb
+eActForm/eActConsoleService/bin/Debug/eActForm.dll
+eActForm/eActConsoleService/bin/Debug/eActForm.pdb
+eActForm/eActConsoleService/bin/Debug/WebLibrary.pdb
+*.pdb

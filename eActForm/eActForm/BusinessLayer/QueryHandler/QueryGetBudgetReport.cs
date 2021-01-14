@@ -65,6 +65,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                   activityTotalBath = d["activityTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalBath"].ToString()),
                                   activityInvoiceTotalBath = d["activityInvoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityInvoiceTotalBath"].ToString()),
                                   activityBalanceBath = d["activityBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["activityBalanceBath"].ToString()),
+                                  activityCostRemainBath = d["activityCostRemainBath"].ToString() == "" ? 0 : decimal.Parse(d["activityCostRemainBath"].ToString()),
 
                                   productBudgetStatusGroupId = d["productBudgetStatusGroupId"].ToString(),
                                   ProductBudgetStatusId = d["ProductBudgetStatusId"].ToString(),

@@ -30,7 +30,7 @@
 						
 						<td style="text-align:right;"> ยอดยกมา </td>
 						<td style="text-align:right;"> ยอดตัดจ่าย </td>
-						<td style="text-align:right;"> ยอดคงเหลือ </td>
+						<td style="text-align:right;"> ค่าใช้จ่ายคงเหลือ </td>
 						<td style="text-align:left;"> สถานะ </td>
 						<td style="text-align:left;"> สถานะกิจกรรม </td>
 
@@ -61,9 +61,9 @@
 						}
 					</td>
 					<td style="text-align:right;">
-						@if (@item.activityBalanceBath != null)
+						@if (@item.activityCostRemainBath != null)
 						{
-							string result = String.Format("{0:n2}", @item.activityBalanceBath);
+							string result = String.Format("{0:n2}", @item.activityCostRemainBath);
 							@result.ToString();
 						}
 					</td>
@@ -116,6 +116,7 @@
                         <td style="text-align:right;"> ยอดยกมา </td>
                         <td style="text-align:right;"> ยอดตัดจ่าย </td>
                         <td style="text-align:right;"> ยอดคงเหลือ </td>
+                        <td style="text-align:right;"> ค่าใช้จ่ายคงเหลือ </td>
                         <td style="text-align:left;"> สถานะ </td>
                         <td style="text-align:left;" class="text-hide"> วันที่ทำรายการ (ตัดจ่าย) </td>
                         <td style="text-align:left;"> สถานะกิจกรรม </td>
@@ -171,6 +172,13 @@
                     @if (@item.activityBalanceBath != null)
                     {
                         string result = String.Format("{0:n2}", @item.activityBalanceBath);
+                        @result.ToString();
+                    }
+                </td>
+                <td>
+                    @if (@item.activityCostRemainBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.activityCostRemainBath);
                         @result.ToString();
                     }
                 </td>
