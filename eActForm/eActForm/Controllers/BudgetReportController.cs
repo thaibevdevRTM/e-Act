@@ -157,24 +157,6 @@ namespace eActForm.Controllers
 
                 #region filter
 
-                //if (Request.Form["chk_all"] == null || Request.Form["chk_all"] == "false")
-                //{
-                //    startDate = Request.Form["startDate"];
-                //    endDate = Request.Form["endDate"];
-
-                //    if (Request.Form["startDate"] == null) { startDate = DateTime.Today.AddDays(-45).ToString("MM/dd/yyyy"); }
-                //    if (Request.Form["endDate"] == null) { endDate = DateTime.Today.ToString("MM/dd/yyyy"); }
-
-                //}
-                //else
-                //{
-                //    if (String.IsNullOrEmpty(Request.Form["ddlActYear"]) != true)
-                //    {
-                //        actYear = Request.Form["ddlActYear"];
-                //    }
-
-                //}
-
                 actYear = Request.Form["ddlActYear"];
                 actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
                 actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
@@ -183,8 +165,6 @@ namespace eActForm.Controllers
                 {
                     model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate, actYear);
                 }
-
-                    
 
                 //----------------------------------------------
 
