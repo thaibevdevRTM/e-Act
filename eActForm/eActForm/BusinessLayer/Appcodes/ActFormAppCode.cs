@@ -566,5 +566,21 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+        public static int insertReserveBudget(string activityId)
+        {
+            try
+            {
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_ReserveBudgetControl"
+                    , new SqlParameter[] { new SqlParameter("@activityId", activityId)});
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertReserveBudget >>" + ex.Message);
+            }
+
+        }
     }
 }

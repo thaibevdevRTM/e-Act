@@ -313,7 +313,12 @@ namespace eActForm.Controllers
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
                                 
-                                if(AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
+                                if(ConfigurationManager.AppSettings["formBgTbmId"].Contains(model.FirstOrDefault().master_type_form_id))
+                                {
+
+                                }
+
+                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
                                 {
                                     // case form benefit will auto approve
                                     if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
