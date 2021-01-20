@@ -6,16 +6,15 @@
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
                                 <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                             <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
-                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
+                        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
-              
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
@@ -46,7 +45,7 @@
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
                                 </div>
                                 <div style="display:inline-block;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" onchange="getEO(@index);" />
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
                                     <script>
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
@@ -81,48 +80,47 @@
                                 </script>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.TextBoxFor(x => item.amountBalance, new { @id = "activityOfEstimateList[" + index + "].amountBalance", Name = "activityOfEstimateList[" + index + "].amountBalance", @class = "form-control textboxcss text-right txtamountBalance__" + index , @readonly = "readonly" })
-                                @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index, @readonly = "readonly" })
+                                @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                @Html.TextBoxFor(x => item.amountTotal, new { @id = "activityOfEstimateList[" + index + "].amountTotal", Name = "activityOfEstimateList[" + index + "].amountTotal", @class = "form-control textboxcss text-right txtamountTotal__" + index })
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
                                 <script>
-                                    $(".txtUnit_@index").blur(function () {
-                                       var v_unitRow = 0.00;
-                                       var v_unitpriceRow = 0.00;
-                                       var v_totalRow = 0.00;
-                                        if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
-                                            v_unitRow = parseFloat($(".txtUnit_@index").val().replaceAll(",",""));
-                                       }
-                                        if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
-                                       }
-                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+                         $(".txtUnit_@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                             if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                 v_unitRow = parseFloat($(".txtUnit_@index").val().replaceAll(",",""));
+                            }
+                             if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
+                                 v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
+                            }
+                             v_totalRow = (v_unitRow * v_unitpriceRow);
 
-                                       $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                                        $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 
-                                        sumall();
-                                   });
+                             sumall();
+                        });
 
-                                   $(".txtunitPriceDisplay__@index").blur(function () {
-                                       var v_unitRow = 0.00;
-                                       var v_unitpriceRow = 0.00;
-                                       var v_totalRow = 0.00;
-                                       if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
-                                           v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
-                                       }
-                                       if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
-                                           v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
-                                       }
-                                       v_totalRow = (v_unitRow * v_unitpriceRow);
+                        $(".txtunitPriceDisplay__@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                            if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
+                            }
+                            if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
+                                v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
+                            }
+                            v_totalRow = (v_unitRow * v_unitpriceRow);
 
-                                       $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                                       $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                       sumall();
-                                   });
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            sumall();
+                        });
+
 
                                 </script>
                             </td>
@@ -186,28 +184,3 @@
         </td>
     </tr>
 </table>
-
-
-<script type="text/javascript">
-
-    function getEO(row) {
-        console.log($(".clstxtEO_"+row).val());
-        $.ajax({
-            url: '@Url.Action("getBudgetByEO", "eAct")',
-            data: {
-                EO: $(".clstxtEO_"+row).val(),
-                companyId: "@UtilsAppCode.Session.User.empCompanyId",
-                subjectId: document.getElementById("ddlSubject").value,
-                channelId: document.getElementById("ddlChannel").value,
-                brandId: document.getElementById("ddlBrand").value,
-            },
-            dataType: "json",
-            type: 'POST'
-        }).done(function (response) {
-            $(".txtamountBalance__" + row).val(response.Data.amountBalance.toFixed(2));
-            $(".txtamountTotal__" + row).val(response.Data.amountTotal.toFixed(2));
-           
-
-        });
-    }
-</script>
