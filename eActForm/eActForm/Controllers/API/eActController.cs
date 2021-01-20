@@ -108,6 +108,30 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getALLProductBrand(string p_txtBrand)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.brandName.ToLower().Trim().Contains(p_txtBrand.ToLower().Trim())).ToList();
+                var resultData = new
+                {
+                    getProductname = getProductBrand.Select(x => new
+                    {
+                        Value = x.id,
+                        Text = x.brandName
+                    }).ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         //public JsonResult getddlSize(string Id)
         //{
         //    var result = new AjaxResult();
@@ -264,7 +288,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                
+
             }
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
@@ -662,7 +686,7 @@ namespace eActForm.Controllers
         public ActionResult genImageStream(string empId)
         {
             var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            if(result.lists.Any())
+            if (result.lists.Any())
             {
                 return File(result.lists[0].signature, "image/jpg");
             }
@@ -670,6 +694,30 @@ namespace eActForm.Controllers
             {
                 return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
             }
+        }
+
+        public JsonResult getBudgetByEO(string EO, string companyId,string subjectId,string channelId,string brandId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description;
+                var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
+                var getAmount = ActFormAppCode.getBalanceByEO(EO, companyId, getActTypeId, channelId, brandId);
+
+                var resultData = new
+                {        
+                    amountBalance = getAmount.FirstOrDefault().balance,
+                    amountTotal = getAmount.FirstOrDefault().amountTotal
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

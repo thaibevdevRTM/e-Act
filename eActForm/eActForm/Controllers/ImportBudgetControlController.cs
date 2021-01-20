@@ -94,7 +94,7 @@ namespace eActForm.Controllers
                             modelBudget.id = genId;
                             modelBudget.companyId = model.companyId;
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
-                            modelBudget.budgetGroupType = ImportBudgetControlAppCode.chanel;
+                            modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
                             modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
                             modelBudget.chanelName = dt.Columns[ii].ToString();

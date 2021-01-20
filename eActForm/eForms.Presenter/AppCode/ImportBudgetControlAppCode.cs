@@ -15,7 +15,7 @@ namespace eForms.Presenter.AppCode
 {
     public class ImportBudgetControlAppCode
     {
-        public static string chanel = "chanel";
+        public static string channel = "channel";
         public static string brand = "brand";
 
 
@@ -26,11 +26,11 @@ namespace eForms.Presenter.AppCode
             {
                 DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No");
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new 
+                             select new
                              {
                                  LE = d["LE"].ToString(),
                              });
-                if(lists.Any())
+                if (lists.Any())
                 {
                     result = lists.FirstOrDefault().LE;
                 }
@@ -206,11 +206,11 @@ namespace eForms.Presenter.AppCode
                 }
 
                 result = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
-                result += modelBudget.budgetGroupType == chanel ? "11" : "10";
+                result += getDigitDepartment(modelBudget.budgetGroupType);
                 result += genGroup; //group
                 result += modelBudget.startDate.Value.Year.ToString().Substring(2, 2);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("genEO Presenter => " + ex.Message);
             }
@@ -218,6 +218,19 @@ namespace eForms.Presenter.AppCode
         }
 
 
+        public static string getDigitDepartment(string p)
+        {
+            var result = "";
+            if(p == channel)
+            {
+                result = "11";
+            }
+            else
+            {
+                result = "10";
+            }
+            return result;
+        }
 
     }
 }

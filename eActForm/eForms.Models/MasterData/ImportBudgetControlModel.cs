@@ -33,6 +33,8 @@ namespace eForms.Models.MasterData
             public DateTime? endDate { get; set; }
             public string endDateStr { get; set; }
             public decimal? amount { get; set; }
+            public decimal? balance { get; set; }
+            public decimal? amountTotal { get; set; }
             public decimal? amountTT { get; set; }
             public decimal? amountCVM { get; set; }
             public decimal? amountMT { get; set; }
