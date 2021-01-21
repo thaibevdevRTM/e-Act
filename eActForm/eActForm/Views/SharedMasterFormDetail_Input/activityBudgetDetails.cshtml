@@ -15,13 +15,13 @@
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
                         <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
                         <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
-              
+
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
                     {
                         <tr class="tagCountRowinTable">
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;" rowspan="2">
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
@@ -41,7 +41,7 @@
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
                                 </td>*@
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="2">
                                 <div>
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
                                 </div>
@@ -69,10 +69,11 @@
                                     </script>
                                 </div>
                             </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"  rowspan="1">
                                 <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
                             </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="1">
                                 <input type="text" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss txtUnit_@index" />
                                 <script>
                                     $(".txtUnit_@index").blur(function () {
@@ -81,7 +82,7 @@
                                 </script>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.TextBoxFor(x => item.amountBalance, new { @id = "activityOfEstimateList[" + index + "].amountBalance", Name = "activityOfEstimateList[" + index + "].amountBalance", @class = "form-control textboxcss text-right txtamountBalance__" + index , @readonly = "readonly" })
+                                @Html.TextBoxFor(x => item.amountBalance, new { @id = "activityOfEstimateList[" + index + "].amountBalance", Name = "activityOfEstimateList[" + index + "].amountBalance", @class = "form-control textboxcss text-right txtamountBalance__" + index, @readonly = "readonly" })
                                 @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
@@ -125,6 +126,11 @@
                                    });
 
                                 </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                test
                             </td>
                         </tr>
                         index++;
@@ -213,7 +219,7 @@
             if (response.Data.amountTotal > 0) {
                 $(".txtamountTotal__" + row).val(response.Data.amountTotal.toFixed(2));
             }
-           
+
 
         });
     }

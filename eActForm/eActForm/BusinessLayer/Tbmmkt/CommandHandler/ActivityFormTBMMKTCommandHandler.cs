@@ -55,6 +55,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
                     model.activityFormTBMMKT.statusNote = model.activityFormTBMMKT.statusNote == null ? "" : model.activityFormTBMMKT.statusNote;
 
+
                     rtn = insertActivityForm(model.activityFormTBMMKT);
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
