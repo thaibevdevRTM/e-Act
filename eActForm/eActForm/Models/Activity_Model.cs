@@ -151,6 +151,7 @@ namespace eActForm.Models
         public string id { get; set; }
         public int statusId { get; set; }
         public string activityNo { get; set; }
+        public string activityNoRef { get; set; }
         public DateTime? documentDate { get; set; }
         public string documentDateStr { get; set; }
         public string reference { get; set; }

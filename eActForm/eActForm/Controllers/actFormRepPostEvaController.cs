@@ -63,7 +63,7 @@ namespace eActForm.Controllers
             try
             {
                 ViewBag.mountText = mountText;
-                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId,"");
+                model = RepPostEvaPresenter.getDataPostEva(AppCode.StrCon, startDate, endDate, customerId,null);
                 
                 model = RepPostEvaPresenter.filterConditionPostEva(model ,productType, productGroup, productBrand, actType);
                 

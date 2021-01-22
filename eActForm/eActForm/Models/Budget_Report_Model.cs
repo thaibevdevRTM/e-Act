@@ -57,6 +57,8 @@ namespace eActForm.Models
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal activityBalanceBath { get; set; }
 
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal activityCostRemainBath { get; set; }
             public string productBudgetStatusGroupId { get; set; }
             public string ProductBudgetStatusId { get; set; }
             public string productBudgetStatusNameTH { get; set; }

@@ -72,7 +72,7 @@
 
 
         }
-     
+
     </div>
     @helper Grid(int line)
     {
@@ -141,7 +141,14 @@
                                                 var status = "0";
                                                 if (Model.approveDetailLists != null && Model.approveDetailLists.Count > 0)
                                                 {
-                                                    status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                                    try
+                                                    {
+                                                        status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        status = "";
+                                                    }
                                                 }
                                                 if (status == "3")
                                                 {

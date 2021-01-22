@@ -141,10 +141,14 @@
                                             var status = "0";
                                             if (Model.approveDetailLists != null && Model.approveDetailLists.Count > 0)
                                             {
-                                                try { status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId; }
-                                                catch { }
-
-
+                                                try
+                                                {
+                                                    status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                                }
+                                                catch(Exception ex)
+                                                {
+                                                    status = "";
+                                                }
                                             }
 
                                             if (status == "3")

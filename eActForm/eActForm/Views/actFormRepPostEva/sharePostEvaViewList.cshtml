@@ -137,7 +137,13 @@
                         <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.volumeMT)</td>
                         <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.netValueMT)</td>
                         <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.specialDiscountMT)</td>
-                        <td style="text-align:center;background-color:#f0ffcb; display:none">@string.Format("{0:n2}", item.presentSE)</td>
+                       
+                        <td style="text-align:center;background-color:#f0ffcb; display:none">
+                            @{
+                                double? perSE = (item.saleActual / item.actAmount) * 100;
+                            }
+                            @string.Format("{0:n2}", @perSE)
+                        </td>
                         <td style="text-align:center;background-color:#f0ffcb;"></td>
                         <td style="text-align:center;background-color:#f0ffcb;"></td>
                         <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
