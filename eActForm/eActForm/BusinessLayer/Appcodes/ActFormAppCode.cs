@@ -573,7 +573,8 @@ namespace eActForm.BusinessLayer
             {
                 int rtn = 0;
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_ReserveBudgetControl"
-                    , new SqlParameter[] { new SqlParameter("@activityId", activityId)});
+                    , new SqlParameter[] { new SqlParameter("@activityId", activityId)
+                    , new SqlParameter("@createByUser" ,UtilsAppCode.Session.User.empId)});
                 return rtn;
             }
             catch (Exception ex)

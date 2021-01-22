@@ -707,8 +707,10 @@ namespace eActForm.Controllers
 
                 var resultData = new
                 {        
-                    amountBalance = getAmount.FirstOrDefault().balance,
-                    amountTotal = getAmount.FirstOrDefault().amountTotal
+                    amountBalance =  getAmount.FirstOrDefault().amountTotal - getAmount.FirstOrDefault().balance,
+                    amountTotal = getAmount.FirstOrDefault().amountTotal,
+                    amountUseBalance = getAmount.FirstOrDefault().balance,
+                    
                 };
                 result.Data = resultData;
             }

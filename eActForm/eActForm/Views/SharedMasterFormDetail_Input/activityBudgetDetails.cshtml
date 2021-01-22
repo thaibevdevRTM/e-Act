@@ -69,11 +69,17 @@
                                     </script>
                                 </div>
                             </td>
-                            <td colspan="4"></td>
-                            
+                            <td colspan="4">
+                                <div>
+                                    ยอดใช้ไป <label id="amountUseBalance_@index" type="text" class="txtamountUseBalance__@index"></label>&nbsp;
+                                    ยอดคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;<br />
+                                    ยอดทั้งหมด <label id="amountTotal_@index" type="text" class="txtamountTotal__@index"></label>&nbsp;
+                                </div>
+                            </td>
+
                         </tr>
                         <tr>
-                            <td colspan="4">
+
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="1">
                                 <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
                             </td>
@@ -86,11 +92,11 @@
                                 </script>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.TextBoxFor(x => item.amountBalance, new { @id = "activityOfEstimateList[" + index + "].amountBalance", Name = "activityOfEstimateList[" + index + "].amountBalance", @class = "form-control textboxcss text-right txtamountBalance__" + index, @readonly = "readonly" })
+
                                 @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                @Html.TextBoxFor(x => item.amountTotal, new { @id = "activityOfEstimateList[" + index + "].amountTotal", Name = "activityOfEstimateList[" + index + "].amountTotal", @class = "form-control textboxcss text-right txtamountTotal__" + index, @readonly = "readonly" })
+
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
                                 <script>
@@ -131,7 +137,6 @@
 
                                 </script>
                             </td>
-</td>
                         </tr>
                         index++;
                     }
@@ -196,8 +201,21 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        getBudgetBalance();
+
+    });
+    function getBudgetBalance() {
+        var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
+        console.log(rowCount)
+        for (i = 0; i < rowCount; i++) {
+       
+            getEO(i);
+            
+        }
+    }
+
     function getEO(row) {
-        console.log($(".clstxtEO_"+row).val());
         $.ajax({
             url: '@Url.Action("getBudgetByEO", "eAct")',
             data: {
@@ -210,17 +228,26 @@
             dataType: "json",
             type: 'POST'
         }).done(function (response) {
-            $(".txtamountBalance__" + row).val(0);
-            $(".txtamountTotal__" + row).val(0);
+           
+            if (response.Data) {
 
-            if (response.Data.amountBalance > 0) {
-                $(".txtamountBalance__" + row).val(response.Data.amountBalance.toFixed(2));
+                if (response.Data.amountBalance) {
+                    $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                }
+                if (response.Data.amountTotal > 0) {
+                    $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                }
+                if (response.Data.amountUseBalance > 0) {
+                    $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                }
             }
-            if (response.Data.amountTotal > 0) {
-                $(".txtamountTotal__" + row).val(response.Data.amountTotal.toFixed(2));
+            else {
+                $("#amountBalance_" + row).text(0);
+                $("#amountTotal_" + row).text(0);
+                $("#amountUseBalance_" + row).text(0);
             }
-
-
         });
     }
+
+
 </script>
