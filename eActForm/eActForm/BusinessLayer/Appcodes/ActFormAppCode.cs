@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.BusinessLayer
 {
@@ -536,6 +538,33 @@ namespace eActForm.BusinessLayer
                 throw new Exception("addDataToDetailOther >>" + ex.Message);
             }
             return activity_TBMMKT_Model;
+        }
+
+        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+                   , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter("@companyId", companyId)
+               ,new SqlParameter("@actTypeId", getActTypeId)
+               ,new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@brandId", brandId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 balance = dr["balance"] is DBNull ? 0 : (decimal?)dr["balance"],
+                                 amountTotal = dr["amountTotal"] is DBNull ? 0 : (decimal?)dr["amountTotal"],
+                                 EO = dr["EO"].ToString(),
+                                 LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
+                             }).ToList();
+                return lists;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
         }
     }
 }

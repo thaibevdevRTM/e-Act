@@ -23,6 +23,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ImportBudgetControlModel model = new ImportBudgetControlModel();
+
             if (UtilsAppCode.Session.User.isSuperAdmin)
             {
                 model.companyList = MainAppCode.getOhterMaster(AppCode.StrCon, "company", "");
@@ -53,123 +54,240 @@ namespace eActForm.Controllers
                 DataTable dt = new DataTable();
                 DataTable dtBrand = new DataTable();
                 DataTable dtCMKT_TT = new DataTable();
-                dt = ExcelAppCode.ReadExcel(resultFilePath, "BG-L1", "A:F");
-                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "B_BRAND", "A:G");
-                dtCMKT_TT = ExcelAppCode.ReadExcel(resultFilePath, "CMKT_TT", "A:G");
+                DataTable dtCMKT_CVM = new DataTable();
+                DataTable dtCMKT_MTM = new DataTable();
+                DataTable dtCMKT_ONT = new DataTable();
+                DataTable dtCMKT_SSC = new DataTable();
+                dt = ExcelAppCode.ReadExcel(resultFilePath, "BG-L1", "A:Z");
+                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "B_BRAND", "A:Z");
+                dtCMKT_TT = ExcelAppCode.ReadExcel(resultFilePath, "TT", "A:Z");
+                dtCMKT_CVM = ExcelAppCode.ReadExcel(resultFilePath, "CVM", "A:Z");
+                dtCMKT_MTM = ExcelAppCode.ReadExcel(resultFilePath, "MT", "A:Z");
+                dtCMKT_ONT = ExcelAppCode.ReadExcel(resultFilePath, "ONT", "A:Z");
+                dtCMKT_SSC = ExcelAppCode.ReadExcel(resultFilePath, "SSC", "A:Z");
 
-                string rtn = ConfigurationManager.AppSettings["chanelBudget"];//File.ReadAllText(path);
-                JObject json = JObject.Parse(rtn);
-                var lists = JsonConvert.DeserializeObject<List<chanelBudgetModel>>(json.SelectToken("chanel").ToString());
 
-                string rtnActTypeBudget = ConfigurationManager.AppSettings["actTypeBudget"];//File.ReadAllText(path);
-                JObject jsonActTypeBudget = JObject.Parse(rtn);
-                var listsActType = JsonConvert.DeserializeObject<List<chanelBudgetModel>>(json.SelectToken("actType").ToString());
+                //string rtn = ConfigurationManager.AppSettings["chanelBudget"];//File.ReadAllText(path);
+                //JObject json = JObject.Parse(rtn);
+                //var lists = JsonConvert.DeserializeObject<List<chanelBudgetModel>>(json.SelectToken("chanel").ToString());
 
+                //string rtnActTypeBudget = ConfigurationManager.AppSettings["actTypeBudget"];//File.ReadAllText(path);
+                //JObject jsonActTypeBudget = JObject.Parse(rtnActTypeBudget);
+                //var listsActType = JsonConvert.DeserializeObject<List<chanelBudgetModel>>(jsonActTypeBudget.SelectToken("actType").ToString());
+                var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon);
 
                 //------------------------ Prepare data for BudgetControl by Chanel -----------------
                 List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
                 List<BudgetControl_LEModel> BudgetLEList = new List<BudgetControl_LEModel>();
+                List<BudgetControl_ActType> bgActTypeList = new List<BudgetControl_ActType>();
+
+                int runingNo = ImportBudgetControlAppCode.getBudget_No(AppCode.StrCon);
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    BudgetControlModels modelBudget = new BudgetControlModels();
-                    BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
-                    BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
-                    for (int ii = 1; ii < dt.Columns.Count; ii++)
+                    for (int ii = 2; ii < dt.Columns.Count; ii++)
                     {
 
-                        if (lists.Where(x => x.name.Contains(dt.Columns[ii].ToString())).Any())
+                        if (QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).Any())
                         {
+                            BudgetControlModels modelBudget = new BudgetControlModels();
                             genId = Guid.NewGuid().ToString();
                             modelBudget.id = genId;
                             modelBudget.companyId = model.companyId;
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
-                            modelBudget.budgetGroupType = "chanel";
-                            modelBudget.amount = dt.Rows[i][dt.Columns[ii].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
-                            modelBudget.chanelId = lists.Where(x => x.name.Contains(dt.Columns[ii].ToString())).FirstOrDefault().id;
+                            modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
+                            modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                            modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
+                            modelBudget.chanelName = dt.Columns[ii].ToString();
                             modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                             modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                             modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
-                            modelBudget.EO = ""; //genauto
-                            modelBudget.budgetNo = ""; //genauto
+                            modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
+                            modelBudget.budgetNo = runingNo + 1; //genauto
+                            modelBudget.LE = int.Parse(getLE) + 1;
                             budgetList.Add(modelBudget);
-                        }
 
-                        if (budgetList.Any())
-                        {
-                            //Add Model LE
-                            genIdLE = Guid.NewGuid().ToString();
-                            modelLE.id = genIdLE;
-                            modelLE.budgetId = genId;
-                            modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelLE.descripion = "";
-                            BudgetLEList.Add(modelLE);
-                        }
 
-                        if(BudgetLEList.Any())
-                        {
-                            if(modelBudget.chanelId == "")
-                            { 
-                            
-                            }
-                            for (int a = 0; a < dtCMKT_TT.Columns.Count; a++)
+                            if (budgetList.Any())
                             {
-                                bgActTypeModel.id = Guid.NewGuid().ToString();
-                                bgActTypeModel.budgetId = genId;
-                                bgActTypeModel.budgetLEId = genIdLE;
-                                bgActTypeModel.actTypeId = listsActType.Where(x => x.name.Contains(dtCMKT_TT.Columns[a].ToString())).FirstOrDefault().id;
-                               // bgActTypeModel.amount = dtCMKT_TT.Rows[i][dtCMKT_TT.Columns[a].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_TT.Rows[i][dtCMKT_TT.Columns[a].ToString()].ToString()));
+                                //Add Model LE
+                                BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
+                                genIdLE = Guid.NewGuid().ToString();
+                                modelLE.id = genIdLE;
+                                modelLE.budgetId = genId;
+                                modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                modelLE.descripion = "";
+                                modelLE.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                                modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
+                                BudgetLEList.Add(modelLE);
+                            }
+
+                            if (BudgetLEList.Any())
+                            {
+
+                                if (dt.Columns[ii].ToString().Contains("TT"))
+                                {
+                                    for (int aa = 1; aa < dtCMKT_TT.Columns.Count; aa++)
+                                    {
+                                        BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                        bgActTypeModel.id = Guid.NewGuid().ToString();
+                                        bgActTypeModel.budgetId = genId;
+                                        bgActTypeModel.budgetLEId = genIdLE;
+                                        bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Contains(dtCMKT_TT.Columns[aa].ToString().ToLower())).FirstOrDefault().id;
+                                        bgActTypeModel.amount = dtCMKT_TT.Rows[i][dtCMKT_TT.Columns[aa].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_TT.Rows[i][dtCMKT_TT.Columns[aa].ToString()].ToString()));
+                                        bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                        bgActTypeList.Add(bgActTypeModel);
+                                    }
+                                }
+
+                                if (dt.Columns[ii].ToString().Contains("CVM"))
+                                {
+                                    for (int aa = 1; aa < dtCMKT_CVM.Columns.Count; aa++)
+                                    {
+                                        BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                        bgActTypeModel.id = Guid.NewGuid().ToString();
+                                        bgActTypeModel.budgetId = genId;
+                                        bgActTypeModel.budgetLEId = genIdLE;
+                                        bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Contains(dtCMKT_CVM.Columns[aa].ToString().ToLower())).FirstOrDefault().id;
+                                        bgActTypeModel.amount = dtCMKT_CVM.Rows[i][dtCMKT_CVM.Columns[aa].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_CVM.Rows[i][dtCMKT_CVM.Columns[aa].ToString()].ToString()));
+                                        bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                        bgActTypeList.Add(bgActTypeModel);
+                                    }
+                                }
+                                if (dt.Columns[ii].ToString().Contains("MT"))
+                                {
+                                    for (int aa = 1; aa < dtCMKT_MTM.Columns.Count; aa++)
+                                    {
+                                        BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                        bgActTypeModel.id = Guid.NewGuid().ToString();
+                                        bgActTypeModel.budgetId = genId;
+                                        bgActTypeModel.budgetLEId = genIdLE;
+                                        bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Contains(dtCMKT_MTM.Columns[aa].ToString().ToLower())).FirstOrDefault().id;
+                                        bgActTypeModel.amount = dtCMKT_MTM.Rows[i][dtCMKT_MTM.Columns[aa].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_MTM.Rows[i][dtCMKT_MTM.Columns[aa].ToString()].ToString()));
+                                        bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                        bgActTypeList.Add(bgActTypeModel);
+                                    }
+                                }
+
+                                if (dt.Columns[ii].ToString().Contains("ONT"))
+                                {
+                                    for (int aa = 1; aa < dtCMKT_ONT.Columns.Count; aa++)
+                                    {
+                                        BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                        bgActTypeModel.id = Guid.NewGuid().ToString();
+                                        bgActTypeModel.budgetId = genId;
+                                        bgActTypeModel.budgetLEId = genIdLE;
+                                        bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Contains(dtCMKT_ONT.Columns[aa].ToString().ToLower())).FirstOrDefault().id;
+                                        bgActTypeModel.amount = dtCMKT_ONT.Rows[i][dtCMKT_ONT.Columns[aa].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_ONT.Rows[i][dtCMKT_ONT.Columns[aa].ToString()].ToString()));
+                                        bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                        bgActTypeList.Add(bgActTypeModel);
+                                    }
+                                }
+                                if (dt.Columns[ii].ToString().Contains("SSC"))
+                                {
+                                    for (int aa = 1; aa < dtCMKT_SSC.Columns.Count; aa++)
+                                    {
+                                        BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                        bgActTypeModel.id = Guid.NewGuid().ToString();
+                                        bgActTypeModel.budgetId = genId;
+                                        bgActTypeModel.budgetLEId = genIdLE;
+                                        bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Contains(dtCMKT_SSC.Columns[aa].ToString().ToLower())).FirstOrDefault().id;
+                                        bgActTypeModel.amount = dtCMKT_SSC.Rows[i][dtCMKT_SSC.Columns[aa].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtCMKT_SSC.Rows[i][dtCMKT_SSC.Columns[aa].ToString()].ToString()));
+                                        bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                        bgActTypeList.Add(bgActTypeModel);
+                                    }
+                                }
 
                             }
-                                //Add BudgetControl ActType
-                              
+                            //Add BudgetControl ActType
+                            runingNo++;
                         }
-
-
                     }
                 }
 
                 //------------------------ Prepare data for BudgetControl by Brand -----------------
+
                 for (int i = 0; i < dtBrand.Rows.Count; i++)
                 {
                     BudgetControlModels modelBudget = new BudgetControlModels();
                     BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
-                    for (int ii = 1; ii < dtBrand.Columns.Count; ii++)
+
+                    genId = Guid.NewGuid().ToString();
+                    modelBudget.id = genId;
+                    modelBudget.companyId = model.companyId;
+                    modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
+                    modelBudget.budgetGroupType = ImportBudgetControlAppCode.brand;
+                    modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i]["Total MKT"].ToString()));
+                    modelBudget.chanelId = "";
+                    modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
+                    modelBudget.budgetNo = runingNo + 1; //genauto
+                    modelBudget.LE = int.Parse(getLE) + 1;
+                    modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
+                    budgetList.Add(modelBudget);
+
+
+                    if (budgetList.Any())
                     {
-                        genId = Guid.NewGuid().ToString();
-                        if (listsActType.Where(x => x.name.Contains(dtBrand.Columns[ii].ToString())).Any())
+                        //Add Model LE
+                        genIdLE = Guid.NewGuid().ToString();
+                        modelLE.id = genIdLE;
+                        modelLE.budgetId = genId;
+                        modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                        modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                        modelLE.amount = decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i]["Total MKT"].ToString()));
+                        modelLE.descripion = "";
+                        modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
+                        BudgetLEList.Add(modelLE);
+                    }
+
+                    if (BudgetLEList.Any())
+                    {
+                        for (int ii = 2; ii < dtBrand.Columns.Count; ii++)
                         {
-                            modelBudget.id = genId;
-                            modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
-                            modelBudget.budgetGroupType = "brand";
-                            modelBudget.amount = dtBrand.Rows[i][dtBrand.Columns[ii].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i][dtBrand.Columns[ii].ToString()].ToString()));
-                            modelBudget.chanelId = "";
-                            modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelBudget.EO = ""; //genauto
-                            modelBudget.budgetNo = ""; //genauto
-                            modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
-                            budgetList.Add(modelBudget);
+                            if (QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Equals(dtBrand.Columns[ii].ToString().ToLower())).Any())
+                            {
+                                BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                bgActTypeModel.id = Guid.NewGuid().ToString();
+                                bgActTypeModel.budgetId = genId;
+                                bgActTypeModel.budgetLEId = genIdLE;
+                                bgActTypeModel.actTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Equals(dtBrand.Columns[ii].ToString().ToLower())).FirstOrDefault().id;
+                                bgActTypeModel.amount = dtBrand.Rows[i][dtBrand.Columns[ii].ToString()].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i][dtBrand.Columns[ii].ToString()].ToString()));
+                                bgActTypeModel.description = "";
+                                bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                bgActTypeList.Add(bgActTypeModel);
+                            }
                         }
+                    }
+                    runingNo++;
+                }
 
-                        if (budgetList.Any())
-                        {
-                            //Add Model LE
-                            genIdLE = Guid.NewGuid().ToString();
-                            modelLE.id = genIdLE;
-                            modelLE.budgetId = genId;
-                            modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelLE.descripion = "";
-                            BudgetLEList.Add(modelLE);
-
-                        }
-
+                if (budgetList.Any())
+                {
+                    foreach (var item in budgetList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetControl(AppCode.StrCon, item);
                     }
                 }
 
+                if (BudgetLEList.Any())
+                {
+                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon);
+                    foreach (var item in BudgetLEList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetLE(AppCode.StrCon, item);
+                    }
+                }
+                if (bgActTypeList.Any())
+                {
+                    var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon);
+                    foreach (var item in bgActTypeList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetActType(AppCode.StrCon, item);
+                    }
+                }
 
-                //var result = ImportBudgetControlAppCode.InsertBudgetControl(AppCode.StrCon, modelBudget);
 
                 resultAjax.Success = true;
 

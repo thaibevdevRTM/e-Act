@@ -22,17 +22,16 @@ namespace eActForm.Controllers
         public ActionResult Index(string actId, string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
-            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+
+            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
             {
-                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
-                {
-                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
-                }
-                else
-                {
-                    models.customerslist = QueryGetAllCustomers.getCustomersOMT();
-                }
+                models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }
+            else
+            {
+                models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+            }
+
 
             models.typeForm = typeForm;
             return View(models);
@@ -86,7 +85,7 @@ namespace eActForm.Controllers
             AjaxResult result = new AjaxResult();
             try
             {
-                
+
                 result.Success = false;
                 if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMTOfDocByActId(actId)))
                 {
@@ -107,7 +106,7 @@ namespace eActForm.Controllers
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }
-               
+
                 ApproveAppCode.setCountWatingApprove();
 
                 // TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];

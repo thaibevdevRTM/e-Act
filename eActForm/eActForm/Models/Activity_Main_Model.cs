@@ -259,6 +259,8 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
+        public decimal? amountBalance { get; set; }
+        public decimal? amountTotal { get; set; }
 
     }
 

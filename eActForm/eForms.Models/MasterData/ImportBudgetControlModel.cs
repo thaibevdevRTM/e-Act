@@ -11,10 +11,15 @@ namespace eForms.Models.MasterData
     {
         public List<TB_Act_Other_Model> companyList { get; set; }
         public BudgetControlModels budgetControlModels { get; set; }
-        public class BudgetControlModels :  DefaultFieldModel
+
+        public ImportBudgetControlModel()
+        {
+            budgetControlModels = new BudgetControlModels();
+        }
+        public class BudgetControlModels : DefaultFieldModel
         {
             public string id { get; set; }
-            public string budgetNo { get; set; }
+            public int budgetNo { get; set; }
             public string EO { get; set; }
             public string budgetGroupType { get; set; }
             public string customerId { get; set; }
@@ -28,6 +33,8 @@ namespace eForms.Models.MasterData
             public DateTime? endDate { get; set; }
             public string endDateStr { get; set; }
             public decimal? amount { get; set; }
+            public decimal? balance { get; set; }
+            public decimal? amountTotal { get; set; }
             public decimal? amountTT { get; set; }
             public decimal? amountCVM { get; set; }
             public decimal? amountMT { get; set; }
@@ -57,7 +64,7 @@ namespace eForms.Models.MasterData
         }
 
         public class BudgetControl_ActType : DefaultFieldModel
-    {
+        {
             public string id { get; set; }
             public string budgetId { get; set; }
             public string budgetLEId { get; set; }

@@ -36,7 +36,8 @@ namespace eForms.Presenter.AppCode
                     , new SqlParameter("@productBrandId", model.productBrandId)
                     , new SqlParameter("@channelId", model.channelId)
                     , new SqlParameter("@departmentId", model.departmentId)
-                    , new SqlParameter("@limit", model.limitTo)
+                    , new SqlParameter("@limitTo", model.limitTo)
+                    , new SqlParameter("@limitBegin", model.limitBegin)
                     , new SqlParameter("@empGroup", model.empGroup));
                     if (ds.Tables.Count > 0)
                     {
