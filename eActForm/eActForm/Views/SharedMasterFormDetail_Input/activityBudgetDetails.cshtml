@@ -46,7 +46,7 @@
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
                                 </div>
                                 <div style="display:inline-block;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" onchange="getEO(@index);" />
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" onchange="processGetEO(@index);" />
                                     <script>
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
@@ -72,8 +72,8 @@
                             <td colspan="4">
                                 <div>
                                     ยอดใช้ไป <label id="amountUseBalance_@index" type="text" class="txtamountUseBalance__@index"></label>&nbsp;
-                                    ยอดคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;<br />
-                                    ยอดทั้งหมด <label id="amountTotal_@index" type="text" class="txtamountTotal__@index"></label>&nbsp;
+                                    งบคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;<br />
+                                    งบทั้งหมด <label id="amountTotal_@index" type="text" class="txtamountTotal__@index"></label>&nbsp;
                                 </div>
                             </td>
 
@@ -207,7 +207,6 @@
     });
     function getBudgetBalance() {
         var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
-        console.log(rowCount)
         for (i = 0; i < rowCount; i++) {
        
             getEO(i);
@@ -215,38 +214,62 @@
         }
     }
 
-    function getEO(row) {
-        $.ajax({
-            url: '@Url.Action("getBudgetByEO", "eAct")',
-            data: {
-                EO: $(".clstxtEO_"+row).val(),
-                companyId: "@UtilsAppCode.Session.User.empCompanyId",
-                subjectId: document.getElementById("ddlSubject").value,
-                channelId: document.getElementById("ddlChannel").value,
-                brandId: document.getElementById("ddlBrand").value,
-            },
-            dataType: "json",
-            type: 'POST'
-        }).done(function (response) {
-           
-            if (response.Data) {
+    $("#ddlSubject").change(function () {
+        console.log('subject');
 
-                if (response.Data.amountBalance) {
-                    $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+
+        getBudgetBalance();
+    });
+
+
+    function processGetEO(row) {
+
+        if ($("#ddlSubject").val().length > 0) {
+            getEO(row);
+        }
+        else {
+            bootbox.alert("กรุณาระบุ Subjet")
+            $(".clstxtEO_" + row).val('');
+        }
+    }
+
+
+    function getEO(row) {
+
+
+        console.log(document.getElementById("ddlSubject").value);
+            $.ajax({
+                url: '@Url.Action("getBudgetByEO", "eAct")',
+                data: {
+                    EO: $(".clstxtEO_" + row).val(),
+                    companyId: "@UtilsAppCode.Session.User.empCompanyId",
+                    subjectId: document.getElementById("ddlSubject").value,
+                    channelId: document.getElementById("ddlChannel").value,
+                    brandId: document.getElementById("ddlBrand").value,
+                },
+                dataType: "json",
+                type: 'POST'
+            }).done(function (response) {
+                console.log(response);
+                if (response.Success == true) {
+
+                    if (response.Data.amountBalance) {
+                        $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    }
+                    if (response.Data.amountTotal > 0) {
+                        $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    }
+                    if (response.Data.amountUseBalance > 0) {
+                        $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    }
                 }
-                if (response.Data.amountTotal > 0) {
-                    $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                else {
+                    $("#amountBalance_" + row).text(0);
+                    $("#amountTotal_" + row).text(0);
+                    $("#amountUseBalance_" + row).text(0);
                 }
-                if (response.Data.amountUseBalance > 0) {
-                    $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                }
-            }
-            else {
-                $("#amountBalance_" + row).text(0);
-                $("#amountTotal_" + row).text(0);
-                $("#amountUseBalance_" + row).text(0);
-            }
-        });
+            });
+       
     }
 
 

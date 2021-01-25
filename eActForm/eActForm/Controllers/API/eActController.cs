@@ -712,10 +712,12 @@ namespace eActForm.Controllers
                     amountUseBalance = getAmount.FirstOrDefault().balance,
                     
                 };
+                result.Success = true;
                 result.Data = resultData;
             }
             catch (Exception ex)
             {
+                result.Success = false;
                 ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
             }
 
