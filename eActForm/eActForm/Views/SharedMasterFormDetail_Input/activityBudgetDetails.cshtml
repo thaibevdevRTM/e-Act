@@ -71,9 +71,10 @@
                             </td>
                             <td colspan="4">
                                 <div>
-                                    ยอดใช้ไป <label id="amountUseBalance_@index" type="text" class="txtamountUseBalance__@index"></label>&nbsp;
-                                    งบคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;<br />
                                     งบทั้งหมด <label id="amountTotal_@index" type="text" class="txtamountTotal__@index"></label>&nbsp;
+                                    ยอดใช้ไป <label id="amountUseBalance_@index" type="text" class="txtamountUseBalance__@index"></label>&nbsp;
+                                    งบคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;
+
                                 </div>
                             </td>
 
@@ -208,16 +209,11 @@
     function getBudgetBalance() {
         var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
         for (i = 0; i < rowCount; i++) {
-       
             getEO(i);
-            
         }
     }
 
     $("#ddlSubject").change(function () {
-        console.log('subject');
-
-
         getBudgetBalance();
     });
 
@@ -236,8 +232,6 @@
 
     function getEO(row) {
 
-
-        console.log(document.getElementById("ddlSubject").value);
             $.ajax({
                 url: '@Url.Action("getBudgetByEO", "eAct")',
                 data: {
@@ -250,7 +244,6 @@
                 dataType: "json",
                 type: 'POST'
             }).done(function (response) {
-                console.log(response);
                 if (response.Success == true) {
 
                     if (response.Data.amountBalance) {

@@ -96,13 +96,15 @@ namespace eActForm.Controllers
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                            modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                            modelBudget.totalBG = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total BG"].ToString()));
                             modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
                             modelBudget.chanelName = dt.Columns[ii].ToString();
                             modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                             modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                             modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
                             modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
-                            modelBudget.budgetNo = runingNo + 1; //genauto
+                            modelBudget.budgetNo = ImportBudgetControlAppCode.genBudgetNo(AppCode.StrCon, modelBudget, int.Parse(getLE) + 1);  //genauto
                             modelBudget.LE = int.Parse(getLE) + 1;
                             budgetList.Add(modelBudget);
 
@@ -117,7 +119,7 @@ namespace eActForm.Controllers
                                 modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                                 modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                                 modelLE.descripion = "";
-                                modelLE.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                                
                                 modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
                                 BudgetLEList.Add(modelLE);
                             }
@@ -218,14 +220,16 @@ namespace eActForm.Controllers
                     modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
                     modelBudget.budgetGroupType = ImportBudgetControlAppCode.brand;
                     modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i]["Total MKT"].ToString()));
+                    modelBudget.totalBG = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total BG"].ToString()));
                     modelBudget.chanelId = "";
                     modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
-                    modelBudget.budgetNo = runingNo + 1; //genauto
+                    modelBudget.budgetNo = ImportBudgetControlAppCode.genBudgetNo(AppCode.StrCon, modelBudget, int.Parse(getLE) + 1);  //genauto
                     modelBudget.LE = int.Parse(getLE) + 1;
                     modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
                     budgetList.Add(modelBudget);
+                    //runingNo + 1
 
 
                     if (budgetList.Any())
@@ -236,7 +240,6 @@ namespace eActForm.Controllers
                         modelLE.budgetId = genId;
                         modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                         modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                        modelLE.amount = decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i]["Total MKT"].ToString()));
                         modelLE.descripion = "";
                         modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
                         BudgetLEList.Add(modelLE);

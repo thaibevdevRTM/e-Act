@@ -85,6 +85,8 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@startDate",model.startDate)
                          ,new SqlParameter("@endDate",model.endDate)
                          ,new SqlParameter("@amount",model.amount)
+                         ,new SqlParameter("@totalChannel",model.totalChannel)
+                         ,new SqlParameter("@totalBG",model.totalBG)
                          ,new SqlParameter("@LE",model.LE)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
                   });
@@ -111,7 +113,6 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@budgetId",model.budgetId)
                          ,new SqlParameter("@startDate",model.startDate)
                          ,new SqlParameter("@endDate",model.endDate)
-                         ,new SqlParameter("@amount",model.amount)
                          ,new SqlParameter("@description",model.descripion)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
                   });
@@ -215,6 +216,31 @@ namespace eForms.Presenter.AppCode
                 ExceptionManager.WriteError("genEO Presenter => " + ex.Message);
             }
             return result;
+        }
+
+        public static string genBudgetNo(string strCon, BudgetControlModels modelBudget , int LE)
+        {
+            string getCode = "" , formatBudgetNo = "{0}-{1}-{2}-{3}";
+            try
+            {
+                if (!string.IsNullOrEmpty(modelBudget.chanelId))
+                {
+                 
+                    getCode = QueryGetAllChanel.getAllChanel(strCon).Where(x => x.id.Equals(modelBudget.chanelId)).FirstOrDefault().brandCode;
+                    formatBudgetNo = String.Format(formatBudgetNo, "ATL", modelBudget.startDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
+                }
+                else
+                {
+                    getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
+                    formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.startDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("genBudgetNo Presenter => " + ex.Message);
+            }
+            return formatBudgetNo;
         }
 
 

@@ -19,7 +19,7 @@ namespace eForms.Models.MasterData
         public class BudgetControlModels : DefaultFieldModel
         {
             public string id { get; set; }
-            public int budgetNo { get; set; }
+            public string budgetNo { get; set; }
             public string EO { get; set; }
             public string budgetGroupType { get; set; }
             public string customerId { get; set; }
@@ -35,13 +35,11 @@ namespace eForms.Models.MasterData
             public decimal? amount { get; set; }
             public decimal? balance { get; set; }
             public decimal? amountTotal { get; set; }
-            public decimal? amountTT { get; set; }
-            public decimal? amountCVM { get; set; }
-            public decimal? amountMT { get; set; }
-            public decimal? amountONT { get; set; }
-            public decimal? amountSSC { get; set; }
+            public decimal? totalChannel { get; set; }
+            public decimal? totalBG { get; set; }
             public string description { get; set; }
             public int LE { get; set; }
+            public decimal? reserve { get; set; }
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }
@@ -58,7 +56,6 @@ namespace eForms.Models.MasterData
             public string budgetId { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
-            public decimal? amount { get; set; }
             public string descripion { get; set; }
 
         }
