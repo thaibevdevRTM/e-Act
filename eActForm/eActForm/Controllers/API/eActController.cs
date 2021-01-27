@@ -701,20 +701,25 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
+                result.Success = false;
                 var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description;
                 var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
                 var getAmount = ActFormAppCode.getBalanceByEO(EO, companyId, getActTypeId, channelId, brandId);
-
-                var resultData = new
-                {        
-                    amountBalance =  getAmount.FirstOrDefault().amountTotal - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve,
-                    amountTotal = getAmount.FirstOrDefault().amountTotal,
-                    amountUseBalance = getAmount.FirstOrDefault().reserve - getAmount.FirstOrDefault().balance ,
-                    
-                };
-                result.Success = true;
-                result.Data = resultData;
+                
+                if (getAmount.Any())
+                {
+                    var resultData = new
+                    {
+                        amountBalance = getAmount.FirstOrDefault().amountTotal - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve,
+                        amountTotal = getAmount.FirstOrDefault().amountTotal,
+                        amountUseBalance = getAmount.FirstOrDefault().reserve - getAmount.FirstOrDefault().balance,
+                    };
+                    result.Data = resultData;
+                    result.Success = true;
+                }
+                
+               
+                
             }
             catch (Exception ex)
             {

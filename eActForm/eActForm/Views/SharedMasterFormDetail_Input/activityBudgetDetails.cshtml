@@ -244,17 +244,12 @@
                 dataType: "json",
                 type: 'POST'
             }).done(function (response) {
-                if (response.Success == true) {
 
-                    if (response.Data.amountBalance) {
-                        $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                    }
-                    if (response.Data.amountTotal > 0) {
-                        $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                    }
-                    if (response.Data.amountUseBalance > 0) {
-                        $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                    }
+                if (response.Success == true) {
+                    console.log(response.Data);
+                    $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                 }
                 else {
                     $("#amountBalance_" + row).text(0);
