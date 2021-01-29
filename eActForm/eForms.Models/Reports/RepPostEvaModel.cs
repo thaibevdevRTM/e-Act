@@ -9,7 +9,19 @@ namespace eForms.Models.Reports
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
         public List<RepPostEvaModel> repPostEvaTopLists { get; set; }
         public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
+        //public List<RepPostEvaModel> repPostEvaBudgetActivity { get; set; }
+
+        //public List<RepPostEvaModel> repPostEvaGroupActBudgetActive { get; set; }
     }
+
+
+    //public class RepPostEvaBudgetAct
+    //{
+    //    public double? countActApprove { get; set; }
+    //    public double? countBudgetActive { get; set; }
+    //    public double? countBudgetInactive { get; set; }
+    //}
+
 
     public class RepPostEvaGroup
     {
@@ -27,6 +39,11 @@ namespace eForms.Models.Reports
         public double? estimateSaleBathAll { get; set; }
         public double? total { get; set; }
         public double? actAmount { get; set; }
+
+        public double? countActApprove { get; set; }
+        public double? countBudgetActive { get; set; }
+        public double? countBudgetInactive { get; set; }
+
     }
     public class RepPostEvaModel
     {
@@ -90,5 +107,8 @@ namespace eForms.Models.Reports
         public string productGroupId { get; set; }
         public string productBrandId { get; set; }
 
+        public double? countActApprove { get; set; }
+        public double? countBudgetActive { get; set; }
+        public double? countBudgetInactive { get; set; }
     }
 }
