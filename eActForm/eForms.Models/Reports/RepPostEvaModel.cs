@@ -94,7 +94,20 @@ namespace eForms.Models.Reports
                 return obj == null || double.IsNaN(double.Parse(obj.ToString())) || double.IsInfinity(double.Parse(obj.ToString())) ? 0 : double.Parse(obj.ToString());
             }
         }
-        public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount == 0 ? 1 : actAmount / estimateSaleBathAll == 0 ? 1 : estimateSaleBathAll) * 100 : 0; } }
+        public double? accuracySaleBath 
+        { 
+            get 
+            {
+                double? activitySales_temp = 0.00;
+                if (activitySales == "Promotion Support")
+                {
+                    activitySales_temp = (actAmount / estimateSaleBathAll)*100;   
+                }
+                return activitySales_temp;
+                //return activitySales == "Promotion Support" ? (actAmount == 0 ? 1 : actAmount / estimateSaleBathAll == 0 ? 1 : estimateSaleBathAll) * 100 : 0; 
+            } 
+       
+        }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }
         public double? presentAcctual { get { return (saleActual / total) * 100; } }
