@@ -70,12 +70,9 @@
                                 </div>
                             </td>
                             <td colspan="4">
-                                <div>
-                                    งบทั้งหมด <label id="amountTotal_@index" type="text" class="txtamountTotal__@index"></label>&nbsp;
-                                    ยอดใช้ไป <label id="amountUseBalance_@index" type="text" class="txtamountUseBalance__@index"></label>&nbsp;
-                                    งบคงเหลือ <label id="amountBalance_@index" type="text" class="txtamountBalance__@index"></label>&nbsp;
-
-                                </div>
+                                <label type="text" class="amountTxt_@index"></label>&nbsp;
+                                <input type="hidden" id="activityOfEstimateList[@index].detail" name="activityOfEstimateList[@index].detail" class="form-control textboxcss HdAmountTxt_@index" />
+                               
                             </td>
 
                         </tr>
@@ -204,7 +201,6 @@
 
     $(document).ready(function () {
         getBudgetBalance();
-
     });
     function getBudgetBalance() {
         var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
@@ -247,14 +243,20 @@
 
                 if (response.Success == true) {
                     console.log(response.Data);
-                    $("#amountBalance_" + row).text(response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                    $("#amountTotal_" + row).text(response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                    $("#amountUseBalance_" + row).text(response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    var amonutBalance = response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    var total = response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    var useBalance = response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    var txt = 'งบทั้งหมด ' + total + ' ยอดใช้ไป ' + useBalance + ' งบคงเหลือ ' + amonutBalance;
+
+                    $(".amountTxt_" + row).text(txt);
+                    $(".HdAmountTxt_" + row).val(txt);
+                  
+                    hdAmountTxt_
                 }
                 else {
-                    $("#amountBalance_" + row).text(0);
-                    $("#amountTotal_" + row).text(0);
-                    $("#amountUseBalance_" + row).text(0);
+                    $(".amountTxt_" + row).text('');
+                    $(".HdAmountTxt_" + row).val('');
+
                 }
             });
        
