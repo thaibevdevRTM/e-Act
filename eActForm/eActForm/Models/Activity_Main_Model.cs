@@ -52,6 +52,7 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();

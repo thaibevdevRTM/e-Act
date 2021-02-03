@@ -2664,6 +2664,7 @@
     <Content Include="images\tbmmktLogo.png" />
     <Content Include="images\warning_error.png" />
     <Content Include="images\xlx.png" />
+    <Content Include="images\zip.ico" />
     <Content Include="Scripts\Admin\adminPage.js" />
     <Content Include="Scripts\Approve\RepDetailApproves.js" />
     <Content Include="Scripts\bootbox.all.js" />
@@ -3211,6 +3212,7 @@
     <Content Include="Views\ImportBudgetControl\Index.cshtml" />
     <Content Include="Views\partialActivityDetail\transferBudgetDetail.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\partialTransferList.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownCondtionBudgetControl.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

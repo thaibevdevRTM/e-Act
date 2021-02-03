@@ -232,6 +232,7 @@ namespace eActForm.Models
         public string contactEmail { get; set; }
         public string contactName { get; set; }
         public string contactTel { get; set; }
+        public Boolean chkAddDown { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

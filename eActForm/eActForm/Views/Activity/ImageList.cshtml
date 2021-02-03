@@ -35,6 +35,20 @@
                     </div>
                 </div>
             }
+            else if (item.extension.ToLower() == ".zip" || item.extension.ToLower() == ".rar")
+            {
+                <div class="col-md-2">
+                    <div>
+                        <div class="col-md-1 divDelImg">
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                        </div>
+                        <a href="@string.Format(url,item._fileName)" target="_blank"><img src="~/images/zip.ico" width="100px" height="100px" /></a>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = item._fileName ,type= @item.imageType , extension = item.extension})" target="_blank">@item._fileName</a>
+                    </div>
+                </div>
+            }
             else
             {
                 <div class="col-md-2">

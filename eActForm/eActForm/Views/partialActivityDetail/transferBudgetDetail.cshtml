@@ -9,137 +9,171 @@
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
-
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    วันที่เสนอ :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                วันที่เสนอ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"])
                  , new { @class = "form-control textRight datepicker textboxcss", Style = "text-align:center; width:200px;", autocomplete = "off" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    เบอร์โทรศัพท์ :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                เบอร์โทรศัพท์ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:200px;" })
             </div>
         </div>
-
     </div>
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12 pull-left">
-
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    ชื่อผู้เสนอ :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อผู้เสนอ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact", style = "width:200px;" })
 
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    เอกสารเลขที่  :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                เอกสารเลขที่ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo", @readonly = true })
             </div>
         </div>
-
     </div>
 
     <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-6 col-xs-12 pull-left">
-
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    สินค้า  :
-                </label>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                สินค้า : <span class="required">*</span>
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
             </div>
-            <div class="col-md-8 col-xs-12">
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อกิจกรรม<br />(งบประมาณเดิม) :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
 
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    BG  :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
-                @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtBudgetNumber" })
-            </div>
         </div>
     </div>
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
-
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    ชื่อกิจกรรม<br />(งบประมาณเดิม) :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
-
-            </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-right">
-                    EO  :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
-                @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtEO" })
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-6 col-xs-12">
-
-            <div class="col-md-4 col-xs-12">
-                <label class="control-label pull-left">
-                    ชื่อกิจกรรม<br/>(งบประมาณใหม่) :
-                </label>
-            </div>
-            <div class="col-md-8 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อกิจกรรม<br />(งบประมาณใหม่) :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", Style = "width:200px;", autocomplete = "off" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-
         </div>
     </div>
 
-
-    <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-12 col-xs-12">
-            <label class="control-label col-md-2 col-xs-12">
+    <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:50px;">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
                 วัตถุประสงค์ :
             </label>
+            <div class="col-md-8 col-sm-4 col-xs-12">
+                @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+            </div>
+        </div>
+    </div>
+</div>
+<hr size="8" width="90%" color="red">
 
-            <div class="col-md-10 col-xs-12">
-                <div class="row">
-                    @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
-                </div>
+<div class="col-md-12 col-xs-12 form-group">
+
+
+    <div class="col-md-12 col-xs-12">
+        <p class="lead">กรอกรายละเอียดงบประมาณ</p>
+    </div>
+
+    <div id="divgetdetailcost" class="col-lg-12">
+        @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group" style="margin-top:15px;">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                ขอลด
+            </label>
+
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                ขอเพิ่ม
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                EO :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtFromEO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtFromEO" })
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                EO :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtToEO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtToEO" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                IO :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtFromIO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtFromIO" })
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                IO :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtToIO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtToIO" })
             </div>
         </div>
     </div>
 
 </div>
+<div class="col-md-12 col-xs-12 form-group">
+    <div class="col-md-7 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            รายละเอียด  :
+        </label>
+        <div class="col-md-8 col-sm-9 col-xs-12">
+            @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+        </div>
+    </div>
+</div>
+
 
 
