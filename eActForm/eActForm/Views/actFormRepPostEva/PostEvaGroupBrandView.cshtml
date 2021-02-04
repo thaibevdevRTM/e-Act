@@ -22,7 +22,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:300px;">
+            <div class="x_content" style="height:280px;">
 
                 <canvas id="echartGroupBrandAndSpending"></canvas>
             </div>
@@ -31,7 +31,8 @@
     <div class="col-lg-6">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Group Sum Sales-In (MB)</h2>
+                <h2>Activity Summary</h2>
+                @*<h2>Group Sum Sales-In (MB) Activity Summary</h2>*@
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -42,9 +43,11 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:300px;">
+            <div class="x_content" style="height:280px;">
 
-                <canvas id="chartGroupSumSaleIn"></canvas>
+                @*<canvas id="chartGroupSumSaleIn"></canvas>*@
+
+                <canvas id="chartBudgetActive"></canvas>
 
             </div>
         </div>
@@ -56,7 +59,7 @@
 
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 hidden">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Compare estimate(case) and sales-in(case)</h2>
@@ -79,7 +82,7 @@
     </div>
 
 
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-3 col-sm-12 col-xs-12 hidden">
         <div>
             <div class="x_title">
                 <h2>Top 5 Summary SaleIn Case</h2>
@@ -130,12 +133,14 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
+                genMonthlyBudgetactivity(response);
                 genMonthlySpending(response);
                 genMonthlyCompareSEActual(response);
                 genMonthlyCompareActualExpend(response);
             },
         });
     }
+
 
     function genMonthlyCompareActualExpend(jsondata) {
         var labels = [];
@@ -176,11 +181,6 @@
 
         mybarChart.update();
     }
-
-
-
-
-
 
     function genMonthlyCompareSEActual(jsondata) {
         var labels = [];
@@ -223,10 +223,10 @@
     }
 
     function genMonthlySpending(jsondata) {
-
         var chart_plot_02_data = [];
         var chart_Spending_data = [];
         var labels = [];
+
         if ($('#chartCompare').length) {
             var ctxC = document.getElementById("chartCompare");
             var mybarChart = new Chart(ctxC, {
@@ -282,44 +282,10 @@
             mybarChart.data.datasets[0].data.push(e.sumSalesInCase);
             mybarChart.data.datasets[1].data.push(e.sumNormalCase);
             mybarChart.data.datasets[2].data.push(e.sumPromotionCase);
-
         })
 
         mybarChart.update();
-
-        var ctx = document.getElementById('chartGroupSumSaleIn').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Montly Summary',
-                    backgroundColor: [
-                        "#455C73",
-                        "#9B59B6",
-                        "#BDC3C7",
-                        "#26B99A",
-                        "#3498DB",
-                        "#3949AB",
-                        "#006064",
-                        "#827717",
-                        "#FF6F00"
-                    ],
-                    //borderColor: "rgba(255,99,132,1)",
-                    pointBorderColor: "#fff",
-                    pointBackgroundColor: "rgba(255,99,132,1)",
-                    pointBorderColor: "#fff",
-                    data: chart_plot_02_data,
-                   
-                }]
-            },
-            // Configuration options go here
-            otpions: {
-                legend: false,
-            },
-        });
-        //chart.update();
+       
 
         var ctx = document.getElementById('echartGroupBrandAndSpending').getContext('2d');
         var chart2 = new Chart(ctx, {
@@ -566,6 +532,124 @@
                 fontFamily: 'Arial, Verdana, sans-serif'
             }
         };
+    }
+
+    function genMonthlyBudgetactivity(jsondata) {
+
+        var chart_BudgetStatus_data = [];
+        var labels_chart_BudgetStatus = [];
+        var countBudgetActive = 0;
+        var countBudgetInactive = 0;
+        var chart_color = ["#f79707","#BDC3C7","#006064","#827717","#FF6F00"];
+
+        jsondata.forEach(function (e) {
+            countBudgetActive = e.countBudgetActive;
+            countBudgetInactive = e.countBudgetInactive;
+        })
+
+        labels_chart_BudgetStatus.push('อยู่ระหว่างทำกิจกรรม');
+        labels_chart_BudgetStatus.push('กิจกรรมที่เสร็จสิ้น');
+
+        chart_BudgetStatus_data.push(countBudgetActive);
+        chart_BudgetStatus_data.push(countBudgetInactive);
+
+
+        //----------------------------------------------------------------
+
+        var canvas = document.getElementById("chartBudgetActive");
+        var ctx = canvas.getContext('2d');
+
+        //Global Options:
+        //Chart.defaults.global.defaultFontColor = 'black';
+        //Chart.defaults.global.defaultFontSize = 14;
+
+        var data = {
+            labels: labels_chart_BudgetStatus,
+            datasets: [
+                {
+                    fill: true,
+                    data: chart_BudgetStatus_data,
+                    backgroundColor: chart_color,
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                }
+            ]
+        };
+
+        // Notice the rotation from the documentation.
+
+        var options = {
+            title: {
+                display: true,
+                text: 'Activity total ' + (countBudgetInactive + countBudgetActive) + ' (Active ' + countBudgetActive + ' InActive ' + countBudgetInactive + ')',
+                fontSize: 16,
+                position: 'top'
+            },
+            rotation: -0.7 * Math.PI
+        };
+
+
+        // Chart declaration:
+        var myBarChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+
+        //----------------------------------------------------------------
+
+
+
+
+        //var ctx = document.getElementById('chartBudgetActive').getContext('2d');
+
+        ////var chart = new Chart(ctx, {
+        ////    type: 'pie',
+        ////    data: {
+        ////        labels: ['Jan', 'Feb', 'Mar'],
+        ////        datasets: [{
+        ////            data: [30, 40, 25],
+        ////            backgroundColor: 'rgba(0,119, 220, 0.2)'
+        ////        }]
+        ////    },
+        ////    options: {
+        ////        pieceLabel: {
+        ////            render: 'value' //show values
+        ////        }
+        ////    }
+        ////});
+
+        //var chartBudget = new Chart(ctx, {
+        //    // The type of chart we want to create
+        //    type: 'pie',
+        //    data: {
+        //        labels: labels_chart_BudgetStatus,
+        //        datasets: [{
+        //            label: 'Activity Summary',
+        //            backgroundColor: [
+        //                "#f79707",
+        //                "#BDC3C7",
+        //                "#006064",
+        //                "#827717",
+        //                "#FF6F00"
+        //            ],
+        //            //borderColor: "rgba(255,99,132,1)",
+        //            pointBorderColor: "#fff",
+        //            pointBackgroundColor: "rgba(255,99,132,1)",
+        //            pointBorderColor: "#fff",
+        //            data: chart_BudgetStatus_data,
+
+        //        }]
+        //    },
+        //    // Configuration options go here
+        //    otpions: {
+        //        legend: true,
+        //        title: {display: true,text: 'Chart.js Line Chart'}
+        //    },
+        //});
+
+
 
 
     }

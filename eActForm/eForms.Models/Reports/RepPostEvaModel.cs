@@ -9,7 +9,19 @@ namespace eForms.Models.Reports
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
         public List<RepPostEvaModel> repPostEvaTopLists { get; set; }
         public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
+        //public List<RepPostEvaModel> repPostEvaBudgetActivity { get; set; }
+
+        //public List<RepPostEvaModel> repPostEvaGroupActBudgetActive { get; set; }
     }
+
+
+    //public class RepPostEvaBudgetAct
+    //{
+    //    public double? countActApprove { get; set; }
+    //    public double? countBudgetActive { get; set; }
+    //    public double? countBudgetInactive { get; set; }
+    //}
+
 
     public class RepPostEvaGroup
     {
@@ -27,6 +39,11 @@ namespace eForms.Models.Reports
         public double? estimateSaleBathAll { get; set; }
         public double? total { get; set; }
         public double? actAmount { get; set; }
+
+        public double? countActApprove { get; set; }
+        public double? countBudgetActive { get; set; }
+        public double? countBudgetInactive { get; set; }
+
     }
     public class RepPostEvaModel
     {
@@ -77,7 +94,20 @@ namespace eForms.Models.Reports
                 return obj == null || double.IsNaN(double.Parse(obj.ToString())) || double.IsInfinity(double.Parse(obj.ToString())) ? 0 : double.Parse(obj.ToString());
             }
         }
-        public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount == 0 ? 1 : actAmount / estimateSaleBathAll == 0 ? 1 : estimateSaleBathAll) * 100 : 0; } }
+        public double? accuracySaleBath 
+        { 
+            get 
+            {
+                double? activitySales_temp = 0.00;
+                if (activitySales == "Promotion Support")
+                {
+                    activitySales_temp = (actAmount / estimateSaleBathAll)*100;   
+                }
+                return activitySales_temp;
+                //return activitySales == "Promotion Support" ? (actAmount == 0 ? 1 : actAmount / estimateSaleBathAll == 0 ? 1 : estimateSaleBathAll) * 100 : 0; 
+            } 
+       
+        }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }
         public double? presentAcctual { get { return (saleActual / total) * 100; } }
@@ -90,5 +120,8 @@ namespace eForms.Models.Reports
         public string productGroupId { get; set; }
         public string productBrandId { get; set; }
 
+        public double? countActApprove { get; set; }
+        public double? countBudgetActive { get; set; }
+        public double? countBudgetInactive { get; set; }
     }
 }

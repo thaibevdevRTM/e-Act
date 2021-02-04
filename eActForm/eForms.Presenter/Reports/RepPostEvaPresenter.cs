@@ -10,6 +10,27 @@ namespace eForms.Presenter.Reports
 {
     public class RepPostEvaPresenter : BasePresenter
     {
+
+        //public static List<RepPostEvaBudgetAct> getPostEvaBudgetActivity(List<RepPostEvaModel> model)
+        //{
+        //    try
+        //    {
+        //        var list = model.GroupBy(x => x.countActApprove)
+        //                        .Select(cl => new RepPostEvaBudgetAct
+        //                        {
+        //                            countActApprove = cl.First().countActApprove,
+        //                            countBudgetActive = cl.First().countBudgetActive,
+        //                            countBudgetInactive = cl.First().countBudgetInactive,
+        //                        }).ToList();
+        //        return list;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("getPostEvaGroupByBrand >> " + ex.Message);
+        //    }
+        //}
+
         public static List<RepPostEvaGroup> getPostEvaGroupByBrand(List<RepPostEvaModel> model)
         {
             try
@@ -30,6 +51,10 @@ namespace eForms.Presenter.Reports
                                     estimateSaleBathAll = (cl.Sum(c => c.estimateSaleBathAll)),
                                     total = (cl.Sum(c => c.total)),
                                     actAmount = (cl.Sum(c => c.actAmount)),
+
+                                    countActApprove = cl.First().countActApprove,
+                                    countBudgetActive = cl.First().countBudgetActive,
+                                    countBudgetInactive = cl.First().countBudgetInactive,
 
                                 }).ToList();
                 return list;
@@ -68,6 +93,16 @@ namespace eForms.Presenter.Reports
                         brandName = group.First().brandName,
                         actReportQuantity = (group.Sum(c => c.actReportQuantity)),
                     }).OrderByDescending(x => x.actReportQuantity).Take(5).ToList();
+
+                //model.repPostEvaGroupActBudgetActive = model.repPostEvaLists.OrderByDescending(x => x.actReportQuantity).GroupBy(x => new { x.brandName })
+                //    .Select((group, index) => new RepPostEvaModel
+                //    {
+                //        countActApprove = group.First().countActApprove,
+                //        countBudgetActive = group.First().countBudgetActive,
+                //        countBudgetInactive = group.First().countBudgetInactive,
+                //    }).OrderByDescending(x => x.actReportQuantity).Take(1).ToList();
+
+
 
             }
             catch (Exception ex)
@@ -132,6 +167,11 @@ namespace eForms.Presenter.Reports
                                  productTypeId = dr["productTypeId"].ToString(),
                                  productGroupId = dr["productGroupId"].ToString(),
                                  productBrandId = dr["productBrandId"].ToString(),
+
+                                 countActApprove = dr["countActApprove"] is DBNull ? 0 : Convert.ToDouble(dr["countActApprove"].ToString()),
+                                 countBudgetActive = dr["countBudgetActive"] is DBNull ? 0 : Convert.ToDouble(dr["countBudgetActive"].ToString()),
+                                 countBudgetInactive = dr["countBudgetInactive"] is DBNull ? 0 : Convert.ToDouble(dr["countBudgetInactive"].ToString()),
+
                                  //presentToSale = dr["presentToSale"] is DBNull ? 0 : Convert.ToDouble(dr["presentToSale"].ToString()), 
                                  //bathParti = dr["bathParti"] is DBNull ? 0 : Convert.ToDouble(dr["bathParti"].ToString()),
                                  //presentToSaleParti = dr["presentToSaleParti"] is DBNull ? 0 : Convert.ToDouble(dr["presentToSaleParti"].ToString()),
