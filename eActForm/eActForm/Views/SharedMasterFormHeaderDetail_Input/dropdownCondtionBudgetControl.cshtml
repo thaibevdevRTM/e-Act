@@ -5,6 +5,7 @@
 
 
 <div class="row">
+    <div class="col-md-1"></div>
     <div class="col-md-2 col-xs-12">
         <div style="display:inline-block; width:100%">
             <label class="control-label" for="ddlChannelOrBrand">
@@ -33,10 +34,10 @@
                 &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
             </label>
             @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlChannel"
-            })
+             {
+                 @class = "form-control ",
+                 id = "ddlChannel"
+             })
         </div>
 
         <div id="divBrand" style="width: 100%">
@@ -78,10 +79,12 @@
         if ($("#ddlChannelOrBrand").val() == 'channel') {
             document.getElementById("divChannel").style.display = "block";
             document.getElementById("divBrand").style.display = "none";
+            $('#ddlBrand').val('');
         }
         else {
             document.getElementById("divBrand").style.display = "block";
             document.getElementById("divChannel").style.display = "none";
+            $('#ddlChannel').val('');
         }
 
         

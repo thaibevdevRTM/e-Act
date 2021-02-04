@@ -3,6 +3,11 @@
 @using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 
+<style>
+    .line {
+        border-bottom: 1px solid black;
+    }
+</style>
 <hr />
 
 <div class="col-md-12 col-xs-12">
@@ -41,7 +46,7 @@
                 เอกสารเลขที่ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo", @readonly = true })
+                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo" })
             </div>
         </div>
     </div>
@@ -100,8 +105,7 @@
 </div>
 <hr size="8" width="90%" color="red">
 
-<div class="col-md-12 col-xs-12 form-group">
-
+<div class="col-md-12 col-xs-12 form-group line">
 
     <div class="col-md-12 col-xs-12">
         <p class="lead">กรอกรายละเอียดงบประมาณ</p>
@@ -111,69 +115,159 @@
         @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
     </div>
 
-    <div class="col-md-12 col-xs-12 form-group" style="margin-top:15px;">
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-6 col-sm-6 col-xs-12">
-                ขอลด
-            </label>
+    <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
 
+        <fieldset class="border p-2">
+            <legend class="w-auto">ขอลด/ขอเพิ่ม</legend>
+        </fieldset>
+
+
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new List<SelectListItem>
+                  {
+                    new SelectListItem { Text = "EO", Value = "EO"},
+                    new SelectListItem { Text = "IO", Value = "IO"},
+                    new SelectListItem { Text = "BG", Value = "BG"},
+
+                 },
+                 new
+                 {
+                     @id = "ddlTypeBudget",
+                     @class = "form-control textboxcss"
+                 })
+            </div>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtBudgetNumber", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetNumber" })
+            </div>
         </div>
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-6 col-sm-6 col-xs-12">
-                ขอเพิ่ม
+
+        <div class="col-md-12 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ขอลด/ขอเพิ่ม :
             </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new List<SelectListItem>
+               {
+                 new SelectListItem { Text = "ลด", Value = "0"},
+                 new SelectListItem { Text = "เพิ่ม", Value = "1"},
+
+              },
+              new
+              {
+                  @class = "form-control textboxcss",
+                  @id = "ddlUpDown"
+              })
+            </div>
         </div>
+        <div class="col-md-12 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                งบประมาณเดิม :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtOldBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtOldBudget"})
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                เหลือ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetBalance" })
+            </div>
+        </div>
+
+
+
+
     </div>
+    <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
+        <fieldset class="border p-2">
+            <legend class="w-auto">โอนงบประมาณ</legend>
+        </fieldset>
+       
+        <div class="col-md-12 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                โอนงบประมาณเพิ่ม<br />(ลด) :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtTransferBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtTransferBudget" })
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                งบประมาณใหม่ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtNewBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtNewBudget" })
+            </div>
+        </div>
+
+    </div>
+
+
 
     <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">
-                EO :
+        <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                รายละเอียด  :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtFromEO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtFromEO" })
-            </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">
-                EO :
-            </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtToEO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtToEO" })
+                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
             </div>
         </div>
     </div>
+
 
     <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">
-                IO :
-            </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtFromIO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtFromIO" })
-            </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">
-                IO :
-            </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtToIO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtToIO" })
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="col-md-12 col-xs-12 form-group">
-    <div class="col-md-7 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-            รายละเอียด  :
-        </label>
-        <div class="col-md-8 col-sm-9 col-xs-12">
-            @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+        <div class="col-md-12 col-md-offset-5">
+            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addData();">Add</button>
         </div>
     </div>
 </div>
 
 
+<script type="text/javascript">
+    function addData() {
 
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+        if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+        if (validate != true) {
+            bootbox.alert(required);
+            return false;
+        }
+
+
+        $("#WaitDialog").show();
+         $.ajax({
+                url: '@Url.Action("addBudgetList", "ActivityProductDetail")',
+                data: {
+                     channelId: $("#ddlChannel").val(),
+                     brandId: $("#ddlBrand").val(),
+                     activityGroupId: $("#ddlActivityGroup").val(),
+                     typeBudget: $("#ddlTypeBudget").val(),
+                     budgetNumber: $("#txtBudgetNumber").val(),
+                     upDown: $("#ddlUpDown").val(),
+                     oldBudget: $("#txtOldBudget").val(),
+                     budgetBalance: $("#txtBudgetBalance").val(),
+                     transferBudget: $("#txtTransferBudget").val(),
+                     newBudget: $("#txtNewBudget").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+                 if (response.Data > 0) {
+
+                     rowCount = response.Data;
+                     CallChangefunc(response.ActivityId);
+                     callThemedetailcost(response.ActivityId);
+                 }
+                 else {
+                     bootbox.alert("ไม่พบ สินค้า!");
+                 }
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+</script>
