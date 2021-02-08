@@ -1,16 +1,27 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 
+<style>
+    table.fixed {
+        table-layout: fixed;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+</style>
+
 <div class="row">
     <div class="col-12">
         <p class="lead">รายละเอียดงบประมาณ</p>
     </div>
     <div class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
-        <table class="table table-striped jambo_table bulk_action fixed" id="tbl_productDetail" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+        <table class="table table-striped jambo_table bulk_action fixed" id="tbl_budgetControl" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
             <thead>
                 <tr class="headings" style="text-align:center;">
-                    <th width="50px" class="align-content-center font10"> ลำดับ </th>
-                    <th width="15%" class="align-content-center font10"> EO </th>
+                    <th width="50px" class="align-content-center font10"> </th>
+                    <th width="15%" class="align-content-center font10"> BudgetNumber </th>
+                    <th width="10%" class="align-content-center font10"> </th>
                     <th width="25%" class="align-content-center font10"> รายละเอียด </th>
                     <th width="15%" class="align-content-center font10"> งบประมาณเดิม </th>
                     <th width="15%" class="align-content-center font10"> เหลือ </th>
@@ -18,7 +29,41 @@
                     <th width="15%" class="align-content-center font10"> งบประมาณใหม่ </th>
                 </tr>
             </thead>
+            @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
+            {
+                <tbody id=first>
+                    <tr class="tagCountRowBudgetControl">
+                        <td>
+                            <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        </td>
+                        <td style="text-align:right" >
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].EO, new { @class = "form-control textboxcss font10 textRight clsEO_" + i, placeholder = "EO", autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].IO, new { @class = "form-control textboxcss font10 textRight clsIO_" + i, placeholder = "IO", autocomplete = "off" })
+                        </td>
+                        <td style="text-align:right" >
 
+                            @Html.DropDownListFor(x => x.activityOfEstimateList[i].hospId, new List<SelectListItem>
+                             {
+                                  new SelectListItem { Text = "ลด", Value = "0"},
+                                  new SelectListItem { Text = "เพิ่ม", Value = "1"},
+                             },
+                             new
+                             {
+                                  @class = "form-control textboxcss"
+                             })
+                        </td>
+                        <td style="text-align:right" >
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })
+                        </td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].normalCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsNormalCost_"+i, autocomplete = "off" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].themeCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].growth, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
+
+                    </tr>
+                </tbody>
+            }
         </table>
     </div>
 </div>
+

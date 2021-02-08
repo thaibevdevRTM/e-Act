@@ -313,7 +313,7 @@ namespace eActForm.Controllers
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
                                 
-                                if(ConfigurationManager.AppSettings["formBgTbmId"].Contains(model.FirstOrDefault().master_type_form_id))
+                                if(ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
                                      ActFormAppCode.insertReserveBudget(activityId);
                                 }

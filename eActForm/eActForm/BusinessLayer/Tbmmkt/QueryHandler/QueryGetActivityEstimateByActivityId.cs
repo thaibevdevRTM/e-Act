@@ -32,6 +32,8 @@ namespace eActForm.BusinessLayer
                                   unitPriceDisplayReport = "",//ปัจจุบันไม่ได้ใช้งานฟิลด์นี้ เก็บไว้เพื่ออยากเอาไปใช้อนาคต
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
+                                  growth = d["growth"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["growth"].ToString())),
+                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["themeCost"].ToString())),
                                   IO = d["IO"].ToString(),
                                   QtyName = d["QtyName"].ToString(),
                                   remark = d["remark"].ToString(),

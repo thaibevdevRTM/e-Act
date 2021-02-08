@@ -42,7 +42,8 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formTrvTbmId"],
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
-            
+            ConfigurationManager.AppSettings["formTransferbudget"],
+
         };
 
         public static string[] checkDocHC =

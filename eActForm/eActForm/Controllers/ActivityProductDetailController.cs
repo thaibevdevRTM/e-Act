@@ -151,34 +151,6 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addBudgetList(
-             string channelId
-           , string brandId
-           , string activityGroupId
-           , string typeBudget
-           , string budgetNumber
-           , string upDown
-           , string oldBudget
-           , string budgetBalance
-           , string transferBudget
-           , string newBudget)
-        {
-            var result = new AjaxResult();
-            try
-            {
-              
-               
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("addItemProduct >> " + ex.Message);
-                result.Success = false;
-                result.Message = ex.Message;
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-
 
         public bool calProductDetail(ProductCostOfGroupByPrice model)
         {

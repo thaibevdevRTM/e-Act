@@ -71,7 +71,7 @@
                 ชื่อกิจกรรม<br />(งบประมาณเดิม) :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
 
             </div>
         </div>
@@ -85,7 +85,7 @@
                 ชื่อกิจกรรม<br />(งบประมาณใหม่) :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", Style = "width:200px;", autocomplete = "off" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", Style = "width:200px;", autocomplete = "off" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -111,9 +111,9 @@
         <p class="lead">กรอกรายละเอียดงบประมาณ</p>
     </div>
 
-    <div id="divgetdetailcost" class="col-lg-12">
-        @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
-    </div>
+    @*<div id="divgetdetailcost" class="col-lg-12">
+            @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
+        </div>*@
 
     <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
 
@@ -123,22 +123,23 @@
 
 
         <div class="col-md-12 col-xs-12">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new List<SelectListItem>
-                  {
-                    new SelectListItem { Text = "EO", Value = "EO"},
-                    new SelectListItem { Text = "IO", Value = "IO"},
-                    new SelectListItem { Text = "BG", Value = "BG"},
 
-                 },
-                 new
-                 {
-                     @id = "ddlTypeBudget",
-                     @class = "form-control textboxcss"
-                 })
-            </div>
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                EO :
+            </label>
+
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtBudgetNumber", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetNumber" })
+                @Html.TextBox("txtBudgetEO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetEO", onchange = "getBudgetEOIO();" })
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                IO :
+            </label>
+
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("txtBudgetIO", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetIO", onchange = "getBudgetEOIO();" })
             </div>
         </div>
 
@@ -147,7 +148,7 @@
                 ขอลด/ขอเพิ่ม :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new List<SelectListItem>
+                @Html.DropDownList("ddlUpDown", new List<SelectListItem>
                {
                  new SelectListItem { Text = "ลด", Value = "0"},
                  new SelectListItem { Text = "เพิ่ม", Value = "1"},
@@ -156,7 +157,8 @@
               new
               {
                   @class = "form-control textboxcss",
-                  @id = "ddlUpDown"
+                  @id = "ddlUpDown",
+                  onchange = "getCalBudget();"
               })
             </div>
         </div>
@@ -165,7 +167,7 @@
                 งบประมาณเดิม :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtOldBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtOldBudget"})
+                @Html.TextBox("txtOldBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtOldBudget",@readonly = "true" })
             </div>
         </div>
         <div class="col-md-12 col-xs-12">
@@ -173,7 +175,7 @@
                 เหลือ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetBalance" })
+                @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtBudgetBalance", @readonly = "true" })
             </div>
         </div>
 
@@ -185,13 +187,13 @@
         <fieldset class="border p-2">
             <legend class="w-auto">โอนงบประมาณ</legend>
         </fieldset>
-       
+
         <div class="col-md-12 col-xs-12">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
                 โอนงบประมาณเพิ่ม<br />(ลด) :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtTransferBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtTransferBudget" })
+                @Html.TextBox("txtTransferBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
             </div>
         </div>
         <div class="col-md-12 col-xs-12">
@@ -199,7 +201,7 @@
                 งบประมาณใหม่ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("txtNewBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtNewBudget" })
+                @Html.TextBox("txtNewBudget", "", new { @class = "form-control textboxcss", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
             </div>
         </div>
 
@@ -221,53 +223,121 @@
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-12 col-md-offset-5">
-            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addData();">Add</button>
+            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRow();">Add</button>
         </div>
     </div>
 </div>
 
 
 <script type="text/javascript">
-    function addData() {
+    $(function () {
+        $(".datepicker").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
 
-        var required = "กรุณา ระบุ :<br>";
-        var validate = true;
-        if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
-        if (validate != true) {
-            bootbox.alert(required);
-            return false;
+    function getCalBudget() {
+
+        var oldBG = $("#txtOldBudget").val().replace(",", "");
+        var TransferBudget = $("#txtTransferBudget").val();
+        if ($("#ddlUpDown").val() == "0") {
+            var result = parseFloat(oldBG) - parseFloat(TransferBudget);
+            $("#txtNewBudget").val(result.toString());
+        }
+        else {
+            var result = parseFloat(oldBG) + parseFloat(TransferBudget);
+            $("#txtNewBudget").val(result.toString());
         }
 
+    }
 
-        $("#WaitDialog").show();
-         $.ajax({
-                url: '@Url.Action("addBudgetList", "ActivityProductDetail")',
+    function cashDelete(btn) {
+        var rowIndex = $(btn).closest('tr').index();
+        console.log(rowIndex);
+        if (rowIndex > 0) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    }
+
+     function getBudgetEOIO() {
+
+         var required = "กรุณา ระบุ :<br>";
+         var validate = true;
+         if ($("#txtBudgetEO").val() == '') { required += "EO*<br>"; validate = false; }
+         if ($("#txtBudgetIO").val() == '') { required += "IO*<br>"; validate = false; }
+         if (validate != true) {
+             bootbox.alert(required);
+             return false;
+         }
+
+       $.ajax({
+                url: '@Url.Action("getBudgetBalanceByEOIO", "TransferBudget")',
                 data: {
-                     channelId: $("#ddlChannel").val(),
-                     brandId: $("#ddlBrand").val(),
-                     activityGroupId: $("#ddlActivityGroup").val(),
-                     typeBudget: $("#ddlTypeBudget").val(),
-                     budgetNumber: $("#txtBudgetNumber").val(),
-                     upDown: $("#ddlUpDown").val(),
-                     oldBudget: $("#txtOldBudget").val(),
-                     budgetBalance: $("#txtBudgetBalance").val(),
-                     transferBudget: $("#txtTransferBudget").val(),
-                     newBudget: $("#txtNewBudget").val(),
+                    EO: $("#txtBudgetEO").val(),
+                    IO: $("#txtBudgetIO").val(),
                 },
                 dataType: "json",
                 type: 'POST',
-             success: function (response) {
-                 if (response.Data > 0) {
-
-                     rowCount = response.Data;
-                     CallChangefunc(response.ActivityId);
-                     callThemedetailcost(response.ActivityId);
+           success: function (response) {
+               console.log(response.Data);
+               if (response.Data != null) {
+                   $("#txtOldBudget").val(response.Data.budgetPrice);
+                   $("#txtBudgetBalance").val(response.Data.paymentBlance);
                  }
-                 else {
-                     bootbox.alert("ไม่พบ สินค้า!");
+               else {
+                   $("#txtOldBudget").val('');
+                   $("#txtBudgetBalance").val('');
+                     bootbox.alert("ไม่พบ ข้อมูล!");
                  }
                  $("#WaitDialog").hide();
              }
          });
     }
+
+
+    function addRow() {
+        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        if (RowCount == 0 && $("#activityOfEstimateList_0__EO").val() == '') {
+            $("#activityOfEstimateList_0__EO").val($("#txtBudgetEO").val());
+            $("#activityOfEstimateList_0__IO").val($("#txtBudgetIO").val());
+            $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown").val());
+            $("#activityOfEstimateList_0__remark").val($("#txtremark").val());
+            $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget").val());
+            $("#activityOfEstimateList_0__themeCost").val($("#txtBudgetBalance").val());
+            $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget").val());
+            $("#activityOfEstimateList_0__total").val($("#txtNewBudget").val());
+        }
+        else {
+            console.log(RowCount);
+            RowCount = RowCount + 1;
+            var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
+
+            $("#tbl_budgetControl > tbody:first").append(newRow);
+            newRow.find("input").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+            newRow.find("select").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+            
+            newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
+
+            $("#activityOfEstimateList_" + RowCount +"__EO").val($("#txtBudgetEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__IO").val($("#txtBudgetIO").val());
+            $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown").val());
+            $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark").val());
+            $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val());
+            $("#activityOfEstimateList_" + RowCount + "__themeCost").val($("#txtBudgetBalance").val());
+            $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget").val());
+            $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val());
+        }
+    }
+
+
+
 </script>

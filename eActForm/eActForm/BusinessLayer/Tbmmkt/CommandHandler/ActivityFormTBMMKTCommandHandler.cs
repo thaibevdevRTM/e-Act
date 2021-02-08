@@ -115,6 +115,8 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.total = item.total == null ? 0 : item.total;
                 costThemeDetail.totalCase = item.totalCase == null ? 0 : item.totalCase;
                 costThemeDetail.normalCost = item.normalCost == null ? 0 : item.normalCost;
+                costThemeDetail.growth = item.growth == null ? 0 : item.growth;
+                costThemeDetail.themeCost = item.themeCost == null ? 0 : item.themeCost;
                 costThemeDetail.IO = item.IO;
                 costThemeDetail.rowNo = insertIndex;
                 costThemeDetail.delFlag = false;
@@ -1234,6 +1236,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@normalCost",decimal.Parse(string.Format("{0:0.00000}", model.normalCost)))
                     ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
                     ,new SqlParameter("@totalCase",decimal.Parse(string.Format("{0:0.00000}", model.totalCase)))
+                    ,new SqlParameter("@themeCost",decimal.Parse(string.Format("{0:0.00000}", model.themeCost)))
+                    ,new SqlParameter("@growth",decimal.Parse(string.Format("{0:0.00000}", model.growth)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
