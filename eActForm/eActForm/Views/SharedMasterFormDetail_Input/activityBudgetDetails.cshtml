@@ -69,9 +69,11 @@
                                 </div>
                             </td>
                             <td colspan="4">
-                                <label type="text" class="amountTxt_@index"></label>&nbsp;
+                                <label type="text" class="amountTxt_@index"></label>&nbsp;<br />
+                                <label type="text" class="amountTotalTxt_@index"></label>
                                 <input type="hidden" id="activityOfEstimateList[@index].detail" name="activityOfEstimateList[@index].detail" class="form-control textboxcss HdAmountTxt_@index" />
-                               
+                                <input type="hidden" id="activityOfEstimateList[@index].remark" name="activityOfEstimateList[@index].remark" class="form-control textboxcss HdAmountTotalTxt_@index" />
+
                             </td>
 
                         </tr>
@@ -96,7 +98,7 @@
 
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
-                                <script>
+                            <script>
                          $(".txtUnit_@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
@@ -109,12 +111,13 @@
                             }
                              v_totalRow = (v_unitRow * v_unitpriceRow);
 
+
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-
+                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                             getEO(@index);
                              sumall();
-                        });
-
+                         });
+                              
                         $(".txtunitPriceDisplay__@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
@@ -129,11 +132,12 @@
 
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            getEO(@index);
                             sumall();
                         });
 
 
-                                </script>
+                            </script>
                             </td>
                         </tr>
                         index++;
@@ -242,24 +246,36 @@
             }).done(function (response) {
 
                 if (response.Success == true) {
-                    console.log(response.Data);
-                    var amonutBalance = response.Data.amountBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    var total = response.Data.amountTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    var useBalance = response.Data.amountUseBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    var txt = 'งบทั้งหมด ' + total + ' ยอดใช้ไป ' + useBalance + ' งบคงเหลือ ' + amonutBalance;
 
+                    var amonutBalance = response.Data.amountBalance;
+                    var total = response.Data.amountTotal;
+                    var useBalance = response.Data.amountUseBalance;
+                    var amountEvent = response.Data.amountEvent;
+                    if (@Model.activityFormTBMMKT.statusId == 1 || @Model.activityFormTBMMKT.statusId == 5) {
+                        var getInputAmount = $(".txttotal_" + row).val().replaceAll(",", "");
+                        if (getInputAmount == '') { getInputAmount = 0.0 }
+                        useBalance = useBalance + parseFloat(getInputAmount);
+                        amonutBalance = amonutBalance - parseFloat(getInputAmount);
+                        total = total - parseFloat(getInputAmount);
+                    }
+                    var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                    var txtTotal = 'ยอดรวม ' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     $(".amountTxt_" + row).text(txt);
+                    $(".amountTotalTxt_" + row).text(txtTotal);
+                    
                     $(".HdAmountTxt_" + row).val(txt);
-                  
-                    hdAmountTxt_
+                    $(".HdAmountTotalTxt_" + row).val(txtTotal);
+
                 }
                 else {
                     $(".amountTxt_" + row).text('');
                     $(".HdAmountTxt_" + row).val('');
+                    $(".HdAmountTotalTxt_" + row).val('');
+                    $(".amountTotalTxt_" + row).text('');
 
                 }
             });
-       
+
     }
 
 

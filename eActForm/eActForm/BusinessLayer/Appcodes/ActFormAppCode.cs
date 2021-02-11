@@ -556,6 +556,7 @@ namespace eActForm.BusinessLayer
                                  balance = dr["balance"] is DBNull ? 0 : (decimal?)dr["balance"],
                                  reserve = dr["reserve"] is DBNull ? 0 : (decimal?)dr["reserve"],
                                  amountTotal = dr["amountTotal"] is DBNull ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = dr["amountEvent"] is DBNull ? 0 : (decimal?)dr["amountEvent"],
                                  EO = dr["EO"].ToString(),
                                  LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
                              }).ToList();

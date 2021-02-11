@@ -1075,7 +1075,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@empId", model.empId)
                     ,new SqlParameter("@productCateId", model.productCateId)
                     ,new SqlParameter("@productGroupId", model.productGroupId)
-                    ,new SqlParameter("@brandId", model.productBrandId)
+                    ,new SqlParameter("@brandId", model.BrandlId)
                     ,new SqlParameter("@theme", model.theme)
                     ,new SqlParameter("@trade", model.trade)
 

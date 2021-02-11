@@ -14,6 +14,7 @@ namespace eActForm.Controllers
         // GET: partialTransferListDetail
         public ActionResult partialTransferList(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
             {
                 activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());

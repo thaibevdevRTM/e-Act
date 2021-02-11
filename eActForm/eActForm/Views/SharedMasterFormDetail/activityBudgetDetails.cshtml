@@ -1,4 +1,9 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+    <style>
+        .size12{
+            font-size:14px;
+        }
+    </style>
 <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
     <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -14,14 +19,15 @@
             if (item.productDetail != "")
             {
                 <tr>
-                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;" rowspan="2">
+                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;" class="size12" rowspan="2">
                         @item.IO
                     </td>
-                    <td style="width: 40%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;" rowspan="2">
+                    <td style="width: 40%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;" class="size12" rowspan="2">
                         @item.productDetail
                     </td>
-                    <td colspan="3" style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                        @item.detail
+                    <td colspan="3" style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;" class="size12">
+                        @item.detail<br />
+                        @item.remark
                     </td>
                 </tr>
                 <tr>
