@@ -1,0 +1,110 @@
+﻿
+
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<style>
+    .cssborderbottom {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: gray;
+    }
+
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font11 {
+        font-size: 11px;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .line-breaks {
+        white-space: pre-line;
+    }
+</style>
+
+<div>
+    <table style="width:100%; margin-top:30px;">
+        <tr>
+            <td width="140px;" class="fontDocSmall">
+                วันที่เสนอ :
+            </td>
+            <td width="260px;" style="margin-left:10px;">
+               @Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy")
+            </td>
+            <td width="20px;"></td>
+            <td class="fontDocSmall" width="150px;">เบอร์โทรศัพท์ :</td>
+            <td class="cssborderbottom fontDocSmall" width="160px;"> @*@Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityTel)*@ </td>
+        </tr>
+        <tr>
+            <td class="fontDocSmall">
+                ชื่อผู้เสนอ :
+            </td>
+            <td class="fontDocSmall">
+               @* @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.toContact)*@
+            </td>
+            <td></td>
+            <td class="fontDocSmall">
+                เอกสารเลขที่ :
+            </td>
+            <td class="fontDocSmall">
+                @*@Html.DisplayFor(item => item.activityFormModel.activityNo)*@
+            </td>
+        </tr>
+        <tr>
+            <td class="fontDocSmall">
+                สินค้า :
+            </td>
+            <td class="fontDocSmall">
+                @*@Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityProduct)*@
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="fontDocSmall">
+                ชื่อกิจกรรม(งบประมาณเดิม) :
+            </td>
+            <td class="fontDocSmall">
+                @*@Html.DisplayFor(item => item.activityFormTBMMKT.activityName)*@
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="fontDocSmall">
+                ชื่อกิจกรรม(งบประมาณใหม่) :
+            </td>
+            <td class="fontDocSmall">
+               @* @Html.DisplayFor(item => item.activityFormTBMMKT.activityDetail)*@
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="fontDocSmall">
+                วัตถุประสงค์ :
+            </td>
+            <td class="fontDocSmall">
+               @* @Html.DisplayFor(item => item.activityFormTBMMKT.objective)*@
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+</div>
+

@@ -52,6 +52,10 @@ namespace eActForm.BusinessLayer
                                   UseYearSelect = d["UseYearSelect"].ToString(),
                                   EO = d["EO"].ToString(),
                                   rowNo = Convert.ToInt32(d["rowNo"].ToString()),
+                                  LE = d["LE"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["LE"].ToString())),
+                                  perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["perTotal"].ToString())),
+                                  totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalCase"].ToString())),
+                                  
                               });
 
                 return result.ToList();

@@ -139,6 +139,8 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.UseYearSelect = item.UseYearSelect == null ? "" : item.UseYearSelect;
                 costThemeDetail.EO = item.EO == null ? "" : item.EO;
                 costThemeDetail.vat = item.vat == null ? 0 : item.vat;
+                costThemeDetail.LE = item.LE == null ? 0 : item.LE;
+                costThemeDetail.perTotal = item.perTotal == null ? 0 : item.perTotal;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -1258,6 +1260,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@UseYearSelect",model.UseYearSelect)
                     ,new SqlParameter("@EO",model.EO)
                     ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
+                    ,new SqlParameter("@le",decimal.Parse(string.Format("{0:0.00000}", model.LE)))
+                    ,new SqlParameter("@perTotal",decimal.Parse(string.Format("{0:0.00000}", model.perTotal)))
                     });
             }
             catch (Exception ex)
