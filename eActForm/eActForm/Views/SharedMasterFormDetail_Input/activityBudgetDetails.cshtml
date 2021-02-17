@@ -3,6 +3,13 @@
 <table style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td style="width: 100%;text-align:right;">
+
+            <div>
+                <label type="text" id="txtEO" class="txtEO"></label>
+                <label type="text" id="amountTxt" class="amountTxt"></label>&nbsp;<br />
+                <label type="text" id="amountTotalTxt" class="amountTotalTxt"></label>
+            </div>
+
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -252,49 +259,61 @@
                     var useBalance = response.Data.amountUseBalance;
                     var amountEvent = response.Data.amountEvent;
 
-
-                    console.log($(".HdAmonutBalance_" + row).val());
-                       //ดึงยอดจาก hiden กรณี total ยอด
-                       var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
-                       for (i = 0; i < rowCount; i++) {
-                           if ($(".clstxtEO_" + i).val() == $(".clstxtEO_" + row).val() && i != row) {
-                               
-                               amonutBalance = $(".HdAmonutBalance_" + i).val();
-                               useBalance = $(".hdUseBalance_" + i).val();
-                               total = $(".hdTotalBG_" + i).val();
-                               console.log('ttt' + amonutBalance + 'tt' + useBalance);
-                           }
-                       }
-
-                   
-                        var getInputAmount = $(".txttotal_" + row).val().replaceAll(",", "");
-                        if (getInputAmount == '') { getInputAmount = 0.0 }
-                        useBalance = parseFloat(useBalance) + parseFloat(getInputAmount);
-                        amonutBalance = parseFloat(amonutBalance) - parseFloat(getInputAmount);
-                        total = total - parseFloat(getInputAmount);
                     
+                    //useBalance = parseFloat(useBalance) + parseFloat(getInputAmount);
+                    //amonutBalance = parseFloat(amonutBalance) - parseFloat(getInputAmount);
+                    //total = total - parseFloat(getInputAmount);
+                    
+                    //$(".HdAmonutBalance_" + row).val(amonutBalance);
+                    //$(".hdUseBalance_" + row).val(useBalance);
+                    //$(".hdTotalBG_" + row).val(total);
 
 
-                    $(".HdAmonutBalance_" + row).val(amonutBalance);
-                    $(".hdUseBalance_" + row).val(useBalance);
-                    $(".hdTotalBG_" + row).val(total);
+                    //sum ยอด EO
+                    var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
+                    for (i = 0; i < rowCount; i++) {
+                        
+                        //var getInputAmount = $(".txttotal_" + i).val().replaceAll(",", "");
+                        //if (getInputAmount == '') { getInputAmount = 0.0 }
+
+                        //useBalance += parseFloat(getInputAmount);
+                        //console.log(useBalance);
+
+                        for (ii = 0; ii < rowCount; ii++) {
+
+
+
+                            if ($(".clstxtEO_" + i).val() == $(".clstxtEO_" + ii).val() && i != ii) {
+
+                                var getInputAmount = $(".txttotal_" + i).val().replaceAll(",", "");
+                                if (getInputAmount == '') { getInputAmount = 0.0 }
+
+                                useBalance += parseFloat(getInputAmount);
+                             //   amonutBalance = parseFloat($(".HdAmonutBalance_" + i).val());
+                                 // total = parseFloat($(".hdTotalBG_" + i).val());
+                                console.log(useBalance);
+                            }
+                        }
+                    }
+
+
 
                     var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 
-                    if (document.getElementById("ddlBrand").value != '') {
-                        var txtTotal = 'ยอดรวม ' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                        $(".amountTotalTxt_" + row).text(txtTotal);
-                        $(".HdAmountTotalTxt_" + row).val(txtTotal);
-                    }
-                    $(".amountTxt_" + row).text(txt);
-                    $(".HdAmountTxt_" + row).val(txt);
+                    //if (document.getElementById("ddlBrand").value != '') {
+                    //    var txtTotal = 'ยอดรวม ' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    //    $(".amountTotalTxt_" + row).text(txtTotal);
+                    //    $(".HdAmountTotalTxt_" + row).val(txtTotal);
+                    //}
+                    //$(".amountTxt_" + row).text(txt);
+                    //$(".HdAmountTxt_" + row).val(txt);
 
                 }
                 else {
-                    $(".amountTxt_" + row).text('');
-                    $(".amountTotalTxt_" + row).text('');
-                    $(".HdAmountTxt_" + row).val('');
-                    $(".HdAmountTotalTxt_" + row).val('');
+                    //$(".amountTxt_" + row).text('');
+                    //$(".amountTotalTxt_" + row).text('');
+                    //$(".HdAmountTxt_" + row).val('');
+                    //$(".HdAmountTotalTxt_" + row).val('');
                 }
             });
 
