@@ -15,7 +15,7 @@
             {
                new SelectListItem { Text = "Brand", Value = "brand"},
                new SelectListItem { Text = "Channel", Value = "channel"},
-               
+
             },
             new
             {
@@ -26,32 +26,31 @@
         </div>
     </div>
 
+    <div id="divBrand" class="col-md-3 col-xs-12">
 
-
-    <div class="col-md-3 col-xs-12">
-        <div id="divChannel" style="display:none; width:100%">
-            <label class="control-label" for="ddlChannel">
-                &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
-            </label>
-            @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
-             {
-                 @class = "form-control ",
-                 id = "ddlChannel"
-             })
-        </div>
-
-        <div id="divBrand" style="width: 100%">
-            <label class="control-label" for="ddlBrand">
-                &nbsp;Brand<span class="required">&nbsp;:&nbsp;</span>
-            </label>
-            @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlBrand"
-            })
-        </div>
-
+        <label class="control-label" for="ddlBrand">
+            &nbsp;Brand<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+        {
+            @class = "form-control ",
+            id = "ddlBrand"
+        })
     </div>
+
+    <div id="divChannel" style="display:none;" class="col-md-3 col-xs-12">
+
+        <label class="control-label" for="ddlChannel">
+            &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+         {
+             @class = "form-control ",
+             id = "ddlChannel"
+         })
+    </div>
+
+
 
 
     <div class="col-md-3 col-xs-12">
@@ -78,7 +77,7 @@
 
         if ($("#ddlChannelOrBrand").val() == 'channel') {
             document.getElementById("divChannel").style.display = "block";
-            document.getElementById("divBrand").style.display = "none";
+            document.getElementById("divBrand").style.display = "block";
             $('#ddlBrand').val('');
         }
         else {
@@ -87,6 +86,6 @@
             $('#ddlChannel').val('');
         }
 
-        
+
     }
 </script>
