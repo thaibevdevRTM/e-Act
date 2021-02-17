@@ -270,9 +270,11 @@
 
 
                     //sum ยอด EO
+
+                   
                     var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
                     for (i = 0; i < rowCount; i++) {
-                        
+                        useBalance = 0;
                         //var getInputAmount = $(".txttotal_" + i).val().replaceAll(",", "");
                         //if (getInputAmount == '') { getInputAmount = 0.0 }
 
@@ -283,13 +285,14 @@
 
 
 
-                            if ($(".clstxtEO_" + i).val() == $(".clstxtEO_" + ii).val() && i != ii) {
+                            if ($(".clstxtEO_" + i).val() == $(".clstxtEO_" + ii).val()) {
 
-                                var getInputAmount = $(".txttotal_" + i).val().replaceAll(",", "");
+
+                                var getInputAmount = $(".txttotal_" + ii).val().replaceAll(",", "");
                                 if (getInputAmount == '') { getInputAmount = 0.0 }
 
                                 useBalance += parseFloat(getInputAmount);
-                             //   amonutBalance = parseFloat($(".HdAmonutBalance_" + i).val());
+                                 //amonutBalance = parseFloat($(".HdAmonutBalance_" + i).val());
                                  // total = parseFloat($(".hdTotalBG_" + i).val());
                                 console.log(useBalance);
                             }
