@@ -3,6 +3,7 @@ using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -696,16 +697,28 @@ namespace eActForm.Controllers
             }
         }
 
-        public JsonResult getBudgetByEO(string EO, string companyId,string subjectId,string channelId,string brandId)
+        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId)
         {
             var result = new AjaxResult();
             try
             {
+                var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
+                var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new budgetTotal
+                {
+                    EO = group.First().EO,
+                    total = group.Sum(c => c.total),
+                }).ToList();
+
+
                 result.Success = false;
                 var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description;
-                var getActTypeId =  QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
-                var getAmount = ActFormAppCode.getBalanceByEO(EO, companyId, getActTypeId, channelId, brandId);
-                
+                var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
+
+
+                var getAmount = ActFormAppCode.getBalanceByEO("", companyId, getActTypeId, channelId, brandId);
+
+
+
                 if (getAmount.Any())
                 {
                     var resultData = new
@@ -718,9 +731,9 @@ namespace eActForm.Controllers
                     result.Data = resultData;
                     result.Success = true;
                 }
-                
-               
-                
+
+
+
             }
             catch (Exception ex)
             {

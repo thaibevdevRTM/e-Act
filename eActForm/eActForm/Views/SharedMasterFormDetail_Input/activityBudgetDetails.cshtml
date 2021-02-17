@@ -3,13 +3,6 @@
 <table style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td style="width: 100%;text-align:right;">
-
-            <div>
-                <label type="text" id="txtEO" class="txtEO"></label>
-                <label type="text" id="amountTxt" class="amountTxt"></label>&nbsp;<br />
-                <label type="text" id="amountTotalTxt" class="amountTotalTxt"></label>
-            </div>
-
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -27,7 +20,7 @@
                     @foreach (var item in Model.activityOfEstimateList)
                     {
                         <tr class="tagCountRowinTable">
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;" rowspan="2">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
@@ -47,18 +40,16 @@
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
                                 </td>*@
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="2">
-                                <div>
-                                    <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
-                                </div>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div style="display:inline-block;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" onchange="processGetEO(@index);" />
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
                                     <script>
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
                                         });
                                     </script>
                                 </div>
+
                                 <div style="display:inline-block;">
                                     @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                                     {
@@ -74,23 +65,15 @@
                                         });
                                     </script>
                                 </div>
-                            </td>
-                            <td colspan="4">
-                                <label type="text" class="amountTxt_@index"></label>&nbsp;<br />
-                                <label type="text" class="amountTotalTxt_@index"></label>
-                                <input type="hidden" id="activityOfEstimateList[@index].detail" name="activityOfEstimateList[@index].detail" class="form-control textboxcss HdAmountTxt_@index" />
-                                <input type="hidden" id="activityOfEstimateList[@index].remark" name="activityOfEstimateList[@index].remark" class="form-control textboxcss HdAmountTotalTxt_@index" />
-                                <input type="hidden" value="@item.LE" id="activityOfEstimateList[@index].LE" name="activityOfEstimateList[@index].LE" class="form-control textboxcss HdAmonutBalance_@index" />
-                                <input type="hidden" value="@item.perTotal" id="activityOfEstimateList[@index].perTotal" name="activityOfEstimateList[@index].perTotal" class="form-control textboxcss hdUseBalance_@index" />
-                                <input type="hidden" value="@item.totalCase" id="activityOfEstimateList[@index].totalCase" name="activityOfEstimateList[@index].totalCase" class="form-control textboxcss hdTotalBG_@index" />
-                            </td>
-                        </tr>
-                        <tr>
+                                <div>
+                                    <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
+                                </div>
 
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="1">
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
                             </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;" rowspan="1">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss txtUnit_@index" />
                                 <script>
                                     $(".txtUnit_@index").blur(function () {
@@ -99,14 +82,12 @@
                                 </script>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
                                 @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
-                            <script>
+                                <script>
                          $(".txtUnit_@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
@@ -119,13 +100,12 @@
                             }
                              v_totalRow = (v_unitRow * v_unitpriceRow);
 
-
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                             getEO(@index);
+                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                             onChangeRow();
                              sumall();
-                         });
-                              
+                        });
+
                         $(".txtunitPriceDisplay__@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
@@ -140,12 +120,12 @@
 
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            getEO(@index);
+                            getEO();
                             sumall();
                         });
 
 
-                            </script>
+                                </script>
                             </td>
                         </tr>
                         index++;
@@ -210,20 +190,6 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        getBudgetBalance();
-    });
-    function getBudgetBalance() {
-        var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
-        for (i = 0; i < rowCount; i++) {
-            getEO(i);
-        }
-    }
-
-    $("#ddlSubject").change(function () {
-        getBudgetBalance();
-    });
-
 
     function processGetEO(row) {
 
@@ -236,89 +202,51 @@
         }
     }
 
+    function onChangeRow(row) {
+
+        var getEOBudget = [];
+        $('#tableDetailsBG tr').each(function (row, tr) {
+            getEOBudget.push({
+                EO: $(this).find("td:eq(1) input").val(),
+                total: $(this).find("td:eq(4) input").val(),
+            });
+        });
+
+        console.log(getEOBudget);
+     }
+
 
     function getEO(row) {
 
-            $.ajax({
-                url: '@Url.Action("getBudgetByEO", "eAct")',
-                data: {
-                    EO: $(".clstxtEO_" + row).val(),
-                    companyId: "@Model.activityFormTBMMKT.formCompanyId",
-                    subjectId: document.getElementById("ddlSubject").value,
-                    channelId: document.getElementById("ddlChannel").value,
-                    brandId: document.getElementById("ddlBrand").value,
-                },
-                dataType: "json",
-                type: 'POST'
-            }).done(function (response) {
 
-                if (response.Success == true) {
-
-                    var amonutBalance = response.Data.amountBalance;
-                    var total = response.Data.amountTotal;
-                    var useBalance = response.Data.amountUseBalance;
-                    var amountEvent = response.Data.amountEvent;
-
-                    
-                    //useBalance = parseFloat(useBalance) + parseFloat(getInputAmount);
-                    //amonutBalance = parseFloat(amonutBalance) - parseFloat(getInputAmount);
-                    //total = total - parseFloat(getInputAmount);
-                    
-                    //$(".HdAmonutBalance_" + row).val(amonutBalance);
-                    //$(".hdUseBalance_" + row).val(useBalance);
-                    //$(".hdTotalBG_" + row).val(total);
-
-
-                    //sum ยอด EO
-
-                   
-                    var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
-                    for (i = 0; i < rowCount; i++) {
-                        useBalance = 0;
-                        //var getInputAmount = $(".txttotal_" + i).val().replaceAll(",", "");
-                        //if (getInputAmount == '') { getInputAmount = 0.0 }
-
-                        //useBalance += parseFloat(getInputAmount);
-                        //console.log(useBalance);
-
-                        for (ii = 0; ii < rowCount; ii++) {
-
-
-
-                            if ($(".clstxtEO_" + i).val() == $(".clstxtEO_" + ii).val()) {
-
-
-                                var getInputAmount = $(".txttotal_" + ii).val().replaceAll(",", "");
-                                if (getInputAmount == '') { getInputAmount = 0.0 }
-
-                                useBalance += parseFloat(getInputAmount);
-                                 //amonutBalance = parseFloat($(".HdAmonutBalance_" + i).val());
-                                 // total = parseFloat($(".hdTotalBG_" + i).val());
-                                console.log(useBalance);
-                            }
-                        }
-                    }
-
-
-
-                    var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-
-                    //if (document.getElementById("ddlBrand").value != '') {
-                    //    var txtTotal = 'ยอดรวม ' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    //    $(".amountTotalTxt_" + row).text(txtTotal);
-                    //    $(".HdAmountTotalTxt_" + row).val(txtTotal);
-                    //}
-                    //$(".amountTxt_" + row).text(txt);
-                    //$(".HdAmountTxt_" + row).val(txt);
-
-                }
-                else {
-                    //$(".amountTxt_" + row).text('');
-                    //$(".amountTotalTxt_" + row).text('');
-                    //$(".HdAmountTxt_" + row).val('');
-                    //$(".HdAmountTotalTxt_" + row).val('');
-                }
+        var getEOBudget = [];
+        $('#tableDetailsBG tr').each(function (row, tr) {
+            getEOBudget.push({
+                EO: $(this).find("td:eq(1) input").val(),
+                total: $(this).find("td:eq(5) input").val(),
             });
+        });
+
+        $.ajax({
+            url: '@Url.Action("getBudgetByEO", "eAct")',
+            data: {
+
+                listEO: JSON.stringify(getEOBudget),
+                companyId: "@Model.activityFormTBMMKT.formCompanyId",
+                subjectId: document.getElementById("ddlSubject").value,
+                channelId: document.getElementById("ddlChannel").value,
+                brandId: document.getElementById("ddlBrand").value,
+
+            },
+            dataType: "json",
+            type: 'POST'
+        }).done(function (response) {
+
+            if (response.Success == true) {
+
+                var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+            }
+        });
 
     }
 
