@@ -702,6 +702,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                
                 List<budgetTotal> budgetTotalsList = new List<budgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
                 var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new budgetTotal
@@ -721,12 +722,15 @@ namespace eActForm.Controllers
                     {
                         budgetTotal budgetTotalModel = new budgetTotal();
                         var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId);
-                        budgetTotalModel.EO = item.EO;
-                        budgetTotalModel.useAmount = item.total - (getAmount.FirstOrDefault().reserve - getAmount.FirstOrDefault().balance);
-                        budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
-                        budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                        budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
-                        budgetTotalsList.Add(budgetTotalModel);
+                        if (getAmount.Any())
+                        {
+                            budgetTotalModel.EO = item.EO;
+                            budgetTotalModel.useAmount = item.total - (getAmount.FirstOrDefault().reserve - getAmount.FirstOrDefault().balance);
+                            budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
+                            budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
+                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
+                            budgetTotalsList.Add(budgetTotalModel);
+                        }
                     }
                 }
                 var resultData = new
