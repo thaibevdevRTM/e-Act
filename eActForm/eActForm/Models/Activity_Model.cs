@@ -445,9 +445,9 @@ namespace eActForm.Models
         public string EO { get; set; }
         public decimal? total { get; set; }
         public decimal? useAmount { get; set; }
-        public decimal? totalBalance { get; set; }
+        public decimal? amountBalance { get; set; }
         public decimal? totalBudget { get; set; }
-        public decimal? totalBG { get; set; }
+        public decimal? amount { get; set; }
     }
 
 }

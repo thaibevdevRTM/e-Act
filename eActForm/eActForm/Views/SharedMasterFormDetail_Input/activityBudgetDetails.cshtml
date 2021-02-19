@@ -3,13 +3,16 @@
 <table style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td style="width: 100%;text-align:right;">
+            <div class="col-md-6 col-xs-12"></div>
+            <div id="divShowBudget" class="col-md-6 col-xs-12" style="text-align:left">
+            </div>
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
-                                <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
-                            <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
+                        <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
+                    <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
                         <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
@@ -25,28 +28,30 @@
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
                             @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
-                                </td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
-                                    {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
-                                    }
-                                    else
-                                    {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
-                                    }
-                                </td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                    @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
-                                </td>*@
+                            <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                            {
+                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
+                            }
+                            else
+                            {
+                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                            }
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
+                        </td>*@
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div style="display:inline-block;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
                                     <script>
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
+                                            getBudgetTotal();
                                         });
+
                                     </script>
                                 </div>
 
@@ -78,6 +83,7 @@
                                 <script>
                                     $(".txtUnit_@index").blur(function () {
                                         $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
+
                                     });
                                 </script>
                             </td>
@@ -102,7 +108,7 @@
 
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
                              $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                             onChangeRow();
+                             getBudgetTotal();
                              sumall();
                         });
 
@@ -120,7 +126,7 @@
 
                             $(".hidtotal_@index").val(v_totalRow.toFixed(2));
                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            getEO();
+                            getBudgetTotal();
                             sumall();
                         });
 
@@ -190,33 +196,12 @@
 
 <script type="text/javascript">
 
-
-    function processGetEO(row) {
-
-        if ($("#ddlSubject").val().length > 0) {
-            getEO(row);
-        }
-        else {
-            bootbox.alert("กรุณาระบุ Subjet")
-            $(".clstxtEO_" + row).val('');
-        }
-    }
-
-    function onChangeRow(row) {
-
-        var getEOBudget = [];
-        $('#tableDetailsBG tr').each(function (row, tr) {
-            getEOBudget.push({
-                EO: $(this).find("td:eq(1) input").val(),
-                total: $(this).find("td:eq(4) input").val(),
-            });
-        });
-
-        console.log(getEOBudget);
-     }
+    $(document).ready(function () {
+        getBudgetTotal();
+    });
 
 
-    function getEO(row) {
+    function getBudgetTotal(row) {
 
 
         var getEOBudget = [];
@@ -244,7 +229,24 @@
 
             if (response.Success == true) {
 
-                var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                console.log(response.Data.budgetTotalsList.length);
+               // var txt = 'งบทั้งหมด ' + amountEvent.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ยอดใช้ไป ' + useBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + amonutBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                //$.each(response.Data, function () {
+                    
+                //});
+                document.getElementById("divShowBudget").innerHTML = "";
+                if (response.Data.budgetTotalsList.length > 0) {
+                    $.each(response.Data.budgetTotalsList, function () {
+                        var amount = $(this).attr('amount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var useAmount = $(this).attr('useAmount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var amountBalance = $(this).attr('amountBalance').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var EO = $(this).attr('EO');
+                        var txt = 'EO ' + EO + '<br/>งบทั้งหมด ' + amount + ' ยอดใช้ไป ' + useAmount + ' งบคงเหลือ ' + amountBalance;
+                        //+ ' ยอดใช้ไป ' + $(this).attr('useAmount').toString().toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + $(this).attr('amountBalance').toString().toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                        $("#divShowBudget").append("<h5>" + txt + "</h5>");
+                    });
+                }
+
             }
         });
 
