@@ -540,7 +540,7 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId)
+        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId,string activityId)
         {
             try
             {
@@ -549,7 +549,8 @@ namespace eActForm.BusinessLayer
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
-               ,new SqlParameter("@brandId", brandId)});
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@activityId", activityId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {

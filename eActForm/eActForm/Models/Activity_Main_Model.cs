@@ -53,6 +53,7 @@ namespace eActForm.Models
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<budgetTotal> budgetTotalList { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();

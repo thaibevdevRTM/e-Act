@@ -1,0 +1,45 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<div class="col-md-4 col-sm-4">
+</div>
+<div class="col-md-8 col-sm-8 col-xs-12 widget_tally_box">
+    <div class="x_panel">
+        <div class="col-xs-12 bg-white progress_summary">
+            <div id="divProgress" class="row">
+                @foreach (var item in Model.budgetTotalList)
+                {
+
+                    string result = String.Format("{0:n2}", item.amountBalancePercen);
+                    int intBalance = Convert.ToInt32(item.amountBalancePercen);
+                    <div class="pro gress_title">
+                        <span>วงเงิน  @item.amount.Value.ToString("#,##0.00")  สะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+                        @*<span class="left">สะสม</span>
+                            <span class="right">คงเหลือ</span>*@
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="col-xs-2">
+                        <span>@item.EO</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="progress progress_sm">
+                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="@intBalance"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 more_info">
+                        <span>@result%</span>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.js"></script>
+<link href="~/Content/vendors/build/css/custom.min.css" rel="stylesheet" />
+
+<script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="~/Content/vendors/build/js/custom.js"></script>

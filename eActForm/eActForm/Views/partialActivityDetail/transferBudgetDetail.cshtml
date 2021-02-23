@@ -126,8 +126,69 @@
 </div>
 
 <div id="divCondition1" class="col-md-12 col-xs-12 shadow">
-    <div class="col-md-12 col-xs-12 form-group">
+    <div class="col-md-12 col-xs-12">
         @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input")
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-6 col-sm-6 col-xs-12">
+            ขอลด/ขอเพิ่ม :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.DropDownList("ddlUpDown", new List<SelectListItem>
+           {
+             new SelectListItem { Text = "ลด", Value = "0"},
+             new SelectListItem { Text = "เพิ่ม", Value = "1"},
+
+          },
+          new
+          {
+              @class = "form-control",
+              @id = "ddlUpDown",
+              onchange = "getCalBudget();",
+          })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs3">
+        <label class="control-label col-md-10 col-sm-10 col-xs-12">
+            โอนงบประมาณเพิ่ม(ลด) :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtTransferBudget", "", new { @class = "form-control", Style = "text-align:center;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-6 col-sm-6 col-xs-12">
+            งบประมาณเดิม :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtOldBudget", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget", @readonly = "true" })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            เหลือ :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-3">
+        <label class="control-label col-md-7 col-sm-7 col-xs-12">
+            งบประมาณใหม่ :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtNewBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">
+                รายละเอียด
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark" })
+            </div>
+        </div>
     </div>
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-12 col-md-offset-5">
@@ -211,8 +272,6 @@
                 @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
             </div>
         </div>
-
-
         <div class="col-md-3 col-xs-3">
             <label class="control-label col-md-7 col-sm-7 col-xs-12">
                 งบประมาณใหม่ :
@@ -221,10 +280,6 @@
                 @Html.TextBox("txtNewBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
             </div>
         </div>
-
-
-
-
         <div class="col-md-12 col-xs-12 form-group">
             <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">
@@ -337,6 +392,10 @@
                  $("#WaitDialog").hide();
              }
          });
+    }
+
+    function addRowNonEO() {
+
     }
 
 
