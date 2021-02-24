@@ -119,8 +119,6 @@
     </div>
 </div>
 
-
-
 <div class="col-md-12 col-xs-12 form-group">
     <a onclick="showBG()"> <h1 class="lead headline">กรอกรายละเอียด BG </h1></a>
 </div>
@@ -143,8 +141,8 @@
           new
           {
               @class = "form-control",
-              @id = "ddlUpDown",
-              onchange = "getCalBudget();",
+              @id = "ddlUpDown_NonEO",
+              onchange = "getCalBudgetNonEO();",
           })
         </div>
     </div>
@@ -153,7 +151,7 @@
             โอนงบประมาณเพิ่ม(ลด) :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.TextBox("txtTransferBudget", "", new { @class = "form-control", Style = "text-align:center;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
+            @Html.TextBox("txtTransferBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center;", @id = "txtTransferBudget_NonEO", onchange = "getCalBudgetNonEO();" })
         </div>
     </div>
     <div class="col-md-3 col-xs-12">
@@ -161,23 +159,16 @@
             งบประมาณเดิม :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.TextBox("txtOldBudget", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget", @readonly = "true" })
+            @Html.TextBox("txtOldBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget_NonEO", @readonly = "true" })
         </div>
     </div>
-    <div class="col-md-3 col-xs-12">
-        <label class="control-label col-md-4 col-sm-4 col-xs-12">
-            เหลือ :
-        </label>
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
-        </div>
-    </div>
+
     <div class="col-md-3 col-xs-3">
         <label class="control-label col-md-7 col-sm-7 col-xs-12">
             งบประมาณใหม่ :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.TextBox("txtNewBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
+            @Html.TextBox("txtNewBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget_NonEO", @readonly = "true" })
         </div>
     </div>
     <div class="col-md-12 col-xs-12 form-group">
@@ -335,6 +326,13 @@
         }
     }
 
+    $("#ddlChannel").change(function () {
+        getBudgetNonEO();
+    });
+    $("#ddlActivityGroup").change(function () {
+        getBudgetNonEO();
+    });
+
     function getCalBudget() {
 
         var oldBG = $("#txtOldBudget").val().replace(",", "");
@@ -346,6 +344,21 @@
         else {
             var result = parseFloat(oldBG) + parseFloat(TransferBudget);
             $("#txtNewBudget").val(result.toString());
+        }
+    }
+
+
+    function getCalBudgetNonEO() {
+
+        var oldBG = $("#txtOldBudget_NonEO").val().replace(",", "");
+        var TransferBudget = $("#txtTransferBudget_NonEO").val();
+        if ($("#ddlUpDown_NonEO").val() == "0") {
+            var result = parseFloat(oldBG) - parseFloat(TransferBudget);
+            $("#txtNewBudget_NonEO").val(result.toString());
+        }
+        else {
+            var result = parseFloat(oldBG) + parseFloat(TransferBudget);
+            $("#txtNewBudget_NonEO").val(result.toString());
         }
 
     }
@@ -393,6 +406,31 @@
              }
          });
     }
+
+    function getBudgetNonEO() {
+       $.ajax({
+                url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
+                data: {
+                    brandId: $("#ddlBrand").val(),
+                    channelId: $("#ddlChannel").val(),
+					activityGroupId: $("#ddlActivityGroup").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+               console.log(response.Data);
+               if (response.Data != null) {
+                   $("#txtOldBudget_NonEO").val(response.Data.amount);
+                 }
+               else {
+                   $("#txtOldBudget_NonEO").val('');
+                 }
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+
+
 
     function addRowNonEO() {
 

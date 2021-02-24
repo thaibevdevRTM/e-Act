@@ -1,9 +1,9 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 
-<div class="col-md-4 col-sm-4">
+<div class="col-md-6 col-sm-6">
 </div>
-<div class="col-md-8 col-sm-8 col-xs-12 widget_tally_box">
+<div class="col-md-6 col-sm-6 col-xs-12 widget_tally_box">
     <div class="x_panel">
         <div class="col-xs-12 bg-white progress_summary">
             <div id="divProgress" class="row">
@@ -14,6 +14,13 @@
                     int intBalance = Convert.ToInt32(item.amountBalancePercen);
                     <div class="pro gress_title">
                         <span>วงเงิน  @item.amount.Value.ToString("#,##0.00")  สะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+
+                        @if (!string.IsNullOrEmpty(item.brandId))
+                        {
+                            <br />
+                            <span> Total BG :</span>  @item.totalBudget.Value.ToString("#,##0.00");
+                        }
+
                         @*<span class="left">สะสม</span>
                             <span class="right">คงเหลือ</span>*@
                         <div class="clearfix"></div>

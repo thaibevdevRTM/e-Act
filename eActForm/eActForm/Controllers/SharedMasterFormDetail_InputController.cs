@@ -246,6 +246,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
                             budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
                             budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total) / getAmount.FirstOrDefault().amount * 100;
+                            budgetTotalModel.brandId = brandId;
                             budgetTotalsList.Add(budgetTotalModel);
                         }
                     }

@@ -37,5 +37,32 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var budgetPrice = transferBudgetAppcode.GetBudgetBalanceNonEO(brandId, channelId, activityGroupId);
+
+                var resultData = new
+                {
+                    EO = budgetPrice.FirstOrDefault().EO,
+                    amount = budgetPrice.FirstOrDefault().amount
+
+                };
+
+                result.Data = resultData;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getBudgetEOIOByAct => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

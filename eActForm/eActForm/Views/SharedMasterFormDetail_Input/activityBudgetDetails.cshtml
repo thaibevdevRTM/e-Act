@@ -7,16 +7,15 @@
         <td style="width: 100%;text-align:right;">
             <div id="getQuery" class="col-lg-12">
             </div>
-           
-            <div id="divShowBudget" class="bg-success col-md-6 col-xs-12" style="text-align:left; color:black;">
-        </div>
+
+
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
-                        <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
-                    <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
+                                <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
+                            <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
                         <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
@@ -32,21 +31,21 @@
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
                             @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
-                            {
-                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
-                            }
-                            else
-                            {
-                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
-                            }
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
-                        </td>*@
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                                    }
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
+                                </td>*@
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div style="display:inline-block;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
@@ -196,6 +195,7 @@
             </div>
         </td>
     </tr>
+    <div id="divShowBudget" class="bg-success col-md-6 col-xs-12" style="text-align:left; color:black; display:none"></div>
     @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new { id = "txtTotalBudget" })
 </table>
 
@@ -203,7 +203,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-    
+
         getBudgetTotal();
     });
 
@@ -238,26 +238,25 @@
             if (response.Success == true) {
                 document.getElementById("divShowBudget").innerHTML = "";
                 if (response.Data.budgetTotalsList.length > 0) {
-                    //$.each(response.Data.budgetTotalsList, function () {
-                    //    var amount = $(this).attr('amount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    //    var useAmount = $(this).attr('useAmount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    //    var amountBalance = $(this).attr('amountBalance').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    //    var totalBudget = $(this).attr('totalBudget').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    //    var EO = $(this).attr('EO');
-                    //    var txt = 'EO ' + EO + ' <br/>วงเงิน ' + amount + ' สะสม ' + useAmount + ' คงเหลือ ' + amountBalance;
-                    //    if ($('#ddlChannelOrBrand').val() == 'Brand') {
-                    //        txt += '<br/>Total BG : ' + totalBudget;
-                    //    }
+                    $.each(response.Data.budgetTotalsList, function () {
+                        var amount = $(this).attr('amount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var useAmount = $(this).attr('useAmount').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var amountBalance = $(this).attr('amountBalance').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var totalBudget = $(this).attr('totalBudget').toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        var EO = $(this).attr('EO');
+                        var txt = 'EO ' + EO + ' <br/>วงเงิน ' + amount + ' สะสม ' + useAmount + ' คงเหลือ ' + amountBalance;
+                        if ($('#ddlChannelOrBrand').val() == 'Brand') {
+                            txt += '<br/> Total BG : ' + totalBudget;
+                        }
 
                     //    //+ ' ยอดใช้ไป ' + $(this).attr('useAmount').toString().toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' งบคงเหลือ ' + $(this).attr('amountBalance').toString().toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-                    //    $("#divShowBudget").append("<p>- " + txt + "</p>");
-                    //    console.log(txt);
+                        $("#divShowBudget").append("<p>- " + txt + "</p>");
+                        console.log(txt);
 
-                    //});
+                    });
 
                     callPartialBudgetControl("@Model.activityFormTBMMKT.id");
-                    //console.log($("#divShowBudget").text());
-                    //$("#txtTotalBudget").val($("#divShowBudget").text());
+                    $("#txtTotalBudget").val($("#divShowBudget").text());
                 }
             }
         });

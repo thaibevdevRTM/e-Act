@@ -314,6 +314,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<ApproveFlowModel.flowApproveDetail> getNewPosition(string empId, string companyId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getPostiForSpectialEmpByCompany"
+                    , new SqlParameter[]{ new SqlParameter("@companyId", companyId)
+                                   , new SqlParameter("@empId", empId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail("")
+                             {
+                                 empPositionTitleTH = dr["positionTH"].ToString(),
+                                 empPositionTitleEN = dr["positionEN"].ToString(),
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getNewPosition >>" + ex.Message);
+            }
+        }
+
+
         public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
         {
             try
