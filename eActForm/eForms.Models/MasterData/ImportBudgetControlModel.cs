@@ -40,6 +40,10 @@ namespace eForms.Models.MasterData
             public string description { get; set; }
             public int LE { get; set; }
             public decimal? reserve { get; set; }
+            public decimal? reserveTotal { get; set; }
+            public decimal? balanceTotal { get; set; }
+
+            public decimal? totalBudgetChannel { get; set; }
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }

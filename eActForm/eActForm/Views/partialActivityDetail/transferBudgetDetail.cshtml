@@ -19,6 +19,7 @@
         font-size: 18px;
         text-align: center;
     }
+
     h1 {
         width: 100%;
         border-bottom: solid 1px #666;
@@ -124,11 +125,17 @@
 </div>
 
 <div id="divCondition1" class="col-md-12 col-xs-12 shadow">
-    <div class="col-md-12 col-xs-12">
-        @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input")
+    @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input")
+    <div class="col-md-3 col-xs3">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            EO :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtTransferEO", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtTransferEO", onchange = "getCalBudget();" })
+        </div>
     </div>
     <div class="col-md-3 col-xs-12">
-        <label class="control-label col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
             ขอลด/ขอเพิ่ม :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -146,8 +153,8 @@
           })
         </div>
     </div>
-    <div class="col-md-3 col-xs3">
-        <label class="control-label col-md-10 col-sm-10 col-xs-12">
+    <div class="col-md-3 col-xs12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
             โอนงบประมาณเพิ่ม(ลด) :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -155,7 +162,7 @@
         </div>
     </div>
     <div class="col-md-3 col-xs-12">
-        <label class="control-label col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
             งบประมาณเดิม :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -163,8 +170,8 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-xs-3">
-        <label class="control-label col-md-7 col-sm-7 col-xs-12">
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
             งบประมาณใหม่ :
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -177,13 +184,13 @@
                 รายละเอียด
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
-                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark" })
+                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark_NonEO" })
             </div>
         </div>
     </div>
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-12 col-md-offset-5">
-            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRow();">Add</button>
+            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRowNonEO();">Add</button>
         </div>
     </div>
 </div>
@@ -202,7 +209,7 @@
     <div class="col-md-12 col-xs-12 form-group shadow" style="margin-top:15px;">
 
         <div class="col-md-3 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 EO :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -211,7 +218,7 @@
         </div>
         <div class="col-md-3 col-xs-12">
 
-            <label class="control-label col-md-3 col-sm-3 col-xs-12 pull-left">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 IO :
             </label>
 
@@ -221,7 +228,7 @@
         </div>
 
         <div class="col-md-3 col-xs-12">
-            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+            <label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">
                 ขอลด/ขอเพิ่ม :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -240,7 +247,7 @@
             </div>
         </div>
         <div class="col-md-3 col-xs3">
-            <label class="control-label col-md-10 col-sm-10 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 โอนงบประมาณเพิ่ม(ลด) :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -248,7 +255,7 @@
             </div>
         </div>
         <div class="col-md-3 col-xs-12">
-            <label class="control-label col-md-6 col-sm-6 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 งบประมาณเดิม :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -256,7 +263,7 @@
             </div>
         </div>
         <div class="col-md-3 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 เหลือ :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -264,7 +271,7 @@
             </div>
         </div>
         <div class="col-md-3 col-xs-3">
-            <label class="control-label col-md-7 col-sm-7 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                 งบประมาณใหม่ :
             </label>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -273,7 +280,7 @@
         </div>
         <div class="col-md-12 col-xs-12 form-group">
             <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">
+                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     รายละเอียด
                 </label>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -326,7 +333,7 @@
         }
     }
 
-    $("#ddlChannel").change(function () {
+    $("#ddlChannel_BG").change(function () {
         getBudgetNonEO();
     });
     $("#ddlActivityGroup").change(function () {
@@ -411,29 +418,68 @@
        $.ajax({
                 url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
                 data: {
-                    brandId: $("#ddlBrand").val(),
-                    channelId: $("#ddlChannel").val(),
+                    brandId: $("#ddlBrand_BG").val(),
+                    channelId: $("#ddlChannel_BG").val(),
 					activityGroupId: $("#ddlActivityGroup").val(),
                 },
                 dataType: "json",
                 type: 'POST',
-                success: function (response) {
+           success: function (response) {
                console.log(response.Data);
                if (response.Data != null) {
                    $("#txtOldBudget_NonEO").val(response.Data.amount);
-                 }
+                   $("#txtTransferEO").val(response.Data.EO);
+                   
+               }
                else {
                    $("#txtOldBudget_NonEO").val('');
-                 }
-                 $("#WaitDialog").hide();
-             }
+               }
+               $("#txtNewBudget_NonEO").val('');
+               getCalBudgetNonEO();
+               $("#WaitDialog").hide();
+           }
          });
     }
 
 
 
     function addRowNonEO() {
+        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        if (RowCount == 0 && $("#activityOfEstimateList_0__EO").val() == '') {
+            $("#activityOfEstimateList_0__EO").val($("#txtTransferEO").val());
+            $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown_NonEO").val());
+            $("#activityOfEstimateList_0__remark").val($("#txtremark_NonEO").val());
+            $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget_NonEO").val());
+            $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget_NonEO").val());
+            $("#activityOfEstimateList_0__total").val($("#txtNewBudget_NonEO").val());
 
+        }
+        else {
+            console.log(RowCount);
+            RowCount = RowCount + 1;
+            var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
+
+            $("#tbl_budgetControl > tbody:first").append(newRow);
+            newRow.find("input").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+            newRow.find("select").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+
+            newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
+
+            $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtTransferEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget_NonEO").val());
+        }
     }
 
 

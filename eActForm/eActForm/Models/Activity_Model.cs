@@ -450,6 +450,11 @@ namespace eActForm.Models
         public decimal? amount { get; set; }
         public decimal? amountBalancePercen { get; set; }
         public string brandId { get; set; }
+        public decimal? useAmountTotal { get; set; }
+        public decimal? amountBalanceTotal { get; set; }
+        public string brandName { get; set; }
+        public decimal? totalBudgetChannel { get; set; }
+        public string channelName { get; set; }
     }
 
 }
