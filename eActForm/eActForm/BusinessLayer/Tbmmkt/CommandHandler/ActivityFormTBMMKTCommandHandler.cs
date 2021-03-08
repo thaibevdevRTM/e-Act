@@ -491,116 +491,25 @@ namespace eActForm.BusinessLayer
                 string sumTxtLabelRequired = "";
 
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
-                activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
-                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
-                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
-                activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
-                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = QueryGet_TB_Act_ActivityForm_DetailOtherList.get_TB_Act_ActivityForm_DetailOtherList(activityId);
-
-                if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
+                if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
-                        var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
-                        index_each = 0;
-                        foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
-                            if (index_each == 0)
-                            {
-                                sumTxtLabelRequired += item.name;
-                            }
-                            else
-                            {
-                                sumTxtLabelRequired += ("," + item.name);
-                            }
-                            index_each++;
-                        }
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
-                        activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
-                        }
-                        else
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
-                        }
-                    }
-                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
-                    }
-                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
-                    {
-                        var countlist_2_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").Count();
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[countlist_2_multi_select];
-                        index_each = 0;
-                        foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").ToList())
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
-                            index_each++;
-                        }
-                    }
-                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                    {
+                    activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
+                    activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
+                    activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
+                    activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = QueryGet_TB_Act_ActivityForm_DetailOtherList.get_TB_Act_ActivityForm_DetailOtherList(activityId);
 
-                        index_each = 0;
-                        List<TB_Act_ActivityChoiceSelectModel> tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChooseRequest").ToList();
-                        if (tempList.Count > 0)
+                    if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
+                    {
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
-                            {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
-                                {
-                                    sumTxtLabelRequired += item.name;
-                                }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
-                            }
-                        }
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ProcuretoPay").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
-                            {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
-                                {
-                                    sumTxtLabelRequired += item.name;
-                                }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
-                            }
-                        }
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ERPSystem").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
+                            var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
+                            index_each = 0;
+                            foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
                             {
                                 activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
@@ -613,219 +522,312 @@ namespace eActForm.BusinessLayer
                                 }
                                 index_each++;
                             }
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
+                            activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
+                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
+                            }
+                            else
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
+                            }
                         }
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "OrdertoCash").ToList();
-                        if (tempList.Count > 0)
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
+                        }
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                        {
+                            var countlist_2_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").Count();
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[countlist_2_multi_select];
+                            index_each = 0;
+                            foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").ToList())
                             {
                                 activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
-                                {
-                                    sumTxtLabelRequired += item.name;
-                                }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
                                 index_each++;
                             }
                         }
-
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ForecasttoDelivery").ToList();
-                        if (tempList.Count > 0)
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+
+                            index_each = 0;
+                            List<TB_Act_ActivityChoiceSelectModel> tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChooseRequest").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "FinanceAndAccounting").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ProcuretoPay").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
-
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "HumanCapital").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ERPSystem").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Other").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "OrdertoCash").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
 
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Changetype").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ForecasttoDelivery").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
 
-                        index_each = 0;
-                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChangeAuthorizations").ToList();
-                        if (tempList.Count > 0)
-                        {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select = new string[tempList.Count];
-                            foreach (var item in tempList)
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "FinanceAndAccounting").ToList();
+                            if (tempList.Count > 0)
                             {
-                                activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select[index_each] = item.select_list_choice_id;
-                                if (index_each == 0)
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
                                 }
-                                else
-                                {
-                                    sumTxtLabelRequired += ("," + item.name);
-                                }
-                                index_each++;
                             }
-                        }
 
+
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "HumanCapital").ToList();
+                            if (tempList.Count > 0)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
+                                {
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
+                                }
+                            }
+
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Other").ToList();
+                            if (tempList.Count > 0)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
+                                {
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
+                                }
+                            }
+
+
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Changetype").ToList();
+                            if (tempList.Count > 0)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
+                                {
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
+                                }
+                            }
+
+
+                            index_each = 0;
+                            tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChangeAuthorizations").ToList();
+                            if (tempList.Count > 0)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select = new string[tempList.Count];
+                                foreach (var item in tempList)
+                                {
+                                    activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select[index_each] = item.select_list_choice_id;
+                                    if (index_each == 0)
+                                    {
+                                        sumTxtLabelRequired += item.name;
+                                    }
+                                    else
+                                    {
+                                        sumTxtLabelRequired += ("," + item.name);
+                                    }
+                                    index_each++;
+                                }
+                            }
+
+                        }
                     }
-                }
-                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
-                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
-                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
+                    bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+                    activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
+                    activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
+                    activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
+                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                {
-                    activity_TBMMKT_Model.dataRequesterToShows = QueryGetSelectMainForm.GetDataRequesterToShow(activityId);
-                }
-
-                Decimal? totalCostThisActivity = 0;
-                foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
-                {
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                     {
-                        totalCostThisActivity += item.unit;
+                        activity_TBMMKT_Model.dataRequesterToShows = QueryGetSelectMainForm.GetDataRequesterToShow(activityId);
                     }
-                    else
-                    {
-                        totalCostThisActivity += item.total;
-                    }
-                }
-                activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
 
-                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
-                {
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                    Decimal? totalCostThisActivity = 0;
+                    foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
                     {
-                        var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).Count();
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
-                        index_each = 0;
-                        foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).ToList())
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = DocumentsAppCode.formatValueSelectEO_PVForm(item.activityIdEO, item.EO);
-                            index_each++;
+                            totalCostThisActivity += item.unit;
                         }
-
-                        //=========จากที่SelectทุกTypeมา=หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน========
-                        activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typePVSectionThreeToFive"]).ToList();
-                        //====END======จากที่SelectทุกTypeมา==หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน====
-                    }
-                }
-
-                //===========Get All EO In Doc=======================
-                List<string> templistEoInDoc = new List<string>();
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
-                {
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != "" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
-                    {
-                        templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
-                    }
-                    foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
-                    {
-                        if (!templistEoInDoc.Contains(itemGetEO.EO))
+                        else
                         {
-                            templistEoInDoc.Add(itemGetEO.EO);
+                            totalCostThisActivity += item.total;
                         }
                     }
-                    activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
+                    activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
+                    {
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                        {
+                            var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).Count();
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
+                            index_each = 0;
+                            foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).ToList())
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = DocumentsAppCode.formatValueSelectEO_PVForm(item.activityIdEO, item.EO);
+                                index_each++;
+                            }
+
+                            //=========จากที่SelectทุกTypeมา=หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน========
+                            activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typePVSectionThreeToFive"]).ToList();
+                            //====END======จากที่SelectทุกTypeมา==หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน====
+                        }
+                    }
+
+                    //===========Get All EO In Doc=======================
+                    List<string> templistEoInDoc = new List<string>();
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                    {
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != "" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
+                        {
+                            templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
+                        }
+                        foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
+                        {
+                            if (!templistEoInDoc.Contains(itemGetEO.EO))
+                            {
+                                templistEoInDoc.Add(itemGetEO.EO);
+                            }
+                        }
+                        activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
+                    }
+                    //===END========Get All EO In Doc=======================
+
                 }
-                //===END========Get All EO In Doc=======================
-
-
             }
             catch (Exception ex)
             {

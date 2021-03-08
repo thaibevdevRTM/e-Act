@@ -224,7 +224,8 @@ else
             dataType: "json",
             type: 'POST',
         }).done(function (response) {
-
+            console.log('success' + actId);
+            console.log($("#dataFromAct").val());
         });
     }
 

@@ -223,7 +223,9 @@ namespace eActForm.BusinessLayer
                             }
                             else
                             {
-                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 
+                                    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10
+                                    || getActList.FirstOrDefault().documentDate.Value.Year > getActList.FirstOrDefault().activityPeriodSt.Value.Year)
                                 {
                                     getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                                 }

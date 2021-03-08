@@ -31,7 +31,7 @@
 
 
 
-
+            @{ decimal? sumNormalCost = 0, sumThemeCost = 0, sumGrowth = 0, sumTotal = 0;}
             @foreach (var item in Model.activityOfEstimateList)
             {
                 <tbody id=first>
@@ -54,20 +54,24 @@
 
                     </tr>
                 </tbody>
+
+                sumNormalCost += @item.normalCost;
+                sumThemeCost += @item.themeCost;
+                sumGrowth += @item.growth;
+                sumTotal += @item.total;
+
             }
             <tr>
                 <td colspan="3">
                 </td>
-                <td>
-                    งบเดิม
-                </td>
-                <td>เหลือ</td>
-                <td>โอนงบประมาณเพิ่ม(ลด)</td>
-
-                <td>งบประมาณใหม่</td>
+                <td class="fontDocSmall">@string.Format("{0:n2}", @sumNormalCost)</td>
+                <td class="fontDocSmall">@string.Format("{0:n2}", @sumThemeCost)</td>
+                <td class="fontDocSmall">@string.Format("{0:n2}", @sumGrowth)</td>
+                <td class="fontDocSmall">@string.Format("{0:n2}", @sumTotal)</td>
 
             </tr>
         </table>
+
     </div>
 </div>
 

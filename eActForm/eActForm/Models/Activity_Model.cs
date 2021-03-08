@@ -440,7 +440,7 @@ namespace eActForm.Models
     }
 
 
-    public class budgetTotal
+    public class BudgetTotal
     {
         public string EO { get; set; }
         public decimal? total { get; set; }
@@ -455,6 +455,7 @@ namespace eActForm.Models
         public string brandName { get; set; }
         public decimal? totalBudgetChannel { get; set; }
         public string channelName { get; set; }
+        public string activityType { get; set; }
     }
 
 }

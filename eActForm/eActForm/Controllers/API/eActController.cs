@@ -686,15 +686,25 @@ namespace eActForm.Controllers
 
         public ActionResult genImageStream(string empId)
         {
-            var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            if (result.lists.Any())
+            try
             {
-                return File(result.lists[0].signature, "image/jpg");
+                var result = SignatureAppCode.currentSignatureByEmpId(empId);
+                if (result.lists.Any())
+                {
+                    return File(result.lists[0].signature, "image/jpg");
+                }
+                else
+                {
+                    return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
+                ExceptionManager.WriteError("genImageStream => " + ex.Message);
+                return File(Server.MapPath("~/images/noSigError.jpg"), "image/jpg");
             }
+
+
         }
 
        

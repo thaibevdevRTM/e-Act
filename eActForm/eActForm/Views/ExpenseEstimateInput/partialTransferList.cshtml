@@ -40,7 +40,7 @@
                             @Html.TextBoxFor(x => x.activityOfEstimateList[i].EO, new { @class = "form-control textboxcss font10 textRight clsEO_" + i, placeholder = "EO", autocomplete = "off" })
                             @Html.TextBoxFor(x => x.activityOfEstimateList[i].IO, new { @class = "form-control textboxcss font10 textRight clsIO_" + i, placeholder = "IO", autocomplete = "off" })
                         </td>
-                        <td style="text-align:right" >
+                        <td style="text-align:right">
 
                             @Html.DropDownListFor(x => x.activityOfEstimateList[i].hospId, new List<SelectListItem>
                              {
@@ -49,8 +49,13 @@
                              },
                              new
                              {
-                                  @class = "form-control textboxcss"
+                                  @class = "form-control textboxcss chkUpdown_"+@i
                              })
+                            <script>
+                                $(function () {
+                                    $("#activityOfEstimateList_" + @i + "__hospId").val("@Model.activityOfEstimateList[i].hospId");
+                                }
+                            </script>
                         </td>
                         <td style="text-align:right" >
                             @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })
