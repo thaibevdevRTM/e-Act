@@ -134,7 +134,7 @@
                     &nbsp;
                 </td>
 
-                @if (Model.Budget_Activity_Invoice != null)
+                @if (Model.Budget_Activity_Invoice != null)   
                 {
                     @*<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>*@
                     <td width="10%">
@@ -179,7 +179,7 @@
         <p></p>
 
         @*<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Admin Save</button>
-            <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Admin Refresh</button>*@
+        <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Admin Refresh</button>*@
 
 
         @if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)

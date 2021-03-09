@@ -39,26 +39,5 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_Chanel_Model.Chanel_Model>();
             }
         }
-
-        public static List<TB_Act_Chanel_Model.Chanel_Model> GetChannelBudgetControl()
-        {
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getChanelBGControl");
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new TB_Act_Chanel_Model.Chanel_Model()
-                             {
-                                 id = d["id"].ToString(),
-                                 chanelGroup = d["chanelGroup"].ToString(),
-                                 
-                             });
-                return lists.ToList();
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("GetChannelBudgetControl => " + ex.Message);
-                return new List<TB_Act_Chanel_Model.Chanel_Model>();
-            }
-        }
     }
 }

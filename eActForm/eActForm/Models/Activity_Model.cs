@@ -155,7 +155,6 @@ namespace eActForm.Models
         public DateTime? documentDate { get; set; }
         public string documentDateStr { get; set; }
         public string reference { get; set; }
-        public string referenceActNo { get; set; }
         public string cusShortName { get; set; }
         public string customerName { get; set; }
         public string customerId { get; set; }
@@ -233,7 +232,6 @@ namespace eActForm.Models
         public string contactEmail { get; set; }
         public string contactName { get; set; }
         public string contactTel { get; set; }
-        public Boolean chkAddDown { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -441,22 +439,6 @@ namespace eActForm.Models
     }
 
 
-    public class BudgetTotal
-    {
-        public string EO { get; set; }
-        public decimal? total { get; set; }
-        public decimal? useAmount { get; set; }
-        public decimal? amountBalance { get; set; }
-        public decimal? totalBudget { get; set; }
-        public decimal? amount { get; set; }
-        public decimal? amountBalancePercen { get; set; }
-        public string brandId { get; set; }
-        public decimal? useAmountTotal { get; set; }
-        public decimal? amountBalanceTotal { get; set; }
-        public string brandName { get; set; }
-        public decimal? totalBudgetChannel { get; set; }
-        public string channelName { get; set; }
-        public string activityType { get; set; }
-    }
+
 
 }

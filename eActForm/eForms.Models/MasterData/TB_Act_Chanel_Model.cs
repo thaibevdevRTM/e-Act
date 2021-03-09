@@ -11,6 +11,6 @@ namespace eForms.Models.MasterData
         public string tradingPartner { get; set; }
         public string no_tbmmkt { get; set; }
         public string typeChannel { get; set; }
-        public string brandCode { get; set; }
+
     }
 }
