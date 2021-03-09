@@ -283,7 +283,7 @@
                             }
 
 
-                            else if ((@Array.AsReadOnly(AppCode.checkDocTBM).Contains(item.master_type_form_id)))
+                            else if ((@Array.AsReadOnly(AppCode.checkDocTBM).Contains(item.master_type_form_id)) || (@Array.AsReadOnly(AppCode.expenseForm).Contains(item.master_type_form_id)))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 

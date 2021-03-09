@@ -1,0 +1,55 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<style>
+    .cssborderbottom {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: gray;
+    }
+</style>
+
+<div id="divProgress" class="row">
+    <br />
+    @{ int row = 0; }
+    @foreach (var item in Model.budgetTotalList)
+    {
+
+        string result = String.Format("{0:n2}", item.amountBalancePercen);
+        int intBalance = Convert.ToInt32(item.amountBalancePercen);
+        <div class="pro gress_title">
+            @if (row == 0)
+            {
+                if (!string.IsNullOrEmpty(item.brandId))
+                {
+
+                    <label class="cssborderbottom">
+                        งบประมาณทั้งปี  @item.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
+                    </label>
+
+                }
+                else
+                {
+                    <label class="cssborderbottom">
+                        งบประมาณช่องทาง @item.channelName ทั้งปี  @Model.budgetTotalModel.totalBudgetChannel.Value.ToString("#,##0.00") ใช้ไปสะสม @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
+                    </label>
+                }
+                <br />
+            }
+
+            @if (!string.IsNullOrEmpty(item.brandId))
+            {
+                <span>งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+
+            }
+            else
+            {
+                <span>งบ @item.brandName ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+
+            }
+
+
+        </div>
+        row++;
+    }
+</div>
