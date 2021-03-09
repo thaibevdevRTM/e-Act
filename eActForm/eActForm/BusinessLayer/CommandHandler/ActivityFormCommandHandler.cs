@@ -223,9 +223,7 @@ namespace eActForm.BusinessLayer
                             }
                             else
                             {
-                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 
-                                    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10
-                                    || getActList.FirstOrDefault().documentDate.Value.Year > getActList.FirstOrDefault().activityPeriodSt.Value.Year)
+                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
                                 {
                                     getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                                 }
@@ -393,7 +391,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityNo",model.activityNo)
                     ,new SqlParameter("@documentDate",model.documentDate)
                     ,new SqlParameter("@reference",model.reference)
-                    ,new SqlParameter("@referenceActNo",model.referenceActNo)
                     ,new SqlParameter("@customerId",model.customerId)
                     ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@productGroupId",model.productGroupId)

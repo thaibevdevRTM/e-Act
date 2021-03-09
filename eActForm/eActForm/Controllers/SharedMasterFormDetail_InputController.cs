@@ -1,8 +1,6 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -211,89 +209,6 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.requestEmpModel = RequestEmp;
             }
             return PartialView(activity_TBMMKT_Model);
-        }
-
-        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId)
-        {
-            var result = new AjaxResult();
-            try
-            {
-
-                List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
-                var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
-                var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
-                {
-                    EO = group.First().EO,
-                    total = group.Sum(c => c.total),
-                }).ToList();
-
-
-                result.Success = false;
-
-                var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description;
-                var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
-                decimal? sumTotal_Input = 0 , amountBalanceTotal = 0 , useAmountTotal = 0 , totalBudgetChannel = 0;
-                if (getTotalBudget.Any())
-                {
-                    foreach (var item in getTotalBudget)
-                    {
-                        BudgetTotal budgetTotalModel = new BudgetTotal();
-                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId);
-                        if (getAmount.Any())
-                        {
-
-                            budgetTotalModel.EO = item.EO;
-                            budgetTotalModel.useAmount = (getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total;
-                            budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
-                            budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
-                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total) / getAmount.FirstOrDefault().amount * 100;
-                            budgetTotalModel.brandId = brandId;
-                            budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
-                            budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
-                            budgetTotalModel.activityType = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales;
-                            budgetTotalsList.Add(budgetTotalModel);
-
-                            totalBudgetChannel = getAmount.FirstOrDefault().totalBudgetChannel;
-                            useAmountTotal = (getAmount.FirstOrDefault().reserveTotal + getAmount.FirstOrDefault().balanceTotal);
-                            sumTotal_Input += item.total;
-                        }
-                    }
-                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
-                    useAmountTotal = useAmountTotal + sumTotal_Input;
-
-                }
-
-                Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
-                model.budgetTotalList = budgetTotalsList;
-                model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
-                model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
-                TempData["showBudget" + activityId] = model;
-
-                var resultData = new
-                {
-                    budgetTotalsList = budgetTotalsList,
-
-                };
-                result.Data = resultData;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
-            }
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult showDetailBudgetControl(string activityId)
-        {
-
-            Activity_TBMMKT_Model model = TempData["showBudget" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudget" + activityId];
-            TempData.Keep();
-            return PartialView(model);
         }
 
     }

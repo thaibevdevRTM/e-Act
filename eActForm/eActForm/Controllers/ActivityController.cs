@@ -290,19 +290,6 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult checkApproveRefNo(string activityId)
-        {
-            var result = new AjaxResult();
-            result.Success = false;
-            var getApprove = ApproveAppCode.getApproveByActFormId(activityId);
-            if(getApprove.approveDetailLists.Where(x => x.rangNo < 3 && x.statusId == "2").Any())
-            {
-                result.Success = true;
-            }
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPost]
         [ValidateInput(false)]
         public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)
@@ -326,12 +313,7 @@ namespace eActForm.Controllers
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
                                 
-                                if(ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                     ActFormAppCode.insertReserveBudget(activityId);
-                                }
-
-                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
+                                if(AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
                                 {
                                     // case form benefit will auto approve
                                     if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
