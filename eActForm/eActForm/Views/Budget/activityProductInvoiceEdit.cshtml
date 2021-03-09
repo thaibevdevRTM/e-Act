@@ -2,7 +2,7 @@
 @model eActForm.Models.Budget_Activity_Model
 @using eActForm.BusinessLayer;
 @{
-    //update 21-04-2020
+    //update 01-03-2021
     Layout = null;
 }
 
@@ -133,6 +133,7 @@
 
                     &nbsp;
                 </td>
+
                 @if (Model.Budget_Activity_Invoice != null)
                 {
                     @*<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>*@
@@ -177,8 +178,6 @@
 
         <p></p>
 
-
-
         @*<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Admin Save</button>
             <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Admin Refresh</button>*@
 
@@ -189,23 +188,21 @@
         }
         else
         {
-    <div class="row">
-        <div class="col-md-8 col-xs-12">
-        </div>
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                </div>
 
-        <div class="col-md-4 col-xs-12">
-            <div class="form-group">
-                หมายเหตุ
+                <div class="col-md-4 col-xs-12">
+                    <div class="form-group">
+                        หมายเหตุ
 
-                @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceRemark, new { @class = "form-control textboxcss", @id = "txt_invoiceRemark", @name = "txt_invoiceRemark" })
+                        @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceRemark, new { @class = "form-control textboxcss", @id = "txt_invoiceRemark", @name = "txt_invoiceRemark" })
+                    </div>
+                </div>
             </div>
-        </div>
 
-
-        </div>
-
-        <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
-        <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+            <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+            <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
         }
         <div>
             <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
