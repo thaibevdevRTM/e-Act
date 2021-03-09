@@ -320,6 +320,7 @@ namespace eActForm.BusinessLayer
                                   invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
                                   budgetApproveId = d["budgetApproveId"].ToString(),
 
+                                  invoiceRemark = d["invoiceRemark"].ToString(),
                               });
 
                 return result.ToList();

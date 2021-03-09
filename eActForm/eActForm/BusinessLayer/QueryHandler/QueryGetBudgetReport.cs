@@ -22,6 +22,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                  , new SqlParameter("@createdDateStart", act_createdDateStart)
                  , new SqlParameter("@createdDateEnd", act_createdDateEnd)
                  , new SqlParameter("@actYear", actYear)
+                 , new SqlParameter("@EmpId", UtilsAppCode.Session.User.empId)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
