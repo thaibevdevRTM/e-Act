@@ -260,7 +260,7 @@
                                 </a>
                             }
 
-                            @if (item.companyId == ConfigurationManager.AppSettings["companyId_MT"])
+                            @if (item.companyId == ConfigurationManager.AppSettings["companyId_MT"] && item.statusId == "3")
                             {
                                 <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
                                     <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
