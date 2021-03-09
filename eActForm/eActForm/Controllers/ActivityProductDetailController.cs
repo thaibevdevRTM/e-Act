@@ -151,7 +151,6 @@ namespace eActForm.Controllers
         }
 
 
-
         public bool calProductDetail(ProductCostOfGroupByPrice model)
         {
             bool success = true;

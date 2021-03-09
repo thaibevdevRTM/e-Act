@@ -76,18 +76,10 @@ namespace eActForm.Controllers
                 if (response != null && response.userModel.Count > 0)
                 {
                     UtilsAppCode.Session.User = response.userModel[0];
-                    var getNewPosition = ApproveFlowAppCode.getNewPosition(UtilsAppCode.Session.User.empId, "");
-                    if (getNewPosition.Count > 0)
-                    {
-                        UtilsAppCode.Session.User.empPositionTitleTH = getNewPosition[0].empPositionTitleTH;
-                        UtilsAppCode.Session.User.empPositionTitleEN = getNewPosition[0].empPositionTitleEN;
-                    }
-
                     int insertToken = eForms.Presenter.AppCode.pUserAppCode.insertTokenByEmpId(AppCode.StrCon, UtilsAppCode.Session.User.empId, UtilsAppCode.Session.User.tokenAccess, UtilsAppCode.Session.User.tokenType);
                     UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
                     ApproveAppCode.setCountWatingApprove();
                     BudgetApproveController.setCountWatingApproveBudget();
-
 
                     if (Request.Form["txtParam"] != null && Request.Form["txtParam"] == AppCode.ApproveEmailype.approve.ToString())
                     {

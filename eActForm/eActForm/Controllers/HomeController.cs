@@ -91,7 +91,7 @@ namespace eActForm.Controllers
                 {
                     // case delete
                     result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-                    ApproveAppCode.updateBudgetControl_Balance(actId);
+
                     if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId(actId))
                     {
                         EmailAppCodes.sendRequestCancelToAdmin(actId);

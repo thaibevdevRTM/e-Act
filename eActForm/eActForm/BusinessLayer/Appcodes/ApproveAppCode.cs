@@ -294,13 +294,11 @@ namespace eActForm.BusinessLayer
                 {
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
-                    var result = updateBudgetControl_Balance(actFormId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
-                    var result = updateBudgetControl_Balance(actFormId);
 
                 }
                 return rtn;
@@ -308,19 +306,6 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-        }
-        public static int updateBudgetControl_Balance(string actId)
-        {
-            try
-            {
-                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetControl_Balance"
-                    ,new SqlParameter[] { new SqlParameter("@actFormId", actId)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
             }
         }
 
