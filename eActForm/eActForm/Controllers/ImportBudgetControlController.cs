@@ -80,7 +80,6 @@ namespace eActForm.Controllers
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
                             modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
-                            modelBudget.totalBG = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total BG"].ToString()));
                             modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
                             modelBudget.chanelName = dt.Columns[ii].ToString();
                             modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -214,7 +213,6 @@ namespace eActForm.Controllers
                     modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
                     modelBudget.budgetGroupType = ImportBudgetControlAppCode.brand;
                     modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dtBrand.Rows[i]["Total MKT"].ToString()));
-                    modelBudget.totalBG = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total BG"].ToString()));
                     modelBudget.chanelId = "";
                     modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
