@@ -155,6 +155,7 @@ namespace eActForm.Models
         public DateTime? documentDate { get; set; }
         public string documentDateStr { get; set; }
         public string reference { get; set; }
+        public string referenceActNo { get; set; }
         public string cusShortName { get; set; }
         public string customerName { get; set; }
         public string customerId { get; set; }

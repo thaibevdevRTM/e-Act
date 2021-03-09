@@ -290,6 +290,19 @@ namespace eActForm.Controllers
         }
 
 
+        public JsonResult checkApproveRefNo(string activityId)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            var getApprove = ApproveAppCode.getApproveByActFormId(activityId);
+            if(getApprove.approveDetailLists.Where(x => x.rangNo < 3 && x.statusId == "2").Any())
+            {
+                result.Success = true;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)

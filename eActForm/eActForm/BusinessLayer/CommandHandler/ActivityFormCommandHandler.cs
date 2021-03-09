@@ -393,6 +393,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityNo",model.activityNo)
                     ,new SqlParameter("@documentDate",model.documentDate)
                     ,new SqlParameter("@reference",model.reference)
+                    ,new SqlParameter("@referenceActNo",model.referenceActNo)
                     ,new SqlParameter("@customerId",model.customerId)
                     ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@productGroupId",model.productGroupId)

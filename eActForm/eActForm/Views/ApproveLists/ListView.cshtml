@@ -208,16 +208,17 @@ else
                 typeForm: '@AppCode.ApproveType.Activity_Form.ToString()',
             }
         }).done(function (htmlResponse) {
-            $("#dataFromAct").val(htmlResponse);
-            sentApprove_GenPdf(actId);
+            //$("#dataFromAct").val(htmlResponse);
+
+            sentApprove_GenPdf(actId, htmlResponse);
         });
     }
 
-    function sentApprove_GenPdf(actId) {
+    function sentApprove_GenPdf(actId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                GridHtml: $("#dataFromAct").val(),
+                GridHtml: htmlResponse,
                 statusId: '3',
                 activityId: actId,
             },
