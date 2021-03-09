@@ -441,6 +441,8 @@
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
+        
+        document.getElementById("btnsubmit").disabled = true;
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
