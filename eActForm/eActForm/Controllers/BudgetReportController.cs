@@ -195,10 +195,10 @@ namespace eActForm.Controllers
                     model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.productBudgetStatusGroupId == Request.Form["ddlBudgetStatus"]).ToList();
                 }
 
-                //if (UtilsAppCode.Session.User.isAdminOMT == false && UtilsAppCode.Session.User.isAdmin == false && UtilsAppCode.Session.User.isSuperAdmin == false)
-                //{
-                //    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.actForm_CreatedByUserId == UtilsAppCode.Session.User.empId).ToList();
-                //}
+                if (UtilsAppCode.Session.User.isAdminOMT == false && UtilsAppCode.Session.User.isAdmin == false && UtilsAppCode.Session.User.isSuperAdmin == false)
+                {
+                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.actForm_CreatedByUserId == UtilsAppCode.Session.User.empId).ToList();
+                }
                 #endregion
             }
             catch (Exception ex)
