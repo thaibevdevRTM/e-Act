@@ -290,12 +290,16 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult checkApproveRefNo(string activityId)
+        public JsonResult checkApproveRefNo(string activityId, string typeForm)
         {
             var result = new AjaxResult();
+            int setRang = 2;
             result.Success = false;
+
+            //setRang = typeForm == Activity_Model.activityType.OMT.ToString() ? 2 : 3;
+
             var getApprove = ApproveAppCode.getApproveByActFormId(activityId);
-            if(getApprove.approveDetailLists.Where(x => x.rangNo < 3 && x.statusId == "2").Any())
+            if (getApprove.approveDetailLists.Where(x => x.rangNo <= setRang && x.statusId == "5").Any())
             {
                 result.Success = true;
             }

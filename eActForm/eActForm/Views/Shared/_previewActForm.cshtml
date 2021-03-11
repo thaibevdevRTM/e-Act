@@ -71,9 +71,24 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">Reference</td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td style="text-align:right; font-size:12.5px;">Customer Format</td>
+                    }
+                    else
+                    {
+                        <td style="text-align:right; font-size:12.5px;">Reference</td>
+                    }
                     <td></td>
                     <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align:right; font-size:12.5px;">Referene ActNo.</td>
+                    <td></td>
+                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.referenceActNo) </td>
                 </tr>
                 <tr>
                     <td></td>
