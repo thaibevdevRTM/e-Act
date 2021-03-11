@@ -155,6 +155,8 @@ namespace eActForm.BusinessLayer
                                   invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
                                   invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
 
+                                  invoiceRemark = d["invoiceRemark"].ToString(),
+
                               });
 
                 return result.ToList();
