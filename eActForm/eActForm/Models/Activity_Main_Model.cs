@@ -52,6 +52,9 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<BudgetTotal> budgetTotalList { get; set; }
+        public BudgetTotal budgetTotalModel { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -67,6 +70,7 @@ namespace eActForm.Models
             exPerryCashModel = new exPerryCashModel();
             empInfoModel = new RequestEmpModel();
             regionalModel = new List<RegionalModel>();
+            budgetTotalModel = new BudgetTotal();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }

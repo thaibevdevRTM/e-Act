@@ -38,5 +38,26 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_ProductBrand_Model>();
             }
         }
+
+        public static List<TB_Act_ProductBrand_Model> GetBrandBudgetControl()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductBrandBGControl");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new TB_Act_ProductBrand_Model()
+                             {
+                                 id = d["id"].ToString(),
+                                 brandName = d["brandName"].ToString(),
+
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetBrandBudgetControl => " + ex.Message);
+                return new List<TB_Act_ProductBrand_Model>();
+            }
+        }
     }
 }

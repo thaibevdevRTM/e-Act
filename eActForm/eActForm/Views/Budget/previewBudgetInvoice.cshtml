@@ -210,9 +210,7 @@
                                         @Html.DisplayFor(x => x.Budget_Activity.act_objective)
                                     }
                                 </td>
-                                <td style="text-align:right;">
-
-                                </td>
+                                <td style="text-align:right;"></td>
                             </tr>
 
                             <tr>
@@ -243,37 +241,19 @@
                             <tr>
                                 <td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
                                 <td rowspan="2" style="width:20%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-                                <td colspan="4" style="width:35%; font-size:11px;">จ่ายจริง (Actual)</td>
+                                <td colspan="4" style="width:40%; font-size:11px;">จ่ายจริง (Actual)</td>
 
-                                <td rowspan="2" style="width:8%; font-size:11px;">คงเหลือ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
                                 <td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
-                                <td rowspan="2" style="width:6%; font-size:11px;">สถานะ</td>
-                                <td rowspan="2" style="width:6%; font-size:11px;">สถานะอนุมัติ</td>
-                                <td rowspan="2" style="font-size:11px;">หมายเหตุ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">สถานะ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">สถานะอนุมัติ</td>
                             </tr>
                             <tr>
-                                <td style="font-size:11px; width:60px;">จำนวนเงินที่ตั้ง</td>
-                                <td style="font-size:11px; ">เลขที่ใบแจ้งหนี้</td>
-                                <td style="font-size:11px; width:60px;">เลขที่ใบสำคัญจ่าย</td>
-                                <td style="font-size:11px; width:60px;">จำนวนเงินจ่าย (฿)</td>
+                                <td style="font-size:11px;">จำนวนเงินที่ตั้ง</td>
+                                <td style="font-size:11px;">เลขที่ใบแจ้งหนี้</td>
+                                <td style="font-size:11px;">เลขที่ใบสำคัญจ่าย</td>
+                                <td style="font-size:11px;">จำนวนเงินจ่าย (฿)</td>
                             </tr>
-
-
-                            @*<tr>
-                                <td style="text-align:left;font-size:12px;">1</td>
-                                <td style="text-align:left;font-size:12px;">2</td>
-                                <td style="text-align:right;font-size:12px;">3</td>
-                                <td style="text-align:center;font-size:12px;">4</td>
-                                <td>5</td>
-                                <td style="text-align:right;font-size:12px;">6</td>
-                                <td style="text-align:right;font-size:12px;">7</td>
-                                <td style="text-align:center;font-size:12px;">8</td>
-                                <td style="text-align:center;font-size:12px;">&nbsp;9</td>
-                                <td>10</td>
-                                <td>11xx</td>
-                            </tr>*@
-
-                            @* ----- invoice history loop -------*@
 
                             @if (Model.Budget_Invoce_History_list.Any())
                             {
@@ -293,7 +273,6 @@
                                             <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
                                             <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
                                             <td style="text-align:center;font-size:12px;">&nbsp;ตั้งจ่าย</td>
-                                            <td></td>
                                             <td></td>
                                         </tr>
                                     }
@@ -344,10 +323,6 @@
                                             {
                                                 <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
                                             }
-
-                                            @* remark การตัดจ่ายรายใบ *@
-                                            <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceRemark</td>
-
                                         </tr>
                                     }
 
@@ -355,8 +330,8 @@
                                     if (index == Model.Budget_Invoce_History_list.Count) /*total footer*/
                                     {
                                         <tr>
-                                            <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
-                                            <td style="text-align:right;font-size:12px;border-left-style:none;">Total &nbsp;</td>
+                                            <td style="text-align:left;font-size:12px;"></td>
+                                            <td style="text-align:right;font-size:12px;">Total &nbsp;</td>
                                             <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.sum_cost_product_inv)&nbsp;</td>
                                             <td style="text-align:center;font-size:12px;"></td>
                                             <td></td>
@@ -365,16 +340,11 @@
                                             <td style="text-align:center;font-size:12px;"></td>
                                             <td style="text-align:center;font-size:12px;"></td>
                                             <td></td>
-                                            <td></td>
                                         </tr>
                                     }
 
                                 }
                             }
-
-                            @* --------------------------------- *@
-
-
                         </table>
 
                         <div>

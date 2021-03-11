@@ -1,0 +1,533 @@
+﻿
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<style>
+    .line {
+        border-bottom: 1px solid black;
+    }
+
+    .shadow {
+        -moz-box-shadow: 5px 5px 5px #ccc;
+        -webkit-box-shadow: 5px 5px 5px #ccc;
+        box-shadow: 5px 5px 5px #ccc;
+    }
+
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    h1 {
+        width: 100%;
+        border-bottom: solid 1px #666;
+    }
+</style>
+
+<div class="col-md-12 col-xs-12">
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                วันที่เสนอ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"])
+                 , new { @class = "form-control textRight datepicker textboxcss", Style = "text-align:center; width:200px;", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                เบอร์โทรศัพท์ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:200px;" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12 pull-left">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อผู้เสนอ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact", style = "width:200px;" })
+
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                เอกสารเลขที่ :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                สินค้า : <span class="required">*</span>
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อกิจกรรม<br />(งบประมาณเดิม) :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
+
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                ชื่อกิจกรรม<br />(งบประมาณใหม่) :
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", Style = "width:200px;", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:50px;">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                วัตถุประสงค์ :
+            </label>
+            <div class="col-md-8 col-sm-4 col-xs-12">
+                @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-xs-12 form-group">
+    <a onclick="showBG()"> <h1 class="lead headline">กรอกรายละเอียด BG </h1></a>
+</div>
+
+<div id="divCondition1" class="col-md-12 col-xs-12 shadow">
+    @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input")
+    <div class="col-md-3 col-xs3">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            EO :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtTransferEO", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtTransferEO", onchange = "getCalBudget();" })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            ขอลด/ขอเพิ่ม :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.DropDownList("ddlUpDown", new List<SelectListItem>
+           {
+             new SelectListItem { Text = "ลด", Value = "0"},
+             new SelectListItem { Text = "เพิ่ม", Value = "1"},
+
+          },
+          new
+          {
+              @class = "form-control",
+              @id = "ddlUpDown_NonEO",
+              onchange = "getCalBudgetNonEO();",
+          })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            โอนงบประมาณเพิ่ม(ลด) :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtTransferBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center;", @id = "txtTransferBudget_NonEO", onchange = "getCalBudgetNonEO();" })
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            งบประมาณเดิม :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtOldBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget_NonEO", @readonly = "true" })
+        </div>
+    </div>
+
+    <div class="col-md-3 col-xs-12">
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            งบประมาณใหม่ :
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.TextBox("txtNewBudget_NonEO", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget_NonEO", @readonly = "true" })
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">
+                รายละเอียด
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark_NonEO" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-12 col-md-offset-5">
+            <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRowNonEO();">Add</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-12 col-xs-12 form-group">
+    <a onclick="showEO()"> <h1 class="lead">กรอกรายละเอียด EO / IO</h1></a>
+</div>
+<div id="divCondition2" class="col-md-12 col-xs-12 form-group">
+
+    @*<div id="divgetdetailcost" class="col-lg-12">
+            @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
+        </div>*@
+
+    <div class="col-md-12 col-xs-12 form-group shadow" style="margin-top:15px;">
+
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                EO :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtBudgetEO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetEO", onchange = "getBudgetEOIO();" })
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                IO :
+            </label>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtBudgetIO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetIO", onchange = "getBudgetEOIO();" })
+            </div>
+        </div>
+
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">
+                ขอลด/ขอเพิ่ม :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.DropDownList("ddlUpDown", new List<SelectListItem>
+               {
+                 new SelectListItem { Text = "ลด", Value = "0"},
+                 new SelectListItem { Text = "เพิ่ม", Value = "1"},
+
+              },
+              new
+              {
+                  @class = "form-control",
+                  @id = "ddlUpDown",
+                  onchange = "getCalBudget();"
+              })
+            </div>
+        </div>
+        <div class="col-md-3 col-xs3">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                โอนงบประมาณเพิ่ม(ลด) :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtTransferBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                งบประมาณเดิม :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtOldBudget", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget", @readonly = "true" })
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                เหลือ :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-3">
+            <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                งบประมาณใหม่ :
+            </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.TextBox("txtNewBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 form-group">
+            <div class="col-md-6 col-xs-6 form-group" style="margin-top:15px;">
+                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                    รายละเอียด
+                </label>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 form-group">
+            <div class="col-md-12 col-md-offset-5">
+                <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRow();">Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $(".datepicker").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+    document.getElementById("divCondition2").style.display = "none";
+
+    function showBG() {
+        var x1 = document.getElementById("divCondition1");
+        var x2 = document.getElementById("divCondition2");
+        if (x1.style.display === "none") {
+            x1.style.display = "block";
+            x2.style.display = "none";
+        } else {
+            x1.style.display = "none";
+            x2.style.display = "block";
+        }
+    }
+
+    function showEO() {
+        var x1 = document.getElementById("divCondition1");
+        var x2 = document.getElementById("divCondition2");
+        if (x2.style.display === "none") {
+            x1.style.display = "none";
+            x2.style.display = "block";
+        } else {
+            x1.style.display = "block";
+            x2.style.display = "none";
+        }
+    }
+
+    $("#ddlChannel_BG").change(function () {
+        getBudgetNonEO();
+    });
+    $("#ddlActivityGroup").change(function () {
+        getBudgetNonEO();
+    });
+    $("#ddlBrand_BG").change(function () {
+        getBudgetNonEO();
+    });
+
+    function getCalBudget() {
+
+        var oldBG = $("#txtOldBudget").val().replace(",", "");
+        var TransferBudget = $("#txtTransferBudget").val();
+        if ($("#ddlUpDown").val() == "0") {
+            var result = parseFloat(oldBG) - parseFloat(TransferBudget);
+            $("#txtNewBudget").val(result.toString());
+        }
+        else {
+            var result = parseFloat(oldBG) + parseFloat(TransferBudget);
+            $("#txtNewBudget").val(result.toString());
+        }
+    }
+
+
+    function getCalBudgetNonEO() {
+
+        var oldBG = $("#txtOldBudget_NonEO").val().replace(",", "");
+        var TransferBudget = $("#txtTransferBudget_NonEO").val();
+        if ($("#ddlUpDown_NonEO").val() == "0") {
+            var result = parseFloat(oldBG) - parseFloat(TransferBudget);
+            $("#txtNewBudget_NonEO").val(result.toString());
+        }
+        else {
+            var result = parseFloat(oldBG) + parseFloat(TransferBudget);
+            $("#txtNewBudget_NonEO").val(result.toString());
+        }
+
+    }
+
+    function cashDelete(btn) {
+        var rowIndex = $(btn).closest('tr').index();
+        console.log(rowIndex);
+        if (rowIndex > 0) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    }
+
+     function getBudgetEOIO() {
+
+         var required = "กรุณา ระบุ :<br>";
+         var validate = true;
+         if ($("#txtBudgetEO").val() == '') { required += "EO*<br>"; validate = false; }
+         if ($("#txtBudgetIO").val() == '') { required += "IO*<br>"; validate = false; }
+         if (validate != true) {
+             bootbox.alert(required);
+             return false;
+         }
+
+       $.ajax({
+                url: '@Url.Action("getBudgetBalanceByEOIO", "TransferBudget")',
+                data: {
+                    EO: $("#txtBudgetEO").val(),
+                    IO: $("#txtBudgetIO").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+           success: function (response) {
+               console.log(response.Data);
+               if (response.Data != null) {
+                   $("#txtOldBudget").val(response.Data.budgetPrice);
+                   $("#txtBudgetBalance").val(response.Data.paymentBlance);
+                 }
+               else {
+                   $("#txtOldBudget").val('');
+                   $("#txtBudgetBalance").val('');
+                     bootbox.alert("ไม่พบ ข้อมูล!");
+                 }
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+
+    function getBudgetNonEO() {
+       $.ajax({
+                url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
+                data: {
+                    brandId: $("#ddlBrand_BG").val(),
+                    channelId: $("#ddlChannel_BG").val(),
+					activityGroupId: $("#ddlActivityGroup").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+           success: function (response) {
+               console.log(response.Data);
+               if (response.Data != null) {
+                   $("#txtOldBudget_NonEO").val(response.Data.amount);
+                   $("#txtTransferEO").val(response.Data.EO);
+                   
+               }
+               else {
+                   $("#txtOldBudget_NonEO").val('');
+               }
+               $("#txtNewBudget_NonEO").val('');
+               getCalBudgetNonEO();
+               $("#WaitDialog").hide();
+           }
+         });
+    }
+
+
+
+    function addRowNonEO() {
+        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        if (RowCount == 0 && $("#activityOfEstimateList_0__EO").val() == '') {
+            $("#activityOfEstimateList_0__EO").val($("#txtTransferEO").val());
+            $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown_NonEO").val());
+            $("#activityOfEstimateList_0__remark").val($("#txtremark_NonEO").val());
+            $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget_NonEO").val());
+            $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget_NonEO").val());
+            $("#activityOfEstimateList_0__total").val($("#txtNewBudget_NonEO").val());
+
+        }
+        else {
+            console.log(RowCount);
+            RowCount = RowCount + 1;
+            var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
+
+            $("#tbl_budgetControl > tbody:first").append(newRow);
+            newRow.find("input").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+            newRow.find("select").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+
+            newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
+
+            $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtTransferEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget_NonEO").val());
+        }
+    }
+
+
+    function addRow() {
+        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        if (RowCount == 0 && $("#activityOfEstimateList_0__EO").val() == '') {
+            $("#activityOfEstimateList_0__EO").val($("#txtBudgetEO").val());
+            $("#activityOfEstimateList_0__IO").val($("#txtBudgetIO").val());
+            $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown").val());
+            $("#activityOfEstimateList_0__remark").val($("#txtremark").val());
+            $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget").val());
+            $("#activityOfEstimateList_0__themeCost").val($("#txtBudgetBalance").val());
+            $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget").val());
+            $("#activityOfEstimateList_0__total").val($("#txtNewBudget").val());
+        }
+        else {
+            console.log(RowCount);
+            RowCount = RowCount + 1;
+            var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
+
+            $("#tbl_budgetControl > tbody:first").append(newRow);
+            newRow.find("input").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+            newRow.find("select").each(function () {
+                $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            }
+            );
+
+            newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
+
+            $("#activityOfEstimateList_" + RowCount +"__EO").val($("#txtBudgetEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__IO").val($("#txtBudgetIO").val());
+            $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown").val());
+            $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark").val());
+            $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val());
+            $("#activityOfEstimateList_" + RowCount + "__themeCost").val($("#txtBudgetBalance").val());
+            $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget").val());
+            $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val());
+        }
+    }
+
+
+
+</script>
