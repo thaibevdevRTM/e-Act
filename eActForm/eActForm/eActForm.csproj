@@ -3079,7 +3079,6 @@
     <Content Include="Views\actFormRepDetail\approvePositionSignature.cshtml" />
     <Content Include="Views\ApproveListsRepDetail\ListView.cshtml" />
     <Content Include="Views\Budget\activityProduct.cshtml" />
-    <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductList.cshtml" />
     <Content Include="Views\BudgetApproveList\budgetApproveList.cshtml" />
@@ -3294,6 +3293,7 @@
     <Content Include="Views\SharedMasterFormDetail_Input\showDetailBudgetControl.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\showDetailBudgetRpt.cshtml" />
     <Content Include="Uploadfiles\Template Budget.xlsx" />
+    <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
