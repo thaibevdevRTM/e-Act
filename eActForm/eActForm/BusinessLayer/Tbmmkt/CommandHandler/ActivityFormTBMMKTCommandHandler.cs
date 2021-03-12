@@ -809,21 +809,28 @@ namespace eActForm.BusinessLayer
                     }
 
                     //===========Get All EO In Doc=======================
-                    List<string> templistEoInDoc = new List<string>();
+                    List<detailEO> templistEoInDoc = new List<detailEO>();
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                     {
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != "" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
                         {
-                            templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
+                            detailEO detailEOModel = new detailEO();
+                            detailEOModel.EO = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO;
+                            detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                            templistEoInDoc.Add(detailEOModel);
+
                         }
                         foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
                         {
-                            if (!templistEoInDoc.Contains(itemGetEO.EO))
+                            if (!templistEoInDoc.Where(x => x.EO.Contains(itemGetEO.EO)).Any())
                             {
-                                templistEoInDoc.Add(itemGetEO.EO);
+                                detailEO detailEOModel = new detailEO();
+                                detailEOModel.EO = itemGetEO.EO;
+                                detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0,4))).FirstOrDefault().brandName;
+                                templistEoInDoc.Add(detailEOModel);
                             }
                         }
-                        activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
+                        activity_TBMMKT_Model.eoList = templistEoInDoc;
                     }
                     //===END========Get All EO In Doc=======================
 
