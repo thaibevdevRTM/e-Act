@@ -11,45 +11,82 @@
 
 <div id="divProgress" class="row">
     <br />
-    @{ int row = 0; }
-    @foreach (var item in Model.budgetTotalList)
-    {
+    <table class="tablethin pull-right">
 
-        string result = String.Format("{0:n2}", item.amountBalancePercen);
-        int intBalance = Convert.ToInt32(item.amountBalancePercen);
-        <div class="pro gress_title">
-            @if (row == 0)
+        @{ int row = 0; }
+        @foreach (var item in Model.budgetTotalList)
+        {
+            string result = String.Format("{0:n2}", item.amountBalancePercen);
+            int intBalance = Convert.ToInt32(item.amountBalancePercen);
+
+            if (row == 0)
             {
+
                 if (!string.IsNullOrEmpty(item.brandId))
                 {
-
-                    <label class="cssborderbottom">
-                        งบประมาณทั้งปี  @item.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
-                    </label>
-
+                    <tr>
+                        <td>งบประมาณ @item.brandName </td>
+                        <td>&nbsp;ทั้งปี&nbsp;&nbsp;</td>
+                        <td>@item.totalBudget.Value.ToString("#,##0.00")</td>
+                        <td>&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
+                        <td>@Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00")</td>
+                        <td>&nbsp;คงเหลือ&nbsp;&nbsp; </td>
+                        <td>@Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")</td>
+                    </tr>
                 }
                 else
                 {
-                    <label class="cssborderbottom">
-                        งบประมาณช่องทาง @item.channelName ทั้งปี  @Model.budgetTotalModel.totalBudgetChannel.Value.ToString("#,##0.00") ใช้ไปสะสม @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
-                    </label>
+                    <tr>
+                        <td>
+                            งบประมาณช่องทาง @item.channelName
+                        </td>
+                        <td>&nbsp;ทั้งปี&nbsp;&nbsp;</td>
+                        <td>
+                            @Model.budgetTotalModel.totalBudgetChannel.Value.ToString("#,##0.00")
+                        </td>
+                        <td>
+                            &nbsp;ใช้ไปสะสม&nbsp;&nbsp;
+                        </td>
+                        <td>
+                            @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00")
+                        </td>
+                        <td>&nbsp;คงเหลือ&nbsp;&nbsp;</td>
+                        <td>
+                            @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
+                        </td>
+                    </tr>
                 }
-                <br />
+
             }
 
-            @if (!string.IsNullOrEmpty(item.brandId))
+            if (!string.IsNullOrEmpty(item.brandId))
             {
-                <span>งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+                <tr>
+                    <td>งบ @item.activityType </td>
+                    <td>&nbsp;ทั้งปี&nbsp;&nbsp;</td>
+                    <td>@item.amount.Value.ToString("#,##0.00")</td>
+                    <td>&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
+                    <td>@item.useAmount.Value.ToString("#,##0.00")</td>
+                    <td>&nbsp;คงเหลือ&nbsp;&nbsp;</td>
+                    <td>@item.amountBalance.Value.ToString("#,##0.00")</td>
 
+                </tr>
             }
             else
             {
-                <span>งบ @item.brandName ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+                <tr>
+                    <td>งบ @item.brandName </td>
+                    <td>&nbsp;ทั้งปี&nbsp;&nbsp;</td>
+                    <td>@item.amount.Value.ToString("#,##0.00")</td>
+                    <td>&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
+                    <td>@item.useAmount.Value.ToString("#,##0.00")</td>
+                    <td>&nbsp;คงเหลือ&nbsp;&nbsp;</td>
+                    <td>@item.amountBalance.Value.ToString("#,##0.00")</td>
 
+                </tr>
             }
 
-
-        </div>
-        row++;
-    }
+            row++;
+        }
+    </table>
 </div>
