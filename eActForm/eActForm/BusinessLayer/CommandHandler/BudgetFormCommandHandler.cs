@@ -33,7 +33,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@invoiceNo",model.invoiceNo)
                     ,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
                     ,new SqlParameter("@actionDate",model.dateInvoiceAction) //invoiceActionDate
-					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@invoiceRemark",model.invoiceRemark)
+
+                    ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });
             }
@@ -68,6 +70,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					//,new SqlParameter("@actionDate",model.invoiceActionDate)
 					,new SqlParameter("@actionDate",model.dateInvoiceAction)
+                    ,new SqlParameter("@invoiceRemark",model.invoiceRemark)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });

@@ -32,10 +32,12 @@
             <th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
             <th class="align-content-center font12B" style="text-align:center;">สถานะ</th>
             <th class="align-content-center font12B" style="text-align:center;">สถานะอนุมัติ</th>
+            <th class="align-content-center font12B" style="text-align:center;">หมายเหตุ</th>
+
         </tr>
     </thead>
 
-    @*------------------------------------------------------------------------------------------------*@
+    @*------------------------ 09-03-2021 -------------------------------------------------------------------*@
     <tbody>
         @if (Model.Budget_Activity_Invoice_list.Count > 0)
         {
@@ -142,9 +144,11 @@
 
                         }
                     </td>
+                    @* หมายเหตุ การตัดจ่าย invoiceRemark *@
+                    <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceRemark</td>
                 </tr>
                 index++;
-            }
+            } @*--- end for ---*@
         }
     </tbody>
     @*------------------------------------------------------------------------------------------------*@
