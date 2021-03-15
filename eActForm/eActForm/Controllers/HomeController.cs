@@ -103,6 +103,10 @@ namespace eActForm.Controllers
                     result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
                     if (result.Success)
                     {
+                        var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId));
+                        var txtStamp = "เอกสารถูกยกเลิก";
+                        bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
+
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }
