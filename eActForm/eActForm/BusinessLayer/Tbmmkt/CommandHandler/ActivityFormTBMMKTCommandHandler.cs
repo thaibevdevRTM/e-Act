@@ -822,18 +822,22 @@ namespace eActForm.BusinessLayer
                         }
                         foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
                         {
+
                             if (!templistEoInDoc.Where(x => x.EO.Contains(itemGetEO.EO)).Any())
                             {
                                 detailEO detailEOModel = new detailEO();
                                 detailEOModel.EO = itemGetEO.EO;
-                                detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0,4))).FirstOrDefault().brandName;
+                                if (!string.IsNullOrEmpty(itemGetEO.EO))
+                                {
+                                    detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                                }
                                 templistEoInDoc.Add(detailEOModel);
                             }
+
                         }
                         activity_TBMMKT_Model.eoList = templistEoInDoc;
                     }
-                    //===END========Get All EO In Doc=======================
-
+                    //===END========Get All EO In Doc======================= 
                 }
             }
             catch (Exception ex)
