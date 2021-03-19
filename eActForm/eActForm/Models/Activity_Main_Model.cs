@@ -71,6 +71,7 @@ namespace eActForm.Models
             empInfoModel = new RequestEmpModel();
             regionalModel = new List<RegionalModel>();
             budgetTotalModel = new BudgetTotal();
+            budgetTotalList = new List<BudgetTotal>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }

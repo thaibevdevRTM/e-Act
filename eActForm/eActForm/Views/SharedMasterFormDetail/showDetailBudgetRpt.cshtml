@@ -2,7 +2,8 @@
 @model eActForm.Models.Activity_TBMMKT_Model
 
 
-
+@if (Model.budgetTotalList.Any())
+{
 <div id="divProgress" class="row">
     <style>
         .cssborderbottom {
@@ -125,3 +126,4 @@
 
     </table>
 </div>
+}
