@@ -9,5 +9,6 @@ namespace eForms.Models.MasterData
         public string digit_IO { get; set; }
         public string digit_EO { get; set; }
         public string no_tbmmkt { get; set; }
+        public string brandCode { get; set; }
     }
 }

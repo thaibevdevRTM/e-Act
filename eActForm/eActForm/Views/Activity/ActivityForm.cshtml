@@ -84,45 +84,77 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12"></div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReferenceRefActNo">
+                        Referene ActNo.
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="divReference">
+                            @Html.TextBoxFor(x => x.activityFormModel.referenceActNo, new { @class = "form-control textboxcss", @id = "txtReferenceActNo", autocomplete = "off", @readonly = "readonly" })
+                            @Html.HiddenFor(x => x.activityFormModel.referenceActNo, new { @id = "hdReferenceActNo" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+
+                <div class="row">
+
+                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                            Customer Format
+                        </label>
+                    }
+                    else
+                    {
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
                             Reference
                         </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div id="divReference">
-                                @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
-                            </div>
-                            <div id="divRadioRef" class="radioRef">
-                            </div>
+                    }
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="divReference">
+                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                        </div>
+                        <div id="divRadioRef" class="radioRef">
                         </div>
                     </div>
                 </div>
+
+
             </div>
-
-            <div class="form-group" id="divRegion">
-                <div class="col-md-6 col-xs-12"></div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
-                            Region<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
-                       {
-                           @class = "form-control textboxcss",
-                           id = "ddlRegion"
-                       })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
+
+        <div class="form-group" id="divRegion">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                        Region<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                   {
+                       @class = "form-control textboxcss",
+                       id = "ddlRegion"
+                   })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
@@ -387,35 +419,39 @@
 
 <div class="row">
     <div id="outer">
+        <div class="container">
+            <div class="row">
 
-        @if (mode != "")
-        {
-            <div class="inner">
-                <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
+
+                @if (mode != "")
+                {
+                    <div style="display: inline-block" id="divSaveAs">
+                        <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
+                    </div>
+                }
+
+                <div style="display:inline-block">
+                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                </div>
+
+                <div style="display:inline-block;" id="divSubmit">
+                    <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+                </div>
+                <div style="display:inline-block;" id="divUpdate">
+                    <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
+                </div>
+
             </div>
-        }
-        <div class="inner">
-            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-            {
-                <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            }
-            else
-            {
-                <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            }
-
         </div>
-        @if (Model.activityFormModel.statusId == 1
-         && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
-        {
-            <div class="inner">
-                <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-            </div>
-        }
 
-        <div class="inner" id="divbtnUpdate">
-            <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
-        </div>
+
     </div>
 
 </div>
@@ -438,9 +474,14 @@
 
         ObjModel = {};
         fillProductOnChange();
+        checkBtn();
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
+        $("#divSubmit").hide();
+        $("#divUpdate").hide();
+
+
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -450,70 +491,94 @@
             document.getElementById("divIO").style.display = "none";
         }
 
+        if (@Model.activityFormModel.statusId == "1" && '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId'
+            || '@string.IsNullOrEmpty(Model.activityFormModel.createdByUserId)' == 'True') {
+            $("#divSubmit").show();
+        }
+
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+            $("#txtCustomerName").show();
+            $("#divRegion").show();
+            $("#ddlCustomer").hide();
+        }
+        else {
+            $("#txtCustomerName").hide();
+            $("#divRegion").hide();
+            $("#ddlCustomer").show();
+        }
+
+        if (@Model.activityFormModel.statusId == "2" || @Model.activityFormModel.statusId == "3") {
+            $("#divbtnUpdate").show();
+        }
+        else {
+            $("#divbtnUpdate").hide();
+        }
 
 
-           if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
-               $("#txtCustomerName").show();
-               $("#divRegion").show();
-               $("#ddlCustomer").hide();
-            }
-           else {
-               $("#txtCustomerName").hide();
-               $("#divRegion").hide();
-               $("#ddlCustomer").show();
-           }
-
-           if (@Model.activityFormModel.statusId == "2" || @Model.activityFormModel.statusId == "3") {
-               $("#divbtnUpdate").show();
-           }
-           else {
-               $("#divbtnUpdate").hide();
-           }
+        if (@Model.activityFormModel.statusId != "1" || @Model.activityFormModel.statusId == "5" || '@Model.activityFormModel.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+            setTxtReadOnly();
+        }
 
 
-           if (@Model.activityFormModel.statusId != "1"  || @Model.activityFormModel.statusId == "5" || '@Model.activityFormModel.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-               setTxtReadOnly();
-           }
-
-
-           if (!'@Model.activityFormModel.createdByUserId' || '@UtilsAppCode.Session.User.isAdmin' == 'True'
-               || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
-               setTxtUnReadOnly();
-           }
+        if (!'@Model.activityFormModel.createdByUserId' || '@UtilsAppCode.Session.User.isAdmin' == 'True'
+            || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+            setTxtUnReadOnly();
+        }
 
 
 
 
-            $("#txtCustomerName").autocomplete({
+        $("#txtCustomerName").autocomplete({
             source: function (request, response) {
-                    $.ajax({
+                $.ajax({
                     url: '@Url.Action("getCustomerByRegion", "eAct")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
+                    type: "POST",
+                    dataType: "json",
+                    data: {
                         regionId: $("#ddlRegion").val(),
-                               txtCus: $("#txtCustomerName").val(),
-                        },
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                            }))
+                        txtCus: $("#txtCustomerName").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                        }))
 
-                        }
-                    })
-                },
-                minLength: 0,
-                messages: {
-                noResults: '',
-                    results: function (resultsCount) {
                     }
-                }, select: function (event, ui) {
-                    $("#customerId").val(ui.item.id)
-                           }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-            });
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#customerId").val(ui.item.id)
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
     });
+
+
+
+    function checkBtn() {
+         $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("checkApproveRefNo", "Activity")',
+             data: {
+                 activityId: '@Model.activityFormModel.id',
+                 typeForm:'@Model.activityFormModel.typeForm',
+            }
+         }).done(function (response) {
+             console.log(response);
+             if (response.Success == true) {
+                 if ('@Model.activityFormModel.statusId' == "5") {
+                     $("#divSubmit").show();
+                     $("#divSaveAs").hide();
+                 }
+             }
+        });
+    }
 
     function OnChangeChkIO(element) {
         if (element.checked) {
@@ -904,10 +969,10 @@
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
 
-       
+
            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
             $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
-        
+
          if ($("#ddlTheme").val() == "8B5402F5-63D0-46E5-BFDA-9FC72F3CF565")
          {
             var rowCount = parseInt($('#tbl_activityDetail tr.tagTR').length);
@@ -953,6 +1018,7 @@
                     dateProductlist: $("#txtdateActivitySt").val(),
                     dateActivitylist: $("#txtdateActivityEnd").val(),
                     Reference: $("#txtReference").val(),
+                    ReferenceActNo: $("#hdReferenceActNo").val(),
                     CustomerId: cusId,
                     ProductCateId: $("#ddlProductCate").val(),
                     ProductGroupId: $("#ddlProductGrp").val(),
@@ -1049,6 +1115,15 @@
          cusId = $("#customerId").val()
         }
 
+        if ('@Model.activityFormModel.statusId' == "5") {
+            $("#hdReferenceActNo").val($("#txtActivityNo").val());
+        }
+        else {
+            $("#hdReferenceActNo").val('');
+        }
+
+
+
         bootbox.confirm({
             message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
@@ -1077,6 +1152,7 @@
                             dateProductlist: $("#txtdateActivitySt").val(),
                             dateActivitylist: $("#txtdateActivityEnd").val(),
                             Reference: $("#txtReference").val(),
+                            referenceActNo: $("#hdReferenceActNo").val(),
                             CustomerId: cusId,
                             ProductCateId: $("#ddlProductCate").val(),
                             ProductGroupId: $("#ddlProductGrp").val(),

@@ -107,7 +107,7 @@ namespace eActForm.BusinessLayer
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
-                string stor = AppCode.AllForm.Contains(getMasterType)  ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+                string stor = AppCode.expenseForm.Contains(getMasterType)  ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
@@ -123,7 +123,7 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     checkFlowApprove = string.IsNullOrEmpty(checkFlowApprove) ? model.flowMain.id : checkFlowApprove;
 
-                    if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.AllForm.Contains(getMasterType)))
+                    if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.expenseForm.Contains(getMasterType)))
                     {
                         model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                     }
@@ -288,7 +288,7 @@ namespace eActForm.BusinessLayer
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
-                                 rangNo = (int)dr["rangNo"],
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
                                  empId = dr["empId"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  //empFNameTH = dr["empFNameTH"].ToString(),
@@ -313,6 +313,29 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlowDetail >>" + ex.Message);
             }
         }
+
+        public static List<ApproveFlowModel.flowApproveDetail> getNewPosition(string empId, string companyId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getPostiForSpectialEmpByCompany"
+                    , new SqlParameter[]{ new SqlParameter("@companyId", companyId)
+                                   , new SqlParameter("@empId", empId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail("")
+                             {
+                                 empPositionTitleTH = dr["positionTH"].ToString(),
+                                 empPositionTitleEN = dr["positionEN"].ToString(),
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getNewPosition >>" + ex.Message);
+            }
+        }
+
 
         public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
         {

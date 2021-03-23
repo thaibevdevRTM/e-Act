@@ -28,6 +28,7 @@
                 <li>@Html.ActionLink("TBM เบิกผลิตภัณฑ์ POS/PREMIUM ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"] }, null)</li>
                 <li>@Html.ActionLink("TBM ใบเบิกค่าใช้จ่ายพนักงาน", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, null)</li>
                 <li>@Html.ActionLink("TBM ใบสั่งจ่าย", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] }, null)</li>
+                @*<li>@Html.ActionLink("TBM โอนงบประมาณ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTransferbudget"] }, null)</li>*@
 
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHCM || (UtilsAppCode.Session.User.isSuperAdmin))

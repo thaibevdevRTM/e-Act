@@ -27,6 +27,7 @@ namespace eActForm.Presenter.MasterData
                                  no_tbmmkt = d["no_tbmmkt"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  typeChannel = d["typeChannel"].ToString(),
+                                 brandCode = d["brandCode"].ToString(),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),

@@ -34,8 +34,19 @@ namespace eActForm.Models
                     List<RequestEmpModel> model =  QueryGet_empDetailById.getEmpDetailById(empId) ;
                     if (model.Count > 0)
                     {
-                        this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
-                        this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+
+                        var getNewPosition = ApproveFlowAppCode.getNewPosition(empId, "");
+                        if (getNewPosition.Count > 0)
+                        {
+                            this.empPositionTitleTH = model.Count > 0 ? getNewPosition[0].empPositionTitleTH : "";
+                            this.empPositionTitleEN = model.Count > 0 ? getNewPosition[0].empPositionTitleEN : "";
+                        }
+                        else
+                        {
+                            this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
+                            this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                        }
+                      
                         this.empFNameTH = model.Count > 0 ? model[0].empName : "";
                         this.empFNameEN = model.Count > 0 ? model[0].empNameEN : "";
                         //HttpContext.Current.Session[empId] = model;

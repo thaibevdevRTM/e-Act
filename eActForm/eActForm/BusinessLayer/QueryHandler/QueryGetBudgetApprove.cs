@@ -139,7 +139,6 @@ namespace eActForm.BusinessLayer
                                   productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
 
                                   invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
-                                  invoiceRemark = d["invoiceRemark"].ToString(),
                                   //invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
                                   //invoiceActionDate = d["invoiceActionDate"].ToString(),
 
@@ -155,7 +154,9 @@ namespace eActForm.BusinessLayer
 
                                   invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
                                   invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
-                                  
+
+                                  invoiceRemark = d["invoiceRemark"].ToString(),
+
                               });
 
                 return result.ToList();

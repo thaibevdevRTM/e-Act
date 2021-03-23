@@ -540,7 +540,7 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId)
+        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId,string activityId)
         {
             try
             {
@@ -549,20 +549,43 @@ namespace eActForm.BusinessLayer
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
-               ,new SqlParameter("@brandId", brandId)});
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@activityId", activityId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
                                  balance = dr["balance"] is DBNull ? 0 : (decimal?)dr["balance"],
+                                 reserve = dr["reserve"] is DBNull ? 0 : (decimal?)dr["reserve"],
+                                 reserveTotal = dr["reserveTotal"] is DBNull ? 0 : (decimal?)dr["reserveTotal"],
+                                 balanceTotal = dr["balanceTotal"] is DBNull ? 0 : (decimal?)dr["balanceTotal"],
                                  amountTotal = dr["amountTotal"] is DBNull ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = dr["amountEvent"] is DBNull ? 0 : (decimal?)dr["amountEvent"],
                                  EO = dr["EO"].ToString(),
                                  LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
+                                 totalBudgetChannel = dr["totalBrandChannel"] is DBNull ? 0 : (decimal?)dr["totalBrandChannel"],
                              }).ToList();
                 return lists;
             }
             catch(Exception ex)
             {
                 throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
+        }
+
+        public static int insertReserveBudget(string activityId)
+        {
+            try
+            {
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_ReserveBudgetControl"
+                    , new SqlParameter[] { new SqlParameter("@activityId", activityId)
+                    , new SqlParameter("@createByUser" ,UtilsAppCode.Session.User.empId)});
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertReserveBudget >>" + ex.Message);
             }
 
         }

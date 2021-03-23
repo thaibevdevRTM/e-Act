@@ -15,9 +15,18 @@ namespace eActForm.Controllers
         public ActionResult dropdownCondtionTbmmkt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrandByForm(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId).Where(x => x.no_tbmmkt != "").ToList();
-
             return PartialView(activity_TBMMKT_Model);
         }
+
+        public ActionResult dropdownCondtionBudgetControl()
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.GetChannelBudgetControl().ToList();
+            activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getActivityGroupBudgetControl().ToList();
+            activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetBrandBudgetControl().ToList();
+            return PartialView(activity_TBMMKT_Model);
+        }
+
         public ActionResult headerDetailsDate(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])

@@ -20,7 +20,12 @@ else
 
 
     <div class="row">
-
+        <div id="WaitDialog" class="loading" style="text-align: center;display:none;">
+            <img src="~/images/loading.gif" style="margin-top:100px;width:100px;height:100px;" />
+            <div style="margin-top: 10px; color: white">
+                <b>Please wait</b>
+            </div>
+        </div>
         <div class="col-md-12 col-xs-12">
             <a class="btn ink-reaction btn-info fa fa-search" href="#"></a>@Resources.Global.toViewDocument
             <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>@Resources.Global.toApproveDocument
@@ -146,12 +151,7 @@ else
         console.log(countDoc);
 
         if (countDoc > 0) {
-            $.each($("input[name='chk_approve']:checked"), function () {
 
-                favorite.push($(this).val());
-                insertApprove(favorite[favorite.length - 1]);
-
-            }).promise().done(function () {
                 bootbox.confirm({
                     title: "",
                     message: "ยืนยันการอนุมัติเอกสาร จำนวน : " + countDoc + " ฉบับ",
@@ -166,22 +166,34 @@ else
                     },
                     callback: function (result) {
                         if (result) {
-                            bootbox.alert({
-                                message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
-                                callback: function () {
-                                    var url = '@Url.Action("Index", "ApproveLists")';
-                                    window.location.replace(url);
-                                }
-                            })
+
+                            $.each($("input[name='chk_approve']:checked"), function (index, value) {
+                                favorite.push($(this).val());
+                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+                            }).promise().done(function () {
+                                $("#WaitDialog").show();
+                                setTimeout(alertFunc, 5000);
+                            });
+
                         }
 
                     }
                 });
-            });
+
         }
         else {
             doAlert('กรุณาเลือกรายการ อนุมัติ');
         }
+    }
+
+    function alertFunc() {
+        bootbox.alert({
+            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
+            callback: function () {
+                var url = '@Url.Action("Index", "ApproveLists")';
+                window.location.replace(url);
+            }
+        })
     }
 
 
@@ -208,23 +220,25 @@ else
                 typeForm: '@AppCode.ApproveType.Activity_Form.ToString()',
             }
         }).done(function (htmlResponse) {
-            $("#dataFromAct").val(htmlResponse);
-            sentApprove_GenPdf(actId);
+            //$("#dataFromAct").val(htmlResponse);
+
+            sentApprove_GenPdf(actId, htmlResponse);
         });
     }
 
-    function sentApprove_GenPdf(actId) {
+    function sentApprove_GenPdf(actId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                GridHtml: $("#dataFromAct").val(),
+                GridHtml: htmlResponse,
                 statusId: '3',
                 activityId: actId,
             },
             dataType: "json",
             type: 'POST',
         }).done(function (response) {
-
+            console.log('success' + actId);
+            console.log($("#dataFromAct").val());
         });
     }
 

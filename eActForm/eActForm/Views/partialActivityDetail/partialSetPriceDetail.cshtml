@@ -60,7 +60,7 @@
                     else
                     {
                         @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.documentDate, ConfigurationManager.AppSettings["formatDateUse"]),
-                       new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
+                       new { @class = "form-control textboxcss", @id = "txtdateDocSet", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
 
                     }
                 </div>
