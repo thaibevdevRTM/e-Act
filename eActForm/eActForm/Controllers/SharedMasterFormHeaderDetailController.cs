@@ -24,6 +24,7 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsBg(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
             return PartialView(activity_TBMMKT_Model);
         }
 

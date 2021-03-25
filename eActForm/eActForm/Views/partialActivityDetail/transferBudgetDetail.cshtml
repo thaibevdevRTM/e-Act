@@ -54,7 +54,6 @@
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact", style = "width:200px;" })
-
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -62,7 +61,7 @@
                 เอกสารเลขที่ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo" })
+                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo",@readonly=true })
             </div>
         </div>
     </div>
@@ -373,14 +372,7 @@
 
     }
 
-    function cashDelete(btn) {
-        var rowIndex = $(btn).closest('tr').index();
-        console.log(rowIndex);
-        if (rowIndex > 0) {
-            var row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-    }
+   
 
      function getBudgetEOIO() {
 
@@ -455,7 +447,8 @@
             $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget_NonEO").val());
             $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget_NonEO").val());
             $("#activityOfEstimateList_0__total").val($("#txtNewBudget_NonEO").val());
-
+            $("#activityOfEstimateList_0__productId").val($("#ddlBrand_BG").val());
+            $("#activityOfEstimateList_0__typeTheme").val($("#ddlChannel_BG").val());
         }
         else {
             console.log(RowCount);
@@ -482,6 +475,8 @@
             $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget_NonEO").val());
             $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget_NonEO").val());
             $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget_NonEO").val());
+            $("#activityOfEstimateList_" + RowCount + "__productId").val($("#ddlBrand_BG").val());
+            $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
         }
     }
 
@@ -497,6 +492,8 @@
             $("#activityOfEstimateList_0__themeCost").val($("#txtBudgetBalance").val());
             $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget").val());
             $("#activityOfEstimateList_0__total").val($("#txtNewBudget").val());
+            $("#activityOfEstimateList_0__productId").val($("#ddlBrand_BG").val());
+            $("#activityOfEstimateList_0__typeTheme").val($("#ddlChannel_BG").val());
         }
         else {
             console.log(RowCount);
@@ -525,6 +522,8 @@
             $("#activityOfEstimateList_" + RowCount + "__themeCost").val($("#txtBudgetBalance").val());
             $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget").val());
             $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val());
+            $("#activityOfEstimateList_" + RowCount + "__productId").val($("#ddlBrand_BG").val());
+            $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
         }
     }
 

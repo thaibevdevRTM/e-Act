@@ -288,7 +288,7 @@ namespace eActForm.BusinessLayer
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
-                                 rangNo = (int)dr["rangNo"],
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
                                  empId = dr["empId"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  //empFNameTH = dr["empFNameTH"].ToString(),
