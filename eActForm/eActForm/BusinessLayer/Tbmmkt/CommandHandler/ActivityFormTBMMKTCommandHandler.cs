@@ -829,7 +829,12 @@ namespace eActForm.BusinessLayer
                                 detailEOModel.EO = itemGetEO.EO;
                                 if (!string.IsNullOrEmpty(itemGetEO.EO))
                                 {
-                                    detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0, 4))).FirstOrDefault().brandName;
+
+                                    var getBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0, 4))).AsEnumerable();
+                                    if (getBrand.ToList().Any())
+                                    {
+                                        detailEOModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(itemGetEO.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                                    }
                                 }
                                 templistEoInDoc.Add(detailEOModel);
                             }

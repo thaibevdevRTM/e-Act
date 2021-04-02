@@ -79,7 +79,7 @@ namespace eActForm.Controllers
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
-                            modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                            //modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
                             modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
                             modelBudget.chanelName = dt.Columns[ii].ToString();
                             modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);

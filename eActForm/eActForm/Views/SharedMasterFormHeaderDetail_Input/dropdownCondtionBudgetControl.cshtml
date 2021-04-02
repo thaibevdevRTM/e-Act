@@ -4,92 +4,47 @@
 @model eActForm.Models.Activity_TBMMKT_Model
 
 
+<div class="col-md-12 col-xs-12">
+    <div id="divBrand" class="col-md-3 col-xs-12">
 
-<div class="col-md-3 col-xs-12">
-    <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-        &nbsp;Condition Flow<span class="required">&nbsp;:&nbsp;</span>
-    </label>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new List<SelectListItem>
-        {
-           new SelectListItem { Text = "Brand", Value = "brand"},
-           new SelectListItem { Text = "Channel", Value = "channel"},
-
-        },
-        new
-        {
-            @class = "form-control ",
-            id = "ddlChannelOrBrand_BG",
-            onchange = "onchangeChannelOrBrand();"
-        })
-    </div>
-</div>
-
-<div id="divBrand" class="col-md-3 col-xs-12">
-
-    <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-        &nbsp;Brand<span class="required">&nbsp;:&nbsp;</span>
-    </label>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-        {
-            @class = "form-control ",
-            id = "ddlBrand_BG"
-        })
-    </div>
-</div>
-
-<div id="divChannel" style="display:none;" class="col-md-3 col-xs-12">
-
-    <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-        &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
-    </label>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
-         {
-             @class = "form-control ",
-             id = "ddlChannel_BG"
-         })
-    </div>
-</div>
-
-
-
-
-<div id="divActivityGroup" class="col-md-3 col-xs-12">
         <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-            &nbsp;ActivityGroup<span class="required">&nbsp;:&nbsp;</span>
+            &nbsp;Brand<span class="required">&nbsp;:&nbsp;</span>
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
+            @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
             {
                 @class = "form-control ",
-                id = "ddlActivityGroup"
+                id = "ddlBrand_BG"
             })
         </div>
+    </div>
+
+    <div id="divChannel" class="col-md-3 col-xs-12">
+
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+             {
+                 @class = "form-control ",
+                 id = "ddlChannel_BG"
+             })
+        </div>
+    </div>
+
+    <div id="divSubject" class="col-md-3 col-xs-12">
+
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            &nbsp;Subject<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.DropDownListFor(x => x.activityFormTBMMKT.empId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+            {
+                @class = "form-control ",
+                id = "ddlSubject_BG"
+            })
+        </div>
+    </div>
+
 </div>
-
-
-
-
-<script type="text/javascript">
-
-    function onchangeChannelOrBrand() {
-
-        if ($("#ddlChannelOrBrand_BG").val() == 'channel') {
-            document.getElementById("divChannel").style.display = "block";
-            document.getElementById("divBrand").style.display = "block";
-            document.getElementById("divActivityGroup").style.display = "none";
-            $('#ddlBrand_BG').val('');
-            $('#ddlActivityGroup').val('');
-        }
-        else {
-            document.getElementById("divBrand").style.display = "block";
-            document.getElementById("divChannel").style.display = "none";
-            document.getElementById("divActivityGroup").style.display = "block";
-            $('#ddlChannel_BG').val('');
-        }
-
-
-    }
-</script>

@@ -15,6 +15,16 @@ namespace eActForm.Controllers
         public ActionResult partialTransferList(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
+
+            for (int i = 0; i < activity_TBMMKT_Model.activityOfEstimateList.Count; i++)
+            {
+                activity_TBMMKT_Model.activityOfEstimateList[i].productName = QueryGetAllBrand.GetAllBrand().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].productId)).FirstOrDefault().brandName;
+                if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme))
+                {
+                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllChanel.getAllChanel().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme)).FirstOrDefault().chanelGroup;
+                }
+            }
+
             if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
             {
                 activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());

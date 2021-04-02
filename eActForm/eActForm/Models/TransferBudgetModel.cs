@@ -17,5 +17,6 @@ namespace eActForm.Models
         public decimal? paymentBlance { get; set; }
         public decimal? amount { get; set; }
         public string EO { get; set; }
+        public string IO { get; set; }
     }
 }

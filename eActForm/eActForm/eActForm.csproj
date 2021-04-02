@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -221,7 +222,7 @@
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportAppCode.cs" />
-    <Compile Include="BusinessLayer\Appcodes\transferBudgetAppcode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\TransferBudgetAppcode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
@@ -3355,6 +3356,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

@@ -16,18 +16,24 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
-                var budgetPrice = transferBudgetAppcode.GetBudgetBalanceByEOIO(EO, IO);
-
-                var resultData = new
+                if (!string.IsNullOrEmpty(IO))
                 {
-                    budgetPrice = budgetPrice.FirstOrDefault().total,
-                    paymentBlance = budgetPrice.FirstOrDefault().total - budgetPrice.FirstOrDefault().paymentBlance
+                    var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceByEOIO(EO, IO);
 
-                };
+                    if (budgetPrice.Any())
+                    {
+                        var resultData = new
+                        {
+                            budgetPrice = budgetPrice.FirstOrDefault().total,
+                            paymentBlance = budgetPrice.FirstOrDefault().paymentBlance > 0 ? budgetPrice.FirstOrDefault().total - budgetPrice.FirstOrDefault().paymentBlance :0
 
-                result.Data = resultData;
-                result.Success = true;
+                        };
+                        result.Data = resultData;
+                        result.Success = true;
+                    }
+                }
+                
+                
             }
             catch (Exception ex)
             {
@@ -43,14 +49,11 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
-                var budgetPrice = transferBudgetAppcode.GetBudgetBalanceNonEO(brandId, channelId, activityGroupId);
-
+                var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceNonEO(brandId, channelId);
                 var resultData = new
                 {
                     EO = budgetPrice.FirstOrDefault().EO,
-                    amount = budgetPrice.FirstOrDefault().amount
-
+                    amount = string.IsNullOrEmpty(channelId) ? 0 : budgetPrice.FirstOrDefault().amount
                 };
 
                 result.Data = resultData;

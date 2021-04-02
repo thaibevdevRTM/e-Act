@@ -320,7 +320,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
+                throw new Exception("updateBudgetControl_Balance >> " + ex.Message);
             }
         }
 

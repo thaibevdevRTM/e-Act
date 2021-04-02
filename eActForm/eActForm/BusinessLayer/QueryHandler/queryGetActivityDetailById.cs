@@ -28,13 +28,12 @@ namespace eActForm.BusinessLayer
                                  activityTypeId = d["activityTypeId"].ToString(),
                                  productId = d["productId"].ToString(),
                                  productName = d["productDetail"].ToString(),//d["productName"].ToString() == "" ? d["productDetail"].ToString() : d["productName"].ToString(),
-                                 //productDetail = d["productDetail"].ToString(),
                                  pack = d["productId"].ToString() != "" ? QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString() : "",
                                  smellName = d["smellName"].ToString(),
                                  brandName = d["brandName"].ToString(),
                                  size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
                                  wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
-                                 typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales,
+                                 typeTheme = !string.IsNullOrEmpty(d["activityTypeId"].ToString())  ? "" : QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales,
                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                  isShowGroup = true,
@@ -53,38 +52,12 @@ namespace eActForm.BusinessLayer
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                  updatedByUserId = d["updatedByUserId"].ToString(),
-                             });
+                             }).ToList();
+
+                var tt = lists.ToList();
 
                 groupByPrice = lists.OrderBy(x => x.rowNo).ToList();
-                //     .GroupBy(item => new { item.normalCost, item.size, item.rowNo, item.pack })
-                //.Select((group, index) => new CostThemeDetailOfGroupByPrice
-                //{
-                //    productGroupId = group.First().productGroupId,
-                //    brandId = group.First().brandId,
-                //    smellId = group.First().smellId,
-                //    smellName = group.First().smellName,
-                //    activityTypeId = group.First().activityTypeId,
-                //    brandName = group.First().brandName/*.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")"*/,
-                //    productId = group.First().productId,
-                //    wholeSalesPrice = group.First().wholeSalesPrice,
-                //    typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == group.First().activityTypeId).FirstOrDefault().activitySales,
-                //    productName = group.First().isShowGroup ? group.First().brandName.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")" : group.First().productName,
-                //    size = group.First().size,
-                //    normalCost = group.First().normalCost,
-                //    themeCost = group.First().themeCost,
-                //    growth = group.First().growth,
-                //    total = group.First().total,
-                //    perTotal = group.First().perTotal,
-                //    unit = group.First().unit,
-                //    compensate = group.First().compensate,
-                //    LE = group.First().LE,
-                //    pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
-                //    isShowGroup = group.First().isShowGroup,
-                //    rowNo = group.First().rowNo,
-                //    detailGroup = group.ToList()
-
-                //}).ToList();
-
+               
                 return groupByPrice;
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using System;
@@ -18,12 +19,12 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult dropdownCondtionBudgetControl()
+        public ActionResult dropdownCondtionBudgetControl(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.GetChannelBudgetControl().ToList();
             activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getActivityGroupBudgetControl().ToList();
             activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetBrandBudgetControl().ToList();
+            activity_TBMMKT_Model.tB_Reg_Subject = new List<TB_Reg_Subject>();
             return PartialView(activity_TBMMKT_Model);
         }
 
