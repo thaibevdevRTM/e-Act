@@ -441,10 +441,10 @@
                     }
                 </div>
 
-                <div style="display:inline-block;" id="divSubmit">
+                <div style="display:inline-block; text-align:center" id="divSubmit">
                     <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
                 </div>
-                <div style="display:inline-block;" id="divUpdate">
+                <div style="display:inline-block; text-align:center" id="divUpdate">
                     <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
                 </div>
 
@@ -508,10 +508,10 @@
         }
 
         if (@Model.activityFormModel.statusId == "2" || @Model.activityFormModel.statusId == "3") {
-            $("#divbtnUpdate").show();
+            $("#divUpdate").show();
         }
         else {
-            $("#divbtnUpdate").hide();
+            $("#divUpdate").hide();
         }
 
 

@@ -16,7 +16,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                if (!string.IsNullOrEmpty(IO))
+               if (!string.IsNullOrEmpty(IO))
                 {
                     var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceByEOIO(EO, IO);
 

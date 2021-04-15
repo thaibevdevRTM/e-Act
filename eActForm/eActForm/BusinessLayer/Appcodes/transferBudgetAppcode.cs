@@ -90,7 +90,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 bool result = false;
                 int rtn = 0;
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_transferBudgetAllApprove"
-                    , new SqlParameter[] { new SqlParameter("@activityId", actId) });
+                    , new SqlParameter[] { new SqlParameter("@activityId", actId)});
                 if (rtn > 0)
                 {
                     result = true;
@@ -100,6 +100,29 @@ namespace eActForm.BusinessLayer.Appcodes
             catch (Exception ex)
             {
                 throw new Exception("transferBudgetAllApprove >>" + ex.Message);
+            }
+
+        }
+
+
+        public static bool transferBudgetForReject(string actId)
+        {
+
+            try
+            {
+                bool result = false;
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_transferBudgetForReject"
+                    , new SqlParameter[] { new SqlParameter("@activityId", actId) });
+                if (rtn > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("transferBudgetForReject >>" + ex.Message);
             }
 
         }

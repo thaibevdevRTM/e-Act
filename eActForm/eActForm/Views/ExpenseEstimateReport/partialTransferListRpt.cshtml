@@ -11,40 +11,52 @@
             <div class="col-md-12 col-xs-12" style="width:100%;">
                 <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse; background-color:#ffffff;">
                     <thead>
-                        <tr class="headings" style="text-align:center;">
-                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> BudgetNumber </th>
-                            <th style="width: 5%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> </th>
-                            <th style="width: 45%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> รายละเอียด </th>
-                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> งบประมาณเดิม </th>
-                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> เหลือ </th>
-                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> โอนงบประมาณเพิ่ม(ลด) </th>
-                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall"> งบประมาณใหม่ </th>
+                        <tr class="headings" style="text-align:center; background-color:#E5E2E2; height:25px;" >
+                            <th style="width: 12%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;" class="fontDoc12"> BudgetNumber </th>
+                            <th style="width: 10%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> ขอลด/ขอเพิ่ม </th>
+                            <th style="width: 30%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> รายละเอียด </th>
+                            <th style="width: 12%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> งบประมาณเดิม(บาท) </th>
+                            <th style="width: 12%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> คงเหลือ </th>
+                            <th style="width: 12%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> โอนงบประมาณ(บาท) </th>
+                            <th style="width: 12%; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDoc12"> งบประมาณใหม่(บาท) </th>
                         </tr>
                     </thead>
 
 
 
-                    @{ decimal? sumNormalCost = 0, sumThemeCost = 0, sumGrowth = 0, sumTotal = 0;}
+                    @{ decimal? sumNormalCost = 0, sumThemeCost = 0, sumGrowth = 0, sumTotal = 0, sumShowTxtTotal = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
                     {
                         <tbody id=first>
                             <tr class="tagCountRowBudgetControl">
-                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse; text-align:center;" class="fontDocSmall">
-                                    @item.EO
-                                    @item.IO
+                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse; text-align:center;" class="fontDoc12">
+                                    @{ var EO = !string.IsNullOrEmpty(item.EO) ? "EO "+ @item.EO : "";
+                                       var IO = !string.IsNullOrEmpty(item.IO) ? "IO " + @item.IO : "";}
+                                    @EO
+                                    @IO
                                 </td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDoc12">
                                     @{ var txtUpDown = item.hospId == "0" ? "ลด" : "เพิ่ม"; }
                                     @txtUpDown
                                 </td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDoc12">
                                     @item.remark
+                                    <br />
+                                    @item.productName
 
                                 </td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@string.Format("{0:n2}", @item.normalCost)</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall"> @string.Format("{0:n2}", @item.themeCost)</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall"> @string.Format("{0:n2}", @item.growth)</td>
-                                <td class="fontDocSmall" style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;"> @string.Format("{0:n2}", @item.total)</td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">@string.Format("{0:n2}", @item.normalCost)</td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> @string.Format("{0:n2}", @item.themeCost)</td>
+                                @if (item.hospId == "1")
+                                {
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> @string.Format("{0:n2}", @item.growth)</td>
+                                }
+                                else
+                                {
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> (@string.Format("{0:n2}", @item.growth))</td>
+                                }
+
+                                <td class="fontDoc12" style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;"> @string.Format("{0:n2}", @item.total)</td>
 
                             </tr>
                         </tbody>
@@ -54,17 +66,24 @@
                         sumGrowth += @item.growth;
                         sumTotal += @item.total;
 
+                        sumShowTxtTotal += item.hospId == "1" ? @item.growth : 0;
+
+
                     }
                     <tr>
-                        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;"></td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@string.Format("{0:n2}", @sumNormalCost)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@string.Format("{0:n2}", @sumThemeCost)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@string.Format("{0:n2}", @sumGrowth)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@string.Format("{0:n2}", @sumTotal)</td>
+                        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"></td>
 
                     </tr>
 
                 </table>
+                <br />
+                <p class="fontDocSmall">จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติโอนงบประมาณจำนวนเงิน &nbsp; @string.Format("{0:n2}", sumShowTxtTotal) &nbsp;  บาท ตามรายละเอียดข้างต้น</p>
+                <br />
+                <br />
                 <br />
                 <br />
                 <br />

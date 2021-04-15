@@ -332,8 +332,10 @@ namespace eActForm.Controllers
                                 
                                 if(ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
-                                     ActFormAppCode.insertReserveBudget(activityId);
+                                    //waiting update budgetControl
+                                    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
                                 }
+
 
                                 if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
                                 {

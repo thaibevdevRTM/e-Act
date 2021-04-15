@@ -350,8 +350,7 @@ namespace eActForm.BusinessLayer
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
 
-                            //waiting update budgetControl
-                            bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
+
 
                             // all approved then send the email notification to user create
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)

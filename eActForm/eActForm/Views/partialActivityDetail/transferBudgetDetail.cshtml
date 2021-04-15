@@ -11,7 +11,7 @@
     .shadow {
         -moz-box-shadow: 5px 5px 5px #ccc;
         -webkit-box-shadow: 5px 5px 5px #ccc;
-        box-shadow: 5px 5px 5px #ccc;
+        box-shadow: 0px 5px 0px #ccc;
     }
 
     .my-bootbox-class .modal-dialog {
@@ -28,6 +28,10 @@
     a {
         cursor: pointer;
     }
+
+    .areaWidth {
+        width: 100%;
+    }
 </style>
 
 <div class="col-md-12 col-xs-12">
@@ -41,18 +45,31 @@
                 วันที่เสนอ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"])
-                 , new { @class = "form-control datepicker textboxcss", Style = "width:200px;", autocomplete = "off" })
+                @if (Model.activityFormModel.documentDate.ToString() != "")
+                {
+                    @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"])
+                 , new { @class = "form-control datepicker textboxcss", autocomplete = "off" })
+                }
+                else
+                {
+                    @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })*@
+                    @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]),
+                   new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
+
+                }
+
             </div>
         </div>
+
         <div class="col-md-6 col-xs-12">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                เบอร์โทรศัพท์ :
+                เอกสารเลขที่ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:200px;" })
+                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center;", @id = "txtActivityNo", @readonly = true })
             </div>
         </div>
+
     </div>
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12 pull-left">
@@ -60,15 +77,15 @@
                 ชื่อผู้เสนอ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact", style = "width:200px;" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                เอกสารเลขที่ :
+                เบอร์โทรศัพท์ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center; width:200px;", @id = "txtActivityNo", @readonly = true })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
             </div>
         </div>
     </div>
@@ -79,7 +96,7 @@
                 สินค้า : <span class="required">*</span>
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -93,7 +110,7 @@
                 ชื่อกิจกรรม<br />(งบประมาณเดิม) :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct", style = "width:200px;" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
 
             </div>
         </div>
@@ -102,7 +119,7 @@
                 ชื่อกิจกรรม<br />(งบประมาณใหม่) :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", Style = "width:200px;", autocomplete = "off" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", autocomplete = "off" })
             </div>
         </div>
     </div>
@@ -141,7 +158,8 @@
     @Html.Action("dropdownCondtionBudgetControl", "SharedMasterFormHeaderDetail_Input", new { activity_TBMMKT_Model = Model })
 
 
-    <div class="col-md-12 col-xs-12 form-group shadow" style="margin-top:15px;">
+    <div class="col-md-12 col-xs-12 form-group shadow">
+        @Html.Hidden("hdRow", new { @id = "hdRow" })
         <div class="col-md-12 col-xs-12">
             <div class="col-md-3 col-xs-12">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
@@ -181,18 +199,33 @@
                   })
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 col-xs3">
             <div class="col-md-3 col-xs3">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-                    โอนงบประมาณเพิ่ม(ลด) :
+                    โอนงบประมาณ :
                 </label>
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    @Html.TextBox("txtTransferBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
+                    @Html.TextBox("txtTransferBudget", "", new { @class = "form-control clsTxtTransferBudget", Style = "text-align:center; width:130;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
                 </div>
-            </div>
+                <script>
+                    $("#txtTransferBudget").blur(function () {
+                        var v_totalRow = 0.00;
 
-            <div class="col-md-3 col-xs-12">
+                        if ($("#txtTransferBudget").val() != '') {
+                            v_totalRow = $("#txtTransferBudget").val();
+                        }
+
+
+                        $("#txtTransferBudget").val(parseFloat(v_totalRow).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+
+
+                    });
+
+                </script>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs3">
+
+            <div class="col-md-4 col-xs-12">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     งบประมาณเดิม :
                 </label>
@@ -200,17 +233,15 @@
                     @Html.TextBox("txtOldBudget", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget", @readonly = "true" })
                 </div>
             </div>
-            <div class="col-md-3 col-xs-12">
+            <div class="col-md-4 col-xs-12">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-                    เหลือ :
+                    คงเหลือ :
                 </label>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            <div class="col-md-3 col-xs-12">
+            <div class="col-md-4 col-xs-12">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     งบประมาณใหม่ :
                 </label>
@@ -219,33 +250,49 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 form-group">
-            <div class="col-md-6 col-xs-12 form-group" style="margin-top:15px;">
+
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-12 col-xs-12">
                 <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     รายละเอียด
                 </label>
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control", @id = "txtremark" })
+                    @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control areaWidth", @id = "txtremark", rows = 3 })
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 form-group">
-            <div class="col-md-12 col-md-offset-5">
-                <button style="width:120px" type="button" id="BtnAdd" class="btn btn-primary" onclick="return addRow();">Add</button>
+
+        <div class="col-md-12 col-xs-12 form-group" style="margin-top:15px; margin-bottom:15px;">
+            <div class="text-center">
+                <div style="display:inline-block;" id="divSubmit">
+                    <button style="width:120px" type="button" id="BtnAdd" class="btn btn-success" onclick="return addRow('new');">Add</button>
+                </div>
+                <div style="display:inline-block;" id="divUpdate">
+                    <button style="width:120px" type="button" id="BtnUpdate" class="btn ink-reaction btn-info" onclick="return addRow('update');">Update</button>
+                </div>
+
             </div>
+
         </div>
 
     </div>
 </div>
 
 
-
 <script type="text/javascript">
+
 
     $(document).ready(function () {
         $("#txtremark").val('')
 
         bindDropdownSubject();
+        getEmpDetail();
+
+        @*if (@Model.activityFormTBMMKT.statusId == "5") {
+            console.log('mode reject');
+            console.log('@Model.activityFormTBMMKT.statusId');
+            updateBudgetList();
+        }*@
 
         $("#txtBudgetIO").autocomplete({
             source: function (request, response) {
@@ -279,6 +326,85 @@
         });
     });
 
+
+    function updateBudgetList() {
+
+        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        console.log(RowCount + 'rowList');
+        for (var i = 0; i < RowCount; i++) {
+
+            setTimeout(function () {
+                cashEdit(RowCount, 'reject');
+            }, 1500);
+           
+        }
+    }
+
+
+    function cashEdit(i,mode) {
+
+        console.log('mode' + mode);
+
+        $("#txtBudgetEO").val($("#activityOfEstimateList_" + i + "__EO").val());
+        $("#txtBudgetIO").val($("#activityOfEstimateList_" + i + "__IO").val());
+        $("#ddlUpDown").val($("#activityOfEstimateList_" + i + "__hospId").val());
+        $("#txtremark").val($("#activityOfEstimateList_" + i + "__remark").val());
+        $("#txtOldBudget").val(parseFloat($("#activityOfEstimateList_" + i + "__normalCost").val()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#txtBudgetBalance").val(parseFloat($("#activityOfEstimateList_" + i + "__themeCost").val()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#txtTransferBudget").val(parseFloat($("#activityOfEstimateList_" + i + "__growth").val()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#txtNewBudget").val(parseFloat($("#activityOfEstimateList_" + i + "__total").val()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#ddlBrand_BG").val($("#activityOfEstimateList_" + i + "__productId").val());
+        $("#ddlChannel_BG").val($("#activityOfEstimateList_" + i + "__typeTheme").val());
+
+        bindDropdownSubject();
+
+
+        setTimeout(function () {
+            $("#ddlSubject_BG").val($("#activityOfEstimateList_"+i+"__QtyName").val());
+        }, 1200);
+        $("#hdRow").val(i);
+        console.log($("#activityOfEstimateList_" + i + "__QtyName").val());
+
+        if ($("#activityOfEstimateList_" + i + "__EO").val() != '') {
+            console.log('have eo');
+            getBudgetEOIO();
+        }
+        else {
+            console.log('non have eo');
+            getBudgetNonEO();
+        }
+
+        if (mode == 'reject') {
+            console.log('reject Budget');
+            addRow('update');
+        }
+
+
+    }
+
+
+
+    function getEmpDetail() {
+
+        ; if ('@Model.tB_Act_ActivityForm_DetailOther.toContact' == "") {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getEmpDetailById", "eAct")',
+                data: {
+                    empId: "@UtilsAppCode.Session.User.empId",
+                }
+            }).done(function (response) {
+                if (response.Data != null) {
+                    $("#txtToContact").val(response.Data.empName);
+                }
+                else {
+                    $("#txtToContact").val('');
+
+                }
+            });
+        }
+    }
+
      function getBudgetNonEO() {
        $.ajax({
                 url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
@@ -291,7 +417,7 @@
            success: function (response) {
                console.log(response.Data);
                if (response.Data != null) {
-                   $("#txtOldBudget").val(response.Data.amount);
+                   $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                }
                else {
                    $("#txtOldBudget").val('');
@@ -361,17 +487,44 @@
     });
 
     function getCalBudget() {
+        var result = "";
+        var oldBG = $("#txtOldBudget").val().replace(/,/g, "");
+        var budgetBalance = $("#txtBudgetBalance").val().replace(/,/g, "");
+        var TransferBudget = $("#txtTransferBudget").val().replace(/,/g, "");
 
-        var oldBG = $("#txtOldBudget").val().replace(",", "");
-        var TransferBudget = $("#txtTransferBudget").val();
+        if (budgetBalance == '' || budgetBalance == "NaN") {
+            budgetBalance = "0.00";
+        }
+        if (TransferBudget == '' || TransferBudget == "NaN") {
+            TransferBudget = "0.00";
+        }
+
+
         if ($("#ddlUpDown").val() == "0") {
-            var result = parseFloat(oldBG) - parseFloat(TransferBudget);
-            $("#txtNewBudget").val(result.toString());
+            if (budgetBalance != "0.00") {
+                console.log('t1');
+                result = parseFloat(budgetBalance) - parseFloat(TransferBudget);
+            }
+            else {
+                console.log('t2');
+                console.log(parseFloat(oldBG));
+
+                console.log(parseFloat(TransferBudget));
+                result = parseFloat(oldBG) - parseFloat(TransferBudget);
+            }
         }
         else {
-            var result = parseFloat(oldBG) + parseFloat(TransferBudget);
-            $("#txtNewBudget").val(result.toString());
+            if (budgetBalance != "0.00") {
+                console.log('t3');
+                result = parseFloat(budgetBalance) + parseFloat(TransferBudget);
+            }
+            else {
+                console.log('t4');
+                result = parseFloat(oldBG) + parseFloat(TransferBudget);
+            }
         }
+
+        $("#txtNewBudget").val(result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
 
 
@@ -399,8 +552,8 @@
              success: function (response) {
                  console.log(response.Data);
                  if (response.Data != null) {
-                     $("#txtOldBudget").val(response.Data.budgetPrice);
-                     $("#txtBudgetBalance").val(response.Data.paymentBlance);
+                     $("#txtOldBudget").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                     $("#txtBudgetBalance").val(response.Data.paymentBlance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                  }
                  else {
                      $("#txtOldBudget").val('');
@@ -408,13 +561,15 @@
                      $("#txtNewBudget").val('');
                      bootbox.alert("ไม่พบ ข้อมูล!");
                  }
+
+                 getCalBudget();
                  $("#WaitDialog").hide();
              }
          });
     }
 
 
-    function addRow() {
+    function addRow(mode) {
         required = "<b>กรุณาระบุ/Please input data :<br></b>";
         var validate = true;
 
@@ -444,6 +599,10 @@
         }
         else {
 
+            var txtBudgetBalance = 0;
+            if ($("#txtBudgetBalance").val() != '') {
+                txtBudgetBalance = $("#txtBudgetBalance").val().replace(/,/g, "");
+            }
 
             var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
             if (RowCount == 0 && $("#activityOfEstimateList_0__remark").val() == '') {
@@ -451,56 +610,114 @@
                 $("#activityOfEstimateList_0__IO").val($("#txtBudgetIO").val());
                 $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown").val());
                 $("#activityOfEstimateList_0__remark").val($("#txtremark").val());
-                $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget").val());
-                $("#activityOfEstimateList_0__themeCost").val($("#txtBudgetBalance").val());
-                $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget").val());
-                $("#activityOfEstimateList_0__total").val($("#txtNewBudget").val());
+                $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget").val().replace(/,/g, ""));
+                $("#activityOfEstimateList_0__themeCost").val(txtBudgetBalance);
+                $("#activityOfEstimateList_0__growth").val($("#txtTransferBudget").val().replace(/,/g, ""));
+                $("#activityOfEstimateList_0__total").val($("#txtNewBudget").val().replace(/,/g, ""));
                 $("#activityOfEstimateList_0__productId").val($("#ddlBrand_BG").val());
                 $("#activityOfEstimateList_0__typeTheme").val($("#ddlChannel_BG").val());
                 $("#activityOfEstimateList_0__QtyName").val($("#ddlSubject_BG").val());
-                
+
                 var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#ddlSubject_BG option:selected").text();
                 $("#activityOfEstimateList_0__productName").val(getTxtBrandChannel);
             }
             else {
+
+                if (mode == "update") {
+                    RowCount = $("#hdRow").val();
+                }
+                else {
+                    RowCount = RowCount + 1;
+                }
+
+                console.log(mode);
                 console.log(RowCount);
-                RowCount = RowCount + 1;
-                var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
-                var newRowLb = $("#tbl_budgetControl tbody tr").first().clone().find("label").val("").end();
+
+                if (mode == "new") {
+
+                    var trHTML = $('.tRow_0').html();
+                    trHTML = trHTML.replaceAll('[0].row', '[' + RowCount + '].row');
+                    trHTML = trHTML.replaceAll('[0].EO', '[' + RowCount + '].EO');
+                    trHTML = trHTML.replaceAll('[0].IO', '[' + RowCount + '].IO');
+                    trHTML = trHTML.replaceAll('[0].hospId', '[' + RowCount + '].hospId');
+                    trHTML = trHTML.replaceAll('[0].remark', '[' + RowCount + '].remark');
+                    trHTML = trHTML.replaceAll('[0].productName', '[' + RowCount + '].productName');
+                    trHTML = trHTML.replaceAll('[0].normalCost', '[' + RowCount + '].normalCost');
+                    trHTML = trHTML.replaceAll('[0].themeCost', '[' + RowCount + '].themeCost');
+                    trHTML = trHTML.replaceAll('[0].growth', '[' + RowCount + '].growth');
+                    trHTML = trHTML.replaceAll('[0].total', '[' + RowCount + '].total');
+                    trHTML = trHTML.replaceAll('[0].productId', '[' + RowCount + '].productId');
+                    trHTML = trHTML.replaceAll('[0].typeTheme', '[' + RowCount + '].typeTheme');
+                    trHTML = trHTML.replaceAll('[0].QtyName', '[' + RowCount + '].QtyName');
+                    trHTML = trHTML.replaceAll('cashEdit(0)', 'cashEdit(' + RowCount +')');
+
+                    trHTML = trHTML.replaceAll('_0__row', '_' + RowCount + '__row');
+                    trHTML = trHTML.replaceAll('_0__EO', '_' + RowCount + '__EO');
+                    trHTML = trHTML.replaceAll('_0__IO', '_' + RowCount + '__IO');
+                    trHTML = trHTML.replaceAll('_0__hospId', '_' + RowCount + '__hospId');
+                    trHTML = trHTML.replaceAll('_0__remark', '_' + RowCount + '__remark');
+                    trHTML = trHTML.replaceAll('_0__remark', '_' + RowCount + '__remark');
+                    trHTML = trHTML.replaceAll('_0__productName', '_' + RowCount + '__productName');
+                    trHTML = trHTML.replaceAll('_0__normalCost', '_' + RowCount + '__normalCost');
+                    trHTML = trHTML.replaceAll('_0__themeCost', '_' + RowCount + '__themeCost');
+                    trHTML = trHTML.replaceAll('_0__growth', '_' + RowCount + '__growth');
+                    trHTML = trHTML.replaceAll('_0__total', '_' + RowCount + '__total');
+                    trHTML = trHTML.replaceAll('_0__productId', '_' + RowCount + '__productId');
+                    trHTML = trHTML.replaceAll('_0__typeTheme', '_' + RowCount + '__typeTheme');
+                    trHTML = trHTML.replaceAll('_0__QtyName', '_' + RowCount + '__QtyName');
+                    trHTML = ("<tr class=\"tbl_budgetControl tRow_" + RowCount + "\">" + trHTML);
+                    trHTML = (trHTML + "</tr>");
+                    $('#tbl_budgetControl > tbody:last').append(trHTML);
+
+                    //var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
+                    //$("#tbl_budgetControl > tbody:first").append(newRow);
+                    //newRow.find("input").each(function () {
+                    //    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                    //    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+                    //}
+                    //);
+                    //newRow.find("select").each(function () {
+                    //    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+                    //    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+                    //}
+                    //);
 
 
-                $("#tbl_budgetControl > tbody:first").append(newRow);
-                newRow.find("input").each(function () {
-                    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-                    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+                    //newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
+                   // newRow.insertBefore('#tbl_budgetControl tbody>tr:last');
                 }
-                );
-                newRow.find("select").each(function () {
-                    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-                    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
-                }
-                );
 
-
-
-                newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
 
                 $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtBudgetEO").val());
                 $("#activityOfEstimateList_" + RowCount + "__IO").val($("#txtBudgetIO").val());
                 $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown").val());
                 $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark").val());
-                $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val());
-                $("#activityOfEstimateList_" + RowCount + "__themeCost").val($("#txtBudgetBalance").val());
-                $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget").val());
-                $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val());
+                $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val().replace(/,/g, ""));
+                $("#activityOfEstimateList_" + RowCount + "__themeCost").val(txtBudgetBalance);
+                $("#activityOfEstimateList_" + RowCount + "__growth").val($("#txtTransferBudget").val().replace(/,/g, ""));
+                $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val().replace(/,/g, ""));
                 $("#activityOfEstimateList_" + RowCount + "__productId").val($("#ddlBrand_BG").val());
                 $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
                 var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#ddlSubject_BG option:selected").text();
                 $("#activityOfEstimateList_" + RowCount + "__productName").val(getTxtBrandChannel);
-
+                $("#activityOfEstimateList_" + RowCount + "__QtyName").val($("#ddlSubject_BG").val());
 
             }
+
+            //claer
+            $("#txtBudgetEO").val('');
+            $("#txtBudgetIO").val('');
+            $("#ddlUpDown").val('');
+            $("#txtremark").val('');
+            $("#txtOldBudget").val('');
+            $("#txtBudgetBalance").val('');
+            $("#txtTransferBudget").val('');
+            $("#txtNewBudget").val('');
+            $("#ddlBrand_BG").val('');
+            $("#ddlChannel_BG").val('');
+            $("#ddlSubject_BG").val('');
         }
+
     }
 
 
