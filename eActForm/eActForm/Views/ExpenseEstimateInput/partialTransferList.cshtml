@@ -83,7 +83,28 @@
 <script type="text/javascript">
     function cashDelete(btn) {
         var i = btn.parentNode.parentNode.rowIndex;
-        if (i > 1) {
+
+        console.log(i);
+        if (i == 1) {
+
+            var row = parseInt(i) - 1;
+            $("#activityOfEstimateList_" + row + "__EO").val('');
+            $("#activityOfEstimateList_" + row + "__IO").val('');
+            $("#activityOfEstimateList_" + row + "__hospId").val('');
+            $("#activityOfEstimateList_" + row + "__hospId").val('');
+            $("#activityOfEstimateList_" + row + "__remark").val('');
+            $("#activityOfEstimateList_" + row + "__normalCost").val('');
+            $("#activityOfEstimateList_" + row + "__themeCost").val('');
+            $("#activityOfEstimateList_" + row + "__growth").val('');
+            $("#activityOfEstimateList_" + row + "__total").val('');
+            $("#activityOfEstimateList_" + row + "__productId").val('');
+            $("#activityOfEstimateList_" + row + "__typeTheme").val('');
+            $("#activityOfEstimateList_" + row + "__productName").val('');
+            $("#activityOfEstimateList_" + row + "__QtyName").val('');
+            $("#activityOfEstimateList_" + row + "__QtyName").val('');
+            $(".txtUpdown_" + row).val('');
+        }
+        else {
             document.getElementById("tbl_budgetControl").deleteRow(i);
         }
     }

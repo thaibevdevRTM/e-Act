@@ -574,7 +574,6 @@
        
             var RowCount = parseInt($('#tbl_budgetControl tr.tagCountRowBudgetControl').length -1).toString();
 
-            console.log(RowCount+'tttnn');
             if (RowCount == 0 && $("#activityOfEstimateList_0__remark").val() == '') {
                 $("#activityOfEstimateList_0__EO").val($("#txtBudgetEO").val());
                 $("#activityOfEstimateList_0__IO").val($("#txtBudgetIO").val());
@@ -668,8 +667,7 @@
                     //newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
                    // newRow.insertBefore('#tbl_budgetControl tbody>tr:last');
                 }
-                console.log(RowCount);
-                console.log($("#ddlUpDown").val() + 'ttt');
+
                 $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtBudgetEO").val());
                 $("#activityOfEstimateList_" + RowCount + "__IO").val($("#txtBudgetIO").val());
 
