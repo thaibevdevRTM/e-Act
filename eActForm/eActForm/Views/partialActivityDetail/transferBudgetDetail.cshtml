@@ -288,12 +288,6 @@
         bindDropdownSubject();
         getEmpDetail();
 
-        @*if (@Model.activityFormTBMMKT.statusId == "5") {
-            console.log('mode reject');
-            console.log('@Model.activityFormTBMMKT.statusId');
-            updateBudgetList();
-        }*@
-
         $("#txtBudgetIO").autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -327,23 +321,10 @@
     });
 
 
-    function updateBudgetList() {
-
-        var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
-        console.log(RowCount + 'rowList');
-        for (var i = 0; i < RowCount; i++) {
-
-            setTimeout(function () {
-                cashEdit(RowCount, 'reject');
-            }, 1500);
-           
-        }
-    }
 
 
-    function cashEdit(i,mode) {
+    function cashEdit(i) {
 
-        console.log('mode' + mode);
 
         $("#txtBudgetEO").val($("#activityOfEstimateList_" + i + "__EO").val());
         $("#txtBudgetIO").val($("#activityOfEstimateList_" + i + "__IO").val());
@@ -363,22 +344,14 @@
             $("#ddlSubject_BG").val($("#activityOfEstimateList_"+i+"__QtyName").val());
         }, 1200);
         $("#hdRow").val(i);
-        console.log($("#activityOfEstimateList_" + i + "__QtyName").val());
+
 
         if ($("#activityOfEstimateList_" + i + "__EO").val() != '') {
-            console.log('have eo');
             getBudgetEOIO();
         }
         else {
-            console.log('non have eo');
             getBudgetNonEO();
         }
-
-        if (mode == 'reject') {
-            console.log('reject Budget');
-            addRow('update');
-        }
-
 
     }
 
@@ -415,7 +388,6 @@
                 dataType: "json",
                 type: 'POST',
            success: function (response) {
-               console.log(response.Data);
                if (response.Data != null) {
                    $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                }
@@ -502,24 +474,18 @@
 
         if ($("#ddlUpDown").val() == "0") {
             if (budgetBalance != "0.00") {
-                console.log('t1');
                 result = parseFloat(budgetBalance) - parseFloat(TransferBudget);
             }
             else {
-                console.log('t2');
-                console.log(parseFloat(oldBG));
 
-                console.log(parseFloat(TransferBudget));
                 result = parseFloat(oldBG) - parseFloat(TransferBudget);
             }
         }
         else {
             if (budgetBalance != "0.00") {
-                console.log('t3');
                 result = parseFloat(budgetBalance) + parseFloat(TransferBudget);
             }
             else {
-                console.log('t4');
                 result = parseFloat(oldBG) + parseFloat(TransferBudget);
             }
         }
@@ -550,7 +516,6 @@
              dataType: "json",
              type: 'POST',
              success: function (response) {
-                 console.log(response.Data);
                  if (response.Data != null) {
                      $("#txtOldBudget").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                      $("#txtBudgetBalance").val(response.Data.paymentBlance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -604,11 +569,23 @@
                 txtBudgetBalance = $("#txtBudgetBalance").val().replace(/,/g, "");
             }
 
-            var RowCount = $('#tbl_budgetControl tbody tr').length - 1;
+        
+
+       
+            var RowCount = parseInt($('#tbl_budgetControl tr.tagCountRowBudgetControl').length -1).toString();
+
+            console.log(RowCount+'tttnn');
             if (RowCount == 0 && $("#activityOfEstimateList_0__remark").val() == '') {
                 $("#activityOfEstimateList_0__EO").val($("#txtBudgetEO").val());
                 $("#activityOfEstimateList_0__IO").val($("#txtBudgetIO").val());
                 $("#activityOfEstimateList_0__hospId").val($("#ddlUpDown").val());
+                if ($("#ddlUpDown").val() == '1') {
+                    $(".txtUpdown_0").val('เพิ่ม');
+                }
+                else {
+                    $(".txtUpdown_0").val('ลด');
+                }
+
                 $("#activityOfEstimateList_0__remark").val($("#txtremark").val());
                 $("#activityOfEstimateList_0__normalCost").val($("#txtOldBudget").val().replace(/,/g, ""));
                 $("#activityOfEstimateList_0__themeCost").val(txtBudgetBalance);
@@ -627,19 +604,21 @@
                     RowCount = $("#hdRow").val();
                 }
                 else {
-                    RowCount = RowCount + 1;
+                    RowCount = parseInt(RowCount) + 1;
                 }
 
-                console.log(mode);
-                console.log(RowCount);
 
                 if (mode == "new") {
-
+                    
                     var trHTML = $('.tRow_0').html();
+                    console.log(trHTML);
+                    var trHTML = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end().html();
                     trHTML = trHTML.replaceAll('[0].row', '[' + RowCount + '].row');
                     trHTML = trHTML.replaceAll('[0].EO', '[' + RowCount + '].EO');
                     trHTML = trHTML.replaceAll('[0].IO', '[' + RowCount + '].IO');
                     trHTML = trHTML.replaceAll('[0].hospId', '[' + RowCount + '].hospId');
+                    trHTML = trHTML.replaceAll('txtUpdown_0', 'txtUpdown_' + RowCount);
+                    
                     trHTML = trHTML.replaceAll('[0].remark', '[' + RowCount + '].remark');
                     trHTML = trHTML.replaceAll('[0].productName', '[' + RowCount + '].productName');
                     trHTML = trHTML.replaceAll('[0].normalCost', '[' + RowCount + '].normalCost');
@@ -665,12 +644,15 @@
                     trHTML = trHTML.replaceAll('_0__productId', '_' + RowCount + '__productId');
                     trHTML = trHTML.replaceAll('_0__typeTheme', '_' + RowCount + '__typeTheme');
                     trHTML = trHTML.replaceAll('_0__QtyName', '_' + RowCount + '__QtyName');
-                    trHTML = ("<tr class=\"tbl_budgetControl tRow_" + RowCount + "\">" + trHTML);
+                    trHTML = ("<tr class=\"tagCountRowBudgetControl tRow_" + RowCount + "\">" + trHTML );
+
                     trHTML = (trHTML + "</tr>");
                     $('#tbl_budgetControl > tbody:last').append(trHTML);
 
+
                     //var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
-                    //$("#tbl_budgetControl > tbody:first").append(newRow);
+                    //console.log(newRow.html);
+                    //$("#tbl_budgetControl > tbody:last").append(newRow);
                     //newRow.find("input").each(function () {
                     //    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
                     //    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
@@ -686,10 +668,18 @@
                     //newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
                    // newRow.insertBefore('#tbl_budgetControl tbody>tr:last');
                 }
-
-
+                console.log(RowCount);
+                console.log($("#ddlUpDown").val() + 'ttt');
                 $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtBudgetEO").val());
                 $("#activityOfEstimateList_" + RowCount + "__IO").val($("#txtBudgetIO").val());
+
+                if ($("#ddlUpDown").val() == '1') {
+                    $(".txtUpdown_" + RowCount).val('เพิ่ม');
+                }
+                else {
+                    $(".txtUpdown_" + RowCount).val('ลด');
+                }
+
                 $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown").val());
                 $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark").val());
                 $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val().replace(/,/g, ""));
@@ -707,7 +697,7 @@
             //claer
             $("#txtBudgetEO").val('');
             $("#txtBudgetIO").val('');
-            $("#ddlUpDown").val('');
+            //$("#ddlUpDown").val('');
             $("#txtremark").val('');
             $("#txtOldBudget").val('');
             $("#txtBudgetBalance").val('');

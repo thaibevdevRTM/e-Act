@@ -24,7 +24,7 @@
                     <th width="10%" class="font10" style="text-align:center"> ขอลด/ขอเพิ่ม </th>
                     <th width="25%" class="font10" style="text-align:center"> รายละเอียด </th>
                     <th width="15%" class="font10" style="text-align:center"> งบประมาณเดิม(บาท) </th>
-                    <th width="15%" class="font10" style="text-align:center"> คงเหลือ</th>
+                    <th width="15%" class="font10" style="text-align:center"> คงเหลือง(บาท)</th>
                     <th width="15%" class="font10" style="text-align:center"> โอนงบประมาณ(บาท) </th>
                     <th width="15%" class="font10" style="text-align:center"> งบประมาณใหม่(บาท) </th>
                 </tr>
@@ -47,21 +47,20 @@
                         </td>
                         <td style="text-align:right">
 
-                            @Html.DropDownListFor(x => x.activityOfEstimateList[i].hospId, new List<SelectListItem>
-                             {
-                                  new SelectListItem { Text = "ลด", Value = "0"},
-                                  new SelectListItem { Text = "เพิ่ม", Value = "1"},
-                             },
-                             new
-                             {
-                                 @class = "form-control textboxcss chkUpdown_" + @i,
-                                 @readonly = true
-                             })
+
+                            @Html.TextBox("txtUpDown", "", new { @class = "form-control textboxcss font10 textRight txtUpdown_" + i, @readonly = true })
+                            @Html.HiddenFor(x => x.activityOfEstimateList[i].hospId)
                             <script>
-                                $(function () {
-                                    $("#activityOfEstimateList_" + @i + "__hospId").val("@Model.activityOfEstimateList[i].hospId");
-                                });
+                             $(function () {
+                                 if ($("#activityOfEstimateList_" + @i + "__hospId").val() == '1') {
+                                     $(".txtUpdown_" +@i).val('เพิ่ม');
+                                 }
+                                 else {
+                                     $(".txtUpdown_" +@i).val('ลด');
+                                 }
+                             });
                             </script>
+
                         </td>
                         <td style="text-align:right">
                             @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off",@readonly = true })
