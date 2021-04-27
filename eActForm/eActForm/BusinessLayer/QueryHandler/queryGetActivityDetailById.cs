@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                                  brandName = d["brandName"].ToString(),
                                  size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
                                  wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
-                                 typeTheme = !string.IsNullOrEmpty(d["activityTypeId"].ToString())  ? "" : QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales,
+                                 typeTheme = !string.IsNullOrEmpty(d["activityTypeId"].ToString())  ?  QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales : "" ,
                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                  isShowGroup = true,
