@@ -64,3 +64,5 @@ D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileIn
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
