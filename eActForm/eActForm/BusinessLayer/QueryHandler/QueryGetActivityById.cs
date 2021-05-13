@@ -60,6 +60,8 @@ namespace eActForm.BusinessLayer
                                   actIO = d["actIO"].ToString(),
                                   companyId = d["companyId"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
+                                  subActivity = d["subActivity"].ToString(),
+                                  txtSubActivity = d["txtSubActivity"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

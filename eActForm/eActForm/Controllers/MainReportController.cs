@@ -82,7 +82,7 @@ namespace eActForm.Controllers
                 {
                     ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
                     objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
-                    objGetDataLayoutDoc.activityId = "";
+                    objGetDataLayoutDoc.activityId = activityId;
                     activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
                 }
                 //===END==layout doc===========

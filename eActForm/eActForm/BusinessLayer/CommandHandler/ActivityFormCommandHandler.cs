@@ -413,6 +413,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@empId",model.empId)
                     ,new SqlParameter("@remark",model.remark)
+                    ,new SqlParameter("@subActivity",model.subActivity)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)

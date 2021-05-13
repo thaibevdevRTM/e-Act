@@ -39,6 +39,8 @@ namespace eActForm.Controllers
                     .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+                activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activitySales.Contains("FOC")).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
