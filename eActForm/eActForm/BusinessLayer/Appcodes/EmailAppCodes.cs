@@ -853,11 +853,14 @@ namespace eActForm.BusinessLayer
                                  where (m.statusId != "")
                                  select m).ToList();
                     string strMailTo = "", strMailCc = "";
-                    foreach (ApproveModel.approveDetailModel m in lists)
-                    {
-                        strMailCc += (strMailCc == "") ? m.empEmail : "," + m.empEmail; // get list email
-                    }
-                    List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
+
+                    strMailCc = string.Format(ConfigurationManager.AppSettings["emailBudgetRejectCC"]);
+
+                    //foreach (ApproveModel.approveDetailModel m in lists)
+                    //{
+                    //    strMailCc += (strMailCc == "") ? m.empEmail : "," + m.empEmail; // get list email
+                    //}
+                    List <ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
                     foreach (ApproveModel.approveDetailModel m in createUsers)
                     {
                         strMailTo += (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email

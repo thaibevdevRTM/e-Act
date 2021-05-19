@@ -98,6 +98,8 @@ namespace eActForm.Models //update 21-04-2020
             public Int32 invoiceApproveStatusId { get; set; }
             public string invoiceApproveStatusName { get; set; }
 
+            public string invoiceRemark { get; set; }
+            
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal productSumInvoiceBath { get; set; }
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
@@ -158,6 +160,8 @@ namespace eActForm.Models //update 21-04-2020
 
             public Int32 invoiceApproveStatusId { get; set; }
             public string invoiceApproveStatusName { get; set; }
+
+            public string invoiceRemark { get; set; }
             public string approveInvoiceId { get; set; }
             public string budgetApproveId { get; set; }
 

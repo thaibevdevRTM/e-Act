@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Budget_Activity_Model
 @using eActForm.BusinessLayer
+@using eActForm.Models
 @{
     //update 21-04-2020
     ViewBag.Title = "";
@@ -25,12 +26,17 @@
 
 @if (var_lastApprove != null)
 {
+
+    @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = Model.Budget_Activity.act_form_id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-file-o", target = "_blank" })
+    <span>กิจกรรม(pdf)</span>
+
     <a onclick="callApproveList('@(var_lastApprove == null ? "" : var_lastApprove.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> การอนุมัติล่าสุด </a>
+
     @Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = var_lastApprove == null ? null : var_lastApprove.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank", })
     <span>รายละเอียด(pdf)</span>
 
 
-    <a href="javascript:" onclick="return onCancelWaitApproveByActno('@Model.Budget_Activity.act_activityNo','@Model.Budget_Activity.act_form_id');" >
+    <a href="javascript:" onclick="return onCancelWaitApproveByActno('@Model.Budget_Activity.act_activityNo','@Model.Budget_Activity.act_form_id');">
         <i class="btn ink-reaction btn-danger fa fa-reply"></i>ยกเลิกขออนุมัติ
     </a>
 

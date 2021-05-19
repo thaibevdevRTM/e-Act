@@ -32,6 +32,8 @@ namespace eActForm.BusinessLayer
                                   unitPriceDisplayReport = "",//ปัจจุบันไม่ได้ใช้งานฟิลด์นี้ เก็บไว้เพื่ออยากเอาไปใช้อนาคต
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
+                                  growth = d["growth"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["growth"].ToString())),
+                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["themeCost"].ToString())),
                                   IO = d["IO"].ToString(),
                                   QtyName = d["QtyName"].ToString(),
                                   remark = d["remark"].ToString(),
@@ -50,6 +52,10 @@ namespace eActForm.BusinessLayer
                                   UseYearSelect = d["UseYearSelect"].ToString(),
                                   EO = d["EO"].ToString(),
                                   rowNo = Convert.ToInt32(d["rowNo"].ToString()),
+                                  LE = d["LE"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["LE"].ToString())),
+                                  perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["perTotal"].ToString())),
+                                  totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalCase"].ToString())),
+                                  
                               });
 
                 return result.ToList();

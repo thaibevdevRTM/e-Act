@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         // GET: actFormRepPostEva
         public ActionResult index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForPostEVAReport(typeForm);
             models.customerslist = models.customerslist;
             models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = true, isShowProductGroup = true, isShowProductType = true, isShowMonthText = false , isShowProductBrand = true};
             return View(models);
@@ -107,7 +107,6 @@ namespace eActForm.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult previewEvaByActId(string actId)
         {

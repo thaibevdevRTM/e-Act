@@ -91,7 +91,7 @@ namespace eActForm.Controllers
                 {
                     // case delete
                     result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-
+                    ApproveAppCode.updateBudgetControl_Balance(actId);
                     if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId(actId))
                     {
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
@@ -103,6 +103,10 @@ namespace eActForm.Controllers
                     result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
                     if (result.Success)
                     {
+                        var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId));
+                        var txtStamp = "เอกสารถูกยกเลิก";
+                        bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
+
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }

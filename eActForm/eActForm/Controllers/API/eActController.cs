@@ -3,6 +3,7 @@ using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -685,39 +686,27 @@ namespace eActForm.Controllers
 
         public ActionResult genImageStream(string empId)
         {
-            var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            if (result.lists.Any())
-            {
-                return File(result.lists[0].signature, "image/jpg");
-            }
-            else
-            {
-                return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
-            }
-        }
-
-        public JsonResult getBudgetByEO(string EO, string companyId,string subjectId,string channelId,string brandId)
-        {
-            var result = new AjaxResult();
             try
             {
-                var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description;
-                var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
-                var getAmount = ActFormAppCode.getBalanceByEO(EO, companyId, getActTypeId, channelId, brandId);
-
-                var resultData = new
-                {        
-                    amountBalance = getAmount.FirstOrDefault().balance,
-                    amountTotal = getAmount.FirstOrDefault().amountTotal
-                };
-                result.Data = resultData;
+                var result = SignatureAppCode.currentSignatureByEmpId(empId);
+                if (result.lists.Any())
+                {
+                    return File(result.lists[0].signature, "image/jpg");
+                }
+                else
+                {
+                    return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
+                ExceptionManager.WriteError("genImageStream => " + ex.Message);
+                return File(Server.MapPath("~/images/noSigError.jpg"), "image/jpg");
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+
         }
+
+       
     }
 }
