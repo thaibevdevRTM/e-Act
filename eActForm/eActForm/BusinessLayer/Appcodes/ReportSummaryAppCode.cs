@@ -204,7 +204,7 @@ namespace eActForm.BusinessLayer
 
 
                 ReportSummaryModels resultModel = new ReportSummaryModels();
-                resultModel.activitySummaryGroupList = groupList;
+                resultModel.activitySummaryGroupList = groupList.OrderBy(x => x.customerName).ToList();
                 resultModel.activitySummaryList = list.ToList();
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
                 return resultModel;
@@ -300,24 +300,28 @@ namespace eActForm.BusinessLayer
 
 
                 //add Sales Forecast
-
-                var forecastlist = (new ReportSummaryModel
-                {
-                    id = Guid.NewGuid().ToString(),
-                    activitySales = "Sales Forecast",
-                    est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
-                    crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
-                    wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
-                    plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
-                    jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
-                    oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
-                    soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
-                          listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
-                    water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
-                });
-
                 ReportSummaryModels resultModel = new ReportSummaryModels();
-                resultModel.activitySummaryGroupList = groupList;
+                ReportSummaryModel forecastlist = new ReportSummaryModel();              
+
+                if (listForSale != null && listForSale.Count > 0)
+                {
+                    forecastlist = (new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        activitySales = "Sales Forecast",
+                        est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
+                        crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
+                        wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
+                        plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
+                        jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
+                        oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
+                        soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
+                              listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
+                        water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                    });
+                    
+                }
+                resultModel.activitySummaryGroupList = groupList.OrderBy(x => x.customerName).ToList();
                 resultModel.activitySummaryList = list.ToList();
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
                 resultModel.activitySummaryForecastList.Add(forecastlist);
@@ -422,27 +426,36 @@ namespace eActForm.BusinessLayer
 
 
                 //add Sales Forecast
-                var forecastlist = (new ReportSummaryModel
-                {
-                    id = Guid.NewGuid().ToString(),
-                    activitySales = "Sales Forecast",
-                    est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
-                    crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
-                    wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
-                    plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
-                    jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
-                    oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
-                    soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
-                          listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
-                    water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
-                });
-                groupList.Add(forecastlist);
-
                 ReportSummaryModels resultModel = new ReportSummaryModels();
+                ReportSummaryModel forecastlist = new ReportSummaryModel();
+                if (listForSale != null && listForSale.Count > 0)
+                {
+                    forecastlist = (new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        activitySales = "Sales Forecast",
+                        est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
+                        crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
+                        wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
+                        plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
+                        jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
+                        oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
+                        soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
+                              listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
+                        water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                    });
+
+                }
+                else
+                {
+
+                }
+
+                groupList.Add(forecastlist);
+                resultModel.activitySummaryForecastList.Add(forecastlist);
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
-                resultModel.activitySummaryForecastList.Add(forecastlist);
                 return resultModel;
             }
             catch (Exception ex)
