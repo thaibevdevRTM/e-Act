@@ -211,7 +211,7 @@
 
 
 
-                            @if (Model.activitySummaryForecastList.Any())
+                            @if (Model.activitySummaryForecastList != null && Model.activitySummaryForecastList.Count > 0)
                             {
                                 <tr class="gradeX">
                                     <td></td>
@@ -268,14 +268,14 @@
                                     </td>
                                     <td>
                                         @{
-                                             sumfTotal = (@Model.activitySummaryForecastList[0].est +
-                                                 Model.activitySummaryForecastList[0].crystal +
-                                                 Model.activitySummaryForecastList[0].wranger +
-                                                 Model.activitySummaryForecastList[0].plus100 +
-                                                 Model.activitySummaryForecastList[0].jubjai +
-                                                 Model.activitySummaryForecastList[0].oishi +
-                                                 Model.activitySummaryForecastList[0].soda +
-                                                 Model.activitySummaryForecastList[0].water);
+                                            sumfTotal = (@Model.activitySummaryForecastList[0].est +
+                                                Model.activitySummaryForecastList[0].crystal +
+                                                Model.activitySummaryForecastList[0].wranger +
+                                                Model.activitySummaryForecastList[0].plus100 +
+                                                Model.activitySummaryForecastList[0].jubjai +
+                                                Model.activitySummaryForecastList[0].oishi +
+                                                Model.activitySummaryForecastList[0].soda +
+                                                Model.activitySummaryForecastList[0].water);
 
                                             string fTotal = String.Format("{0:n2}", @sumfTotal);
                                             @fTotal.ToString();
@@ -284,7 +284,6 @@
                                     <td></td>
 
                                 </tr>
-                            }
 
                                 <tr class="gradeX">
                                     <td></td>
@@ -349,6 +348,9 @@
                                     <td></td>
 
                                 </tr>
+                            }
+
+
 
                         </tbody>
 
