@@ -242,7 +242,7 @@
                     คงเหลือ :
                 </label>
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", @readonly = "true" })
+                    @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", onchange = "getCalBudget();" })
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">

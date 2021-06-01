@@ -268,7 +268,8 @@ namespace eActForm.Controllers
 
                 if (BudgetLEList.Any())
                 {
-                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon);
+
+                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon, BudgetLEList.FirstOrDefault().endDate);
                     foreach (var item in BudgetLEList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetLE(AppCode.StrCon, item);
@@ -276,7 +277,7 @@ namespace eActForm.Controllers
                 }
                 if (bgActTypeList.Any())
                 {
-                    var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon);
+                    //var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon , BudgetLEList.FirstOrDefault().endDate);
                     foreach (var item in bgActTypeList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetActType(AppCode.StrCon, item);
