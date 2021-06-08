@@ -460,6 +460,7 @@ namespace eActForm.Models
         public decimal? totalBudgetChannel { get; set; }
         public string channelName { get; set; }
         public string activityType { get; set; }
+        public string activityTypeId { get; set; }
     }
 
 }

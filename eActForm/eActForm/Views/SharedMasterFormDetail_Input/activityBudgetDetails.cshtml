@@ -27,6 +27,8 @@
                     {
                         <tr class="tagCountRowinTable">
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                
+                                @Html.HiddenFor(x => item.typeTheme, new { @id = "activityOfEstimateList[" + index + "].typeTheme", Name = "activityOfEstimateList[" + index + "].typeTheme", @class = "form-control textboxcss text-right txtTypetheme__" + index })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
@@ -235,10 +237,22 @@
         }).done(function (response) {
 
             if (response.Success == true) {
+
+                var rowCount = parseInt($('#tableDetailsBG tr').length-2);
+                for (i = 0; i < rowCount; i++) {
+                    console.log(i);
+
+                    $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
+                   
+                }
+
+               
                 document.getElementById("divShowBudget").innerHTML = "";
                 if (response.Data.budgetTotalsList.length > 0) {
                     callPartialBudgetControl("@Model.activityFormTBMMKT.id");
                 }
+
+
             }
         });
     }

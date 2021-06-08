@@ -240,7 +240,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.activityType = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales;
                             budgetTotalsList.Add(budgetTotalModel);
 
-                            totalBudgetChannel = getAmount.FirstOrDefault().totalBudgetChannel;
+                            totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
                             useAmountTotal = (getAmount.FirstOrDefault().reserveTotal + getAmount.FirstOrDefault().balanceTotal);
                             sumTotal_Input += item.total;
                         }

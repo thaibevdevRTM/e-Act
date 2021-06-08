@@ -296,8 +296,12 @@ namespace eActForm.BusinessLayer
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
 
-                    //waiting update budgetControl
-                    bool resultTransfer = TransferBudgetAppcode.transferBudgetForReject(actFormId);
+                    List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
+                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
+                    {
+                        //waiting update budgetControl
+                        bool resultTransfer = TransferBudgetAppcode.transferBudgetForReject(actFormId);
+                    }
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {

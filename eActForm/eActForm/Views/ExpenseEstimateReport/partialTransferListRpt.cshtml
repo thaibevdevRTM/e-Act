@@ -30,8 +30,8 @@
                         <tbody id=first>
                             <tr class="tagCountRowBudgetControl">
                                 <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse; text-align:center;" class="fontDoc12">
-                                    @{ var EO = !string.IsNullOrEmpty(item.EO) ? "EO "+ @item.EO : "";
-                                       var IO = !string.IsNullOrEmpty(item.IO) ? "IO " + @item.IO : "";}
+                                    @{ var EO = !string.IsNullOrEmpty(item.EO) ? "EO " + @item.EO : "";
+                                        var IO = !string.IsNullOrEmpty(item.IO) ? "IO " + @item.IO : "";}
                                     @EO
                                     @IO
                                 </td>
@@ -46,7 +46,16 @@
 
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">@string.Format("{0:n2}", @item.normalCost)</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> @string.Format("{0:n2}", @item.themeCost)</td>
+                                @if (@item.themeCost.ToString().Contains("-"))
+                                {
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">(@string.Format("{0:n2}", float.Parse(@item.themeCost.ToString().Replace("-",""))))</td>
+                                }
+                                else
+                                {
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> @string.Format("{0:n2}", @item.themeCost)</td>
+                                }
+
+
                                 @if (item.hospId == "1")
                                 {
                                     <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12"> @string.Format("{0:n2}", @item.growth)</td>

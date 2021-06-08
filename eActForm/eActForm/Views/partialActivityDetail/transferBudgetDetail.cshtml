@@ -654,7 +654,7 @@
                 if (mode == "new") {
 
                     var trHTML = $('.tRow_0').html();
-                    console.log(trHTML);
+  
                     var trHTML = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end().html();
                     trHTML = trHTML.replaceAll('[0].row', '[' + RowCount + '].row');
                     trHTML = trHTML.replaceAll('[0].EO', '[' + RowCount + '].EO');

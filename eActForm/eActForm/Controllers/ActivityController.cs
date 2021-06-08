@@ -331,8 +331,11 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                
-                                if(ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
+                                if (ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
+                                {
+                                    ActFormAppCode.insertReserveBudget(activityId);
+                                }
+                                if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
                                     //waiting update budgetControl
                                     bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
@@ -347,7 +350,7 @@ namespace eActForm.Controllers
                                         ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                     }
                                 }
-                                var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                              var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                             }
                         }
                     }

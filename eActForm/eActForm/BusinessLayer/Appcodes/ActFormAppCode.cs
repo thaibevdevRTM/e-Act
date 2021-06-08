@@ -554,15 +554,15 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
-                                 balance = dr["balance"] is DBNull ? 0 : (decimal?)dr["balance"],
-                                 reserve = dr["reserve"] is DBNull ? 0 : (decimal?)dr["reserve"],
-                                 reserveTotal = dr["reserveTotal"] is DBNull ? 0 : (decimal?)dr["reserveTotal"],
-                                 balanceTotal = dr["balanceTotal"] is DBNull ? 0 : (decimal?)dr["balanceTotal"],
-                                 amountTotal = dr["amountTotal"] is DBNull ? 0 : (decimal?)dr["amountTotal"],
-                                 amount = dr["amountEvent"] is DBNull ? 0 : (decimal?)dr["amountEvent"],
+                                 balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
+                                 reserve = string.IsNullOrEmpty(dr["reserve"].ToString()) ? 0 : (decimal?)dr["reserve"],
+                                 reserveTotal = string.IsNullOrEmpty(dr["reserveTotal"].ToString())  ? 0 : (decimal?)dr["reserveTotal"],
+                                 balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
+                                 amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
                                  EO = dr["EO"].ToString(),
                                  LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
-                                 totalBudgetChannel = dr["totalBrandChannel"] is DBNull ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
                              }).ToList();
                 return lists;
             }
