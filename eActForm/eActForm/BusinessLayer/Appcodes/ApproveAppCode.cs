@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -294,15 +295,25 @@ namespace eActForm.BusinessLayer
                 {
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
-                    var result = updateBudgetControl_Balance(actFormId);
+
+                    List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
+                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
+                    {
+                        //waiting update budgetControl
+                        bool resultTransfer = TransferBudgetAppcode.transferBudgetForReject(actFormId);
+                    }
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
-                    var result = updateBudgetControl_Balance(actFormId);
-
                 }
+
+                var result = updateBudgetControl_Balance(actFormId);
+               
+                
+
+
                 return rtn;
             }
             catch (Exception ex)
@@ -320,7 +331,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
+                throw new Exception("updateBudgetControl_Balance >> " + ex.Message);
             }
         }
 

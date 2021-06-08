@@ -39,6 +39,8 @@ namespace eActForm.Controllers
                     .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+                activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activitySales.Contains("FOC")).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
@@ -329,11 +331,16 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                
-                                if(ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
+                                if (ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
-                                     ActFormAppCode.insertReserveBudget(activityId);
+                                    ActFormAppCode.insertReserveBudget(activityId);
                                 }
+                                if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
+                                {
+                                    //waiting update budgetControl
+                                    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
+                                }
+
 
                                 if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
                                 {
@@ -343,7 +350,7 @@ namespace eActForm.Controllers
                                         ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                     }
                                 }
-                                var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                              var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                             }
                         }
                     }

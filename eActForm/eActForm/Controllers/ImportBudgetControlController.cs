@@ -79,7 +79,7 @@ namespace eActForm.Controllers
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
-                            modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                            //modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
                             modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
                             modelBudget.chanelName = dt.Columns[ii].ToString();
                             modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -268,7 +268,8 @@ namespace eActForm.Controllers
 
                 if (BudgetLEList.Any())
                 {
-                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon);
+
+                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon, BudgetLEList.FirstOrDefault().endDate);
                     foreach (var item in BudgetLEList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetLE(AppCode.StrCon, item);
@@ -276,7 +277,7 @@ namespace eActForm.Controllers
                 }
                 if (bgActTypeList.Any())
                 {
-                    var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon);
+                    //var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon , BudgetLEList.FirstOrDefault().endDate);
                     foreach (var item in bgActTypeList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetActType(AppCode.StrCon, item);

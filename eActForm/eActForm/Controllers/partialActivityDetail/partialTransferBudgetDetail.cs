@@ -9,7 +9,6 @@ namespace eActForm.Controllers
         public ActionResult transferBudgetDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
 
-
             return PartialView(activity_TBMMKT_Model);
         }
     }

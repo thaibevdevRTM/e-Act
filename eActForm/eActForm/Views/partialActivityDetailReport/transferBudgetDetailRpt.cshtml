@@ -33,38 +33,39 @@
 </style>
 
 <div>
-    <table style="width:100%; margin-top:30px;">
+    <table style="width:97%; margin-top:30px; margin-left: 20px;">
         <tr>
-            <td width="140px;" class="fontDocSmall">
-                วันที่เสนอ :
+            <td width="140px;" class="fontDoc12">
+                <b>วันที่เสนอ :</b>
             </td>
             <td width="260px;" style="margin-left:10px;">
-               @Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy")
+                @Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy")
             </td>
             <td width="20px;"></td>
-            <td class="fontDocSmall" width="150px;">เบอร์โทรศัพท์ :</td>
-            <td class="fontDocSmall" width="160px;"> @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityTel) </td>
+            <td class="fontDoc12">
+                <b>เอกสารเลขที่ :</b>
+            </td>
+            <td class="fontDoc12">
+                @Html.DisplayFor(item => item.activityFormModel.activityNo)
+            </td>
+
         </tr>
         <tr>
-            <td class="fontDocSmall">
-                ชื่อผู้เสนอ :
+            <td class="fontDoc12">
+                <b> ชื่อผู้เสนอ :</b>
             </td>
-            <td class="fontDocSmall">
+            <td class="fontDoc12">
                 @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.toContact)
             </td>
             <td></td>
-            <td class="fontDocSmall">
-                เอกสารเลขที่ :
-            </td>
-            <td class="fontDocSmall">
-                @Html.DisplayFor(item => item.activityFormModel.activityNo)
-            </td>
+            <td class="fontDoc12" width="150px;"><b>เบอร์โทรศัพท์ :</b></td>
+            <td class="fontDoc12" width="160px;"> @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityTel) </td>
         </tr>
         <tr>
-            <td class="fontDocSmall">
-                สินค้า :
+            <td class="fontDoc12">
+                <b> สินค้า :</b>
             </td>
-            <td class="fontDocSmall">
+            <td class="fontDoc12">
                 @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityProduct)
             </td>
             <td></td>
@@ -72,10 +73,10 @@
             <td></td>
         </tr>
         <tr>
-            <td class="fontDocSmall">
-                ชื่อกิจกรรม(งบประมาณเดิม) :
+            <td class="fontDoc12">
+                <b>ชื่อกิจกรรม :</b>
             </td>
-            <td class="fontDocSmall">
+            <td class="fontDoc12">
                 @Html.DisplayFor(item => item.activityFormTBMMKT.activityName)
             </td>
             <td></td>
@@ -83,10 +84,10 @@
             <td></td>
         </tr>
         <tr>
-            <td class="fontDocSmall">
-                ชื่อกิจกรรม(งบประมาณใหม่) :
+            <td class="fontDoc12">
+                <b> เลขที่ใบอนุมัติงบกิจกรรม :</b>
             </td>
-            <td class="fontDocSmall">
+            <td class="fontDoc12">
                 @Html.DisplayFor(item => item.activityFormTBMMKT.activityDetail)
             </td>
             <td></td>
@@ -94,10 +95,10 @@
             <td></td>
         </tr>
         <tr>
-            <td class="fontDocSmall">
-                วัตถุประสงค์ :
+            <td class="fontDoc12">
+                <b>วัตถุประสงค์ :</b>
             </td>
-            <td class="fontDocSmall">
+            <td class="fontDoc12">
                 @Html.DisplayFor(item => item.activityFormTBMMKT.objective)
             </td>
             <td></td>

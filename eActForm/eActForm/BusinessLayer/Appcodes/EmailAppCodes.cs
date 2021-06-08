@@ -1,4 +1,5 @@
-﻿using eActForm.Controllers;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Controllers;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -348,10 +349,12 @@ namespace eActForm.BusinessLayer
                         DataRow dr = ds.Tables[0].Rows[0];
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
+
+
+
                             // all approved then send the email notification to user create
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
-
                             createUsersName = createUsers.FirstOrDefault().empName;
                             emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
                             txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];

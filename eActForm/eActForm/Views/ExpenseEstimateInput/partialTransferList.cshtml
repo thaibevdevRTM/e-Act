@@ -19,53 +19,68 @@
         <table class="table table-striped jambo_table bulk_action fixed" id="tbl_budgetControl" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
             <thead>
                 <tr class="headings" style="text-align:center;">
-                    <th width="50px" class="align-content-center font10"> </th>
-                    <th width="15%" class="align-content-center font10"> BudgetNumber </th>
-                    <th width="10%" class="align-content-center font10"> </th>
-                    <th width="25%" class="align-content-center font10"> รายละเอียด </th>
-                    <th width="15%" class="align-content-center font10"> งบประมาณเดิม </th>
-                    <th width="15%" class="align-content-center font10"> เหลือ </th>
-                    <th width="15%" class="align-content-center font10"> โอนงบประมาณเพิ่ม(ลด) </th>
-                    <th width="15%" class="align-content-center font10"> งบประมาณใหม่ </th>
+                    <th width="50px" class="font10" style="text-align:center"> </th>
+                    <th width="15%" class="font10" style="text-align:center"> BudgetNumber </th>
+                    <th width="10%" class="font10" style="text-align:center"> ขอลด/ขอเพิ่ม </th>
+                    <th width="25%" class="font10" style="text-align:center"> รายละเอียด </th>
+                    <th width="15%" class="font10" style="text-align:center"> งบประมาณเดิม(บาท) </th>
+                    <th width="15%" class="font10" style="text-align:center"> คงเหลือ(บาท)</th>
+                    <th width="15%" class="font10" style="text-align:center"> จำนวนที่ต้องการโอน(บาท) </th>
+                    <th width="15%" class="font10" style="text-align:center"> งบประมาณใหม่(บาท) </th>
                 </tr>
             </thead>
             @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
             {
                 <tbody id=first>
-                    <tr class="tagCountRowBudgetControl">
+                    <tr class="tagCountRowBudgetControl tRow_@i">
                         <td>
-                            <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                            @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                            {
+                                <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                                <button type="button" class="btn ink-reaction btn-info fa fa-edit" id="btn[@i].row" onclick="cashEdit(@i);"></button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);" disabled></button>
+                                <button type="button" class="btn ink-reaction btn-info fa fa-edit" id="btn[@i].row" onclick="cashEdit(@i);" disabled></button>
+                            }
+
                         </td>
+
+
                         <td style="text-align:right">
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].EO, new { @class = "form-control textboxcss font10 textRight clsEO_" + i, placeholder = "EO", autocomplete = "off" })
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].IO, new { @class = "form-control textboxcss font10 textRight clsIO_" + i, placeholder = "IO", autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].EO, new { @class = "form-control textboxcss font10 textRight", placeholder = "EO", autocomplete = "off", @readonly = true })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].IO, new { @class = "form-control textboxcss font10 textRight", placeholder = "IO", autocomplete = "off", @readonly = true })
                         </td>
                         <td style="text-align:right">
 
-                            @Html.DropDownListFor(x => x.activityOfEstimateList[i].hospId, new List<SelectListItem>
-                             {
-                                  new SelectListItem { Text = "ลด", Value = "0"},
-                                  new SelectListItem { Text = "เพิ่ม", Value = "1"},
-                             },
-                             new
-                             {
-                                  @class = "form-control textboxcss chkUpdown_" + @i
-                             })
+
+                            @Html.TextBox("txtUpDown", "", new { @class = "form-control textboxcss font10 textRight txtUpdown_" + i, @readonly = true })
+                            @Html.HiddenFor(x => x.activityOfEstimateList[i].hospId)
                             <script>
-                                $(function () {
-                                    $("#activityOfEstimateList_" + @i + "__hospId").val("@Model.activityOfEstimateList[i].hospId");
-                                });
+                             $(function () {
+                                 if ($("#activityOfEstimateList_" + @i + "__hospId").val() == '1') {
+                                     $(".txtUpdown_" +@i).val('เพิ่ม');
+                                 }
+                                 else {
+                                     $(".txtUpdown_" +@i).val('ลด');
+                                 }
+                             });
                             </script>
+
                         </td>
                         <td style="text-align:right">
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[i].productName, new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })
                         </td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].normalCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsNormalCost_" + i, autocomplete = "off" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].themeCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].growth, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].normalCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].themeCost, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].growth, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", autocomplete = "off", @readonly = true })</td>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId)
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].typeTheme)
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].QtyName)
+
                     </tr>
                 </tbody>
             }
@@ -73,12 +88,31 @@
     </div>
 </div>
 <script type="text/javascript">
-
     function cashDelete(btn) {
         var i = btn.parentNode.parentNode.rowIndex;
-        if (i > 1) {
+
+        console.log(i);
+        if (i == 1) {
+
+            var row = parseInt(i) - 1;
+            $("#activityOfEstimateList_" + row + "__EO").val('');
+            $("#activityOfEstimateList_" + row + "__IO").val('');
+            $("#activityOfEstimateList_" + row + "__hospId").val('');
+            $("#activityOfEstimateList_" + row + "__hospId").val('');
+            $("#activityOfEstimateList_" + row + "__remark").val('');
+            $("#activityOfEstimateList_" + row + "__normalCost").val('');
+            $("#activityOfEstimateList_" + row + "__themeCost").val('');
+            $("#activityOfEstimateList_" + row + "__growth").val('');
+            $("#activityOfEstimateList_" + row + "__total").val('');
+            $("#activityOfEstimateList_" + row + "__productId").val('');
+            $("#activityOfEstimateList_" + row + "__typeTheme").val('');
+            $("#activityOfEstimateList_" + row + "__productName").val('');
+            $("#activityOfEstimateList_" + row + "__QtyName").val('');
+            $("#activityOfEstimateList_" + row + "__QtyName").val('');
+            $(".txtUpdown_" + row).val('');
+        }
+        else {
             document.getElementById("tbl_budgetControl").deleteRow(i);
         }
     }
-
 </script>

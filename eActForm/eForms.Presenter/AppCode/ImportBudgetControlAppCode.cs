@@ -128,12 +128,15 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int InsertBudgetLE_History(string strCon)
+        public static int InsertBudgetLE_History(string strCon,DateTime? importDate)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History"
+              , new SqlParameter[] {new SqlParameter("@importDate",importDate)
+                });
+                result++;
             }
             catch (Exception ex)
             {
@@ -169,12 +172,16 @@ namespace eForms.Presenter.AppCode
 
             return result;
         }
-        public static int InsertBudgetActType_History(string strCon)
+        public static int InsertBudgetActType_History(string strCon ,DateTime? importDate)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History"
+             , new SqlParameter[] {new SqlParameter("@importDate",importDate)
+               });
+                result++;
+
             }
             catch (Exception ex)
             {
@@ -205,11 +212,13 @@ namespace eForms.Presenter.AppCode
                         genGroup = "B4";
                     }
                 }
-
-                result = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
+                if (!string.IsNullOrEmpty(modelBudget.brandId))
+                {
+                    result = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
+                }
                 result += getDigitDepartment(modelBudget.budgetGroupType);
                 result += genGroup; //group
-                result += modelBudget.startDate.Value.Year.ToString().Substring(2, 2);
+                result += modelBudget.endDate.Value.Year.ToString().Substring(2, 2);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using eForms.Presenter.MasterData;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.Controllers
 {
@@ -17,13 +19,14 @@ namespace eActForm.Controllers
             public string idBrandOrChannel { get; set; }
             public string master_type_form_id { get; set; }
             public string companyId { get; set; }
+            public string channelId { get; set; }
         }
 
         public JsonResult GetDataSubjectByChanelOrBrand(objGetDataSubjectByChanelOrBrand objGetDataSubjectBy)
         {
             var result = new AjaxResult();
             try
-            {
+            { 
                 List<TB_Reg_Subject> tB_Reg_Subject = new List<TB_Reg_Subject>();
                 tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
 
@@ -304,5 +307,48 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getIOByEO(string txtEO,string txtIO)
+        {
+            var result = new AjaxResult();
+            List<TransferBudgetModels> transfersList = new List<TransferBudgetModels>();
+            try
+            {
+                transfersList = TransferBudgetAppcode.GetIOByEO(txtEO).Where(x => x.IO.Contains(txtIO) && x.IO != null).ToList();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(transfersList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEmpGroupFlowByChannel(objGetDataSubjectByChanelOrBrand objGetDataSubjectBy)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<User> userList = new List<User>();
+
+                var userResult = QueryGet_empByComp.getEmpGroupByChannelId(objGetDataSubjectBy.channelId , objGetDataSubjectBy.master_type_form_id);
+
+              
+                var resultData = new
+                {
+                    userList = userResult.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
+
+   
+    
 }

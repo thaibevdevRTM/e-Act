@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer
 {
@@ -61,6 +62,28 @@ namespace eActForm.BusinessLayer
             {
                 ExceptionManager.WriteError("getEmpByDepartment => " + ex.Message);
                 return new List<RequestEmpModel>();
+            }
+        }
+
+        public static List<User> getEmpGroupByChannelId(string channelId, string master_type_form_id)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpGroupByChannel"
+                     , new SqlParameter("@channelId", channelId)
+                      , new SqlParameter("@master_type_form_id", master_type_form_id));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new User()
+                             {
+                                 empId = d["empId"].ToString(),
+                                 empFNameTH = d["empFNameTH"].ToString(),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpGroupByChannelId => " + ex.Message);
+                return new List<User>();
             }
         }
     }

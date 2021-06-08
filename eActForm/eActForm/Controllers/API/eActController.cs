@@ -580,7 +580,7 @@ namespace eActForm.Controllers
                 {
 
 
-                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    //hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
                     cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
                     if (cashEmpList != null && cashEmpList.Count > 0)
                     {

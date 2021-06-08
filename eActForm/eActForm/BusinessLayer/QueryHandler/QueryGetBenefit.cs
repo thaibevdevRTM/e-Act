@@ -1,7 +1,9 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -145,10 +147,10 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
+                DateTime? hireDatee = DateTime.ParseExact(hireDate, "dd/MM/yyyy", null);
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByTypeId"
                      , new SqlParameter("@typeId", typeId)
-                      , new SqlParameter("@hireDate", hireDate)
+                      , new SqlParameter("@hireDate", hireDatee)
                        , new SqlParameter("@jobLevel", jobLevel));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new CashEmpModel()

@@ -14,6 +14,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupFilterList { get; set; }
         public List<Product_Model> productlist { get; set; }
         public List<ProductSmellModel> productSmellLists { get; set; }
 
@@ -234,6 +235,8 @@ namespace eActForm.Models
         public string contactName { get; set; }
         public string contactTel { get; set; }
         public Boolean chkAddDown { get; set; }
+        public string subActivity { get; set; }
+        public string txtSubActivity { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -457,6 +460,7 @@ namespace eActForm.Models
         public decimal? totalBudgetChannel { get; set; }
         public string channelName { get; set; }
         public string activityType { get; set; }
+        public string activityTypeId { get; set; }
     }
 
 }

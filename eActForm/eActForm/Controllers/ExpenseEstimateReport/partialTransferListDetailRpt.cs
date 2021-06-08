@@ -21,6 +21,15 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
             }
 
+            for (int i = 0; i < activity_TBMMKT_Model.activityOfEstimateList.Count; i++)
+            {
+                activity_TBMMKT_Model.activityOfEstimateList[i].productName = QueryGetAllBrand.GetAllBrand().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].productId)).FirstOrDefault().brandName;
+                if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme))
+                {
+                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllChanel.getAllChanel().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme)).FirstOrDefault().chanelGroup;
+                }
+               
+            }
             return PartialView(activity_TBMMKT_Model);
         }
 
