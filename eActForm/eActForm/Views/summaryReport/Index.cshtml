@@ -33,6 +33,10 @@
 <script type="text/javascript">
 
     function beginQuery() {
+        if ($("#ddlCompany").val() == "") {
+            doMsgFail("กรุณาระบุ บริษัท ครับ");
+            return false;
+        }
         if ($("#ddlCustomer").val() == "") {
             doMsgFail("กรุณาระบุ ลูกค้า ครับ");
             return false;

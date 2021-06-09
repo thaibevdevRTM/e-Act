@@ -13,14 +13,27 @@
         </div>
     </div>
     <div class="col-md-6 col-xs-12">
-        @*<div class="row" id="divStatus">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                    Status
+
+            <div class="row">
+
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCompany">
+                    Company<span class="required"></span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+                    @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "id", "companyName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCompany", Name = "ddlCompany" })
                 </div>
-            </div>*@
+
+
+            </div>
+
+        @*<div class="row" id="divStatus">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                Status
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+            </div>
+        </div>*@
     </div>
 </div>
 <div class="form-group">
@@ -45,30 +58,37 @@
 </div>
 
 <div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                Product Type<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductType">
+                    Product Type<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                เพิ่มเติม<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                <input type="checkbox" name="chk_Approve" id="chk_Approve" value="true" class="icheckbox_flat-green">
+        <div class="col-md-6">
+            <div class="row">
+
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chk_Approve">
+                    เพิ่มเติม<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    <input type="checkbox" name="chk_Approve" id="chk_Approve" value="true" class="icheckbox_flat-green">
+                </div>
             </div>
         </div>
+
+
     </div>
 </div>
-
-
 <hr />
+
 <div class="form-group">
     <div class="row">
         <div class="col-md-12">
