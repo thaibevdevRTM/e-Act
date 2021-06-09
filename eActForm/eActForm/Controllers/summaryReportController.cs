@@ -136,11 +136,11 @@ namespace eActForm.Controllers
 
                 if (Request.Form["txtRepDetailNo"] != "")
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"], Request.Form["ddlCompany"]);
                 }
                 if (Request.Form["ddlProductType"] != "")
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"], Request.Form["ddlCompany"]);
                 }
 
                 if (chk == "true")
