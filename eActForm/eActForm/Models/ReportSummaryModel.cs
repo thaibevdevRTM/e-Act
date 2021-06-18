@@ -85,6 +85,7 @@ namespace eActForm.Models
             public decimal? total { get; set; }
             public string remark { get; set; }
             public int rowNo { get; set; }
+            public string companyId { get; set; }
         }
 
         public class actApproveSummaryDetailList

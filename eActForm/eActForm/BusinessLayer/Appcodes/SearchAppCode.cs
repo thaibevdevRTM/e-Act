@@ -65,6 +65,7 @@ namespace eActForm.BusinessLayer
             {
                 SearchActivityModels models = new SearchActivityModels
                 {
+                    companyList = ReportSummaryAppCode.getCompanyMTMList(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
                     customerslist = @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() : QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(),

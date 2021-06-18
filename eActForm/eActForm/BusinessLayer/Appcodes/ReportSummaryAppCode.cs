@@ -1,5 +1,7 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +16,21 @@ namespace eActForm.BusinessLayer
     public class ReportSummaryAppCode
     {
 
+        public static List<CompanyMTM> getCompanyMTMList()
+        {
+            try
+            {
+                string rtn = ConfigurationManager.AppSettings["companyMTM"];//File.ReadAllText(path);
+                JObject json = JObject.Parse(rtn);
+                var lists = JsonConvert.DeserializeObject<List<CompanyMTM>>(json.SelectToken("companyMTM").ToString());
+                return lists;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCompanyMTMList >>" + ex.Message);
+            }
+        }
 
         public static int updateSummaryReportWithApproveDetail(string repDetailId)
         {
@@ -126,6 +143,7 @@ namespace eActForm.BusinessLayer
                                  customerId = dr["customerId"].ToString(),
                                  customerName = dr["cusNameTH"].ToString(),
                                  createdDate = (DateTime?)dr["createdDate"],
+                                 companyId = dr["companyId"].ToString()
                              });
 
                 return lists.ToList();
@@ -465,11 +483,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId,string txtCompanyId)
         {
             try
             {
-                return lists.Where(r => r.productTypeId == producttypeId).ToList();
+                return lists.Where(r => r.productTypeId == producttypeId && r.companyId.Equals(txtCompanyId)).ToList();
             }
             catch (Exception ex)
             {
@@ -477,11 +495,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo,string txtCompanyId)
         {
             try
             {
-                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo)).ToList();
+                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo) && r.companyId.Equals(txtCompanyId)).ToList();
             }
             catch (Exception ex)
             {
