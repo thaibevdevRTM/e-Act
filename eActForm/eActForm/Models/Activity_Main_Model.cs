@@ -124,6 +124,7 @@ namespace eActForm.Models
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
         public string[] list_chooseRequest_multi_select { get; set; }
+        public Boolean chkTemp { get; set; }
 
     }
 

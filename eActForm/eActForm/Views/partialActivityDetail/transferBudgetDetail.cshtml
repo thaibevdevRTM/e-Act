@@ -365,6 +365,8 @@
         $("#txtNewBudget").val(parseFloat($("#activityOfEstimateList_" + i + "__total").val()).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#ddlBrand_BG").val($("#activityOfEstimateList_" + i + "__productId").val());
         $("#ddlChannel_BG").val($("#activityOfEstimateList_" + i + "__typeTheme").val());
+        $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
+        $("#txtBGYear").val($("#activityOfEstimateList_" + i + "__UseYearSelect").val());
 
         bindDropdownSubject();
 
@@ -413,6 +415,8 @@
                 data: {
                     brandId: $("#ddlBrand_BG").val(),
                     channelId: $("#ddlChannel_BG").val(),
+                    activityGroupId: $("#ddlActType_BG").val(),
+                    bgYear: $("#txtBGYear").val(),
                 },
                 dataType: "json",
                 type: 'POST',
@@ -452,8 +456,35 @@
     $("#ddlChannel_BG").change(function () {
 
         $("#ddlSubject_BG option[value !='']").remove();
-        if ($("#ddlChannel_BG").val() != "") {
+       // if ($("#ddlChannel_BG").val() != "") {
             bindDropdownSubject();
+
+            if ($("#txtBudgetEO").val() != '') {
+                getBudgetEOIO
+            } else {
+                getBudgetNonEO();
+            }
+       // }
+       // else {
+        //    document.getElementById("divActType").style.display = "block";
+        //    document.getElementById("divBGYear").style.display = "block";
+        //    document.getElementById("divSubject").style.display = "none";
+      //  }
+
+    });
+
+
+    $("#txtBGYear").change(function () {
+
+        if ($("#ddlActType_BG").val() != "" || $("#txtBGYear").val()) {
+                getBudgetNonEO();
+        }
+
+    });
+
+    $("#ddlActType_BG").change(function () {
+
+        if ($("#ddlActType_BG").val() != "") {
 
             if ($("#txtBudgetEO").val() != '') {
                 getBudgetEOIO
@@ -480,13 +511,24 @@
                 dataType: 'json',
                 type: "POST",
                 success: function (response) {
+                    $("#ddlSubject_BG option[value !='']").remove();
+
                     if (response.Data.userList.length > 0) {
-                        $("#ddlSubject_BG option[value !='']").remove();
+                      
+                        document.getElementById("divSubject").style.display = "block";
+                        document.getElementById("divActType").style.display = "none";
+                        //document.getElementById("divBGYear").style.display = "none";
+                        document.getElementById("ddlActType_BG").selectedIndex = "0";
                         $.each(response.Data.userList, function () {
                             ddlSubject.append($("<option></option>").val(this['empId']).html(this['empFNameTH']));
                         });
                     }
-
+                    else {
+                        document.getElementById("divSubject").style.display = "none";
+                        document.getElementById("divActType").style.display = "block";
+                        //document.getElementById("divBGYear").style.display = "block";
+                    }
+                    
                 },
                 error: function (data) {
                     alert("Error Get Subject.");
@@ -603,6 +645,7 @@
             required += "กรุณาระบุ โอนงบประมาณ! *<br>"; validate = false;
         }
 
+
         if (validate == false) {
             bootbox.alert(required)
         }
@@ -637,8 +680,11 @@
                 $("#activityOfEstimateList_0__productId").val($("#ddlBrand_BG").val());
                 $("#activityOfEstimateList_0__typeTheme").val($("#ddlChannel_BG").val());
                 $("#activityOfEstimateList_0__QtyName").val($("#ddlSubject_BG").val());
+                $("#activityOfEstimateList_0__activityTypeId").val($("#ddlActType_BG").val());
+                $("#activityOfEstimateList_0__UseYearSelect").val($("#txtBGYear").val());
 
-                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text();
+                
+                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_0__productName").val(getTxtBrandChannel);
             }
             else {
@@ -671,6 +717,8 @@
                     trHTML = trHTML.replaceAll('[0].productId', '[' + RowCount + '].productId');
                     trHTML = trHTML.replaceAll('[0].typeTheme', '[' + RowCount + '].typeTheme');
                     trHTML = trHTML.replaceAll('[0].QtyName', '[' + RowCount + '].QtyName');
+                    trHTML = trHTML.replaceAll('[0].activityTypeId', '[' + RowCount + '].activityTypeId');
+                    trHTML = trHTML.replaceAll('[0].UseYearSelect', '[' + RowCount + '].UseYearSelect');
                     trHTML = trHTML.replaceAll('cashEdit(0)', 'cashEdit(' + RowCount +')');
 
                     trHTML = trHTML.replaceAll('_0__row', '_' + RowCount + '__row');
@@ -687,29 +735,14 @@
                     trHTML = trHTML.replaceAll('_0__productId', '_' + RowCount + '__productId');
                     trHTML = trHTML.replaceAll('_0__typeTheme', '_' + RowCount + '__typeTheme');
                     trHTML = trHTML.replaceAll('_0__QtyName', '_' + RowCount + '__QtyName');
+                    trHTML = trHTML.replaceAll('_0__activityTypeId', '_' + RowCount + '__activityTypeId');
+                    trHTML = trHTML.replaceAll('_0__UseYearSelect', '_' + RowCount + '__UseYearSelect');
                     trHTML = ("<tr class=\"tagCountRowBudgetControl tRow_" + RowCount + "\">" + trHTML );
 
                     trHTML = (trHTML + "</tr>");
                     $('#tbl_budgetControl > tbody:last').append(trHTML);
 
 
-                    //var newRow = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end();
-                    //console.log(newRow.html);
-                    //$("#tbl_budgetControl > tbody:last").append(newRow);
-                    //newRow.find("input").each(function () {
-                    //    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-                    //    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
-                    //}
-                    //);
-                    //newRow.find("select").each(function () {
-                    //    $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-                    //    $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
-                    //}
-                    //);
-
-
-                    //newRow.insertAfter('#tbl_budgetControl tbody>tr:last');
-                   // newRow.insertBefore('#tbl_budgetControl tbody>tr:last');
                 }
 
                 $("#activityOfEstimateList_" + RowCount + "__EO").val($("#txtBudgetEO").val());
@@ -730,10 +763,12 @@
                 $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val().replace(/,/g, ""));
                 $("#activityOfEstimateList_" + RowCount + "__productId").val($("#ddlBrand_BG").val());
                 $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
-                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() ;
+                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_" + RowCount + "__productName").val(getTxtBrandChannel);
 
                 $("#activityOfEstimateList_" + RowCount + "__QtyName").val($("#ddlSubject_BG").val());
+                $("#activityOfEstimateList_" + RowCount + "__activityTypeId").val($("#ddlActType_BG").val());
+                $("#activityOfEstimateList_" + RowCount + "__UseYearSelect").val($("#txtBGYear").val());
 
             }
 
@@ -749,6 +784,9 @@
             $("#ddlBrand_BG").val('');
             $("#ddlChannel_BG").val('');
             $("#ddlSubject_BG").val('');
+            $("#txtBGYear").val('');
+            document.getElementById("ddlActType_BG").selectedIndex = "0";
+
         }
 
     }

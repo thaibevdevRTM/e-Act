@@ -44,16 +44,18 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId)
+        public JsonResult getBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId , string bgYear)
         {
             var result = new AjaxResult();
             try
             {
-                var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceNonEO(brandId, channelId);
+                var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceNonEO(brandId, channelId,activityGroupId, bgYear);
                 var resultData = new
                 {
-                    EO = budgetPrice.FirstOrDefault().EO,
-                    amount = string.IsNullOrEmpty(channelId) ? 0 : budgetPrice.FirstOrDefault().amount
+
+                    EO = budgetPrice.Any() ? budgetPrice.FirstOrDefault().EO : "",
+                    amount = budgetPrice.Any() ? budgetPrice.FirstOrDefault().amount : 0,
+     
                 };
 
                 result.Data = resultData;

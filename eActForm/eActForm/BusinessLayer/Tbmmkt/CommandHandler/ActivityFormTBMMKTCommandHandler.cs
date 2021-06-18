@@ -1098,8 +1098,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@brandId", model.productBrandId)
                     ,new SqlParameter("@theme", model.theme)
                     ,new SqlParameter("@trade", model.trade)
-
-
+                    ,new SqlParameter("@isTemp", model.chkTemp)
                     ,new SqlParameter("@statusNote", model.statusNote)
                   });
             }
