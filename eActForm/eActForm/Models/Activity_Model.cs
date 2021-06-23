@@ -63,6 +63,7 @@ namespace eActForm.Models
             OMT,
             MT,
             SetPrice,
+            SetPriceOMT,
             TBM,
             EXPENSE,
             HCM,

@@ -281,6 +281,10 @@
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
 
 
                             else if ((@Array.AsReadOnly(AppCode.checkDocTBM).Contains(item.master_type_form_id)) || (@Array.AsReadOnly(AppCode.expenseForm).Contains(item.master_type_form_id)))
@@ -424,6 +428,7 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceMT"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formReceptions"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTransferbudget"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceOMT"]"
         ) {
              $.ajax({
                 type: 'POST',

@@ -117,6 +117,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTByEmpId";
+                }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm";
@@ -142,7 +146,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceFormAll";
                 }
-
+                else if(isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTFormAll";
+                }
                 if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
@@ -506,6 +513,7 @@ namespace eActForm.BusinessLayer
             bool check = false;
             if (ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceOMT"] == masterForm
                 || ConfigurationManager.AppSettings["formReceptions"] == masterForm)
             {
                 check = true;

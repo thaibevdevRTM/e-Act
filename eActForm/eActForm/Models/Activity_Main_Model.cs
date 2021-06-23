@@ -55,6 +55,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -72,6 +73,7 @@ namespace eActForm.Models
             regionalModel = new List<RegionalModel>();
             budgetTotalModel = new BudgetTotal();
             budgetTotalList = new List<BudgetTotal>();
+            tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
