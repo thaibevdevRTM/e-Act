@@ -334,10 +334,14 @@
             }
         });
 
-          if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
-              $("#txtCustomerName").show();
-              $("#divRegion").show();
-              $("#ddlCustomer").hide();
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
+            $("#txtCustomerName").show();
+            $("#divRegion").show();
+            $("#ddlCustomer").hide();
+        }
+        else {
+            $("#txtCustomerName").hide();
+            $("#divRegion").hide();
         }
 
 
