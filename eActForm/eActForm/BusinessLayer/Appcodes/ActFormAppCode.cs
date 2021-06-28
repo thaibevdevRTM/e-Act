@@ -532,7 +532,7 @@ namespace eActForm.BusinessLayer
 
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
-                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                //activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id ||
                     ConfigurationManager.AppSettings["formReceptions"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)

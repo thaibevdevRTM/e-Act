@@ -117,16 +117,22 @@
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
 
-                    @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
-                    @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "customerId" })
+                    @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formSetPriceOMT"])
+                    {
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                        @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "customerId" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                                     {
+                                         @class = "form-control textboxcss",
+                                         onchange = "onchangeCustomer();",
+                                         id = "ddlCustomer"
+                                     })
+                    }
 
 
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   onchange = "onchangeCustomer();",
-                   id = "ddlCustomer"
-               })
 
 
 
