@@ -350,7 +350,7 @@ namespace eActForm.Controllers
                                         ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                     }
                                 }
-                             // var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                             var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                             }
                         }
                     }
