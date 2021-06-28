@@ -80,6 +80,8 @@
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId)
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].typeTheme)
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].QtyName)
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId)
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].UseYearSelect)
 
                     </tr>
                 </tbody>
@@ -107,7 +109,8 @@
             $("#activityOfEstimateList_" + row + "__productId").val('');
             $("#activityOfEstimateList_" + row + "__typeTheme").val('');
             $("#activityOfEstimateList_" + row + "__productName").val('');
-            $("#activityOfEstimateList_" + row + "__QtyName").val('');
+            $("#activityOfEstimateList_" + row + "__activityTypeId").val('');
+            $("#activityOfEstimateList_" + row + "__UseYearSelect").val('');
             $("#activityOfEstimateList_" + row + "__QtyName").val('');
             $(".txtUpdown_" + row).val('');
         }

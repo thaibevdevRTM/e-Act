@@ -59,14 +59,16 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
-        public static List<TransferBudgetModels> GetBudgetBalanceNonEO(string brandId, string channelId)
+        public static List<TransferBudgetModels> GetBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId ,string bgYear)
         {
             try
             {
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceNonEO"
                     , new SqlParameter[] { new SqlParameter("@brandId", brandId)
-                    ,new SqlParameter("@channelId", channelId)});
+                    ,new SqlParameter("@channelId", channelId)
+                    ,new SqlParameter("@activityGroupId", activityGroupId)
+                    , new SqlParameter("@bgYear", bgYear)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new TransferBudgetModels
                              {
