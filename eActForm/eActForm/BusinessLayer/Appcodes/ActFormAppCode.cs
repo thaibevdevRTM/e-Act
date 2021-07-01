@@ -117,6 +117,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTByEmpId";
+                }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm";
@@ -142,7 +146,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceFormAll";
                 }
-
+                else if(isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTFormAll";
+                }
                 if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
@@ -506,6 +513,7 @@ namespace eActForm.BusinessLayer
             bool check = false;
             if (ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceOMT"] == masterForm
                 || ConfigurationManager.AppSettings["formReceptions"] == masterForm)
             {
                 check = true;
@@ -524,7 +532,7 @@ namespace eActForm.BusinessLayer
 
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
-                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                //activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id ||
                     ConfigurationManager.AppSettings["formReceptions"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)

@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,16 @@ namespace eActForm.Controllers
                     //เก็บใส่ Temp ใช้กับหน้า Productlist เพราะ สูตรการคำนวณของเดิม ใช้Temp เก็บค่า
                     activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activity_TBMMKT_Model.activityFormTBMMKT.id);
 
+                }
+
+                if (UtilsAppCode.Session.User.regionId != "")
+                {
+                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
+                    activity_TBMMKT_Model.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
+                }
+                else
+                {
+                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion();
                 }
                 TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] = activity_TBMMKT_Model;
             }

@@ -86,7 +86,7 @@ namespace eActForm.Controllers
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
-                    
+
                         model.importFlowList.Add(modelFlow);
                     }
                 }
@@ -132,9 +132,28 @@ namespace eActForm.Controllers
                         {
                             if ((item.subject != strSubject && item.limitBegin == limitBegin) || (item.subject != strSubject && item.limitBegin != limitBegin))
                             {
+
+                                if(model.masterTypeId == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                                {
+                                    var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains(item.subject)).ToList();
+                                    if (!getSubject.Any())
+                                    {
+                                        getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                    }
+                                    else
+                                    {
+                                        getSubjectId = getSubject.FirstOrDefault().id;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    //check insert subject
+                                    getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                }
+
                                 checkSubject = true;
-                                //check insert subject
-                                getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                               
                                 item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
                                 keepFlow = item.flowId;
                             }

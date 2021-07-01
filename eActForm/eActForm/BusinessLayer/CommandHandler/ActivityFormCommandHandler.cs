@@ -205,11 +205,11 @@ namespace eActForm.BusinessLayer
                     {
 
                         string getYear = "";
-                        if (getActList.FirstOrDefault().activityPeriodSt != null && 
+                        if (getActList.FirstOrDefault().activityPeriodSt != null &&
                             (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
-                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"] || getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
                             {
                                 if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
                                 {
@@ -223,11 +223,11 @@ namespace eActForm.BusinessLayer
                             }
                             else
                             {
-                                if(getActList.FirstOrDefault().documentDate.Value.Year > getActList.FirstOrDefault().activityPeriodSt.Value.Year)
+                                if (getActList.FirstOrDefault().documentDate.Value.Year > getActList.FirstOrDefault().activityPeriodSt.Value.Year)
                                 {
                                     getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
                                 }
-                                else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 
+                                else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
                                     && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
                                 {
                                     getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
@@ -254,14 +254,33 @@ namespace eActForm.BusinessLayer
                         }
                         else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            int genNumber = int.Parse(getActivityDoc("running_OMT", activityId).FirstOrDefault().docNo);
+                            int genNumber = 0;
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                            {
+                                genNumber = int.Parse(getActivityDoc("running_SetPrice_OMT", activityId).FirstOrDefault().docNo);
+                            }
+                            else
+                            {
+                                genNumber = int.Parse(getActivityDoc("running_OMT", activityId).FirstOrDefault().docNo);
+                            }
+
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().regionShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
                             result[0] += getYear;
                             result[0] += string.Format("{0:0000}", genNumber);
-                            result[1] = Activity_Model.activityType.OMT.ToString();
+
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                            {
+                                result[1] = Activity_Model.activityType.SetPriceOMT.ToString();
+                            }
+                            else
+                            {
+                                result[1] = Activity_Model.activityType.OMT.ToString();
+                            }
+
                         }
                         else//other company
                         {
@@ -304,6 +323,11 @@ namespace eActForm.BusinessLayer
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
                         }
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] &&
+                           getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
+                        }
                         else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
                             getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
@@ -314,6 +338,7 @@ namespace eActForm.BusinessLayer
                         {
                             typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
                         }
+
                         else
                         {
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
