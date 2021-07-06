@@ -313,6 +313,22 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCustomerMT(string companyId)
+        {
+
+            List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+            try
+            {
+                customerList = QueryGetAllCustomers.getCustomersMT().ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerMT => " + ex.Message);
+            }
+            return Json(customerList, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
             bool langEn = false;

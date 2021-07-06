@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).OrderBy(x => x.nameTH).ToList();
         }
 
-        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId,string companyId)
+        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId, string companyId)
         {
             var result = QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
             return result.Where(x => x.companyId.Equals(companyId)).ToList();
@@ -94,13 +94,18 @@ namespace eActForm.BusinessLayer.Appcodes
                       , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
                       , new SqlParameter("@empId", model.p_empGroup[0])
                       });
-                if (result > 0)
-                {
-                    foreach (var item in model.p_appovedGroupList)
-                    {
-                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
 
-                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+
+                if (!string.IsNullOrEmpty(model.p_flowId[0]))
+                {
+
+                }
+
+                foreach (var item in model.p_appovedGroupList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
                     ,new SqlParameter("@flowId",model.p_flowId[0])
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
@@ -113,9 +118,12 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                          });
-                        i++;
-                    }
+                      });
+                    i++;
+                }
+                else
+                {
+
                 }
             }
             catch (Exception ex)

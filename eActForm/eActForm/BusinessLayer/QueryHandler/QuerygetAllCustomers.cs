@@ -85,11 +85,13 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  cusTrading = d["cusTrading"].ToString(),
                                  cusNameTH = d["cusNameTH"].ToString() + "(" + d["cust"].ToString() + ")",
+
                                  cusNameEN = d["cusNameEN"].ToString(),
                                  cusShortName = d["cusShortName"].ToString(),
                                  cust = d["cust"].ToString(),
                                  chanel_Id = d["chanel_Id"].ToString(),
                                  regionId = d["regionId"].ToString(),
+                                 region = d["region"].ToString(),
                                  delFlag = d["delFlag"].ToString(),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

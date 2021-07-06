@@ -18,7 +18,7 @@ namespace eActForm.Models
         public List<Product_Model> productlist { get; set; }
         public List<ProductSmellModel> productSmellLists { get; set; }
 
-
+        public Customers_Model customerModel { get; set; }
         // ***************************** class is duplicat ***********************************/
         public List<CostThemeDetail> costthemedetail { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
@@ -36,6 +36,8 @@ namespace eActForm.Models
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<scriptModel> scristModelList { get; set; }
 
+        public List<TB_Act_Other_Model> companyList { get; set; }
+
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
@@ -50,6 +52,7 @@ namespace eActForm.Models
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
             activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
             activityFormModel = new ActivityForm();
+            customerModel = new Customers_Model();
         }
 
         public enum modeForm

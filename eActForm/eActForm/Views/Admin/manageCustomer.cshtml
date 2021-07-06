@@ -1,0 +1,262 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_Model
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .center {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 style="text-align: center">Add Customer</h3>
+    </div>
+</div>
+<hr />
+
+@using (Ajax.BeginForm("insertCustomer", "Admin"
+, new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
+, new { id = "submitCus", @class = "form-horizontal form-label-left" }))
+{
+
+    <div class="row form-group">
+        <div class="col-md-2 col-sm-6 col-xs-2">
+            Company:
+            @Html.DropDownListFor(x => x.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+
+        </div>
+
+
+        <div id="divOMT" style="display:none">
+            <div class="col-md-2 col-sm-6 col-xs-2">
+                Region:<span class="required">*</span>
+
+                @Html.DropDownListFor(x => x.customerModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+           {
+               @class = "form-control textboxcss",
+               id = "ddlRegion"
+           })
+
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                Customer:<span class="required">*</span>
+
+                @Html.TextBoxFor(x => x.customerModel.cusNameTH, new { @class = "form-control textboxcss", @id = "txtCustomerNameOMT", @name = "txtCustomerNameOMT" })
+                @Html.HiddenFor(x => x.customerModel.id, new { id = "customerId" })
+            </div>
+            <div class="col-md-2 col-sm-6 col-xs-2">
+                shortName:<span class="required">*</span>
+
+                @Html.TextBoxFor(x => x.customerModel.cusShortName, new { @class = "form-control textboxcss", @id = "txtCusShortName", @name = "txtCusShortName" })
+            </div>
+
+        </div>
+        <div id="divMT" style="display:none">
+            <div class="col-md-4 col-sm-6 col-xs-4">
+                Customer:<span class="required">*</span>
+
+                @Html.TextBoxFor(x => x.customerModel.cusNameTH, new { @class = "form-control textboxcss", @id = "txtCustomerNameMT", @name = "txtCustomerNameMT" })
+                @Html.HiddenFor(x => x.customerModel.id, new { id = "customerId" })
+            </div>
+            <div class="col-md-2 col-sm-6 col-xs-2">
+                shortName:<span class="required">*</span>
+
+                @Html.TextBoxFor(x => x.customerModel.cusShortName, new { @class = "form-control textboxcss", @id = "txtCusShortName", @name = "txtCusShortName" })
+            </div>
+        </div>
+     
+        <div id="divBtn" style="display:none" class="row center">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                <div style="display:inline-block; text-align:center" id="divSubmit">
+                    <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Add or Update</button>
+                </div>
+               
+            </div>
+        </div>
+
+        <div id="getQuery" class="col-lg-12"></div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    function validatesubmit() {
+        $("#submitCus").submit();
+    }
+
+
+    function successQuery_Index() {
+        callPartialCustomer();
+        $("#ddlRegion").val('');
+        $("#customerId").val('');
+        $("#txtCustomerNameOMT").val('');
+        $("#txtCustomerNameMT").val('');
+        $("#txtCusShortName").val('');
+
+    }
+
+    function failureQuery_Index(data) {
+        bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+    }
+
+    function beginQuery_Index() {
+
+    }
+
+
+    $(document).ready(function () {
+        $("#txtCustomerNameOMT").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getCustomerByRegion", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        regionId: $("#ddlRegion").val(),
+                        txtCus: $("#txtCustomerNameOMT").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#customerId").val(ui.item.id)
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+
+         $("#txtCustomerNameMT").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getCustomerMT", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#customerId").val(ui.item.id)
+            }
+    }).focus(function () {
+        $(this).data("uiAutocomplete").search($(this).val());
+    });
+
+    });
+
+
+    $("#ddlCompany").change(function () {
+
+        $("#txtCustomerNameOMT").val('')
+        $("#txtCustomerNameMT").val('')
+        $("#txtCusShortName").val('')
+        document.getElementById("divBtn").style.display = "block";
+        if ($("#ddlCompany").val() == "5600") {
+
+            document.getElementById("divOMT").style.display = "none";
+            document.getElementById("divMT").style.display = "block";
+        }
+        else if ($("#ddlCompany").val() == "5601") {
+            document.getElementById("divOMT").style.display = "block";
+            document.getElementById("divMT").style.display = "none";
+        }
+        else {
+            document.getElementById("divOMT").style.display = "none";
+            document.getElementById("divMT").style.display = "none";
+            document.getElementById("divBtn").style.display = "none";
+        }
+        callPartialCustomer();
+    });
+
+
+    function callPartialCustomer() {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("customerList", "Admin")',
+            data: {
+                companyId: $("#ddlCompany").val(),
+            }
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse)
+        });
+    }
+
+
+    function editRow(id, regionId, cusNameTH, cusShortName) {
+
+        $("#ddlRegion").val(regionId);
+        $("#customerId").val(id);
+        $("#txtCustomerNameOMT").val(cusNameTH);
+        $("#txtCustomerNameMT").val(cusNameTH);
+        $("#txtCusShortName").val(cusShortName);
+    }
+
+    function onDelCustomer(id) {
+        bootbox.confirm({
+            title: "Confirm Message",
+
+            message: "ยืนยัน ลบข้อมูล",
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("delCustomer", "Admin")',
+                        data: {
+                            id: id,
+                        }
+                    }).done(function () {
+                        callPartialCustomer();
+                    });
+
+                }
+            }
+        });
+    }
+
+
+
+</script>
+

@@ -146,5 +146,51 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             return QueryGetMessage.getOtherByType("company");
         }
+
+        public static int insertCustomer(Activity_Model model)
+        {
+            int rtn = 0;
+            try
+            {
+                
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCustomer"
+                           , new SqlParameter[] {new SqlParameter("@id",model.customerModel.id)
+                            ,new SqlParameter("@companyId",model.customerModel.companyId)
+                            ,new SqlParameter("@cusTrading",model.customerModel.cusTrading)
+                            ,new SqlParameter("@cusNameTH",model.customerModel.cusNameTH)
+                            ,new SqlParameter("@cusNameEN",model.customerModel.cusNameEN)
+                            ,new SqlParameter("@cusShort",model.customerModel.cusShortName)
+                            ,new SqlParameter("@regionId",model.customerModel.regionId)
+                            ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                           });
+
+                return rtn;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message + "  " + "insertCustomer");
+            }
+        }
+
+        public static int delCustomer(string id)
+        {
+            int rtn = 0;
+            try
+            {
+
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_delCustomer"
+                           , new SqlParameter[] {new SqlParameter("@id",id)
+                           ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                           });
+
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "  " + "delCustomer");
+            }
+        }
+
+
     }
 }
