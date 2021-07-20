@@ -41,7 +41,9 @@ namespace eActForm.Models
         public string p_productCateId { get; set; }
         public string p_productGroupId { get; set; }
         public string activityTypeId { get; set; }
+        public string customerId { get; set; }
         public string typeFlow { get; set; }
+        public string flowId { get; set; } 
         public ManagementFlow_Model()
         {
             approveFlow = new ApproveFlowModel.approveFlowModel();

@@ -30,13 +30,13 @@
     <div class="row form-group">
         <div class="col-md-2 col-sm-6 col-xs-2">
             Company:
-            @Html.DropDownListFor(x => x.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+            @Html.DropDownListFor(x => x.customerModel.companyId, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
 
         </div>
 
 
-        <div id="divOMT" style="display:none">
-            <div class="col-md-2 col-sm-6 col-xs-2">
+        <div id="divDetail" style="display:none">
+            <div id="divRegion" class="col-md-2 col-sm-6 col-xs-2">
                 Region:<span class="required">*</span>
 
                 @Html.DropDownListFor(x => x.customerModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
@@ -50,7 +50,7 @@
             <div class="col-md-4 col-sm-4 col-xs-4">
                 Customer:<span class="required">*</span>
 
-                @Html.TextBoxFor(x => x.customerModel.cusNameTH, new { @class = "form-control textboxcss", @id = "txtCustomerNameOMT", @name = "txtCustomerNameOMT" })
+                @Html.TextBoxFor(x => x.customerModel.cusNameTH, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
                 @Html.HiddenFor(x => x.customerModel.id, new { id = "customerId" })
             </div>
             <div class="col-md-2 col-sm-6 col-xs-2">
@@ -60,26 +60,14 @@
             </div>
 
         </div>
-        <div id="divMT" style="display:none">
-            <div class="col-md-4 col-sm-6 col-xs-4">
-                Customer:<span class="required">*</span>
 
-                @Html.TextBoxFor(x => x.customerModel.cusNameTH, new { @class = "form-control textboxcss", @id = "txtCustomerNameMT", @name = "txtCustomerNameMT" })
-                @Html.HiddenFor(x => x.customerModel.id, new { id = "customerId" })
-            </div>
-            <div class="col-md-2 col-sm-6 col-xs-2">
-                shortName:<span class="required">*</span>
 
-                @Html.TextBoxFor(x => x.customerModel.cusShortName, new { @class = "form-control textboxcss", @id = "txtCusShortName", @name = "txtCusShortName" })
-            </div>
-        </div>
-     
         <div id="divBtn" style="display:none" class="row center">
             <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:15px;">
                 <div style="display:inline-block; text-align:center" id="divSubmit">
                     <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Add or Update</button>
                 </div>
-               
+
             </div>
         </div>
 
@@ -98,8 +86,7 @@
         callPartialCustomer();
         $("#ddlRegion").val('');
         $("#customerId").val('');
-        $("#txtCustomerNameOMT").val('');
-        $("#txtCustomerNameMT").val('');
+        $("#txtCustomerName").val('');
         $("#txtCusShortName").val('');
 
     }
@@ -114,16 +101,30 @@
 
 
     $(document).ready(function () {
-        $("#txtCustomerNameOMT").autocomplete({
+
+
+
+        $("#txtCustomerName").autocomplete({
+
             source: function (request, response) {
+                var data = new FormData();
+                var url = '';
+                if ($("#ddlCompany").val() == "5601") {
+                    url = '@Url.Action("getCustomerByRegion", "eAct")'
+                    data.append("regionId", $("#ddlRegion").val())
+                    data.append("txtCus", $("#txtCustomerName").val())
+                }
+                else {
+                    url = '@Url.Action("getCustomerMT", "eAct")';
+                }
+
                 $.ajax({
-                    url: '@Url.Action("getCustomerByRegion", "eAct")',
+                    url: url,
                     type: "POST",
                     dataType: "json",
-                    data: {
-                        regionId: $("#ddlRegion").val(),
-                        txtCus: $("#txtCustomerNameOMT").val(),
-                    },
+                    data: data,
+                    contentType: false,
+                    processData: false,
                     success: function (data) {
                         response($.map(data, function (item) {
                             return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
@@ -143,58 +144,26 @@
         }).focus(function () {
             $(this).data("uiAutocomplete").search($(this).val());
         });
-
-         $("#txtCustomerNameMT").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("getCustomerMT", "eAct")',
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-
-                    },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                        }))
-
-                    }
-                })
-            },
-            minLength: 0,
-            messages: {
-                noResults: '',
-                results: function (resultsCount) {
-                }
-            }, select: function (event, ui) {
-                $("#customerId").val(ui.item.id)
-            }
-    }).focus(function () {
-        $(this).data("uiAutocomplete").search($(this).val());
     });
 
-    });
 
 
     $("#ddlCompany").change(function () {
 
-        $("#txtCustomerNameOMT").val('')
-        $("#txtCustomerNameMT").val('')
+
+        $("#txtCustomerName").val('')
         $("#txtCusShortName").val('')
         document.getElementById("divBtn").style.display = "block";
         if ($("#ddlCompany").val() == "5600") {
-
-            document.getElementById("divOMT").style.display = "none";
-            document.getElementById("divMT").style.display = "block";
+            document.getElementById("divDetail").style.display = "block";
+            document.getElementById("divRegion").style.display = "none";
         }
         else if ($("#ddlCompany").val() == "5601") {
-            document.getElementById("divOMT").style.display = "block";
-            document.getElementById("divMT").style.display = "none";
+            document.getElementById("divDetail").style.display = "block";
+            document.getElementById("divRegion").style.display = "block";
         }
         else {
-            document.getElementById("divOMT").style.display = "none";
-            document.getElementById("divMT").style.display = "none";
-            document.getElementById("divBtn").style.display = "none";
+            document.getElementById("divDetail").style.display = "none";
         }
         callPartialCustomer();
     });
@@ -218,8 +187,7 @@
 
         $("#ddlRegion").val(regionId);
         $("#customerId").val(id);
-        $("#txtCustomerNameOMT").val(cusNameTH);
-        $("#txtCustomerNameMT").val(cusNameTH);
+        $("#txtCustomerName").val(cusNameTH);
         $("#txtCusShortName").val(cusShortName);
     }
 

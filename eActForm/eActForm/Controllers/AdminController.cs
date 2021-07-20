@@ -5,6 +5,7 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -51,6 +52,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+
 
                 AdminCommandHandler.updatePriceProduct(model);
                 result.Success = true;
@@ -144,7 +146,7 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
-            activityModel.companyList = managementFlowAppCode.getCompany().Where(x => x.val1.Contains("5601")).ToList();
+            activityModel.companyList = managementFlowAppCode.getCompany().Where(x => x.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
 
             return View(activityModel);
         }
@@ -155,7 +157,14 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             if (!string.IsNullOrEmpty(companyId))
             {
-                activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT().OrderBy(x => x.regionId).ToList();
+                if (companyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT().OrderBy(x => x.regionId).ToList();
+                }
+                else
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersMT().ToList();
+                }
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using eActForm.Presenter.MasterData;
 using eForms.Models.MasterData;
+using eForms.Presenter.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -128,7 +129,7 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int InsertBudgetLE_History(string strCon,DateTime? importDate)
+        public static int InsertBudgetLE_History(string strCon, DateTime? importDate)
         {
             int result = 0;
             try
@@ -172,7 +173,7 @@ namespace eForms.Presenter.AppCode
 
             return result;
         }
-        public static int InsertBudgetActType_History(string strCon ,DateTime? importDate)
+        public static int InsertBudgetActType_History(string strCon, DateTime? importDate)
         {
             int result = 0;
             try
@@ -227,21 +228,22 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static string genBudgetNo(string strCon, BudgetControlModels modelBudget , int LE)
+        public static string genBudgetNo(string strCon, BudgetControlModels modelBudget, int LE)
         {
-            string getCode = "" , formatBudgetNo = "{0}-{1}-{2}-{3}";
+            string getCode = "", formatBudgetNo = "{0}-{1}-{2}-{3}";
+
             try
             {
                 if (!string.IsNullOrEmpty(modelBudget.chanelId))
                 {
-                 
-                    getCode = QueryGetAllChanel.getAllChanel(strCon).Where(x => x.id.Equals(modelBudget.chanelId)).FirstOrDefault().brandCode;
-                    formatBudgetNo = String.Format(formatBudgetNo, "ATL", modelBudget.startDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
+
+                    getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
+                    formatBudgetNo = String.Format(formatBudgetNo, "ATL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
                 }
                 else
                 {
                     getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
-                    formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.startDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
+                    formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
 
                 }
             }
@@ -256,7 +258,7 @@ namespace eForms.Presenter.AppCode
         public static string getDigitDepartment(string p)
         {
             var result = "";
-            if(p == channel)
+            if (p == channel)
             {
                 result = "11";
             }
@@ -267,5 +269,216 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
+
+        public static int InsertBudgetRpt_Temp(string strCon, BudgetControlModels model)
+        {
+            int result = 0;
+            try
+            {
+
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetRpt_Temp"
+                      , new SqlParameter[] {new SqlParameter("@EO",model.EO)
+                      ,new SqlParameter("@approveNo",model.approveNo)
+                      ,new SqlParameter("@orderNo",model.orderNo)
+                      ,new SqlParameter("@description",model.description)
+                      ,new SqlParameter("@budgetAmount",model.budgetAmount)
+                      ,new SqlParameter("@returnAmount",model.returnAmount)
+                      ,new SqlParameter("@actual",model.actual)
+                      ,new SqlParameter("@accrued",model.accrued)
+                      ,new SqlParameter("@commitment",model.commitment)
+                      ,new SqlParameter("@prpo_Outstanding",model.PR_PO)
+                      ,new SqlParameter("@prepaid",model.prepaid)
+                      ,new SqlParameter("@available",model.available)
+                      ,new SqlParameter("@replaceEO",model.replaceEO)
+                      ,new SqlParameter("@importType",model.typeImport)
+                      ,new SqlParameter("@createdByUserId",model.createdByUserId)
+
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetRpt_Temp => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int delBudgetRpt_Temp(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("delBudgetRpt_Temp => " + ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public static string getChannelIdForTxt(string strCon, string p_channelTxt)
+        {
+            string result = "";
+            try
+            {
+                result = QueryGetAllChanel.getAllChanel(strCon).Where(x => x.cust.Contains(p_channelTxt)).FirstOrDefault().id;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        public static string getActivityIdIdForTxt(string strCon, string p_ActTypeTxt)
+        {
+            string result = "";
+            try
+            {
+                result = QueryGetAllActivityGroup.getAllActivityGroup(strCon).Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Equals(p_ActTypeTxt.ToLower())).FirstOrDefault().id;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+
+
+        public static List<BudgetControlModels> getBudgetList(string strCon)
+        {
+            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetList");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 //activityNo = d["activityNo"].ToString(),
+                                 budgetNo = d["budgetNo"].ToString(),
+                                 b_Code = d["bCode"].ToString(),
+                                 brandName = d["brandName"].ToString(),
+                                 EO = d["EO"].ToString(),
+                                 budgetAmount = decimal.Parse(d["budgetAmount"].ToString()),
+                                 transaction = d["TransactionTxt"].ToString(),
+                                 budget_Amount2 = decimal.Parse(d["budgetAmount2"].ToString()),
+                                 chanelName = d["chanelName"].ToString(),
+                                 commitAmount = 0,
+                                 actual = decimal.Parse(d["actual"].ToString()),
+                                 accrued = decimal.Parse(d["accrued"].ToString()),
+                                 commitment = decimal.Parse(d["commitment"].ToString()),
+                                 PR_PO = decimal.Parse(d["Outstanding"].ToString()),
+                                 prepaid = decimal.Parse(d["prepaid"].ToString()),
+                                 returnAmount = decimal.Parse(d["ReturnAmount"].ToString()),
+                                 balance = decimal.Parse(d["balanceAmount"].ToString()),
+                                 remark = d["remark"].ToString(),
+                             });
+
+                return lists.ToList(); ;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getBudgetList");
+            }
+
+            return budgetList;
+        }
+
+        public static List<BudgetControlModels> getBudgetBrandList(string strCon)
+        {
+            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetList");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 activityNo = d["activityNo"].ToString(),
+                                 budgetNo = d["budgetNo"].ToString(),
+                                 b_Code = d["bCode"].ToString(),
+                                 brandName = d["brand"].ToString(),
+                                 EO = d["EO"].ToString(),
+                                 budgetAmount = decimal.Parse(d["budgetAmount"].ToString()),
+                                 transaction = d["TransactionTxt"].ToString(),
+                                 budget_Amount2 = decimal.Parse(d["budgetAmount2"].ToString()),
+                                 chanelName = d["chanel"].ToString(),
+                                 commitAmount = 0,
+                                 actual = decimal.Parse(d["actual"].ToString()),
+                                 accrued = decimal.Parse(d["accrued"].ToString()),
+                                 commitment = decimal.Parse(d["commitment"].ToString()),
+                                 PR_PO = decimal.Parse(d["Outstanding"].ToString()),
+                                 prepaid = decimal.Parse(d["prepaid"].ToString()),
+                                 returnAmount = decimal.Parse(d["ReturnAmount"].ToString()),
+                                 balance = decimal.Parse(d["balanceAmount"].ToString()),
+                                 remark = d["remark"].ToString(),
+                             });
+
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getBudgetBrandList");
+            }
+
+            return budgetList;
+        }
+
+
+        public static int insertDateReportBudgetTBM(string strCon, ImportBudgetControlModel model)
+        {
+            int result = 0;
+            try
+            {
+
+                foreach (var item in model.budgetReportList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt"
+                    , new SqlParameter[] {new SqlParameter("@budNum",item.budNum)
+                         ,new SqlParameter("@bCode",item.b_Code)
+                         ,new SqlParameter("@bNum_En",item.chanelName)
+                         ,new SqlParameter("@type",item.type)
+                         ,new SqlParameter("@brand",item.brandName)
+                         ,new SqlParameter("@budgetAmount1",item.budgetAmount)
+                         ,new SqlParameter("@activity",item.budget_Activity)
+                         ,new SqlParameter("@transaction",item.transaction)
+                         ,new SqlParameter("@budgetAmount2",item.budget_Amount2)
+                         ,new SqlParameter("@EO",item.EO)
+                         ,new SqlParameter("@commitAmount",item.commitAmount)
+                         ,new SqlParameter("@actual",item.actual)
+                         ,new SqlParameter("@accrued",item.accrued)
+                         ,new SqlParameter("@commitment",item.commitment)
+                         ,new SqlParameter("@pr_po",item.PR_PO)
+                         ,new SqlParameter("@prepaid",item.prepaid)
+                         ,new SqlParameter("@returnAmount",item.returnAmount)
+                         ,new SqlParameter("@balanceAmount",item.budgetAmount)
+                         ,new SqlParameter("@remark",item.remark)
+                         ,new SqlParameter("@createdByUserId",item.createdByUserId)
+
+                      });
+                }
+
+
+
+
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertDateReportBudgetTBM");
+            }
+
+            return result;
+        }
     }
 }
