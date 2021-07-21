@@ -234,7 +234,7 @@ namespace eForms.Presenter.AppCode
 
             try
             {
-                getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
+                getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
                 if (!string.IsNullOrEmpty(modelBudget.chanelId))
                 {
                     formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode);
@@ -304,12 +304,15 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int delBudgetRpt_Temp(string strCon)
+        public static int delBudgetRpt_Temp(string strCon,string EO , string IO)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport"
+                     , new SqlParameter[] {new SqlParameter("@EO",EO)
+                      ,new SqlParameter("@IO",IO)
+                     });
 
             }
             catch (Exception ex)
@@ -361,26 +364,27 @@ namespace eForms.Presenter.AppCode
                              select new BudgetControlModels
                              {
                                  //activityNo = d["activityNo"].ToString(),
-                                 budNum = d["Bud_Num"].ToString(),
+                                 date = DateTime.Parse(d["documentDate"].ToString()),
+                                 budNum = d["budNum"].ToString(),
                                  b_Code = d["bCode"].ToString(),
-                                 brandName = d["Bnam_Eng"].ToString(),
-                                 type = d["Type"].ToString(),
+                                 brandName = d["bnam_Eng"].ToString(),
+                                 type = d["type"].ToString(),
                                  budget_Activity = d["actType"].ToString(),
-                                 transaction = d["TransactionTxt"].ToString(),
+                                 transaction = d["transactionTxt"].ToString(),
                                  EO = d["EO"].ToString(),
-                                 originalBudget = decimal.Parse(d["OriginalBudget"].ToString()),
-                                 LE_Amount = decimal.Parse(d["LE_Amount"].ToString()),
+                                 originalBudget = decimal.Parse(d["originalBudget"].ToString()),
+                                 LE_Amount = decimal.Parse(d["amountLE"].ToString()),
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
                                  balanceLEApprove = decimal.Parse(d["balanceLEApprove"].ToString()),
                                  trf_BG = decimal.Parse(d["trf_BG"].ToString()),
-                                 actual = decimal.Parse(d["Actual"].ToString()),
+                                 actual = decimal.Parse(d["actual"].ToString()),
                                  PR_PO = decimal.Parse(d["pr_po"].ToString()),
                                  actualTotal = decimal.Parse(d["totalActual"].ToString()),
                                  available = decimal.Parse(d["availableAmount"].ToString()),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  balance = decimal.Parse(d["balanceAmount"].ToString()),
-                                 runingNo = double.Parse(d["runingNo"].ToString()),
                                  remark = d["remark"].ToString(),
+                                 createdByUserId = d["createBy"].ToString(),
                              });
 
                 return lists.ToList(); ;
@@ -423,6 +427,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@available",item.available)
                       ,new SqlParameter("@returnAmount",item.returnAmount)
                       ,new SqlParameter("@balanceAmount",item.balance)
+                      ,new SqlParameter("@importType",item.typeImport)
                       ,new SqlParameter("@createdByUserId",item.createdByUserId)
 
                       });

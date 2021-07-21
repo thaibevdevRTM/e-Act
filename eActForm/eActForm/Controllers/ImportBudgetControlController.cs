@@ -301,36 +301,18 @@ namespace eActForm.Controllers
                     modelBudgetRpt.typeImport = importType;
                     //modelBudgetRpt.chanelId = ImportBudgetControlAppCode.getChannelIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Bnam_Eng"].ToString());
                     //modelBudgetRpt.activityTypeId = ImportBudgetControlAppCode.getActivityIdIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Activity"].ToString());
-                    //modelBudgetRpt.typeImport = "channel";
                     modelBudgetRpt.createdByUserId = UtilsAppCode.Session.User.empId;
                     modelBudgetRptList.Add(modelBudgetRpt);
                 }
 
-                //for (int i = 0; i < dtBrand.Rows.Count; i++)
-                //{
-                //    BudgetControlModels modelBudgetRpt = new BudgetControlModels();
-
-                //    string replaceEO = dtBrand.Rows[i]["EO"].ToString().Remove(6, 2);
-                //    replaceEO = replaceEO.Insert(6, "{0}");
-
-                //    modelBudgetRpt.EO = dtBrand.Rows[i]["EO"].ToString();
-                //    modelBudgetRpt.replaceEO = replaceEO;
-                //    modelBudgetRpt.actual = decimal.Parse(dtBrand.Rows[i]["Actual"].ToString());
-                //    modelBudgetRpt.accrued = decimal.Parse(dtBrand.Rows[i]["Accrued"].ToString());
-                //    modelBudgetRpt.commitment = decimal.Parse(dtBrand.Rows[i]["Commitment"].ToString());
-                //    modelBudgetRpt.PR_PO = decimal.Parse(dtBrand.Rows[i]["PR/PO Outstanding"].ToString());
-                //    modelBudgetRpt.prepaid = decimal.Parse(dtBrand.Rows[i]["Prepaid"].ToString());
-                //    modelBudgetRpt.returnAmount = decimal.Parse(dtBrand.Rows[i]["returnAmount"].ToString());
-                //    modelBudgetRpt.activityTypeId = ImportBudgetControlAppCode.getActivityIdIdForTxt(AppCode.StrCon, dtBrand.Rows[i]["Activity"].ToString());
-                //    modelBudgetRpt.typeImport = "brand";
-                //    modelBudgetRpt.createdByUserId = UtilsAppCode.Session.User.empId;
-                //    modelBudgetRptList.Add(modelBudgetRpt);
-                //}
-
-                int result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon);
+                int result = 0;
                 foreach (var item in modelBudgetRptList)
                 {
+                    result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon,item.EO , item.orderNo);
+                }
 
+                foreach (var item in modelBudgetRptList)
+                {
                     result = +ImportBudgetControlAppCode.InsertBudgetRpt_Temp(AppCode.StrCon, item);
                 }
 

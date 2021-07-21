@@ -1,5 +1,9 @@
 ﻿@model eActForm.Models.ImportBudgetControlModel
-
+@using System.Configuration;
+@using System.Globalization;
+@{
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
 <style>
     table.fixed {
         table-layout: fixed;
@@ -16,8 +20,8 @@
         background-color: #f1f1f1;
     }
 
-        /* Style the buttons inside the tab */
-        .tab button {
+    /* Style the buttons inside the tab */
+    /*.tab button {
             background-color: inherit;
             float: left;
             border: none;
@@ -26,32 +30,32 @@
             padding: 14px 16px;
             transition: 0.3s;
             font-size: 17px;
-        }
+        }*/
 
-            /* Change background color of buttons on hover */
-            .tab button:hover {
+    /* Change background color of buttons on hover */
+    /*.tab button:hover {
                 background-color: #ddd;
-            }
+            }*/
 
-            /* Create an active/current tablink class */
-            .tab button.active {
+    /* Create an active/current tablink class */
+    /*.tab button.active {
                 background-color: #ccc;
-            }
+            }*/
 
     /* Style the tab content */
-    .tabcontent {
+    /*.tabcontent {
         display: none;
         padding: 6px 12px;
         border: 1px solid #ccc;
         border-top: none;
-    }
+    }*/
 </style>
 
 
-<div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'divChanel')">Chanel</button>
-    <button class="tablinks" onclick="openCity(event, 'divBrand')">Brand</button>
-</div>
+@*<div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'divChanel')">Chanel</button>
+        <button class="tablinks" onclick="openCity(event, 'divBrand')">Brand</button>
+    </div>*@
 
 <div id="" class="col-md-12 col-xs-12 tabcontent" style="width:100%;overflow-x:scroll;">
     <table class="table table-striped jambo_table bulk_action fixed" id="tbl_reportChanel" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
@@ -80,29 +84,39 @@
             </tr>
         </thead>
         <tbody>
+            @{string eo = ""; }
             @foreach (var item in Model.budgetReportList)
             {
-            <tr>
-                <td>@item.date</td>
-                <td>@item.budNum</td>
-                <td>@item.b_Code</td>
-                <td>@item.brandName</td>
-                <td>@item.type</td>
-                <td>@item.budget_Activity</td>
-                <td>@item.transaction</td>
-                <td>@item.EO</td>
-                <td>@string.Format("{0:n2}", @item.originalBudget)</td>
-                <td>@string.Format("{0:n2}", @item.LE_Amount)</td>
-                <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
-                <td>@string.Format("{0:n2}", @item.balanceLEApprove)</td>
-                <td>@string.Format("{0:n2}", @item.trf_BG)</td>
-                <td>@string.Format("{0:n2}", @item.actual)</td>
-                <td>@string.Format("{0:n2}", @item.PR_PO)</td>
-                <td>@string.Format("{0:n2}", @item.actualTotal)</td>
-                <td>@string.Format("{0:n2}", @item.available)</td>
-                <td>@string.Format("{0:n2}", @item.returnAmount)</td>
-                <td>@string.Format("{0:n2}", @item.balance)</td>
-            </tr>
+                <tr>
+                    <td>@item.date.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                    <td>@item.budNum</td>
+                    <td>@item.b_Code</td>
+                    <td>@item.brandName</td>
+                    <td>@item.type</td>
+                    <td>@item.budget_Activity</td>
+                    <td>@item.transaction</td>
+                    @if (item.EO != eo)
+                    {
+                        eo = @item.EO;
+                    }
+                    else
+                    {
+                        eo = "";
+                    }
+
+                    <td>@eo</td>
+                    <td>@string.Format("{0:n2}", @item.originalBudget)</td>
+                    <td>@string.Format("{0:n2}", @item.LE_Amount)</td>
+                    <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
+                    <td>@string.Format("{0:n2}", @item.balanceLEApprove)</td>
+                    <td>@string.Format("{0:n2}", @item.trf_BG)</td>
+                    <td>@string.Format("{0:n2}", @item.actual)</td>
+                    <td>@string.Format("{0:n2}", @item.PR_PO)</td>
+                    <td>@string.Format("{0:n2}", @item.actualTotal)</td>
+                    <td>@string.Format("{0:n2}", @item.available)</td>
+                    <td>@string.Format("{0:n2}", @item.returnAmount)</td>
+                    <td>@string.Format("{0:n2}", @item.balance)</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -112,28 +126,28 @@
 
 
 
-<div class="row form-group">
-    <div id="divBtn" align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
+<div id="divBtn" class="row form-group">
+    <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
         <label class="btn ink-reaction btn-success" style="margin-top:20px; font-size:15px; width:100%">Confirm</label>
     </div>
 </div>
 
 
 <script>
-    function openCity(evt, cityName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
+    //function openCity(evt, cityName) {
+    //    var i, tabcontent, tablinks;
+    //    tabcontent = document.getElementsByClassName("tabcontent");
+    //    for (i = 0; i < tabcontent.length; i++) {
+    //        tabcontent[i].style.display = "none";
+    //    }
 
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
+    //    tablinks = document.getElementsByClassName("tablinks");
+    //    for (i = 0; i < tablinks.length; i++) {
+    //        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    //    }
+    //    document.getElementById(cityName).style.display = "block";
+    //    evt.currentTarget.className += " active";
+    //}
 
     function submmitBtn() {
         $.ajax({
@@ -142,7 +156,9 @@
             data: {
             }
         }).done(function (response) {
+            document.getElementById("divBtn").style.display = "none";
             doMsgSuccess('บันทึกเรียบร้อย');
+
         });
     }
 
