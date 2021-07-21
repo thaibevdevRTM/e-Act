@@ -73,7 +73,15 @@ namespace eForms.Models.MasterData
             public string activityNo { get; set; }
             public string approveNo { get; set; }
             public string orderNo { get; set; }
-            public decimal available { get; set; }
+            public decimal? available { get; set; }
+            public decimal? originalBudget { get; set; }
+            public decimal? LE_Amount { get; set; }
+            public decimal? approve_Amount { get; set; }
+            public decimal? balanceLEApprove { get; set; }
+            public decimal? trf_BG { get; set; }
+            public decimal? actualTotal { get; set; }
+            public double runingNo { get; set; }
+            
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }

@@ -230,21 +230,18 @@ namespace eForms.Presenter.AppCode
 
         public static string genBudgetNo(string strCon, BudgetControlModels modelBudget, int LE)
         {
-            string getCode = "", formatBudgetNo = "{0}-{1}-{2}-{3}";
+            string getCode = "", formatBudgetNo = "{0}-{1}-{2}-";
 
             try
             {
+                getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().digit_EO;
                 if (!string.IsNullOrEmpty(modelBudget.chanelId))
                 {
-
-                    getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
-                    formatBudgetNo = String.Format(formatBudgetNo, "ATL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
+                    formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode);
                 }
                 else
                 {
-                    getCode = QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(modelBudget.brandId)).FirstOrDefault().brandCode;
-                    formatBudgetNo = String.Format(formatBudgetNo, "BTL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode, LE.ToString("D3"));
-
+                    formatBudgetNo = String.Format(formatBudgetNo, "ATL", modelBudget.endDate.Value.Year.ToString().Substring(2, 2), getCode);
                 }
             }
             catch (Exception ex)
@@ -364,22 +361,25 @@ namespace eForms.Presenter.AppCode
                              select new BudgetControlModels
                              {
                                  //activityNo = d["activityNo"].ToString(),
-                                 budgetNo = d["budgetNo"].ToString(),
+                                 budNum = d["Bud_Num"].ToString(),
                                  b_Code = d["bCode"].ToString(),
-                                 brandName = d["brandName"].ToString(),
-                                 EO = d["EO"].ToString(),
-                                 budgetAmount = decimal.Parse(d["budgetAmount"].ToString()),
+                                 brandName = d["Bnam_Eng"].ToString(),
+                                 type = d["Type"].ToString(),
+                                 budget_Activity = d["actType"].ToString(),
                                  transaction = d["TransactionTxt"].ToString(),
-                                 budget_Amount2 = decimal.Parse(d["budgetAmount2"].ToString()),
-                                 chanelName = d["chanelName"].ToString(),
-                                 commitAmount = 0,
-                                 actual = decimal.Parse(d["actual"].ToString()),
-                                 accrued = decimal.Parse(d["accrued"].ToString()),
-                                 commitment = decimal.Parse(d["commitment"].ToString()),
-                                 PR_PO = decimal.Parse(d["Outstanding"].ToString()),
-                                 prepaid = decimal.Parse(d["prepaid"].ToString()),
-                                 returnAmount = decimal.Parse(d["ReturnAmount"].ToString()),
+                                 EO = d["EO"].ToString(),
+                                 originalBudget = decimal.Parse(d["OriginalBudget"].ToString()),
+                                 LE_Amount = decimal.Parse(d["LE_Amount"].ToString()),
+                                 approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
+                                 balanceLEApprove = decimal.Parse(d["balanceLEApprove"].ToString()),
+                                 trf_BG = decimal.Parse(d["trf_BG"].ToString()),
+                                 actual = decimal.Parse(d["Actual"].ToString()),
+                                 PR_PO = decimal.Parse(d["pr_po"].ToString()),
+                                 actualTotal = decimal.Parse(d["totalActual"].ToString()),
+                                 available = decimal.Parse(d["availableAmount"].ToString()),
+                                 returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  balance = decimal.Parse(d["balanceAmount"].ToString()),
+                                 runingNo = double.Parse(d["runingNo"].ToString()),
                                  remark = d["remark"].ToString(),
                              });
 
@@ -393,45 +393,7 @@ namespace eForms.Presenter.AppCode
             return budgetList;
         }
 
-        public static List<BudgetControlModels> getBudgetBrandList(string strCon)
-        {
-            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetList");
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new BudgetControlModels
-                             {
-                                 activityNo = d["activityNo"].ToString(),
-                                 budgetNo = d["budgetNo"].ToString(),
-                                 b_Code = d["bCode"].ToString(),
-                                 brandName = d["brand"].ToString(),
-                                 EO = d["EO"].ToString(),
-                                 budgetAmount = decimal.Parse(d["budgetAmount"].ToString()),
-                                 transaction = d["TransactionTxt"].ToString(),
-                                 budget_Amount2 = decimal.Parse(d["budgetAmount2"].ToString()),
-                                 chanelName = d["chanel"].ToString(),
-                                 commitAmount = 0,
-                                 actual = decimal.Parse(d["actual"].ToString()),
-                                 accrued = decimal.Parse(d["accrued"].ToString()),
-                                 commitment = decimal.Parse(d["commitment"].ToString()),
-                                 PR_PO = decimal.Parse(d["Outstanding"].ToString()),
-                                 prepaid = decimal.Parse(d["prepaid"].ToString()),
-                                 returnAmount = decimal.Parse(d["ReturnAmount"].ToString()),
-                                 balance = decimal.Parse(d["balanceAmount"].ToString()),
-                                 remark = d["remark"].ToString(),
-                             });
-
-                return lists.ToList();
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> getBudgetBrandList");
-            }
-
-            return budgetList;
-        }
-
+     
 
         public static int insertDateReportBudgetTBM(string strCon, ImportBudgetControlModel model)
         {
@@ -443,25 +405,25 @@ namespace eForms.Presenter.AppCode
                 {
                     result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt"
                     , new SqlParameter[] {new SqlParameter("@budNum",item.budNum)
-                         ,new SqlParameter("@bCode",item.b_Code)
-                         ,new SqlParameter("@bNum_En",item.chanelName)
-                         ,new SqlParameter("@type",item.type)
-                         ,new SqlParameter("@brand",item.brandName)
-                         ,new SqlParameter("@budgetAmount1",item.budgetAmount)
-                         ,new SqlParameter("@activity",item.budget_Activity)
-                         ,new SqlParameter("@transaction",item.transaction)
-                         ,new SqlParameter("@budgetAmount2",item.budget_Amount2)
-                         ,new SqlParameter("@EO",item.EO)
-                         ,new SqlParameter("@commitAmount",item.commitAmount)
-                         ,new SqlParameter("@actual",item.actual)
-                         ,new SqlParameter("@accrued",item.accrued)
-                         ,new SqlParameter("@commitment",item.commitment)
-                         ,new SqlParameter("@pr_po",item.PR_PO)
-                         ,new SqlParameter("@prepaid",item.prepaid)
-                         ,new SqlParameter("@returnAmount",item.returnAmount)
-                         ,new SqlParameter("@balanceAmount",item.budgetAmount)
-                         ,new SqlParameter("@remark",item.remark)
-                         ,new SqlParameter("@createdByUserId",item.createdByUserId)
+                      ,new SqlParameter("@date",item.date)
+                      ,new SqlParameter("@bCode",item.b_Code)
+                      ,new SqlParameter("@bNum_En",item.brandName)
+                      ,new SqlParameter("@type",item.type)
+                      ,new SqlParameter("@bg_Activity",item.budget_Activity)
+                      ,new SqlParameter("@transaction",item.transaction)
+                      ,new SqlParameter("@EO",item.EO)
+                      ,new SqlParameter("@originalBudget",item.originalBudget)
+                      ,new SqlParameter("@LE_Amount",item.LE_Amount)
+                      ,new SqlParameter("@approve_Amount",item.approve_Amount)
+                      ,new SqlParameter("@balanceLEApprove",item.balanceLEApprove)
+                      ,new SqlParameter("@trf_BG",item.trf_BG)
+                      ,new SqlParameter("@actual",item.actual)
+                      ,new SqlParameter("@pr_po",item.PR_PO)
+                      ,new SqlParameter("@actualTotal",item.actualTotal)
+                      ,new SqlParameter("@available",item.available)
+                      ,new SqlParameter("@returnAmount",item.returnAmount)
+                      ,new SqlParameter("@balanceAmount",item.balance)
+                      ,new SqlParameter("@createdByUserId",item.createdByUserId)
 
                       });
                 }

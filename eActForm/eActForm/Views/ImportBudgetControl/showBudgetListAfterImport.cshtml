@@ -53,56 +53,56 @@
     <button class="tablinks" onclick="openCity(event, 'divBrand')">Brand</button>
 </div>
 
-<div id="divChanel" class="col-md-12 col-xs-12 tabcontent" style="width:100%;overflow-x:scroll;">
+<div id="" class="col-md-12 col-xs-12 tabcontent" style="width:100%;overflow-x:scroll;">
     <table class="table table-striped jambo_table bulk_action fixed" id="tbl_reportChanel" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
         <thead>
             <tr class="headings" style="text-align:center;">
+                <th width="170px" class="center">Date</th>
                 <th width="170px" class="center">Bud_Num</th>
                 <th width="170px" class="center">B_Code</th>
                 <th width="170px" class="center">Bnam_Eng</th>
                 <th width="170px" class="center">Type</th>
-                <th width="170px" class="center">Brand</th>
-                <th width="170px" class="center">Budget_Amount</th>
-                <th width="170px" class="center">Activity</th>
+                <th width="170px" class="center">BG_Activity</th>
                 <th width="170px" class="center">Transaction</th>
-                <th width="170px" class="center">Budget_Amount2</th>
                 <th width="170px" class="center">EO</th>
-                <th width="170px" class="center">CommitAmount</th>
-                <th width="170px" class="center">Actual</th>
-                <th width="170px" class="center">Accrued</th>
-                <th width="170px" class="center">Commitment</th>
-                <th width="170px" class="center">PR/PO Outstanding</th>
-                <th width="170px" class="center">Prepaid</th>
-                <th width="170px" class="center">ReturnAmount</th>
-                <th width="170px" class="center">BalanceAmount</th>
-                <th width="170px" class="center">Remark</th>
+                <th width="170px" class="center">Original Budget</th>
+                <th width="170px" class="center">LE Amount</th>
+                <th width="170px" class="center">Approve Amount</th>
+                <th width="170px" class="center">Balance (LE1-Approve)</th>
+                <th width="170px" class="center">โยก BG</th>
+                <th width="170px" class="center">Actual Spending</th>
+                <th width="170px" class="center">PR</th>
+                <th width="170px" class="center">Total Actual Spending</th>
+                <th width="170px" class="center">Available Amount</th>
+                <th width="170px" class="center">Return</th>
+                <th width="170px" class="center">Balance Amount</th>
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.budgetReportList)
             {
-                <tr>
-                    <td>@item.budgetNo</td>
-                    <td>@item.b_Code</td>
-                    <td>@item.chanelName</td>
-                    <td>@item.type</td>
-                    <td>@item.brandName</td>
-                    <td>@string.Format("{0:n2}", @item.budgetAmount)</td>
-                    <td>@item.budget_Activity</td>
-                    <td>@item.transaction</td>
-                    <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
-                    <td>@item.EO</td>
-                    <td>@string.Format("{0:n2}", @item.commitAmount)</td>
-                    <td>@string.Format("{0:n2}", @item.actual)</td>
-                    <td>@string.Format("{0:n2}", @item.accrued)</td>
-                    <td>@string.Format("{0:n2}", @item.commitment)</td>
-                    <td>@string.Format("{0:n2}", @item.PR_PO)</td>
-                    <td>@string.Format("{0:n2}", @item.prepaid)</td>
-                    <td>@string.Format("{0:n2}", @item.returnAmount)</td>
-                    <td>@string.Format("{0:n2}", @item.balance)</td>
-                    <td>@item.remark</td>
-                </tr>
+            <tr>
+                <td>@item.date</td>
+                <td>@item.budNum</td>
+                <td>@item.b_Code</td>
+                <td>@item.brandName</td>
+                <td>@item.type</td>
+                <td>@item.budget_Activity</td>
+                <td>@item.transaction</td>
+                <td>@item.EO</td>
+                <td>@string.Format("{0:n2}", @item.originalBudget)</td>
+                <td>@string.Format("{0:n2}", @item.LE_Amount)</td>
+                <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
+                <td>@string.Format("{0:n2}", @item.balanceLEApprove)</td>
+                <td>@string.Format("{0:n2}", @item.trf_BG)</td>
+                <td>@string.Format("{0:n2}", @item.actual)</td>
+                <td>@string.Format("{0:n2}", @item.PR_PO)</td>
+                <td>@string.Format("{0:n2}", @item.actualTotal)</td>
+                <td>@string.Format("{0:n2}", @item.available)</td>
+                <td>@string.Format("{0:n2}", @item.returnAmount)</td>
+                <td>@string.Format("{0:n2}", @item.balance)</td>
+            </tr>
             }
         </tbody>
     </table>
@@ -113,7 +113,7 @@
 
 
 <div class="row form-group">
-    <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
+    <div id="divBtn" align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
         <label class="btn ink-reaction btn-success" style="margin-top:20px; font-size:15px; width:100%">Confirm</label>
     </div>
 </div>
@@ -142,7 +142,7 @@
             data: {
             }
         }).done(function (response) {
-
+            doMsgSuccess('บันทึกเรียบร้อย');
         });
     }
 
