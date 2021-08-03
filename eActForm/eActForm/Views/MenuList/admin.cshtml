@@ -22,11 +22,7 @@
                 <li>@Html.ActionLink(" Flow Swap Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.swap.ToString() }, null)</li>
                 <li>@Html.ActionLink(" Import Flow ", "index", "ImportFlow")</li>
             }
-            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
-            {
-
-                <li>@Html.ActionLink(" Import Budget ", "index", "ImportBudgetControl")</li>
-            }
+    
 
         </ul>
     </li>

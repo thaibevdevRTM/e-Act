@@ -11,8 +11,10 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using WebLibrary;
 using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.Controllers
@@ -72,53 +74,57 @@ namespace eActForm.Controllers
 
                         if (QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).Any())
                         {
-                            BudgetControlModels modelBudget = new BudgetControlModels();
-                            genId = Guid.NewGuid().ToString();
-                            modelBudget.id = genId;
-                            modelBudget.companyId = model.companyId;
-                            modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
-                            modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
-                            modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
-                            //modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
-                            modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
-                            modelBudget.chanelName = dt.Columns[ii].ToString();
-                            modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                            modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
-                            modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
-                            modelBudget.budgetNo = ImportBudgetControlAppCode.genBudgetNo(AppCode.StrCon, modelBudget, int.Parse(getLE) + 1);  //genauto
-                            modelBudget.LE = int.Parse(getLE) + 1;
-                            budgetList.Add(modelBudget);
-
-
-                            if (budgetList.Any())
+                            if (!string.IsNullOrEmpty(dt.Rows[i]["brandId"].ToString()))
                             {
-                                //Add Model LE
-                                BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
-                                genIdLE = Guid.NewGuid().ToString();
-                                modelLE.id = genIdLE;
-                                modelLE.budgetId = genId;
-                                modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                                modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                                modelLE.descripion = "";
 
-                                modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
-                                BudgetLEList.Add(modelLE);
+                                BudgetControlModels modelBudget = new BudgetControlModels();
+                                genId = Guid.NewGuid().ToString();
+                                modelBudget.id = genId;
+                                modelBudget.companyId = model.companyId;
+                                modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
+                                modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
+                                modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                                //modelBudget.totalChannel = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i]["Total Channel"].ToString()));
+                                modelBudget.chanelId = QueryGetAllChanel.getAllChanel().Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
+                                modelBudget.chanelName = dt.Columns[ii].ToString();
+                                modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                modelBudget.createdByUserId = UtilsAppCode.Session.User.empId;
+                                modelBudget.EO = ImportBudgetControlAppCode.genEO(AppCode.StrCon, modelBudget); //genauto
+                                modelBudget.budgetNo = ImportBudgetControlAppCode.genBudgetNo(AppCode.StrCon, modelBudget, int.Parse(getLE) + 1);  //genauto
+                                modelBudget.LE = int.Parse(getLE) + 1;
+                                budgetList.Add(modelBudget);
+
+
+                                if (budgetList.Any())
+                                {
+                                    //Add Model LE
+                                    BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
+                                    genIdLE = Guid.NewGuid().ToString();
+                                    modelLE.id = genIdLE;
+                                    modelLE.budgetId = genId;
+                                    modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                    modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                                    modelLE.descripion = "";
+
+                                    modelLE.createdByUserId = UtilsAppCode.Session.User.empId;
+                                    BudgetLEList.Add(modelLE);
+                                }
+                                if (BudgetLEList.Any())
+                                {
+                                    BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                                    bgActTypeModel.id = Guid.NewGuid().ToString();
+                                    bgActTypeModel.budgetId = genId;
+                                    bgActTypeModel.budgetLEId = genIdLE;
+                                    bgActTypeModel.actTypeId = "";
+                                    bgActTypeModel.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                                    bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                                    bgActTypeList.Add(bgActTypeModel);
+                                }
+
+
+                                runingNo++;
                             }
-                            if (BudgetLEList.Any())
-                            {
-                                BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
-                                bgActTypeModel.id = Guid.NewGuid().ToString();
-                                bgActTypeModel.budgetId = genId;
-                                bgActTypeModel.budgetLEId = genIdLE;
-                                bgActTypeModel.actTypeId = "";
-                                bgActTypeModel.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
-                                bgActTypeModel.createdByUserId = UtilsAppCode.Session.User.empId;
-                                bgActTypeList.Add(bgActTypeModel);
-                            }
-
-
-                            runingNo++;
                         }
                     }
                 }
@@ -245,6 +251,7 @@ namespace eActForm.Controllers
             try
             {
                 string resultFilePath = "";
+                TempData.Clear();
                 int CountFile = model.InputFiles.Count();
                 for (int i = 0; i < CountFile; i++)
                 {
@@ -286,9 +293,14 @@ namespace eActForm.Controllers
                         }
                     }
 
+                    if(dtBudget.Rows[i]["Order No"].ToString() == "86S02147L020")
+                    {
+                        var ttt = "t";
+                    }
+                        
                     modelBudgetRpt.EO = dtBudget.Rows[i]["External Order No"].ToString();
                     modelBudgetRpt.approveNo = dtBudget.Rows[i]["Approve No"].ToString();
-                    modelBudgetRpt.orderNo =  dtBudget.Rows[i]["Order No"].ToString();
+                    modelBudgetRpt.orderNo = dtBudget.Rows[i]["Order No"].ToString();
                     modelBudgetRpt.description = dtBudget.Rows[i]["Description"].ToString();
                     modelBudgetRpt.budgetAmount = decimal.Parse(dtBudget.Rows[i]["Budget"].ToString());
                     modelBudgetRpt.returnAmount = decimal.Parse(dtBudget.Rows[i]["Return"].ToString());
@@ -306,10 +318,7 @@ namespace eActForm.Controllers
                 }
 
                 int result = 0;
-                foreach (var item in modelBudgetRptList)
-                {
-                    result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon,item.EO , item.orderNo);
-                }
+                result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon);
 
                 foreach (var item in modelBudgetRptList)
                 {
@@ -319,6 +328,8 @@ namespace eActForm.Controllers
                 Models.ImportBudgetControlModel budgetModel = new Models.ImportBudgetControlModel();
                 //budgetModel.budgetReportChannelList = ImportBudgetControlAppCode.getBudgetChannelList(AppCode.StrCon);
                 budgetModel.budgetReportList = ImportBudgetControlAppCode.getBudgetList(AppCode.StrCon);
+                budgetModel.budgetReportList2 = ImportBudgetControlAppCode.getBudgetReportTBM_NotEO(AppCode.StrCon);
+
 
                 TempData["budgetTemp"] = budgetModel;
                 resultAjax.Success = true;
@@ -333,6 +344,23 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult ExportExcel(string gridHtml,string type)
+        {
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "ReportTBM_"+ type+".xls");
+        }
 
         public ActionResult showBudgetListAfterImport()
         {

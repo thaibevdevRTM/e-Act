@@ -53,7 +53,6 @@ namespace eActForm.Controllers
             try
             {
 
-
                 AdminCommandHandler.updatePriceProduct(model);
                 result.Success = true;
             }

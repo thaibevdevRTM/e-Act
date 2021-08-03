@@ -273,6 +273,7 @@ namespace eForms.Presenter.AppCode
             try
             {
 
+             
 
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetRpt_Temp"
                       , new SqlParameter[] {new SqlParameter("@EO",model.EO)
@@ -304,15 +305,12 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int delBudgetRpt_Temp(string strCon,string EO , string IO)
+        public static int delBudgetRpt_Temp(string strCon)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport"
-                     , new SqlParameter[] {new SqlParameter("@EO",EO)
-                      ,new SqlParameter("@IO",IO)
-                     });
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport");
 
             }
             catch (Exception ex)
@@ -368,10 +366,12 @@ namespace eForms.Presenter.AppCode
                                  budNum = d["budNum"].ToString(),
                                  b_Code = d["bCode"].ToString(),
                                  brandName = d["bnam_Eng"].ToString(),
-                                 type = d["type"].ToString(),
+                                 //type = d["type"].ToString(),
+                                 chanelName = d["chanelName"].ToString(),
                                  budget_Activity = d["actType"].ToString(),
                                  transaction = d["transactionTxt"].ToString(),
                                  EO = d["EO"].ToString(),
+                                 orderNo = d["orderNo"].ToString(),
                                  originalBudget = decimal.Parse(d["originalBudget"].ToString()),
                                  LE_Amount = decimal.Parse(d["amountLE"].ToString()),
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
@@ -384,6 +384,8 @@ namespace eForms.Presenter.AppCode
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  balance = decimal.Parse(d["balanceAmount"].ToString()),
                                  remark = d["remark"].ToString(),
+                                 typeImport = d["importType"].ToString(),
+                                 replaceEO = d["replaceEO"].ToString(),
                                  createdByUserId = d["createBy"].ToString(),
                              });
 
@@ -397,7 +399,35 @@ namespace eForms.Presenter.AppCode
             return budgetList;
         }
 
-     
+
+        public static List<BudgetControlModels> getBudgetReportTBM_NotEO(string strCon)
+        {
+            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetReportTBM_NotEO");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 //activityNo = d["activityNo"].ToString(),
+
+                                 EO = d["EO"].ToString(),
+                                 orderNo = d["orderNo"].ToString(),
+                                 description = d["description"].ToString(),
+                                
+                             });
+
+                return lists.ToList(); ;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getBudgetReportTBM_NotEO");
+            }
+
+            return budgetList;
+        }
+
+
 
         public static int insertDateReportBudgetTBM(string strCon, ImportBudgetControlModel model)
         {
@@ -416,6 +446,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@bg_Activity",item.budget_Activity)
                       ,new SqlParameter("@transaction",item.transaction)
                       ,new SqlParameter("@EO",item.EO)
+                      ,new SqlParameter("@IO",item.orderNo)
                       ,new SqlParameter("@originalBudget",item.originalBudget)
                       ,new SqlParameter("@LE_Amount",item.LE_Amount)
                       ,new SqlParameter("@approve_Amount",item.approve_Amount)

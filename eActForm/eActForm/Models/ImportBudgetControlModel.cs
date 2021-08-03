@@ -12,6 +12,7 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> companyList { get; set; }
         public BudgetControlModels budgetControlModels { get; set; }
         public List<BudgetControlModels> budgetReportList { get; set; }
+        public List<BudgetControlModels> budgetReportList2 { get; set; }
         public List<BudgetControlModels> budgetReportChannelList { get; set; }
 
         public ImportBudgetControlModel()
