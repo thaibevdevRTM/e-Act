@@ -20,12 +20,14 @@ namespace eForms.Presenter.AppCode
         public static string brand = "brand";
 
 
-        public static string getLE_No(string strCon)
+        public static string getLE_No(string strCon,int year)
         {
             string result = "";
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No");
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No"
+                     , new SqlParameter[] {new SqlParameter("@year",year)
+                     });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new
                              {

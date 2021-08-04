@@ -59,7 +59,7 @@ namespace eActForm.Controllers
                 dt = ExcelAppCode.ReadExcel(resultFilePath, "BG-L1", "A:Z");
                 dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "B_BRAND", "A:Z");
 
-                var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon);
+                var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon, MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]).Year);
 
                 //------------------------ Prepare data for BudgetControl by Chanel -----------------
                 List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
@@ -187,31 +187,40 @@ namespace eActForm.Controllers
                     runingNo++;
                 }
 
-                if (budgetList.Any())
-                {
-                    foreach (var item in budgetList)
-                    {
-                        int result = +ImportBudgetControlAppCode.InsertBudgetControl(AppCode.StrCon, item);
-                    }
-                }
 
-                if (BudgetLEList.Any())
-                {
+                eForms.Models.MasterData.ImportBudgetControlModel modelTemp = new eForms.Models.MasterData.ImportBudgetControlModel();
 
-                    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon, BudgetLEList.FirstOrDefault().endDate);
-                    foreach (var item in BudgetLEList)
-                    {
-                        int result = +ImportBudgetControlAppCode.InsertBudgetLE(AppCode.StrCon, item);
-                    }
-                }
-                if (bgActTypeList.Any())
-                {
-                    //var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon , BudgetLEList.FirstOrDefault().endDate);
-                    foreach (var item in bgActTypeList)
-                    {
-                        int result = +ImportBudgetControlAppCode.InsertBudgetActType(AppCode.StrCon, item);
-                    }
-                }
+                modelTemp.budgetReportList = budgetList;
+                modelTemp.BudgetLEList = BudgetLEList;
+                modelTemp.bgActTypeList = bgActTypeList;
+                TempData["modelTemp"] = modelTemp;
+
+
+                //if (budgetList.Any())
+                //{
+                //    foreach (var item in budgetList)
+                //    {
+                //        int result = +ImportBudgetControlAppCode.InsertBudgetControl(AppCode.StrCon, item);
+                //    }
+                //}
+
+                //if (BudgetLEList.Any())
+                //{
+
+                //    var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon, BudgetLEList.FirstOrDefault().endDate);
+                //    foreach (var item in BudgetLEList)
+                //    {
+                //        int result = +ImportBudgetControlAppCode.InsertBudgetLE(AppCode.StrCon, item);
+                //    }
+                //}
+                //if (bgActTypeList.Any())
+                //{
+                //    //var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon , BudgetLEList.FirstOrDefault().endDate);
+                //    foreach (var item in bgActTypeList)
+                //    {
+                //        int result = +ImportBudgetControlAppCode.InsertBudgetActType(AppCode.StrCon, item);
+                //    }
+                //}
 
 
                 resultAjax.Success = true;
@@ -226,10 +235,23 @@ namespace eActForm.Controllers
         }
 
 
+        public ActionResult showImportBGlist()
+        {
+
+            eForms.Models.MasterData.ImportBudgetControlModel modelTemp = new eForms.Models.MasterData.ImportBudgetControlModel();
+            modelTemp = (eForms.Models.MasterData.ImportBudgetControlModel)TempData["modelTemp"];
+
+            Models.ImportBudgetControlModel modelForShow = new Models.ImportBudgetControlModel();
+            modelForShow.budgetReportList = modelTemp.budgetReportList;
+            modelForShow.BudgetLEList = modelTemp.BudgetLEList;
+            modelForShow.bgActTypeList = modelTemp.bgActTypeList;
+
+            return View(modelForShow);
+        }
 
 
 
-        public ActionResult Inddex_ImportBGMarketing()
+            public ActionResult Inddex_ImportBGMarketing()
         {
             eForms.Models.MasterData.ImportBudgetControlModel model = new eForms.Models.MasterData.ImportBudgetControlModel();
 
@@ -293,11 +315,7 @@ namespace eActForm.Controllers
                         }
                     }
 
-                    if(dtBudget.Rows[i]["Order No"].ToString() == "86S02147L020")
-                    {
-                        var ttt = "t";
-                    }
-                        
+               
                     modelBudgetRpt.EO = dtBudget.Rows[i]["External Order No"].ToString();
                     modelBudgetRpt.approveNo = dtBudget.Rows[i]["Approve No"].ToString();
                     modelBudgetRpt.orderNo = dtBudget.Rows[i]["Order No"].ToString();
