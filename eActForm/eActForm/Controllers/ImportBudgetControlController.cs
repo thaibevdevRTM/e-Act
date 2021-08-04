@@ -59,7 +59,7 @@ namespace eActForm.Controllers
                 dt = ExcelAppCode.ReadExcel(resultFilePath, "BG-L1", "A:Z");
                 dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "B_BRAND", "A:Z");
 
-                var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon);
+                var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon, MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]).Year);
 
                 //------------------------ Prepare data for BudgetControl by Chanel -----------------
                 List<BudgetControlModels> budgetList = new List<BudgetControlModels>();

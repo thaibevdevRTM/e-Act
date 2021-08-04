@@ -20,12 +20,14 @@ namespace eForms.Presenter.AppCode
         public static string brand = "brand";
 
 
-        public static string getLE_No(string strCon)
+        public static string getLE_No(string strCon,int year)
         {
             string result = "";
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No");
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No"
+                     , new SqlParameter[] {new SqlParameter("@year",year)
+                     });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new
                              {
@@ -103,6 +105,42 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
+        public static int InsertBudgetControlTemp(string strCon, ImportBudgetControlModel.BudgetControlModels model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetControlTemp"
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetNo",model.budgetNo)
+                         ,new SqlParameter("@EO",model.EO)
+                         ,new SqlParameter("@companyId",model.companyId)
+                         ,new SqlParameter("@budgetGroupType",model.budgetGroupType)
+                         ,new SqlParameter("@customerId",model.customerId)
+                         ,new SqlParameter("@chanelId",model.chanelId)
+                         ,new SqlParameter("@brandId",model.brandId)
+                         ,new SqlParameter("@startDate",model.startDate)
+                         ,new SqlParameter("@endDate",model.endDate)
+                         ,new SqlParameter("@amount",model.amount)
+                         ,new SqlParameter("@totalChannel",model.totalChannel)
+                         ,new SqlParameter("@totalBG",model.totalBG)
+                         ,new SqlParameter("@LE",model.LE)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetControl => " + ex.Message);
+            }
+
+            return result;
+        }
+
+
         public static int InsertBudgetLE(string strCon, ImportBudgetControlModel.BudgetControl_LEModel model)
         {
             int result = 0;
@@ -110,6 +148,32 @@ namespace eForms.Presenter.AppCode
             {
 
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE"
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetId",model.budgetId)
+                         ,new SqlParameter("@startDate",model.startDate)
+                         ,new SqlParameter("@endDate",model.endDate)
+                         ,new SqlParameter("@description",model.descripion)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetLE => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int InsertBudgetLETemp(string strCon, ImportBudgetControlModel.BudgetControl_LEModel model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLETemp"
                 , new SqlParameter[] {new SqlParameter("@id",model.id)
                          ,new SqlParameter("@budgetId",model.budgetId)
                          ,new SqlParameter("@startDate",model.startDate)
@@ -154,6 +218,34 @@ namespace eForms.Presenter.AppCode
             {
 
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType"
+                , new SqlParameter[] {new SqlParameter("@id",model.id)
+                         ,new SqlParameter("@budgetId",model.budgetId)
+                         ,new SqlParameter("@budgetLEId",model.budgetLEId)
+                         ,new SqlParameter("@actTypeId",model.actTypeId)
+                         ,new SqlParameter("@amount",model.amount)
+                         ,new SqlParameter("@description",model.description)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetActType => " + ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public static int InsertBudgetActTypeTemp(string strCon, ImportBudgetControlModel.BudgetControl_ActType model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActTypeTemp"
                 , new SqlParameter[] {new SqlParameter("@id",model.id)
                          ,new SqlParameter("@budgetId",model.budgetId)
                          ,new SqlParameter("@budgetLEId",model.budgetLEId)
