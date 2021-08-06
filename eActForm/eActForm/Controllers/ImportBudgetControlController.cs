@@ -293,10 +293,7 @@ namespace eActForm.Controllers
                         }
                     }
 
-                    if(dtBudget.Rows[i]["Order No"].ToString() == "86S02147L020")
-                    {
-                        var ttt = "t";
-                    }
+                   
                         
                     modelBudgetRpt.EO = dtBudget.Rows[i]["External Order No"].ToString();
                     modelBudgetRpt.approveNo = dtBudget.Rows[i]["Approve No"].ToString();
