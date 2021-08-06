@@ -193,19 +193,33 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int InsertBudgetLE_History(string strCon, DateTime? importDate)
+        public static int InsertBudgetLE_History(string strCon)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History"
-              , new SqlParameter[] {new SqlParameter("@importDate",importDate)
-                });
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History");
                 result++;
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> InsertBudgetLE_History");
+            }
+
+            return result;
+        }
+
+        public static int deleteBudgetTemp_ImportBudgetBG(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_deleteBudgetTemp");
+                result++;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteBudgetTemp");
             }
 
             return result;
@@ -239,6 +253,60 @@ namespace eForms.Presenter.AppCode
         }
 
 
+        public static List<BudgetControlModels> getBudgetTemp(string strCon)
+        {
+           
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetTemp");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 startDate = DateTime.Parse(d["startDate"].ToString()),
+                                 endDate = DateTime.Parse(d["endDate"].ToString()),
+                                 EO = d["EO"].ToString(),
+                                 LE = int.Parse(d["LE"].ToString()),
+                                 budgetGroupType = d["budgetGroupType"].ToString(),
+                                 brandName = d["brandName"].ToString(),
+                                 chanelName = d["chanelGroup"].ToString(),
+                                 budget_Activity = d["activitySales"].ToString(),
+                                 amount = decimal.Parse(d["amount"].ToString()),
+                             });
+                if (lists.Any())
+                {
+                    return lists.ToList();
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetTemp => " + ex.Message);
+                return null;
+            }
+
+        }
+
+
+        public static int confirmImportBudget(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_confirmImportBudgetTemp");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetTemp => " + ex.Message);
+                return result;
+            }
+
+        }
+
         public static int InsertBudgetActTypeTemp(string strCon, ImportBudgetControlModel.BudgetControl_ActType model)
         {
             int result = 0;
@@ -265,14 +333,12 @@ namespace eForms.Presenter.AppCode
 
             return result;
         }
-        public static int InsertBudgetActType_History(string strCon, DateTime? importDate)
+        public static int InsertBudgetActType_History(string strCon)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History"
-             , new SqlParameter[] {new SqlParameter("@importDate",importDate)
-               });
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History");
                 result++;
 
             }
