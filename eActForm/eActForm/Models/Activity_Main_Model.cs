@@ -15,6 +15,7 @@ namespace eActForm.Models
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
         //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
+        public List<TB_Act_master_cost_centerModel> TB_Act_master_cost_centerModel_List { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
@@ -74,6 +75,7 @@ namespace eActForm.Models
             budgetTotalModel = new BudgetTotal();
             budgetTotalList = new List<BudgetTotal>();
             tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
@@ -112,6 +114,10 @@ namespace eActForm.Models
         public string[] list_6_multi_select { get; set; }
         public string[] list_7_multi_select { get; set; }
         public string[] list_8_multi_select { get; set; }
+        public string[] brand_multi_select { get; set; }
+        public string[] costCenter_multi_select { get; set; }
+
+        
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }

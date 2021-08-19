@@ -277,6 +277,7 @@ namespace eActForm.Controllers
         public JsonResult ImportFlie_BudgetConttrol_Rpt(BudgetControlModels model)
         {
             var resultAjax = new AjaxResult();
+           
             try
             {
                 string resultFilePath = "";
@@ -305,10 +306,16 @@ namespace eActForm.Controllers
                     string importType = "";
                     if (!string.IsNullOrEmpty(getEO) && getEO.Length > 10)
                     {
+
+
+                        var getEO_Brand2digit = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(getEO.Substring(0, 4))).FirstOrDefault().digit_EO;
+                        resultAjax.Code = i;
+
                         string subStrEO = getEO.Substring(4, 2);
                         if (subStrEO == "11")
                         {
-                            modelBudgetRpt.replaceEO = getEO.Substring(0, 10);
+                           
+                            modelBudgetRpt.replaceEO = getEO_Brand2digit + getEO.Substring(4, 6);
                             importType = "chanel";
                         }
                         else
@@ -317,7 +324,8 @@ namespace eActForm.Controllers
                             getEO = getEO.Substring(0, 10);
                             getEO = getEO.Remove(6, 2);
                             getEO = getEO.Insert(6, "{0}");
-                            modelBudgetRpt.replaceEO = getEO;
+
+                            modelBudgetRpt.replaceEO = getEO_Brand2digit + getEO.Substring(4, 7);
                             importType = "brand";
                         }
                     }
@@ -363,7 +371,7 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
+                resultAjax.Message = ex.Message + "__Row" + resultAjax.Code + int.Parse("3");
 
             }
             return Json(resultAjax, "text/plain");

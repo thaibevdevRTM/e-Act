@@ -3299,8 +3299,6 @@
     <Content Include="Views\Admin\customerList.cshtml" />
     <Content Include="Views\ImportBudgetControl\Inddex_ImportBGMarketing.cshtml" />
     <Content Include="Views\ImportBudgetControl\showBudgetListAfterImport.cshtml" />
-    <Content Include="Uploadfiles\template\Template Budget.xlsx" />
-    <Content Include="Uploadfiles\template\TemplateSap.xlsx" />
     <Content Include="Views\ImportBudgetControl\showImportBGlist.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -3322,6 +3320,7 @@
     <Folder Include="Uploadfiles\ImportHospital\template\" />
     <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
+    <Folder Include="Uploadfiles\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exListEntertain\" />
     <Folder Include="Views\expenseEntertainReport\" />
