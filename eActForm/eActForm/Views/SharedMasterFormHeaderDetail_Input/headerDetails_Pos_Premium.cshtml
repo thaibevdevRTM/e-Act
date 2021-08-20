@@ -111,7 +111,7 @@
                                                                                                                    })
                                         </div>
                                         <div id="div_showData_ddlproduct_pos_premium" style="display:none;">
-                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly"  />
+                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly" />
                                         </div>
                                         <script>
                                         $(document).ready(function () {
@@ -200,17 +200,34 @@
 
                                 <div class="col-md-3 col-xs-12">
                                     <div class="row">
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                        @*@Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                            {
+                                                @class = "form-control selectpicker",
+                                                id = "ddlbrand_select"
+                                            })*@
+
+                                        @Html.DropDownList("activityFormTBMMKT.brand_multi_select", new SelectList(Model.tB_Act_ProductBrand_Model_2,
+                                        "id", "brandName"),
+                                        new
                                         {
-                                            @class = "form-control selectpicker",
-                                            id = "ddlbrand_select"
+                                            @class = "form-control",
+                                            id = "ddlbrand_select",
+                                            multiple = "multiple"
                                         })
                                         <script>
                                         $("#ddlbrand_select").change(function () {
                                             if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
+
+                                                var valuesSelectBrand = [];
+                                                $("#ddlbrand_select option:selected").each(function () {
+                                                    var $this = $(this);
+                                                    valuesSelectBrand.push($this.val());
+                                                });
+
+                                            
                                                 var dataToBeSend =
                                                     {
-                                                        productBrandId: $("#ddlbrand_select").val()
+                                                          productBrandId: valuesSelectBrand
                                                         , companyId: "@UtilsAppCode.Session.User.empCompanyId"
                                                     };
 
@@ -228,13 +245,18 @@
                                                                 } else {
                                                                     mixCostLastThreePosition = "200";
                                                                 }
-                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function () {
-                                                                    var resultCostCenter = (this['costCenter'] + mixCostLastThreePosition);
-                                                                    $("#txtCostCenter").val(resultCostCenter);
+
+                                                                $("#ddlCostCenter").empty();
+                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function (i, j) {
+                                                                    console.log(j);
+                                                                    console.log(response.Data.tB_Act_Master_Cost_CenterModels);
+                                                                    $("#ddlCostCenter").append("<option value='" + this['id'] + "'>" + this['costCenter'] + mixCostLastThreePosition + "</option>");
                                                                 });
+
+                                                                $("#ddlCostCenter").multiselect('rebuild');
                                                             }
                                                             else {
-                                                                $("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
+                                                                //$("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
                                                             }
                                                         },
                                                         error: function (data) {
@@ -242,7 +264,7 @@
                                                         }
                                                     });
                                             } else {
-                                                $("#txtCostCenter").val("");
+                                              //  $("#txtCostCenter").val("");
                                             }
                                         });
                                         </script>
@@ -255,7 +277,14 @@
 
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
+                                        @* @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })*@
+                                
+                                        @Html.DropDownList("activityFormTBMMKT.costCenter_multi_select", new SelectList(Model.TB_Act_master_cost_centerModel_List, "id", "costCenter"), new
+                                           {
+                                               @class = "form-control",
+                                               id = "ddlCostCenter",
+                                               multiple = "multiple"
+                                           })
                                     </div>
                                 </div>
                             </div>
@@ -438,3 +467,44 @@
         </td>
     </tr>
 </table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ddlbrand_select').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '                                                    ',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+        var valuesSelectChoiceFromDb = [];
+          @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+          {
+              foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+              {
+                  @:valuesSelectChoiceFromDb.push("@itemArray");
+              }
+          }
+          $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
+
+
+        $('#ddlCostCenter').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '                                                    ',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+
+
+
+    });
+
+</script>
