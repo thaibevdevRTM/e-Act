@@ -564,28 +564,41 @@ namespace eActForm.BusinessLayer
                                 activity_TBMMKT_Model.activityFormTBMMKT.brand_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.activityFormTBMMKT.labelBrand += item.name;
                                 }
                                 else
                                 {
-                                    sumTxtLabelRequired += ("," + item.name);
+                                  
+                                    activity_TBMMKT_Model.activityFormTBMMKT.labelBrand += ("," + item.name);
                                 }
                                 index_each++;
                             }
 
                             index_each = 0;
+                            string addCost = "";
                             var costCenter_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select = new string[costCenter_multi_select];
+                            if(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId != null)
+                            {
+                                addCost = "200";
+                            }
+                            else
+                            {
+                                addCost = "100";
+                            }
                             foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").ToList())
                             {
+                                var tt = activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel;
+
                                 activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
                                 {
-                                    sumTxtLabelRequired += item.name;
+                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter  += item.name + addCost;
+                                    
                                 }
                                 else
                                 {
-                                    sumTxtLabelRequired += ("," + item.name);
+                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter += ("," + item.name + addCost);
                                 }
                                 index_each++;
                             }
@@ -594,8 +607,9 @@ namespace eActForm.BusinessLayer
                             activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
+
                             //activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
+                            //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
                             

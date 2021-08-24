@@ -218,51 +218,7 @@
                                         $("#ddlbrand_select").change(function () {
                                             if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
 
-                                                var valuesSelectBrand = [];
-                                                $("#ddlbrand_select option:selected").each(function () {
-                                                    var $this = $(this);
-                                                    valuesSelectBrand.push($this.val());
-                                                });
-
-                                            
-                                                var dataToBeSend =
-                                                    {
-                                                          productBrandId: valuesSelectBrand
-                                                        , companyId: "@UtilsAppCode.Session.User.empCompanyId"
-                                                    };
-
-                                                $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
-                                                    {
-                                                        contentType: "application/json; charset=utf-8",
-                                                        data: JSON.stringify(dataToBeSend),
-                                                        dataType: 'json',
-                                                        type: "POST",
-                                                        success: function (response) {
-                                                            if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
-                                                                var mixCostLastThreePosition = "";
-                                                                if ($("#ddlChannelOrBrand").val() == "Brand") {
-                                                                    mixCostLastThreePosition = "100";
-                                                                } else {
-                                                                    mixCostLastThreePosition = "200";
-                                                                }
-
-                                                                $("#ddlCostCenter").empty();
-                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function (i, j) {
-                                                                    console.log(j);
-                                                                    console.log(response.Data.tB_Act_Master_Cost_CenterModels);
-                                                                    $("#ddlCostCenter").append("<option value='" + this['id'] + "'>" + this['costCenter'] + mixCostLastThreePosition + "</option>");
-                                                                });
-
-                                                                $("#ddlCostCenter").multiselect('rebuild');
-                                                            }
-                                                            else {
-                                                                //$("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
-                                                            }
-                                                        },
-                                                        error: function (data) {
-                                                            alert("Error Get CosCenter.");
-                                                        }
-                                                    });
+                                                getCostCenter();
                                             } else {
                                               //  $("#txtCostCenter").val("");
                                             }
@@ -481,17 +437,6 @@
             },
         });
 
-        var valuesSelectChoiceFromDb = [];
-          @if (Model.activityFormTBMMKT.list_1_multi_select != null)
-          {
-              foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
-              {
-                  @:valuesSelectChoiceFromDb.push("@itemArray");
-              }
-          }
-          $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
-
-
         $('#ddlCostCenter').multiselect({
             numberDisplayed: 1,
             enableFiltering: true,
@@ -503,8 +448,83 @@
         });
 
 
+        var valuesSelectChoiceBrand = [];
+          @if (Model.activityFormTBMMKT.brand_multi_select != null)
+          {
+              foreach (var itemArray in Model.activityFormTBMMKT.brand_multi_select)
+              {
+                  @:valuesSelectChoiceBrand.push("@itemArray");
+              }
+          }
+        $("#ddlbrand_select").multiselect('select', valuesSelectChoiceBrand);
+
+        //call multi select Cost Center
+        getCostCenter();
+
+        setTimeout(function () {
+            var valuesSelectChoiceCostCenter = [];
+             @if (Model.activityFormTBMMKT.brand_multi_select != null)
+             {
+                 foreach (var itemArray in Model.activityFormTBMMKT.costCenter_multi_select)
+                 {
+                     @:valuesSelectChoiceCostCenter.push("@itemArray");
+                 }
+             }
+
+         $("#ddlCostCenter").multiselect('select', valuesSelectChoiceCostCenter);
+        }, 2000);
 
 
     });
 
+
+    function getCostCenter() {
+
+         var valuesSelectBrand = [];
+           $("#ddlbrand_select option:selected").each(function () {
+               var $this = $(this);
+               valuesSelectBrand.push($this.val());
+           });
+
+
+        var dataToBeSend =
+            {
+                  productBrandId: valuesSelectBrand
+                , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+            };
+        $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
+        {
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataToBeSend),
+            dataType: 'json',
+            type: "POST",
+            success: function (response) {
+                if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
+                    var mixCostLastThreePosition = "";
+                    if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        mixCostLastThreePosition = "100";
+                    } else {
+                        mixCostLastThreePosition = "200";
+                    }
+
+                    $("#ddlCostCenter").empty();
+                    $.each(response.Data.tB_Act_Master_Cost_CenterModels, function (i, j) {
+
+                        $("#ddlCostCenter").append("<option value='" + this['id'] + "'>" + this['costCenter'] + mixCostLastThreePosition + "</option>");
+                    });
+
+                    $("#ddlCostCenter").multiselect('rebuild');
+
+
+
+                }
+                else {
+                    //$("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
+                }
+            },
+            error: function (data) {
+                alert("Error Get CosCenter.");
+            }
+        });
+    }
 </script>
