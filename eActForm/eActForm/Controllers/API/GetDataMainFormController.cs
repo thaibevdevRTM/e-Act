@@ -56,11 +56,13 @@ namespace eActForm.Controllers
             try
             {
                 List<TB_Act_master_cost_centerModel> tB_Act_Master_Cost_CenterModels = new List<TB_Act_master_cost_centerModel>();
-
-                foreach (var item in objGetDataCostCenter.productBrandId)
+                if (objGetDataCostCenter.productBrandId != null)
                 {
-                    var costlist = QueryGet_TB_Act_master_cost_center.get_TB_Act_master_cost_center(item, objGetDataCostCenter.companyId);
-                    tB_Act_Master_Cost_CenterModels.AddRange(costlist);
+                    foreach (var item in objGetDataCostCenter.productBrandId)
+                    {
+                        var costlist = QueryGet_TB_Act_master_cost_center.get_TB_Act_master_cost_center(item, objGetDataCostCenter.companyId);
+                        tB_Act_Master_Cost_CenterModels.AddRange(costlist);
+                    }
                 }
                 var resultData = new
                 {

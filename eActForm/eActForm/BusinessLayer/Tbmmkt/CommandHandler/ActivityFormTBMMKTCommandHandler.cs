@@ -588,8 +588,7 @@ namespace eActForm.BusinessLayer
                             }
                             foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").ToList())
                             {
-                                var tt = activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel;
-
+                              
                                 activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
                                 {

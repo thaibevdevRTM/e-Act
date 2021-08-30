@@ -135,6 +135,7 @@ namespace eActForm.Models
             public string master_type_form_id { get; set; }
             public DateTime? dateSentApprove { get; set; }
             public string companyId { get; set; }
+            public string brandName { get; set; }
 
         }
 

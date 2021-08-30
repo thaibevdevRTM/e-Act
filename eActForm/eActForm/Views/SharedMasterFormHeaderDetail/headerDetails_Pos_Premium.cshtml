@@ -11,14 +11,14 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-                if (item.approveGroupId == AppCode.ApproveGroup.Applicant)//ผู้ขอเบิก
+            if (item.approveGroupId == AppCode.ApproveGroup.Applicant)//ผู้ขอเบิก
+            {
+                signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                 {
-                    signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
-                    {
-                        signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
-                    }
+                    signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
                 }
+            }
         }
     }
     else
@@ -91,9 +91,39 @@
                             <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                                 <tr class="hDetailtr bgColorFocusDataAcc">
                                     <td style="width:150px;vertical-align:top;">&nbsp;Brand/ผลิตภัณฑ์</td>
-                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelBrand</td>
+
+                                    @{ string brand = Model.activityFormTBMMKT.labelBrand;
+                                        string[] brandList = brand.Split(',');
+                                    }
+
+                                    <td style="width:150px;vertical-align:top;text-align:left;">
+                                        :
+                                        @foreach (string loopbrand in brandList)
+                                        {
+
+                                            @:&nbsp;@loopbrand
+                                            <br />
+                                        }
+
+                                    </td>
+                                    @*<td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelBrand</td>*@
                                     <td style="width:140px;vertical-align:top;">&nbsp;Cost Center</td>
-                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.costCenter</td>
+
+                                    @{ string costcenter = Model.tB_Act_ActivityForm_DetailOther.costCenter;
+                                        string[] costList = costcenter.Split(',');
+                                    }
+
+                                    <td style="width:260px;vertical-align:top;">
+                                        :&nbsp;
+                                        @foreach (string loopcost in costList)
+                                        {
+                                            @:&nbsp; @loopcost
+                                            <br />
+                                        }
+
+                                    </td>
+
+                                    @* <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.costCenter </td>*@
                                 </tr>
                             </table>
                         </td>
