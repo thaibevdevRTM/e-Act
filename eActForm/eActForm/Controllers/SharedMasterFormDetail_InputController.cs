@@ -213,7 +213,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId)
+        public JsonResult getBudgetByEO(string listEO, string listIO, string companyId, string subjectId, string channelId, string brandId, string activityId)
         {
             var result = new AjaxResult();
             try
@@ -221,11 +221,19 @@ namespace eActForm.Controllers
                 
                 List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
-                var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
+                var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
                     total = group.Sum(c => c.total),
                 }).ToList();
+
+                //var getListIO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listIO);
+                //var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
+                //{
+                //    EO = group.First().EO,
+                //    total = group.Sum(c => c.total),
+                //}).ToList();
+
 
 
                 result.Success = false;
@@ -234,12 +242,12 @@ namespace eActForm.Controllers
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
                 decimal? sumTotal_Input = 0 , amountBalanceTotal = 0 , useAmountTotal = 0 , totalBudgetChannel = 0;
-                if (getTotalBudget.Any())
+                if (groupEO.Any())
                 {
-                    foreach (var item in getTotalBudget)
+                    foreach (var item in groupEO)
                     {
                         BudgetTotal budgetTotalModel = new BudgetTotal();
-                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId);
+                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO ,companyId, getActTypeId, channelId, brandId, activityId);
                         if (getAmount.Any())
                         {
 

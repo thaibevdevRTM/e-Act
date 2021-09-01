@@ -218,6 +218,11 @@
                 EO: $(this).find("td:eq(1) input").val(),
                 total: $(this).find("td:eq(5) input").val(),
             });
+
+            getIOBudget.push({
+                EO: $(this).find("td:eq(1) input").val(),
+                IO: $(this).find("td:eq(2) input").val(),
+            });
         });
 
         $.ajax({
@@ -225,6 +230,7 @@
             data: {
 
                 listEO: JSON.stringify(getEOBudget),
+                listIO: JSON.stringify(getIOBudget),
                 companyId: "@Model.activityFormTBMMKT.formCompanyId",
                 subjectId: document.getElementById("ddlSubject").value,
                 channelId: document.getElementById("ddlChannel").value,
