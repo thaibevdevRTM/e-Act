@@ -563,8 +563,6 @@ namespace eActForm.BusinessLayer
                              select new BudgetControlModels
                              {
                                  balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
-                                 reserve = string.IsNullOrEmpty(dr["reserve"].ToString()) ? 0 : (decimal?)dr["reserve"],
-                                 reserveTotal = string.IsNullOrEmpty(dr["reserveTotal"].ToString())  ? 0 : (decimal?)dr["reserveTotal"],
                                  balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
                                  amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
                                  amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
@@ -577,6 +575,29 @@ namespace eActForm.BusinessLayer
             catch(Exception ex)
             {
                 throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
+        }
+
+        public static List<BudgetControlModels> getAmountReturn(string EO, string IO)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
+                   , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter("@IO", IO)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
+                                
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                return new List<BudgetControlModels>();
+                throw new Exception("getAmountReturn >>" + ex.Message);
             }
 
         }

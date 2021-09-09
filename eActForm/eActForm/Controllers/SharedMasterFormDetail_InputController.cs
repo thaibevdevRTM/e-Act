@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.Controllers
 {
@@ -213,12 +214,13 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public JsonResult getBudgetByEO(string listEO, string listIO, string companyId, string subjectId, string channelId, string brandId, string activityId)
+        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId)
         {
             var result = new AjaxResult();
             try
             {
-                
+
+
                 List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
                 var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
@@ -227,12 +229,12 @@ namespace eActForm.Controllers
                     total = group.Sum(c => c.total),
                 }).ToList();
 
-                //var getListIO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listIO);
-                //var getTotalBudget = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
-                //{
-                //    EO = group.First().EO,
-                //    total = group.Sum(c => c.total),
-                //}).ToList();
+                var getListEOIO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
+                var groupEOIO = getListEOIO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.IO }).Select((group, index) => new BudgetTotal
+                {
+                    EO = group.First().EO,
+                    IO = group.First().IO,
+                }).ToList();
 
 
 
@@ -241,22 +243,45 @@ namespace eActForm.Controllers
                 var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
-                decimal? sumTotal_Input = 0 , amountBalanceTotal = 0 , useAmountTotal = 0 , totalBudgetChannel = 0;
+                decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
+
+
                 if (groupEO.Any())
                 {
+                    List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
+                    List<BudgetControlModels> getAmountReturn = new List<BudgetControlModels>();
+                    foreach (var item in groupEOIO)
+                    {
+                        if (!string.IsNullOrEmpty(item.IO))
+                        {
+                            BudgetTotal returnAmountModel = new BudgetTotal();
+                            getAmountReturn = ActFormAppCode.getAmountReturn(item.EO, item.IO);
+                            if (getAmountReturn.Any())
+                            {
+                                returnAmountModel.EO = item.EO;
+                                returnAmountModel.IO = item.IO;
+                                returnAmountModel.amount = getAmountReturn.FirstOrDefault().returnAmount;
+                                returnAmountList.Add(returnAmountModel);
+                            }
+                        }
+                    }
+
+
                     foreach (var item in groupEO)
                     {
                         BudgetTotal budgetTotalModel = new BudgetTotal();
-                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO ,companyId, getActTypeId, channelId, brandId, activityId);
+                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId);
                         if (getAmount.Any())
                         {
+                            var returnAmount = returnAmountList.FirstOrDefault(a => a.EO == item.EO);
 
                             budgetTotalModel.EO = item.EO;
-                            budgetTotalModel.useAmount = (getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total;
+                            budgetTotalModel.returnAmount = returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
+                            budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
-                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total) / getAmount.FirstOrDefault().amount * 100;
+                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total;
+                            budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / getAmount.FirstOrDefault().amount * 100;
                             budgetTotalModel.brandId = brandId;
                             budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                             budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
@@ -264,9 +289,12 @@ namespace eActForm.Controllers
                             budgetTotalsList.Add(budgetTotalModel);
 
                             totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
-                            useAmountTotal = (getAmount.FirstOrDefault().reserveTotal + getAmount.FirstOrDefault().balanceTotal);
+                            useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
                             sumTotal_Input += item.total;
+                            sumReturn += returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
                         }
+
+
                     }
                     amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
                     useAmountTotal = useAmountTotal + sumTotal_Input;
@@ -277,7 +305,8 @@ namespace eActForm.Controllers
                 model.budgetTotalList = budgetTotalsList;
                 model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
+                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal + sumReturn;
+                model.budgetTotalModel.returnAmount = sumReturn;
                 TempData["showBudget" + activityId] = model;
 
                 var resultData = new

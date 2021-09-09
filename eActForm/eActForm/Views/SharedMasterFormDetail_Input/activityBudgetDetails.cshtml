@@ -72,6 +72,7 @@
                                     <script>
                                         $(".clstxtIO_@index").blur(function () {
                                             $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                            getBudgetTotal();
                                         });
                                     </script>
                                 </div>
@@ -211,18 +212,16 @@
 
     function getBudgetTotal(row) {
 
-
+        console.log('tt' + row);
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
+           
             getEOBudget.push({
-                EO: $(this).find("td:eq(1) input").val(),
-                total: $(this).find("td:eq(5) input").val(),
+                EO: $(".clstxtEO_" + row).val(),
+                IO: $(".clstxtIO_" + row).val(),
+                total: $(".txttotal_" + row).val(),
             });
 
-            getIOBudget.push({
-                EO: $(this).find("td:eq(1) input").val(),
-                IO: $(this).find("td:eq(2) input").val(),
-            });
         });
 
         $.ajax({
@@ -230,7 +229,6 @@
             data: {
 
                 listEO: JSON.stringify(getEOBudget),
-                listIO: JSON.stringify(getIOBudget),
                 companyId: "@Model.activityFormTBMMKT.formCompanyId",
                 subjectId: document.getElementById("ddlSubject").value,
                 channelId: document.getElementById("ddlChannel").value,
@@ -248,10 +246,10 @@
                 for (i = 0; i < rowCount; i++) {
 
                     $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
-                   
+
                 }
 
-               
+
                 document.getElementById("divShowBudget").innerHTML = "";
                 if (response.Data.budgetTotalsList.length > 0) {
                     callPartialBudgetControl("@Model.activityFormTBMMKT.id");

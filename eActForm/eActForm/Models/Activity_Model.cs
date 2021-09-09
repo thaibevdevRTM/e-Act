@@ -458,6 +458,7 @@ namespace eActForm.Models
     public class BudgetTotal
     {
         public string EO { get; set; }
+        public string IO { get; set; }
         public decimal? total { get; set; }
         public decimal? useAmount { get; set; }
         public decimal? amountBalance { get; set; }
@@ -472,6 +473,7 @@ namespace eActForm.Models
         public string channelName { get; set; }
         public string activityType { get; set; }
         public string activityTypeId { get; set; }
+        public decimal? returnAmount { get; set; }
     }
 
 }

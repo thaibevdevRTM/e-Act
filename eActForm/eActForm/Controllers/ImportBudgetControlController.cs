@@ -371,7 +371,7 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 resultAjax.Success = false;
-                resultAjax.Message = ex.Message + "__Row" + resultAjax.Code + int.Parse("3");
+                resultAjax.Message = ex.Message + "__Row" + resultAjax.Code;
 
             }
             return Json(resultAjax, "text/plain");
