@@ -40,7 +40,8 @@ namespace eActForm.BusinessLayer
                              select new GetDataIO()
                              {
                                  IO = d["IO"].ToString(),
-                                 totalPayByIO = d["totalPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalPayByIO"].ToString())),
+                                 //totalPayByIO = d["totalPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalPayByIO"].ToString())),
+                                 totalPayByIO = d["calTrfPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["calTrfPayByIO"].ToString())),
                              });
                 return lists.ToList();
             }

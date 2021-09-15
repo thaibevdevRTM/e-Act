@@ -207,6 +207,7 @@ namespace eActForm.Models
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalallPayNo { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalTransfer { get; set; }
         public decimal? totalallPayByIOBalance { get; set; }
         public string fiscalYear { get; set; }
         public string APCode { get; set; }
@@ -426,6 +427,7 @@ namespace eActForm.Models
 
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalPayByIO { get; set; }
+        public decimal? amountTransfer { get; set; }
     }
 
     public class ObjGetDataGL

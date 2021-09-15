@@ -151,6 +151,11 @@
                                                 nonSelectedText: '',
                                                 buttonWidth: '100%',
                                                     onChange: function (option, checked) {
+                                                       
+                                                        EOSelect = [];
+                                                        ActivityByEOSelect = [];
+                                                        valuesSelectChoiceFromDb = [];
+                                                        
                                                      payByIOSelect = [];
                                                      payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
                                                         if ($("#ddl_EO_PV").val() != "")
@@ -159,6 +164,7 @@
                                                         if (checked === true) {
                                                             valuesSelectChoiceFromDb.push(option.val());
                                                             EOSelect.push(valEOSelect);
+
                                                         } else {
                                                             removeArray(valuesSelectChoiceFromDb, option.val());
                                                             removeArray(EOSelect, valEOSelect);
@@ -170,6 +176,8 @@
                                                                 if (iLoopEO > 0) { EOtext += "|"; ActivityByEOSelect += "|"; }
                                                                 EOtext += EOSelect[iLoopEO]; ActivityByEOSelect += subStringGetActId(valuesSelectChoiceFromDb[iLoopEO]);                                                              
                                                             }
+
+                                                     
                                                             /*===END===วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
                                                             if (ActivityByEOSelect != "" && EOtext!="") {
                                                             var dataToBeSend = {

@@ -220,6 +220,7 @@
 
                 <script>
                     $('#ddlChannel').change(function () {
+                        $('#ddlBrand').val('');
                         bindDropdownSubject();
                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
                         {
@@ -231,6 +232,7 @@
                         }
                     });
                     $('#ddlBrand').change(function () {
+                        $('#ddlChannel').val('');
                         bindDropdownSubject();
                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
                         {

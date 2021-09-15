@@ -34,20 +34,6 @@
         </div>
     </div>
 
-    <div id="divSubject" style="display:none" class="col-md-2 col-xs-12">
-
-        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
-            &nbsp;Subject<span class="required">&nbsp;:&nbsp;</span>
-        </label>
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            @Html.DropDownListFor(x => x.activityFormTBMMKT.empId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlSubject_BG"
-            })
-        </div>
-    </div>
-
 
     <div id="divActType" class="col-md-2 col-xs-12">
 
@@ -62,14 +48,31 @@
        })
         </div>
     </div>
+
+    <div id="divSubject"  class="col-md-2 col-xs-12">
+
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+            &nbsp;Subject<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @Html.DropDownListFor(x => x.activityFormTBMMKT.empId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+            {
+                @class = "form-control ",
+                id = "ddlSubject_BG"
+            })
+        </div>
+    </div>
+
+
+
     <div id="divBGYear" class="col-md-2 col-xs-12">
 
         <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
             &nbsp;Budget Year<span class="required">&nbsp;:&nbsp;</span>
         </label>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <input type="number" class="form-control textboxcss" id="txtBGYear" placeholder="YYYY"  min="2017" max="2100">
-           
+            <input type="number" class="form-control textboxcss" id="txtBGYear" placeholder="YYYY" min="2017" max="2100">
+
         </div>
     </div>
 
