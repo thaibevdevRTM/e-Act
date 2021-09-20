@@ -309,7 +309,7 @@ namespace eActForm.Controllers
 
 
                         var getEO_Brand2digit = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(getEO.Substring(0, 4))).FirstOrDefault().digit_EO;
-                        resultAjax.Code = i;
+                        resultAjax.Code = i +3;
 
                         string subStrEO = getEO.Substring(4, 2);
                         if (subStrEO == "11")

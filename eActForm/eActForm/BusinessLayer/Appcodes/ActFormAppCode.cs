@@ -146,7 +146,7 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceFormAll";
                 }
-                else if(isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                else if (isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                 {
                     strCall = "usp_getActivitySetPriceOMTFormAll";
                 }
@@ -548,7 +548,7 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId,string activityId)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId)
         {
             try
             {
@@ -572,25 +572,50 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getBalanceByEO >>" + ex.Message);
             }
 
         }
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string IO)
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannel"
+               , new SqlParameter[] { new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@EO", EO)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                return new List<BudgetControlModels>();
+                throw new Exception("getAmountReturn >>" + ex.Message);
+            }
+
+        }
+
+
+        public static List<BudgetControlModels> getAmountReturnByEOIO(string EO, string IO)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
-                   , new SqlParameter[] { new SqlParameter("@EO", EO)
+               , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@IO", IO)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
                                  returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
-                                
+
                              }).ToList();
                 return lists;
             }

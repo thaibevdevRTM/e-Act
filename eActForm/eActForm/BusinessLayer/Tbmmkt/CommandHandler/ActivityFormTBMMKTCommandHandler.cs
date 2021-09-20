@@ -578,7 +578,7 @@ namespace eActForm.BusinessLayer
                             string addCost = "";
                             var costCenter_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select = new string[costCenter_multi_select];
-                            if(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId != null)
+                            if(!string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId))
                             {
                                 addCost = "200";
                             }

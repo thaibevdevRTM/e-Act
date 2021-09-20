@@ -117,8 +117,11 @@
                             }).done(function (response) {
 
                                 var val_typeForm = response.Message;
-                                var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = "val_typeForm" }, null)';
-                                url = url.replace("val_typeForm", val_typeForm);
+                                var url = encodeURI("../Home?&typeForm=" + response.Message); 
+                                
+                                //url = url.replace("val_typeForm", val_typeForm);
+                                //url = url.replace(/\n|\r/g, "");
+                                
                                 window.location.href = url;
 
                             });

@@ -221,26 +221,35 @@ namespace eActForm.Controllers
 
                 var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId)).FirstOrDefault().description;
                 var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
-                decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0,sumReturn = 0;
+                decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
                 if (getTotalBudget.Any())
                 {
+
+                    var getAmountReturn = ActFormAppCode.getAmountReturn(groupEOIO.FirstOrDefault().EO, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId);
+                    if (getAmountReturn.Any())
+                    {
+                        sumReturn = getAmountReturn.FirstOrDefault().returnAmount;
+                    }
+
                     List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
-                    List<BudgetControlModels> getAmountReturn = new List<BudgetControlModels>();
                     foreach (var item in groupEOIO)
                     {
                         if (!string.IsNullOrEmpty(item.IO))
                         {
                             BudgetTotal returnAmountModel = new BudgetTotal();
-                            getAmountReturn = ActFormAppCode.getAmountReturn(item.EO, item.IO);
-                            if (getAmountReturn.Any())
+                            var getAmountReturnEOIO = ActFormAppCode.getAmountReturnByEOIO(item.EO, item.IO);
+                            if (getAmountReturnEOIO.Any())
                             {
                                 returnAmountModel.EO = item.EO;
                                 returnAmountModel.IO = item.IO;
-                                returnAmountModel.amount = getAmountReturn.FirstOrDefault().returnAmount;
+                                returnAmountModel.amount = getAmountReturnEOIO.FirstOrDefault().returnAmount;
                                 returnAmountList.Add(returnAmountModel);
                             }
                         }
                     }
+
+
+
 
                     foreach (var item in getTotalBudget)
                     {
@@ -248,11 +257,10 @@ namespace eActForm.Controllers
                         var getAmount = ActFormAppCode.getBalanceByEO(item.EO, activity_TBMMKT_Model.activityFormTBMMKT.companyId, getActTypeId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId, activity_TBMMKT_Model.activityFormTBMMKT.id);
                         if (getAmount.Any())
                         {
-
                             var returnAmount = returnAmountList.FirstOrDefault(a => a.EO == item.EO);
+                            budgetTotalModel.returnAmount = returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
 
                             budgetTotalModel.EO = item.EO;
-                            budgetTotalModel.returnAmount = returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
                             budgetTotalModel.useAmount = (getAmount.FirstOrDefault().balance) + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
@@ -270,7 +278,7 @@ namespace eActForm.Controllers
                             totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
                             useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
                             sumTotal_Input += item.total;
-                            sumReturn += returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
+
                         }
                         amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
                         useAmountTotal = useAmountTotal + sumTotal_Input;
