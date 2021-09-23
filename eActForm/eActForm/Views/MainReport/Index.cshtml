@@ -106,7 +106,7 @@
                             htmlstr = $("#divForm").html();
                             doLoading("Loading....");
                             $.ajax({
-                            url: '@Url.Action("submitPreview", "Activity")',
+                                url: '@Url.Action("submitPreview", "Activity")',
                                 data: {
                                     GridHtml1: htmlstr,
                                     status: 2,
@@ -117,15 +117,12 @@
                             }).done(function (response) {
 
                                 var val_typeForm = response.Message;
-                                var url = encodeURI("../Home?&typeForm=" + response.Message); 
-                                
-                                //url = url.replace("val_typeForm", val_typeForm);
-                                //url = url.replace(/\n|\r/g, "");
-                                
+                                var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = "val_typeForm" }, null)';
+                                url = url.replace("val_typeForm", val_typeForm);
                                 window.location.href = url;
 
                             });
-                            }
+                        }
                     }
 
                 });
