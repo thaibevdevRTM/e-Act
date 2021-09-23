@@ -520,7 +520,7 @@ namespace eForms.Presenter.AppCode
                              select new BudgetControlModels
                              {
                                  //activityNo = d["activityNo"].ToString(),
-                                 date = DateTime.Parse(d["documentDate"].ToString()),
+                                 //date = DateTime.Parse(d["documentDate"].ToString()),
                                  budNum = d["budNum"].ToString(),
                                  b_Code = d["bCode"].ToString(),
                                  brandName = d["bnam_Eng"].ToString(),
@@ -530,10 +530,10 @@ namespace eForms.Presenter.AppCode
                                  transaction = d["transactionTxt"].ToString(),
                                  EO = d["EO"].ToString(),
                                  orderNo = d["orderNo"].ToString(),
-                                 originalBudget = decimal.Parse(d["originalBudget"].ToString()),
-                                 LE_Amount = decimal.Parse(d["amountLE"].ToString()),
+                                 //originalBudget = decimal.Parse(d["originalBudget"].ToString()),
+                                 //LE_Amount = decimal.Parse(d["amountLE"].ToString()),
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
-                                 balanceLEApprove = decimal.Parse(d["balanceLEApprove"].ToString()),
+                                 //balanceLEApprove = decimal.Parse(d["balanceLEApprove"].ToString()),
                                  trf_BG = decimal.Parse(d["trf_BG"].ToString()),
                                  actual = decimal.Parse(d["actual"].ToString()),
                                  PR_PO = decimal.Parse(d["pr_po"].ToString()),

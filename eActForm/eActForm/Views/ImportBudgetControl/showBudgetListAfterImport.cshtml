@@ -3,7 +3,7 @@
 @using System.Globalization;
 @{
     CultureInfo DateEnglish = new CultureInfo("en-US");
-   
+
 }
 
 
@@ -78,20 +78,16 @@
         <table id="tbSuccess" class="table table-striped jambo_table bulk_action fixed" id="tbl_report" height="200" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
             <thead>
                 <tr class="headings" style="text-align:center;">
-                    <th width="170px" class="center">Date</th>
+             
                     <th width="170px" class="center">Bud_Num</th>
                     <th width="170px" class="center">B_Code</th>
                     <th width="170px" class="center">Bnam_Eng</th>
                     <th width="170px" class="center">Type</th>
-                    <th width="170px" class="center">Channel</th>
-                    <th width="170px" class="center">BG_Activity</th>
-                    <th width="170px" class="center">Transaction</th>
+                   
                     <th width="170px" class="center">EO</th>
                     <th width="170px" class="center">IO</th>
-                    <th width="170px" class="center">Original Budget</th>
-                    <th width="170px" class="center">LE Amount</th>
+                   
                     <th width="170px" class="center">Approve Amount</th>
-                    <th width="170px" class="center">Balance (LE1-Approve)</th>
                     <th width="170px" class="center">โยก BG</th>
                     <th width="170px" class="center">Actual Spending</th>
                     <th width="170px" class="center">PR/PO</th>
@@ -108,20 +104,16 @@
                 @foreach (var item in Model.budgetReportList)
                 {
                     <tr>
-                        <td>@item.date.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                 
                         <td>@item.budNum</td>
                         <td>@item.b_Code</td>
                         <td>@item.brandName</td>
                         <td>@item.typeImport</td>
-                        <td>@item.chanelName</td>
-                        <td>@item.budget_Activity</td>
-                        <td>@item.transaction</td>
                         @if (item.replaceEO != replaceEO)
                         {
                             <td>@string.Format("{0:n2}", item.EO)</td>
                             <td>@string.Format("{0:n2}", item.orderNo)</td>
-                            <td>@string.Format("{0:n2}", item.originalBudget)</td>
-                            <td>@string.Format("{0:n2}", item.LE_Amount)</td>
+                          
                         }
                         else
                         {
@@ -132,7 +124,6 @@
                         }
                         <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
 
-                        <td>@string.Format("{0:n2}", @item.balanceLEApprove)</td>
                         <td>@string.Format("{0:n2}", @item.trf_BG)</td>
                         <td>@string.Format("{0:n2}", @item.actual)</td>
                         <td>@string.Format("{0:n2}", @item.PR_PO)</td>
