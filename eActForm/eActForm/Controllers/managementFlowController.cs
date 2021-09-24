@@ -46,7 +46,7 @@ namespace eActForm.Controllers
                 model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                     .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
                     .GroupBy(item => item.activitySales)
-                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                    .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 model.typeFlow = typeFlow;
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace eActForm.Controllers
             management_Model.p_channelId = model.channelId;
             management_Model.p_subjectId = model.subjectId;
             management_Model.activityTypeId = model.activityGroup;
-
+            management_Model.customerId = model.customerId;
             management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
 
             TempData["management_Model"] = management_Model;

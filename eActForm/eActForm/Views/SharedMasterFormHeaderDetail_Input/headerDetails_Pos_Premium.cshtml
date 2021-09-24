@@ -111,7 +111,7 @@
                                                                                                                    })
                                         </div>
                                         <div id="div_showData_ddlproduct_pos_premium" style="display:none;">
-                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly"  />
+                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly" />
                                         </div>
                                         <script>
                                         $(document).ready(function () {
@@ -200,49 +200,27 @@
 
                                 <div class="col-md-3 col-xs-12">
                                     <div class="row">
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                        @*@Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                            {
+                                                @class = "form-control selectpicker",
+                                                id = "ddlbrand_select"
+                                            })*@
+
+                                        @Html.DropDownList("activityFormTBMMKT.brand_multi_select", new SelectList(Model.tB_Act_ProductBrand_Model_2,
+                                        "id", "brandName"),
+                                        new
                                         {
-                                            @class = "form-control selectpicker",
-                                            id = "ddlbrand_select"
+                                            @class = "form-control",
+                                            id = "ddlbrand_select",
+                                            multiple = "multiple"
                                         })
                                         <script>
                                         $("#ddlbrand_select").change(function () {
                                             if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
-                                                var dataToBeSend =
-                                                    {
-                                                        productBrandId: $("#ddlbrand_select").val()
-                                                        , companyId: "@UtilsAppCode.Session.User.empCompanyId"
-                                                    };
 
-                                                $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
-                                                    {
-                                                        contentType: "application/json; charset=utf-8",
-                                                        data: JSON.stringify(dataToBeSend),
-                                                        dataType: 'json',
-                                                        type: "POST",
-                                                        success: function (response) {
-                                                            if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
-                                                                var mixCostLastThreePosition = "";
-                                                                if ($("#ddlChannelOrBrand").val() == "Brand") {
-                                                                    mixCostLastThreePosition = "100";
-                                                                } else {
-                                                                    mixCostLastThreePosition = "200";
-                                                                }
-                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function () {
-                                                                    var resultCostCenter = (this['costCenter'] + mixCostLastThreePosition);
-                                                                    $("#txtCostCenter").val(resultCostCenter);
-                                                                });
-                                                            }
-                                                            else {
-                                                                $("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
-                                                            }
-                                                        },
-                                                        error: function (data) {
-                                                            alert("Error Get CosCenter.");
-                                                        }
-                                                    });
+                                                getCostCenter();
                                             } else {
-                                                $("#txtCostCenter").val("");
+                                              //  $("#txtCostCenter").val("");
                                             }
                                         });
                                         </script>
@@ -255,7 +233,14 @@
 
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
+                                        @* @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })*@
+                                
+                                        @Html.DropDownList("activityFormTBMMKT.costCenter_multi_select", new SelectList(Model.TB_Act_master_cost_centerModel_List, "id", "costCenter"), new
+                                           {
+                                               @class = "form-control",
+                                               id = "ddlCostCenter",
+                                               multiple = "multiple"
+                                           })
                                     </div>
                                 </div>
                             </div>
@@ -438,3 +423,108 @@
         </td>
     </tr>
 </table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ddlbrand_select').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '                                                    ',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+        $('#ddlCostCenter').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '                                                    ',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+
+        var valuesSelectChoiceBrand = [];
+          @if (Model.activityFormTBMMKT.brand_multi_select != null)
+          {
+              foreach (var itemArray in Model.activityFormTBMMKT.brand_multi_select)
+              {
+                  @:valuesSelectChoiceBrand.push("@itemArray");
+              }
+          }
+        $("#ddlbrand_select").multiselect('select', valuesSelectChoiceBrand);
+
+        //call multi select Cost Center
+        getCostCenter();
+
+        setTimeout(function () {
+            var valuesSelectChoiceCostCenter = [];
+             @if (Model.activityFormTBMMKT.brand_multi_select != null)
+             {
+                 foreach (var itemArray in Model.activityFormTBMMKT.costCenter_multi_select)
+                 {
+                     @:valuesSelectChoiceCostCenter.push("@itemArray");
+                 }
+             }
+
+         $("#ddlCostCenter").multiselect('select', valuesSelectChoiceCostCenter);
+        }, 2000);
+
+
+    });
+
+
+    function getCostCenter() {
+
+         var valuesSelectBrand = [];
+           $("#ddlbrand_select option:selected").each(function () {
+               var $this = $(this);
+               valuesSelectBrand.push($this.val());
+           });
+
+
+        var dataToBeSend =
+            {
+                  productBrandId: valuesSelectBrand
+                , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+            };
+        $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
+        {
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataToBeSend),
+            dataType: 'json',
+            type: "POST",
+            success: function (response) {
+                if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
+                    var mixCostLastThreePosition = "";
+                    if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        mixCostLastThreePosition = "100";
+                    } else {
+                        mixCostLastThreePosition = "200";
+                    }
+
+                    $("#ddlCostCenter").empty();
+                    $.each(response.Data.tB_Act_Master_Cost_CenterModels, function (i, j) {
+
+                        $("#ddlCostCenter").append("<option value='" + this['id'] + "'>" + this['costCenter'] + mixCostLastThreePosition + "</option>");
+                    });
+
+                    $("#ddlCostCenter").multiselect('rebuild');
+
+
+
+                }
+                else {
+                    //$("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
+                }
+            },
+            error: function (data) {
+                alert("Error Get CosCenter.");
+            }
+        });
+    }
+</script>

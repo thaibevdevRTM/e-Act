@@ -117,6 +117,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTByEmpId";
+                }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm";
@@ -142,7 +146,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivitySetPriceFormAll";
                 }
-
+                else if (isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceOMTFormAll";
+                }
                 if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
@@ -506,6 +513,7 @@ namespace eActForm.BusinessLayer
             bool check = false;
             if (ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceOMT"] == masterForm
                 || ConfigurationManager.AppSettings["formReceptions"] == masterForm)
             {
                 check = true;
@@ -524,7 +532,7 @@ namespace eActForm.BusinessLayer
 
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
-                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                //activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id ||
                     ConfigurationManager.AppSettings["formReceptions"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
@@ -540,7 +548,7 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO,string companyId,string getActTypeId,string channelId,string brandId,string activityId)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId)
         {
             try
             {
@@ -555,8 +563,6 @@ namespace eActForm.BusinessLayer
                              select new BudgetControlModels
                              {
                                  balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
-                                 reserve = string.IsNullOrEmpty(dr["reserve"].ToString()) ? 0 : (decimal?)dr["reserve"],
-                                 reserveTotal = string.IsNullOrEmpty(dr["reserveTotal"].ToString())  ? 0 : (decimal?)dr["reserveTotal"],
                                  balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
                                  amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
                                  amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
@@ -566,9 +572,57 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
+        }
+
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannel"
+               , new SqlParameter[] { new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@EO", EO)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                return new List<BudgetControlModels>();
+                throw new Exception("getAmountReturn >>" + ex.Message);
+            }
+
+        }
+
+
+        public static List<BudgetControlModels> getAmountReturnByEOIO(string EO, string IO)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
+               , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter("@IO", IO)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                return new List<BudgetControlModels>();
+                throw new Exception("getAmountReturn >>" + ex.Message);
             }
 
         }

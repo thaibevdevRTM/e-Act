@@ -1,23 +1,12 @@
-﻿@model eForms.Models.MasterData.ImportFlowModel
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row form-group">
-    <div class="col-md-12 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-            เลือกประเภทเอกสาร<span class="required">*</span>
-        </label>
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            @Html.DropDownListFor(model => model.masterTypeFormList, new SelectList(Model.masterTypeFormList, "id", "companyNameEN", 0), "Please Select", new
-       {
-           @class = "form-control textboxcss",
-           id = "ddlMaster"
-       })
-        </div>
-    </div>
-</div>
+<div><h2>Import Budget Report</h2></div>
+<hr />
 <div class="row form-group">
     <div class="col-md-12 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -30,7 +19,6 @@
 
 </div>
 
-
 <div class="row">
     <div class="col-md-12 col-md-offset-5">
         <button style="width:120px" type="button" id="BtnImport" class="btn btn-primary" onclick="return importData();">Import</button>
@@ -38,31 +26,30 @@
 </div>
 
 
-<a href="~/Uploadfiles/template/Template_Flow.xlsx">Download Template Flow</a>
 
 
-<div id="divGetDetail" class="col-lg-12">
+<a href="~/Uploadfiles/template/TemplateSap.xlsx">Download Template</a>
+
+<hr />
+
+<div id="divView" class="col-md-12">
 </div>
 
-
-
-<script>
+<script type="text/javascript">
 
 
     function importData() {
-        console.log($("#ddlMaster").val());
         var data = new FormData();
         var files = $("#inputFile").get(0).files;
         if (files.length > 0) {
-            data.append("InputFile", files[0]);
-            data.append("masterTypeId", $("#ddlMaster").val());
+            data.append("InputFiles", files[0]);
         }
         else {
             bootbox.alert("กรุณา แนบไฟล์ !")
             return false;
         }
         bootbox.confirm({
-            message: "<p class='lead text-center'>คุณต้องการ Import Flow ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            message: "<p class='lead text-center'>คุณต้องการ Import Budget Report ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
                 confirm: {
                     label: 'Yes',
@@ -78,7 +65,7 @@
                     $("#WaitDialog").show();
 
                     $.ajax({
-                        url: '@Url.Action("ImportFlie", "ImportFlow")',
+                        url: '@Url.Action("ImportFlie_BudgetConttrol_Rpt", "ImportBudgetControl")',
                         data: data,
                         dataType: 'json',
                         type: 'POST',
@@ -100,20 +87,20 @@
         });
     }
 
-
-    function callPreviewData(obj) {
+       function callPreviewData(obj) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("detailList", "ImportFlow")',
+            url:  '@Url.Action("showBudgetListAfterImport", "ImportBudgetControl")',
             data: {
-
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
-            $("#divGetDetail").html(htmlResponse)
+            $("#divView").html(htmlResponse);
         });
     }
+
+
+
+
+
 </script>
-
-
-

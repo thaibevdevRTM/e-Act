@@ -15,6 +15,7 @@ namespace eActForm.Models
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
         //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
+        public List<TB_Act_master_cost_centerModel> TB_Act_master_cost_centerModel_List { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
@@ -55,6 +56,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -72,6 +74,8 @@ namespace eActForm.Models
             regionalModel = new List<RegionalModel>();
             budgetTotalModel = new BudgetTotal();
             budgetTotalList = new List<BudgetTotal>();
+            tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
@@ -110,6 +114,10 @@ namespace eActForm.Models
         public string[] list_6_multi_select { get; set; }
         public string[] list_7_multi_select { get; set; }
         public string[] list_8_multi_select { get; set; }
+        public string[] brand_multi_select { get; set; }
+        public string[] costCenter_multi_select { get; set; }
+
+        
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -199,6 +207,7 @@ namespace eActForm.Models
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalallPayNo { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalTransfer { get; set; }
         public decimal? totalallPayByIOBalance { get; set; }
         public string fiscalYear { get; set; }
         public string APCode { get; set; }
@@ -418,6 +427,7 @@ namespace eActForm.Models
 
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalPayByIO { get; set; }
+        public decimal? amountTransfer { get; set; }
     }
 
     public class ObjGetDataGL

@@ -1,0 +1,69 @@
+﻿
+@using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_Model
+
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+<div class="row">
+
+    <div class="col-md-12 col-xs-12">
+        <table id="datatableCm" class="table table-striped table-hover">
+            <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th width="120px"></th>
+                    <th>Region</th>
+                    <th>Customer</th>
+                    <th>ShortName</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.customerslist)
+                {
+                    <tr class="gradeX">
+                        <td>
+                            <a href="javascript:" onclick="onDelCustomer('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;&nbsp;
+                            </a>
+                            <a href="javascript:" onclick="editRow('@item.id', '@item.regionId', '@item.cusNameTH', '@item.cusShortName');">
+                                <i class="btn ink-reaction btn-info fa fa-edit"></i>&nbsp;&nbsp;
+                            </a>
+                        </td>
+                        <td>@item.region</td>
+                        <td>@item.cusNameTH</td>
+                        <td>@item.cusShortName</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#datatableCm').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 },
+                //{ "orderable": false, "targets": 3 },
+                //{ "orderable": false, "targets": 4 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+    });
+
+
+   
+</script>

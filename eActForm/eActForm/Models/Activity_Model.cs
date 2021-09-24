@@ -18,7 +18,7 @@ namespace eActForm.Models
         public List<Product_Model> productlist { get; set; }
         public List<ProductSmellModel> productSmellLists { get; set; }
 
-
+        public Customers_Model customerModel { get; set; }
         // ***************************** class is duplicat ***********************************/
         public List<CostThemeDetail> costthemedetail { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
@@ -36,6 +36,8 @@ namespace eActForm.Models
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<scriptModel> scristModelList { get; set; }
 
+        public List<TB_Act_Other_Model> companyList { get; set; }
+
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
@@ -50,6 +52,7 @@ namespace eActForm.Models
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
             activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
             activityFormModel = new ActivityForm();
+            customerModel = new Customers_Model();
         }
 
         public enum modeForm
@@ -63,6 +66,7 @@ namespace eActForm.Models
             OMT,
             MT,
             SetPrice,
+            SetPriceOMT,
             TBM,
             EXPENSE,
             HCM,
@@ -131,6 +135,7 @@ namespace eActForm.Models
             public string master_type_form_id { get; set; }
             public DateTime? dateSentApprove { get; set; }
             public string companyId { get; set; }
+            public string brandName { get; set; }
 
         }
 
@@ -453,6 +458,7 @@ namespace eActForm.Models
     public class BudgetTotal
     {
         public string EO { get; set; }
+        public string IO { get; set; }
         public decimal? total { get; set; }
         public decimal? useAmount { get; set; }
         public decimal? amountBalance { get; set; }
@@ -467,6 +473,7 @@ namespace eActForm.Models
         public string channelName { get; set; }
         public string activityType { get; set; }
         public string activityTypeId { get; set; }
+        public decimal? returnAmount { get; set; }
     }
 
 }

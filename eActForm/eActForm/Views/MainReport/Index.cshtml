@@ -106,7 +106,7 @@
                             htmlstr = $("#divForm").html();
                             doLoading("Loading....");
                             $.ajax({
-                            url: '@Url.Action("submitPreview", "Activity")',
+                                url: '@Url.Action("submitPreview", "Activity")',
                                 data: {
                                     GridHtml1: htmlstr,
                                     status: 2,
@@ -122,7 +122,7 @@
                                 window.location.href = url;
 
                             });
-                            }
+                        }
                     }
 
                 });

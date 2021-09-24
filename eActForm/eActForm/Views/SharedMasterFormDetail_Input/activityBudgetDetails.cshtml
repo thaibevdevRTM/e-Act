@@ -72,6 +72,7 @@
                                     <script>
                                         $(".clstxtIO_@index").blur(function () {
                                             $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                            getBudgetTotal();
                                         });
                                     </script>
                                 </div>
@@ -197,7 +198,7 @@
             </div>
         </td>
     </tr>
-    <div id="divShowBudget" class="bg-success col-md-6 col-xs-12" style="text-align:left; color:black; display:none"></div>
+    @*<div id="divShowBudget" class="bg-success col-md-6 col-xs-12" style="text-align:left; color:black; display:none"></div>*@
 </table>
 
 
@@ -211,13 +212,16 @@
 
     function getBudgetTotal(row) {
 
-
+        console.log('tt' + row);
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
+           
             getEOBudget.push({
-                EO: $(this).find("td:eq(1) input").val(),
-                total: $(this).find("td:eq(5) input").val(),
+                EO: $(".clstxtEO_" + row).val(),
+                IO: $(".clstxtIO_" + row).val(),
+                total: $(".txttotal_" + row).val(),
             });
+
         });
 
         $.ajax({
@@ -240,16 +244,18 @@
 
                 var rowCount = parseInt($('#tableDetailsBG tr').length-2);
                 for (i = 0; i < rowCount; i++) {
-                    console.log(i);
 
                     $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
-                   
+
                 }
 
-               
+
                 document.getElementById("divShowBudget").innerHTML = "";
                 if (response.Data.budgetTotalsList.length > 0) {
                     callPartialBudgetControl("@Model.activityFormTBMMKT.id");
+                }
+                else {
+                    callPartialBudgetControl("");
                 }
 
 

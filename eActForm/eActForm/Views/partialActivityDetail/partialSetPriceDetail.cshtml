@@ -86,6 +86,28 @@
 
 
     </div>
+
+
+
+
+    <div class="form-group" id="divRegion">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                    Region<span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+               {
+                   @class = "form-control textboxcss",
+                   id = "ddlRegion"
+               })
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="col-md-6 col-xs-12"></div>
         <div class="col-md-6 col-xs-12">
@@ -94,12 +116,23 @@
                     Customer Name<span class="required">*</span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   onchange = "onchangeCustomer();",
-                   id = "ddlCustomer"
-               })
+
+                    @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formSetPriceOMT"])
+                    {
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                        @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "customerId" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                                     {
+                                         @class = "form-control textboxcss",
+                                         onchange = "onchangeCustomer();",
+                                         id = "ddlCustomer"
+                                     })
+                    }
+
+
 
 
 
@@ -124,13 +157,13 @@
                         Product category<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                   {
-                       @class = "form-control textboxcss",
-                       required = "required",
-                       onchange = "onchangeCate();",
-                       id = "ddlProductCate"
-                   })
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           required = "required",
+                           onchange = "onchangeCate();",
+                           id = "ddlProductCate"
+                       })
                     </div>
 
                 </div>
@@ -207,25 +240,25 @@
                     </div>
                 </div>
                 <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            @*@Html.CheckBoxFor(x => x.activityFormTBMMKT.chkAddIOStr, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" })*@ IO
-                        </label>
-                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
-                            <div class="col-md-5 col-sm-5 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormTBMMKT.actIO, new { @class = "form-control textboxcss", id = "txtActIO", autocomplete = "off" })
-                            </div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">
-                                Claim
-                            </label>
-                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormTBMMKT.actClaim, new { @class = "form-control textboxcss", id = "txtActClaim",  autocomplete = "off" })
-
-                            </div>
-                            <label class="control-label col-md-1 col-sm-1 col-xs-12">
-                                %
-                            </label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        @*@Html.CheckBoxFor(x => x.activityFormTBMMKT.chkAddIOStr, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" })*@ IO
+                    </label>
+                    <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormTBMMKT.actIO, new { @class = "form-control textboxcss", id = "txtActIO", autocomplete = "off" })
                         </div>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Claim
+                        </label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormTBMMKT.actClaim, new { @class = "form-control textboxcss", id = "txtActClaim", autocomplete = "off" })
+
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">
+                            %
+                        </label>
                     </div>
+                </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -307,7 +340,17 @@
             }
         });
 
-      
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
+            $("#txtCustomerName").show();
+            $("#divRegion").show();
+            $("#ddlCustomer").hide();
+        }
+        else {
+            $("#txtCustomerName").hide();
+            $("#divRegion").hide();
+        }
+
+
 
         if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' != "False") {
              fillProductOnChange();

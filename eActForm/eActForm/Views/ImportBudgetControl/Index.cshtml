@@ -68,8 +68,11 @@
 
 
 
-<a href="~/Uploadfiles/Template Budget.xlsx">Download Template Budget</a>
+<a href="~/Uploadfiles/template/Template Budget.xlsx">Download Template Budget</a>
 
+
+<div id="divView" class="col-md-12">
+</div>
 
 <script type="text/javascript">
 
@@ -114,8 +117,7 @@
                         success: function (response) {
                             console.log(response);
                             if (response.Success) {
-                                doMsgSuccess('บันทึกเรียบร้อย');
-                               // callPreviewData();
+                                callPreviewData();
                             }
                             else {
                                 doAlert(response.Message);
@@ -132,13 +134,13 @@
     function callPreviewData(obj) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("detailList", "ImportFlow")',
+            url: '@Url.Action("showImportBGlist", "ImportBudgetControl")',
             data: {
 
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
-            $("#divGetDetail").html(htmlResponse)
+            $("#divView").html(htmlResponse)
         });
     }
 

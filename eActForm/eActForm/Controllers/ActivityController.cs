@@ -324,7 +324,7 @@ namespace eActForm.Controllers
 
                     GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                     GenPDFAppCode.doGen(GridHtml1, activityId, Server);
-                    List <ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
+                    List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     if (model.FirstOrDefault().statusId != 3)
                     {
                         if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
@@ -333,7 +333,7 @@ namespace eActForm.Controllers
                             {
                                 if (ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
-                                    ActFormAppCode.insertReserveBudget(activityId);
+                                    //ActFormAppCode.insertReserveBudget(activityId);
                                 }
                                 if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
@@ -350,7 +350,7 @@ namespace eActForm.Controllers
                                         ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                     }
                                 }
-                             var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                                var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                             }
                         }
                     }

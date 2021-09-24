@@ -11,10 +11,17 @@ namespace eForms.Models.MasterData
     {
         public List<TB_Act_Other_Model> companyList { get; set; }
         public BudgetControlModels budgetControlModels { get; set; }
+        public List<BudgetControlModels> budgetReportList { get; set; }
+        public List<BudgetControlModels> budgetReportChannelList { get; set; }
+        public List<BudgetControl_LEModel> BudgetLEList { get; set; }
+        public List<BudgetControl_ActType> bgActTypeList { get; set; }
+
 
         public ImportBudgetControlModel()
         {
             budgetControlModels = new BudgetControlModels();
+            budgetReportList = new List<BudgetControlModels>();
+            budgetReportChannelList = new List<BudgetControlModels>();
         }
         public class BudgetControlModels : DefaultFieldModel
         {
@@ -42,8 +49,41 @@ namespace eForms.Models.MasterData
             public decimal? reserve { get; set; }
             public decimal? reserveTotal { get; set; }
             public decimal? balanceTotal { get; set; }
-
             public decimal? totalBudgetChannel { get; set; }
+            public string dateStr { get; set; }
+            public DateTime? date { get; set; }
+            public string budNum { get; set; }
+            public string b_Code { get; set; }
+            public string bnamEng { get; set; }
+            public string type { get; set; }
+            public string budget_Activity { get; set; }
+            public decimal? budget_Amount2 { get; set; }
+            public string transaction { get; set; }
+            public decimal? budgetAmount { get; set; }
+            public string RefDoc { get; set; }
+            public decimal? commitAmount { get; set; }
+            public decimal? actual { get; set; }
+            public decimal? accrued { get; set; }
+            public decimal? commitment { get; set; }
+            public decimal? PR_PO { get; set; }
+            public decimal? prepaid { get; set; }
+            public decimal? returnAmount { get; set; }
+            public string remark { get; set; }
+            public string activityTypeId { get; set; }
+            public string typeImport { get; set; }
+            public string replaceEO { get; set; } 
+            public string activityNo { get; set; }
+            public string approveNo { get; set; }
+            public string orderNo { get; set; }
+            public decimal? available { get; set; }
+            public decimal? originalBudget { get; set; }
+            public decimal? LE_Amount { get; set; }
+            public decimal? approve_Amount { get; set; }
+            public decimal? balanceLEApprove { get; set; }
+            public decimal? trf_BG { get; set; }
+            public decimal? actualTotal { get; set; }
+            public double runingNo { get; set; }
+            
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }

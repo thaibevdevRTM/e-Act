@@ -22,25 +22,7 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public JsonResult getChanel(string Id)
-        {
-            var result = new AjaxResult();
-            try
-            {
-                var getcustomer = QueryGetAllCustomers.getAllCustomers().Where(x => x.id == Id).FirstOrDefault();
-                var getchanel = QueryGetAllChanel.getAllChanel().Where(x => x.id == getcustomer.chanel_Id).FirstOrDefault();
-                result.Data = new
-                {
-                    Chanel_group = getchanel.chanelGroup,
-                };
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-            }
-            return Json(result, "text/plain");
-        }
+ 
 
 
         public JsonResult getProductGroup(string cateId)
@@ -309,6 +291,22 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+            }
+            return Json(customerList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getCustomerMT(string companyId)
+        {
+
+            List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+            try
+            {
+                customerList = QueryGetAllCustomers.getCustomersMT().ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerMT => " + ex.Message);
             }
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }

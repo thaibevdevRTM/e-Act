@@ -381,6 +381,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImportBudgetControlModel.cs" />
     <Compile Include="Models\Claim_Report_Model.cs" />
     <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
@@ -3293,8 +3294,12 @@
     <Content Include="Views\ExpenseEstimateReport\partialTransferListRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\showDetailBudgetControl.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\showDetailBudgetRpt.cshtml" />
-    <Content Include="Uploadfiles\Template Budget.xlsx" />
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
+    <Content Include="Views\Admin\manageCustomer.cshtml" />
+    <Content Include="Views\Admin\customerList.cshtml" />
+    <Content Include="Views\ImportBudgetControl\Inddex_ImportBGMarketing.cshtml" />
+    <Content Include="Views\ImportBudgetControl\showBudgetListAfterImport.cshtml" />
+    <Content Include="Views\ImportBudgetControl\showImportBGlist.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -3315,6 +3320,7 @@
     <Folder Include="Uploadfiles\ImportHospital\template\" />
     <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
+    <Folder Include="Uploadfiles\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exListEntertain\" />
     <Folder Include="Views\expenseEntertainReport\" />

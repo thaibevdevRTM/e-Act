@@ -46,7 +46,7 @@ namespace eActForm.Controllers
 
         public class objGetDataCostCenter
         {
-            public string productBrandId { get; set; }
+            public string[] productBrandId { get; set; }
             public string companyId { get; set; }
         }
 
@@ -56,8 +56,14 @@ namespace eActForm.Controllers
             try
             {
                 List<TB_Act_master_cost_centerModel> tB_Act_Master_Cost_CenterModels = new List<TB_Act_master_cost_centerModel>();
-                tB_Act_Master_Cost_CenterModels = QueryGet_TB_Act_master_cost_center.get_TB_Act_master_cost_center(objGetDataCostCenter.productBrandId, objGetDataCostCenter.companyId);
-
+                if (objGetDataCostCenter.productBrandId != null)
+                {
+                    foreach (var item in objGetDataCostCenter.productBrandId)
+                    {
+                        var costlist = QueryGet_TB_Act_master_cost_center.get_TB_Act_master_cost_center(item, objGetDataCostCenter.companyId);
+                        tB_Act_Master_Cost_CenterModels.AddRange(costlist);
+                    }
+                }
                 var resultData = new
                 {
                     tB_Act_Master_Cost_CenterModels = tB_Act_Master_Cost_CenterModels.ToList(),

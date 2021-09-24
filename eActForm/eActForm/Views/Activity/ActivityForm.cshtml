@@ -194,7 +194,6 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
 
-                        @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                             Product category<span class="required">*</span>
                         </label>
@@ -494,7 +493,6 @@
             }
         });
 
-        ObjModel = {};
         fillProductOnChange();
         checkBtn();
         onchangeActivity();
@@ -665,21 +663,8 @@
     }
 
     function onchangeCustomer() {
-        ObjModel = {};
         getFormatCus();
 
-        $("#txtchanel").val('');
-         $.ajax({
-                url: '@Url.Action("getChanel", "eAct")',
-                data: {
-                    Id: $("#ddlCustomer").val(),
-                },
-                dataType: "json",
-                type: 'POST',
-             success: function (response) {
-                 $("#txtchanel").val(response.Data.Chanel_group);
-             }
-         });
     }
 
     //function clearFormatCus() {
@@ -788,7 +773,6 @@
 
     function onchangeCate() {
 
-        ObjModel = {};
         $("#ddlProductBrand").val('');
         $("#ddlProductfilter").val('');
         $("#ddlProductSize").val('');
@@ -852,8 +836,6 @@
     //});
 
     $("#ddlProductGrp").change(function () {
-        ObjModel = {};
-
         var ddlProductBrand = $("#ddlProductBrand");
 
         $("#ddlProductSmell").val('')
@@ -1254,7 +1236,6 @@
             document.getElementById("txtActivityNo").disabled = true;
             document.getElementById("ddlCustomer").disabled = true;
             document.getElementById("txtActivityName").disabled = true;
-            document.getElementById("txtchanel").disabled = true;
             document.getElementById("ddlTheme").disabled = true;
             document.getElementById("ddlProductBrand").disabled = true;
             document.getElementById("ddlProductCate").disabled = true;
@@ -1340,7 +1321,6 @@
          document.getElementById("txtActivityNo").disabled = false;
          document.getElementById("ddlCustomer").disabled = false;
          document.getElementById("txtActivityName").disabled = false;
-         document.getElementById("txtchanel").disabled = false;
          document.getElementById("ddlTheme").disabled = false;
          document.getElementById("ddlProductBrand").disabled = false;
          document.getElementById("ddlProductCate").disabled = false;

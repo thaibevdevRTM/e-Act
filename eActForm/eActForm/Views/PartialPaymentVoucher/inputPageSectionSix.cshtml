@@ -227,6 +227,7 @@
             @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIO, new { @id = "hdtotalallPayByIO" })
         </td>
     </tr>
+   
     <tr class="highHeadFooterTable">
         <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             งบฯ สะสม&nbsp;
@@ -338,6 +339,7 @@
                 }
         //}//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
         $("#hdtotalallPayByIO").val(sumtotalallPayByIO);
+        $("#hdtotalTransfer").val(sumtotalallPayByIO);
         $("#totalallPayByIO").text(sumtotalallPayByIO.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function calVat() {

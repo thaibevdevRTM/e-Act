@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).OrderBy(x => x.nameTH).ToList();
         }
 
-        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId,string companyId)
+        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId, string companyId)
         {
             var result = QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
             return result.Where(x => x.companyId.Equals(companyId)).ToList();
@@ -94,14 +95,19 @@ namespace eActForm.BusinessLayer.Appcodes
                       , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
                       , new SqlParameter("@empId", model.p_empGroup[0])
                       });
-                if (result > 0)
-                {
-                    foreach (var item in model.p_appovedGroupList)
-                    {
-                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
 
-                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
-                    ,new SqlParameter("@flowId",model.p_flowId[0])
+                string getLimitId = "",flowId = model.p_flowId[0];
+                if (string.IsNullOrEmpty(model.p_flowId[0]))
+                {
+                    flowId = getFlowtLimitByCondition(AppCode.StrCon, model);
+                }
+
+                foreach (var item in model.p_appovedGroupList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                    ,new SqlParameter("@flowId",flowId)
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
@@ -113,10 +119,10 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                          });
-                        i++;
-                    }
+                      });
+                    i++;
                 }
+               
             }
             catch (Exception ex)
             {
@@ -195,6 +201,43 @@ namespace eActForm.BusinessLayer.Appcodes
                 });
 
             return result;
+        }
+
+
+        public static string getFlowtLimitByCondition(string strCon, ManagementFlow_Model model)
+        {
+            string result = "";
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowLimitByCondition"
+                        , new SqlParameter[] {new SqlParameter("@subjectId",model.p_subjectId)
+                         ,new SqlParameter("@flowLimitId",model.p_flowLimitId)
+                         ,new SqlParameter("@companyId",model.p_companyId)
+                         ,new SqlParameter("@customerId",model.customerId)
+                         ,new SqlParameter("@productBrandId",model.p_productBrandId)
+                         ,new SqlParameter("@channelId",model.p_channelId)
+                         ,new SqlParameter("@productCate",model.p_productCateId)
+                         ,new SqlParameter("@createBy",UtilsAppCode.Session.User.empId)
+                         });
+
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow d in ds.Tables[0].Rows
+                                 select new ManagementFlow_Model()
+                                 {
+                                     flowId = d["flowId"].ToString(),
+                                 });
+                    result = lists.FirstOrDefault().flowId;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertSubject => " + ex.Message);
+                return result;
+            }
         }
     }
 }

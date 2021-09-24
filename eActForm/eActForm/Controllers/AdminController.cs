@@ -1,10 +1,14 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.CommandHandler;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -131,6 +135,80 @@ namespace eActForm.Controllers
 
             List<TB_Act_ProductPrice_Model.ProductPrice> productPriceList = new List<TB_Act_ProductPrice_Model.ProductPrice>();
             productPriceList = QueryGetAllPrice.getPriceByProductCode(model.productCode);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public ActionResult manageCustomer()
+        {
+            Activity_Model activityModel = new Activity_Model();
+            activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+            activityModel.companyList = managementFlowAppCode.getCompany().Where(x => x.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+
+            return View(activityModel);
+        }
+
+        public ActionResult customerList(string companyId)
+        {
+
+            Activity_Model activityModel = new Activity_Model();
+            if (!string.IsNullOrEmpty(companyId))
+            {
+                if (companyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT().OrderBy(x => x.regionId).ToList();
+                }
+                else
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersMT().ToList();
+                }
+            }
+            else
+            {
+                activityModel.customerslist = new List<TB_Act_Customers_Model.Customers_Model>();
+            }
+            return PartialView(activityModel);
+        }
+
+
+        public JsonResult insertCustomer(Activity_Model model)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                string fineReplace = model.customerModel.cusNameTH;
+                int count = fineReplace.IndexOf("(");
+                if (count != -1)
+                {
+                    model.customerModel.cusNameTH = fineReplace.Substring(0, count);
+                }
+                int countResult = AdminUserAppCode.insertCustomer(model);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("getFlowSwap => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult delCustomer(string id)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                int countResult = AdminUserAppCode.delCustomer(id);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("delCustomer => " + ex.Message);
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

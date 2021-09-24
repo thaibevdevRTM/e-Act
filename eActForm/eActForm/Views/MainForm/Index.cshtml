@@ -281,6 +281,7 @@
             if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
             if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
+            if ($("#ddlCostCenter").val() == null) { required += "Cost Center*<br>"; validate = false; }
 
             var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
@@ -393,7 +394,7 @@
             if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
             @*if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }*@
         }
-        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]' || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
             if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
             if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
@@ -426,6 +427,10 @@
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เสนอกิจกรรม*<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "") { required += "&emsp;วันที่ เริ่มกิจกรรม*<br>"; validate = false; }
+            if ($("#txtactivityPeriodEnd").val() == "") { required += "&emsp;วันที่ สิ้นสุดกิจกรรม*<br>"; validate = false; }
+
+            
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($(".txttotal_" + i).val() != "0.00") {

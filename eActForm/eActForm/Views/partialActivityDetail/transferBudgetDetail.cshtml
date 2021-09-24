@@ -342,6 +342,7 @@
                 document.getElementById("txtBudgetIO").readOnly = false;
             } else {
                 $("#txtBudgetIO").val('')
+                getBudgetNonEO();
                 document.getElementById("txtBudgetIO").readOnly = true;
             }
 
@@ -366,14 +367,17 @@
         $("#ddlBrand_BG").val($("#activityOfEstimateList_" + i + "__productId").val());
         $("#ddlChannel_BG").val($("#activityOfEstimateList_" + i + "__typeTheme").val());
         $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
+        $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
         $("#txtBGYear").val($("#activityOfEstimateList_" + i + "__UseYearSelect").val());
-
+        
         bindDropdownSubject();
 
 
+        console.log($("#activityOfEstimateList_" + i + "__QtyName").val());
+     
         setTimeout(function () {
             $("#ddlSubject_BG").val($("#activityOfEstimateList_"+i+"__QtyName").val());
-        }, 1200);
+        }, 5000);
         $("#hdRow").val(i);
 
 
@@ -455,8 +459,14 @@
 
     $("#ddlChannel_BG").change(function () {
 
-        $("#ddlSubject_BG option[value !='']").remove();
-       // if ($("#ddlChannel_BG").val() != "") {
+        if ($("#ddlChannel_BG").val() != '') {
+            $('#ddlActType_BG').attr("disabled", true); 
+            document.getElementById("ddlActType_BG").selectedIndex = "0";
+        }
+        else {
+            $('#ddlActType_BG').attr("disabled", false); 
+        }
+      
             bindDropdownSubject();
 
             if ($("#txtBudgetEO").val() != '') {
@@ -472,6 +482,20 @@
       //  }
 
     });
+
+    $("#ddlActType_BG").change(function () {
+       
+        if ($("#ddlActType_BG").val() != '') {
+            $('#ddlChannel_BG').attr("disabled", true); 
+            document.getElementById("ddlChannel_BG").selectedIndex = "0";
+        }
+        else {
+            $('#ddlChannel_BG').attr("disabled", false); 
+        }
+    });
+
+
+
 
 
     $("#txtBGYear").change(function () {
@@ -627,9 +651,7 @@
         if ($("#ddlBrand_BG").val() == '') {
             required += "กรุณาเลือก Brand! *<br>"; validate = false;
         }
-        if ($("#ddlChannel_BG").val() != "" && $("#ddlSubject_BG").val() == "") {
-            required += "ระบุ Subject! *<br>"; validate = false;
-        }
+        
         if ($("#txtremark").val() == '') {
             required += "กรุณากรอกรายละเอียด! *<br>"; validate = false;
         }

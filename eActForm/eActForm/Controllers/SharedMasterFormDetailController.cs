@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.Controllers
 {
@@ -138,7 +139,7 @@ namespace eActForm.Controllers
                     {
                         costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                     };
-                    
+
                     model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
 
                     for (int i = 0; i < model2.costDetailLists.Count; i++)
@@ -211,38 +212,73 @@ namespace eActForm.Controllers
                     total = group.Sum(c => c.total),
                 }).ToList();
 
+                var groupEOIO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.IO }).Select((group, index) => new BudgetTotal
+                {
+                    EO = group.First().EO,
+                    IO = group.First().IO,
+                }).ToList();
+
 
                 var getTxtActGroup = QueryGetSubject.getAllSubject().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId)).FirstOrDefault().description;
                 var getActTypeId = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id;
-                decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0;
+                decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
                 if (getTotalBudget.Any())
                 {
+
+                    var getAmountReturn = ActFormAppCode.getAmountReturn(groupEOIO.FirstOrDefault().EO, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId);
+                    if (getAmountReturn.Any())
+                    {
+                        sumReturn = getAmountReturn.FirstOrDefault().returnAmount;
+                    }
+
+                    List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
+                    foreach (var item in groupEOIO)
+                    {
+                        if (!string.IsNullOrEmpty(item.IO))
+                        {
+                            BudgetTotal returnAmountModel = new BudgetTotal();
+                            var getAmountReturnEOIO = ActFormAppCode.getAmountReturnByEOIO(item.EO, item.IO);
+                            if (getAmountReturnEOIO.Any())
+                            {
+                                returnAmountModel.EO = item.EO;
+                                returnAmountModel.IO = item.IO;
+                                returnAmountModel.amount = getAmountReturnEOIO.FirstOrDefault().returnAmount;
+                                returnAmountList.Add(returnAmountModel);
+                            }
+                        }
+                    }
+
+
+
+
                     foreach (var item in getTotalBudget)
                     {
-
-
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         var getAmount = ActFormAppCode.getBalanceByEO(item.EO, activity_TBMMKT_Model.activityFormTBMMKT.companyId, getActTypeId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId, activity_TBMMKT_Model.activityFormTBMMKT.id);
                         if (getAmount.Any())
                         {
+                            var returnAmount = returnAmountList.FirstOrDefault(a => a.EO == item.EO);
+                            budgetTotalModel.returnAmount = returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
+
                             budgetTotalModel.EO = item.EO;
-                            budgetTotalModel.useAmount = (getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total;
+                            budgetTotalModel.useAmount = (getAmount.FirstOrDefault().balance) + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - getAmount.FirstOrDefault().reserve) - item.total;
-                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().reserve + getAmount.FirstOrDefault().balance) + item.total) / getAmount.FirstOrDefault().amount * 100;
+                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total;
+                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().balance) + item.total) / getAmount.FirstOrDefault().amount * 100;
                             budgetTotalModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
-                            budgetTotalModel.useAmountTotal = (getAmount.FirstOrDefault().reserveTotal + getAmount.FirstOrDefault().balanceTotal) + item.total;
-                            budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal - getAmount.FirstOrDefault().reserveTotal) - item.total;
-                            budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0,4))).FirstOrDefault().brandName;
+                            budgetTotalModel.useAmountTotal = (getAmount.FirstOrDefault().balanceTotal) + item.total;
+                            budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
+                            budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                             budgetTotalModel.totalBudgetChannel = getAmount.FirstOrDefault().totalBudgetChannel;
                             budgetTotalModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
                             budgetTotalModel.activityType = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales;
                             budgetTotalsList.Add(budgetTotalModel);
 
                             totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
-                            useAmountTotal = (getAmount.FirstOrDefault().reserveTotal + getAmount.FirstOrDefault().balanceTotal);
+                            useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
                             sumTotal_Input += item.total;
+
                         }
                         amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
                         useAmountTotal = useAmountTotal + sumTotal_Input;
@@ -251,8 +287,8 @@ namespace eActForm.Controllers
 
                 activity_TBMMKT_Model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 activity_TBMMKT_Model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                activity_TBMMKT_Model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
-
+                activity_TBMMKT_Model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal + sumReturn;
+                activity_TBMMKT_Model.budgetTotalModel.returnAmount = sumReturn;
                 activity_TBMMKT_Model.budgetTotalList = budgetTotalsList;
 
 
