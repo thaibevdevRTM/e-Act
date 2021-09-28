@@ -474,6 +474,7 @@ namespace eActForm.Models
         public string activityType { get; set; }
         public string activityTypeId { get; set; }
         public decimal? returnAmount { get; set; }
+        public decimal? returnAmountBrand { get; set; }
     }
 
 }

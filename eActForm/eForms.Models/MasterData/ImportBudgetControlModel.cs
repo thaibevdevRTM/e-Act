@@ -68,6 +68,7 @@ namespace eForms.Models.MasterData
             public decimal? PR_PO { get; set; }
             public decimal? prepaid { get; set; }
             public decimal? returnAmount { get; set; }
+            public decimal? returnAmountBrand { get; set; }
             public string remark { get; set; }
             public string activityTypeId { get; set; }
             public string typeImport { get; set; }

@@ -23,10 +23,14 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
+                if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 || model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
-                    rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+
+                    if (model.activityFormTBMMKT.statusId != 3)
+                    {
+                        rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+                    }
                 }
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
                 {
@@ -568,7 +572,7 @@ namespace eActForm.BusinessLayer
                                 }
                                 else
                                 {
-                                  
+
                                     activity_TBMMKT_Model.activityFormTBMMKT.labelBrand += ("," + item.name);
                                 }
                                 index_each++;
@@ -578,7 +582,7 @@ namespace eActForm.BusinessLayer
                             string addCost = "";
                             var costCenter_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select = new string[costCenter_multi_select];
-                            if(!string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId))
+                            if (!string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId))
                             {
                                 addCost = "200";
                             }
@@ -588,12 +592,12 @@ namespace eActForm.BusinessLayer
                             }
                             foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").ToList())
                             {
-                              
+
                                 activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
                                 {
-                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter  += item.name + addCost;
-                                    
+                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter += item.name + addCost;
+
                                 }
                                 else
                                 {
@@ -611,8 +615,8 @@ namespace eActForm.BusinessLayer
                             //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
-                            
-                            
+
+
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                             {
                                 activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
@@ -851,7 +855,7 @@ namespace eActForm.BusinessLayer
                             }
 
 
-                            
+
 
                         }
                     }
