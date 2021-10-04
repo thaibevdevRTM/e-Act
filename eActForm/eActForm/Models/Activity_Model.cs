@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static eActForm.Models.ApproveFlowModel;
+using static eActForm.Models.ApproveModel;
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
@@ -37,6 +39,8 @@ namespace eActForm.Models
         public List<scriptModel> scristModelList { get; set; }
 
         public List<TB_Act_Other_Model> companyList { get; set; }
+
+        public approveFlowModel approveModels { get; set; }
 
         public Activity_Model()
         {

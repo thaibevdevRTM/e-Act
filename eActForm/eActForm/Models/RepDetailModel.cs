@@ -14,7 +14,7 @@ namespace eActForm.Models
             public string typeForm { get; set; }
             public string setShowPDF { get; set; }
             public string dateReport { get; set; }
-
+            public string reportDetailId { get; set; }
         }
         public class actFormRepDetailModel : Activity_Model.actForm
         {
@@ -44,6 +44,7 @@ namespace eActForm.Models
             public decimal? promotionGp { get; set; }
             public decimal? rsp { get; set; }
             public string unitTxt { get; set; }
+            public string rowNo { get; set; }
         }
 
         public class actApproveRepDetailModels

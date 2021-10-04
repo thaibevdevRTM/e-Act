@@ -38,41 +38,42 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
 {
-    <div class="text-center">
-        @if (TempData["approvePositionSignatureError"] != null)
+<div class="text-center">
+    @if (TempData["approvePositionSignatureError"] != null)
+    {
+        <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
+       
+    }
+    else
+    {
+
+        if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
         {
-            <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
+            var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
+            @genSignatureFromApproveDetail(1);
+            if (countLine > 5)
+            {
+                @genSignatureFromApproveDetail(2);
+            }
+        }
+        else if (Model.approveFlowDetail.Count > 0)
+        {
+            var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
+            @Grid(1);
+            if (countLine > 5)
+            {
+                @Grid(2);
+            }
+
         }
         else
         {
-
-            if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
-            {
-                var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
-                @genSignatureFromApproveDetail(1);
-                if (countLine > 5)
-                {
-                    @genSignatureFromApproveDetail(2);
-                }
-            }
-            else if (Model.approveFlowDetail != null)
-            {
-                var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
-                @Grid(1);
-                if (countLine > 5)
-                {
-                    @Grid(2);
-                }
-
-            }
-            else
-            {
-                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
-            }
-
+            <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
         }
-    
-    </div>
+
+    }
+
+</div>
 
 
     @helper Grid(int line)

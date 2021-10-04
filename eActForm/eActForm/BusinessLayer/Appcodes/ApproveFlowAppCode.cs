@@ -219,21 +219,8 @@ namespace eActForm.BusinessLayer
                                  empGroup = dr["empGroup"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
-                                 imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
-                                 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                              }).ToList();
 
-                if (lists.Any())
-                {
-                    int i = 0;
-                    foreach (var item in lists)
-                    {
-                        string imageBase64Data = Convert.ToBase64String(item.signature);
-                        string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
-                        lists[0].urlImg = imageDataURL;
-                        i++;
-                    }
-                }
                 return lists;
             }
             catch (Exception ex)
@@ -390,7 +377,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@productType",model.productTypeId)
                     ,new SqlParameter("@activityGroup",model.activityGroup)
-                    ,new SqlParameter("@empId",model.empId)});
+                    ,new SqlParameter("@empId",model.empId)
+                    ,new SqlParameter("@deparmentId",model.deparmentId)
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail("")
                              {
