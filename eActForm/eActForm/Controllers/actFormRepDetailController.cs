@@ -223,7 +223,7 @@ namespace eActForm.Controllers
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM-yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {
@@ -256,7 +256,7 @@ namespace eActForm.Controllers
             try
             {
                 rep.actFormRepDetailLists = model.actFormRepDetailGroupLists.Where(r => brandId.Contains(r.brandId)).ToList();
-
+                ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {

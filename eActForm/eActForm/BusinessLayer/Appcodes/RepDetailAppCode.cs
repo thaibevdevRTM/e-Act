@@ -539,6 +539,7 @@ namespace eActForm.BusinessLayer
                                                          promotionGp = dr["promotionGp"] is DBNull ? 0 : Convert.ToDecimal(dr["promotionGp"]),
                                                          rsp = dr["RSP"] is DBNull ? 0 : Convert.ToDecimal(dr["RSP"]),
                                                          unitTxt = dr["unitTxt"].ToString(),
+                                                         rowNo = dr["rowNo"].ToString(),
                                                          #endregion
 
                                                      }).ToList();
@@ -547,7 +548,8 @@ namespace eActForm.BusinessLayer
                     .GroupBy(item => new
                     {
                         item.activityNo,
-                        item.productGroupid
+                        item.productGroupid,
+                        item.activityDetail
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {
@@ -597,6 +599,7 @@ namespace eActForm.BusinessLayer
                         promotionGp = group.First().promotionGp,
                         rsp = group.First().rsp,
                         unitTxt = group.First().unitTxt,
+                        rowNo = group.First().rowNo,
                         #endregion
 
 
