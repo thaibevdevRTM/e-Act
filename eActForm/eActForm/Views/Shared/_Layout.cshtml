@@ -163,7 +163,6 @@
                 (new PNotify({
                     title: 'แจ้งเตือน',
                     text: '<a href="@Url.Action("getRejectApproveByEmpId", "ApproveLists")">เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
-
                     hide: false,
                     styling: 'bootstrap3',
                     addclass: "sizeFont15",
@@ -184,7 +183,7 @@
 
 
         function doMsgSuccess(msg) {
-            bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
+            bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
         }
         function doMsgFail(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><br/>" + msg + "</div></div>");
@@ -203,7 +202,7 @@
 
         function doMsgSuccessAction(msg, action) {
             bootbox.alert({
-                message: "<div class='row'><div class='text-center'><img width='150px' src='~/images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
+                message: "<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
                 callback: function () {
                     var url = action;
                     window.location.href = url;

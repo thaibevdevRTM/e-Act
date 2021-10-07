@@ -579,14 +579,14 @@ namespace eActForm.BusinessLayer
 
         }
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId)
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannel"
                , new SqlParameter[] { new SqlParameter("@channelId", channelId)
                ,new SqlParameter("@brandId", brandId)
-               ,new SqlParameter("@EO", EO)});
+               ,new SqlParameter("@EO", EO) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {

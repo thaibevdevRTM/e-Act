@@ -240,6 +240,7 @@ namespace eActForm.Controllers
 
                 result.Success = false;
 
+                
                 var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
@@ -253,7 +254,7 @@ namespace eActForm.Controllers
                     foreach (var item in groupEO)
                     {
                         BudgetTotal returnAmountModel = new BudgetTotal();
-                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId);
+                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId);
                         if (getAmountReturnEOIO.Any())
                         {
                             returnAmountModel.EO = item.EO;
