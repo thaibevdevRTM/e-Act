@@ -275,7 +275,7 @@ namespace eActForm.Controllers
                     {
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                        budgetTotalModel.returnAmountBrand = returnAmount.Any() ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
+                        budgetTotalModel.returnAmountBrand = returnAmount.Any() && !string.IsNullOrEmpty(channelId) ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
 
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;

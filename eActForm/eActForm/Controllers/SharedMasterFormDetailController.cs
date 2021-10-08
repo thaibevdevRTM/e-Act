@@ -226,10 +226,10 @@ namespace eActForm.Controllers
                     {
                         BudgetTotal returnAmountModel = new BudgetTotal();
                         var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId, getActTypeId);
+                        sumReturn = getAmountReturnEOIO.FirstOrDefault().returnAmount > 1 ? getAmountReturnEOIO.FirstOrDefault().returnAmount : sumReturn;
                         if (getAmountReturnEOIO.Any())
                         {
                             returnAmountModel.EO = item.EO;
-                            sumReturn += getAmountReturnEOIO.FirstOrDefault().returnAmount;
                             returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
                             returnAmountList.Add(returnAmountModel);
                         }
@@ -247,7 +247,7 @@ namespace eActForm.Controllers
                         if (getAmount.Any())
                         {
                             var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                            budgetTotalModel.returnAmountBrand = returnAmount.Any() ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
+                            budgetTotalModel.returnAmountBrand = returnAmount.Any() && !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
 
                             budgetTotalModel.EO = item.EO;
                             budgetTotalModel.useAmount = (getAmount.FirstOrDefault().balance) + item.total;
