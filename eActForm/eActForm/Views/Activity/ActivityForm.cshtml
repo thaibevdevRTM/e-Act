@@ -983,6 +983,7 @@
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+        if ($("#ddlTheme").val() == "8B5402F5-63D0-46E5-BFDA-9FC72F3CF565" && $("#ddlSubActivity").val() == "") { required += "เพื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
