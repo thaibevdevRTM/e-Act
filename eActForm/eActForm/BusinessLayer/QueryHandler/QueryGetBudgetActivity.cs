@@ -463,5 +463,35 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<TB_Act_AmountBudget> getBudgetAmountList(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetAmountList"
+                 , new SqlParameter("@activityId", activityId)
+                 );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new TB_Act_AmountBudget()
+                              {
+                                  id = d["id"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  budgetTotal = d["budgetTotal"].ToString() == "" ? 0 : decimal.Parse(d["budgetTotal"].ToString()),
+                                  useAmount = d["useAmount"].ToString() == "" ? 0 : decimal.Parse(d["useAmount"].ToString()),
+                                  returnAmount = d["returnAmount"].ToString() == "" ? 0 : decimal.Parse(d["returnAmount"].ToString()),
+                                  amountBalance = d["amountBalance"].ToString() == "" ? 0 : decimal.Parse(d["amountBalance"].ToString()),
+
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetAmountList => " + ex.Message);
+                return new List<TB_Act_AmountBudget>();
+            }
+        }
+
     }
 }

@@ -429,7 +429,7 @@ namespace eActForm.BusinessLayer
                     {
                         item.activityNo,
                         item.productGroupid,
-                        item.activityDetail
+                        item.theme
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {
@@ -549,7 +549,7 @@ namespace eActForm.BusinessLayer
                     {
                         item.activityNo,
                         item.productGroupid,
-                        item.activityDetail
+                        item.theme
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {

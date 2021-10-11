@@ -392,6 +392,7 @@
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\scriptModel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
+    <Compile Include="Models\TB_Act_AmountBudget.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />
     <Compile Include="Models\Master_type_form_Model.cs" />

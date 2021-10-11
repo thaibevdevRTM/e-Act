@@ -223,7 +223,7 @@ namespace eActForm.Controllers
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM-yyyy", null).ToString("MMM yyyy");
+                //ViewBag.MouthText = DateTime.ParseExact(startDate, "MM-yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {
