@@ -2049,11 +2049,17 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetAmount"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    });
                 foreach (var item in model.amountBudgetList)
                 {
                     rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
-                        , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
-                     ,new SqlParameter("@budgetTotal",item.budgetTotal)
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    ,new SqlParameter("@EO",item.EO)
+                    ,new SqlParameter("@activityType",item.activityType)
+                    ,new SqlParameter("@budgetTotal",item.budgetTotal)
                     ,new SqlParameter("@useAmount",item.useAmount)
                     ,new SqlParameter("@returnAmount",item.returnAmount)
                     ,new SqlParameter("@amountBalance",item.amountBalance)
