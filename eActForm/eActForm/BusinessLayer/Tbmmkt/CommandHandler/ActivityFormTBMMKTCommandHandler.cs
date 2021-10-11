@@ -2049,17 +2049,17 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
-                    , new SqlParameter[] {new SqlParameter("@actId",model.activityFormTBMMKT.id)
-                     ,new SqlParameter("@claim",model.activityFormTBMMKT.actClaim)
-                    ,new SqlParameter("@IO",model.activityFormTBMMKT.actIO)
-                    ,new SqlParameter("@checkbox",model.activityFormTBMMKT.chkAddIO)
-                    ,new SqlParameter("@delFlag",model.activityFormTBMMKT.delFlag)
-                    ,new SqlParameter("@createdDate",model.activityFormTBMMKT.createdDate)
+                foreach (var item in model.amountBudgetList)
+                {
+                    rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
+                        , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                     ,new SqlParameter("@budgetTotal",item.budgetTotal)
+                    ,new SqlParameter("@useAmount",item.useAmount)
+                    ,new SqlParameter("@returnAmount",item.returnAmount)
+                    ,new SqlParameter("@amountBalance",item.amountBalance)
                     ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
-                    ,new SqlParameter("@updatedDate",model.activityFormTBMMKT.updatedDate)
-                    ,new SqlParameter("@updatedByUserId",model.activityFormTBMMKT.updatedByUserId)
-                    });
+                        });
+                }
             }
             catch (Exception ex)
             {
