@@ -236,13 +236,13 @@ namespace eActForm.Controllers
                    // var getAmount = ActFormAppCode.getBalanceByEO(item.EO, activity_TBMMKT_Model.activityFormTBMMKT.companyId, getActTypeId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId, activity_TBMMKT_Model.activityFormTBMMKT.id);
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                        budgetTotalModel.returnAmountBrand = returnAmount.Any() && !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
+                    budgetTotalModel.returnAmount = item.returnAmount;
 
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = item.useAmount;
                         //budgetTotalModel.totalBudget = item.budgetTotal;
                         budgetTotalModel.amount = item.budgetTotal;
-                        budgetTotalModel.amountBalance = item.returnAmount;
+                        budgetTotalModel.amountBalance = item.amountBalance;
                         budgetTotalModel.activityType = item.activityType;
                         var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
                         budgetTotalModel.amountBalancePercen = item.useAmount / amount;
@@ -254,9 +254,9 @@ namespace eActForm.Controllers
 
                 }
 
-
-                activity_TBMMKT_Model.budgetTotalModel.totalBudgetChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
-                activity_TBMMKT_Model.budgetTotalModel.useAmountTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+           
+                activity_TBMMKT_Model.budgetTotalModel.totalBudget = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
+                activity_TBMMKT_Model.budgetTotalModel.useAmountTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountCumulative;
                 activity_TBMMKT_Model.budgetTotalModel.amountBalanceTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountBalance;
                 activity_TBMMKT_Model.budgetTotalModel.returnAmount = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
                 activity_TBMMKT_Model.budgetTotalList = budgetTotalsList;
