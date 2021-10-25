@@ -158,14 +158,19 @@
 
         var companyId = $("#ddlCompany").val();
 
-        if ($("#ddlSubject").val() == 'C67164E4-A891-43D6-B4F7-090F62C6290E' || $("#ddlSubject").val() == '30A230AB-42D4-4E48-8626-4366F5901C8B') //ใบเบิกค่าใช้จ่ายเดินทาง , ใบเบิกค่ารักษาพยาบาล
-        {
+        if ($("#ddlSubject").val() == 'C67164E4-A891-43D6-B4F7-090F62C6290E' || $("#ddlSubject").val() == '30A230AB-42D4-4E48-8626-4366F5901C8B')//ใบเบิกค่าใช้จ่ายเดินทาง , ใบเบิกค่ารักษาพยาบาล ,
+            {
             companyId = "";
             document.getElementById("divDeparment").style.display = "none";
             document.getElementById("divEmp").style.display = "block";
         }
+        else if ($("#ddlSubject").val() == '590BE88B-5FEE-4B96-9D68-EBCAC3703D7C') // ใบเบิกค่าใช้จ่ายพนักงาน
+        {
+            document.getElementById("divDeparment").style.display = "none";
+            document.getElementById("divEmp").style.display = "block";
+        }
         else {
-            document.getElementById("divDeparment").style.display = "block";
+            document.getElementById("divDeparment").style.display = "none";
             document.getElementById("divEmp").style.display = "none";
         }
 
@@ -183,7 +188,7 @@
                      $("#ddlLimit option[value !='']").remove();
                     $.each(response.Data, function () {
                         $("#ddlLimit").append($("<option></option>").val(this['id']).html(this['displayVal']));
-                       
+
                     });
                      document.getElementById("ddlLimit").disabled = false;
                 }

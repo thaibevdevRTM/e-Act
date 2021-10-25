@@ -241,7 +241,7 @@ namespace eActForm.Controllers
                 result.Success = false;
 
                 
-                var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
+               var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
@@ -275,7 +275,7 @@ namespace eActForm.Controllers
                     {
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                        budgetTotalModel.returnAmountBrand = returnAmount.Any() && !string.IsNullOrEmpty(channelId) ? Convert.ToDecimal(returnAmount.FirstOrDefault().returnAmountBrand) : 0;
+                        budgetTotalModel.returnAmountBrand = returnAmount.FirstOrDefault().returnAmountBrand;
 
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;

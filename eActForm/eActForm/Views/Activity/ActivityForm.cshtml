@@ -72,7 +72,7 @@
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
                             @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })*@
-                            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
+                            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", @id = "txtdateDoc", autocomplete = "off" })
                         }
                         else
                         {

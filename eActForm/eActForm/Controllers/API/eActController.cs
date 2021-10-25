@@ -549,7 +549,7 @@ namespace eActForm.Controllers
             {
                 if (!string.IsNullOrEmpty(empId))
                 {
-                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId, DateTime.Today).ToList();
                     if (cashEmpList.Count > 0)
                     {
                         var resultData = new
@@ -566,7 +566,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel)
+        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel ,string docDate)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
@@ -578,14 +578,15 @@ namespace eActForm.Controllers
                 {
 
 
-                    //hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    //docDate = (BaseAppCodes.converStrToDatetimeWithFormat(docDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
                     cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
                     if (cashEmpList != null && cashEmpList.Count > 0)
                     {
                         limit = cashEmpList[0].cashPerDay;
                     }
 
-                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    DateTime? docDatee = DateTime.ParseExact(docDate, "dd/MM/yyyy", null);
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId, docDatee).ToList();
                     if (cashEmpList != null && cashEmpList.Count > 0)
                     {
                         cumulative = cashEmpList[0].cashPerDay;

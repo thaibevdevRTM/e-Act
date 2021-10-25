@@ -27,7 +27,7 @@
                     {
                         <tr class="tagCountRowinTable">
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                
+
                                 @Html.HiddenFor(x => item.typeTheme, new { @id = "activityOfEstimateList[" + index + "].typeTheme", Name = "activityOfEstimateList[" + index + "].typeTheme", @class = "form-control textboxcss text-right txtTypetheme__" + index })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
@@ -211,11 +211,9 @@
 
 
     function getBudgetTotal(row) {
-
-        console.log('tt' + row);
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
-           
+
             getEOBudget.push({
                 EO: $(".clstxtEO_" + row).val(),
                 IO: $(".clstxtIO_" + row).val(),

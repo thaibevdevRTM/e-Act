@@ -78,23 +78,13 @@
         <table id="tbSuccess" class="table table-striped jambo_table bulk_action fixed" id="tbl_report" height="200" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
             <thead>
                 <tr class="headings" style="text-align:center;">
-             
-                    <th width="170px" class="center">Bud_Num</th>
-                    <th width="170px" class="center">B_Code</th>
-                    <th width="170px" class="center">Bnam_Eng</th>
-                    <th width="170px" class="center">Type</th>
-                   
+
                     <th width="170px" class="center">EO</th>
                     <th width="170px" class="center">IO</th>
-                   
-                    <th width="170px" class="center">Approve Amount</th>
-                    <th width="170px" class="center">โยก BG</th>
-                    <th width="170px" class="center">Actual Spending</th>
-                    <th width="170px" class="center">PR/PO</th>
-                    <th width="170px" class="center">Total Actual Spending</th>
-                    <th width="170px" class="center">Available Amount</th>
-                    <th width="170px" class="center">Return</th>
-                    <th width="170px" class="center">Balance Amount</th>
+
+                    <th width="170px" class="center">Detail</th>
+                    <th width="170px" class="center">Amount for Eact</th>
+                    <th width="170px" class="center">Amount for SAP</th>
 
                 </tr>
             </thead>
@@ -104,36 +94,28 @@
                 @foreach (var item in Model.budgetReportList)
                 {
                     <tr>
-                 
-                        <td>@item.budNum</td>
-                        <td>@item.b_Code</td>
-                        <td>@item.brandName</td>
-                        <td>@item.typeImport</td>
-                        @if (item.replaceEO != replaceEO)
+
+
+                        <td>@string.Format("{0:n2}", @item.EO)</td>
+                        <td>@string.Format("{0:n2}", @item.orderNo)</td>
+
+
+                        <td>@string.Format("{0:n2}", @item.transaction)</td>
+
+
+                        @if (@item.approve_Amount != @item.budget_Amount2)
                         {
-                            <td>@string.Format("{0:n2}", item.EO)</td>
-                            <td>@string.Format("{0:n2}", item.orderNo)</td>
-                          
+                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
+                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
                         }
                         else
                         {
-                            <td></td>
-                            <td>@string.Format("{0:n2}", item.orderNo)</td>
-                            <td></td>
-                            <td></td>
+                            <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
+                            <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
                         }
-                        <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
-
-                        <td>@string.Format("{0:n2}", @item.trf_BG)</td>
-                        <td>@string.Format("{0:n2}", @item.actual)</td>
-                        <td>@string.Format("{0:n2}", @item.PR_PO)</td>
-                        <td>@string.Format("{0:n2}", @item.actualTotal)</td>
-                        <td>@string.Format("{0:n2}", @item.available)</td>
-                        <td>@string.Format("{0:n2}", @item.returnAmount)</td>
-                        <td>@string.Format("{0:n2}", @item.balance)</td>
                     </tr>
 
-                    replaceEO = item.replaceEO;
+                    replaceEO = item.EO;
                     count = count + 1;
                 }
                 <tr>

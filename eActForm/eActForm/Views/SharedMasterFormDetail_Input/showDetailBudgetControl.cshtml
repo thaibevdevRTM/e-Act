@@ -1,6 +1,7 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 
+
 @if (Model.budgetTotalList.Count > 0)
 {
     <div class="col-md-5 col-sm-5">
@@ -35,7 +36,7 @@
                             <br />
                             @if (!string.IsNullOrEmpty(item.brandId))
                             {
-                                <span>งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00")  คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+                                <span>งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
                             }
                             else
                             {
@@ -70,5 +71,3 @@
     </div>
 }
 
-<script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<script src="~/Content/vendors/build/js/custom.js"></script>

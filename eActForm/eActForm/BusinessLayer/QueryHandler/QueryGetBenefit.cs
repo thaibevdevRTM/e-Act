@@ -165,12 +165,14 @@ namespace eActForm.BusinessLayer
                 return new List<CashEmpModel>();
             }
         }
-        public static List<CashEmpModel> getCumulativeByEmpId(string empId)
+        public static List<CashEmpModel> getCumulativeByEmpId(string empId,DateTime? docDate)
         {
             try
             {
+                
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCumulativeByEmpId"
-                     , new SqlParameter("@empId", empId));
+                     , new SqlParameter("@empId", empId)
+                     , new SqlParameter("@docDate", docDate));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new CashEmpModel()
                              {

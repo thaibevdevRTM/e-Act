@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.ApproveFlowModel;
 
 namespace eActForm.BusinessLayer
 {
@@ -126,10 +128,29 @@ namespace eActForm.BusinessLayer
                     if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.expenseForm.Contains(getMasterType)))
                     {
                         model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
+
+
                     }
                     else
                     {
                         model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+
+
+                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
+                        {
+                            
+                            if(!model.flowDetail.Where(X => X.empId == "11023182").Any())
+                            {
+                                int conutRow = model.flowDetail.Count();
+                                model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 1).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.OrderBy(X => X.rangNo);
+
+                            }
+                                
+                        }
+
                     }
 
                 }
@@ -142,7 +163,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string checkFlowBeforeByActId(string actFormId)
+        public static flowApproveDetail getAddOn_TrvTBM(string empId,int rangNo ,string approveGroupId,bool isShowInDoc)
+        {
+            var result = new ApproveFlowModel.flowApproveDetail(empId)
+            {
+                rangNo = rangNo,
+                empId = empId,
+                //empFNameTH = dr["empFNameTH"].ToString(),
+                //empLNameTH = dr["empLNameTH"].ToString(),
+                //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get from AD
+                approveGroupId = approveGroupId,
+                approveGroupName = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameTH,
+                approveGroupNameEN = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameEN,
+                isShowInDoc = isShowInDoc,
+                empGroup ="",
+                isApproved =  true,
+
+            };
+
+            return result;
+        }
+
+
+            public static string checkFlowBeforeByActId(string actFormId)
         {
             try
             {

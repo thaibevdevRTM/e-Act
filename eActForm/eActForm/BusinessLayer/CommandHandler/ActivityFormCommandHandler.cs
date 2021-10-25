@@ -209,36 +209,21 @@ namespace eActForm.BusinessLayer
                             (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
-                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"] || getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
-                            {
-                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
-                                {
-                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
-                                }
-                                else
-                                {
-                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
-                                }
 
+                            //else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
+                            //    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                            if (getActList.FirstOrDefault().documentDate.Value.Month < 10 &&
+                                getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 22 && getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9
+                                || getActList.FirstOrDefault().documentDate.Value.Month >= 10)
+                            {
+                                //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                             }
                             else
                             {
-                                if (getActList.FirstOrDefault().documentDate.Value.Year > getActList.FirstOrDefault().activityPeriodSt.Value.Year)
-                                {
-                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
-                                }
-                               
-                                else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
-                                    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
-                                {
-                                    //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
-                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
-                                }
-                                else
-                                {
-                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
-                                }
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
                             }
+
                         }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
