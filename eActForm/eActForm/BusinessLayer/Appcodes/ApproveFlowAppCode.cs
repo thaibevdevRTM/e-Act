@@ -143,8 +143,17 @@ namespace eActForm.BusinessLayer
                             if(!model.flowDetail.Where(X => X.empId == "11023182").Any())
                             {
                                 int conutRow = model.flowDetail.Count();
-                                model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 1).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow, AppCode.ApproveGroup.Approveby, true));
+                                var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
+                                foreach(var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+
+                                model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM("11023742", conutRow, AppCode.ApproveGroup.Verifyby, false));
+                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow+1, AppCode.ApproveGroup.Approveby, true));
                                 model.flowDetail.OrderBy(X => X.rangNo);
 
                             }

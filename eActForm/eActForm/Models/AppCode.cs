@@ -116,6 +116,7 @@ namespace eActForm.Models
             public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
             public const string CreateBy = "1AFEFF8D-C980-4628-8550-78AE619AC31A";//ผู้จัดทำ
             public const string PettyCashVerify = "FA88EB4E-26C1-49FB-BEC7-D161AA9CC0A0";//ผู้ตรวจสอบเงินสดย่อย
+            public const string Verifyby = "6247F49F-AE95-4193-BA24-F65CE94289D1";//ผ่าน
         }
         public static class CodeHtml
         {
