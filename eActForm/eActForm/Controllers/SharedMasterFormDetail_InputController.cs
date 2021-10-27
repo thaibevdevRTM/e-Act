@@ -286,7 +286,9 @@ namespace eActForm.Controllers
                         budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                         budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
                         budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total + budgetTotalModel.returnAmountBrand;
-                        budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / getAmount.FirstOrDefault().amount * 100;
+
+                        var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
+                        budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
                         budgetTotalModel.brandId = brandId;
                         budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                         budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";

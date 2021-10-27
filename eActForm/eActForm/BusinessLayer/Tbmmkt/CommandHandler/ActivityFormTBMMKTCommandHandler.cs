@@ -74,6 +74,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertPurpose(rtn, model, activityId);
                     rtn = ProcessInsertProduct(rtn, model, activityId);
                     rtn = ProcessInsertCliamIO(rtn, model, activityId);
+                    rtn = InsertBudgetAmount(rtn, model, activityId);
 
                 }
 
@@ -2039,6 +2040,36 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> insertCliamIO");
+            }
+
+            return rtn;
+        }
+
+        protected static int InsertBudgetAmount(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            try
+            {
+
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetAmount"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    });
+                foreach (var item in model.amountBudgetList)
+                {
+                    rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    ,new SqlParameter("@EO",item.EO)
+                    ,new SqlParameter("@activityType",item.activityType)
+                    ,new SqlParameter("@budgetTotal",item.budgetTotal)
+                    ,new SqlParameter("@useAmount",item.useAmount)
+                    ,new SqlParameter("@returnAmount",item.returnAmount)
+                    ,new SqlParameter("@amountBalance",item.amountBalance)
+                    ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
+                        });
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> InsertBudgetAmount");
             }
 
             return rtn;

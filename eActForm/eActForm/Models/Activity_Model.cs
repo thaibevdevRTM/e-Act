@@ -252,6 +252,7 @@ namespace eActForm.Models
         public Boolean chkAddDown { get; set; }
         public string subActivity { get; set; }
         public string txtSubActivity { get; set; }
+
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
