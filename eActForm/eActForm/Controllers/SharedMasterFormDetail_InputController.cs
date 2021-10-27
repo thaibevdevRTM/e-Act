@@ -214,7 +214,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId)
+        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId,string status)
         {
             var result = new AjaxResult();
             try
@@ -276,6 +276,10 @@ namespace eActForm.Controllers
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                         budgetTotalModel.returnAmountBrand = returnAmount.FirstOrDefault().returnAmountBrand;
+                        if(status == "2")
+                        {
+                            item.total = 0;
+                        }
 
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
