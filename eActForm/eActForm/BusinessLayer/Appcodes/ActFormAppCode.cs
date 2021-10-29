@@ -548,17 +548,18 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId,string selectYear)
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
                ,new SqlParameter("@brandId", brandId)
-               ,new SqlParameter("@activityId", activityId)});
+               ,new SqlParameter("@activityId", activityId)
+               ,new SqlParameter("@selectYear", selectYear)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
