@@ -516,7 +516,7 @@ namespace eForms.Presenter.AppCode
             List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetListNew");
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetList");
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
@@ -531,6 +531,7 @@ namespace eForms.Presenter.AppCode
                                  actual = decimal.Parse(d["actual"].ToString()),
                                  bnamEng = d["bnam_Eng"].ToString(),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
+                                 fiscalYear = d["fiscalYear"].ToString(),
                              });
 
                 return lists.ToList(); ;
@@ -581,7 +582,7 @@ namespace eForms.Presenter.AppCode
 
                 foreach (var item in model.budgetReportList)
                 {
-                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt"
+                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt_New"
                     , new SqlParameter[] {new SqlParameter("@budNum",item.budNum)
                       ,new SqlParameter("@date",item.date)
                       ,new SqlParameter("@bCode",item.b_Code)

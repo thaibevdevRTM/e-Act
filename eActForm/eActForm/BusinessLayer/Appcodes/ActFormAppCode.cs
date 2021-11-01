@@ -548,7 +548,7 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId,string selectYear)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId,string fiscalYear)
         {
             try
             {
@@ -559,7 +559,7 @@ namespace eActForm.BusinessLayer
                ,new SqlParameter("@channelId", channelId)
                ,new SqlParameter("@brandId", brandId)
                ,new SqlParameter("@activityId", activityId)
-               ,new SqlParameter("@selectYear", selectYear)});
+               ,new SqlParameter("@fiscalYear", fiscalYear)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
@@ -581,14 +581,15 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId)
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId,string fiscalYear)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannelNew"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannel"
                , new SqlParameter[] { new SqlParameter("@channelId", channelId)
                ,new SqlParameter("@brandId", brandId)
                ,new SqlParameter("@EO", EO)
+               ,new SqlParameter("@fiscalYear", fiscalYear)
                ,new SqlParameter("@actTypeId", actTypeId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels

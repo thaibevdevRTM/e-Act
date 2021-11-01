@@ -226,7 +226,7 @@ namespace eActForm.Controllers
                 var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
-                    selectYear = group.First().UseYearSelect,
+                    fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
 
@@ -247,7 +247,7 @@ namespace eActForm.Controllers
                     foreach (var item in groupEO)
                     {
                         BudgetTotal returnAmountModel = new BudgetTotal();
-                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId);
+                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId,item.fiscalYear);
                         if (getAmountReturnEOIO.Any())
                         {
                             returnAmountModel.EO = item.EO;
@@ -263,7 +263,7 @@ namespace eActForm.Controllers
                 foreach (var item in groupEO)
                 {
                     BudgetTotal budgetTotalModel = new BudgetTotal();
-                    var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.selectYear);
+                    var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear);
                     if (getAmount.Any())
                     {
 
