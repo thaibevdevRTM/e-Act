@@ -447,6 +447,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@prepaid",model.prepaid)
                       ,new SqlParameter("@available",model.available)
                       ,new SqlParameter("@replaceEO",model.replaceEO)
+                      ,new SqlParameter("@fiscalYear",model.fiscalYear)
                       ,new SqlParameter("@importType",model.typeImport)
                       ,new SqlParameter("@createdByUserId",model.createdByUserId)
 
@@ -603,6 +604,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@balanceAmount",item.balance)
                       ,new SqlParameter("@importType",item.typeImport)
                       ,new SqlParameter("@createdByUserId",item.createdByUserId)
+                      ,new SqlParameter("@fiscalYear",item.fiscalYear)
 
                       });
                 }

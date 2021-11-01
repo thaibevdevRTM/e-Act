@@ -77,6 +77,8 @@ namespace eActForm.Models
             budgetTotalList = new List<BudgetTotal>();
             tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
             TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
+            amountBudgetList = new List<TB_Act_AmountBudget>();
+
         }
 
         public ApproveModel.approveModels approveModels { get; set; }

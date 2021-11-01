@@ -339,8 +339,8 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 bu = dr["empDivisionTH"].ToString(),
-                                 buEN = dr["empDivisionEN"].ToString(),
+                                // bu = dr["empDivisionTH"].ToString(),
+                                // buEN = dr["empDivisionEN"].ToString(),
                                  //empFNameEN = dr["empFNameEN"].ToString(),
                                  //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()

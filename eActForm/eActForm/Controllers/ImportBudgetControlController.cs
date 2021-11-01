@@ -346,6 +346,7 @@ namespace eActForm.Controllers
                     modelBudgetRpt.PR_PO = decimal.Parse(dtBudget.Rows[i]["PR/PO Outstanding"].ToString());
                     modelBudgetRpt.prepaid = decimal.Parse(dtBudget.Rows[i]["Prepaid"].ToString());
                     modelBudgetRpt.available = decimal.Parse(dtBudget.Rows[i]["Available"].ToString());
+                    modelBudgetRpt.fiscalYear = dtBudget.Rows[i]["Fiscal Year"].ToString();
                     modelBudgetRpt.typeImport = importType;
                     //modelBudgetRpt.chanelId = ImportBudgetControlAppCode.getChannelIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Bnam_Eng"].ToString());
                     //modelBudgetRpt.activityTypeId = ImportBudgetControlAppCode.getActivityIdIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Activity"].ToString());
