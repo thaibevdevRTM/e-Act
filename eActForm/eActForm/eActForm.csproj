@@ -2931,7 +2931,6 @@
     <Content Include="Content\vendors\bootstrap-progressbar\scss\bootstrap-progressbar-3.2.0.scss" />
     <Content Include="Content\vendors\bootstrap-progressbar\scss\bootstrap-progressbar-3.3.0-3.x.x.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.css.map" />
