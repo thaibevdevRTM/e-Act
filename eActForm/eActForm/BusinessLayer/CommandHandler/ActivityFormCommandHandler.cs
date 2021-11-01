@@ -212,9 +212,10 @@ namespace eActForm.BusinessLayer
 
                             //else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
                             //    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
-                            if (getActList.FirstOrDefault().documentDate.Value.Month < 10 &&
-                                getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 22 && getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9
-                                || getActList.FirstOrDefault().documentDate.Value.Month >= 10)
+                            if ((getActList.FirstOrDefault().documentDate.Value.Month < 10 &&
+                                getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 22 && getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9)
+                                || getActList.FirstOrDefault().documentDate.Value.Month >= 10
+                                || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
                             {
                                 //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
