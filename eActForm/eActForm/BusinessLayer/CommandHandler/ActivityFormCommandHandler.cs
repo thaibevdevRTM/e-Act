@@ -217,11 +217,11 @@ namespace eActForm.BusinessLayer
                                 || getActList.FirstOrDefault().documentDate.Value.Month >= 10)
                             {
                                 //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
                             }
                             else
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
                             }
 
                         }
