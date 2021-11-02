@@ -499,10 +499,14 @@
 
 
     $("#txtBGYear").change(function () {
-
-        if ($("#ddlActType_BG").val() != "" || $("#txtBGYear").val()) {
-                getBudgetNonEO();
+        if ($("#txtBudgetIO").val() != "") {
+            getBudgetEOIO();
         }
+        else {
+            getBudgetNonEO();
+        }
+
+       
 
     });
 
@@ -622,6 +626,7 @@
              data: {
                  EO: $("#txtBudgetEO").val(),
                  IO: $("#txtBudgetIO").val(),
+                 fiscalYear: $("#txtBGYear").val(),
              },
              dataType: "json",
              type: 'POST',

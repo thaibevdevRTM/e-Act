@@ -135,6 +135,8 @@ namespace eActForm.BusinessLayer
                     {
                         model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
 
+                        var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
+                        var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
                         if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
