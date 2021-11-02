@@ -152,8 +152,8 @@ namespace eActForm.BusinessLayer
                                 }
 
                                 model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM("11023742", conutRow, AppCode.ApproveGroup.Verifyby, false));
-                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow+1, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], conutRow, AppCode.ApproveGroup.Verifyby, false));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], conutRow+1, AppCode.ApproveGroup.Approveby, true));
                                 model.flowDetail.OrderBy(X => X.rangNo);
 
                             }
