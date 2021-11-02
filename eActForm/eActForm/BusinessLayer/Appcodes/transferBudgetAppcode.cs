@@ -12,14 +12,15 @@ namespace eActForm.BusinessLayer.Appcodes
     public class TransferBudgetAppcode
     {
 
-        public static List<TransferBudgetModels> GetBudgetBalanceByEOIO(string EO, string IO)
+        public static List<TransferBudgetModels> GetBudgetBalanceByEOIO(string EO, string IO,string fiscalYear)
         {
             try
             {
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEOIO"
                     , new SqlParameter[] { new SqlParameter("@EO", EO),
-                    new SqlParameter("@IO", IO)});
+                    new SqlParameter("@IO", IO),
+                    new SqlParameter("@fiscalYear", fiscalYear)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new TransferBudgetModels
                              {

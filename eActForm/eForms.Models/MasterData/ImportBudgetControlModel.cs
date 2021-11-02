@@ -72,7 +72,7 @@ namespace eForms.Models.MasterData
             public string remark { get; set; }
             public string activityTypeId { get; set; }
             public string typeImport { get; set; }
-            public string replaceEO { get; set; } 
+            public string replaceEO { get; set; }
             public string activityNo { get; set; }
             public string approveNo { get; set; }
             public string orderNo { get; set; }
@@ -84,7 +84,8 @@ namespace eForms.Models.MasterData
             public decimal? trf_BG { get; set; }
             public decimal? actualTotal { get; set; }
             public double runingNo { get; set; }
-            
+            public string fiscalYear { get; set; }
+
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }

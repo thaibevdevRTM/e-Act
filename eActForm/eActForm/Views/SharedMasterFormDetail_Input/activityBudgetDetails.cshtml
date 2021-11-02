@@ -30,7 +30,7 @@
 
                                 @Html.HiddenFor(x => item.typeTheme, new { @id = "activityOfEstimateList[" + index + "].typeTheme", Name = "activityOfEstimateList[" + index + "].typeTheme", @class = "form-control textboxcss text-right txtTypetheme__" + index })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
-                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @id = "yearSelect_"+ index,  @class = "form-control clstxtYearSelect_" + index, @title = "เลือกปีงบประมาณ" })
                             </td>
                             @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
@@ -214,10 +214,13 @@
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
 
+
             getEOBudget.push({
                 EO: $(".clstxtEO_" + row).val(),
                 IO: $(".clstxtIO_" + row).val(),
                 total: $(".txttotal_" + row).val(),
+                UseYearSelect: $(".clstxtYearSelect_" + row).val(),
+                
             });
 
         });
@@ -233,6 +236,7 @@
                 brandId: document.getElementById("ddlBrand").value,
                 activityId: "@Model.activityFormTBMMKT.id",
                 status: "@Model.activityFormTBMMKT.statusId",
+
 
             },
             dataType: "json",

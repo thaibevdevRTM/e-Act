@@ -480,6 +480,7 @@ namespace eActForm.Models
         public string activityTypeId { get; set; }
         public decimal? returnAmount { get; set; }
         public decimal? returnAmountBrand { get; set; }
+        public string fiscalYear { get; set; }
     }
 
 }

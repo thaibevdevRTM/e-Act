@@ -135,6 +135,8 @@ namespace eActForm.BusinessLayer
                     {
                         model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
 
+                        var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
+                        var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
                         if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
@@ -339,8 +341,8 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 bu = dr["empDivisionTH"].ToString(),
-                                 buEN = dr["empDivisionEN"].ToString(),
+                                // bu = dr["empDivisionTH"].ToString(),
+                                // buEN = dr["empDivisionEN"].ToString(),
                                  //empFNameEN = dr["empFNameEN"].ToString(),
                                  //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
