@@ -315,12 +315,14 @@ namespace eActForm.BusinessLayer
 
                 string strBody = "", strSubject = "";
                 strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
-                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
+                if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
+
                     if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])//Inter sale
                     {
                         strSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
                     }
+
                 }
 
                 if (lists.Count > 0)
@@ -740,7 +742,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
@@ -766,7 +768,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
@@ -863,7 +865,7 @@ namespace eActForm.BusinessLayer
                     //{
                     //    strMailCc += (strMailCc == "") ? m.empEmail : "," + m.empEmail; // get list email
                     //}
-                    List <ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
+                    List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
                     foreach (ApproveModel.approveDetailModel m in createUsers)
                     {
                         strMailTo += (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
@@ -934,7 +936,7 @@ namespace eActForm.BusinessLayer
                         {
 
                             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null,null).FirstOrDefault();
+                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
 
                             string var_link = "";
                             var_link = "activityProduct?activityId=" + budget_activity_model.Budget_Activity.act_form_id + "&activityNo=" + budget_activity_model.Budget_Activity.act_activityNo + "&companyEN=" + budget_activity_model.Budget_Activity.act_companyEN;
@@ -1087,7 +1089,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),

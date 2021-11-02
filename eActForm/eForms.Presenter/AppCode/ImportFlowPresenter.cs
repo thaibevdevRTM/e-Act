@@ -53,12 +53,47 @@ namespace eForms.Presenter.AppCode
                         return "";
                     }
                 }
-               
+
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getFlowIdByDetail => " + ex.Message);
                 return null;
+            }
+        }
+        public static bool checkFlowApprove(string strCon, ImportFlowModel.ImportFlowModels model)
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowApproveExist"
+                , new SqlParameter("@companyId", model.companyId)
+                , new SqlParameter("@masterTypeId", model.masterTypeId)
+                , new SqlParameter("@subjectId", "")
+                , new SqlParameter("@customerId", model.customerId)
+                , new SqlParameter("@productCateId", model.productCateId)
+                , new SqlParameter("@productTypeId", model.productTypeId)
+                , new SqlParameter("@productBrandId", model.productBrandId)
+                , new SqlParameter("@channelId", model.channelId)
+                , new SqlParameter("@departmentId", model.departmentId)
+                , new SqlParameter("@limitTo", model.limitTo)
+                , new SqlParameter("@limitBegin", model.limitBegin)
+                , new SqlParameter("@empGroup", model.empGroup));
+
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new
+                             {
+                                 id = d["id"].ToString(),
+                             });
+
+                return lists.Any() ? true : false;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowIdByDetail => " + ex.Message);
+                return false;
             }
         }
 
@@ -68,9 +103,9 @@ namespace eForms.Presenter.AppCode
             int result = 0;
             try
             {
-               
-                        result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
-                        , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
+                , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                          ,new SqlParameter("@flowId",model.flowId)
                          ,new SqlParameter("@empId",model.empId)
                          ,new SqlParameter("@approveGroupId",model.approveGroupId)
@@ -83,9 +118,9 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
                          ,new SqlParameter("@updatedDate",DateTime.Now)
                          ,new SqlParameter("@updatedByUserId",model.createdByUserId)
-                          });
-                        result++;
-                    
+                  });
+                result++;
+
 
             }
             catch (Exception ex)

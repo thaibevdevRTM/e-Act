@@ -23,10 +23,14 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
+                if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 || model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
-                    rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+
+                    if (model.activityFormTBMMKT.statusId != 3)
+                    {
+                        rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+                    }
                 }
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
                 {
@@ -70,6 +74,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertPurpose(rtn, model, activityId);
                     rtn = ProcessInsertProduct(rtn, model, activityId);
                     rtn = ProcessInsertCliamIO(rtn, model, activityId);
+                    rtn = InsertBudgetAmount(rtn, model, activityId);
 
                 }
 
@@ -568,7 +573,7 @@ namespace eActForm.BusinessLayer
                                 }
                                 else
                                 {
-                                  
+
                                     activity_TBMMKT_Model.activityFormTBMMKT.labelBrand += ("," + item.name);
                                 }
                                 index_each++;
@@ -578,7 +583,7 @@ namespace eActForm.BusinessLayer
                             string addCost = "";
                             var costCenter_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select = new string[costCenter_multi_select];
-                            if(!string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId))
+                            if (!string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId))
                             {
                                 addCost = "200";
                             }
@@ -588,12 +593,12 @@ namespace eActForm.BusinessLayer
                             }
                             foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "costCenter").ToList())
                             {
-                              
+
                                 activity_TBMMKT_Model.activityFormTBMMKT.costCenter_multi_select[index_each] = item.select_list_choice_id;
                                 if (index_each == 0)
                                 {
-                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter  += item.name + addCost;
-                                    
+                                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter += item.name + addCost;
+
                                 }
                                 else
                                 {
@@ -611,8 +616,8 @@ namespace eActForm.BusinessLayer
                             //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
-                            
-                            
+
+
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                             {
                                 activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
@@ -851,7 +856,7 @@ namespace eActForm.BusinessLayer
                             }
 
 
-                            
+
 
                         }
                     }
@@ -2035,6 +2040,36 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> insertCliamIO");
+            }
+
+            return rtn;
+        }
+
+        protected static int InsertBudgetAmount(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            try
+            {
+
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetAmount"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    });
+                foreach (var item in model.amountBudgetList)
+                {
+                    rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    ,new SqlParameter("@EO",item.EO)
+                    ,new SqlParameter("@activityType",item.activityType)
+                    ,new SqlParameter("@budgetTotal",item.budgetTotal)
+                    ,new SqlParameter("@useAmount",item.useAmount)
+                    ,new SqlParameter("@returnAmount",item.returnAmount)
+                    ,new SqlParameter("@amountBalance",item.amountBalance)
+                    ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
+                        });
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> InsertBudgetAmount");
             }
 
             return rtn;

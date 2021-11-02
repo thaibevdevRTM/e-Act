@@ -214,7 +214,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId)
+        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId,string status)
         {
             var result = new AjaxResult();
             try
@@ -229,45 +229,40 @@ namespace eActForm.Controllers
                     total = group.Sum(c => c.total),
                 }).ToList();
 
-                var getListEOIO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
-                var groupEOIO = getListEOIO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.IO }).Select((group, index) => new BudgetTotal
-                {
-                    EO = group.First().EO,
-                    IO = group.First().IO,
-                }).ToList();
+                //var getListEOIO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
+                //var groupEOIO = getListEOIO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.IO }).Select((group, index) => new BudgetTotal
+                //{
+                //    EO = group.First().EO,
+                //    IO = group.First().IO,
+                //}).ToList();
 
 
 
                 result.Success = false;
 
-                var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
+                
+               var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
 
 
+
+                List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
                 if (groupEO.Any())
                 {
-                    var getAmountReturn = ActFormAppCode.getAmountReturn(groupEO.FirstOrDefault().EO, channelId, brandId);
-                    if (getAmountReturn.Any())
-                    {
-                        sumReturn = getAmountReturn.FirstOrDefault().returnAmount;
-                    }
-                }
-                List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
-                foreach (var item in groupEOIO)
-                {
-                    if (!string.IsNullOrEmpty(item.IO))
+                    foreach (var item in groupEO)
                     {
                         BudgetTotal returnAmountModel = new BudgetTotal();
-                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturnByEOIO(item.EO, item.IO);
+                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId);
                         if (getAmountReturnEOIO.Any())
                         {
                             returnAmountModel.EO = item.EO;
-                            returnAmountModel.IO = item.IO;
-                            returnAmountModel.amount = getAmountReturnEOIO.FirstOrDefault().returnAmount;
+                            sumReturn = getAmountReturnEOIO.FirstOrDefault().returnAmount;
+                            returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
                             returnAmountList.Add(returnAmountModel);
                         }
+
                     }
                 }
 
@@ -279,15 +274,21 @@ namespace eActForm.Controllers
                     if (getAmount.Any())
                     {
 
-                        var returnAmount = returnAmountList.FirstOrDefault(a => a.EO == item.EO);
-                        budgetTotalModel.returnAmount = returnAmount != null ? Convert.ToDecimal(returnAmount.amount) : 0;
+                        var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
+                        budgetTotalModel.returnAmountBrand = returnAmount.FirstOrDefault().returnAmountBrand;
+                        if(status == "2")
+                        {
+                            item.total = 0;
+                        }
 
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                         budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                         budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                        budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total;
-                        budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / getAmount.FirstOrDefault().amount * 100;
+                        budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total + budgetTotalModel.returnAmountBrand;
+
+                        var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
+                        budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
                         budgetTotalModel.brandId = brandId;
                         budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                         budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";

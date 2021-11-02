@@ -33,6 +33,7 @@ namespace eActForm.Models
             {
                 approveModel = new approveModel();
                 approveDetailLists = new List<approveDetailModel>();
+                approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             }
 
         }

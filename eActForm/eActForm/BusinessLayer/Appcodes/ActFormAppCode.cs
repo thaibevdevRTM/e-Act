@@ -552,7 +552,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
@@ -579,19 +579,21 @@ namespace eActForm.BusinessLayer
 
         }
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId)
+
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannel"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnChannelNew"
                , new SqlParameter[] { new SqlParameter("@channelId", channelId)
                ,new SqlParameter("@brandId", brandId)
-               ,new SqlParameter("@EO", EO)});
+               ,new SqlParameter("@EO", EO)
+               ,new SqlParameter("@actTypeId", actTypeId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
                                  returnAmount = string.IsNullOrEmpty(dr["returnAmount"].ToString()) ? 0 : (decimal?)dr["returnAmount"],
-
+                                 returnAmountBrand = string.IsNullOrEmpty(dr["returnBrand"].ToString()) ? 0 : (decimal?)dr["returnBrand"],
                              }).ToList();
                 return lists;
             }
@@ -609,8 +611,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
-               , new SqlParameter[] { new SqlParameter("@EO", EO)
-               ,new SqlParameter("@IO", IO)});
+               , new SqlParameter[] { new SqlParameter("@EO", EO)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {

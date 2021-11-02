@@ -515,36 +515,21 @@ namespace eForms.Presenter.AppCode
             List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetList");
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetListNew");
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
-                                 //activityNo = d["activityNo"].ToString(),
-                                 //date = DateTime.Parse(d["documentDate"].ToString()),
-                                 budNum = d["budNum"].ToString(),
-                                 b_Code = d["bCode"].ToString(),
-                                 brandName = d["bnam_Eng"].ToString(),
-                                 //type = d["type"].ToString(),
-                                 chanelName = d["chanelName"].ToString(),
-                                 budget_Activity = d["actType"].ToString(),
+
                                  transaction = d["transactionTxt"].ToString(),
                                  EO = d["EO"].ToString(),
                                  orderNo = d["orderNo"].ToString(),
-                                 //originalBudget = decimal.Parse(d["originalBudget"].ToString()),
-                                 //LE_Amount = decimal.Parse(d["amountLE"].ToString()),
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
-                                 //balanceLEApprove = decimal.Parse(d["balanceLEApprove"].ToString()),
-                                 trf_BG = decimal.Parse(d["trf_BG"].ToString()),
-                                 actual = decimal.Parse(d["actual"].ToString()),
-                                 PR_PO = decimal.Parse(d["pr_po"].ToString()),
-                                 actualTotal = decimal.Parse(d["totalActual"].ToString()),
-                                 available = decimal.Parse(d["availableAmount"].ToString()),
-                                 returnAmount = decimal.Parse(d["returnAmount"].ToString()),
-                                 balance = decimal.Parse(d["balanceAmount"].ToString()),
-                                 remark = d["remark"].ToString(),
-                                 typeImport = d["importType"].ToString(),
+                                 budget_Amount2 = decimal.Parse(d["approveAmount_Sap"].ToString()),  
                                  replaceEO = d["replaceEO"].ToString(),
-                                 createdByUserId = d["createBy"].ToString(),
+                                 PR_PO = decimal.Parse(d["pr_po"].ToString()),
+                                 actual = decimal.Parse(d["actual"].ToString()),
+                                 bnamEng = d["bnam_Eng"].ToString(),
+                                 returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                              });
 
                 return lists.ToList(); ;

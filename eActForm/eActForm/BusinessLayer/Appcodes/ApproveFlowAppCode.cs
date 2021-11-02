@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.ApproveFlowModel;
 
 namespace eActForm.BusinessLayer
 {
@@ -126,10 +128,38 @@ namespace eActForm.BusinessLayer
                     if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.expenseForm.Contains(getMasterType)))
                     {
                         model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
+
+
                     }
                     else
                     {
                         model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+
+
+                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
+                        {
+                            
+                            if(!model.flowDetail.Where(X => X.empId == "11023182").Any())
+                            {
+                                int conutRow = model.flowDetail.Count();
+                                var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
+                                foreach(var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+
+                                model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM("11023742", conutRow, AppCode.ApproveGroup.Verifyby, false));
+                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow+1, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.OrderBy(X => X.rangNo);
+
+                            }
+                                
+                        }
+
                     }
 
                 }
@@ -142,7 +172,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string checkFlowBeforeByActId(string actFormId)
+        public static flowApproveDetail getAddOn_TrvTBM(string empId,int rangNo ,string approveGroupId,bool isShowInDoc)
+        {
+            var result = new ApproveFlowModel.flowApproveDetail(empId)
+            {
+                rangNo = rangNo,
+                empId = empId,
+                //empFNameTH = dr["empFNameTH"].ToString(),
+                //empLNameTH = dr["empLNameTH"].ToString(),
+                //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get from AD
+                approveGroupId = approveGroupId,
+                approveGroupName = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameTH,
+                approveGroupNameEN = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameEN,
+                isShowInDoc = isShowInDoc,
+                empGroup ="",
+                isApproved =  true,
+
+            };
+
+            return result;
+        }
+
+
+            public static string checkFlowBeforeByActId(string actFormId)
         {
             try
             {
@@ -219,21 +271,8 @@ namespace eActForm.BusinessLayer
                                  empGroup = dr["empGroup"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
-                                 imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
-                                 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                              }).ToList();
 
-                if (lists.Any())
-                {
-                    int i = 0;
-                    foreach (var item in lists)
-                    {
-                        string imageBase64Data = Convert.ToBase64String(item.signature);
-                        string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
-                        lists[0].urlImg = imageDataURL;
-                        i++;
-                    }
-                }
                 return lists;
             }
             catch (Exception ex)
@@ -390,7 +429,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@productType",model.productTypeId)
                     ,new SqlParameter("@activityGroup",model.activityGroup)
-                    ,new SqlParameter("@empId",model.empId)});
+                    ,new SqlParameter("@empId",model.empId)
+                    ,new SqlParameter("@deparmentId",model.deparmentId)
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail("")
                              {

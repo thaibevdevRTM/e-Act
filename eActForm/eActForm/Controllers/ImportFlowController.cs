@@ -86,7 +86,7 @@ namespace eActForm.Controllers
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
-
+                        modelFlow.checkFlowExist = ImportFlowPresenter.checkFlowApprove(AppCode.StrCon, modelFlow);
                         model.importFlowList.Add(modelFlow);
                     }
                 }
@@ -116,66 +116,68 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.importFlowList)
                     {
-                        if (model.masterTypeId == MainAppCode.masterTypePaymentVoucher && !string.IsNullOrEmpty(item.productBrandId))
+                        if (item.checkFlowExist != true)
                         {
-                            //ใบสั่งจ่าย ช่องทาง brand จะมี subjectId แค่อันเดียว
-                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, MainAppCode.subjectPaymentVoucherId);
-                        }
-                        else if (model.masterTypeId == MainAppCode.masterTypeActivityBudget && !string.IsNullOrEmpty(item.productBrandId))
-                        {
-                            //budget TBM สำหรับช่องทาง Brand 
-                            var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains("งบประมาณกิจกรรม")).ToList();
-                            getSubjectId = getSubject.Where(x => x.nameTH.Contains(item.actType)).FirstOrDefault().id;
-                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubjectId);
-                        }
-                        else if (ImportFlowPresenter.checkFormAddSubject(AppCode.StrCon, model.masterTypeId))
-                        {
-                            if ((item.subject != strSubject && item.limitBegin == limitBegin) || (item.subject != strSubject && item.limitBegin != limitBegin))
+                            if (model.masterTypeId == MainAppCode.masterTypePaymentVoucher && !string.IsNullOrEmpty(item.productBrandId))
                             {
-
-                                if(model.masterTypeId == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                                //ใบสั่งจ่าย ช่องทาง brand จะมี subjectId แค่อันเดียว
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, MainAppCode.subjectPaymentVoucherId);
+                            }
+                            else if (model.masterTypeId == MainAppCode.masterTypeActivityBudget && !string.IsNullOrEmpty(item.productBrandId))
+                            {
+                                //budget TBM สำหรับช่องทาง Brand 
+                                var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains("งบประมาณกิจกรรม")).ToList();
+                                getSubjectId = getSubject.Where(x => x.nameTH.Contains(item.actType)).FirstOrDefault().id;
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubjectId);
+                            }
+                            else if (ImportFlowPresenter.checkFormAddSubject(AppCode.StrCon, model.masterTypeId))
+                            {
+                                if ((item.subject != strSubject && item.limitBegin == limitBegin) || (item.subject != strSubject && item.limitBegin != limitBegin))
                                 {
-                                    var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains(item.subject)).ToList();
-                                    if (!getSubject.Any())
+
+                                    if (model.masterTypeId == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                                     {
-                                        getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                        var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains(item.subject)).ToList();
+                                        if (!getSubject.Any())
+                                        {
+                                            getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                        }
+                                        else
+                                        {
+                                            getSubjectId = getSubject.FirstOrDefault().id;
+                                        }
+
                                     }
                                     else
                                     {
-                                        getSubjectId = getSubject.FirstOrDefault().id;
+                                        //check insert subject
+                                        getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
                                     }
-                                    
+
+                                    checkSubject = true;
+
+                                    item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
+                                    keepFlow = item.flowId;
+                                }
+                                else if (item.subject == strSubject && item.limitBegin != limitBegin)
+                                {
+                                    checkSubject = true;
+                                    item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
+                                    keepFlow = item.flowId;
                                 }
                                 else
                                 {
-                                    //check insert subject
-                                    getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
+                                    item.flowId = keepFlow;
                                 }
-
-                                checkSubject = true;
-                               
-                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
-                                keepFlow = item.flowId;
-                            }
-                            else if (item.subject == strSubject && item.limitBegin != limitBegin)
-                            {
-                                checkSubject = true;
-                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, getSubjectId);
-                                keepFlow = item.flowId;
                             }
                             else
                             {
-                                item.flowId = keepFlow;
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, "");
                             }
+                            result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
+                            strSubject = item.subject;
+                            limitBegin = item.limitBegin;
                         }
-                        else
-                        {
-                            item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, checkSubject, "");
-                        }
-                        result += ImportFlowPresenter.InsertFlow(AppCode.StrCon, item);
-                        strSubject = item.subject;
-                        limitBegin = item.limitBegin;
-
                     }
                     resultAjax.Success = true;
                 }

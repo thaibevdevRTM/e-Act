@@ -116,7 +116,7 @@ namespace eActForm.Controllers
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
             activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
-
+            activityModel.approveModels = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], activityId);
             return PartialView(activityModel);
         }
 

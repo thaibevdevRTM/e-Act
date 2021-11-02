@@ -22,6 +22,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<RequestEmpModel> empList { get; set; }
         public List<ManagentFlowModel.flowSubject> flowSubjectList { get; set; }
+        public List<departmentMasterModel> departmentMasterList { get; set; }
         public List<string> addOn_Id { get; set; }
         public List<string> p_idList { get; set; }
         public List<string> p_rangNoList { get; set; }
@@ -40,6 +41,7 @@ namespace eActForm.Models
         public string p_companyId { get; set; }
         public string p_productCateId { get; set; }
         public string p_productGroupId { get; set; }
+        public string p_deparmentId { get; set; }
         public string activityTypeId { get; set; }
         public string customerId { get; set; }
         public string typeFlow { get; set; }
@@ -57,6 +59,7 @@ namespace eActForm.Models
             getDDlApproveList = new List<TB_Act_Other_Model>();
             approveGroupList = new List<TB_Reg_ApproveGroup_Model>();
             empList = new List<RequestEmpModel>();
+            departmentMasterList = new List<departmentMasterModel>();
         }
     }
 
@@ -73,5 +76,6 @@ namespace eActForm.Models
         public string productBrandId { get; set; }
         public string activityGroup { get; set; }
         public string empId { get; set; }
+        public string deparmentId { get; set; }
     }
 }

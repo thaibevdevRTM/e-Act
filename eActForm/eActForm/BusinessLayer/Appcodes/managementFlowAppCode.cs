@@ -22,7 +22,7 @@ namespace eActForm.BusinessLayer.Appcodes
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
         {
             if (companyId == "5601") { companyId = "5600"; }
-            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).OrderBy(x => x.nameTH).ToList();
+            return QueryGetSubject.getAllSubjectByFlowCompany(companyId).OrderBy(x => x.nameTH).ToList();
         }
 
         public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId, string companyId)

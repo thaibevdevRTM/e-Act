@@ -3,8 +3,10 @@ using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using eForms.Presenter.AppCode;
+using eForms.Presenter.MasterData;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -39,11 +41,12 @@ namespace eActForm.Controllers
                 model.subjectList = managementFlowAppCode.getSubject(companyId);
                 model.customerList = managementFlowAppCode.getCustomer(companyId);
                 //model.getLimitList = managementFlowAppCode.getLimit();
+                model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
-                model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
                     .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
@@ -73,6 +76,7 @@ namespace eActForm.Controllers
             management_Model.p_subjectId = model.subjectId;
             management_Model.activityTypeId = model.activityGroup;
             management_Model.customerId = model.customerId;
+            management_Model.p_deparmentId = model.deparmentId;
             management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
 
             TempData["management_Model"] = management_Model;
@@ -198,6 +202,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                if(subjectId == ConfigurationManager.AppSettings["formTrvHcmId"] || subjectId == ConfigurationManager.AppSettings["formExpMedNumId"])
+                {
+                    companyId = "";
+                }
+
+
                 var lists = managementFlowAppCode.getLimit(subjectId, companyId);
                 result.Data = lists;
             }
