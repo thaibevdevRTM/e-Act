@@ -139,10 +139,9 @@ namespace eActForm.BusinessLayer
                         var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
-                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]))
                         {
-                            
-                            if(!model.flowDetail.Where(X => X.empId == "11023182").Any())
+                            if (!model.flowDetail.Where(X => X.empId == "11023182").Any())
                             {
                                 int conutRow = model.flowDetail.Count();
                                 var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
