@@ -134,6 +134,7 @@ namespace eActForm.BusinessLayer
                              {
                                  
                                  empId = d["empId"].ToString(),
+                                 empDepartment = d["empDepartment"].ToString(),
                                  empPhone = d["empPhone"].ToString(),
                                  languageDoc = d["languageDoc"].ToString()
                              });

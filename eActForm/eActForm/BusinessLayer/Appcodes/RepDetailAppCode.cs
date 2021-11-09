@@ -419,7 +419,7 @@ namespace eActForm.BusinessLayer
                                                          perGrowth = dr["growth"] is DBNull ? 0 : Convert.ToDecimal(dr["growth"]),
                                                          perSE = dr["Le"] is DBNull ? 0 : Convert.ToDecimal(dr["Le"]),
                                                          perToSale = dr["perToSale"] is DBNull ? 0 : Convert.ToDecimal(dr["perToSale"]),
-                                                         rowNo = dr["rowNo"].ToString(),
+                                                         rowNo =  int.Parse(dr["rowNo"].ToString()),
                                                          #endregion
 
                                                      }).ToList();
@@ -539,7 +539,7 @@ namespace eActForm.BusinessLayer
                                                          promotionGp = dr["promotionGp"] is DBNull ? 0 : Convert.ToDecimal(dr["promotionGp"]),
                                                          rsp = dr["RSP"] is DBNull ? 0 : Convert.ToDecimal(dr["RSP"]),
                                                          unitTxt = dr["unitTxt"].ToString(),
-                                                         rowNo = dr["rowNo"].ToString(),
+                                                         rowNo = int.Parse(dr["rowNo"].ToString()),
                                                          #endregion
 
                                                      }).ToList();
