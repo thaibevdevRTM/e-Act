@@ -518,6 +518,32 @@ namespace eActForm.Models
 
     public class DataRequesterToShow
     {
+        public DataRequesterToShow(string empId)
+        {
+            if (empId != "")
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                if (model.Count > 0)
+                {
+                    this.empName = model.Count > 0 ? model[0].empName : "";
+                    this.empDepartment = model.Count > 0 ? model[0].department : "";
+                    this.empPhone = model.Count > 0 ? model[0].empTel : "";
+                    this.empCompany = model.Count > 0 ? model[0].companyName : "";
+                    this.empEmail = model.Count > 0 ? model[0].email : "";
+
+                    //HttpContext.Current.Session[empId] = model;
+                }
+                else
+                {
+                    this.empName = "";
+                    this.empDepartment = "";
+                    this.empPhone ="";
+                    this.empCompany = "";
+                    this.empEmail = "";
+                }
+            }
+        }
+
         public string empName { get; set; }
         public string empId { get; set; }
         public string empDepartment { get; set; }
