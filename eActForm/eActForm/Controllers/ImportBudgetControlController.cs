@@ -56,8 +56,8 @@ namespace eActForm.Controllers
                 DataTable dt = new DataTable();
                 DataTable dtBrand = new DataTable();
 
-                dt = ExcelAppCode.ReadExcel(resultFilePath, "BG-L1", "A:Z");
-                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "B_BRAND", "A:Z");
+                dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
+                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "Brand", "A:Z");
 
                 var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon, MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]).Year);
 

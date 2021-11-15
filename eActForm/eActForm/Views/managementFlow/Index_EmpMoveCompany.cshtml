@@ -6,7 +6,7 @@
 <html>
 <body>
 
-    <h1>พนักย้ายบริษัท</h1>
+    <h1>พนักงานย้ายบริษัท</h1>
 
 
     <fieldset>
@@ -54,17 +54,23 @@
 
 
     function submitPreview() {
-        $("#WaitDialog").show();
-         $.ajax({
-            type: 'POST',
-            url: '@Url.Action("list_EmpMoveCompany", "ManagementFlow")',
-             data: {
-                 empId: $("#txtempId").val(),
-             }
-         }).done(function (htmlResponse) {
-             $("#WaitDialog").hide();
-            $("#divDetail").html(htmlResponse);
-        });
+        if ($('#txtempId').val() != '') {
+
+            $("#WaitDialog").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("list_EmpMoveCompany", "ManagementFlow")',
+                data: {
+                    empId: $("#txtempId").val(),
+                }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                $("#divDetail").html(htmlResponse);
+            });
+        }
+        else {
+            bootbox.alert("กรุณาระบุ รหัสพนักงาน <br/>" );
+        }
     }
 
 </script>

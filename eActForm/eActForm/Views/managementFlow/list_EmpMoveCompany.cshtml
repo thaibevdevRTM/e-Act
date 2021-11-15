@@ -38,7 +38,7 @@
                         @item.companyName
                     </td>
                     <td>
-                        @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany_" + @i })
+                        @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany_" + @i, onchange = "ddlCompany_Onchange();" });
                         @Html.Hidden("Model.p_flowId", item.flowId ,new { id= "hd_flowId_"+ i })
                     </td>
 
@@ -134,6 +134,19 @@
     function setFlagAll(ele) {
         var chkAll = ele.checked ? true : false;
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+    }
+
+    function ddlCompany_Onchange() {
+
+        console.log('tt');
+        $.each($("input[name='chk_approve']:checked"), function (index, value) {
+
+            var row = $(this).val();
+          
+            var x = document.getElementById("ddlCompany_" + 0).selectedIndex;
+            document.getElementById("ddlCompany_" + row).selectedIndex = x;
+
+        })
     }
 
 

@@ -87,8 +87,11 @@ namespace eActForm.BusinessLayer
                                  cusNameEN = dr["cusNameEN"].ToString(),
                                  nameTH = dr["nameTH"].ToString(),
                              }).ToList();
-                model.flowMain = lists[0];
-                model.flowDetail = getFlowDetail(model.flowMain.id);
+                if (lists.Any())
+                {
+                    model.flowMain = lists[0];
+                    model.flowDetail = getFlowDetail(model.flowMain.id);
+                }
             }
             catch (Exception ex)
             {
