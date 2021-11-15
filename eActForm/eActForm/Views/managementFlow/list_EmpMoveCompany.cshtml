@@ -1,0 +1,151 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+@using eActForm.Models
+
+
+
+<table id="dtApproveLists" class="table table-striped table-hover">
+    <thead>
+        <tr style="background-color:#2B5D95;color:#ffffff;">
+            <th style="width:20px">
+                <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
+            </th>
+            <th style="width:100px" class="center"">SubjectName</th>
+            <th style="width:100px" class="center">Limit</th>
+            <th style="width:80px" class="center">Company</th>
+            <th style="width:80px" class="center">To Company</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.flowSubjectList.Any())
+        {
+            int i = 0;
+            foreach (var item in Model.flowSubjectList)
+            {
+
+                <tr class="tagTR">
+                    <td>
+                        <input type="checkbox" id="chk_@i" class="icheckbox_flat-green" value="@i" name="chk_approve">
+                    </td>
+                    <td style="width:100px">
+                        @item.subjectName
+                    </td>
+                    <td>
+                        @item.limitName
+                    </td>
+                    <td>
+                        @item.companyName
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany_" + @i })
+                        @Html.Hidden("Model.p_flowId", item.flowId ,new { id= "hd_flowId_"+ i })
+                    </td>
+
+                    
+                </tr>
+                i++;
+            }
+        }
+
+
+</table>
+
+
+<div class="row form-group  hero-container">
+    <div class="col-md-5 col-xs-6">
+        
+    </div>
+    <div class="col-md-6 col-xs-6">
+        <button type="button" onclick="return update();" class="btn btn-info">Update</button>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+
+     function updateCompanyEmp(flowId , companyId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("updateCompanyByEmpId", "ManagementFlow")',
+            data: {
+                flowId: flowId,
+                companyId: companyId,
+                empId: $("#txtempId").val()
+            }
+        }).done(function (result) {
+            if (result.Success) {
+               
+            }
+            else {
+            
+                bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + result.Message);
+            }
+
+        });
+    }
+
+
+    function update() {
+        var favorite = [];
+        var countDoc = document.querySelectorAll("input[name='chk_approve']:checked").length
+        console.log(countDoc);
+
+        if (countDoc > 0) {
+
+            bootbox.confirm({
+                title: "",
+                message: "ยืนยัน เอกสาร จำนวน : " + countDoc + " flow",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancel'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Confirm',
+                        className: 'btn-success'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        $.each($("input[name='chk_approve']:checked"), function (index, value) {
+
+                            var row = $(this).val();
+                            setTimeout(updateCompanyEmp($("#hd_flowId_" + row).val(), $("#ddlCompany_" + row).val()), 300);
+
+                        }).promise().done(function () {
+                            $("#WaitDialog").show();
+                            setTimeout(alertFunc, 5000);
+                        });
+
+                    }
+
+                }
+            });
+
+        }
+        else {
+            doAlert('กรุณาเลือกรายการ อนุมัติ');
+        }
+    }
+
+    function setFlagAll(ele) {
+        var chkAll = ele.checked ? true : false;
+        $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+    }
+
+
+        function alertFunc() {
+        bootbox.alert({
+            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />เปลี่ยน Company เรียบร้อย</div></div>",
+            callback: function () {
+                var url = '@Url.Action("Index_EmpMoveCompany", "ManagementFlow")';
+                window.location.replace(url);
+            }
+        })
+    }
+
+
+</script>

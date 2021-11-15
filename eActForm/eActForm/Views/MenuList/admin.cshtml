@@ -7,7 +7,7 @@
         <ul class="nav child_menu">
             @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin)
             {
-                if (UtilsAppCode.Session.User.empCompanyId  == "5601")
+                if (UtilsAppCode.Session.User.empCompanyId == "5601")
                 {
                     <li>@Html.ActionLink(" Customer Setting ", "manageCustomer", "admin")</li>
                 }
@@ -21,8 +21,9 @@
                 <li>@Html.ActionLink(" User Setting ", "index", "AdminUser")</li>
                 <li>@Html.ActionLink(" Flow Swap Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.swap.ToString() }, null)</li>
                 <li>@Html.ActionLink(" Import Flow ", "index", "ImportFlow")</li>
+                <li>@Html.ActionLink(" Move Company ", "Index_EmpMoveCompany", "ManagementFlow")</li>
             }
-    
+
 
         </ul>
     </li>

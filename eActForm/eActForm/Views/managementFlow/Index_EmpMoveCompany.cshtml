@@ -1,0 +1,70 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+@using eActForm.Models
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h1>พนักย้ายบริษัท</h1>
+
+
+    <fieldset>
+        <legend style="text-align:center;"><b>รายละเอียด</b></legend>
+        <div class="col-3 col-lg-3">
+            <label for="fname">EmpId:</label>
+            <input class="form-control" type="text" id="txtempId" name="txtempId" onchange="getEmpDetail();">
+        </div>
+        <div class="col-3 col-lg-3">
+            <label for="lname">Name:</label>
+            <input class="form-control" type="text" id="fname" name="fname" readonly>
+        </div>
+        <div class="col-3 col-lg-3">
+            <br />
+            <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+        </div>
+       
+    </fieldset>
+
+    <br />
+    <br />
+    <div class="col-md-12">
+        <div id="divDetail" class="col-md-12">
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    function getEmpDetail() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $('#txtempId').val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            $('#fname').val(response.Data.empName);
+        });
+
+    }
+
+
+    function submitPreview() {
+        $("#WaitDialog").show();
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("list_EmpMoveCompany", "ManagementFlow")',
+             data: {
+                 empId: $("#txtempId").val(),
+             }
+         }).done(function (htmlResponse) {
+             $("#WaitDialog").hide();
+            $("#divDetail").html(htmlResponse);
+        });
+    }
+
+</script>
