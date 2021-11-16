@@ -269,7 +269,7 @@ namespace eActForm.Controllers
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                         budgetTotalModel.returnAmountBrand = returnAmount.FirstOrDefault().returnAmountBrand;
-                        if(status == "2")
+                        if(status == "2" || status =="3")
                         {
                             item.total = 0;
                         }
