@@ -190,6 +190,8 @@ namespace eActForm.Controllers
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                model.actFormRepDetailGroupLists.OrderBy(x => x.activityNo).ThenBy(x => x.rowNo).ToList();
+
                 ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)

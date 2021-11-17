@@ -82,7 +82,7 @@
                                     @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
                                     @foreach (var item in Model.actFormRepDetailGroupLists)
                                     {
-                                        if (item.delFlag == false)
+                                        if ((item.delFlag == false && item.typeTheme != "" && item.total > 0) || (item.delFlag == false && item.activityDetail != ""))
                                         {
                                             <tr class="gradeX">
 

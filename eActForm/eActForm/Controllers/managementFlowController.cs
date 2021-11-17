@@ -202,7 +202,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                if(subjectId == ConfigurationManager.AppSettings["formTrvHcmId"] || subjectId == ConfigurationManager.AppSettings["formExpMedNumId"])
+                if (subjectId == ConfigurationManager.AppSettings["formTrvHcmId"] || subjectId == ConfigurationManager.AppSettings["formExpMedNumId"])
                 {
                     companyId = "";
                 }
@@ -268,7 +268,7 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult getFlowSwap(string empId,string[] companyList )
+        public ActionResult getFlowSwap(string empId, string[] companyList)
         {
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
@@ -284,7 +284,7 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow,string newEmpId)
+        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow, string newEmpId)
         {
             var result = new AjaxResult();
 
@@ -293,11 +293,11 @@ namespace eActForm.Controllers
             {
                 int i = 0;
 
-                foreach(var item in ApproveIdList)
+                foreach (var item in ApproveIdList)
                 {
-                    if(selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
+                    if (selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
                     {
-                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId , UtilsAppCode.Session.User.empId);
+                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId, UtilsAppCode.Session.User.empId);
                     }
                     i++;
                 }
@@ -313,5 +313,52 @@ namespace eActForm.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult Index_EmpMoveCompany()
+        {
+
+            return View();
+        }
+
+        public ActionResult list_EmpMoveCompany(string empId)
+        {
+            ManagementFlow_Model model = new ManagementFlow_Model();
+            try
+            {
+
+                model.flowSubjectList = pManagementFlowAppCode.getFlowbyEmpId(AppCode.StrCon, empId);
+                model.companyList = managementFlowAppCode.getCompany();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("list_EmpMoveCompany => " + ex.Message);
+            }
+            return PartialView(model);
+
+        }
+
+         public JsonResult updateCompanyByEmpId(string flowId, string empId , string companyId)
+        {
+            var result = new AjaxResult();
+
+            ManagentFlowModel flowSubject = new ManagentFlowModel();
+            try
+            {
+                result.Code = pManagementFlowAppCode.updateCompanyFlowByEmpId(AppCode.StrCon,flowId,companyId, empId, UtilsAppCode.Session.User.empId);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("updateCompanyByEmpId => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+ 
     }
 }

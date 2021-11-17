@@ -44,7 +44,7 @@ namespace eActForm.Models
             public decimal? promotionGp { get; set; }
             public decimal? rsp { get; set; }
             public string unitTxt { get; set; }
-            public string rowNo { get; set; }
+            public int rowNo { get; set; }
         }
 
         public class actApproveRepDetailModels

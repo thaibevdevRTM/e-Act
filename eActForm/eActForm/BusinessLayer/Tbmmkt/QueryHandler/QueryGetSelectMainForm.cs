@@ -130,14 +130,12 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetDataRequesterToShow", new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new DataRequesterToShow()
+                             select new DataRequesterToShow(d["empId"].ToString())
                              {
-                                 empName = d["empName"].ToString(),
+                                 
                                  empId = d["empId"].ToString(),
                                  empDepartment = d["empDepartment"].ToString(),
                                  empPhone = d["empPhone"].ToString(),
-                                 empCompany = d["empCompany"].ToString(),
-                                 empEmail = d["empEmail"].ToString(),
                                  languageDoc = d["languageDoc"].ToString()
                              });
                 return lists.ToList();

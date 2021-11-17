@@ -27,6 +27,8 @@ namespace eForms.Models.MasterData
             public string rangNo { get; set; }
             public string cusNameTH { get; set; }
             public Boolean selectRow { get; set; }
+            public string flowId { get; set; }
+            public  string limitName { get; set; }
             public List<string> flowApproveIdList { get; set; }
 
 

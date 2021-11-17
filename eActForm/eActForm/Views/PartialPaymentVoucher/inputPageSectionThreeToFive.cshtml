@@ -42,7 +42,7 @@
                                 }
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control" })
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control", Onchange = "getGL("+ index + ")" });
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss txtGL_@index" readonly="readonly" />
@@ -62,10 +62,7 @@
                                         liveSearch: true,
                                         showSubtext: true
                                     });
-                                    $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava + '__IO').change(function ()
-                                    {
-                                        getGL(indexJava);
-                                    });
+                                    
                                 </script>
                             </td>
                         </tr>
@@ -107,6 +104,8 @@
                     function getGL(indexRow) {
                         //alert('getGl' + indexRow);
                         var IOSelect = $('#tB_Act_ActivityForm_DetailOtherList_' + indexRow + '__IO').val().toString();
+
+                        console.log(IOSelect + 'IOSelect');
                         var dataToBeSend = {
                             IOCode: IOSelect.substring(6, 8)
                             , SubGroupCode: IOSelect.substring(8, 9)
@@ -122,6 +121,7 @@
                                         if (response.Data.tbToAjax.length > 0) {
                                             //tB_Act_ActivityForm_DetailOtherList[0].GL
                                             $.each(response.Data.tbToAjax, function () {
+                                                console.log(indexRow);
                                                 $(".txtGL_" + indexRow).val(this['GL']);
                                             });
                                         }

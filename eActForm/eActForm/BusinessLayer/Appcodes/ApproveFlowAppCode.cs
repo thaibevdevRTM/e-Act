@@ -87,8 +87,11 @@ namespace eActForm.BusinessLayer
                                  cusNameEN = dr["cusNameEN"].ToString(),
                                  nameTH = dr["nameTH"].ToString(),
                              }).ToList();
-                model.flowMain = lists[0];
-                model.flowDetail = getFlowDetail(model.flowMain.id);
+                if (lists.Any())
+                {
+                    model.flowMain = lists[0];
+                    model.flowDetail = getFlowDetail(model.flowMain.id);
+                }
             }
             catch (Exception ex)
             {
@@ -135,27 +138,32 @@ namespace eActForm.BusinessLayer
                     {
                         model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
 
+                        var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
+                        var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
-                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && purpose.Any())
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                         {
-                            
-                            if(!model.flowDetail.Where(X => X.empId == "11023182").Any())
+                            if (purpose.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]))
                             {
-                                int conutRow = model.flowDetail.Count();
-                                var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
-                                foreach(var item in changeApproveGroup)
+
+                                if (!model.flowDetail.Where(X => X.empId == "11023182").Any())
                                 {
-                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
-                                    item.approveGroupName = "ผ่าน";
-                                    item.approveGroupNameEN = "Verify by";
+                                    int conutRow = model.flowDetail.Count();
+                                    var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
+                                    foreach (var item in changeApproveGroup)
+                                    {
+                                        item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                        item.approveGroupName = "ผ่าน";
+                                        item.approveGroupNameEN = "Verify by";
+                                    }
+
+                                    model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                                    model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], conutRow, AppCode.ApproveGroup.Verifyby, false));
+                                    model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], conutRow + 1, AppCode.ApproveGroup.Approveby, true));
+                                    model.flowDetail.OrderBy(X => X.rangNo);
+
                                 }
-
-                                model.flowDetail.Where(x => x.rangNo == conutRow).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM("11023742", conutRow, AppCode.ApproveGroup.Verifyby, false));
-                                model.flowDetail.Add(getAddOn_TrvTBM("11023182", conutRow+1, AppCode.ApproveGroup.Approveby, true));
-                                model.flowDetail.OrderBy(X => X.rangNo);
-
                             }
                                 
                         }
@@ -339,8 +347,8 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 bu = dr["empDivisionTH"].ToString(),
-                                 buEN = dr["empDivisionEN"].ToString(),
+                                // bu = dr["empDivisionTH"].ToString(),
+                                // buEN = dr["empDivisionEN"].ToString(),
                                  //empFNameEN = dr["empFNameEN"].ToString(),
                                  //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()

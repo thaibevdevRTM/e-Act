@@ -11,14 +11,14 @@ namespace eActForm.Controllers
     public class TransferBudgetController : Controller
     {
         // GET: transferBudget
-        public JsonResult getBudgetBalanceByEOIO(string EO, string IO)
+        public JsonResult getBudgetBalanceByEOIO(string EO, string IO,string fiscalYear)
         {
             var result = new AjaxResult();
             try
             {
                if (!string.IsNullOrEmpty(IO))
                 {
-                    var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceByEOIO(EO, IO);
+                    var budgetPrice = TransferBudgetAppcode.GetBudgetBalanceByEOIO(EO, IO, fiscalYear);
 
                     if (budgetPrice.Any())
                     {

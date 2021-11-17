@@ -93,6 +93,11 @@ namespace eActForm.Models
             public string empPositionTitleTH { get; set; }
             public string empPositionTitleEN { get; set; }
             public bool? isShowInDoc { get; set; }
+            public string empDepartment { get; set; }
+            public string empPhone { get; set; }
+            public string languageDoc { get; set; }
+
+
         }
         public class approveStatus : ActBaseModel
         {
