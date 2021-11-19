@@ -214,7 +214,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId,string status)
+        public JsonResult getBudgetByEO(string listEO, string companyId, string subjectId, string channelId, string brandId, string activityId, string status)
         {
             var result = new AjaxResult();
             try
@@ -230,11 +230,11 @@ namespace eActForm.Controllers
                     total = group.Sum(c => c.total),
                 }).ToList();
 
-           
+
                 result.Success = false;
 
-                
-               var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
+
+                var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
 
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
@@ -247,7 +247,7 @@ namespace eActForm.Controllers
                     foreach (var item in groupEO)
                     {
                         BudgetTotal returnAmountModel = new BudgetTotal();
-                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId,item.fiscalYear);
+                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId, item.fiscalYear);
                         if (getAmountReturnEOIO.Any())
                         {
                             returnAmountModel.EO = item.EO;
@@ -268,8 +268,8 @@ namespace eActForm.Controllers
                     {
 
                         var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                        budgetTotalModel.returnAmountBrand = returnAmount.FirstOrDefault().returnAmountBrand;
-                        if(status == "2" || status =="3")
+                        budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
+                        if (status == "2" || status == "3")
                         {
                             item.total = 0;
                         }
@@ -321,7 +321,7 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 result.Success = false;
-                ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetByEO => " + activityId + "____" + ex.Message);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);

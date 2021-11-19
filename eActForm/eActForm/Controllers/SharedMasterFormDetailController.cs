@@ -266,7 +266,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getBudgetByEO => " + ex.Message);
+                ExceptionManager.WriteError("showDetailBudgetRpt => " + ex.Message);
             }
 
             return PartialView(activity_TBMMKT_Model);
