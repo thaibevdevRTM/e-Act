@@ -35,5 +35,17 @@ namespace updateDataReportTBM.Properties {
                 this["strConn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}\\logs\\logs_{1}.txt")]
+        public string logsFileName {
+            get {
+                return ((string)(this["logsFileName"]));
+            }
+            set {
+                this["logsFileName"] = value;
+            }
+        }
     }
 }

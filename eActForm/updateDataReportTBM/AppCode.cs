@@ -3,6 +3,7 @@ using Microsoft.ApplicationBlocks.Data;
 using System.Data;
 using System.Threading.Tasks;
 
+
 namespace updateDataReportTBM
 {
     public class AppCode
@@ -49,5 +50,6 @@ namespace updateDataReportTBM
                 }
             });
         }
+
     }
 }
