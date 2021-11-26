@@ -311,7 +311,7 @@
 
 
                                             @*@if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId == 3)*@
-                                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
+                                            @if ( item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
                                             {
                                                 count_history_inv++;
                                             }
@@ -396,7 +396,7 @@
                             @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
                         }
                         @* show last signature approved *@
-                        else if (count_wait_approve == 0 && count_req_approve == 0 && count_history_inv > 0)
+                        else if (count_wait_approve == 0 && count_req_approve == 0 && count_history_inv >= 0)
                         {
                             @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
                         }
