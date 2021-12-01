@@ -67,6 +67,7 @@ namespace eActForm.BusinessLayer
                                  createByUserName = dr["createByName"].ToString(),
                                  dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                                  brandName = dr["brandName"].ToString(),
+                                 master_type_form_id = dr["master_type_form_id"].ToString(),
                              }).ToList();
                 return lists;
             }

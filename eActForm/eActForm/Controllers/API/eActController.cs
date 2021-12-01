@@ -405,7 +405,8 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId).ToList();
+   
+                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, UtilsAppCode.Session.User.empLevel).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new
