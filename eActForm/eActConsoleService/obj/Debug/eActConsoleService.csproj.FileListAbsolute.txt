@@ -78,7 +78,6 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleServ
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
-D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ApplicationInsights.config
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf
@@ -308,3 +307,8 @@ D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Deb
 D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.AssemblyReference.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe.manifest
+D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.application
+D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe.manifest
+D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.application

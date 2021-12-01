@@ -163,6 +163,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
                     ,new SqlParameter("@activityTypeId",model.activityTypeId)
+                    ,new SqlParameter("@customerId",model.customerId)
                     ,new SqlParameter("@delFlag",model.p_active[i])
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)

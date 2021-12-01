@@ -252,7 +252,7 @@
                                 <i class="btn ink-reaction btn-dark fa fa-eye"></i>
                             </a>
 
-                            @if (item.statusId == "2")
+                            @if (item.statusId == "2" || item.statusId == "3")
                             {
 
                                 <a onclick="resendApprove('@item.id');">

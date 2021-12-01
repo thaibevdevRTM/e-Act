@@ -93,28 +93,28 @@
                     int count = 0;}
                 @foreach (var item in Model.budgetReportList)
                 {
-                <tr>
+                    <tr>
 
-                    <td> @item.fiscalYear</td>
-                    <td>@string.Format("{0:n2}", @item.EO)</td>
-                    <td>@string.Format("{0:n2}", @item.orderNo)</td>
-
-
-                    <td>@string.Format("{0:n2}", @item.transaction)</td>
+                        <td> @item.fiscalYear</td>
+                        <td>@string.Format("{0:n2}", @item.EO)</td>
+                        <td>@string.Format("{0:n2}", @item.orderNo)</td>
 
 
-                    @if (@item.approve_Amount != @item.budget_Amount2)
-                    {
-                        <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
-                        <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
-                    }
-                    else
-                    {
-                        <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
-                        <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
-                    }
+                        <td>@string.Format("{0:n2}", @item.transaction)</td>
 
-                </tr>
+
+                        @if (@item.approve_Amount != @item.budget_Amount2)
+                        {
+                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
+                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
+                        }
+                        else
+                        {
+                            <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
+                            <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
+                        }
+
+                    </tr>
 
                     replaceEO = item.EO;
                     count = count + 1;
@@ -125,11 +125,14 @@
             </tbody>
         </table>
     </div>
-    <div id="divBtn" class="row form-group">
-        <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
-            <label class="btn ink-reaction btn-success" style="margin-top:20px; font-size:15px; width:100%">Confirm</label>
+    @if (Model.budgetReportList2.Count == 0)
+    {
+        <div id="divBtn" class="row form-group">
+            <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
+                <label class="btn ink-reaction btn-success" style="margin-top:20px; font-size:15px; width:100%">Confirm</label>
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 

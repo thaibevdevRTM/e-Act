@@ -16,11 +16,23 @@
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
             {
-                @RenderPage("~/Views/Shared/_search.cshtml")           
+                @RenderPage("~/Views/Shared/_search.cshtml")
             }
         </div>
     </div>
 </div>
+
+@if (ViewBag.messCannotFindSignature != null)
+{
+    <div class="loading" style="text-align: center;">
+        <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
+        <div style="margin-top: 10px; color: white">
+            <p class="text-danger"><h2>@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</h2></p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
+        </div>
+
+    </div>
+}
 
 <div class="row tile_count">
     <div id="getQuery" class="col-md-12 col-xs-12">
@@ -30,7 +42,7 @@
 
 
 <script type="text/javascript">
-    
+
     $(document).ready(function () {
         $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
     })

@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="updateDataReportTBM.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="strConn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=10.6.241.101; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;</Value>
+    </Setting>
+    <Setting Name="logsFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}\logs\logs_{1}.txt</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

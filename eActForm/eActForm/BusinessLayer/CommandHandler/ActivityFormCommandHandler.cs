@@ -154,7 +154,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertAllActivity");
+                ExceptionManager.WriteError(ex.Message + ">> insertAllActivity" + activityId);
                 return rtn;
             }
 
