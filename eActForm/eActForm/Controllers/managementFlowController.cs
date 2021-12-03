@@ -284,22 +284,18 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow, string newEmpId)
+        public JsonResult insertFlowAddOn(string[] selectRow, string newEmpId)
         {
             var result = new AjaxResult();
 
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
-                int i = 0;
-
-                foreach (var item in ApproveIdList)
+                foreach (var item in selectRow)
                 {
-                    if (selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
-                    {
-                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId, UtilsAppCode.Session.User.empId);
-                    }
-                    i++;
+
+                    result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId, UtilsAppCode.Session.User.empId);
+
                 }
                 result.Success = true;
                 //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
@@ -338,14 +334,14 @@ namespace eActForm.Controllers
 
         }
 
-         public JsonResult updateCompanyByEmpId(string flowId, string empId , string companyId)
+        public JsonResult updateCompanyByEmpId(string flowId, string empId, string companyId)
         {
             var result = new AjaxResult();
 
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
-                result.Code = pManagementFlowAppCode.updateCompanyFlowByEmpId(AppCode.StrCon,flowId,companyId, empId, UtilsAppCode.Session.User.empId);
+                result.Code = pManagementFlowAppCode.updateCompanyFlowByEmpId(AppCode.StrCon, flowId, companyId, empId, UtilsAppCode.Session.User.empId);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -359,6 +355,6 @@ namespace eActForm.Controllers
         }
 
 
- 
+
     }
 }

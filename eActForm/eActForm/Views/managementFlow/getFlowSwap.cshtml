@@ -34,7 +34,7 @@
                         <th>บริษัท</th>
                         <th>เรื่อง</th>
                         <th>รหัส</th>
-                        <th>Customer</th>
+                        <th>Customer or EmpGroup</th>
                         <th>ช่องทาง</th>
 
                     </tr>
@@ -44,8 +44,9 @@
                     {
                         <tr class="gradeX">
                             <td style="text-align:center;">
-                                @Html.CheckBox("selectRow", item.selectRow)
-                                @Html.Hidden("ApproveIdList", item.flowApproveId)
+                                @*@Html.CheckBox("selectRow", item.selectRow)*@
+                                <input type="checkbox" id="chk_@item.selectRow" class="icheckbox_flat-green" value="@item.flowApproveId" name="selectRow">
+                 
                             </td>
                             <td>
                                 <a href="javascript:" onclick="return checkBeforeDeleteSwap('@item.flowApproveId');">
@@ -56,7 +57,7 @@
                             <td>@item.companyName</td>
                             <td>@item.subjectName</td>
                             <td>@item.empId</td>
-                            <td>@item.cusNameTH</td>
+                            <td>@item.cusNameTH </td>
                             <td>@item.chanelGroup  @item.brandName  @item.cateName</td>
 
                         </tr>

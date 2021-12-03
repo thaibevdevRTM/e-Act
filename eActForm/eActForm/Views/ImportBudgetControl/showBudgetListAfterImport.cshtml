@@ -90,7 +90,8 @@
             </thead>
             <tbody>
                 @{string replaceEO = "";
-                    int count = 0;}
+                    int count = 0;
+                    bool checkRow = true;}
                 @foreach (var item in Model.budgetReportList)
                 {
                     <tr>
@@ -107,11 +108,15 @@
                         {
                             <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
                             <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
+                            checkRow = false;
                         }
                         else
                         {
                             <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
                             <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
+
+                           
+
                         }
 
                     </tr>
@@ -125,7 +130,7 @@
             </tbody>
         </table>
     </div>
-    @if (Model.budgetReportList2.Count == 0)
+    @if (checkRow == true)
     {
         <div id="divBtn" class="row form-group">
             <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
