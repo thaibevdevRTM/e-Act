@@ -26,24 +26,28 @@
 </div>
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
-            Start date
-        </label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-7), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+                Start date
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-7), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
+            </div>
         </div>
-
     </div>
     <div class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
             End date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
         </div>
 
     </div>
+
 </div>
+
+
 
 @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
 {
@@ -54,7 +58,15 @@
                     Document Type
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.masterTypeFormList, new SelectList(Model.masterTypeFormList, "id", "nameForm"), "Please Select", new { @class = "form-control textboxcss", id = "ddlMasterType", Name = "ddlMasterType" })
+                    @Html.DropDownListFor(model => model.masterTypeFormList, new SelectList(Model.masterTypeFormList, "id", "nameForm"), "Please Select",
+                   new
+                        {
+                       @class = "form-control",
+                            id = "ddlMasterType",
+                            Name = "ddlMasterType",
+                            multiple = "multiple"
+
+                   })
                 </div>
             </div>
         </div>
@@ -63,7 +75,7 @@
                 Department
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.departmentList, new SelectList(Model.departmentList, "val1", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlDepartment", Name = "ddlDepartment" })
+                @Html.DropDownListFor(model => model.departmentList, new SelectList(Model.departmentList, "val1", "displayVal"), "Please Select", new { @class = "form-control", id = "ddlDepartment", Name = "ddlDepartment" })
             </div>
         </div>
 
@@ -76,7 +88,7 @@
                     Channel
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.channelList, new SelectList(Model.channelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control textboxcss", id = "ddlChannel", Name = "ddlChannel" })
+                    @Html.DropDownListFor(model => model.channelList, new SelectList(Model.channelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control", id = "ddlChannel", Name = "ddlChannel" })
                 </div>
             </div>
         </div>
@@ -85,7 +97,7 @@
                 Brand
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.brandList, new SelectList(Model.brandList, "id", "brandName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlbrand", Name = "ddlbrand" })
+                @Html.DropDownListFor(model => model.brandList, new SelectList(Model.brandList, "id", "brandName"), "Please Select", new { @class = "form-control", id = "ddlbrand", Name = "ddlbrand" })
             </div>
         </div>
 
@@ -151,9 +163,41 @@
     </div>
 </div>
 
+<style>
+    td div span {
+        line-height: 0px;
+    }
+
+    .multiselect-container {
+        width: 100% !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style>
+
 <script>
+
+    $(document).ready(function () {
+        $('#ddlMasterType').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+        $(".multiselect .caret").css('float', 'right');
+        $(".multiselect .caret").css('margin', '8px 0');
+    });
+
     $(function () {
         $("#startDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
         $("#endDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
     });
+
+
 </script>
+
+

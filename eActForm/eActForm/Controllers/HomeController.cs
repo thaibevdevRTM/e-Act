@@ -135,7 +135,14 @@ namespace eActForm.Controllers
                 actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
             };
 
-
+            if (!string.IsNullOrEmpty(Request.Form["ddlMasterType"]))
+            {
+                var masterList = Request.Form["ddlMasterType"].Split(',').ToList();
+                if (masterList.Any())
+                {
+                    model.actLists = model.actLists.Where(r => masterList.Contains(r.master_type_form_id)).ToList();
+                }
+            }
             if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
@@ -166,14 +173,9 @@ namespace eActForm.Controllers
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }
 
-            if (!string.IsNullOrEmpty(Request.Form["ddlMasterType"]))
-            {
-                model.actLists = model.actLists.Where(r => r.master_type_form_id == Request.Form["ddlMasterType"]).ToList();
-            }
-
             if (!string.IsNullOrEmpty(Request.Form["ddlDepartment"]))
             {
-                if(Request.Form["ddlDepartment"] == "Channel")
+                if (Request.Form["ddlDepartment"] == "Channel")
                 {
                     model.actLists = model.actLists.Where(r => r.channelId != "").ToList();
                 }
@@ -181,7 +183,7 @@ namespace eActForm.Controllers
                 {
                     model.actLists = model.actLists.Where(r => r.brandId != "").ToList();
                 }
-             
+
             }
 
             if (!string.IsNullOrEmpty(Request.Form["ddlbrand"]))
@@ -192,6 +194,9 @@ namespace eActForm.Controllers
             {
                 model.actLists = model.actLists.Where(r => r.channelId == Request.Form["ddlChannel"]).ToList();
             }
+
+
+
 
             model.typeForm = activityType;
             TempData["SearchDataModel"] = model;
