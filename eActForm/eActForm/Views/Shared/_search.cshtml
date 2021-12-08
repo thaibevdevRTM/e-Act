@@ -97,7 +97,7 @@
                 Brand
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.brandList, new SelectList(Model.brandList, "id", "brandName"), "Please Select", new { @class = "form-control", id = "ddlbrand", Name = "ddlbrand" })
+                @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control", id = "ddlbrand", Name = "ddlbrand" })
             </div>
         </div>
 
