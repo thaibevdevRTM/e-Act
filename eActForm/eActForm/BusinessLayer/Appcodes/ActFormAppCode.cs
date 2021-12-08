@@ -210,7 +210,8 @@ namespace eActForm.BusinessLayer
                                  createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
                                  companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm),
-
+                                 channelId = dr["channelId"].ToString(),
+                                 brandId = dr["productBrandId"].ToString(),
                              }).ToList();
 
 
