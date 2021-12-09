@@ -65,7 +65,7 @@
                             id = "ddlMasterType",
                             Name = "ddlMasterType",
                             multiple = "multiple"
-
+                            
                    })
                 </div>
             </div>
@@ -163,6 +163,7 @@
     </div>
 </div>
 
+
 <style>
     td div span {
         line-height: 0px;
@@ -172,7 +173,12 @@
         width: 100% !important;
         overflow-x: auto;
         overflow-y: hidden;
+
     }
+    .btn{
+        text-align:left;
+    }
+
 </style>
 
 <script>
@@ -184,9 +190,10 @@
             nonSelectedText: '',
             buttonWidth: '100%',
             onChange: function (option, checked) {
-
+            
             },
         });
+
 
         $(".multiselect .caret").css('float', 'right');
         $(".multiselect .caret").css('margin', '8px 0');
