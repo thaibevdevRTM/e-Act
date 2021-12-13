@@ -252,7 +252,7 @@
 
                 }
 
-
+                console.log(response.Data.budgetTotalsList.length);
                 document.getElementById("divShowBudget").innerHTML = "";
                 if (response.Data.budgetTotalsList.length > 0) {
                     callPartialBudgetControl("@Model.activityFormTBMMKT.id");

@@ -230,6 +230,10 @@
                                bindDropdownEO();
                            }
                         }
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+                            getBudgetTotal();
+                        }
+
                     });
                     $('#ddlBrand').change(function () {
                         $('#ddlChannel').val('');
@@ -242,7 +246,16 @@
                                 bindDropdownEO();
                             }
                         }
+
                     });
+
+                    $('#ddlSubject').change(function () {
+                       if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+                            getBudgetTotal();
+                        }
+
+                    });
+
                     function bindDropdownSubject() {
                         var valDropdown = '';
                         if ($('#ddlChannelOrBrand').val() =="Brand") {

@@ -532,6 +532,7 @@ namespace eForms.Presenter.AppCode
                                  bnamEng = d["bnam_Eng"].ToString(),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  fiscalYear = d["fiscalYear"].ToString(),
+                                 approveNo = d["approveNo"].ToString(),
                              });
 
                 return lists.ToList(); ;
@@ -606,7 +607,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@importType",item.typeImport)
                       ,new SqlParameter("@createdByUserId",item.createdByUserId)
                       ,new SqlParameter("@fiscalYear",item.fiscalYear)
-
+                      ,new SqlParameter("@approveNo",item.approveNo)
                       });
                 }
 
