@@ -43,7 +43,7 @@ namespace eActForm.Controllers
                 //model.getLimitList = managementFlowAppCode.getLimit();
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-                model.chanelList = managementFlowAppCode.getChanel("data");
+              //  model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
                 model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
@@ -354,6 +354,25 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult getChannelBySubject(string subjectId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+
+                var lists = QueryGetAllChanel.getChanelBySubjectId(subjectId);
+                result.Data = lists;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getChannelBySubject => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

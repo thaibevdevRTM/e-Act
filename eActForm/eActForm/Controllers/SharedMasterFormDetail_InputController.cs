@@ -226,6 +226,7 @@ namespace eActForm.Controllers
                 var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
+                    IO = group.First().IO,
                     fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
@@ -306,7 +307,7 @@ namespace eActForm.Controllers
 
                             var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                             budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
-                            if (status == "2" || status == "3")
+                            if (status == "2" || status == "3" || item.IO == ConfigurationManager.AppSettings["Instock"])
                             {
                                 item.total = 0;
                             }
@@ -315,7 +316,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total + budgetTotalModel.returnAmountBrand;
+                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - ( getAmount.FirstOrDefault().balance + item.total + budgetTotalModel.returnAmountBrand);
 
                             var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
                             budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
@@ -331,19 +332,17 @@ namespace eActForm.Controllers
 
                         }
                     }
-                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
+                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input + sumReturn;
                     useAmountTotal = useAmountTotal + sumTotal_Input;
+
                 }
-
-
-
 
 
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 model.budgetTotalList = budgetTotalsList;
                 model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal + sumReturn;
+                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
                 model.budgetTotalModel.returnAmount = sumReturn;
                 TempData["showBudget" + activityId] = model;
 

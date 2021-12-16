@@ -8,7 +8,7 @@
             <div id="getQuery" class="col-lg-12">
             </div>
 
-
+            <div><span style="color:red">หมายเหตุ : .กรณีขออนุมัติงบ เข้าStock  ให้ระบุ IO เข้าStock ก่อนส่งอนุมัติทุกครั้ง</span></div>
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -61,7 +61,7 @@
                                 </div>
 
                                 <div style="display:inline-block;">
-                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isCreator))
                                     {
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" />
                                     }
