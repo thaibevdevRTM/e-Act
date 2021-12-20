@@ -61,6 +61,7 @@ namespace eActForm.Controllers
         }
         public ActionResult listDetailsPosPremium(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+           
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -317,7 +318,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - (getAmount.FirstOrDefault().balance + item.total + budgetTotalModel.returnAmountBrand);
+                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
 
                             var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
                             budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
