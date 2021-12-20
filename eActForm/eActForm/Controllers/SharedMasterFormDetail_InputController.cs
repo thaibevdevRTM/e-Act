@@ -254,6 +254,7 @@ namespace eActForm.Controllers
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
                     foreach (var item in getAmount)
                     {
+                        
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         budgetTotalModel.returnAmountBrand = item.returnAmount;
                         budgetTotalModel.EO = item.EO;
@@ -316,7 +317,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - ( getAmount.FirstOrDefault().balance + item.total + budgetTotalModel.returnAmountBrand);
+                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - (getAmount.FirstOrDefault().balance + item.total + budgetTotalModel.returnAmountBrand);
 
                             var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
                             budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
