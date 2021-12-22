@@ -723,10 +723,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  //empEmail =  dr["empEmail"].ToString()
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -753,9 +750,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -779,9 +774,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -987,9 +980,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -1100,10 +1091,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),

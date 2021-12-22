@@ -399,14 +399,14 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getCashLimitByEmpId(string empId)
+        public JsonResult getCashLimitByEmpId(string empId , string empLvl)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
             try
             {
    
-                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, UtilsAppCode.Session.User.empLevel).ToList();
+                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, empLvl).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new

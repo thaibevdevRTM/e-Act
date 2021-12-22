@@ -120,6 +120,8 @@ namespace eActForm.Models
                     if(model.Count > 0)
                     {
                         empEmail = model[0].email;
+                        empName = model[0].empName;
+                        empName_EN = model[0].empNameEN;
                     }
                     else
                     {
