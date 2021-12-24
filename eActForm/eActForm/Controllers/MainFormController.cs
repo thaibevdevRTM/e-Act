@@ -60,6 +60,7 @@ namespace eActForm.Controllers
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
 
+
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                     {
                         ObjGetDataEO objGetDataEO = new ObjGetDataEO();
