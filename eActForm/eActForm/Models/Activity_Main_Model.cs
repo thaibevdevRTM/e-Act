@@ -78,6 +78,8 @@ namespace eActForm.Models
             tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
             TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
             amountBudgetList = new List<TB_Act_AmountBudget>();
+            tB_Reg_Subject = new List<TB_Reg_Subject>();
+            tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>();
 
         }
 
@@ -318,6 +320,7 @@ namespace eActForm.Models
                     compId = model[0].compId;
                     email = model[0].email;
                     hireDate = model[0].hireDate;
+                    empTel = model[0].empTel;
                 }
             }
         }

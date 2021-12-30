@@ -61,7 +61,22 @@ namespace eActForm.Controllers
         }
         public ActionResult listDetailsPosPremium(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
+
+            Decimal? totalCostThisActivity = 0;
+            foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
+            {
+                #region formPosTbm
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                {
+                    totalCostThisActivity += item.unit;
+                }
+                else
+                {
+                    totalCostThisActivity += item.total;
+                }
+                #endregion
+            }
+            activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
