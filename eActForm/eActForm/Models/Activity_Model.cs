@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static eActForm.Models.ApproveFlowModel;
 using static eActForm.Models.ApproveModel;
+using static eActForm.Models.TB_Act_Chanel_Model;
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
@@ -140,6 +141,7 @@ namespace eActForm.Models
             public DateTime? dateSentApprove { get; set; }
             public string companyId { get; set; }
             public string brandName { get; set; }
+            public string channelId { get; set; }
 
         }
 
@@ -154,6 +156,11 @@ namespace eActForm.Models
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<CompanyMTM> companyList { get; set; }
+        public List<TB_Act_Other_Model> departmentList { get; set; }
+        public List<Master_type_form_Model> masterTypeFormList { get; set; }
+        public List<Chanel_Model> channelList { get; set; }
+        public List<TB_Act_ProductBrand_Model> brandList { get; set; }
+
         public string typeForm { get; set; }
     }
 

@@ -128,14 +128,21 @@ namespace eActForm.Controllers
             string count = Request.Form.AllKeys.Count().ToString();
 
             Activity_Model.actForms model;
-            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
             model = new Activity_Model.actForms
             {
                 actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
             };
 
-
+            if (!string.IsNullOrEmpty(Request.Form["ddlMasterType"]))
+            {
+                var masterList = Request.Form["ddlMasterType"].Split(',').ToList();
+                if (masterList.Any())
+                {
+                    model.actLists = model.actLists.Where(r => masterList.Contains(r.master_type_form_id)).ToList();
+                }
+            }
             if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
@@ -165,6 +172,31 @@ namespace eActForm.Controllers
             {
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }
+
+            if (!string.IsNullOrEmpty(Request.Form["ddlDepartment"]))
+            {
+                if (Request.Form["ddlDepartment"] == "Channel")
+                {
+                    model.actLists = model.actLists.Where(r => r.channelId != "").ToList();
+                }
+                else
+                {
+                    model.actLists = model.actLists.Where(r => r.brandId != "").ToList();
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(Request.Form["ddlbrand"]))
+            {
+                model.actLists = model.actLists.Where(r => r.brandId == Request.Form["ddlbrand"]).ToList();
+            }
+            if (!string.IsNullOrEmpty(Request.Form["ddlChannel"]))
+            {
+                model.actLists = model.actLists.Where(r => r.channelId == Request.Form["ddlChannel"]).ToList();
+            }
+
+
+
 
             model.typeForm = activityType;
             TempData["SearchDataModel"] = model;

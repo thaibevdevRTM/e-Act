@@ -538,8 +538,14 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = QueryGet_TB_Act_ActivityForm_DetailOtherList.get_TB_Act_ActivityForm_DetailOtherList(activityId);
 
+                    activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
+                    activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
+                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
+                    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+
                     if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                     {
+                        #region FormPos
                         if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
@@ -560,6 +566,7 @@ namespace eActForm.BusinessLayer
                                 }
                                 index_each++;
                             }
+                            
 
                             index_each = 0;
                             var brand_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "brand").Count();
@@ -631,11 +638,15 @@ namespace eActForm.BusinessLayer
 
 
                         }
+                        #endregion
+                        #region formTrvTbm formTrvHcm
                         else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
                         }
+                        #endregion
+                        #region formPaymentVoucherTbm
                         else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                         {
                             var countlist_2_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").Count();
@@ -647,6 +658,8 @@ namespace eActForm.BusinessLayer
                                 index_each++;
                             }
                         }
+                        #endregion
+                        #region formCR_IT_FRM
                         else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                         {
 
@@ -669,6 +682,7 @@ namespace eActForm.BusinessLayer
                                     index_each++;
                                 }
                             }
+                            
 
                             index_each = 0;
                             tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ProcuretoPay").ToList();
@@ -859,13 +873,10 @@ namespace eActForm.BusinessLayer
 
 
                         }
+                        #endregion
                     }
-                    bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                    activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-                    activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
-                    activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
-                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
 
+                    
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                     {
                         activity_TBMMKT_Model.dataRequesterToShows = QueryGetSelectMainForm.GetDataRequesterToShow(activityId);
@@ -874,6 +885,7 @@ namespace eActForm.BusinessLayer
                     Decimal? totalCostThisActivity = 0;
                     foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
                     {
+                        #region formPosTbm
                         if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                         {
                             totalCostThisActivity += item.unit;
@@ -882,11 +894,13 @@ namespace eActForm.BusinessLayer
                         {
                             totalCostThisActivity += item.total;
                         }
+                        #endregion
                     }
                     activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
 
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
                     {
+                        #region formPaymentVoucherTbm
                         if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                         {
                             var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).Count();
@@ -902,9 +916,10 @@ namespace eActForm.BusinessLayer
                             activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typePVSectionThreeToFive"]).ToList();
                             //====END======จากที่SelectทุกTypeมา==หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน====
                         }
+                        #endregion
                     }
 
-                    //===========Get All EO In Doc=======================
+                    #region Get All EO In Doc
                     List<detailEO> templistEoInDoc = new List<detailEO>();
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                     {
@@ -938,7 +953,7 @@ namespace eActForm.BusinessLayer
                         }
                         activity_TBMMKT_Model.eoList = templistEoInDoc;
                     }
-                    //===END========Get All EO In Doc======================= 
+                    #endregion
                 }
             }
             catch (Exception ex)

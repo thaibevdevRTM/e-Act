@@ -19,9 +19,6 @@
             document.getElementById('lblLimitBypass').innerHTML = "0.00";
             document.getElementById('lblLimitCarWash').innerHTML = "0.00";
             document.getElementById('lblLimitPhone').innerHTML = "0.00";
-
-           
-
         },
 
        
@@ -43,41 +40,6 @@
                 bootbox.alert(required)
             }
         },
-
-        //getDetailList: function (i) {
-        //    console.log(i.id);
-        //    $("#" + i.id).autocomplete({
-        //        source: function (request, response) {
-        //            $.ajax({
-        //                url: "eAct/getOtherMasterByType",
-        //                type: "POST",
-        //                dataType: "json",
-        //                data: {
-        //                    type: 'CashLimitType',
-        //                    subType: '',
-        //                    text: $("#" + i.id).val(),
-        //                },
-        //                success: function (data) {
-        //                    response($.map(data, function (item) {
-        //                        return { label: item.displayVal, value: item.displayVal, id: item.id };
-        //                    }))
-
-        //                }
-        //            })
-        //        },
-        //        minLength: 0,
-        //        messages: {
-        //            noResults: '',
-        //            results: function (resultsCount) {
-        //            }
-        //        }, select: function (event, ui) {
-        //            $("#" + i.id).val(ui.item.id)
-        //        }
-        //    }).focus(function () {
-        //        $(this).data("uiAutocomplete").search($(this).val());
-        //    });
-        //},
-
        
 
     }

@@ -79,12 +79,11 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel("")
+                             select new ApproveModel.approveDetailModel(dr["empId"].ToString())
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
                                  empName_EN = dr["empName_EN"].ToString(),
-                                 empEmail = dr["empEmail"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  companyName = dr["companyName"].ToString(),
                                  companyNameEN = dr["companyNameEN"].ToString(),
@@ -112,59 +111,60 @@ namespace eActForm.BusinessLayer
                 if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormAll";
+                    }
                 }
                 else if (typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivitySetPriceFormAll";
+                    }
                 }
                 else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                 {
                     strCall = "usp_getActivitySetPriceOMTByEmpId";
+                    if (isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
+                    {
+                        strCall = "usp_getActivitySetPriceOMTFormAll";
+                    }
                 }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
+                    }
                 }
                 else if (typeForm == Activity_Model.activityType.HCForm.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_HCPomNum";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormAll_HCPomNum";
+                    }
                 }
                 else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
                 {
                     strCall = "usp_getActivityExpenseEntertainByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormAll_Expense";
+                    }
                 }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormAll";
+                    }
                 }
-
-                if (isAdmin())
-                {
-                    strCall = "usp_getActivityFormAll";
-                }
-                if (isAdmin() && typeForm == Activity_Model.activityType.SetPrice.ToString())
-                {
-                    strCall = "usp_getActivitySetPriceFormAll";
-                }
-                else if (isAdmin() && typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
-                {
-                    strCall = "usp_getActivitySetPriceOMTFormAll";
-                }
-                if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
-                {
-                    strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
-                }
-
-                //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
-                if (isAdmin() && typeForm == Activity_Model.activityType.HCForm.ToString())
-                {
-                    strCall = "usp_getActivityFormAll_HCPomNum";
-                }
-                if (isAdmin() && typeForm == Activity_Model.activityType.EXPENSE.ToString())
-                {
-                    strCall = "usp_getActivityFormAll_Expense";
-                }
-
+                
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
@@ -210,7 +210,8 @@ namespace eActForm.BusinessLayer
                                  createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
                                  companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm),
-
+                                 channelId = dr["channelId"].ToString(),
+                                 brandId = dr["productBrandId"].ToString(),
                              }).ToList();
 
 

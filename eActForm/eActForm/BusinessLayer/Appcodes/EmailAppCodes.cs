@@ -352,8 +352,6 @@ namespace eActForm.BusinessLayer
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
 
-
-
                             // all approved then send the email notification to user create
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
@@ -440,102 +438,113 @@ namespace eActForm.BusinessLayer
 
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
-            //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-
-            List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];
-            var checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
-            //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
-            //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
-
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+            var checkMail = "";
+            try
             {
-                strBody += checkMail;
-            }
+                //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+                ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+                //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
 
-            switch (emailType)
-            {
-                case AppCode.ApproveType.Activity_Form:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
-                    activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
-                    break;
-                case AppCode.ApproveType.Report_Detail:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                List<Attachment> files = new List<Attachment>();
+                string[] pathFile = new string[10];
+                checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
 
-                    break;
-                case AppCode.ApproveType.Report_Summary:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
 
-                    break;
-            }
+                //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
+                //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
+                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
 
-            TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
-            if (getImageModel.tbActImageList.Any())
-            {
-                int i = 1;
-                foreach (var item in getImageModel.tbActImageList)
+                if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
                 {
-                    //=== use case this background service (bg service cannot get data session)===
-                    string companyId = "";
-                    try
-                    {
-                        companyId = UtilsAppCode.Session.User.empCompanyId;
-                    }
-                    catch
-                    {
-                        companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
-                    }
-                    // ==================================================
-                    if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
-                    {
-                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-
-                    }
-                    else
-                    {
-                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                    }
-                    i++;
+                    strBody += checkMail;
                 }
-            }
 
-            var i_loop_change_name = 0;
-            foreach (var item in pathFile)
-            {
-                if (System.IO.File.Exists(item))
+                switch (emailType)
                 {
-                    string extTypeFile = Path.GetExtension(item);
-                    Attachment attachment;
-                    attachment = new Attachment(item);
-                    if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
-                    {
-                        attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
-                    }
+                    case AppCode.ApproveType.Activity_Form:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                        activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
 
-                    var dontAttach = 0;
-                    if (extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
-                    {
-                        dontAttach = 1;
-                    }
-                    if (dontAttach == 0)
-                    {
-                        files.Add(attachment);
-                    }
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
 
-                    i_loop_change_name++;
+                        break;
                 }
-            }
 
-            sendEmailWithActId(actFormId, mailTo
-                    , mailCC
-                    , strSubject
-                    , strBody
-                    , files);
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
+                if (getImageModel.tbActImageList.Any())
+                {
+                    int i = 1;
+                    foreach (var item in getImageModel.tbActImageList)
+                    {
+                        //=== use case this background service (bg service cannot get data session)===
+                        string companyId = "";
+                        try
+                        {
+                            companyId = UtilsAppCode.Session.User.empCompanyId;
+                        }
+                        catch
+                        {
+                            companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
+                        }
+                        // ==================================================
+                        if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                        {
+                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
+
+                        }
+                        else
+                        {
+                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        }
+                        i++;
+                    }
+                }
+
+                var i_loop_change_name = 0;
+                foreach (var item in pathFile)
+                {
+                    if (System.IO.File.Exists(item))
+                    {
+                        string extTypeFile = Path.GetExtension(item);
+                        Attachment attachment;
+                        attachment = new Attachment(item);
+                        if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
+                        {
+                            attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
+                        }
+
+                        var dontAttach = 0;
+                        if (extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
+                        {
+                            dontAttach = 1;
+                        }
+                        if (dontAttach == 0)
+                        {
+                            files.Add(attachment);
+                        }
+
+                        i_loop_change_name++;
+                    }
+                }
+
+                sendEmailWithActId(actFormId, mailTo
+                        , mailCC
+                        , strSubject
+                        , strBody
+                        , files);
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("sendEmailActForm >> " + ex.Message + "_" + checkMail);
+            }
         }
 
         public static string replaceWordDangerForNameFile(string txt)
@@ -714,10 +723,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  //empEmail =  dr["empEmail"].ToString()
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -744,9 +750,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -770,9 +774,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -978,9 +980,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -1091,10 +1091,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),

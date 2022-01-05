@@ -61,6 +61,22 @@ namespace eActForm.Controllers
         }
         public ActionResult listDetailsPosPremium(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
+            Decimal? totalCostThisActivity = 0;
+            foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
+            {
+                #region formPosTbm
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                {
+                    totalCostThisActivity += item.unit;
+                }
+                else
+                {
+                    totalCostThisActivity += item.total;
+                }
+                #endregion
+            }
+            activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -68,6 +84,11 @@ namespace eActForm.Controllers
 
             //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             //string en = ConfigurationManager.AppSettings["cultureEng"];
+            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
+            {
+                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
+            }
 
             activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId,
               activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
@@ -202,6 +223,13 @@ namespace eActForm.Controllers
 
         public ActionResult requestEmp2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
+            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
+            {
+                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
+            }
+
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
@@ -226,6 +254,7 @@ namespace eActForm.Controllers
                 var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
+                    IO = group.First().IO,
                     fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
@@ -243,15 +272,17 @@ namespace eActForm.Controllers
 
                 
 
+                
                 if (status == "2" || status == "3")
                 {
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
 
-
+                    //ดึงยอด ก่อนส่่งอนุมัติมาแสดง
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
                     foreach (var item in getAmount)
                     {
+                        
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         budgetTotalModel.returnAmountBrand = item.returnAmount;
                         budgetTotalModel.EO = item.EO;
@@ -305,7 +336,7 @@ namespace eActForm.Controllers
 
                             var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                             budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
-                            if (status == "2" || status == "3")
+                            if (status == "2" || status == "3" || item.IO.ToLower() == ConfigurationManager.AppSettings["Instock"].ToLower())
                             {
                                 item.total = 0;
                             }
@@ -314,7 +345,7 @@ namespace eActForm.Controllers
                             budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                             budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                            budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total + budgetTotalModel.returnAmountBrand;
+                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
 
                             var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
                             budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
@@ -330,19 +361,17 @@ namespace eActForm.Controllers
 
                         }
                     }
-                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
+                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input + sumReturn;
                     useAmountTotal = useAmountTotal + sumTotal_Input;
+
                 }
-
-
-
 
 
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 model.budgetTotalList = budgetTotalsList;
                 model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal + sumReturn;
+                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
                 model.budgetTotalModel.returnAmount = sumReturn;
                 TempData["showBudget" + activityId] = model;
 

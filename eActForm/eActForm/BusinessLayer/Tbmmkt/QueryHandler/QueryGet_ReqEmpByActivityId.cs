@@ -36,20 +36,7 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                                  empTel = d["empTel"].ToString(),
-                                 detail = d["detail"].ToString(),
-                                 empId = d["empId"].ToString(),
-                                 //position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
-                                 //level = d["empLevel"].ToString(),
-                                 //department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
-                                 //bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
-                                 //empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 //positionEN = d["empPositionTitleEN"].ToString(),
-                                 //departmentEN = d["empDepartmentEN"].ToString(),
-                                 //buEN = d["empDivisionEN"].ToString(),
-                                 //companyName = "บริษัท " + d["companyNameTH"].ToString(),
-                                 //companyNameEN = d["companyNameEN"].ToString(),
-                                 //detail = d["detail"].ToString(),
-                                 //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate                                                                                                                                                                                                        //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
+                                 detail = d["detail"].ToString(),                    
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }

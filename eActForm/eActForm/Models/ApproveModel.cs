@@ -58,12 +58,14 @@ namespace eActForm.Models
                     {
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                        this.empEmail = model.Count > 0 ? model[0].email : "";
                         //HttpContext.Current.Session[empId] = model;
                     }
                     else
                     {
                         this.empPositionTitleTH = "";
                         this.empPositionTitleEN = "";
+
                     }
                 }
             }
@@ -118,6 +120,8 @@ namespace eActForm.Models
                     if(model.Count > 0)
                     {
                         empEmail = model[0].email;
+                        empName = model[0].empName;
+                        empName_EN = model[0].empNameEN;
                     }
                     else
                     {
