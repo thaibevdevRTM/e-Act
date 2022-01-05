@@ -84,14 +84,9 @@ namespace eActForm.Controllers
 
             //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             //string en = ConfigurationManager.AppSettings["cultureEng"];
-            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
-            {
-                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-            }
 
             activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId,
-              activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
+            activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
 
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
@@ -223,13 +218,6 @@ namespace eActForm.Controllers
 
         public ActionResult requestEmp2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
-            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
-            {
-                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-            }
-
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();

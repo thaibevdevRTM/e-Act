@@ -15,11 +15,8 @@ namespace eActForm.Controllers
         public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-            activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-
             if (activity_TBMMKT_Model.activityFormTBMMKT.mode == AppCode.Mode.edit.ToString())
             {
-
                 activity_TBMMKT_Model.empInfoModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk).FirstOrDefault();
 
                 if (activity_TBMMKT_Model.regionalModel == null || activity_TBMMKT_Model.regionalModel.Count == 0)
