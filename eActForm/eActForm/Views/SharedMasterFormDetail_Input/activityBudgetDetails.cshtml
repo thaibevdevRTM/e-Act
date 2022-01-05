@@ -75,6 +75,44 @@
                                             getBudgetTotal();
                                         });
                                     </script>
+                                    <script>
+                                            $(document).ready(function () {
+                                                $(function () {
+
+                                                    $(".clstxtIO_@index").autocomplete({
+                                                        source: function (request, response) {
+                                                            $.ajax({
+                                                                url: '@Url.Action("getOtherMasterByType", "eAct")',
+                                                                type: "POST",
+                                                                dataType: "json",
+                                                                data: {
+                                                                    type: 'stocktbm',
+                                                                    subType: '',
+                                                                    text: $(".clstxtIO_@index").val(),
+                                                                },
+                                                                success: function (data) {
+                                                                    response($.map(data, function (item) {
+                                                                        return { label: item.displayVal, value: item.displayVal, id: item.id };
+                                                                    }))
+
+                                                                }
+                                                            })
+                                                        },
+                                                        minLength: 0,
+                                                        messages: {
+                                                            noResults: '',
+                                                            results: function (resultsCount) {
+                                                            }
+                                                        }, select: function (event, ui) {
+                                                            $(".clstxtIO_@index").val(ui.item.id)
+                                                        }
+                                                    }).focus(function () {
+                                                        $(this).data("uiAutocomplete").search($(this).val());
+                                                    });
+
+                                                });
+                                            });
+                                    </script>
                                 </div>
                                 <div>
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
@@ -213,6 +251,7 @@
         }
 
     });
+
 
 
     function getBudgetTotal(row) {

@@ -324,7 +324,7 @@ namespace eActForm.Controllers
 
                             var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                             budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
-                            if (status == "2" || status == "3" || item.IO.ToLower() == ConfigurationManager.AppSettings["Instock"].ToLower())
+                            if (status == "2" || status == "3" || ConfigurationManager.AppSettings["Instock"].ToLower().Contains(item.IO.ToLower()))
                             {
                                 item.total = 0;
                             }

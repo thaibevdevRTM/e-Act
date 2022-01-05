@@ -117,13 +117,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.unit = item.unit;
                         costThemeDetail.compensate = item.compensate;
                         costThemeDetail.LE = item.LE;
-
-                        DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
-                        string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                        var getIO = QueryGetAllProduct.getBrandByProductId(item.productId).Any() ? "54" : "56";
-                        costThemeDetail.IO = getIO + "S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
-
-                        //costThemeDetail.IO = item.IO;
+                        costThemeDetail.IO = item.IO;
                         costThemeDetail.mechanics = item.mechanics;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
@@ -209,13 +203,13 @@ namespace eActForm.BusinessLayer
                             (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
-
-                            //else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
-                            //    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
-                            if ((getActList.FirstOrDefault().documentDate.Value.Month < 10 &&
-                                getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 22 && getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9)
-                                || getActList.FirstOrDefault().documentDate.Value.Month >= 10
-                                || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                            DateTime? chkDate = new DateTime(DateTime.Now.Year, 9, 22);
+                           if (getActList.FirstOrDefault().documentDate.Value.Month >= 10)
+                            {
+                                //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
+                            }
+                            else if ( getActList.FirstOrDefault().activityPeriodSt >= chkDate && getActList.FirstOrDefault().documentDate.Value.Month < 10)
                             {
                                 //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
@@ -224,7 +218,6 @@ namespace eActForm.BusinessLayer
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
                             }
-
                         }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
