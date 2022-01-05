@@ -206,7 +206,12 @@
 
     $(document).ready(function () {
         $("#divHeaderDetailsCost :input").prop("disabled", false);
-        getBudgetTotal();
+
+        if ("@Model.activityFormTBMMKT.id" != '') {
+            console.log('budget');
+            getBudgetTotal();
+        }
+
     });
 
 
