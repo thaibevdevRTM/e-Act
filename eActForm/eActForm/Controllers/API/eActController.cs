@@ -22,7 +22,7 @@ namespace eActForm.Controllers
             return View();
         }
 
- 
+
 
 
         public JsonResult getProductGroup(string cateId)
@@ -78,7 +78,7 @@ namespace eActForm.Controllers
                     getProductname = getProductBrand.Select(x => new
                     {
                         Value = x.id,
-                        Text = x.brandName
+                        Text = x.brandName,
                     }).ToList(),
                 };
                 result.Data = resultData;
@@ -90,6 +90,33 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getDetailBrandById(string brandId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.id.Trim() == brandId.Trim()).ToList();
+                var resultData = new
+                {
+
+                    Value = getProductBrand.FirstOrDefault().id,
+                    Text = getProductBrand.FirstOrDefault().brandName,
+                    EO = getProductBrand.FirstOrDefault().digit_EO
+,
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
         public JsonResult getALLProductBrand(string p_txtBrand)
         {
@@ -399,13 +426,13 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getCashLimitByEmpId(string empId , string empLvl)
+        public JsonResult getCashLimitByEmpId(string empId, string empLvl)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
             try
             {
-   
+
                 cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, empLvl).ToList();
                 if (cashEmpList.Count > 0)
                 {
@@ -567,7 +594,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel ,string docDate)
+        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel, string docDate)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
@@ -698,7 +725,7 @@ namespace eActForm.Controllers
                     return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("genImageStream => " + ex.Message);
                 return File(Server.MapPath("~/images/noSigError.jpg"), "image/jpg");
@@ -707,6 +734,6 @@ namespace eActForm.Controllers
 
         }
 
-       
+
     }
 }

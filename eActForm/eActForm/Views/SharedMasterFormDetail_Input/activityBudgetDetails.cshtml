@@ -30,7 +30,12 @@
 
                                 @Html.HiddenFor(x => item.typeTheme, new { @id = "activityOfEstimateList[" + index + "].typeTheme", Name = "activityOfEstimateList[" + index + "].typeTheme", @class = "form-control textboxcss text-right txtTypetheme__" + index })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
-                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @id = "yearSelect_"+ index,  @class = "form-control clstxtYearSelect_" + index, @title = "เลือกปีงบประมาณ" })
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @id = "yearSelect_" + index, @class = "form-control clstxtYearSelect_" + index, @title = "เลือกปีงบประมาณ" })
+                                <script>
+                                    $(".clstxtYearSelect_@index").change(function () {
+                                        getBudgetTotal();
+                                    });
+                                </script>
                             </td>
                             @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
@@ -55,6 +60,7 @@
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
                                             getBudgetTotal();
+
                                         });
 
                                     </script>
@@ -70,13 +76,8 @@
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
                                     <script>
-                                        $(".clstxtIO_@index").blur(function () {
-                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
-                                            getBudgetTotal();
-                                        });
-                                    </script>
-                                    <script>
-                                            $(document).ready(function () {
+
+                                          $(document).ready(function () {
                                                 $(function () {
 
                                                     $(".clstxtIO_@index").autocomplete({
@@ -112,7 +113,13 @@
 
                                                 });
                                             });
+
+                                        $(".clstxtIO_@index").blur(function () {
+                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                            getBudgetTotal();
+                                        });
                                     </script>
+
                                 </div>
                                 <div>
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
@@ -255,6 +262,7 @@
 
 
     function getBudgetTotal(row) {
+
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
 
@@ -264,7 +272,7 @@
                 IO: $(".clstxtIO_" + row).val(),
                 total: $(".txttotal_" + row).val(),
                 UseYearSelect: $(".clstxtYearSelect_" + row).val(),
-                
+
             });
 
         });
@@ -278,9 +286,8 @@
                 subjectId: document.getElementById("ddlSubject").value,
                 channelId: document.getElementById("ddlChannel").value,
                 brandId: document.getElementById("ddlBrand").value,
-                activityId: "@Model.activityFormTBMMKT.id",
+                activityId: "@Model.activityFormModel.id",
                 status: "@Model.activityFormTBMMKT.statusId",
-
 
             },
             dataType: "json",
@@ -295,16 +302,8 @@
                     $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
 
                 }
-
-                console.log(response.Data.budgetTotalsList.length);
                 document.getElementById("divShowBudget").innerHTML = "";
-                if (response.Data.budgetTotalsList.length > 0) {
-                    callPartialBudgetControl("@Model.activityFormTBMMKT.id");
-                }
-                else {
-                    callPartialBudgetControl("");
-                }
-
+                callPartialBudgetControl("@Model.activityFormModel.id");
 
             }
         });

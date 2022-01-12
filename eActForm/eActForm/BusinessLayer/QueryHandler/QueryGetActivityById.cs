@@ -68,8 +68,6 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                               });
-
-                var test = result.ToList();
                 return result.ToList();
             }
             catch (Exception ex)

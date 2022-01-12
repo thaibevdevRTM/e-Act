@@ -73,6 +73,7 @@
                 </div>
 
                 <div class="col-md-1 col-xs-12">
+                    @Html.Hidden("hdEO", new { @id = "hdEO" })
                 </div>
 
                 <script>
@@ -247,6 +248,11 @@
                             }
                         }
 
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+                            getEOByBrandId();
+                        }
+
+
                     });
 
                     $('#ddlSubject').change(function () {
@@ -291,6 +297,30 @@
                                     alert("Error Get Subject.");
                                 }
                             });
+                }
+
+
+                 function getEOByBrandId(brandId) {
+
+                        $.ajax({
+                            url: '@Url.Action("getDetailBrandById", "eAct")',
+                            data: {
+                                brandId: $('#ddlBrand').val(),
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                            success: function (response) {
+                                console.log(response.Data);
+                                if (response.Data) {
+                                    $('#hdEO').val(response.Data.EO);
+                                }
+                                else {
+                                    $('#hdEO').val('');
+                                }
+
+
+                            }
+                        });
                 }
 
                 </script>

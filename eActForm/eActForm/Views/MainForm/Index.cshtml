@@ -431,16 +431,23 @@
             if ($("#txtdateActivitySt").val() == "") { required += "&emsp;วันที่ เริ่มกิจกรรม*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "&emsp;วันที่ สิ้นสุดกิจกรรม*<br>"; validate = false; }
 
-            
+
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
-                if ($(".txttotal_" + i).val() != "0.00") {
-                        if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
-                            required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                if ($(".clstxtproductDetail_" + i).val() != "" || $(".clstxtEO_" + i).val() != "") {
+
+                    if ($("#ddlBrand").val() != '') {
+                        if ($("#hdEO").val() != $(".clstxtEO_" + i).val().substring(0, 4)) {
+                            required += "&emsp;ระบุ EO ไม่ตรงกับ  Sub Condition Flow " + (i + 1) + "*<br>"; validate = false;
                         }
-                        if ($(".clstxtEO_" + i).val() == "") {
-                             required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
-                       }
+                    }
+
+                    if ($(".clstxtYearSelect_" + i).val() == "") {
+                        required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
+                    if ($(".clstxtEO_" + i).val() == "") {
+                        required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
                 }
             }
         }
@@ -515,6 +522,8 @@
 
         return checkUpload;
     }
+
+
 
     function SubmitData() {
         console.log("submit");
