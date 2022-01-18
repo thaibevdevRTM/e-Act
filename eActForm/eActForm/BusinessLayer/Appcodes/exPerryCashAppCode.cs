@@ -63,7 +63,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
-                                 select new exPerryCashModel()
+                                 select new exPerryCashModel(dr["createdByUserId"].ToString())
                                  {
                                      id = dr["id"].ToString(),
                                      actNo = dr["statusId"].ToString(),
@@ -71,7 +71,6 @@ namespace eActForm.BusinessLayer.Appcodes
                                      status = dr["productTypeName"].ToString(),
                                      startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
                                      activityNo = dr["actNo"].ToString(),
-                                     createName = dr["createByName"].ToString(),
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),

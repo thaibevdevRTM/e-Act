@@ -617,7 +617,7 @@ namespace eActForm.BusinessLayer
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
-                                 select new ReportSummaryModels.actApproveSummaryDetailModel()
+                                 select new ReportSummaryModels.actApproveSummaryDetailModel(dr["createdByUserId"].ToString())
                                  {
                                      id = dr["id"].ToString(),
                                      statusId = dr["statusId"].ToString(),
@@ -626,7 +626,6 @@ namespace eActForm.BusinessLayer
                                      startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
                                      activityNo = dr["actNo"].ToString(),
                                      endDate = dr["endDate"] is DBNull ? null : (DateTime?)dr["endDate"],
-                                     createName = dr["createByName"].ToString(),
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
@@ -676,7 +675,7 @@ namespace eActForm.BusinessLayer
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
-                                 select new ReportSummaryModels.actApproveSummaryDetailModel()
+                                 select new ReportSummaryModels.actApproveSummaryDetailModel(dr["createdByUserId"].ToString())
                                  {
                                      id = dr["id"].ToString(),
                                      summaryId = dr["summaryDetailId"].ToString(),
@@ -687,7 +686,6 @@ namespace eActForm.BusinessLayer
                                      activityNo = dr["activityNo"].ToString(),
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
-                                     createName = dr["createByUserName"].ToString(),
                                  }).ToList();
                     return lists;
                 }

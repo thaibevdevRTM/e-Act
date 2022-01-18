@@ -146,6 +146,7 @@
                     if (p_productBrandId != "") {
                         $("#divBrand").css('display', 'inline-block');
                         $("#ddlBrand").val(p_productBrandId);
+                        getEOByBrandId(p_productBrandId);
                     }
                     if (p_channelId != "") {
                         $("#divChannel").css('display', 'inline-block');
