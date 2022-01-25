@@ -551,7 +551,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)

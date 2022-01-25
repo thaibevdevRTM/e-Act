@@ -529,6 +529,7 @@ namespace eForms.Presenter.AppCode
                                  replaceEO = d["replaceEO"].ToString(),
                                  PR_PO = decimal.Parse(d["pr_po"].ToString()),
                                  actual = decimal.Parse(d["actual"].ToString()),
+                                 accrued = decimal.Parse(d["accrued"].ToString()),
                                  bnamEng = d["bnam_Eng"].ToString(),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  fiscalYear = d["fiscalYear"].ToString(),
@@ -599,6 +600,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@balanceLEApprove",item.balanceLEApprove)
                       ,new SqlParameter("@trf_BG",item.trf_BG)
                       ,new SqlParameter("@actual",item.actual)
+                      ,new SqlParameter("@accrued",item.accrued)
                       ,new SqlParameter("@pr_po",item.PR_PO)
                       ,new SqlParameter("@actualTotal",item.actualTotal)
                       ,new SqlParameter("@available",item.available)

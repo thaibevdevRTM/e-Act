@@ -59,6 +59,8 @@ namespace eActForm.Models
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
                         this.empEmail = model.Count > 0 ? model[0].email : "";
+                        this.empName = model.Count > 0 ? model[0].empName : "";
+                        this.empName_EN = model.Count > 0 ? model[0].empNameEN : "";
                         //HttpContext.Current.Session[empId] = model;
                     }
                     else

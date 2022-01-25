@@ -312,7 +312,6 @@ namespace eActForm.Controllers
                                 returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
                                 returnAmountList.Add(returnAmountModel);
                             }
-
                         }
                     }
                     foreach (var item in groupEO)
@@ -329,8 +328,7 @@ namespace eActForm.Controllers
                             {
                                 item.total = 0;
                             }
-                            else
-                            {
+                          
                                 budgetTotalModel.EO = item.EO;
                                 budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
                                 budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
@@ -344,7 +342,7 @@ namespace eActForm.Controllers
                                 budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
                                 budgetTotalModel.activityType = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales : "";
                                 budgetTotalsList.Add(budgetTotalModel);
-                            }
+                            
                             totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
                             useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
                             sumTotal_Input += item.total;

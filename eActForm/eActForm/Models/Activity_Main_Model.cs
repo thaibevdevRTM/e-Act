@@ -70,7 +70,7 @@ namespace eActForm.Models
             expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
-            exPerryCashModel = new exPerryCashModel();
+            exPerryCashModel = new exPerryCashModel("");
             empInfoModel = new RequestEmpModel();
             regionalModel = new List<RegionalModel>();
             budgetTotalModel = new BudgetTotal();
