@@ -95,7 +95,6 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 3 && (UtilsAppCode.Session.User.isAdminTBM))
             || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
@@ -435,12 +434,6 @@
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($(".clstxtproductDetail_" + i).val() != "" || $(".clstxtEO_" + i).val() != "") {
-
-                    if ($("#ddlBrand").val() != '') {
-                        if ($("#hdEO").val() != $(".clstxtEO_" + i).val().substring(0, 4)) {
-                            required += "&emsp; EOบรรทัดที่ " + (i + 1) + " ไม่ตรงกับ  Sub Condition Flow *<br>"; validate = false;
-                        }
-                    }
 
                     if ($(".clstxtYearSelect_" + i).val() == "") {
                         required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;

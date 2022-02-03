@@ -430,9 +430,7 @@ namespace eForms.Presenter.AppCode
             int result = 0;
             try
             {
-
-             
-
+         
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetRpt_Temp"
                       , new SqlParameter[] {new SqlParameter("@EO",model.EO)
                       ,new SqlParameter("@approveNo",model.approveNo)
@@ -443,9 +441,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@actual",model.actual)
                       ,new SqlParameter("@accrued",model.accrued)
                       ,new SqlParameter("@commitment",model.commitment)
-                      ,new SqlParameter("@prpo_Outstanding",model.PR_PO)
-                      ,new SqlParameter("@prepaid",model.prepaid)
-                      ,new SqlParameter("@available",model.available)
+                      ,new SqlParameter("@nonCommitment",model.nonCommitment)
                       ,new SqlParameter("@replaceEO",model.replaceEO)
                       ,new SqlParameter("@fiscalYear",model.fiscalYear)
                       ,new SqlParameter("@importType",model.typeImport)
@@ -527,9 +523,10 @@ namespace eForms.Presenter.AppCode
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
                                  budget_Amount2 = decimal.Parse(d["approveAmount_Sap"].ToString()),  
                                  replaceEO = d["replaceEO"].ToString(),
-                                 PR_PO = decimal.Parse(d["pr_po"].ToString()),
                                  actual = decimal.Parse(d["actual"].ToString()),
                                  accrued = decimal.Parse(d["accrued"].ToString()),
+                                 commitment = decimal.Parse(d["commitment"].ToString()),
+                                 nonCommitment = decimal.Parse(d["nonCommitment"].ToString()),
                                  bnamEng = d["bnam_Eng"].ToString(),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  fiscalYear = d["fiscalYear"].ToString(),
@@ -584,7 +581,7 @@ namespace eForms.Presenter.AppCode
 
                 foreach (var item in model.budgetReportList)
                 {
-                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt_New"
+                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_BGC_Budget_Rpt"
                     , new SqlParameter[] {new SqlParameter("@budNum",item.budNum)
                       ,new SqlParameter("@date",item.date)
                       ,new SqlParameter("@bCode",item.b_Code)
@@ -610,13 +607,10 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@createdByUserId",item.createdByUserId)
                       ,new SqlParameter("@fiscalYear",item.fiscalYear)
                       ,new SqlParameter("@approveNo",item.approveNo)
+                      ,new SqlParameter("@commitment",item.commitment)
+                      ,new SqlParameter("@nonCommitment",item.nonCommitment)
                       });
                 }
-
-
-
-
-
 
                 return result;
             }

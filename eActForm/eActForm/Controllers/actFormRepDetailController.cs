@@ -281,8 +281,9 @@ namespace eActForm.Controllers
             {
                 ExceptionManager.WriteError(ex.Message);
             }
-
-            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
+            var data = Encoding.UTF8.GetBytes(gridHtml);
+            var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
+            return File(result, "application/vnd.ms-excel", "DetailReport.xls");
         }
 
 
@@ -429,7 +430,33 @@ namespace eActForm.Controllers
             return File(p_image, "image/png");
         }
 
+        public ActionResult mockupData(string typeForm)
+        {
+            ViewBag.TypeForm = typeForm;
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
+            models.showUIModel = new searchParameterFilterModel();
 
+
+            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+            {
+                models.customerslist = QueryGetAllCustomers.getCustomersMT();
+            }
+            else
+            {
+                models.customerslist = QueryGetAllCustomers.getAllRegion();
+            }
+
+
+
+
+            models.approveStatusList.Add(new ApproveModel.approveStatus()
+            {
+                id = "7",
+                nameTH = "เพิ่มเติม",
+                nameEN = "เพิ่มเติม",
+            });
+            return View(models);
+        }
 
     }
 }

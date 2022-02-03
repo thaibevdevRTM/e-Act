@@ -65,6 +65,7 @@ namespace eForms.Models.MasterData
             public decimal? actual { get; set; }
             public decimal? accrued { get; set; }
             public decimal? commitment { get; set; }
+            public decimal? nonCommitment { get; set; }
             public decimal? PR_PO { get; set; }
             public decimal? prepaid { get; set; }
             public decimal? returnAmount { get; set; }
