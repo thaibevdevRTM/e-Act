@@ -9,7 +9,7 @@
 <div><h2>Import Budget Report</h2></div>
 <hr />
 <div class="row form-group">
-    <div class="col-md-12 col-xs-12">
+    @*<div class="col-md-12 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">
             วันที่
         </label>
@@ -17,7 +17,7 @@
             @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(null, "yyyy-MM")
                   , new { type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"), autocomplete = "off" })
         </div>
-    </div>
+    </div>*@
     <div class="col-md-12 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">
             เลือกไฟล์
