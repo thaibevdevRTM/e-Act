@@ -445,6 +445,7 @@ namespace eForms.Presenter.AppCode
                       ,new SqlParameter("@replaceEO",model.replaceEO)
                       ,new SqlParameter("@fiscalYear",model.fiscalYear)
                       ,new SqlParameter("@importType",model.typeImport)
+                      ,new SqlParameter("@dateActual",model.date)
                       ,new SqlParameter("@createdByUserId",model.createdByUserId)
 
                   });
@@ -531,6 +532,7 @@ namespace eForms.Presenter.AppCode
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  fiscalYear = d["fiscalYear"].ToString(),
                                  approveNo = d["approveNo"].ToString(),
+                                 date = !string.IsNullOrEmpty(d["dateActual"].ToString()) ? DateTime.Parse(d["dateActual"].ToString()) : (DateTime?)null,
                              });
 
                 return lists.ToList(); ;

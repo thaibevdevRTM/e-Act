@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @using System.Configuration;
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +9,15 @@
 <div><h2>Import Budget Report</h2></div>
 <hr />
 <div class="row form-group">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            วันที่
+        </label>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(null, "yyyy-MM")
+                  , new { type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"), autocomplete = "off" })
+        </div>
+    </div>
     <div class="col-md-12 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">
             เลือกไฟล์
@@ -43,6 +53,7 @@
         var files = $("#inputFile").get(0).files;
         if (files.length > 0) {
             data.append("InputFiles", files[0]);
+            data.append("dateStr", $("#txtExMonth").val())
         }
         else {
             bootbox.alert("กรุณา แนบไฟล์ !")

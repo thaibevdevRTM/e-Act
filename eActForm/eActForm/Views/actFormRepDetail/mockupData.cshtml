@@ -1,0 +1,298 @@
+﻿@using eActForm.BusinessLayer
+
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var actId = Request.QueryString["typeForm"];
+}
+
+<h2>Activity Form Report Detail</h2>
+<hr />
+<div class="row tile_count">
+
+    <div class="row tile_count">
+        <div class="col-md-12 col-xs-12">
+            @using (Ajax.BeginForm("searchActForm", "actFormRepDetail", new { typeForm = @ViewBag.TypeForm }
+, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new { id = "form", @class = "form-horizontal form-label-left" }))
+            {
+                @RenderPage("~/Views/Shared/_search.cshtml")
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="row tile_count">
+    <div id="divMock" style="display:none" class="col-md-12 col-xs-12">
+        <div class="col-lg-4">
+            <a href="~/Uploadfiles/template/dataPO.xlsx"><img src="~/images/xlx.png" alt="download" style="height:150px; width:150px;"><br /><h5>Download File</h5> </a>
+        </div>
+        <div class="col-lg-8">
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+            <html>
+            <head>
+
+                <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+                <title></title>
+                <meta name="generator" content="https://conversiontools.io" />
+                <meta name="author" content="Salisa Ramanjit" />
+                <meta name="created" content="2021-05-31T03:10:46" />
+                <meta name="changedby" content="Parnupong Khananukul" />
+                <meta name="changed" content="2021-12-02T07:54:40" />
+                <meta name="AppVersion" content="16.0300" />
+                <meta name="ContentTypeId" content="0x010100ED47FB7B6CC1164588A6F98042DD5C91" />
+
+                <style type="text/css">
+                    body, div, table, thead, tbody, tfoot, tr, th, td, p {
+                        font-family: "Arial";
+                        font-size: x-small
+                    }
+
+                    a.comment-indicator:hover + comment {
+                        background: #ffd;
+                        position: absolute;
+                        display: block;
+                        border: 1px solid black;
+                        padding: 0.5em;
+                    }
+
+                    a.comment-indicator {
+                        background: red;
+                        display: inline-block;
+                        border: 1px solid black;
+                        width: 0.5em;
+                        height: 0.5em;
+                    }
+
+                    comment {
+                        display: none;
+                    }
+                </style>
+
+            </head>
+
+            <body>
+                <table class="table table-striped jambo_table bulk_action fixed" id="tbl_productDetail" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+                    <colgroup width="78"></colgroup>
+                    <colgroup width="71"></colgroup>
+                    <colgroup width="75"></colgroup>
+                    <colgroup width="84"></colgroup>
+                    <colgroup width="71"></colgroup>
+                    <colgroup width="60"></colgroup>
+                    <colgroup width="63"></colgroup>
+                    <thead>
+                        <tr>
+                            <td height="18" align="center" center" valign=bottom>ph_docdate</td>
+                            <td align="center" center" valign=bottom>ph_brcode</td>
+                            <td align="center" center" valign=bottom>ph_reqdate</td>
+                            <td align="center" center" valign=bottom>ph_docno</td>
+                            <td align="center" center" valign=bottom>pd_prcode</td>
+                            <td align="center" center" valign=bottom>pd_t_qty</td>
+                            <td align="center" center" valign=bottom>pd_puqty</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44345" sdnum="1033;1033;M/D/YYYY">5/29/2021</td>
+                        <td align="center" center" valign=bottom>1042</td>
+                        <td align="center" center" valign=bottom sdval="44352" sdnum="1033;1033;M/D/YYYY">6/5/2021</td>
+                        <td align="center" center" valign=bottom>C210165346</td>
+                        <td align="center" center" valign=bottom>0209849</td>
+                        <td align="center" center" valign=bottom sdval="20" sdnum="1033;">20</td>
+                        <td align="center" center" valign=bottom sdval="4" sdnum="1033;">4</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" center" valign=bottom>1000</td>
+                        <td align="center" center" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" center" valign=bottom>C210166873</td>
+                        <td align="center" center" valign=bottom>0131331</td>
+                        <td align="center" center" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" center" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" center"valign=bottom>1001</td>
+                        <td align="center" center" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" center"valign=bottom>C210166969</td>
+                        <td align="center" center"valign=bottom>0209849</td>
+                        <td align="center" center" valign=bottom sdval="36" sdnum="1033;">36</td>
+                        <td align="center" center" valign=bottom sdval="4" sdnum="1033;">4</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1003</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167043</td>
+                        <td align="center" left" valign=bottom>0203525</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1005</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167131</td>
+                        <td align="center" left" valign=bottom>0108779</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1005</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167131</td>
+                        <td align="center" left" valign=bottom>0108780</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1005</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167131</td>
+                        <td align="center" left" valign=bottom>0167845</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1005</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167131</td>
+                        <td align="center" left" valign=bottom>0218006</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1006</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167220</td>
+                        <td align="center" left" valign=bottom>0131332</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1006</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167220</td>
+                        <td align="center" left" valign=bottom>0227104</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1007</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167292</td>
+                        <td align="center" left" valign=bottom>0108779</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1007</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167292</td>
+                        <td align="center" left" valign=bottom>0131332</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1007</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167292</td>
+                        <td align="center" left" valign=bottom>0167846</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1007</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167292</td>
+                        <td align="center" left" valign=bottom>0227104</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1007</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167293</td>
+                        <td align="center" left" valign=bottom>0209849</td>
+                        <td align="center" right" valign=bottom sdval="48" sdnum="1033;">48</td>
+                        <td align="center" right" valign=bottom sdval="4" sdnum="1033;">4</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1011</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167401</td>
+                        <td align="center" left" valign=bottom>0131332</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1011</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167401</td>
+                        <td align="center" left" valign=bottom>0218005</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1011</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167401</td>
+                        <td align="center" left" valign=bottom>0235035</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1012</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167503</td>
+                        <td align="center" left" valign=bottom>0227103</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                    <tr>
+                        <td height="18" align="center" right" valign=bottom sdval="44346" sdnum="1033;1033;M/D/YYYY">5/30/2021</td>
+                        <td align="center" left" valign=bottom>1014</td>
+                        <td align="center" right" valign=bottom sdval="44349" sdnum="1033;1033;M/D/YYYY">6/2/2021</td>
+                        <td align="center" left" valign=bottom>C210167596</td>
+                        <td align="center" left" valign=bottom>0131331</td>
+                        <td align="center" right" valign=bottom sdval="24" sdnum="1033;">24</td>
+                        <td align="center" right" valign=bottom sdval="12" sdnum="1033;">12</td>
+                    </tr>
+                </table>
+                <!-- ************************************************************************** -->
+            </body>
+
+        </html>
+
+    </div>
+
+    <hr />
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#btnSubmitSearch").click(function () {
+            $("#divMock").css('display', 'inline-block');
+
+        });
+    });
+
+</script>
