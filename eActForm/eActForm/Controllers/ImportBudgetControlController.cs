@@ -283,6 +283,9 @@ namespace eActForm.Controllers
            
             try
             {
+                //model.dateStr = BaseAppCodes.converStrToDatetimeWithFormat(model.dateStr + "-" + "01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+
+
                 string resultFilePath = "";
                 TempData.Clear();
                 int CountFile = model.InputFiles.Count();
@@ -342,10 +345,8 @@ namespace eActForm.Controllers
                     modelBudgetRpt.returnAmount = decimal.Parse(dtBudget.Rows[i]["Return"].ToString());
                     modelBudgetRpt.actual = decimal.Parse(dtBudget.Rows[i]["Actual"].ToString());
                     modelBudgetRpt.accrued = decimal.Parse(dtBudget.Rows[i]["Accrued"].ToString());
-                    modelBudgetRpt.commitment = decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString());
-                    modelBudgetRpt.PR_PO = decimal.Parse(dtBudget.Rows[i]["PR/PO Outstanding"].ToString());
-                    modelBudgetRpt.prepaid = decimal.Parse(dtBudget.Rows[i]["Prepaid"].ToString());
-                    modelBudgetRpt.available = decimal.Parse(dtBudget.Rows[i]["Available"].ToString());
+                    modelBudgetRpt.commitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                    modelBudgetRpt.nonCommitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Non Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
                     modelBudgetRpt.fiscalYear = dtBudget.Rows[i]["Fiscal Year"].ToString();
                     modelBudgetRpt.typeImport = importType;
                     //modelBudgetRpt.chanelId = ImportBudgetControlAppCode.getChannelIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Bnam_Eng"].ToString());
@@ -363,6 +364,7 @@ namespace eActForm.Controllers
                     result = +ImportBudgetControlAppCode.InsertBudgetRpt_Temp(AppCode.StrCon, item);
                 }
 
+                
                 Models.ImportBudgetControlModel budgetModel = new Models.ImportBudgetControlModel();
                 //budgetModel.budgetReportChannelList = ImportBudgetControlAppCode.getBudgetChannelList(AppCode.StrCon);
                 budgetModel.budgetReportList = ImportBudgetControlAppCode.getBudgetList(AppCode.StrCon);
