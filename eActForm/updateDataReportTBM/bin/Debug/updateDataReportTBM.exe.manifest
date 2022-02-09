@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="updateDataReportTBM.exe" size="9152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="updateDataReportTBM.exe" size="9664">
       <assemblyIdentity name="updateDataReportTBM" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7Dqy7C07VGx+Yjq59sOFQg7iTbM8IlaH/w1KlDMWOMo=</dsig:DigestValue>
+        <dsig:DigestValue>qt4KL8R3132axV/N2cbihqsAbPl9L9IoRiSgB98qDE4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
