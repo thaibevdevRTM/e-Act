@@ -272,17 +272,10 @@ namespace eActForm.Controllers
         [ValidateInput(false)]
         public FileResult repListViewExportExcel(string gridHtml)
         {
-            try
-            {
-                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                //gridHtml = gridHtml.Replace("\n", "<br>");
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message);
-            }
+
             var data = Encoding.UTF8.GetBytes(gridHtml);
             var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
+
             return File(result, "application/vnd.ms-excel", "DetailReport.xls");
         }
 
@@ -317,7 +310,7 @@ namespace eActForm.Controllers
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model , typeForm);
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model, typeForm);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
