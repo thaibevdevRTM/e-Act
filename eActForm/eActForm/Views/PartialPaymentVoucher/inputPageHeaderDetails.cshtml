@@ -42,10 +42,10 @@
                                         @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
                                         {
                                             @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
-                                       {
-                                           @class = "form-control selectpicker",
-                                           id = "ddlFiscalYear"
-                                       })
+                                          {
+                                              @class = "form-control selectpicker",
+                                              id = "ddlFiscalYear"
+                                          })
                                             <script>
                                             $('#ddlFiscalYear').change(function () {
                                                 bindDropdownEO();

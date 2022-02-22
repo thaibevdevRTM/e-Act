@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 using static eForms.Models.MasterData.ImportBudgetControlModel;
+using QueryGetAllActivityGroup = eActForm.BusinessLayer.QueryGetAllActivityGroup;
 
 namespace eActForm.Controllers
 {
@@ -40,6 +41,7 @@ namespace eActForm.Controllers
                 yearTo = (Convert.ToInt32(nowPhysicalYear) + 10).ToString();
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderBy(m => m.UseYear).ToList();
+            activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "actTbm").ToList();
 
             return PartialView(activity_TBMMKT_Model);
         }

@@ -15,7 +15,7 @@ namespace eForms.Models.MasterData
         public List<BudgetControlModels> budgetReportChannelList { get; set; }
         public List<BudgetControl_LEModel> BudgetLEList { get; set; }
         public List<BudgetControl_ActType> bgActTypeList { get; set; }
-
+        public List<TB_Act_Other_Model> importTypeList { get; set; }
 
         public ImportBudgetControlModel()
         {

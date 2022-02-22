@@ -43,7 +43,6 @@ namespace eActForm.BusinessLayer.CommandHandler
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_delProductAndProductPrice"
                     , new SqlParameter[] {new SqlParameter("@productId",productId)
-                    ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });
             }

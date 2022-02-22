@@ -145,6 +145,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.scristModelList = QueryGetScriptByMasterFormId.getScriptByMasterFormId(activityFormTBMMKT.master_type_form_id);
                 if (activityFormTBMMKT.formCompanyId != "")
                 {
+                    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = activityFormTBMMKT.formCompanyId;
                     activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameTH;
                     activity_TBMMKT_Model.activityFormTBMMKT.companyNameEN = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameEN;
                 }

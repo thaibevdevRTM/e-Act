@@ -2,11 +2,15 @@
 <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
     <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
-            <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
+            <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
+            @if (Model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+            {
+                <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ActType</th>
+            }
+            <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
             <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
+            <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+            <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
         </tr>
         @{ var index = 0;}
         @foreach (var item in Model.activityOfEstimateList)
@@ -14,63 +18,92 @@
             if (item.productDetail != "")
             {
                 <tr>
-                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                         @item.IO
                     </td>
-                    <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;">
+                    @if (Model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+                    {
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;">
+                            @item.actType
+                        </td>
+                    }
+                   
+
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;">
                         @item.productDetail
                     </td>
                     @if (item.unit != 0)
                     {
-                        <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             @string.Format("{0:#,0}", @item.unit) @item.QtyName
                         </td>
                     }
                     else
                     {
-                        <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
                     }
 
                     @if (item.unitPrice != 0)
                     {
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             @item.unitPriceDisplay
                         </td>
                     }
                     else
                     {
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
                     }
 
                     @if (item.total != 0)
                     {
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             @string.Format("{0:#,0.00}", @item.total)
                         </td>
                     }
                     else
                     {
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
                     }
                 </tr>
             }
             index++;
         }
-        <tr>
-            <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                จำนวนเงินรวม(บาท)&nbsp;
-            </td>
-            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                @Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;
-            </td>
-        </tr>
-        <tr>
 
-            <td colspan="5" style="width: 85%;text-align:right;">
-                @Html.Action("showDetailBudgetRpt", "SharedMasterFormDetail", new { activity_TBMMKT_Model = Model })
-            </td>
 
-        </tr>
+        @if (Model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+        {
+            <tr>
+                <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    จำนวนเงินรวม(บาท)&nbsp;
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                    @Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="width: 85%;text-align:right;">
+                    @Html.Action("showDetailBudgetRpt", "SharedMasterFormDetail", new { activity_TBMMKT_Model = Model })
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    จำนวนเงินรวม(บาท)&nbsp;
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                    @Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="width: 85%;text-align:right;">
+                    @Html.Action("showDetailBudgetRpt", "SharedMasterFormDetail", new { activity_TBMMKT_Model = Model })
+                </td>
+            </tr>
+        }
+
+
 
     </table>
 </div>

@@ -12,14 +12,15 @@
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
                                 <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                             <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ActType</th>
                         <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
                     </tr>
                     @{ var index = 0;}
@@ -55,13 +56,18 @@
                                     @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
                                 </td>*@
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].productGroupId", new SelectList(Model.activityTypeList, "id", "activitySales", item.productGroupId), "", new { @class = "form-control clsActType", @title = "ประเภทกิจกรรม" })
+                            
+                            </td>
+
+
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div style="display:inline-block;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
                                     <script>
                                         $(".clstxtEO_@index").blur(function () {
                                             $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
                                             getBudgetTotal();
-
                                         });
 
                                     </script>
@@ -251,10 +257,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#divHeaderDetailsCost :input").prop("disabled", false);
+       // $("#divHeaderDetailsCost :input").prop("disabled", false);
 
         if ("@Model.activityFormTBMMKT.id" != '') {
-            console.log('budget');
             getBudgetTotal();
         }
 

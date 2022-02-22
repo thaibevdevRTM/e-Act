@@ -55,6 +55,7 @@
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
+
         @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
         @*=================for test====================*@
         @*<tr>
@@ -134,7 +135,7 @@
 @foreach (var item in Model.scristModelList)
 {
     var getscript = @item.scriptsName.Replace("\\", "/").ToString();
-    
+
     <script src="@string.Format(ConfigurationManager.AppSettings["rootURL"], @getscript)"></script>
 }
 

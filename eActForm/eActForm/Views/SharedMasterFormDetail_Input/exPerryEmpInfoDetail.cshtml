@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-3 col-xs-12">
             @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
-            @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId , new {@id = "hdCompId" })
+        
         </div>
     </div>
 
@@ -110,10 +110,7 @@
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
-                if ('@Model.activityFormTBMMKT.master_type_form_id' != '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-                    $("#hdCompId").val(response.Data.compId);
-                }
-                console.log($("#hdCompId").val());
+             
             }
             else {
                 $("#txtEmpName").val('');
@@ -121,9 +118,7 @@
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
-                if ('@Model.activityFormTBMMKT.master_type_form_id' != '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-                    $("#hdCompId").val('');
-                }
+              
             }
         });
 

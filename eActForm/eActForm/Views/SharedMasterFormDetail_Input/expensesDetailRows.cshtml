@@ -125,14 +125,14 @@
 
 
     <script>
-                            function sumall() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.costDetailLists.Count';
+        function sumall() {
+            var totalAll = 0.00;
+            var rowCount = '@Model.costDetailLists.Count';
 
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }
-                                 $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            }
+            for (i = 0; i < rowCount; i++) {
+                var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
+                totalAll = totalAll + rowtotal;
+            }
+            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        }
     </script>

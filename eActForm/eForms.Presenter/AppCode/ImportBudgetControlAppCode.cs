@@ -461,12 +461,65 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
+
+        public static int InsertBudgetTemp_Monthly(string strCon, BudgetControlModels model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetTemp_Monthly"
+                      , new SqlParameter[] {new SqlParameter("@EO",model.EO)
+                      ,new SqlParameter("@approveNo",model.approveNo)
+                      ,new SqlParameter("@orderNo",model.orderNo)
+                      ,new SqlParameter("@description",model.description)
+                      ,new SqlParameter("@budgetAmount",model.budgetAmount)
+                      ,new SqlParameter("@returnAmount",model.returnAmount)
+                      ,new SqlParameter("@actual",model.actual)
+                      ,new SqlParameter("@accrued",model.accrued)
+                      ,new SqlParameter("@commitment",model.commitment)
+                      ,new SqlParameter("@nonCommitment",model.nonCommitment)
+                      ,new SqlParameter("@replaceEO",model.replaceEO)
+                      ,new SqlParameter("@fiscalYear",model.fiscalYear)
+                      ,new SqlParameter("@importType",model.typeImport)
+                      ,new SqlParameter("@dateActual",model.date)
+                      ,new SqlParameter("@createdByUserId",model.createdByUserId)
+
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InsertBudgetTemp_Monthly => " + ex.Message);
+            }
+
+            return result;
+        }
+
         public static int delBudgetRpt_Temp(string strCon)
         {
             int result = 0;
             try
             {
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("delBudgetRpt_Temp => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int delBudgetRptMonthly_Temp(string strCon)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delTempBudgetReport_Monthly");
 
             }
             catch (Exception ex)
@@ -546,6 +599,44 @@ namespace eForms.Presenter.AppCode
         }
 
 
+        public static List<BudgetControlModels> getDataSapMonthlyList(string strCon)
+        {
+            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetMonthlyList");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+
+                                 date = !string.IsNullOrEmpty(d["dateActual"].ToString()) ? DateTime.Parse(d["dateActual"].ToString()) : (DateTime?)null,
+                                 fiscalYear = d["fiscalYear"].ToString(),
+                                 transaction = d["description"].ToString(),
+                                 EO = d["EO"].ToString(),
+                                 replaceEO = d["replaceEO"].ToString(),
+                                 orderNo = d["IO"].ToString(),
+                                 approveNo = d["approveNo"].ToString(),
+                                 budgetAmount = decimal.Parse(d["budget"].ToString()),
+                                 returnAmount = decimal.Parse(d["returnAmount"].ToString()),
+                                 brandName = d["brandName"].ToString(),
+                                 actual = decimal.Parse(d["actual"].ToString()),
+                                 accrued = decimal.Parse(d["accrued"].ToString()),
+                                 commitment = decimal.Parse(d["commitment"].ToString()),
+                                 nonCommitment = decimal.Parse(d["nonCommitment"].ToString()),
+
+                             });
+
+                return lists.ToList(); ;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getBudgetList");
+            }
+
+            return budgetList;
+        }
+
+
         public static List<BudgetControlModels> getBudgetReportTBM_NotEO(string strCon)
         {
             List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
@@ -575,8 +666,45 @@ namespace eForms.Presenter.AppCode
 
 
 
+        public static int insertDateReportMonthly_BudgetTBM(string strCon, ImportBudgetControlModel model)
+        {
+            int result = 0;
+            try
+            {
+
+                foreach (var item in model.budgetReportList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTo_TB_BGC_BudgetReporMonthly"
+                    , new SqlParameter[] {new SqlParameter("@dateActual",item.date)
+                      ,new SqlParameter("@fiscalYear",item.fiscalYear)
+                      ,new SqlParameter("@description",item.transaction)
+                      ,new SqlParameter("@EO",item.EO)
+                      ,new SqlParameter("@replaceEO",item.replaceEO)
+                      ,new SqlParameter("@IO",item.orderNo)
+                      ,new SqlParameter("@approveNo",item.approveNo)
+                      ,new SqlParameter("@budget",item.budgetAmount)
+                      ,new SqlParameter("@actual",item.actual)
+                      ,new SqlParameter("@accrued",item.accrued)
+                      ,new SqlParameter("@returnAmount",item.returnAmount)
+                      ,new SqlParameter("@commitment",item.commitment)
+                      ,new SqlParameter("@nonCommitment",item.nonCommitment)
+                      ,new SqlParameter("@createdByUserId",item.createdByUserId)
+                      });
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertDateReportBudgetTBM");
+            }
+
+            return result;
+        }
+
         public static int insertDateReportBudgetTBM(string strCon, ImportBudgetControlModel model)
         {
+            
             int result = 0;
             try
             {

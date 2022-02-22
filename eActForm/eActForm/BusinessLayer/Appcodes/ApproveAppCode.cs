@@ -490,7 +490,7 @@ namespace eActForm.BusinessLayer
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
-                    var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
+                    var empDetail = models.approveDetailLists.Where(r => r.empId.Trim() == empId).ToList(); //
 
                     if (empDetail.Count > 1)
                     {

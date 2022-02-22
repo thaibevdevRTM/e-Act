@@ -317,6 +317,7 @@ namespace eActForm.Models
         public decimal? vat { get; set; }
         public decimal? balance { get; set; }
         public decimal? limit { get; set; }
+        public string actType { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()

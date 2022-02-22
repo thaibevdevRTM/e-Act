@@ -54,6 +54,7 @@ namespace eActForm.Models
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
@@ -80,6 +81,7 @@ namespace eActForm.Models
             amountBudgetList = new List<TB_Act_AmountBudget>();
             tB_Reg_Subject = new List<TB_Reg_Subject>();
             tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>();
+            activityGroupList = new List<TB_Act_ActivityGroup_Model>();
 
         }
 
@@ -288,6 +290,7 @@ namespace eActForm.Models
         public string remark { get; set; }
         public decimal? amountBalance { get; set; }
         public decimal? amountTotal { get; set; }
+
 
     }
 
