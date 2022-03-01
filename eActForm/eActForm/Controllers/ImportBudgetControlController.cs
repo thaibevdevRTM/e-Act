@@ -345,8 +345,16 @@ namespace eActForm.Controllers
                     modelBudgetRpt.returnAmount = decimal.Parse(dtBudget.Rows[i]["Return"].ToString());
                     modelBudgetRpt.actual = decimal.Parse(dtBudget.Rows[i]["Actual"].ToString());
                     modelBudgetRpt.accrued = decimal.Parse(dtBudget.Rows[i]["Accrued"].ToString());
-                    modelBudgetRpt.commitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
-                    modelBudgetRpt.nonCommitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Non Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                    if (model.typeImport.ToLower() == ConfigurationManager.AppSettings["typeImportYearly"])
+                    {
+                        modelBudgetRpt.commitment =  decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString());
+                    }
+                    else
+                    {
+                        modelBudgetRpt.commitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                        modelBudgetRpt.nonCommitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Non Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                    }
+
                     modelBudgetRpt.fiscalYear = dtBudget.Rows[i]["Fiscal Year"].ToString();
                     modelBudgetRpt.typeImport = importType;
                     var dateStr = BaseAppCodes.converStrToDatetimeWithFormat(model.dateStr + "-" + "01", "yyyy-MM-dd").ToString("dd/MM/yyyy");

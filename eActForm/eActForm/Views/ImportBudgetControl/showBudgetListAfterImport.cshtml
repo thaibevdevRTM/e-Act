@@ -148,7 +148,7 @@
             </tbody>
         </table>
     </div>
-    @if (checkRow == true)
+    @if (checkRow == true && Model.budgetReportList2.Count == 0)
     {
         <div id="divBtn" class="row form-group">
             <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">

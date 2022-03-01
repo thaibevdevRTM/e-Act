@@ -580,7 +580,6 @@ namespace eForms.Presenter.AppCode
                                  actual = decimal.Parse(d["actual"].ToString()),
                                  accrued = decimal.Parse(d["accrued"].ToString()),
                                  commitment = decimal.Parse(d["commitment"].ToString()),
-                                 nonCommitment = decimal.Parse(d["nonCommitment"].ToString()),
                                  bnamEng = d["bnam_Eng"].ToString(),
                                  returnAmount = decimal.Parse(d["returnAmount"].ToString()),
                                  fiscalYear = d["fiscalYear"].ToString(),

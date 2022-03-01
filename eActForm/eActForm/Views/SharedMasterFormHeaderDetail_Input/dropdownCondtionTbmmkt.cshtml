@@ -107,8 +107,8 @@
                 }
                     function processDropdownConditionFlow() {
 
-                        
-                  
+
+
                         if ($("#ddlChannelOrBrand").val() == "") {
 
                             $("#divBrand").hide();
@@ -116,7 +116,7 @@
                             $("#divSubject").hide();
                             $('#divChannelNull').css('display', 'inline-block');
                             $('#divSubjectNull').css('display', 'inline-block');
-                            
+
 
                         }
                         else if ($("#ddlChannelOrBrand").val() == "Brand") {
@@ -128,7 +128,7 @@
                             $("#divChannel").hide();
                             $("#ddlChannel").val('');
 
-                           
+
                             if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                             {
                                 $(".clsActType").prop('disabled', true);

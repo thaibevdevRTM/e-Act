@@ -16,7 +16,7 @@
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
                                 <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                             <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ActType</th>
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Activities Group</th>
                         <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
@@ -57,7 +57,7 @@
                                 </td>*@
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].productGroupId", new SelectList(Model.activityTypeList, "id", "activitySales", item.productGroupId), "", new { @class = "form-control clsActType", @title = "ประเภทกิจกรรม" })
-                            
+
                             </td>
 
 
