@@ -248,6 +248,7 @@ namespace eActForm.Models
         public string companyId { get; set; }
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
+        public string actEO { get; set; }
         public string actClaim { get; set; }
         public int actClaimInt { get; set; }
         public string master_type_form_id { get; set; }

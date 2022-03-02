@@ -2047,6 +2047,7 @@ namespace eActForm.BusinessLayer
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
                     , new SqlParameter[] {new SqlParameter("@actId",model.activityFormTBMMKT.id)
                      ,new SqlParameter("@claim",model.activityFormTBMMKT.actClaim)
+                    ,new SqlParameter("@EO",model.activityFormTBMMKT.actEO)
                     ,new SqlParameter("@IO",model.activityFormTBMMKT.actIO)
                     ,new SqlParameter("@checkbox",model.activityFormTBMMKT.chkAddIO)
                     ,new SqlParameter("@delFlag",model.activityFormTBMMKT.delFlag)
