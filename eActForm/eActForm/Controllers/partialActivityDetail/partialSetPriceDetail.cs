@@ -3,6 +3,7 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -23,6 +24,14 @@ namespace eActForm.Controllers
                     .Where(x => x.activityCondition.Contains("sp".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+                if(activity_TBMMKT_Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                {
+                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains("actBeer".ToLower())).ToList();
+
+                }
+
+                    
                 if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
                 {
                     activity_TBMMKT_Model.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activity_TBMMKT_Model.activityFormModel.productGroupId);

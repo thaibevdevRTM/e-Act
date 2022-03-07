@@ -262,10 +262,14 @@
     function getValues() {
         var totalAll = 0.00;
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
-
+            
         for (i = 0; i < rowCount; i++) {
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
+
+           
             var rowtotal = parseFloat($(x).val());
+
+            console.log(rowtotal);
             if (isNaN(rowtotal)) rowtotal = 0;
             totalAll = totalAll + rowtotal;
         }

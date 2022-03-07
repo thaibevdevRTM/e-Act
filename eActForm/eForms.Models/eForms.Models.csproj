@@ -58,6 +58,7 @@
     <Compile Include="MasterData\SalesTeamCVMModel.cs" />
     <Compile Include="MasterData\SubjectModel.cs" />
     <Compile Include="MasterData\TB_Act_ActivityGroup_Model.cs" />
+    <Compile Include="MasterData\TB_Act_Area_Model.cs" />
     <Compile Include="MasterData\TB_Act_Chanel_Model.cs" />
     <Compile Include="MasterData\TB_Act_ProductBrand_Model.cs" />
     <Compile Include="MasterData\tokenModel.cs" />
