@@ -174,7 +174,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm()
+                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -207,7 +207,6 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
                                  companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm),
                                  channelId = dr["channelId"].ToString(),
@@ -237,7 +236,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm()
+                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -270,7 +269,6 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
 
                              }).ToList();
@@ -553,7 +551,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)

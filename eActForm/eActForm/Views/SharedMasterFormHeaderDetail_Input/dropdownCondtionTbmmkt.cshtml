@@ -73,6 +73,7 @@
                 </div>
 
                 <div class="col-md-1 col-xs-12">
+                    @Html.Hidden("hdEO", new { @id = "hdEO" })
                 </div>
 
                 <script>
@@ -104,40 +105,59 @@
                             }
                         });
                 }
-                function processDropdownConditionFlow() {
+                    function processDropdownConditionFlow() {
 
-                    if ($("#ddlChannelOrBrand").val() == "") {
 
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#divSubject").hide();
-                        $('#divChannelNull').css('display', 'inline-block');
-                        $('#divSubjectNull').css('display', 'inline-block');
-                     }
-                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                        $('#divBrand').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divChannel").hide();
-                        $("#ddlChannel").val('');
+
+                        if ($("#ddlChannelOrBrand").val() == "") {
+
+                            $("#divBrand").hide();
+                            $("#divChannel").hide();
+                            $("#divSubject").hide();
+                            $('#divChannelNull').css('display', 'inline-block');
+                            $('#divSubjectNull').css('display', 'inline-block');
+
+
+                        }
+                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                            console.log("Load brand");
+                            $("#divChannelNull").hide();
+                            $("#divSubjectNull").hide();
+                            $('#divBrand').css('display', 'inline-block');
+                            $("#divSubject").css('display', 'inline-block');
+                            $("#divChannel").hide();
+                            $("#ddlChannel").val('');
+
+
+                            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                            {
+                                $(".clsActType").prop('disabled', true);
+                                $(".clsActType").val('')
+                            }
+
+
+                        }
+                        else {
+                            $("#divChannelNull").hide();
+                            $("#divSubjectNull").hide();
+                            $('#divChannel').css('display', 'inline-block');
+                            $("#divSubject").css('display', 'inline-block');
+                            $("#divBrand").hide();
+                            $("#divBrand").val('');
+
+                            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                            {
+                                $(".clsActType").prop('disabled', false);
+                            }
+                        }
                     }
-                    else {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                        $('#divChannel').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divBrand").hide();
-                        $("#divBrand").val('');
-
-                    }
-                }
 
                 $(function () {
                     //ทำหลังLoadหน้่าเว็บเสร็จ
                     var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
                     var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
                     var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
+
                     if (p_subjectId != "") {
                         $("#divSubject").css('display', 'inline-block');
                         $("#ddlSubject").val(p_subjectId);
@@ -145,6 +165,9 @@
                     if (p_productBrandId != "") {
                         $("#divBrand").css('display', 'inline-block');
                         $("#ddlBrand").val(p_productBrandId);
+                        getEOByBrandId(p_productBrandId);
+                        $("#hdEO").val(p_productBrandId);
+
                     }
                     if (p_channelId != "") {
                         $("#divChannel").css('display', 'inline-block');
@@ -207,12 +230,11 @@
                         }
                     }
 
-                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
-                        {
-                             $("#ddl_EO_PV").multiselect('dataprovider', null);
-                             $('#ddlBrand').val("");
-                             $('#ddlChannel').val("");
-                        }
+                    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
+                        $("#ddl_EO_PV").multiselect('dataprovider', null);
+                        $('#ddlBrand').val("");
+                        $('#ddlChannel').val("");
+                    }
                 });
 
                 </script>
@@ -246,6 +268,11 @@
                                 bindDropdownEO();
                             }
                         }
+
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+                            getEOByBrandId();
+                        }
+
 
                     });
 
@@ -291,6 +318,30 @@
                                     alert("Error Get Subject.");
                                 }
                             });
+                }
+
+
+                 function getEOByBrandId(brandId) {
+
+                        $.ajax({
+                            url: '@Url.Action("getDetailBrandById", "eAct")',
+                            data: {
+                                brandId: $('#ddlBrand').val(),
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                            success: function (response) {
+                                console.log(response.Data);
+                                if (response.Data) {
+                                    $('#hdEO').val(response.Data.EO);
+                                }
+                                else {
+                                    $('#hdEO').val('');
+                                }
+
+
+                            }
+                        });
                 }
 
                 </script>

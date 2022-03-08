@@ -81,10 +81,21 @@
                     <th width="170px" class="center">FiscalYear</th>
                     <th width="170px" class="center">EO</th>
                     <th width="170px" class="center">IO</th>
-
                     <th width="170px" class="center">Detail</th>
-                    <th width="170px" class="center">Amount for Eact</th>
-                    <th width="170px" class="center">Amount for SAP</th>
+                    @if (Model.typeImport == System.Configuration.ConfigurationManager.AppSettings["typeImportYearly"])
+                    {
+                        <th width="170px" class="center">Amount for Eact</th>
+                        <th width="170px" class="center">Amount for SAP</th>
+                    }
+                    else
+                    {
+                        <th class="center">budget</th>
+                        <th class="center">return</th>
+                        <th class="center">actual</th>
+                        <th class="center">accrued</th>
+                        <th class="center">commit</th>
+                        <th class="center">nonCommit</th>
+                    }
 
                 </tr>
             </thead>
@@ -99,24 +110,31 @@
                         <td> @item.fiscalYear</td>
                         <td>@string.Format("{0:n2}", @item.EO)</td>
                         <td>@string.Format("{0:n2}", @item.orderNo)</td>
-
-
                         <td>@string.Format("{0:n2}", @item.transaction)</td>
 
 
-                        @if (@item.approve_Amount != @item.budget_Amount2)
+                        @if (Model.typeImport == ConfigurationManager.AppSettings["typeImportYearly"])
                         {
-                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
-                            <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
-                            checkRow = false;
+                            if (@item.approve_Amount != @item.budget_Amount2)
+                            {
+                                <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.approve_Amount)</td>
+                                <td style="background-color:lightcoral">@string.Format("{0:n2}", @item.budget_Amount2)</td>
+                                checkRow = false;
+                            }
+                            else
+                            {
+                                <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
+                                <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
+                            }
                         }
                         else
                         {
-                            <td>@string.Format("{0:n2}", @item.approve_Amount)</td>
-                            <td>@string.Format("{0:n2}", @item.budget_Amount2)</td>
-
-                           
-
+                            <td>@string.Format("{0:n2}", @item.budgetAmount)</td>
+                            <td>@string.Format("{0:n2}", @item.returnAmount)</td>
+                            <td>@string.Format("{0:n2}", @item.actual)</td>
+                            <td>@string.Format("{0:n2}", @item.accrued)</td>
+                            <td>@string.Format("{0:n2}", @item.commitment)</td>
+                            <td>@string.Format("{0:n2}", @item.nonCommitment)</td>
                         }
 
                     </tr>
@@ -130,7 +148,7 @@
             </tbody>
         </table>
     </div>
-    @if (checkRow == true)
+    @if (checkRow == true && Model.budgetReportList2.Count == 0)
     {
         <div id="divBtn" class="row form-group">
             <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="submmitBtn();">
@@ -165,17 +183,21 @@
                 </tr>
             </thead>
             <tbody>
-                @{ count = 0;}
-                @foreach (var item in Model.budgetReportList2)
-                {
-                    <tr>
-                        <td>@item.EO</td>
-                        <td>@item.orderNo</td>
-                        <td>@item.description</td>
-                    </tr>
 
-                    replaceEO = item.replaceEO;
-                    count = count + 1;
+                @{ count = 0;}
+                @if (Model.budgetReportList2.Count > 0)
+                {
+                    foreach (var item in Model.budgetReportList2)
+                    {
+                        <tr>
+                            <td>@item.EO</td>
+                            <td>@item.orderNo</td>
+                            <td>@item.description</td>
+                        </tr>
+
+                        replaceEO = item.replaceEO;
+                        count = count + 1;
+                    }
                 }
                 <tr>
                     <td>จำนวนแถว : @count</td>

@@ -146,6 +146,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.vat = item.vat == null ? 0 : item.vat;
                 costThemeDetail.LE = item.LE == null ? 0 : item.LE;
                 costThemeDetail.perTotal = item.perTotal == null ? 0 : item.perTotal;
+                costThemeDetail.productGroupId = item.productGroupId;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -538,6 +539,8 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = QueryGet_TB_Act_ActivityForm_DetailOtherList.get_TB_Act_ActivityForm_DetailOtherList(activityId);
 
+                    bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+                    activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
                     activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                     activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                     activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
@@ -1389,6 +1392,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
                     ,new SqlParameter("@le",decimal.Parse(string.Format("{0:0.00000}", model.LE)))
                     ,new SqlParameter("@perTotal",decimal.Parse(string.Format("{0:0.00000}", model.perTotal)))
+                    ,new SqlParameter("@productGroupId",model.productGroupId)
                     });
             }
             catch (Exception ex)

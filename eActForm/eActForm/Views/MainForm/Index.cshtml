@@ -55,6 +55,7 @@
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
+
         @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
         @*=================for test====================*@
         @*<tr>
@@ -95,7 +96,6 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 3 && (UtilsAppCode.Session.User.isAdminTBM))
             || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
@@ -135,7 +135,7 @@
 @foreach (var item in Model.scristModelList)
 {
     var getscript = @item.scriptsName.Replace("\\", "/").ToString();
-    
+
     <script src="@string.Format(ConfigurationManager.AppSettings["rootURL"], @getscript)"></script>
 }
 
@@ -431,16 +431,17 @@
             if ($("#txtdateActivitySt").val() == "") { required += "&emsp;วันที่ เริ่มกิจกรรม*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "&emsp;วันที่ สิ้นสุดกิจกรรม*<br>"; validate = false; }
 
-            
+
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
-                if ($(".txttotal_" + i).val() != "0.00") {
-                        if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
-                            required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
-                        }
-                        if ($(".clstxtEO_" + i).val() == "") {
-                             required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
-                       }
+                if ($(".clstxtproductDetail_" + i).val() != "" || $(".clstxtEO_" + i).val() != "") {
+
+                    if ($(".clstxtYearSelect_" + i).val() == "") {
+                        required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
+                    if ($(".clstxtEO_" + i).val() == "") {
+                        required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
                 }
             }
         }
@@ -515,6 +516,8 @@
 
         return checkUpload;
     }
+
+
 
     function SubmitData() {
         console.log("submit");

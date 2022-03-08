@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 using static eForms.Models.MasterData.ImportBudgetControlModel;
+using QueryGetAllActivityGroup = eActForm.BusinessLayer.QueryGetAllActivityGroup;
 
 namespace eActForm.Controllers
 {
@@ -40,6 +41,7 @@ namespace eActForm.Controllers
                 yearTo = (Convert.ToInt32(nowPhysicalYear) + 10).ToString();
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderBy(m => m.UseYear).ToList();
+            activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "actTbm").ToList();
 
             return PartialView(activity_TBMMKT_Model);
         }
@@ -84,14 +86,9 @@ namespace eActForm.Controllers
 
             //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             //string en = ConfigurationManager.AppSettings["cultureEng"];
-            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
-            {
-                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-            }
 
             activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId,
-              activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
+            activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
 
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
@@ -223,13 +220,6 @@ namespace eActForm.Controllers
 
         public ActionResult requestEmp2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
-            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
-            {
-                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
-            }
-
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
@@ -251,17 +241,12 @@ namespace eActForm.Controllers
 
                 List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
-                var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
+                var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO }).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
-                    IO = group.First().IO,
                     fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
-
-
-                result.Success = false;
-
 
                 var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
@@ -269,10 +254,6 @@ namespace eActForm.Controllers
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
 
 
-
-                
-
-                
                 if (status == "2" || status == "3")
                 {
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
@@ -282,7 +263,7 @@ namespace eActForm.Controllers
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
                     foreach (var item in getAmount)
                     {
-                        
+
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         budgetTotalModel.returnAmountBrand = item.returnAmount;
                         budgetTotalModel.EO = item.EO;
@@ -323,22 +304,32 @@ namespace eActForm.Controllers
                                 returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
                                 returnAmountList.Add(returnAmountModel);
                             }
-
                         }
                     }
                     foreach (var item in groupEO)
                     {
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear);
+                        string[] ipArray = ConfigurationManager.AppSettings["Instock"].ToLower().Split(',');
+
+                        var getSum = getListEO.Where(x => x.EO == item.EO && !ipArray.Contains(x.IO.ToLower())
+                       ).GroupBy(x => new { x.EO }).Select((group, index) => new BudgetTotal
+                       {
+                           total = group.Sum(c => c.total),
+                       }).ToList();
 
                         if (getAmount.Any())
                         {
 
                             var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
                             budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
-                            if (status == "2" || status == "3" || item.IO.ToLower() == ConfigurationManager.AppSettings["Instock"].ToLower())
+                            if (status == "2" || status == "3")
                             {
                                 item.total = 0;
+                            }
+                            else
+                            {
+                                item.total = getSum.Any() ? getSum.FirstOrDefault().total : 0;
                             }
 
                             budgetTotalModel.EO = item.EO;
@@ -367,12 +358,22 @@ namespace eActForm.Controllers
                 }
 
 
+
+
+
+                //show budget ก้อนใหญ่
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 model.budgetTotalList = budgetTotalsList;
                 model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
                 model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
                 model.budgetTotalModel.returnAmount = sumReturn;
+
+
+
+
+
+
                 TempData["showBudget" + activityId] = model;
 
                 var resultData = new
@@ -397,7 +398,8 @@ namespace eActForm.Controllers
         {
 
             Activity_TBMMKT_Model model = TempData["showBudget" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudget" + activityId];
-            TempData.Keep();
+
+
             return PartialView(model);
         }
 

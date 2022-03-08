@@ -442,21 +442,7 @@
     }
 
     function onchangeCustomer() {
-        ObjModel = {};
         getFormatCus();
-
-        $("#txtchanel").val('');
-         $.ajax({
-                url: '@Url.Action("getChanel", "eAct")',
-                data: {
-                    Id: $("#ddlCustomer").val(),
-                },
-                dataType: "json",
-                type: 'POST',
-             success: function (response) {
-                 $("#txtchanel").val(response.Data.Chanel_group);
-             }
-         });
     }
 
 

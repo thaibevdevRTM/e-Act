@@ -1,4 +1,5 @@
-﻿using eForms.Models.Forms;
+﻿using eActForm.BusinessLayer;
+using eForms.Models.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -101,6 +102,15 @@ namespace eActForm.Models
 
         public class actForm : ActBaseModel
         {
+            public actForm(string empId)
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                if (model.Count > 0)
+                {
+                    this.createByUserName = model.Count > 0 ? model[0].empName : "";
+                }
+            }
+
             public string id { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
@@ -307,6 +317,7 @@ namespace eActForm.Models
         public decimal? vat { get; set; }
         public decimal? balance { get; set; }
         public decimal? limit { get; set; }
+        public string actType { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()

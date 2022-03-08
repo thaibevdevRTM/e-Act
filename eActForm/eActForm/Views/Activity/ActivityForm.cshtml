@@ -812,7 +812,7 @@
     }
 
     function onchangeActivity() {
-        if ($("#ddlTheme").val() == '8B5402F5-63D0-46E5-BFDA-9FC72F3CF565') {
+        if ($("#ddlTheme option:selected").text() == 'FOC') {
 
             document.getElementById("divSubAct").style.display = "block";
         }

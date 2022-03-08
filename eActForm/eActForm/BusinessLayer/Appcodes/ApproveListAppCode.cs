@@ -28,7 +28,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveFormByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm()
+                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -64,7 +64,6 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByName"].ToString(),
                                  dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                                  brandName = dr["brandName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
@@ -85,7 +84,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRejectApproveFormByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm()
+                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -121,7 +120,6 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByName"].ToString(),
                                  dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                              }).ToList();
                 return lists;

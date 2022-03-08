@@ -8,29 +8,36 @@
             <div id="getQuery" class="col-lg-12">
             </div>
 
-            <div><span style="color:red">หมายเหตุ : .กรณีขออนุมัติงบ เข้าStock  ให้ระบุ IO เข้าStock ก่อนส่งอนุมัติทุกครั้ง</span></div>
+            <div><span style="color:red">หมายเหตุ : .กรณีขออนุมัติงบ เข้าStock  ให้ระบุ IO เข้าStock , ทรัพย์สิน ก่อนส่งอนุมัติทุกครั้ง</span></div>
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
                                 <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                             <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Activities Group</th>
                         <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
                     {
+
                         <tr class="tagCountRowinTable">
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
 
                                 @Html.HiddenFor(x => item.typeTheme, new { @id = "activityOfEstimateList[" + index + "].typeTheme", Name = "activityOfEstimateList[" + index + "].typeTheme", @class = "form-control textboxcss text-right txtTypetheme__" + index })
                                 @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
-                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @id = "yearSelect_"+ index,  @class = "form-control clstxtYearSelect_" + index, @title = "เลือกปีงบประมาณ" })
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @id = "yearSelect_" + index, @class = "form-control clstxtYearSelect_" + index, @title = "เลือกปีงบประมาณ" })
+                                <script>
+                                    $(".clstxtYearSelect_@index").change(function () {
+                                        getBudgetTotal();
+                                    });
+                                </script>
                             </td>
                             @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
@@ -48,6 +55,12 @@
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
                                 </td>*@
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].productGroupId", new SelectList(Model.activityTypeList, "id", "activitySales", item.productGroupId), "", new { @class = "form-control clsActType", @title = "ประเภทกิจกรรม" })
+
+                            </td>
+
+
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div style="display:inline-block;">
                                     <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
@@ -70,11 +83,50 @@
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
                                     <script>
+
+                                          $(document).ready(function () {
+                                                $(function () {
+
+                                                    $(".clstxtIO_@index").autocomplete({
+                                                        source: function (request, response) {
+                                                            $.ajax({
+                                                                url: '@Url.Action("getOtherMasterByType", "eAct")',
+                                                                type: "POST",
+                                                                dataType: "json",
+                                                                data: {
+                                                                    type: 'stocktbm',
+                                                                    subType: '',
+                                                                    text: $(".clstxtIO_@index").val(),
+                                                                },
+                                                                success: function (data) {
+                                                                    response($.map(data, function (item) {
+                                                                        return { label: item.displayVal, value: item.displayVal, id: item.id };
+                                                                    }))
+
+                                                                }
+                                                            })
+                                                        },
+                                                        minLength: 0,
+                                                        messages: {
+                                                            noResults: '',
+                                                            results: function (resultsCount) {
+                                                            }
+                                                        }, select: function (event, ui) {
+                                                            $(".clstxtIO_@index").val(ui.item.id)
+                                                        }
+                                                    }).focus(function () {
+                                                        $(this).data("uiAutocomplete").search($(this).val());
+                                                    });
+
+                                                });
+                                            });
+
                                         $(".clstxtIO_@index").blur(function () {
                                             $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
                                             getBudgetTotal();
                                         });
                                     </script>
+
                                 </div>
                                 <div>
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
@@ -205,17 +257,18 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#divHeaderDetailsCost :input").prop("disabled", false);
+       // $("#divHeaderDetailsCost :input").prop("disabled", false);
 
         if ("@Model.activityFormTBMMKT.id" != '') {
-            console.log('budget');
             getBudgetTotal();
         }
 
     });
 
 
+
     function getBudgetTotal(row) {
+
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
 
@@ -225,7 +278,7 @@
                 IO: $(".clstxtIO_" + row).val(),
                 total: $(".txttotal_" + row).val(),
                 UseYearSelect: $(".clstxtYearSelect_" + row).val(),
-                
+
             });
 
         });
@@ -239,9 +292,8 @@
                 subjectId: document.getElementById("ddlSubject").value,
                 channelId: document.getElementById("ddlChannel").value,
                 brandId: document.getElementById("ddlBrand").value,
-                activityId: "@Model.activityFormTBMMKT.id",
+                activityId: "@Model.activityFormModel.id",
                 status: "@Model.activityFormTBMMKT.statusId",
-
 
             },
             dataType: "json",
@@ -256,16 +308,8 @@
                     $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
 
                 }
-
-                console.log(response.Data.budgetTotalsList.length);
                 document.getElementById("divShowBudget").innerHTML = "";
-                if (response.Data.budgetTotalsList.length > 0) {
-                    callPartialBudgetControl("@Model.activityFormTBMMKT.id");
-                }
-                else {
-                    callPartialBudgetControl("");
-                }
-
+                callPartialBudgetControl("@Model.activityFormModel.id");
 
             }
         });

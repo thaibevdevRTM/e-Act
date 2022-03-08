@@ -463,8 +463,18 @@
                         <br />
                         <table class="borderWidthMaxCollape">
                             <tr>
-                                <td class="paddingRowTableN txtRight">
+                                <td class="paddingRowTableV2N txtRight">
                                     รวม
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="paddingRowTableV2N txtRight fontRedV2">
+                                    ภาษีมูลค่าเพิ่ม 7%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="paddingRowTableV2N txtRight">
+                                    รวมทั้งสิ้น (บาท)
                                 </td>
                             </tr>
                         </table>
@@ -473,77 +483,17 @@
                         <br />
                         <table class="borderWidthMaxCollape">
                             <tr>
-                                <td class="paddingRowTableN txtRight fontBlueV1">
+                                <td class="paddingRowTableV2N txtRight fontBlueV1">
                                     @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
                                 </td>
                             </tr>
-                        </table>
-                    </td>
-                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                        &nbsp;
-                    </td>
-                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                        &nbsp;
-                    </td>
-                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                        &nbsp;
-                    </td>
-                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
-                        &nbsp;
-                    </td>
-                    <td class="tdTopCenter pvNoWidth">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="txtRight fontRedV2">
-                        <table class="borderWidthMaxCollape">
-                            <tr>
-                                <td class="paddingRowTableV2N txtRight fontRedV2">
-                                    ภาษีมูลค่าเพิ่ม 7%
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td class="dCol3 txtRight borderRight fontBlueV1">
-                        <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTableV2N txtRight fontBlueV1">
                                     @Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")&nbsp;&nbsp;
                                 </td>
                             </tr>
-                        </table>
-                    </td>
-                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                        &nbsp;
-                    </td>
-                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                        &nbsp;
-                    </td>
-                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                        &nbsp;
-                    </td>
-                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
-                        &nbsp;
-                    </td>
-                    <td class="tdTopCenter pvNoWidth">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="txtRight">
-                        <table class="borderWidthMaxCollape">
                             <tr>
-                                <td class="paddingRowTableV3N txtRight">
-                                    รวมทั้งสิ้น (บาท)
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td class="dCol3 txtRight borderRight fontBlueV1">
-                        <table class="borderWidthMaxCollape">
-                            <tr>
-                                <td class="paddingRowTableV3N txtRight fontBlueV1">
+                                <td class="paddingRowTableV2N txtRight fontBlueV1">
                                     @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")&nbsp;&nbsp;
                                 </td>
                             </tr>
@@ -567,25 +517,16 @@
                 </tr>
                 <tr>
                     <td colspan="3" class="dCol3 txtRight borderRight fontBlueV1">
-                        <table class="borderWidthMaxCollape">
-                            <tr>
-                                <td class="paddingRowTableN txtRight fontBlueV1">
-                                    <table class="borderWidthMaxCollape txtRight">
-                                        <tr>
-                                            <td style="width:100px;" class="paddingRowTableV3N txtLeft fontRedV1">
-                                                &nbsp;&nbsp;บาท (ตัวอักษร)
-                                            </td>
-                                            <td class="paddingRowTableV3N txtRight fontBlueV1">
-                                                @{
-                                                    string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00"));
-                                                }
-                                                @totalWithVat &nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="row">
+                            <span class=" fontRedV1">&nbsp;&nbsp;บาท (ตัวอักษร)</span>
+
+                            <span class=" txtRight fontBlueV1">
+                                @{
+                                    string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00"));
+                                }
+                                @totalWithVat &nbsp;
+                            </span>
+                        </div>
                     </td>
                     <td class="vatTitleColumn verticalTop vatWidth borderRight">
                         &nbsp;
@@ -638,3 +579,4 @@
         </td>
     </tr>
 </table>
+

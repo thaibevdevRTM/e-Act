@@ -55,7 +55,9 @@ namespace eActForm.BusinessLayer
                                   LE = d["LE"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["LE"].ToString())),
                                   perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["perTotal"].ToString())),
                                   totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalCase"].ToString())),
-                                  
+                                  productGroupId = d["productGroupId"].ToString(),
+                                  actType = d["actType"].ToString()
+
                               });
 
                 return result.ToList();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
@@ -16,7 +17,7 @@ namespace eActForm.Models
             public string dateReport { get; set; }
             public string reportDetailId { get; set; }
         }
-        public class actFormRepDetailModel : Activity_Model.actForm
+        public class actFormRepDetailModel : ActBaseModel
         {
             public string cusNameTH { get; set; }
             public string productId { get; set; }
@@ -45,6 +46,47 @@ namespace eActForm.Models
             public decimal? rsp { get; set; }
             public string unitTxt { get; set; }
             public int rowNo { get; set; }
+            public string id { get; set; }
+            public string statusId { get; set; }
+            public string statusName { get; set; }
+            public string statusNameEN { get; set; }
+            public string languageDoc { get; set; }
+            public string activityNo { get; set; }
+            public DateTime? documentDate { get; set; }
+            public string reference { get; set; }
+            public string productCateId { get; set; }
+            public string productGroupid { get; set; }
+            public string customerId { get; set; }
+            public string channelName { get; set; }
+            public string productTypeId { get; set; }
+            public string productTypeNameEN { get; set; }
+            public string cusShortName { get; set; }
+            public string productCategory { get; set; }
+            public string productGroup { get; set; }
+            public string groupName { get; set; }
+            public DateTime? activityPeriodSt { get; set; }
+            public DateTime? activityPeriodEnd { get; set; }
+            public DateTime? costPeriodSt { get; set; }
+            public DateTime? costPeriodEnd { get; set; }
+            public string activityName { get; set; }
+            public string theme { get; set; }
+            public string objective { get; set; }
+            public string trade { get; set; }
+            public string activityDetail { get; set; }
+            public decimal? normalCost { get; set; }
+            public decimal? themeCost { get; set; }
+
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? totalCost { get; set; }
+            public decimal? perTotal { get; set; }
+            public string createByUserName { get; set; }
+            public string regionId { get; set; }
+            public string brandId { get; set; }
+            public string master_type_form_id { get; set; }
+            public DateTime? dateSentApprove { get; set; }
+            public string companyId { get; set; }
+            public string brandName { get; set; }
+            public string channelId { get; set; }
         }
 
         public class actApproveRepDetailModels

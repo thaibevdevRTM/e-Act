@@ -29,7 +29,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveFormByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm()
+                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),

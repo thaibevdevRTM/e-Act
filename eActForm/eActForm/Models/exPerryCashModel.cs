@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using System;
 using System.Collections.Generic;
 
 namespace eActForm.Models
@@ -18,6 +19,14 @@ namespace eActForm.Models
 
     public class exPerryCashModel : ActBaseModel
     {
+        public exPerryCashModel(string empId)
+        {
+            List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+            if (model.Count > 0)
+            {
+                this.createName = model.Count > 0 ? model[0].empName : "";
+            }
+        }
         public string id { get; set; }
         public string actNo { get; set; }
         public string detail { get; set; }
