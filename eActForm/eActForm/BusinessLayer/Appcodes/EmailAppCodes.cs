@@ -338,6 +338,8 @@ namespace eActForm.BusinessLayer
                             , strBody
                             , emailType);
                     }
+
+                    System.Threading.Thread.Sleep(1000);
                 }
                 else
                 {
