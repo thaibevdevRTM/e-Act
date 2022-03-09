@@ -30,7 +30,14 @@
 </style>
 
 <div class="col-md-6 col-xs-12">
-    @HtmleActBeer()
+    @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+    {
+        @HtmleActBeer()
+    }
+    else
+    {
+        @HtmlSetPrice()
+    }
 </div>
 
 
@@ -87,7 +94,7 @@
                 Region<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                @Html.DropDownListFor(x => x.activityFormTBMMKT.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
            {
                @class = "form-control textboxcss",
                id = "ddlRegion"
@@ -95,7 +102,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-xs-12">
+    <div id="divCustomer" class="col-md-12 col-xs-12">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
                 Customer<span class="required">*</span>
@@ -120,6 +127,21 @@
             </div>
         </div>
     </div>
+
+    <div id="divArea" class="col-md-12 col-xs-12">
+        <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Area<span class="required">*</span>
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtArea", @name = "txtArea" })
+                @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "areaId" })
+
+            </div>
+        </div>
+    </div>
+
 
     <div class="col-md-12 col-xs-12">
         <div class="form-group">
@@ -184,7 +206,7 @@
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "start",@class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
+                    @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "start", @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "end", @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
@@ -372,81 +394,81 @@
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="ddlTheme">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3">
                 หน่วยงานหลัก<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
-                {
-                @class = "form-control textboxcss",
-                id = "ddlTheme"
-                })
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new SelectList(Model.otherList_1, "val1", "displayVal"), new
+           {
+               @class = "form-control textboxcss",
+               id = "ddlMainAgency"
+           })
             </div>
         </div>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="ddlTheme">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3">
                 หน่วยงานย่อย<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
-                {
-                @class = "form-control textboxcss",
-                id = "ddlTheme"
-                })
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new SelectList(Model.otherList_2, "val1", "displayVal"), new
+          {
+              @class = "form-control textboxcss",
+              id = "ddlSubAgency"
+          })
             </div>
         </div>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="ddlTheme">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3">
                 ส่วน(การจ่าย)<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.payNo, new SelectList(Model.otherList_3, "val1", "displayVal"), new
                 {
-                @class = "form-control textboxcss",
-                id = "ddlTheme"
+                    @class = "form-control textboxcss",
+                    id = "ddlpay"
                 })
             </div>
         </div>
     </div>
     <div class="col-md-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="ddlTheme">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3">
                 Game<span class="required">*</span>
             </label>
             <div class="col-md-4 col-sm-4 col-xs-4">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
-                {
-                @class = "form-control textboxcss",
-                id = "ddlTheme"
-                })
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.glNo, new SelectList(Model.otherList_4, "val1", "displayVal"), new
+                  {
+                      @class = "form-control textboxcss",
+                      id = "ddlGame"
+                  })
             </div>
 
-            <label class="control-label col-md-1 col-sm-1 col-xs-1" for="ddlTheme">
+            <label class="control-label col-md-1 col-sm-1 col-xs-1">
                 พื้นที่<span class="required">*</span>
             </label>
             <div class="col-md-4 col-sm-4 col-xs-4">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new SelectList(Model.otherList_5, "val1", "displayVal"), new
                 {
                 @class = "form-control textboxcss",
-                id = "ddlTheme"
+                id = "ddlArea"
                 })
             </div>
         </div>
     </div>
     <div class="col-md-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="ddlTheme">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3" >
                 ช่องทาง<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup"), new
                 {
                 @class = "form-control textboxcss",
-                id = "ddlTheme"
+                id = "ddlChannel"
                 })
             </div>
         </div>
@@ -462,13 +484,23 @@
 
 <hr />
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12 col-xs-12">
         <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-6">
         @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <p class="lead">คำอธิบาย</p>
+    </div>
+    <div class="col-md-6 col-xs-6">
+        @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
+    </div>
+</div>
+
+
 <hr />
 <div id="getQuery" class="col-lg-12">
     @Html.Action("productSetPriceList", "ExpenseEstimateInput", new { typeForm = Model.activityFormTBMMKT.typeForm, actId = Model.activityFormTBMMKT.id })
@@ -507,15 +539,22 @@
                 $(this).focus();
             }
         });
+        $("#divArea").hide();
+        $("#divCustomer").hide();
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
             $("#txtCustomerName").show();
             $("#divRegion").show();
-            $("#ddlCustomer").hide();
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]'){
+            $("#divArea").show();
+            $("#divRegion").show();
+
         }
         else {
             $("#txtCustomerName").hide();
             $("#divRegion").hide();
+            $("#divArea").hide();
         }
 
 
@@ -553,6 +592,43 @@
                 }
             }, select: function (event, ui) {
                 $("#customerId").val(ui.item.id)
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+
+
+
+        $('#ddlRegion').selectpicker({
+            liveSearch: true,
+            showSubtext: true
+        });
+
+         $("#txtArea").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getAreaByRegion", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        regionId: $("#ddlRegion").val(),
+                        txtCus: $("#txtArea").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.area, value: item.area, id: item.id };
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#areaId").val(ui.item.id)
             }
         }).focus(function () {
             $(this).data("uiAutocomplete").search($(this).val());

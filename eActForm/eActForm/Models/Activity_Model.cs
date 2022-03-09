@@ -78,7 +78,8 @@ namespace eActForm.Models
             HCM,
             ITForm,
             HCForm,
-            OtherCompany
+            OtherCompany,
+            Beer
         }
         public enum groupCompany
         {

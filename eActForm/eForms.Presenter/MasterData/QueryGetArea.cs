@@ -3,6 +3,7 @@ using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace eForms.Presenter.MasterData
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCode, CommandType.StoredProcedure, "usp_getAreaByCondition");
+                DataSet ds = SqlHelper.ExecuteDataset(strCode, CommandType.StoredProcedure, "usp_getAreaByCondition"
+                    , new SqlParameter[] { new SqlParameter("@condition", condition) });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_Area_Model()
                              {

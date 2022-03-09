@@ -20,17 +20,39 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.customerslist = QueryGetAllCustomers.getCustomersMT();
 
                 activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-                activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains("sp".ToLower()))
-                    .GroupBy(item => item.activitySales)
-                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+               
 
-                if(activity_TBMMKT_Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
                 {
-                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains("actBeer".ToLower())).ToList();
+                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Contains("actBeer".ToLower())).ToList();
+                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("actBeer")).OrderBy(x => x.descTh).ToList();
+                    activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("mainAgency", "");
+                    activity_TBMMKT_Model.otherList_2 = QueryOtherMaster.getOhterMaster("subAgency", "");
+                    activity_TBMMKT_Model.otherList_3 = QueryOtherMaster.getOhterMaster("pay", "");
+                    activity_TBMMKT_Model.otherList_4 = QueryOtherMaster.getOhterMaster("game", "");
+                    activity_TBMMKT_Model.otherList_5 = QueryOtherMaster.getOhterMaster("area", "");
+                    activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt.Equals("actBeer")).ToList();
 
                 }
+                else
+                {
+                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                   .Where(x => x.activityCondition.Contains("sp".ToLower()))
+                   .GroupBy(item => item.activitySales)
+                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
+                    if (UtilsAppCode.Session.User.regionId != "")
+                    {
+                        activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
+                        activity_TBMMKT_Model.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
+                    }
+                    else
+                    {
+
+                        activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("OMT")).ToList();
+                    }
+
+                }
                     
                 if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
                 {
@@ -44,15 +66,7 @@ namespace eActForm.Controllers
 
                 }
 
-                if (UtilsAppCode.Session.User.regionId != "")
-                {
-                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
-                    activity_TBMMKT_Model.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
-                }
-                else
-                {
-                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion();
-                }
+                
                 TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] = activity_TBMMKT_Model;
             }
             catch (Exception ex)
