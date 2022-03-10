@@ -333,6 +333,7 @@
     <Compile Include="Controllers\API\eActController.cs" />
     <Compile Include="Controllers\ExpenseEstimateInput\exListEntertainController.cs" />
     <Compile Include="Controllers\ExpenseEstimateInput\parialPriceStructure.cs" />
+    <Compile Include="Controllers\ExpenseEstimateInput\partialCostDetailController.cs" />
     <Compile Include="Controllers\ExpenseEstimateInput\partialTransferListDetailController.cs" />
     <Compile Include="Controllers\ExpenseEstimateReport\expenseEntertainReportController.cs" />
     <Compile Include="Controllers\ExpenseEstimateReport\parialPriceStructureRpt.cs" />
@@ -3303,6 +3304,7 @@
     <Content Include="Views\managementFlow\Index_EmpMoveCompany.cshtml" />
     <Content Include="Views\managementFlow\list_EmpMoveCompany.cshtml" />
     <Content Include="Views\actFormRepDetail\mockupData.cshtml" />
+    <Content Include="Views\ExpenseEstimateInput\partialCostDetail.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

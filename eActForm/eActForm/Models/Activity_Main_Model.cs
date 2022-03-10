@@ -53,7 +53,7 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
-        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList2 { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }

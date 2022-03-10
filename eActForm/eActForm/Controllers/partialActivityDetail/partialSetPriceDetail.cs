@@ -24,7 +24,12 @@ namespace eActForm.Controllers
 
                 if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
                 {
-                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Contains("actBeer".ToLower())).ToList();
+                    activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+                    activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Contains("actBeer".ToLower())).ToList();
                     activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("actBeer")).OrderBy(x => x.descTh).ToList();
                     activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("mainAgency", "");
                     activity_TBMMKT_Model.otherList_2 = QueryOtherMaster.getOhterMaster("subAgency", "");

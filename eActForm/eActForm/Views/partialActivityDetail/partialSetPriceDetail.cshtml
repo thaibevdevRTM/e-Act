@@ -315,7 +315,7 @@
                 ประเภทกิจกรรม<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
+                @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityTypeList, "id", "activitySales"), new
                 {
                 @class = "form-control textboxcss",
                 id = "ddlTheme"
@@ -461,7 +461,7 @@
     </div>
     <div class="col-md-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" >
+            <label class="control-label col-md-3 col-sm-3 col-xs-3">
                 ช่องทาง<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
@@ -475,12 +475,6 @@
     </div>
 
 }
-
-
-
-
-
-
 
 <hr />
 <div class="row">
@@ -499,6 +493,7 @@
         @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
     </div>
 </div>
+
 
 
 <hr />
@@ -528,6 +523,18 @@
         <label class="btn ink-reaction btn-danger fa fa-plus" style="margin-top:20px;"></label>
     </div>
 </div>
+
+
+@if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+{
+    <div id="divgetdetailcost" class="col-lg-12">
+        @Html.Action("partialCostDetail", "ExpenseEstimateInput", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
+    </div>
+
+}
+
+
+
 
 <script type="text/javascript">
 
