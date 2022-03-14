@@ -122,6 +122,14 @@ namespace eActForm.BusinessLayer
                         strCall = "usp_getActivitySetPriceFormAll";
                     }
                 }
+                else if (typeForm == Activity_Model.activityType.Beer.ToString())
+                {
+                    strCall = "usp_getActivityActBeerByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityActBeerFormAll";
+                    }
+                }
                 else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                 {
                     strCall = "usp_getActivitySetPriceOMTByEmpId";

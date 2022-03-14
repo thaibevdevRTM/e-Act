@@ -287,7 +287,7 @@
                             }
                             else if (Model.typeForm == Activity_Model.activityType.Beer.ToString())
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
 
 
@@ -433,6 +433,7 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["formReceptions"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTransferbudget"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceOMT"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["companyId_ChangInter"]"
         ) {
              $.ajax({
                 type: 'POST',

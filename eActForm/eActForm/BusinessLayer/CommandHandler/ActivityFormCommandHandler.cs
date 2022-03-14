@@ -455,6 +455,7 @@ namespace eActForm.BusinessLayer
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
                     , new SqlParameter[] {new SqlParameter("@actId",model.id)
                      ,new SqlParameter("@claim",model.actClaim)
+                    ,new SqlParameter("@EO",model.actEO)
                     ,new SqlParameter("@IO",model.actIO)
                     ,new SqlParameter("@checkbox",model.chkAddIO)
                     ,new SqlParameter("@delFlag",model.delFlag)

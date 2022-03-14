@@ -18,6 +18,10 @@
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, null)</li>
             }
+            @if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            {
+                <li onclick="waitpopup();">@Html.ActionLink(" Documents Beer", "Index", "Home", new { typeForm = Activity_Model.activityType.Beer.ToString() }, null)</li>
+            }
             @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents TBM", "Index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
@@ -54,9 +58,9 @@
                 <li onclick="waitpopup();">@Html.ActionLink(" Report Detail OMT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
             }
             @*@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-            }*@
+        {
+            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+        }*@
             <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
         </ul>
     </li>

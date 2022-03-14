@@ -84,6 +84,7 @@ namespace eActForm.Models
             public bool isAdmin { get; set; }
             public bool isSuperAdmin { get; set; }
             public bool isAdminOMT { get; set; }
+            public bool isAdminBeer { get; set; }
             public bool isAdminTBM { get; set; }
             public bool isAdminHCM { get; set; }
             public bool isAdminNUM { get; set; }
