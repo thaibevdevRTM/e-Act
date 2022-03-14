@@ -14,8 +14,10 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+ 
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 gridHtml = gridHtml.Replace("undefined", "");
+
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), server.MapPath(rootPathInsert), server.MapPath("~"));
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels

@@ -285,6 +285,10 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.Beer.ToString())
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
 
 
                             else if ((@Array.AsReadOnly(AppCode.checkDocTBM).Contains(item.master_type_form_id)) || (@Array.AsReadOnly(AppCode.expenseForm).Contains(item.master_type_form_id)))

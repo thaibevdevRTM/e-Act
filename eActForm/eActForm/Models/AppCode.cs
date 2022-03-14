@@ -233,8 +233,7 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 //ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview"); backgroud can't write error
-                EmailAppCodes.sendEmailWithActId("activityId"
-                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                EmailAppCodes.sendEmail(EmailAppCodes.GetDataEmailIsDev("").FirstOrDefault().e_to
                     , ""
                     , "eAct ApiApprove Error GetFileReportTomail_Preview"
                     , GridHtml + " " + ex.Message
@@ -445,8 +444,7 @@ namespace eActForm.Models
                 {
                     result = "error" + exc.Message;
                     //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
-                    EmailAppCodes.sendEmailWithActId("activityId"
-                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
                     , "eAct ApiApprove mergePDF Error"
                     , ex.Message

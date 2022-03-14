@@ -43,7 +43,7 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
-                sendEmailWithActId(actFormId, mailTo
+                sendEmail( mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
                     , strBody
@@ -174,6 +174,12 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                EmailAppCodes.sendEmail(
+                   EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
+                  , ""
+                  , "eAct sendApprove non backgroup Error"
+                  , actFormId + " " + ex.Message
+                  , null);
                 //ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
                 throw new Exception("sendRejectActForm >>" + ex.Message + " " + actFormId);
             }
@@ -282,6 +288,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
                 throw new Exception("sendEmailApprove " + ex.Message);
             }
@@ -338,8 +345,6 @@ namespace eActForm.BusinessLayer
                             , strBody
                             , emailType);
                     }
-
-                    System.Threading.Thread.Sleep(1000);
                 }
                 else
                 {
@@ -433,6 +438,12 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                EmailAppCodes.sendEmail(
+                    EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
+                   , ""
+                   , "eAct sendApprove non backgroup Error"
+                   , actFormId + " " + ex.Message
+                   , null);
                 //ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message); backgroud can't write error
                 throw new Exception("sendEmailApprove" + ex.Message);
             }
@@ -536,7 +547,7 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                sendEmailWithActId(actFormId, mailTo
+                sendEmail(mailTo
                         , mailCC
                         , strSubject
                         , strBody
@@ -545,7 +556,10 @@ namespace eActForm.BusinessLayer
             }
             catch(Exception ex)
             {
+
+
                 throw new Exception("sendEmailActForm >> " + ex.Message + "_" + checkMail);
+
             }
         }
 
@@ -790,27 +804,8 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
         public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
-        {
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailTo = mailTo == null || mailTo == "" ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
-            GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
-            GMailer mailer = new GMailer();
-            mailer.ToEmail = mailTo;
-            mailer.Subject = subject;
-            mailer.Body = body;
-            mailer.p_Attachment = files;
-            if (!String.IsNullOrEmpty(cc))
-            {
-                mailer.CC = cc;
-            }
-
-            mailer.IsHtml = true;
-            mailer.Send();
-        }
-
-        public static void sendEmailWithActId(string actFormId, string mailTo, string cc, string subject, string body, List<Attachment> files)
         {
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];

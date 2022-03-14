@@ -46,18 +46,18 @@
                 </tr>
             </thead>
 
-            @if (Model.activitydetaillist != null)
+            @if (Model.activityOfEstimateList != null)
             {
                 var index = 0;
                 total = 0;
 
-                foreach (var item in Model.activitydetaillist)
+                foreach (var item in Model.activityOfEstimateList)
                 {
 
                     <tr class="tagTR">
                         <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
-                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+                            @Html.HiddenFor(x => x.activityOfEstimateList[index].productId, new { @class = "hdProductId_"+index })
                         </td>
                         @if (item.isShowGroup == true)
                         {
@@ -72,26 +72,29 @@
                             }
                         }
 
-                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].productName, new { @class = "form-control textboxcss font10 textLeft lblProductName_"+ index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
 
-                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
-                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].unit, new { @class = "form-control textboxcss font10 textRight lblUnit_"+ index , @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].compensate, new {  @class = "form-control textboxcss font10 textRight lblCompensate_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].normalCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblNormalCost_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].themeCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblThemeCost_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].growth, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblGrowth_"+index, @readonly = true, style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].LE, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblLE_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.totalCase, "{0:n2}", new { @id = "lblTotalCase_" + index, Name = "lblTotalCase_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].totalCase, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblTotalCase_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].total, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblTotal_"+index, @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].perTotal, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblPerTotal_"+index, @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = item.perTotal > 200 ? "background-color:coral;" : "" })
                         </td>
 
                     </tr>
@@ -175,22 +178,7 @@
         </table>
     </div>
 </div>
-<div class="row" id="divAddActivityDetail">
-    <div class="form-group col-lg-8 col-xs-8">
-    </div>
-    <div class="form-group col-lg-3 col-xs-3">
-        <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
-            <option style="color:#0e0d0d;" value="0">Please Select</option>
-            @foreach (var list in Model.activityGroupList)
-            {
-                <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
-            }
-        </select>
-    </div>
-    <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
-        <label class="btn ink-reaction btn-danger fa fa-plus"></label>
-    </div>
-</div>
+
 <script>
     function setZero(txtId) {
         if ($(txtId).val() == "0.00") {
@@ -215,7 +203,7 @@
         $("#WaitDialog").show();
          $.ajax({
             type: 'POST',
-            url:  '@Url.Action("addCostDetailTheme", "ActivityCostDetail")',
+            url:  '@Url.Action("addCostDetailTheme", "ExpenseEstimateInput")',
              data: {
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
@@ -231,10 +219,8 @@
      function callThemedetailcost(actId) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
+            url:  '@Url.Action("partialCostList", "ExpenseEstimateInput")',
             data: {
-
-                typeForm: '@Model.activityFormModel.typeForm',
                 actId: actId,
             }
         }).done(function (htmlResponse) {
@@ -246,7 +232,7 @@
     function calGrowthPerTotal(id, rowIndex, checktotal) {
         var perTotal = 0;
         if (checktotal == true) {
-            perTotal = $('#lblPerTotal_' + rowIndex).val();
+            perTotal = $('.lblPerTotal_' + rowIndex).val();
         }
         $.ajax({
             type: 'POST',
@@ -265,14 +251,14 @@
     // case spending input change
     function calGrowthTotal(id, rowIndex, checktotal) {
 
-        var themeCost = $('#lblThemeCost_' + rowIndex).val();
+        var themeCost = $('.lblThemeCost_' + rowIndex).val();
         themeCost = themeCost == "" ? 0 : themeCost;
-        var productId = $("#hdProductId_" + rowIndex).val();
+        var productId = $(".hdProductId_" + rowIndex).val();
         var total = 0;
         if (checktotal == true) {
-            total = $("#lblTotal_" + rowIndex).val();
+            total = $(".lblTotal_" + rowIndex).val();
             total = total == "" ? 0 : total;
-            perTotal = $('#lblPerTotal_' + rowIndex).val();
+            perTotal = $('.lblPerTotal_' + rowIndex).val();
             perTotal = perTotal == "" ? 0 : perTotal;
         }
         $.ajax({
@@ -293,26 +279,26 @@
 
     // case all input change
     function calActivityDetailCost(id, rowIndex, checktotal) {
-        var name = $('#lblProductName_' + rowIndex).val();
-        var mechanics = $('#lblMechanics_' + rowIndex).val();
-        var normalCost = $('#lblNormalCost_' + rowIndex).val();
+        var name = $('.lblProductName_' + rowIndex).val();
+        var mechanics = $('.lblMechanics_' + rowIndex).val();
+        var normalCost = $('.lblNormalCost_' + rowIndex).val();
         normalCost = normalCost == "" ? 0 : normalCost;
-        var themeCost = $('#lblThemeCost_' + rowIndex).val();
+        var themeCost = $('.lblThemeCost_' + rowIndex).val();
         themeCost = themeCost == "" ? 0 : themeCost;
-        var unit = $("#lblUnit_" + rowIndex).val();
+        var unit = $(".lblUnit_" + rowIndex).val();
         unit = unit == "" ? 0 : unit;
-        var compensate = $("#lblCompensate_" + rowIndex).val();
+        var compensate = $(".lblCompensate_" + rowIndex).val();
         compensate = compensate == "" ? 0 : compensate;
-        var LE = $("#lblLE_" + rowIndex).val();
+        var LE = $(".lblLE_" + rowIndex).val();
         LE = LE == "" ? 0 : LE;
-        var productId = $("#hdProductId_" + rowIndex).val();
-        var totalCase = $("#lblTotalCase_" + rowIndex).val();
+        var productId = $(".hdProductId_" + rowIndex).val();
+        var totalCase = $(".lblTotalCase_" + rowIndex).val();
         totalCase = totalCase == "" ? 0 : totalCase;
 
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("calActivityDetailCost", "ActivityCostDetail")',
+            url: '@Url.Action("calActivityDetailCost", "ExpenseEstimateInput")',
             data: {
                 name: name,
                 mechanics: mechanics,
@@ -335,7 +321,7 @@
     function onDelActDetail(id) {
 
         $.ajax({
-            url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
+            url: '@Url.Action("delActCostDetail", "ExpenseEstimateInput")',
             data: {
                 rowid: id,
                 actId:'@Model.activityFormModel.id'

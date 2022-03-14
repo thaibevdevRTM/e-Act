@@ -193,11 +193,6 @@
 <input type="hidden" id="hdPromotionCost" value="@promotionTotal">
 <script>
 
-
-
-
-
-
     var rowCount = @Model.productcostdetaillist1.Count;
     function calProductDiscount(id, rowIndex) {
         if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
@@ -266,8 +261,6 @@
 
 
     function onDelCostDetail(id) {
-
-
 
             $.ajax({
             url: '@Url.Action("delCostDetail", "ExpenseEstimateInput")',

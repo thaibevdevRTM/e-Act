@@ -337,6 +337,7 @@ namespace eActForm.Models
         public string UseYearSelect { get; set; }
         public string EO { get; set; }
         public string glCodeId { get; set; }
+        public decimal? promotionCost { get; set; }
 
     }
 

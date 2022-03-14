@@ -105,11 +105,9 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateRepDetailForm"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel("")
+                             select new ApproveModel.approveDetailModel(dr["createdByUserId"].ToString())
                              {
                                  empId = dr["empId"].ToString(),
-                                 empName = dr["empName"].ToString(),
-                                 empEmail = dr["empEmail"].ToString(),
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
