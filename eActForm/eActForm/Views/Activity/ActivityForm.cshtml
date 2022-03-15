@@ -985,11 +985,10 @@
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
-        if ($("#ddlTheme").val() == "8B5402F5-63D0-46E5-BFDA-9FC72F3CF565" && $("#ddlSubActivity").val() == "") { required += "เพื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#ddlTheme option:selected").text() == 'FOC' && $("#ddlSubActivity").val() == "") { required += "เพื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
-        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus();}
         else {
@@ -1004,14 +1003,13 @@
 
            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
             $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
-
-         if ($("#ddlTheme").val() == "8B5402F5-63D0-46E5-BFDA-9FC72F3CF565")
-         {
+        
+        if ($("#ddlTheme option:selected").text() == 'FOC') {
             var rowCount = parseInt($('#tbl_activityDetail tr.tagTR').length);
             for (i = 0; i < rowCount; i++) {
-                if ($("#lblTotalCase_" + i).val() == 0 || $("#lblTotalCase_" + i).val() == "") { required += "&emsp; ระบุราคา Spending Exp.(Case) แถวที่ " + (i+1) + "*<br>"; validate = false; }
+                if ($("#lblTotalCase_" + i).val() == 0 || $("#lblTotalCase_" + i).val() == "") { required += "&emsp; ระบุราคา Spending Exp.(Case) แถวที่ " + (i + 1) + "*<br>"; validate = false; }
             }
-         }
+        }
 
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 

@@ -112,32 +112,22 @@
                 @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formSetPriceOMT"])
                 {
                     @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
-                    @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "customerId" })
+
+                }
+                else if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+                {
+                    @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtArea", @name = "txtArea" })
                 }
                 else
                 {
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                                 {
-                                     @class = "form-control textboxcss",
-                                     onchange = "onchangeCustomer();",
-                                     id = "ddlCustomer"
-                                 })
+                    {
+                        @class = "form-control textboxcss",
+                        onchange = "onchangeCustomer();",
+                        id = "ddlCustomer"
+                    })
                 }
-
-            </div>
-        </div>
-    </div>
-
-    <div id="divArea" class="col-md-12 col-xs-12">
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                Area<span class="required">*</span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.customerName, new { @class = "form-control textboxcss", @id = "txtArea", @name = "txtArea" })
-                @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "areaId" })
-
+                @Html.HiddenFor(x => x.activityFormTBMMKT.customerId, new { id = "customerId" })
             </div>
         </div>
     </div>
@@ -525,30 +515,30 @@
 </div>
 
 
-@if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
-{
-    <div id="divgetdetailcost" class="col-lg-12">
-        @Html.Action("partialCostList", "ExpenseEstimateInput", new { actId = Model.activityFormModel.id })
-    </div>
+@*@if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+    {
+        <div id="divgetdetailcost" class="col-lg-12">
+            @Html.Action("partialCostList", "ExpenseEstimateInput", new { actId = Model.activityFormModel.id })
+        </div>
 
-    <div class="row" id="divAddActivityDetail">
-        <div class="form-group col-lg-8 col-xs-8">
+        <div class="row" id="divAddActivityDetail">
+            <div class="form-group col-lg-8 col-xs-8">
+            </div>
+            <div class="form-group col-lg-3 col-xs-3">
+                <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
+                    <option style="color:#0e0d0d;" value="0">Please Select</option>
+                    @foreach (var list in Model.activityGroupList)
+                    {
+                        <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
+                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+            </div>
         </div>
-        <div class="form-group col-lg-3 col-xs-3">
-            <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
-                <option style="color:#0e0d0d;" value="0">Please Select</option>
-                @foreach (var list in Model.activityGroupList)
-                {
-                    <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
-                }
-            </select>
-        </div>
-        <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
-            <label class="btn ink-reaction btn-danger fa fa-plus"></label>
-        </div>
-    </div>
 
-}
+    }*@
 
 
 
@@ -564,22 +554,18 @@
                 $(this).focus();
             }
         });
-        $("#divArea").hide();
-        $("#divCustomer").hide();
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
             $("#txtCustomerName").show();
             $("#divRegion").show();
         }
-        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]'){
-            $("#divArea").show();
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+            $("#txtArea").show();
             $("#divRegion").show();
-
         }
         else {
             $("#txtCustomerName").hide();
             $("#divRegion").hide();
-            $("#divArea").hide();
         }
 
 

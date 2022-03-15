@@ -58,7 +58,7 @@ namespace eActForm.BusinessLayer
                                   chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
-                                  actEO = d["actEO"].ToString(),
+                                  //actEO = d["actEO"].ToString(),
                                   companyId = d["companyId"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
                                   subActivity = d["subActivity"].ToString(),
