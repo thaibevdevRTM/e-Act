@@ -107,7 +107,6 @@ namespace eActForm.Models
             otherList_3 = new List<TB_Act_Other_Model>();
             otherList_4 = new List<TB_Act_Other_Model>();
             otherList_5 = new List<TB_Act_Other_Model>();
-
         }
 
     }

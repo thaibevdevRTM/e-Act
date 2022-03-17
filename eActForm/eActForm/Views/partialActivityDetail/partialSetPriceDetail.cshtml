@@ -104,7 +104,7 @@
     </div>
     <div id="divCustomer" class="col-md-12 col-xs-12">
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+            <label id="lblCustomer" class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
                 Customer<span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
@@ -133,7 +133,7 @@
     </div>
 
 
-    <div class="col-md-12 col-xs-12">
+    <div id="divProductCate" class="col-md-12 col-xs-12">
         <div class="form-group">
             @Html.HiddenFor(x => x.activityFormTBMMKT.chanel, new { @id = "txtchanel" })
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
@@ -151,7 +151,7 @@
         </div>
     </div>
 
-    <div class="col-md-12 col-xs-12">
+    <div id="divProductGroup" class="col-md-12 col-xs-12">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
                 Product Group<span class="required">*</span>
@@ -382,34 +382,41 @@
             </label>
         </div>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+    <div class="col-md-12 col-xs-12">
+
         <div class="form-group">
+
             <label class="control-label col-md-3 col-sm-3 col-xs-3">
-                หน่วยงานหลัก<span class="required">*</span>
+                หน่วยงานหลัก
             </label>
-            <div class="col-md-9 col-sm-9 col-xs-9">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new SelectList(Model.otherList_1, "val1", "displayVal"), new
-           {
-               @class = "form-control textboxcss",
-               id = "ddlMainAgency"
-           })
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3">
-                หน่วยงานย่อย<span class="required">*</span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new SelectList(Model.otherList_2, "val1", "displayVal"), new
           {
               @class = "form-control textboxcss",
-              id = "ddlSubAgency"
+              id = "ddlMainAgency"
           })
             </div>
+
+
+            <label class="control-label col-md-1 col-sm-1 col-xs-1">
+                ย่อย
+            </label>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new SelectList(Model.otherList_2, "val1", "displayVal"), new
+                {
+                    @class = "form-control textboxcss",
+                    id = "ddlSubAgency"
+                })
+            </div>
+
         </div>
     </div>
+
+
+
+
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-3">
@@ -457,8 +464,7 @@
             <div class="col-md-9 col-sm-9 col-xs-9">
                 @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup"), new
                 {
-                @class = "form-control textboxcss",
-                id = "ddlChannel"
+                @class = "form-control textboxcss"
                 })
             </div>
         </div>
@@ -467,20 +473,22 @@
 }
 
 <hr />
-<div class="row">
-    <div class="col-md-12 col-xs-12">
-        <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-6 col-xs-6">
+        <div class="col-md-12 col-xs-12">
+            <label> รายละเอียดของการทำกิจกรรม (Activity Detail)</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
+        </div>
     </div>
     <div class="col-md-6 col-xs-6">
-        @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-xs-12">
-        <p class="lead">คำอธิบาย</p>
-    </div>
-    <div class="col-md-6 col-xs-6">
-        @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
+        <div class="col-md-12 col-xs-12">
+            <label>คำอธิบาย</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
+        </div>
     </div>
 </div>
 
@@ -515,30 +523,30 @@
 </div>
 
 
-@*@if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
-    {
-        <div id="divgetdetailcost" class="col-lg-12">
-            @Html.Action("partialCostList", "ExpenseEstimateInput", new { actId = Model.activityFormModel.id })
-        </div>
+@if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+{
+    <div id="divgetdetailcost" class="col-lg-12">
+        @Html.Action("partialCostList", "ExpenseEstimateInput", new { actId = Model.activityFormModel.id })
+    </div>
 
-        <div class="row" id="divAddActivityDetail">
-            <div class="form-group col-lg-8 col-xs-8">
-            </div>
-            <div class="form-group col-lg-3 col-xs-3">
-                <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
-                    <option style="color:#0e0d0d;" value="0">Please Select</option>
-                    @foreach (var list in Model.activityGroupList)
-                    {
-                        <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
-                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
-            </div>
+    <div class="row" id="divAddActivityDetail">
+        <div class="form-group col-lg-8 col-xs-8">
         </div>
+        <div class="form-group col-lg-3 col-xs-3">
+            <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
+                <option style="color:#0e0d0d;" value="0">Please Select</option>
+                @foreach (var list in Model.activityGroupList)
+                {
+                    <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
+            <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+        </div>
+    </div>
 
-    }*@
+}
 
 
 
@@ -562,6 +570,9 @@
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
             $("#txtArea").show();
             $("#divRegion").show();
+            $("#divProductGroup").hide();
+            $("#divProductCate").hide();
+            document.getElementById('lblCustomer').innerHTML = 'Area'
         }
         else {
             $("#txtCustomerName").hide();

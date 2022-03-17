@@ -271,6 +271,11 @@ namespace eActForm.Models
         public Boolean chkAddDown { get; set; }
         public string subActivity { get; set; }
         public string txtSubActivity { get; set; }
+        public string txtMainAgency { get; set; }
+        public string txtSubAgency { get; set; }
+        public string txtPay { get; set; }
+        public string txtGame { get; set; }
+        public string txtArea { get; set; }
 
     }
 
@@ -289,16 +294,11 @@ namespace eActForm.Models
         public decimal? LE { get; set; }
         public decimal? compensate { get; set; }
         public int unit { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCase { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }

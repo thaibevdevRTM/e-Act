@@ -57,7 +57,7 @@
                     <tr class="tagTR">
                         <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
-                            @Html.HiddenFor(x => x.activityOfEstimateList[index].productId, new { @class = "hdProductId_"+index })
+
                         </td>
                         @if (item.isShowGroup == true)
                         {
@@ -67,35 +67,23 @@
                         {
                             if (item.detailGroup.Count >= 1)
                             {
-
                                 <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
                             }
                         }
 
-                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].productName, new { @class = "form-control textboxcss font10 textLeft lblProductName_"+ index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
 
-                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].unit, new { @class = "form-control textboxcss font10 textRight lblUnit_"+ index , @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
-                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].compensate, new {  @class = "form-control textboxcss font10 textRight lblCompensate_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblProductName_@index" name="activityOfEstimateList[@index].productName" value="@item.productName" /> </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblUnit_@index" name="activityOfEstimateList[@index].unit" value="@item.unit" onfocus="setZero(lblUnit_@index)" /> </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost"/></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblThemeCost_@index" onfocus="setZero(lblThemeCost_@index)" name="activityOfEstimateList[@index].themeCost" value="@item.themeCost"/></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblGrowth_@index" onfocus="setZero(lblGrowth_@index)" name="activityOfEstimateList[@index].growth"  value="@item.growth"/></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblLE_@index" onfocus="setZero(lblLE_@index)" name="activityOfEstimateList[@index].LE" value="@item.LE" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblTotalCase_@index" onfocus="setZero(lblTotalCase_@index)" name="activityOfEstimateList[@index].totalCase" value="@item.totalCase" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calGrowthTotal('@item.productGroupId','@index')" id="lblTotal_@index" onfocus="setZero(lblTotal_@index)" name="activityOfEstimateList[@index].total"  value="@item.total"/></td>
 
-                        <td>@Html.TextBoxFor(x => x.activityOfEstimateList[index].normalCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblNormalCost_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].themeCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblThemeCost_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].growth, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblGrowth_"+index, @readonly = true, style = "autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].LE, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblLE_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].totalCase, "{0:n2}", new { @class = "form-control textboxcss font10 textRight lblTotalCase_"+index, @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].total, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblTotal_"+index, @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(x => x.activityOfEstimateList[index].perTotal, "{0:n2}", new {  @class = "form-control textboxcss font10 textRight lblPerTotal_"+index, @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = item.perTotal > 200 ? "background-color:coral;" : "" })
-                        </td>
+
+
 
                     </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
@@ -180,159 +168,159 @@
 </div>
 
 <script>
-    function setZero(txtId) {
-        if ($(txtId).val() == "0.00") {
-            $(txtId).val("");
-        }
-    }
-
-
-     function AddThemeCost() {
-        var validate = true;
-        var required = "กรุณา ระบุ :<br>";
-        var ddlTheme = document.getElementById("ddlThemeDetail");
-        var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
-        if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม"); validate = false; }
-        if ($("#ddlProductBrand").val() == '') { required += "กรุณา Brand*<br>"; validate = false; }
-
-        if (validate != true) {
-            bootbox.alert(required);
-            return false;
-        }
-
-        $("#WaitDialog").show();
-         $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("addCostDetailTheme", "ExpenseEstimateInput")',
-             data: {
-                 themeId: $("#ddlThemeDetail").val(),
-                 txttheme: txtddlTheme,
-                 actId: '@Model.activityFormModel.id',
-                 brandId: $("#ddlProductBrand").val(),
+            function setZero(txtId) {
+                if ($(txtId).val() == "0.00") {
+                    $(txtId).val("");
+                }
             }
-         }).done(function (response) {
-             callThemedetailcost('@Model.activityFormModel.id');
-             $("#WaitDialog").hide();
-        });
-    }
 
-     function callThemedetailcost(actId) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("partialCostList", "ExpenseEstimateInput")',
-            data: {
-                actId: actId,
+
+             function AddThemeCost() {
+                var validate = true;
+                var required = "กรุณา ระบุ :<br>";
+                var ddlTheme = document.getElementById("ddlThemeDetail");
+                var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
+                if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม"); validate = false; }
+                if ($("#ddlProductBrand").val() == '') { required += "กรุณา Brand*<br>"; validate = false; }
+
+                if (validate != true) {
+                    bootbox.alert(required);
+                    return false;
+                }
+
+                $("#WaitDialog").show();
+                 $.ajax({
+                    type: 'POST',
+                    url:  '@Url.Action("addCostDetailTheme", "ExpenseEstimateInput")',
+                     data: {
+                         themeId: $("#ddlThemeDetail").val(),
+                         txttheme: txtddlTheme,
+                         actId: '@Model.activityFormModel.id',
+                         brandId: $("#ddlProductBrand").val(),
+                    }
+                 }).done(function (response) {
+                     callThemedetailcost('@Model.activityFormModel.id');
+                     $("#WaitDialog").hide();
+                });
             }
-        }).done(function (htmlResponse) {
-            $("#divgetdetailcost").html(htmlResponse)
-        });
-    }
 
-    // case %Spending of sale Change
-    function calGrowthPerTotal(id, rowIndex, checktotal) {
-        var perTotal = 0;
-        if (checktotal == true) {
-            perTotal = $('.lblPerTotal_' + rowIndex).val();
-        }
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("calSpendingOfSaleChange", "ActivityCostDetail")',
-            data: {
-                productGroupId: id,
-                perTotal: perTotal,
-                actId:'@Model.activityFormModel.id',
+             function callThemedetailcost(actId) {
+                $.ajax({
+                    type: 'POST',
+                    url:  '@Url.Action("partialCostList", "ExpenseEstimateInput")',
+                    data: {
+                        actId: actId,
+                    }
+                }).done(function (htmlResponse) {
+                    $("#divgetdetailcost").html(htmlResponse)
+                });
+            }
+
+            // case %Spending of sale Change
+            function calGrowthPerTotal(id, rowIndex, checktotal) {
+                var perTotal = 0;
+                if (checktotal == true) {
+                    perTotal = $('#lblPerTotal_' + rowIndex).val();
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("calSpendingOfSaleChange", "ActivityCostDetail")',
+                    data: {
+                        productGroupId: id,
+                        perTotal: perTotal,
+                        actId:'@Model.activityFormModel.id',
+
+                    }
+                }).done(function (response) {
+                    callThemedetailcost('@Model.activityFormModel.id');
+                });
+            }
+
+            // case spending input change
+            function calGrowthTotal(id, rowIndex, checktotal) {
+
+                var themeCost = $('#lblThemeCost_' + rowIndex).val();
+                themeCost = themeCost == "" ? 0 : themeCost;
+                var productId = $("#hdProductId_" + rowIndex).val();
+                var total = 0;
+                if (checktotal == true) {
+                    total = $("#lblTotal_" + rowIndex).val();
+                    total = total == "" ? 0 : total;
+                    perTotal = $('#lblPerTotal_' + rowIndex).val();
+                    perTotal = perTotal == "" ? 0 : perTotal;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("calPercentSpendingOfSale", "ActivityCostDetail")',
+                    data: {
+                        productGroupId: id,
+                        productId: productId,
+                        total: total,
+                        themeCost: themeCost,
+                        actId:'@Model.activityFormModel.id'
+
+                    }
+                }).done(function (response) {
+                    callThemedetailcost('@Model.activityFormModel.id');
+                });
+            }
+
+            // case all input change
+            function calActivityDetailCost(id, rowIndex, checktotal) {
+                var name = $('#lblProductName_' + rowIndex).val();
+                var mechanics = $('#lblMechanics_' + rowIndex).val();
+                var normalCost = $('#lblNormalCost_' + rowIndex).val();
+                normalCost = normalCost == "" ? 0 : normalCost;
+                var themeCost = $('#lblThemeCost_' + rowIndex).val();
+                themeCost = themeCost == "" ? 0 : themeCost;
+                var unit = $("#lblUnit_" + rowIndex).val();
+                unit = unit == "" ? 0 : unit;
+                var compensate = $("#lblCompensate_" + rowIndex).val();
+                compensate = compensate == "" ? 0 : compensate;
+                var LE = $("#lblLE_" + rowIndex).val();
+                LE = LE == "" ? 0 : LE;
+                var productId = $("#hdProductId_" + rowIndex).val();
+                var totalCase = $("#lblTotalCase_" + rowIndex).val();
+                totalCase = totalCase == "" ? 0 : totalCase;
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("calActivityDetailCost", "ExpenseEstimateInput")',
+                    data: {
+                        name: name,
+                        mechanics: mechanics,
+                        productGroupId: id,
+                        productId: productId,
+                        normalCase: normalCost,
+                        promotionCase: themeCost,
+                        unit: unit,
+                        compensate: compensate,
+                        LE: LE,
+                        totalCase: totalCase,
+                        typeForm: '@Model.activityFormModel.typeForm',
+                        actId : '@Model.activityFormModel.id'
+                    }
+                }).done(function (response) {
+                    callThemedetailcost('@Model.activityFormModel.id');
+                });
 
             }
-        }).done(function (response) {
-            callThemedetailcost('@Model.activityFormModel.id');
-        });
-    }
+            function onDelActDetail(id) {
 
-    // case spending input change
-    function calGrowthTotal(id, rowIndex, checktotal) {
-
-        var themeCost = $('.lblThemeCost_' + rowIndex).val();
-        themeCost = themeCost == "" ? 0 : themeCost;
-        var productId = $(".hdProductId_" + rowIndex).val();
-        var total = 0;
-        if (checktotal == true) {
-            total = $(".lblTotal_" + rowIndex).val();
-            total = total == "" ? 0 : total;
-            perTotal = $('.lblPerTotal_' + rowIndex).val();
-            perTotal = perTotal == "" ? 0 : perTotal;
-        }
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("calPercentSpendingOfSale", "ActivityCostDetail")',
-            data: {
-                productGroupId: id,
-                productId: productId,
-                total: total,
-                themeCost: themeCost,
-                actId:'@Model.activityFormModel.id'
-
+                $.ajax({
+                    url: '@Url.Action("delActCostDetail", "ExpenseEstimateInput")',
+                    data: {
+                        rowid: id,
+                        actId:'@Model.activityFormModel.id'
+                    },
+                    dataType: "json",
+                    type: 'POST',
+                    success: function (response) {
+                        callThemedetailcost('@Model.activityFormModel.id');
+                        CallChangefunc('@Model.activityFormModel.id');
+                    }
+                });
             }
-        }).done(function (response) {
-            callThemedetailcost('@Model.activityFormModel.id');
-        });
-    }
-
-    // case all input change
-    function calActivityDetailCost(id, rowIndex, checktotal) {
-        var name = $('.lblProductName_' + rowIndex).val();
-        var mechanics = $('.lblMechanics_' + rowIndex).val();
-        var normalCost = $('.lblNormalCost_' + rowIndex).val();
-        normalCost = normalCost == "" ? 0 : normalCost;
-        var themeCost = $('.lblThemeCost_' + rowIndex).val();
-        themeCost = themeCost == "" ? 0 : themeCost;
-        var unit = $(".lblUnit_" + rowIndex).val();
-        unit = unit == "" ? 0 : unit;
-        var compensate = $(".lblCompensate_" + rowIndex).val();
-        compensate = compensate == "" ? 0 : compensate;
-        var LE = $(".lblLE_" + rowIndex).val();
-        LE = LE == "" ? 0 : LE;
-        var productId = $(".hdProductId_" + rowIndex).val();
-        var totalCase = $(".lblTotalCase_" + rowIndex).val();
-        totalCase = totalCase == "" ? 0 : totalCase;
-
-
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("calActivityDetailCost", "ExpenseEstimateInput")',
-            data: {
-                name: name,
-                mechanics: mechanics,
-                productGroupId: id,
-                productId: productId,
-                normalCase: normalCost,
-                promotionCase: themeCost,
-                unit: unit,
-                compensate: compensate,
-                LE: LE,
-                totalCase: totalCase,
-                typeForm: '@Model.activityFormModel.typeForm',
-                actId : '@Model.activityFormModel.id'
-            }
-        }).done(function (response) {
-            callThemedetailcost('@Model.activityFormModel.id');
-        });
-
-    }
-    function onDelActDetail(id) {
-
-        $.ajax({
-            url: '@Url.Action("delActCostDetail", "ExpenseEstimateInput")',
-            data: {
-                rowid: id,
-                actId:'@Model.activityFormModel.id'
-            },
-            dataType: "json",
-            type: 'POST',
-            success: function (response) {
-                callThemedetailcost('@Model.activityFormModel.id');
-                CallChangefunc('@Model.activityFormModel.id');
-            }
-        });
-    }
 
 </script>

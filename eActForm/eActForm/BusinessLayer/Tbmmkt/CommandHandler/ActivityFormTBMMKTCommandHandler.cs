@@ -268,7 +268,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.amountBalance = model.tB_Act_ActivityForm_DetailOther.amountBalance;
                 tB_Act_ActivityForm_DetailOther.amountReceived = model.tB_Act_ActivityForm_DetailOther.amountReceived;
                 tB_Act_ActivityForm_DetailOther.departmentIdFlow = model.tB_Act_ActivityForm_DetailOther.departmentIdFlow == null ? "" : model.tB_Act_ActivityForm_DetailOther.departmentIdFlow;
-
+                tB_Act_ActivityForm_DetailOther.channelId = model.tB_Act_ActivityForm_DetailOther.channelId;
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;

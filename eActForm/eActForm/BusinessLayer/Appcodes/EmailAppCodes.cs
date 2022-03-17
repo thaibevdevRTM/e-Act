@@ -43,7 +43,7 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
-                sendEmail( mailTo
+                sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
                     , strBody
@@ -438,12 +438,6 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                EmailAppCodes.sendEmail(
-                    EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
-                   , ""
-                   , "eAct sendApprove non backgroup Error"
-                   , actFormId + " " + ex.Message
-                   , null);
                 //ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message); backgroud can't write error
                 throw new Exception("sendEmailApprove" + ex.Message);
             }
@@ -554,9 +548,25 @@ namespace eActForm.BusinessLayer
                         , files);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                try
+                {
+                    sendEmail(mailTo
+                        , mailCC
+                        , strSubject
+                        , strBody
+                        , null);
+                }
+                catch (Exception exs)
+                {
+                    EmailAppCodes.sendEmail(
+                    EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
+                   , ""
+                   , "eAct sendApprove non backgroup Error"
+                   , actFormId + " " + exs.Message
+                   , null);
+                }
 
                 throw new Exception("sendEmailActForm >> " + ex.Message + "_" + checkMail);
 

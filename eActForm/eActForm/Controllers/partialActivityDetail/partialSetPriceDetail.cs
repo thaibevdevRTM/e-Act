@@ -37,6 +37,8 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.otherList_4 = QueryOtherMaster.getOhterMaster("game", "");
                     activity_TBMMKT_Model.otherList_5 = QueryOtherMaster.getOhterMaster("area", "");
                     activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt.Equals("actBeer")).ToList();
+                    activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Equals(ConfigurationManager.AppSettings["productGroupBeer"])).ToList();
+                    
 
                 }
                 else

@@ -1,4 +1,5 @@
-﻿@model eActForm.Models.Activity_TBMMKT_Model
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @using eActForm.Models;
@@ -44,24 +45,24 @@
 
             <table style="width:100%; margin-top:30px;">
                 <tr>
-                    <td width="140px;"></td>
-                    <td width="260px;" style="margin-left:10px;"></td>
+                    <td class="fontDocSmall" width="140px;">ชื่อกิจกรรม</td>
+                    <td class="cssborderbottom fontDocSmall" width="260px;" style="margin-left:10px;">@Html.DisplayFor(item => item.activityFormTBMMKT.activityName) </td>
                     <td width="20px;"></td>
                     <td class="fontDocSmall" width="150px;" style="text-align:right;">Activity No.</td>
                     <td width="5px;"></td>
                     <td class="cssborderbottom fontDocSmall" width="160px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.activityNo) </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td class="fontDocSmall">ประเภทกิจกรรม(Theme)</td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.txttheme) </td>
                     <td></td>
                     <td class="fontDocSmall" style="text-align:right;">Document Date</td>
                     <td></td>
                     <td class="cssborderbottom fontDocSmall">@Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy") </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td class="fontDocSmall">วัตถุประสงค์</td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.objective)</td>
                     <td></td>
                     <td class="fontDocSmall" style="text-align:right;">Reference</td>
                     <td></td>
@@ -71,39 +72,47 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class="fontDocSmall">ชื่อกิจกรรม</td>
-                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.activityName) </td>
+                    @{
+                        string agency = "หลัก : " + @Model.tB_Act_ActivityForm_DetailOther.other1 + "    ย่อย : " + @Model.tB_Act_ActivityForm_DetailOther.other2;
+                    }
+                    <td class="fontDocSmall">หน่วยงาน</td>
+                    <td class="fontDocSmall cssborderbottom">@agency</td>
                     <td></td>
-                    <td class="fontDocSmall" style="text-align:right;">ลูกค้า(Customer Name)</td>
+                    <td class="fontDocSmall" style="text-align:right;">ศูนย์</td>
+                    <td></td>
+
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.regionName) </td>
+
+                </tr>
+                <tr>
+                    <td class="fontDocSmall">ส่วน(การจ่าย)</td>
+                    <td class="fontDocSmall cssborderbottom"> @Html.DisplayFor(item => item.activityFormTBMMKT.txtPay)</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">พื้นที่(Area)</td>
                     <td></td>
                     <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.customerName) </td>
                 </tr>
-                <tr>
-                    <td class="fontDocSmall">ประเภทกิจกรรม(Theme)</td>
-                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.txttheme) </td>
-                    <td></td>
-                    <td class="fontDocSmall" style="text-align:right;">ช่องทาง(Channel)</td>
-                    <td></td>
-                    @if (string.IsNullOrEmpty(Model.activityFormTBMMKT.chanel))
-                    {
-                        <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.regionName) </td>
 
-                    }
-                    else
-                    {
-                        <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.chanel) </td>
-                    }
-
-                </tr>
                 <tr>
-                    <td class="fontDocSmall">วัตถุประสงค์</td>
-                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.objective)</td>
+
+                    <td class="fontDocSmall">Game / พื้นที่ </td>
+                    <td class="fontDocSmall cssborderbottom">@Html.DisplayFor(item => item.activityFormTBMMKT.txtGame) &nbsp;/&nbsp; @Html.DisplayFor(item => item.activityFormTBMMKT.txtArea)</td>
                     <td></td>
-                    <td class="fontDocSmall" style="text-align:right;">กลุ่มสินค้า(Product Group)</td>
+                    <td class="fontDocSmall" style="text-align:right;">สินค้า(Product Brand)</td>
                     <td></td>
                     <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.brandName) </td>
 
                 </tr>
+                <tr>
+
+                    <td class="fontDocSmall">ช่องทาง</td>
+                    <td class="fontDocSmall cssborderbottom">@Html.DisplayFor(item => item.activityFormTBMMKT.chanel)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
                 <tr>
                     <td style="height:10px;"></td>
                 </tr>
@@ -140,7 +149,10 @@
                     {
                         if (Model.activityFormTBMMKT.trade == "outterm")
                         {
-                            <td style="text-align:right">X &nbsp; </td>
+                            <td style="text-align:right">
+                                <img src="~/images/check_b.png" height="15px" width="15px" />
+                                &nbsp;
+                            </td>
                         }
                         else
                         {
@@ -161,7 +173,7 @@
 
                     @if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.actIO))
                     {
-                        showIO = "IO:" + @Model.activityFormTBMMKT.actIO + " / Claim :" + @Model.activityFormTBMMKT.actClaim + "%";
+                        showIO = "EO:" + @Model.activityFormTBMMKT.actEO + " / IO:" + @Model.activityFormTBMMKT.actIO + " / Claim :" + @Model.activityFormTBMMKT.actClaim + "%";
                     }
                     <td class="fontDocSmall">@showIO</td>
                     <td></td>
