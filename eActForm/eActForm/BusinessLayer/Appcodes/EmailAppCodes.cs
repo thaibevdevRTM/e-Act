@@ -136,13 +136,14 @@ namespace eActForm.BusinessLayer
                     #endregion
 
                     var empUser = models.approveDetailLists.Where(r => r.empId == currentEmpId).ToList(); // get current user
-                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
 
                     string emailRejectBody = "";
                     string emailRejectSubject = "";
                     string txtEmpUser = "";
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
+
+                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
 
                     emailRejectBody = ConfigurationManager.AppSettings["emailRejectBody"];
                     emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject"];
@@ -491,16 +492,7 @@ namespace eActForm.BusinessLayer
                     foreach (var item in getImageModel.tbActImageList)
                     {
                         //=== use case this background service (bg service cannot get data session)===
-                        string companyId = "";
-                        try
-                        {
-                            companyId = UtilsAppCode.Session.User.empCompanyId;
-                        }
-                        catch
-                        {
-                            companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
-                        }
-                        // ==================================================
+                        
                         if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                         {
                             pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
@@ -563,7 +555,7 @@ namespace eActForm.BusinessLayer
                     EmailAppCodes.sendEmail(
                     EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
                    , ""
-                   , "eAct sendApprove non backgroup Error"
+                   , "eAct sendApprove Catch in Catch"
                    , actFormId + " " + exs.Message
                    , null);
                 }
@@ -678,8 +670,8 @@ namespace eActForm.BusinessLayer
                         }
                         if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess == true)
                         {
-                            strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > {9} </a>", "");
-                            strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > {9} </a>", "");
+                            strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > Click </a>", "");
+                            strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > Click </a>", "");
                         }
 
                         //==============peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========

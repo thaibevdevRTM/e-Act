@@ -216,13 +216,21 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                 tB_Act_ActivityForm_DetailOther.activityId = activityId;
 
-                if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
+                if (!string.IsNullOrEmpty(model.activityFormTBMMKT.selectedBrandOrChannel))
                 {
-                    tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                    if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
+                    {
+                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                    }
+                    else
+                    {
+                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                    }
                 }
                 else
                 {
-                    tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                    tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                    tB_Act_ActivityForm_DetailOther.channelId = model.tB_Act_ActivityForm_DetailOther.channelId;
                 }
 
                 tB_Act_ActivityForm_DetailOther.SubjectId = string.IsNullOrEmpty(model.activityFormTBMMKT.SubjectId) ? model.tB_Act_ActivityForm_DetailOther.SubjectId : model.activityFormTBMMKT.SubjectId;
@@ -268,7 +276,6 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.amountBalance = model.tB_Act_ActivityForm_DetailOther.amountBalance;
                 tB_Act_ActivityForm_DetailOther.amountReceived = model.tB_Act_ActivityForm_DetailOther.amountReceived;
                 tB_Act_ActivityForm_DetailOther.departmentIdFlow = model.tB_Act_ActivityForm_DetailOther.departmentIdFlow == null ? "" : model.tB_Act_ActivityForm_DetailOther.departmentIdFlow;
-                tB_Act_ActivityForm_DetailOther.channelId = model.tB_Act_ActivityForm_DetailOther.channelId;
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;

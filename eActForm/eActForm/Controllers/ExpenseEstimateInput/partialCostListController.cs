@@ -30,13 +30,7 @@ namespace eActForm.Controllers
                 ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
                 costThemeDetailOfGroupByPriceModel.productGroupId = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
-                costThemeDetailOfGroupByPriceModel.isShowGroup = false;
-
-                productcostdetail.id = Guid.NewGuid().ToString();
-                productcostdetail.typeTheme = txttheme;
-                costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
-                costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
-                //costThemeDetailOfGroupByPriceModel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(themeId);
+                costThemeDetailOfGroupByPriceModel.typeTheme = txttheme;
                 activityModel.activityOfEstimateList.Add(costThemeDetailOfGroupByPriceModel);
                 TempData["actForm" + actId] = activityModel;
                 TempData.Keep();
@@ -108,7 +102,7 @@ namespace eActForm.Controllers
                         .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
                         .Select(r =>
                         {
-                            r.productName = name;
+                            r.productDetail = name;
                             r.mechanics = mechanics;
                             //r.detailGroup[0].productName = name;
                             r.normalCost = p_normalCase;

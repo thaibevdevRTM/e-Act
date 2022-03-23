@@ -53,26 +53,15 @@
 
                 foreach (var item in Model.activityOfEstimateList)
                 {
-
+                    @Html.HiddenFor(x => Model.activityOfEstimateList[index].productGroupId)
                     <tr class="tagTR">
                         <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
 
                         </td>
-                        @if (item.isShowGroup == true)
-                        {
-                            <td class="font10 textLeft">@item.typeTheme</td>
-                        }
-                        else
-                        {
-                            if (item.detailGroup.Count >= 1)
-                            {
-                                <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
-                            }
-                        }
+                        <td style="text-align:right"><input readonly type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblTypeTheme_@index" name="activityOfEstimateList[@index].typeTheme" value="@item.typeTheme" /> </td>
 
-
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblProductName_@index" name="activityOfEstimateList[@index].productName" value="@item.productName" /> </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblProductName_@index" name="activityOfEstimateList[@index].productDetail" value="@item.productDetail" /> </td>
                         <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblUnit_@index" name="activityOfEstimateList[@index].unit" value="@item.unit" onfocus="setZero(lblUnit_@index)" /> </td>
                         <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
                         <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost" /></td>
@@ -266,6 +255,9 @@
 
             // case all input change
     function calActivityDetailCost(id, rowIndex, checktotal) {
+
+        console.log(rowIndex);
+
         var name = $('#lblProductName_' + rowIndex).val();
         var mechanics = $('#lblMechanics_' + rowIndex).val();
         var normalCost = $('#lblNormalCost_' + rowIndex).val();

@@ -400,7 +400,7 @@
             </div>
 
 
-            <label class="control-label col-md-1 col-sm-1 col-xs-1">
+            @*<label class="control-label col-md-1 col-sm-1 col-xs-1">
                 ย่อย
             </label>
             <div class="col-md-4 col-sm-4 col-xs-4">
@@ -409,7 +409,7 @@
                     @class = "form-control textboxcss",
                     id = "ddlSubAgency"
                 })
-            </div>
+            </div>*@
 
         </div>
     </div>
@@ -474,7 +474,7 @@
 
 <hr />
 <div class="col-md-12 col-xs-12">
-    <div class="col-md-6 col-xs-6">
+    <div class="col-md-12 col-xs-12">
         <div class="col-md-12 col-xs-12">
             <label> รายละเอียดของการทำกิจกรรม (Activity Detail)</label>
         </div>
@@ -482,14 +482,14 @@
             @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
         </div>
     </div>
-    <div class="col-md-6 col-xs-6">
+    @*<div id="divDetailContact" class="col-md-6 col-xs-6" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>คำอธิบาย</label>
         </div>
         <div class="col-md-12 col-xs-12">
             @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
         </div>
-    </div>
+    </div>*@
 </div>
 
 
@@ -573,6 +573,8 @@
             $("#divProductGroup").hide();
             $("#divProductCate").hide();
             document.getElementById('lblCustomer').innerHTML = 'Area'
+           // $("#divDetailContact").show();
+            
         }
         else {
             $("#txtCustomerName").hide();

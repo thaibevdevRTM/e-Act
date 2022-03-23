@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -25,12 +26,12 @@ namespace eActForm.Controllers
                 if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
                 {
                     activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
-                    .GroupBy(item => item.activitySales)
-                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-
-                    activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Contains("actBeer".ToLower())).ToList();
-                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("actBeer")).OrderBy(x => x.descTh).ToList();
+                     .Where(x => x.activityCondition.ToLower().Equals("actbeer_cost"))
+                     .GroupBy(item => item.activitySales)
+                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                    activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Equals("actBeer".ToLower())).ToList();
+                    var empDepartmentEN = !string.IsNullOrEmpty(UtilsAppCode.Session.User.empDepartmentEN) ? Regex.Replace(UtilsAppCode.Session.User.empDepartmentEN, @"\D", "") : "";
+                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("actBeer") && x.name.Contains(empDepartmentEN)).OrderBy(x => x.descTh).ToList();
                     activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("mainAgency", "");
                     activity_TBMMKT_Model.otherList_2 = QueryOtherMaster.getOhterMaster("subAgency", "");
                     activity_TBMMKT_Model.otherList_3 = QueryOtherMaster.getOhterMaster("pay", "");
@@ -38,7 +39,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.otherList_5 = QueryOtherMaster.getOhterMaster("area", "");
                     activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt.Equals("actBeer")).ToList();
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Equals(ConfigurationManager.AppSettings["productGroupBeer"])).ToList();
-                    
+
 
                 }
                 else

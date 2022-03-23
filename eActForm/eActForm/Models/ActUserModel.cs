@@ -100,12 +100,15 @@ namespace eActForm.Models
             public string countRejectAct { get; set; }
             public string exception { get; set; }
             public string regionId { get; set; }
+            public string regionNum { get; set; }
             public string customerId { get; set; }
             public string empProbationEndDate { get; set; }
             public string empGroupName { get; set; }
             public string empGroupNameTH { get; set; }
             public string tokenAccess { get; set; }
             public string tokenType { get; set; }
+            public string DepartmentName { get; set; }
+            public string DepartmentNameTH { get; set; }
         }
     }
 }

@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -48,7 +50,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("OMT")).ToList();
                 }
 
                 if (!string.IsNullOrEmpty(activityId))
@@ -322,8 +324,8 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
 
-                    GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                    GenPDFAppCode.doGen(GridHtml1, activityId, Server);
+
+                    //GenPDFAppCode.doGen(GridHtml1, activityId, Server);
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     if (model.FirstOrDefault().statusId != 3)
                     {
@@ -350,7 +352,10 @@ namespace eActForm.Controllers
                                         ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                     }
                                 }
-                                var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                                //var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                                GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
+                                string empId = UtilsAppCode.Session.User.empId;
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));
                             }
                         }
                     }
@@ -369,6 +374,38 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
+
+        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
+        {
+            var resultAjax = new AjaxResult();
+            try
+            {
+
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    var txtStamp = "เอกสารถูกยกเลิก";
+                    bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
+
+                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
+                }
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
+                {
+                    GenPDFAppCode.doGen(gridHtml, activityId, Server);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                }
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+
+                throw new Exception("Activity>>doGenFile >> " + ex.Message);
+            }
+
+            return resultAjax;
+        }
 
     }
 }
