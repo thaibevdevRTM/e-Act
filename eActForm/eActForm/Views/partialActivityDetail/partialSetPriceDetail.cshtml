@@ -635,8 +635,9 @@
                     type: "POST",
                     dataType: "json",
                     data: {
-                        regionId: $("#ddlRegion").val(),
+                        center: $("#ddlRegion").val(),
                         txtCus: $("#txtArea").val(),
+                        type: '@ConfigurationManager.AppSettings["conditionGetMaster"]'
                     },
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -652,7 +653,7 @@
                 results: function (resultsCount) {
                 }
             }, select: function (event, ui) {
-                $("#areaId").val(ui.item.id)
+                $("#customerId").val(ui.item.id)
             }
         }).focus(function () {
             $(this).data("uiAutocomplete").search($(this).val());

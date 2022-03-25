@@ -323,13 +323,13 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAreaByRegion(string regionId, string txtCus)
+        public JsonResult getAreaByRegion(string center, string txtCus,string type)
         {
 
            List<eForms.Models.MasterData.TB_Act_Area_Model> areaList = new List<eForms.Models.MasterData.TB_Act_Area_Model>();
             try
             {
-                areaList = QueryGetArea.getAreaByCondition(AppCode.StrCon, "actBeer").Where(x => x.region == regionId && x.area.Contains(txtCus)).ToList();
+                areaList = QueryGetArea.getAreaByCondition(AppCode.StrCon, type).Where(x => x.center == center && x.area.Contains(txtCus)).ToList();
 
             }
             catch (Exception ex)

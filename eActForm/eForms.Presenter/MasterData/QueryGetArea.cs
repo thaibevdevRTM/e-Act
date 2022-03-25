@@ -25,6 +25,7 @@ namespace eForms.Presenter.MasterData
                                  id = d["id"].ToString(),
                                  companyId = d["companyId"].ToString(),
                                  region = d["region"].ToString(),
+                                 center = d["center"].ToString(),
                                  area = d["area"].ToString(),
                                  province = d["province"].ToString(),
                                  condition = d["condition"].ToString(),

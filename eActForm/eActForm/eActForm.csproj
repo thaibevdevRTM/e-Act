@@ -3360,7 +3360,6 @@
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
     <Folder Include="Views\partailViewDataMaster\" />
-    <Folder Include="Views\partialActBeerDetail\" />
     <Folder Include="Views\partialCostListRpt\" />
     <Folder Include="Views\partialCumulative\" />
     <Folder Include="Views\partialTransferDetail\" />
