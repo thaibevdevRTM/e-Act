@@ -1,7 +1,9 @@
 ﻿using eActForm.Models;
 using iTextSharp.text;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -10,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class GenPDFAppCode
     {
-        public static string doGen(string gridHtml, string activityId, HttpServerUtilityBase server)
+        public static void doGen(string gridHtml, string activityId, HttpServerUtilityBase server)
         {
             try
             {
@@ -36,8 +38,19 @@ namespace eActForm.BusinessLayer
                     }
                 }
                 var rootPathOutput = server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
-                return resultMergePDF;
+
+                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
+                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                }
+                else
+                {
+                    File.Delete(rootPathOutput);
+                    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                    File.Copy(replace, rootPathOutput);
+                }
+
             }
             catch (Exception ex)
             {

@@ -2,6 +2,10 @@
 using eActForm.Models;
 using System;
 using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Web;
 using System.Web.Mvc;
 namespace eActForm.Controllers
 {
@@ -41,6 +45,25 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Image(string fileName)
+        {
+            string path = Server.MapPath(String.Format("~/Uploadfiles/" + fileName));
+
+            string mime = MimeMapping.GetMimeMapping(path);
+            FileInfo fi = new FileInfo(fileName);
+
+            if (fi.Extension == ".xlsx" || fi.Extension == "xls")
+            {
+                return File(path, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                return File(path, mime);
+            }
+
+        }
+
 
     }
     public class LoginExpireAttribute : ActionFilterAttribute

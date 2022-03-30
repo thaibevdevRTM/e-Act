@@ -171,7 +171,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivity => " + ex.Message);
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + "actId :"+ activityFormModel.id);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -359,7 +359,6 @@ namespace eActForm.Controllers
                             }
                         }
                     }
-
                 }
                 ApproveAppCode.setCountWatingApprove(); // เพิ่มให้อัพเดทเอกสารที่ต้องอนุมัติเลย กรณีผู้สร้างเอกสารต้องอนุมัติด้วยหลังจากส่งอนุมัติหนังสือ fream dev date 20200622
                 resultAjax.Success = true;

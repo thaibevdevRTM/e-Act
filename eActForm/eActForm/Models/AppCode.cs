@@ -33,8 +33,9 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
-        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
+        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
+
 
 
         public static string[] checkDocTBM =
@@ -71,6 +72,7 @@ namespace eActForm.Models
             approve
                 , document
                 , budget_form
+                , attachment
         }
         public enum ApproveType
         {
@@ -227,10 +229,10 @@ namespace eActForm.Models
                         using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
-                        }
 
-                        pdfDoc.Close();
+                        }
                     }
+                    pdfDoc.Close();
                 }
                 return ms;
             }
@@ -242,8 +244,7 @@ namespace eActForm.Models
                     , "eAct ApiApprove Error GetFileReportTomail_Preview"
                     , GridHtml + " " + ex.Message
                     , null);
-                ms.Dispose();
-                ms.Close();
+
                 return ms;
             }
         }
@@ -374,17 +375,8 @@ namespace eActForm.Models
 
                     for (int i = 1; i <= pages; i++)
                     {
-                        try
-                        {
-                            importedPage = pdfCopyProvider.GetImportedPage(reader, i);
-                            pdfCopyProvider.AddPage(importedPage);
-                        }
-                        catch (Exception ex)
-                        {
-                            Thread.Sleep(1000);
-                        }
-
-                        
+                        importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                        pdfCopyProvider.AddPage(importedPage);
                     }
                     reader.Close();
 
@@ -395,14 +387,11 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
-
                 EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
                     , "eAct ApiApprove mergePDF 1 Error"
                     , ex.Message
                     , null);
-
-
                 try
                 {
                     sourceDocument.Close();
@@ -410,6 +399,7 @@ namespace eActForm.Models
                     File.Delete(rootPathOutput);
                     string replace = rootPathOutput.Replace(".pdf", "_.pdf");
                     File.Copy(replace, rootPathOutput);
+
                 }
                 catch (Exception exc)
                 {

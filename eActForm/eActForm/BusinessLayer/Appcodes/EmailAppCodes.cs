@@ -447,17 +447,15 @@ namespace eActForm.BusinessLayer
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             var checkMail = "";
+            List<Attachment> files = new List<Attachment>();
+            string[] pathFile = new string[10];
             try
             {
                 //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
                 ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
                 //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
 
-                List<Attachment> files = new List<Attachment>();
-                string[] pathFile = new string[10];
                 checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
-
-
                 //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
                 //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
                 mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
@@ -468,6 +466,7 @@ namespace eActForm.BusinessLayer
                     strBody += checkMail;
                 }
 
+                //Get Document
                 switch (emailType)
                 {
                     case AppCode.ApproveType.Activity_Form:
@@ -484,6 +483,7 @@ namespace eActForm.BusinessLayer
                         break;
                 }
 
+                //Get File Attachment
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
                 getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
                 if (getImageModel.tbActImageList.Any())
@@ -496,7 +496,6 @@ namespace eActForm.BusinessLayer
                         if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                         {
                             pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-
                         }
                         else
                         {
@@ -505,6 +504,7 @@ namespace eActForm.BusinessLayer
                         i++;
                     }
                 }
+
 
                 var i_loop_change_name = 0;
                 foreach (var item in pathFile)
@@ -690,6 +690,28 @@ namespace eActForm.BusinessLayer
                         }
                         //======END========peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========
 
+
+                        string pathFile = "";
+                        var tbActImageList = ImageAppCode.GetImage(actId);
+                        if (tbActImageList.Any())
+                        {
+                            int i = 1;
+                            foreach (var loop in tbActImageList)
+                            {
+                                if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                {
+                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                }
+                                else
+                                {
+                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"],loop._fileName), loop._fileName) + "<br/>" ;
+                                }
+                                i++;
+                            }
+                        }
+
+
+
                         strBody = string.Format(strBody
                         , item.empPrefix + " " + empNameResult
                         , txtApprove
@@ -700,6 +722,7 @@ namespace eActForm.BusinessLayer
                         , String.Format("{0:0,0.00}", item.sumTotal)
                         , (models != null && models.Count > 0) ? txtCompanyname : ""
                         , txtcreateBy
+                        , pathFile
                         , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
                         break;
                     case AppCode.ApproveType.Report_Detail:

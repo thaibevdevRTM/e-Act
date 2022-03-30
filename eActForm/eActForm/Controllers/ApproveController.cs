@@ -23,7 +23,6 @@ namespace eActForm.Controllers
                 if (actId == null) return RedirectToAction("index", "Home");
                 else
                 {
-
                     ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
                     if (signModels.lists == null || signModels.lists.Count == 0)
                     {

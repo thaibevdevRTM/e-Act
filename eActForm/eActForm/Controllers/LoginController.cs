@@ -101,6 +101,10 @@ namespace eActForm.Controllers
                             typeForm = UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? Activity_Model.activityType.OMT.ToString() : Activity_Model.activityType.MT.ToString()
                         });
                     }
+                    else if (Request.Form["txtParam"] == AppCode.ApproveEmailype.attachment.ToString())
+                    {
+                        return RedirectToAction("Image", "Base", new { fileName  = Request.Form["txtFilename"] });
+                    }
                     else
                     {
                         return RedirectToAction("index", "DashBoard");

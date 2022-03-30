@@ -539,7 +539,8 @@
         }).done(function (htmlResponse) {
             if (('@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True' ||
                 '@Array.AsReadOnly(AppCode.checkDocTBM).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True') &&
-                '@Model.activityFormModel.mode' == '@AppCode.Mode.edit.ToString()') {
+                '@Model.activityFormModel.mode' == '@AppCode.Mode.edit.ToString()' &&
+                '@Model.activityFormModel.statusId' =='2') {
                     console.log('Gen');
                     $("#divPreview").html(htmlResponse);
                     $("#WaitDialog").hide();
