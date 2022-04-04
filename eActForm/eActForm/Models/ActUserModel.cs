@@ -84,6 +84,7 @@ namespace eActForm.Models
             public bool isAdmin { get; set; }
             public bool isSuperAdmin { get; set; }
             public bool isAdminOMT { get; set; }
+            public bool isAdminBeer { get; set; }
             public bool isAdminTBM { get; set; }
             public bool isAdminHCM { get; set; }
             public bool isAdminNUM { get; set; }
@@ -99,12 +100,15 @@ namespace eActForm.Models
             public string countRejectAct { get; set; }
             public string exception { get; set; }
             public string regionId { get; set; }
+            public string regionNum { get; set; }
             public string customerId { get; set; }
             public string empProbationEndDate { get; set; }
             public string empGroupName { get; set; }
             public string empGroupNameTH { get; set; }
             public string tokenAccess { get; set; }
             public string tokenType { get; set; }
+            public string DepartmentName { get; set; }
+            public string DepartmentNameTH { get; set; }
         }
     }
 }

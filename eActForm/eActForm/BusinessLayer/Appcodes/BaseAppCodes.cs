@@ -134,6 +134,14 @@ namespace eActForm.BusinessLayer.Appcodes
                 {
                     return Activity_Model.activityType.TBM.ToString();
                 }
+                else if (comId == ConfigurationManager.AppSettings["companyId_ChangInter"].ToString())
+                {
+                    return Activity_Model.activityType.Beer.ToString();
+                }
+                else if (comId == ConfigurationManager.AppSettings["companyId_HCM"].ToString())
+                {
+                    return Activity_Model.activityType.HCM.ToString();
+                }
                 else
                 {
                     return Activity_Model.activityType.MT.ToString();

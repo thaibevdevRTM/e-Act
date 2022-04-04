@@ -24,12 +24,10 @@ namespace eActForm.Models
                     _image = new byte[0];
                     extension = ".pdf";
                     delFlag = false;
-                    createdByUserId = UtilsAppCode.Session.User.empId;
                     createdDate = DateTime.Now;
-                    updatedByUserId = UtilsAppCode.Session.User.empId;
                     updatedDate = DateTime.Now;
                 }
-                catch { }
+                catch (Exception ex) { }
             }
             public string id { get; set; }
             public string activityId { get; set; }

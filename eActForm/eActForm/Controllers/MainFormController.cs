@@ -106,6 +106,8 @@ namespace eActForm.Controllers
                     {
                         rowEstimateTable = 1;
                     }
+                    rowEstimateTable = activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"] ? 0 : rowEstimateTable;
+
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < rowEstimateTable; i++)
                     {

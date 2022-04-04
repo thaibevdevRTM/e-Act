@@ -14,6 +14,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
@@ -32,7 +33,9 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
-        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
+        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
+        public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
+
 
 
         public static string[] checkDocTBM =
@@ -69,6 +72,7 @@ namespace eActForm.Models
             approve
                 , document
                 , budget_form
+                , attachment
         }
         public enum ApproveType
         {
@@ -209,7 +213,8 @@ namespace eActForm.Models
                 GridBuilder.Append("</body>");
                 GridBuilder.Append("</html>");
                 GridBuilder.Append(sw.ToString());
-
+                sw.Flush();
+                sw.Close();
 
                 string path = serverMapPath + "\\Content\\" + "tablethin.css";
                 string readText = File.ReadAllText(path);
@@ -224,22 +229,22 @@ namespace eActForm.Models
                         using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
+
                         }
-                        pdfDoc.Close();
                     }
+                    pdfDoc.Close();
                 }
                 return ms;
             }
             catch (Exception ex)
             {
                 //ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview"); backgroud can't write error
-                EmailAppCodes.sendEmailWithActId("activityId"
-                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                EmailAppCodes.sendEmail(EmailAppCodes.GetDataEmailIsDev("").FirstOrDefault().e_to
                     , ""
                     , "eAct ApiApprove Error GetFileReportTomail_Preview"
                     , GridHtml + " " + ex.Message
                     , null);
-                ms.Dispose();
+
                 return ms;
             }
         }
@@ -267,9 +272,9 @@ namespace eActForm.Models
                 GridBuilder.Append(GridHtml);
                 GridBuilder.Append("</body>");
                 GridBuilder.Append("</html>");
-
                 GridBuilder.Append(sw.ToString());
-
+                sw.Flush();
+                sw.Close();
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
@@ -293,65 +298,9 @@ namespace eActForm.Models
             {
                 ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
                 ms.Dispose();
+                ms.Close();
                 return ms;
             }
-        }
-
-        public static MemoryStream GetFileStream(string GridHtml, Document pdfDoc)
-        {
-            MemoryStream ms = new MemoryStream();
-            try
-            {
-                //GridHtml = "testt";
-                UserControl LoadControl = new UserControl();
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter myWriter = new HtmlTextWriter(sw);
-                LoadControl.RenderControl(myWriter);
-                StringReader sr = new StringReader(sw.ToString());
-
-
-
-                StringBuilder GridBuilder = new StringBuilder();
-                GridBuilder.Append("<html>");
-                GridBuilder.Append("<style>");
-                GridBuilder.Append(".fontt{font-family:Angsana New;}");
-                GridBuilder.Append("</style>");
-                GridBuilder.Append("<body class=\"fontt\">");
-                GridBuilder.Append(GridHtml);
-                GridBuilder.Append("</body>");
-                GridBuilder.Append("</html>");
-
-                GridBuilder.Append(sw.ToString());
-
-
-                string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
-                string readText = System.IO.File.ReadAllText(path);
-
-                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
-                using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
-                {
-                    pdfDoc.Open();
-                    using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
-                    {
-
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
-                        {
-                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
-                        }
-
-
-                        pdfDoc.Close();
-                    }
-                }
-                return ms;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
-                ms.Dispose();
-                return ms;
-            }
-
         }
 
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
@@ -421,34 +370,44 @@ namespace eActForm.Models
                 {
 
                     int pages = get_pageCcount(pathFile[f]);
-                    reader = new PdfReader(pathFile[f]);
+                    reader = new PdfReader(System.IO.File.ReadAllBytes(pathFile[f]));
+                    reader.ConsolidateNamedDestinations();
+
                     for (int i = 1; i <= pages; i++)
                     {
                         importedPage = pdfCopyProvider.GetImportedPage(reader, i);
                         pdfCopyProvider.AddPage(importedPage);
                     }
                     reader.Close();
+
                 }
                 sourceDocument.Close();
+                pdfCopyProvider.Close();
                 result = "success";
             }
             catch (Exception ex)
             {
+                EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove mergePDF 1 Error"
+                    , ex.Message
+                    , null);
                 try
                 {
                     sourceDocument.Close();
+                    pdfCopyProvider.Close();
                     File.Delete(rootPathOutput);
                     string replace = rootPathOutput.Replace(".pdf", "_.pdf");
                     File.Copy(replace, rootPathOutput);
+
                 }
                 catch (Exception exc)
                 {
                     result = "error" + exc.Message;
                     //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
-                    EmailAppCodes.sendEmailWithActId("activityId"
-                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
-                    , "eAct ApiApprove mergePDF Error"
+                    , "eAct ApiApprove mergePDF 2 Error"
                     , ex.Message
                     , null);
                 }
@@ -588,6 +547,7 @@ namespace eActForm.Models
                     if (!File.Exists(server.MapPath(filePath)))
                     {
                         File.WriteAllBytes(server.MapPath(filePath), imgByte);
+                        System.Threading.Thread.Sleep(1000);
                     }
                 }
                 return filePath;
@@ -598,7 +558,7 @@ namespace eActForm.Models
             }
         }
 
-        public static bool stampCancel(HttpServerUtilityBase server,string rootPathMap,string txtStamp)
+        public static bool stampCancel(HttpServerUtilityBase server, string rootPathMap, string txtStamp)
         {
             bool result = true;
             try

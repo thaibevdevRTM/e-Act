@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -322,6 +323,22 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getAreaByRegion(string center, string txtCus,string type)
+        {
+
+           List<eForms.Models.MasterData.TB_Act_Area_Model> areaList = new List<eForms.Models.MasterData.TB_Act_Area_Model>();
+            try
+            {
+                areaList = QueryGetArea.getAreaByCondition(AppCode.StrCon, type).Where(x => x.center == center && x.area.Contains(txtCus)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+            }
+            return Json(areaList, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getCustomerMT(string companyId)
         {
 
@@ -383,13 +400,22 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAllRegion(string txtRegion)
+        public JsonResult getAllRegion(string txtRegion ,string condition)
         {
 
             List<TB_Act_Region_Model> regionList = new List<TB_Act_Region_Model>();
             try
             {
-                regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion)).ToList();
+                if(UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion) && x.condition.Equals(condition)).ToList();
+
+                }
+                else
+                {
+                    regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion) && x.descEn.Contains(Regex.Match(UtilsAppCode.Session.User.DepartmentName, @"\d+").Value) && x.condition.Equals(condition)).ToList();
+
+                }
 
             }
             catch (Exception ex)

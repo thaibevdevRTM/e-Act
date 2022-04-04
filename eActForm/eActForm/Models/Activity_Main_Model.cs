@@ -53,12 +53,32 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
-        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList2 { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<TB_Act_AmountBudget> amountBudgetList { get; set; }
+        public List<TB_Act_Other_Model> otherList_1 { get; set; }
+        public List<TB_Act_Other_Model> otherList_2 { get; set; }
+        public List<TB_Act_Other_Model> otherList_3 { get; set; }
+        public List<TB_Act_Other_Model> otherList_4 { get; set; }
+        public List<TB_Act_Other_Model> otherList_5 { get; set; }
+        public ApproveModel.approveModels approveModels { get; set; }
+        public List<eForms.Models.MasterData.FiscalYearModel> listFiscalYearModel { get; set; }
+        public List<GetDataEO> listGetDataEO { get; set; }
+        public List<eForms.Models.MasterData.APModel> listAPModel { get; set; }
+        public List<GetDataIO> listGetDataIO { get; set; }
+        public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
+        public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
+        public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
+        public List<DataRequesterToShow> dataRequesterToShows { get; set; }
+        public List<string> listEoInDoc { get; set; }
+        public List<detailEO> eoList { get; set; }
+        
+        public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
+
+
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -82,23 +102,12 @@ namespace eActForm.Models
             tB_Reg_Subject = new List<TB_Reg_Subject>();
             tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>();
             activityGroupList = new List<TB_Act_ActivityGroup_Model>();
-
+            otherList_1 = new List<TB_Act_Other_Model>();
+            otherList_2 = new List<TB_Act_Other_Model>();
+            otherList_3 = new List<TB_Act_Other_Model>();
+            otherList_4 = new List<TB_Act_Other_Model>();
+            otherList_5 = new List<TB_Act_Other_Model>();
         }
-
-        public ApproveModel.approveModels approveModels { get; set; }
-
-        public List<eForms.Models.MasterData.FiscalYearModel> listFiscalYearModel { get; set; }
-        public List<GetDataEO> listGetDataEO { get; set; }
-        public List<eForms.Models.MasterData.APModel> listAPModel { get; set; }
-        public List<GetDataIO> listGetDataIO { get; set; }
-        public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
-        public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
-        public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
-        public List<DataRequesterToShow> dataRequesterToShows { get; set; }
-        public List<string> listEoInDoc { get; set; }
-        public List<detailEO> eoList { get; set; }
-        
-        public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
 
     }
 

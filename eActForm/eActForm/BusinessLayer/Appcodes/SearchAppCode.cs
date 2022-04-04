@@ -25,9 +25,9 @@ namespace eActForm.BusinessLayer
                     masterTypeFormList = QueryGet_master_type_form.get_master_type_form("").Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList(),
                     departmentList = QueryOtherMaster.getOhterMaster("department", "search").ToList(),
                     channelList = QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel == "data").ToList(),
-                    activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm))
+                    activityGroupList = !string.IsNullOrEmpty(typeForm) ?QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm))
                    .GroupBy(item => item.activitySales)
-                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
+                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList() : QueryGetAllActivityGroup.getAllActivityGroup()
                 };
                 return models;
             }

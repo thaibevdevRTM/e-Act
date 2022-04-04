@@ -79,11 +79,9 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel(dr["empId"].ToString())
+                             select new ApproveModel.approveDetailModel(dr["createdByUserId"].ToString())
                              {
                                  empId = dr["empId"].ToString(),
-                                 empName = dr["empName"].ToString(),
-                                 empName_EN = dr["empName_EN"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  companyName = dr["companyName"].ToString(),
                                  companyNameEN = dr["companyNameEN"].ToString(),
@@ -122,6 +120,14 @@ namespace eActForm.BusinessLayer
                     if (isAdmin())
                     {
                         strCall = "usp_getActivitySetPriceFormAll";
+                    }
+                }
+                else if (typeForm == Activity_Model.activityType.Beer.ToString())
+                {
+                    strCall = "usp_getActivityActBeerByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityActBeerFormAll";
                     }
                 }
                 else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())

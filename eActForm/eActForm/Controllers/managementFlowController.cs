@@ -43,13 +43,26 @@ namespace eActForm.Controllers
                 //model.getLimitList = managementFlowAppCode.getLimit();
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-              //  model.chanelList = managementFlowAppCode.getChanel("data");
+                //  model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
-                model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                if (ReportSummaryAppCode.getCompanyMTMList().Where(x => x.id.Equals(companyId)).Any())
+                {
+                    model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
+                   .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                   .GroupBy(item => item.activitySales)
+                   .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                }
+                else
+                {
+                    model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionGetMaster"]))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                }
+
+
+
                 model.typeFlow = typeFlow;
             }
             catch (Exception ex)
