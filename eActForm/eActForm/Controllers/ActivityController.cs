@@ -323,8 +323,6 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
                 if (countresult > 0)
                 {
-
-
                     //GenPDFAppCode.doGen(GridHtml1, activityId, Server);
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     if (model.FirstOrDefault().statusId != 3)
@@ -343,8 +341,7 @@ namespace eActForm.Controllers
                                     bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
                                 }
 
-
-                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
+                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id) || ConfigurationManager.AppSettings["companyId_MT"] == model.FirstOrDefault().companyId)
                                 {
                                     // case form benefit will auto approve
                                     if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))

@@ -69,7 +69,7 @@ namespace eActForm.Controllers
 
                 if (actId != null && actId != "")
                 {
-                    model.actLists = model.actLists.Where(r => r.id.Equals(actId)).ToList();
+                    model.actLists = model.actLists.Where(x => x.id.Contains(actId)).ToList();
                 }
             }
 

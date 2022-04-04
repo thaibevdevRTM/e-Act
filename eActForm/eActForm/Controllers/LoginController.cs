@@ -103,7 +103,7 @@ namespace eActForm.Controllers
                     }
                     else if (Request.Form["txtParam"] == AppCode.ApproveEmailype.attachment.ToString())
                     {
-                        return RedirectToAction("Image", "Base", new { fileName  = Request.Form["txtFilename"] });
+                        return RedirectToAction("Image", "Base", new { f  = Request.Form["txtFilename"] });
                     }
                     else
                     {

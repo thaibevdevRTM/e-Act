@@ -265,13 +265,36 @@ namespace eActForm.BusinessLayer
                                 }
                             }
 
+
+                            string pathFile = "";
+                            var tbActImageList = ImageAppCode.GetImage(actFormId);
+                            if (tbActImageList.Any())
+                            {
+                                int i = 1;
+                                foreach (var loop in tbActImageList)
+                                {
+                                    if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                    }
+                                    else
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"], loop._fileName), loop._fileName) + "<br/>";
+                                    }
+                                    i++;
+                                }
+                            }
+
+
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
                                 ? string.Format(txtemailAllApproveBody
                                     , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
                                     , createUsersName
+                                    ,pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
@@ -333,6 +356,8 @@ namespace eActForm.BusinessLayer
 
                 }
 
+
+
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
@@ -376,13 +401,34 @@ namespace eActForm.BusinessLayer
                                 }
                             }
 
+                            string pathFile = "";
+                            var tbActImageList = ImageAppCode.GetImage(actFormId);
+                            if (tbActImageList.Any())
+                            {
+                                int i = 1;
+                                foreach (var loop in tbActImageList)
+                                {
+                                    if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                    }
+                                    else
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"], loop._fileName), loop._fileName) + "<br/>";
+                                    }
+                                    i++;
+                                }
+                            }
+
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
                                 ? string.Format(txtemailAllApproveBody
                                     , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
                                     , createUsersName
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             //=============New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
@@ -448,7 +494,7 @@ namespace eActForm.BusinessLayer
         {
             var checkMail = "";
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];
+            string[] pathFile = new string[1];
             try
             {
                 //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
@@ -483,29 +529,6 @@ namespace eActForm.BusinessLayer
                         break;
                 }
 
-                //Get File Attachment
-                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
-                if (getImageModel.tbActImageList.Any())
-                {
-                    int i = 1;
-                    foreach (var item in getImageModel.tbActImageList)
-                    {
-                        //=== use case this background service (bg service cannot get data session)===
-                        
-                        if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
-                        {
-                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-                        }
-                        else
-                        {
-                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                        }
-                        i++;
-                    }
-                }
-
-
                 var i_loop_change_name = 0;
                 foreach (var item in pathFile)
                 {
@@ -532,6 +555,7 @@ namespace eActForm.BusinessLayer
                         i_loop_change_name++;
                     }
                 }
+
 
                 sendEmail(mailTo
                         , mailCC

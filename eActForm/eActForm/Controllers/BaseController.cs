@@ -46,16 +46,16 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Image(string fileName)
+        public ActionResult Image(string f)
         {
-            string path = Server.MapPath(String.Format("~/Uploadfiles/" + fileName));
+            string path = Server.MapPath(String.Format("~/Uploadfiles/" + f));
 
             string mime = MimeMapping.GetMimeMapping(path);
-            FileInfo fi = new FileInfo(fileName);
+            FileInfo fi = new FileInfo(f);
 
             if (fi.Extension == ".xlsx" || fi.Extension == "xls")
             {
-                return File(path, "application/vnd.ms-excel", fileName);
+                return File(path, "application/vnd.ms-excel", f);
             }
             else
             {
