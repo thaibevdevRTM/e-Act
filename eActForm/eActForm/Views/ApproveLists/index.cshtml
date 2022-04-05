@@ -22,6 +22,13 @@
     </div>
 </div>
 
+<div id="divShowSummary"><a href="#"><h4>Show Summary</h4></a></div>
+<div class="clsSummary" style="display: none;">
+    @Html.Action("approveListSummaryActBeer", "ApproveLists", new { })
+</div>
+
+
+
 @if (ViewBag.messCannotFindSignature != null)
 {
     <div class="loading" style="text-align: center;">
@@ -45,6 +52,10 @@
 
     $(document).ready(function () {
         $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
+
+        $('#divShowSummary').click(function () {
+            $('.clsSummary').slideToggle("fast");
+        });
     })
 
     function beginQuery() {

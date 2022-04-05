@@ -190,19 +190,22 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                เวลาการให้ทุนพิเศษ (Cost Period)
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "start", @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "end", @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
+        @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
+        {
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                    เวลาการให้ทุนพิเศษ (Cost Period)
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "start", @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @placeholder = "end", @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 
 </div>
@@ -401,15 +404,15 @@
 
 
             @*<label class="control-label col-md-1 col-sm-1 col-xs-1">
-                ย่อย
-            </label>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new SelectList(Model.otherList_2, "val1", "displayVal"), new
-                {
-                    @class = "form-control textboxcss",
-                    id = "ddlSubAgency"
-                })
-            </div>*@
+                    ย่อย
+                </label>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new SelectList(Model.otherList_2, "val1", "displayVal"), new
+                    {
+                        @class = "form-control textboxcss",
+                        id = "ddlSubAgency"
+                    })
+                </div>*@
 
         </div>
     </div>
@@ -483,13 +486,13 @@
         </div>
     </div>
     @*<div id="divDetailContact" class="col-md-6 col-xs-6" style="display:none">
-        <div class="col-md-12 col-xs-12">
-            <label>คำอธิบาย</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
-        </div>
-    </div>*@
+            <div class="col-md-12 col-xs-12">
+                <label>คำอธิบาย</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDescription" })
+            </div>
+        </div>*@
 </div>
 
 
@@ -574,7 +577,7 @@
             $("#divProductCate").hide();
             document.getElementById('lblCustomer').innerHTML = 'Area'
            // $("#divDetailContact").show();
-            
+
         }
         else {
             $("#txtCustomerName").hide();

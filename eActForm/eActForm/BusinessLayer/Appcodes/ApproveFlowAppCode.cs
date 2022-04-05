@@ -321,7 +321,6 @@ namespace eActForm.BusinessLayer
             try
             {
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-                string[] comp = new string[] { "5600", "5601" };
 
                 var callStored = getActList.FirstOrDefault().companyId == ("5600") || getActList.FirstOrDefault().companyId == ("5601") ? "usp_getFlowApproveDetailForActFormMT" : "usp_getFlowApproveDetailForActForm";
 

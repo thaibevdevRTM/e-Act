@@ -24,8 +24,15 @@ namespace eActForm.Controllers
             });
             return View(models);
         }
+        public ActionResult approveListSummaryActBeer()
+        {
 
-        public ActionResult ListView(string fromPage, string StatusApprove)
+            return PartialView();
+        }
+
+
+
+            public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
             ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);

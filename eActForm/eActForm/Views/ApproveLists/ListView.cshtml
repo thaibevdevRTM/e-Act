@@ -169,13 +169,13 @@ else
                     callback: function (result) {
                         if (result) {
 
-                            $.each($("input[name='chk_approve']:checked"), function (index, value) {
-                                favorite.push($(this).val());
-                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
-                            }).promise().done(function () {
-                                $("#WaitDialog").show();
-                                setTimeout(alertFunc, 5000);
-                            });
+                            //$.each($("input[name='chk_approve']:checked"), function (index, value) {
+                            //    favorite.push($(this).val());
+                            //    setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+                            //}).promise().done(function () {
+                            //    $("#WaitDialog").show();
+                            //    setTimeout(alertFunc, 5000);
+                            //});
 
                         }
 
@@ -190,7 +190,7 @@ else
 
     function alertFunc() {
         bootbox.alert({
-            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
+            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='http://thaibevss.com/eAct/images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
             callback: function () {
                 var url = '@Url.Action("Index", "ApproveLists")';
                 window.location.replace(url);

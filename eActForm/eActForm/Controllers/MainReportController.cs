@@ -24,8 +24,8 @@ namespace eActForm.Controllers
 
             if (!string.IsNullOrEmpty(activityId))
             {
-                List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = listMasterType.FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = listMasterType.FirstOrDefault().nameForm_EN;
