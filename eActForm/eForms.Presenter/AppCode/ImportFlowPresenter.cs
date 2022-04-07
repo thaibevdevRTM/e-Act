@@ -36,6 +36,7 @@ namespace eForms.Presenter.AppCode
                     , new SqlParameter("@productBrandId", model.productBrandId)
                     , new SqlParameter("@channelId", model.channelId)
                     , new SqlParameter("@departmentId", model.departmentId)
+                    , new SqlParameter("@actTypeId", model.actType)
                     , new SqlParameter("@limitTo", model.limitTo)
                     , new SqlParameter("@limitBegin", model.limitBegin)
                     , new SqlParameter("@empGroup", model.empGroup));
@@ -78,7 +79,8 @@ namespace eForms.Presenter.AppCode
                 , new SqlParameter("@departmentId", model.departmentId)
                 , new SqlParameter("@limitTo", model.limitTo)
                 , new SqlParameter("@limitBegin", model.limitBegin)
-                , new SqlParameter("@empGroup", model.empGroup));
+                , new SqlParameter("@empGroup", model.empGroup)
+                , new SqlParameter("@actTypeId", model.actType));
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new

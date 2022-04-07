@@ -87,8 +87,17 @@ namespace eActForm.Controllers
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
                         modelFlow.checkFlowExist = ImportFlowPresenter.checkFlowApprove(AppCode.StrCon, modelFlow);
+                        if(model.masterTypeId == ConfigurationManager.AppSettings["formEactBeer"])
+                        {
+                            modelFlow.actType = eForms.Presenter.MasterData.QueryGetAllActivityGroup.getAllActivityGroup(AppCode.StrCon).Where(x => x.activityCondition.Equals(ConfigurationManager.AppSettings["conditionGetMaster"]) && x.activitySales.Contains(dt.Rows[i]["actType"].ToString())).FirstOrDefault().activitySales;
+                        }
+                        else
+                        {
+                            modelFlow.actType = dt.Rows[i]["actType"].ToString();
+                        }
                         model.importFlowList.Add(modelFlow);
                     }
+                    
                 }
                 TempData["importFlowModel"] = model;
                 resultAjax.Success = true;
