@@ -89,7 +89,7 @@ namespace eActForm.Controllers
                         modelFlow.checkFlowExist = ImportFlowPresenter.checkFlowApprove(AppCode.StrCon, modelFlow);
                         if(model.masterTypeId == ConfigurationManager.AppSettings["formEactBeer"])
                         {
-                            modelFlow.actType = eForms.Presenter.MasterData.QueryGetAllActivityGroup.getAllActivityGroup(AppCode.StrCon).Where(x => x.activityCondition.Equals(ConfigurationManager.AppSettings["conditionGetMaster"]) && x.activitySales.Contains(dt.Rows[i]["actType"].ToString())).FirstOrDefault().activitySales;
+                            modelFlow.actType = eForms.Presenter.MasterData.QueryGetAllActivityGroup.getAllActivityGroup(AppCode.StrCon).Where(x => x.activityCondition.Equals(ConfigurationManager.AppSettings["conditionActBeer"]) && x.activitySales.Contains(dt.Rows[i]["actType"].ToString())).FirstOrDefault().activitySales;
                         }
                         else
                         {

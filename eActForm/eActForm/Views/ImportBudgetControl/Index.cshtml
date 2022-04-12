@@ -136,7 +136,7 @@
             type: 'POST',
             url: '@Url.Action("showImportBGlist", "ImportBudgetControl")',
             data: {
-
+                companyId: $("#ddlCompany").val(),
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();

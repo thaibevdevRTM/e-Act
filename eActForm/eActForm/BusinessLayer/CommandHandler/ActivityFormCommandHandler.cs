@@ -269,17 +269,6 @@ namespace eActForm.BusinessLayer
                         }
                         else//other company
                         {
-                            //==========แบบเก่า================
-                            //int genNumber = int.Parse(getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo);
-                            //var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
-                            //result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ?
-                            //    QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt
-                            //    : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
-                            //result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
-                            //result[0] += "/";
-                            //result[0] += string.Format("{0:0000}", genNumber);
-                            //==========แบบเก่า================
-
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
 
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId,"").FirstOrDefault().docNo;
@@ -322,6 +311,10 @@ namespace eActForm.BusinessLayer
                             getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
+                        }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.Beer.ToString();
                         }
 
                         else

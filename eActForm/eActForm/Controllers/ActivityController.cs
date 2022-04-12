@@ -171,7 +171,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + "actId :"+ activityFormModel.id);
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + "actId :" + activityFormModel.id);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -341,14 +341,14 @@ namespace eActForm.Controllers
                                     bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
                                 }
 
-                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id) || ConfigurationManager.AppSettings["companyId_MT"] == model.FirstOrDefault().companyId)
+                                //if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id) || ConfigurationManager.AppSettings["companyId_MT"] == model.FirstOrDefault().companyId)
+                                //{
+                                // case form benefit will auto approve
+                                if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
-                                    // case form benefit will auto approve
-                                    if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
-                                    {
-                                        ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
-                                    }
+                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
                                 }
+                                //}
                                 //var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;

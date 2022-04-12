@@ -56,7 +56,7 @@ namespace eActForm.Controllers
                 else
                 {
                     model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionGetMaster"]))
+                    .Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionActBeer"]))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 }

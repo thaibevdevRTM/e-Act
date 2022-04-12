@@ -38,42 +38,42 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
 {
-<div class="text-center">
-    @if (TempData["approvePositionSignatureError"] != null)
-    {
-        <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
-       
-    }
-    else
-    {
-
-        if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
+    <div class="text-center">
+        @if (TempData["approvePositionSignatureError"] != null)
         {
-            var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
-            @genSignatureFromApproveDetail(1);
-            if (countLine > 5)
-            {
-                @genSignatureFromApproveDetail(2);
-            }
-        }
-        else if (Model.approveFlowDetail.Count > 0)
-        {
-            var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
-            @Grid(1);
-            if (countLine > 5)
-            {
-                @Grid(2);
-            }
+            <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
 
         }
         else
         {
-            <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
+
+            if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
+            {
+                var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
+                @genSignatureFromApproveDetail(1);
+                if (countLine > 5)
+                {
+                    @genSignatureFromApproveDetail(2);
+                }
+            }
+            else if (Model.approveFlowDetail.Count > 0)
+            {
+                var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
+                @Grid(1);
+                if (countLine > 5)
+                {
+                    @Grid(2);
+                }
+
+            }
+            else
+            {
+                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
+            }
+
         }
 
-    }
-
-</div>
+    </div>
 
 
     @helper Grid(int line)
@@ -130,15 +130,14 @@
                             <table class="tablethin" style="text-align:center; width:100%" cellpadding="0" cellspacing="0">
                                 <tr style="height: 80px;">
                                     <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;">
-                                        @if (@Array.AsReadOnly(AppCode.formApproveAuto).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                        @*@if (@Array.AsReadOnly(AppCode.formApproveAuto).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                            {*@
+                                        @if (Model.activity_TBMMKT_Model.activityFormModel.createdByUserId == item.empId &&
+                                           item.rangNo == 1)
                                         {
-                                            if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId ||
-                                               Model.activity_TBMMKT_Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId &&
-                                               item.rangNo == 1)
-                                            {
-                                                <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
-                                            }
+                                            <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
                                         }
+                                        @*}*@
                                         else
                                         {
                                             var status = "0";
@@ -148,7 +147,7 @@
                                                 {
                                                     status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
                                                 }
-                                                catch(Exception ex)
+                                                catch (Exception ex)
                                                 {
                                                     status = "";
                                                 }
