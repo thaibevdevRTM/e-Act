@@ -71,7 +71,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             string act_year = null;
             try
             {
-                if (TempData["searchBudgetActivityForm"] != null)
+                if (TempData["searchBudgetActivityForm"] != null )
                 {
                     models = (Budget_Activity_Model)TempData["searchBudgetActivityForm"];
                 }
