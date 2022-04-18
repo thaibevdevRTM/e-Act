@@ -17,7 +17,7 @@ namespace eForms.Presenter.AppCode
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowbyEmpId"
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowApproveByEmpId"
                     , new SqlParameter("@empId", empId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new ManagentFlowModel.flowSubject()

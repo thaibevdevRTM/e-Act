@@ -26,11 +26,11 @@ namespace eActForm.BusinessLayer
                     {
                         response = AuthenAppCode.doAuthenInfo(empId);
                     }
-                    else if(HttpContext.Current.Session[empId] != null)
+                    else if (HttpContext.Current.Session[empId] != null)
                     {
                         response = (ResponseUserAPI)HttpContext.Current.Session[empId];
                     }
-                        
+
                 }
                 catch
                 {

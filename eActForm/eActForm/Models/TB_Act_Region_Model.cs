@@ -7,7 +7,7 @@
         public string nameShot { get; set; }
         public string descEn { get; set; }
         public string descTh { get; set; }
-
+        public string condition { get; set; }
 
     }
 }

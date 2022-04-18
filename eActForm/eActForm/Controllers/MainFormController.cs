@@ -28,6 +28,7 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(activityId))
                 {
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+
                     if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
                         activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
@@ -35,10 +36,9 @@ namespace eActForm.Controllers
                     }
 
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                     activityFormTBMMKT.formCompanyId = string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId) ? activity_TBMMKT_Model.activityFormTBMMKT.companyId : activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId;
 
-                    //===================Get Subject=======================
+                    #region Get Subject
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
                     objGetDataSubjectBy.companyId = activity_TBMMKT_Model.activityFormTBMMKT.companyId;
                     objGetDataSubjectBy.master_type_form_id = activityFormTBMMKT.master_type_form_id;
@@ -57,9 +57,10 @@ namespace eActForm.Controllers
                     }
 
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
-                    //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
+                    #endregion
 
+                    #region getEO formPaymentVoucherTbm
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                     {
                         ObjGetDataEO objGetDataEO = new ObjGetDataEO();
@@ -81,6 +82,7 @@ namespace eActForm.Controllers
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
+                    #endregion
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
 
@@ -93,16 +95,19 @@ namespace eActForm.Controllers
                     activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
-                    //activityFormTBMMKT.subjectId = subjectId;
                     activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
-                    activityFormTBMMKT.formCompanyId = !string.IsNullOrEmpty(activityFormTBMMKT.formCompanyId) ? activityFormTBMMKT.formCompanyId : @UtilsAppCode.Session.User.empCompanyId;
+                    //activityFormTBMMKT.formCompanyId = !string.IsNullOrEmpty(activityFormTBMMKT.formCompanyId) ? activityFormTBMMKT.formCompanyId : @UtilsAppCode.Session.User.empCompanyId;
                     activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+
+                    #region mock data for first input
                     //===mock data for first input====
                     int rowEstimateTable = 14;
                     if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย
                     {
                         rowEstimateTable = 1;
                     }
+                    rowEstimateTable = activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"] ? 0 : rowEstimateTable;
+
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < rowEstimateTable; i++)
                     {
@@ -119,22 +124,17 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.brand_select = "";
 
-
-                    
+                    //dev date 20200413 fream;
+                    //=END==mock data for first input=====
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>
                     {
                         new TB_Act_ActivityForm_DetailOtherList() { id = "", IO = "", GL = "", select_list_choice_id_ChReg = "", productBrandId = "" }
                     };//dev date 20200413 fream;
-                    //=END==mock data for first input=====
-
-                    //===================Get Subject=======================
-                    List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>();
-                    activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
-                    //======END=============Get Subject=======================
-
+                    #endregion
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
+
 
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrandByForm(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId).Where(x => x.no_tbmmkt != "").ToList();
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGet_channelMaster.get_channelMaster(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId);
@@ -147,6 +147,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.scristModelList = QueryGetScriptByMasterFormId.getScriptByMasterFormId(activityFormTBMMKT.master_type_form_id);
                 if (activityFormTBMMKT.formCompanyId != "")
                 {
+                    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = activityFormTBMMKT.formCompanyId;
                     activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameTH;
                     activity_TBMMKT_Model.activityFormTBMMKT.companyNameEN = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameEN;
                 }

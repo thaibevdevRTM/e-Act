@@ -43,13 +43,26 @@ namespace eActForm.Controllers
                 //model.getLimitList = managementFlowAppCode.getLimit();
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-                model.chanelList = managementFlowAppCode.getChanel("data");
+                //  model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
-                model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                if (ReportSummaryAppCode.getCompanyMTMList().Where(x => x.id.Equals(companyId)).Any())
+                {
+                    model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
+                   .Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                   .GroupBy(item => item.activitySales)
+                   .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                }
+                else
+                {
+                    model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionGetMaster"]))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new Models.TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                }
+
+
+
                 model.typeFlow = typeFlow;
             }
             catch (Exception ex)
@@ -284,22 +297,18 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow, string newEmpId)
+        public JsonResult insertFlowAddOn(string[] selectRow, string newEmpId)
         {
             var result = new AjaxResult();
 
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
-                int i = 0;
-
-                foreach (var item in ApproveIdList)
+                foreach (var item in selectRow)
                 {
-                    if (selectRow[i].ToString() == "true" && i != ApproveIdList.Count())
-                    {
-                        result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId, UtilsAppCode.Session.User.empId);
-                    }
-                    i++;
+
+                    result.Code = pManagementFlowAppCode.updateSwapByApproveId(AppCode.StrCon, item, newEmpId, UtilsAppCode.Session.User.empId);
+
                 }
                 result.Success = true;
                 //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
@@ -338,14 +347,14 @@ namespace eActForm.Controllers
 
         }
 
-         public JsonResult updateCompanyByEmpId(string flowId, string empId , string companyId)
+        public JsonResult updateCompanyByEmpId(string flowId, string empId, string companyId)
         {
             var result = new AjaxResult();
 
             ManagentFlowModel flowSubject = new ManagentFlowModel();
             try
             {
-                result.Code = pManagementFlowAppCode.updateCompanyFlowByEmpId(AppCode.StrCon,flowId,companyId, empId, UtilsAppCode.Session.User.empId);
+                result.Code = pManagementFlowAppCode.updateCompanyFlowByEmpId(AppCode.StrCon, flowId, companyId, empId, UtilsAppCode.Session.User.empId);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -359,6 +368,25 @@ namespace eActForm.Controllers
         }
 
 
- 
+        public JsonResult getChannelBySubject(string subjectId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+
+                var lists = QueryGetAllChanel.getChanelBySubjectId(subjectId);
+                result.Data = lists;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getChannelBySubject => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

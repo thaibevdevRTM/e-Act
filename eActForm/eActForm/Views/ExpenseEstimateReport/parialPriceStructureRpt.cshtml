@@ -4,12 +4,6 @@
 @using eActForm.Models;
 @{
     Layout = null;
-    decimal? perTotal = 0;
-    decimal? totalActCost = 0;
-    decimal? costActivity = 0;
-    decimal? costProduct = 0;
-    decimal? growthPerTotal = 0;
-    decimal? sumGrowth = 0;
 }
 
 <div style="margin-top:5px; width:100%;">
@@ -25,10 +19,13 @@
             <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Normal</td>
             <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Normal</td>
             <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Promotion</td>
-            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Special</td>
-            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Promotion</td>
-            <td rowspan="2" style="width:6%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">RSP</td>
-            <td rowspan="2" style="width:8%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Unit</td>
+            @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
+            {
+                <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Special</td>
+                <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Promotion</td>
+                <td rowspan="2" style="width:6%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">RSP</td>
+                <td rowspan="2" style="width:8%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Unit</td>
+            }
         </tr>
         <tr>
             <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">(1)</td>
@@ -38,24 +35,25 @@
             <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">GP%</td>
             <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">GP%</td>
 
-
-            @if (Model.productcostdetaillist1.Any())
+            @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
             {
-                if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                if (Model.productcostdetaillist1.Any())
                 {
-                    <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount Baht</td>
+                    if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                    {
+                        <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount Baht</td>
+                    }
+                    else
+                    {
+                        <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount %</td>
+                    }
                 }
                 else
                 {
                     <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount %</td>
                 }
+                <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Cost (BHT)</td>
             }
-            else
-            {
-                <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount %</td>
-            }
-            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Cost (BHT)</td>
-
 
         </tr>
 
@@ -83,31 +81,42 @@
                     <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                     <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
                     <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-
-                    @if (Model.activityFormTBMMKT.typeForm != Activity_TBMMKT_Model.activityType.OMT.ToString())
+                    @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
                     {
-                        if (item.specialDiscBaht != 0)
+                        if (Model.activityFormTBMMKT.typeForm != Activity_TBMMKT_Model.activityType.OMT.ToString())
                         {
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                            if (item.specialDiscBaht != 0)
+                            {
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                            }
+                            else
+                            {
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                            }
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
                         }
-                        else
-                        {
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                        }
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.rsp)</td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="font11">@Html.DisplayFor(m => item.unitTxt)</td>
                     }
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.rsp)</td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="font11">@Html.DisplayFor(m => item.unitTxt)</td>
                 </tr>
 
             }
         }
-    <tr>
-        <td colspan="9" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;" class="font11">&nbsp;</td>
-        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
-        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
-        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
-    </tr>
+        <tr>
+            @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
+            {
+                <td colspan="9" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;" class="font11">&nbsp;</td>
+
+            }
+            else
+            {
+                <td colspan="5" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;" class="font11">&nbsp;</td>
+
+            }
+            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+        </tr>
 
     </table>
 </div>

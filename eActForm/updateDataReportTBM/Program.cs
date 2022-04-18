@@ -19,6 +19,7 @@ namespace updateDataReportTBM
             {
                 strLogs.WriteLine("== Start Service " + DateTime.Now.ToString("dd MM yyyy HH:mm:ss ") + "==");
                 var result = AppCode.updateDataToTable();
+                result = AppCode.updateDataReportMaketingToTable();
                 if (result)
                 {
                     Console.WriteLine("Update Report Success");

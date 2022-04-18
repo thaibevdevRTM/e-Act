@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
         {
-            if (companyId == "5601") { companyId = "5600"; }
+            //if (companyId == "5601") { companyId = "5600"; }
             return QueryGetSubject.getAllSubjectByFlowCompany(companyId).OrderBy(x => x.nameTH).ToList();
         }
 

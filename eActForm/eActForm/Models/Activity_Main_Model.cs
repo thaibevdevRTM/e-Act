@@ -53,36 +53,18 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
         public List<RegionalModel> regionalModel { get; set; }
-        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList2 { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<TB_Act_AmountBudget> amountBudgetList { get; set; }
-        public Activity_TBMMKT_Model()
-        {
-            activityFormTBMMKT = new ActivityFormTBMMKT();
-            channelMasterTypeList = new List<ChannelMasterType>();
-            masterRequestEmp = new List<RequestEmpModel>();
-            requestEmpModel = new List<RequestEmpModel>();
-            purposeModel = new List<PurposeModel>();
-            placeDetailModel = new List<PlaceDetailModel>();
-            expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
-            expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
-            approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
-            exPerryCashList = new List<exPerryCashModel>();
-            exPerryCashModel = new exPerryCashModel();
-            empInfoModel = new RequestEmpModel();
-            regionalModel = new List<RegionalModel>();
-            budgetTotalModel = new BudgetTotal();
-            budgetTotalList = new List<BudgetTotal>();
-            tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-            TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
-            amountBudgetList = new List<TB_Act_AmountBudget>();
-
-        }
-
+        public List<TB_Act_Other_Model> otherList_1 { get; set; }
+        public List<TB_Act_Other_Model> otherList_2 { get; set; }
+        public List<TB_Act_Other_Model> otherList_3 { get; set; }
+        public List<TB_Act_Other_Model> otherList_4 { get; set; }
+        public List<TB_Act_Other_Model> otherList_5 { get; set; }
         public ApproveModel.approveModels approveModels { get; set; }
-
         public List<eForms.Models.MasterData.FiscalYearModel> listFiscalYearModel { get; set; }
         public List<GetDataEO> listGetDataEO { get; set; }
         public List<eForms.Models.MasterData.APModel> listAPModel { get; set; }
@@ -95,6 +77,37 @@ namespace eActForm.Models
         public List<detailEO> eoList { get; set; }
         
         public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
+
+
+        public Activity_TBMMKT_Model()
+        {
+            activityFormTBMMKT = new ActivityFormTBMMKT();
+            channelMasterTypeList = new List<ChannelMasterType>();
+            masterRequestEmp = new List<RequestEmpModel>();
+            requestEmpModel = new List<RequestEmpModel>();
+            purposeModel = new List<PurposeModel>();
+            placeDetailModel = new List<PlaceDetailModel>();
+            expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
+            expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
+            approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
+            exPerryCashList = new List<exPerryCashModel>();
+            exPerryCashModel = new exPerryCashModel("");
+            empInfoModel = new RequestEmpModel();
+            regionalModel = new List<RegionalModel>();
+            budgetTotalModel = new BudgetTotal();
+            budgetTotalList = new List<BudgetTotal>();
+            tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            TB_Act_master_cost_centerModel_List = new List<TB_Act_master_cost_centerModel>();
+            amountBudgetList = new List<TB_Act_AmountBudget>();
+            tB_Reg_Subject = new List<TB_Reg_Subject>();
+            tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>();
+            activityGroupList = new List<TB_Act_ActivityGroup_Model>();
+            otherList_1 = new List<TB_Act_Other_Model>();
+            otherList_2 = new List<TB_Act_Other_Model>();
+            otherList_3 = new List<TB_Act_Other_Model>();
+            otherList_4 = new List<TB_Act_Other_Model>();
+            otherList_5 = new List<TB_Act_Other_Model>();
+        }
 
     }
 
@@ -287,6 +300,7 @@ namespace eActForm.Models
         public decimal? amountBalance { get; set; }
         public decimal? amountTotal { get; set; }
 
+
     }
 
     public class RequestEmpModel : ActBaseModel
@@ -318,6 +332,7 @@ namespace eActForm.Models
                     compId = model[0].compId;
                     email = model[0].email;
                     hireDate = model[0].hireDate;
+                    empTel = model[0].empTel;
                 }
             }
         }

@@ -465,9 +465,6 @@ namespace eActForm.BusinessLayer
                                                  approveId = dr["approveId"].ToString(),
                                                  rangNo = (int)dr["rangNo"],
                                                  empId = dr["empId"].ToString(),
-                                                 empName = dr["empName"].ToString(),
-                                                 empName_EN = dr["empName_EN"].ToString(),
-                                                 empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),
                                                  statusNameEN = dr["statusNameEN"].ToString(),
@@ -493,7 +490,7 @@ namespace eActForm.BusinessLayer
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
-                    var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
+                    var empDetail = models.approveDetailLists.Where(r => r.empId.Trim() == empId).ToList(); //
 
                     if (empDetail.Count > 1)
                     {

@@ -146,7 +146,7 @@
         if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
             document.getElementById("divProductType").style.display = "none";
         }
-        else { 
+        else {
             if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
                 document.getElementById("divProductType").style.display = "block";
             }
@@ -169,8 +169,9 @@
             document.getElementById("divDeparment").style.display = "none";
             document.getElementById("divEmp").style.display = "block";
         }
+        
         else {
-            document.getElementById("divDeparment").style.display = "none";
+            document.getElementById("divDeparment").style.display = "block";
             document.getElementById("divEmp").style.display = "none";
         }
 
@@ -197,6 +198,30 @@
                 }
             }
         });
+
+        $.ajax({
+            url: '@Url.Action("getChannelBySubject", "ManagementFlow")',
+            data: {
+                subjectId: $("#ddlSubject").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                console.log(response.Data.length);
+                if (response.Data.length > 0) {
+                    var data = [];
+                     $("#ddlChanelGroup option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlChanelGroup").append($("<option></option>").val(this['id']).html(this['chanelGroup']));
+
+                    });
+                    $('.selectpicker').selectpicker('refresh');
+                }
+
+            }
+        });
+
+
     });
 
 
@@ -204,7 +229,15 @@
         getEmp();
     });
     $('#ddlBrand').change(function () {
-        getEmp();
+
+        if ($('#ddlSubject').val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectTransferBudget"]' && $('#ddlBrand').val() != '') //ใบโอนงบ TBM
+        {
+            document.getElementById("divEmp").style.display = "none";
+        }
+        else {
+            getEmp();
+        } 
+        
     });
     $('#ddlChanelGroup').change(function () {
         getEmp();

@@ -58,13 +58,8 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                //throw new Exception("apiApprove genPdfApprove >> " + ex.Message);
-                EmailAppCodes.sendEmailWithActId("activityId"
-                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
-                    , ""
-                    , "eAct ApiApprove Error"
-                    , activityId + " " + ex.Message
-                    , null);
+                
+                throw new Exception("apiApprove genPdfApprove >> " + ex.Message);
             }
 
             return resultAjax;

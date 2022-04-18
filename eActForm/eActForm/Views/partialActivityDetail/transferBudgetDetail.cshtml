@@ -653,6 +653,11 @@
         required = "<b>กรุณาระบุ/Please input data :<br></b>";
         var validate = true;
 
+        
+
+        if ($("#txtBGYear").val() == '') {
+            required += "กรุณาเลือก Budget Year! *<br>"; validate = false;
+        }
         if ($("#ddlBrand_BG").val() == '') {
             required += "กรุณาเลือก Brand! *<br>"; validate = false;
         }

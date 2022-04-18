@@ -51,7 +51,7 @@ namespace eActForm.BusinessLayer
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
                                   createdByNameEN = d["createdByNameEN"].ToString(),
                                   piorityDoc = d["piorityDoc"].ToString(),
-                                  customerName = d["customerName"].ToString() + "(" + d["cusShortName"].ToString() + ")",
+                                  customerName = string.IsNullOrEmpty(d["cusShortName"].ToString()) ? d["customerName"].ToString() : d["customerName"].ToString() + "(" + d["cusShortName"].ToString() + ")",
                                   cusShortName = d["cusShortName"].ToString(),
                                   chanel = d["channelName"].ToString(),
                                   chanelShort = d["chanelShort"].ToString(),
@@ -74,7 +74,7 @@ namespace eActForm.BusinessLayer
                                   chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
-
+                                  actEO = d["EO"].ToString(),
                                   statusNote = d["statusNote"].ToString(),
                               });
 

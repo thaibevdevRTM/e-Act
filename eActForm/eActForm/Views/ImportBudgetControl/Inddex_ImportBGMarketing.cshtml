@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @using System.Configuration;
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +9,24 @@
 <div><h2>Import Budget Report</h2></div>
 <hr />
 <div class="row form-group">
+    <div id"divMonth" class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            ประเภท รายงาน
+        </label>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            @Html.DropDownList("importType", new SelectList(Model.importTypeList, "val1", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlImportType" })
+
+        </div>
+    </div>
+    <div id="divMonth" class="col-md-12 col-xs-12" style="display:none">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            วันที่
+        </label>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(null, "yyyy-MM")
+                  , new { type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:left;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"), autocomplete = "off" })
+        </div>
+    </div>
     <div class="col-md-12 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">
             เลือกไฟล์
@@ -37,17 +56,45 @@
 
 <script type="text/javascript">
 
+    $('#ddlImportType').change(function () {
+        console.log($('#ddlImportType').val());
+
+        if ($('#ddlImportType').val() == 'monthly') {
+           
+            $("#divMonth").show();
+        }
+        else {
+            $("#divMonth").hide();
+        }
+     });
+
 
     function importData() {
         var data = new FormData();
         var files = $("#inputFile").get(0).files;
+
+        if ($("#ddlImportType").val() == '') {
+            bootbox.alert("กรุณาระบุ ประเภทรายงาน")
+            return false;
+        }
+
+        if ($("#txtExMonth").val() == '') {
+            bootbox.alert("กรุณา เลือกเดือน")
+            return false;
+        }
+
+
         if (files.length > 0) {
             data.append("InputFiles", files[0]);
+            data.append("typeImport", $("#ddlImportType").val());
+            data.append("dateStr", $("#txtExMonth").val());
         }
         else {
             bootbox.alert("กรุณา แนบไฟล์ !")
             return false;
         }
+
+
         bootbox.confirm({
             message: "<p class='lead text-center'>คุณต้องการ Import Budget Report ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {

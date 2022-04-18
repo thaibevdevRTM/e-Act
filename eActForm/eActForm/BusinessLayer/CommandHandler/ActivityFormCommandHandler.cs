@@ -117,13 +117,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.unit = item.unit;
                         costThemeDetail.compensate = item.compensate;
                         costThemeDetail.LE = item.LE;
-
-                        DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
-                        string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                        var getIO = QueryGetAllProduct.getBrandByProductId(item.productId).Any() ? "54" : "56";
-                        costThemeDetail.IO = getIO + "S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
-
-                        //costThemeDetail.IO = item.IO;
+                        costThemeDetail.IO = item.IO;
                         costThemeDetail.mechanics = item.mechanics;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
@@ -198,38 +192,41 @@ namespace eActForm.BusinessLayer
             {
 
                 String[] result = new String[2];
+                string getYear = "" , getYearEN = "";
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
 
-                        string getYear = "";
+
                         if (getActList.FirstOrDefault().activityPeriodSt != null &&
                             (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
-
-                            //else if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21
-                            //    && getActList.FirstOrDefault().activityPeriodEnd.Value.Month != 9 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
-                            if ((getActList.FirstOrDefault().documentDate.Value.Month < 10 &&
-                                getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 22 && getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9)
-                                || getActList.FirstOrDefault().documentDate.Value.Month >= 10
-                                || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                            DateTime? chkDate = new DateTime(DateTime.Now.Year, 9, 22);
+                            if (getActList.FirstOrDefault().documentDate.Value.Month >= 10)
                             {
                                 //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
+                                getYearEN = getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString();
+                            }
+                            else if (getActList.FirstOrDefault().activityPeriodSt >= chkDate && getActList.FirstOrDefault().documentDate.Value.Month < 10)
+                            {
+                                //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value.AddYears(1)).ToString().Substring(2, 2);
+                                getYearEN = getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString();
                             }
                             else
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                                getYearEN = getActList.FirstOrDefault().documentDate.Value.Year.ToString();
                             }
-
                         }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
-                            int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
+                            int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId, getYearEN).FirstOrDefault().docNo);
 
                             if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
@@ -245,11 +242,11 @@ namespace eActForm.BusinessLayer
                             int genNumber = 0;
                             if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
                             {
-                                genNumber = int.Parse(getActivityDoc("running_SetPrice_OMT", activityId).FirstOrDefault().docNo);
+                                genNumber = int.Parse(getActivityDoc("running_SetPrice_OMT", activityId, getYearEN).FirstOrDefault().docNo);
                             }
                             else
                             {
-                                genNumber = int.Parse(getActivityDoc("running_OMT", activityId).FirstOrDefault().docNo);
+                                genNumber = int.Parse(getActivityDoc("running_OMT", activityId, getYearEN).FirstOrDefault().docNo);
                             }
 
                             if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
@@ -285,7 +282,7 @@ namespace eActForm.BusinessLayer
 
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
 
-                            result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
+                            result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId,"").FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
                                 result[1] = Activity_Model.activityType.TBM.ToString();
@@ -458,6 +455,7 @@ namespace eActForm.BusinessLayer
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
                     , new SqlParameter[] {new SqlParameter("@actId",model.id)
                      ,new SqlParameter("@claim",model.actClaim)
+                    ,new SqlParameter("@EO",model.actEO)
                     ,new SqlParameter("@IO",model.actIO)
                     ,new SqlParameter("@checkbox",model.chkAddIO)
                     ,new SqlParameter("@delFlag",model.delFlag)
@@ -624,7 +622,7 @@ namespace eActForm.BusinessLayer
 
 
 
-        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string chanel_Id, string activityId)
+        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string chanel_Id, string activityId, string docYear)
         {
             //ถ้ามาจาก other company คือบริษัที่ไม่ใช่ OMT กับ MT ตัวแปรchanel_Idคือส่ง ActFromId ไป By Peerapop dev date 20200214
             try
@@ -639,7 +637,8 @@ namespace eActForm.BusinessLayer
 
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId"
                          , new SqlParameter[] { new SqlParameter("@chanel_Id", chanel_Id)
-                         , new SqlParameter("@activityId", activityId) });
+                         , new SqlParameter("@activityId", activityId)
+                         , new SqlParameter("@docYear", docYear) });
                 }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows

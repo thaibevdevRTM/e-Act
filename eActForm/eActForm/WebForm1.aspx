@@ -1,977 +1,534 @@
-﻿<div>
+﻿{<html><style>
+           .fontt {
+               font-family: TH SarabunPSK;
+           }
+       </style><body class="fontt">
+    <style>
+        .fontDocV1 {
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+        }
 
-    <div>
+        .fontDocV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 22px;
+            color: black;
+        }
 
-        <div>
+        .fontDocSmall {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
 
-            <p class="MsoNormal">× </p>
 
-        </div>
+        .fontDoc12 {
+            font-family: 'TH SarabunPSK';
+            font-size: 12px;
+            color: black;
+        }
 
-        <div>
+        .fontDocSmallV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 16px;
+            color: black;
+        }
 
-            <div align="center">
+        .fontDocSmallV2Bold {
+            font-family: 'TH SarabunPSK';
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
 
-                <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%"
-                    style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                    <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                        <td style='border: solid black 1.0pt; border-bottom: none; padding: .75pt .75pt .75pt .75pt'>
-                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                <b><span lang="TH"
-                                    style='font-size: 13.5pt; font-family: "TH SarabunPSK",sans-serif; color: #961930'>ใบสั่งจ่าย
-                                </span></b><span style='font-size: 13.5pt; font-family: "TH SarabunPSK",sans-serif; color: #961930'>
-                                    <o:p></o:p>
-                                </span>
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style='mso-yfti-irow: 1'>
-                        <td style='border-top: none; border-left: solid black 1.0pt; border-bottom: none; border-right: solid black 1.0pt; padding: .75pt .75pt .75pt .75pt'>
-                            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%"
-                                style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                    <td width="400" valign="top" style='width: 300.0pt; border: solid black 1.0pt; border-right: none; padding: 0in .75pt .75pt .75pt'>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                                                <td width="10%" valign="top" style='width: 10.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>เรื่อง:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
+        .fontSigV1 {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
+
+        .paddingFormV1 {
+            width: 100%;
+            padding-left: 35px;
+        }
+
+        .formListDetailV1 {
+            height: 450px;
+            vertical-align: top;
+        }
+
+        .formListDetailV2 {
+            height: 400px;
+            vertical-align: top;
+        }
+
+        .fontDocV3 {
+            font-family: 'TH SarabunPSK';
+            font-size: 28px;
+            color: black;
+        }
+
+        .paddingFormV2 {
+            width: 100%;
+        }
+
+        .paddingFormV3 {
+            width: 100%;
+        }
+
+        .formBorderStyle1 {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        /*==========20200401===========*/
+        .formBorderStyle2 {
+            border: 1px solid black;
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+            border-collapse: collapse;
+        }
+
+        .txtLeft {
+            text-align: left;
+        }
+
+        .txtRight {
+            text-align: right;
+        }
+
+        .txtCenter {
+            text-align: center;
+        }
+
+        .borderWidthMaxCollape {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .borderTop {
+            border-top: 1px solid black;
+        }
+
+        .borderLeft {
+            border-left: 1px solid black;
+        }
+
+        .borderRight {
+            border-right: 1px solid black;
+        }
+
+        .borderBottomV2 {
+            border-bottom: 1px solid black;
+        }
+
+        .paddingRowTableMin {
+            padding-top: -12px;
+        }
+
+        .paddingRowTable {
+            padding-top: -15px;
+        }
+
+        .paddingRowTableV2 {
+            padding-top: -22px;
+        }
+
+        .paddingRowTableV3 {
+            padding-top: -27px;
+        }
+
+        .paddingRowTableN {
+            padding-top: -9px;
+        }
+
+        .paddingRowTableV2N {
+            padding-top: -16px;
+        }
+
+        .paddingRowTableV3N {
+            padding-top: -21px;
+        }
+
+
+        .borderBottom {
+            padding-top: -30px;
+            text-align: center;
+            border-top: 1px solid black;
+        }
+
+        .tdTopLeft {
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .tdTopRight {
+            vertical-align: top;
+            text-align: right;
+        }
+
+        .tdTopCenter {
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .verticalTop {
+            vertical-align: top;
+        }
+
+        .boxTableFormMainV1 {
+            width: 100%;
+            border-top: 1px solid black;
+            border-right: 0px solid black;
+            border-bottom: 0px solid black;
+            border-left: 0px solid black;
+            border-collapse: collapse;
+        }
+
+        .boxTableFormV1 {
+            vertical-align: top;
+            padding-top: -9px;
+        }
+
+        .fontRedV1 {
+            color: #961930;
+        }
+
+        .fontRedV2 {
+            color: red;
+        }
+
+        .fontBlueV1 {
+            color: darkblue;
+        }
+
+        .fontOrangeV1 {
+            color: #942c00;
+        }
+
+        .cssCheckBoxV1 {
+            height: 10px;
+            width: 10px;
+        }
+
+        .picSigV1 {
+            height: 30px;
+            width: 100px;
+        }
+
+        .verAlignMid {
+            vertical-align: middle;
+        }
+
+        .formBorderStyle3 {
+            border-style: solid;
+            border-width: 0px 0px 0px 0px;
+            border-collapse: collapse;
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+        }
+        /*=====END=====20200401===========*/
+    </style>
+    <div class="paddingFormV1">
+        <table style="width: 100%;" id="tabel_report" class="fontDocV1">
+            <tbody>
+                <tr>
+                    <td>
+
+
+
+                        <div class="modal-body">
+                            <div id="divForm" style="width: 97%; margin-left: 20px;">
+                                <style>
+                                    .cssborderbottom {
+                                        border-bottom-width: 1px;
+                                        border-bottom-style: solid;
+                                        border-bottom-color: gray;
+                                    }
+
+                                    .font8 {
+                                        font-size: 8px;
+                                    }
+
+                                    .font11 {
+                                        font-size: 11px;
+                                    }
+
+                                    .textRight {
+                                        text-align: right;
+                                    }
+
+                                    .textLeft {
+                                        text-align: left;
+                                    }
+
+                                    .line-breaks {
+                                        white-space: pre-line;
+                                    }
+                                </style>
+                                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+                                    บริษัท ช้างอินเตอร์เนชั่นแนล จำกัด<br />
+                                    E-act Beer
+                                </div>
+                                <div>
+
+
+                                    <table style="width: 100%; margin-top: 30px;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="fontDocSmall" width="140px;">ชื่อกิจกรรม</td>
+                                                <td class="cssborderbottom fontDocSmall" width="260px;" style="margin-left: 10px;"></td>
+                                                <td width="20px;"></td>
+                                                <td class="fontDocSmall" width="150px;" style="text-align: right;">Activity No.</td>
+                                                <td width="5px;"></td>
+                                                <td class="cssborderbottom fontDocSmall" width="160px;">--- </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fontDocSmall">ประเภทกิจกรรม(Theme)</td>
+                                                <td class="cssborderbottom fontDocSmall">01.ปิดการขาย/ปิดร้าน </td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">Document Date</td>
+                                                <td></td>
+                                                <td class="cssborderbottom fontDocSmall">23/03/2565 </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fontDocSmall">วัตถุประสงค์</td>
+                                                <td class="cssborderbottom fontDocSmall"></td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">Reference</td>
+                                                <td></td>
+                                                <td class="cssborderbottom fontDocSmall"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+
+                                                <td class="fontDocSmall">หน่วยงาน</td>
+                                                <td class="fontDocSmall cssborderbottom">หลัก : TT    ย่อย : </td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">ศูนย์</td>
+                                                <td></td>
+
+                                                <td class="cssborderbottom fontDocSmall">พระนคร 2(R1) </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="fontDocSmall">ส่วน(การจ่าย)</td>
+                                                <td class="fontDocSmall cssborderbottom">ส่วนที่ 1(ประจำเดือน)</td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">พื้นที่(Area)</td>
+                                                <td></td>
+                                                <td class="cssborderbottom fontDocSmall">LSเมืองเอก </td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td class="fontDocSmall">Game / พื้นที่ </td>
+                                                <td class="fontDocSmall cssborderbottom">A &nbsp;/&nbsp; เขียวเล็ก
                                                 </td>
-                                                <td width="85%" style='width: 85.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal"><span style='color: darkblue'>test
-                                                        <o:p></o:p>
-                                                    </span></p>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">สินค้า(Product Brand)</td>
+                                                <td></td>
+                                                <td class="cssborderbottom fontDocSmall">Archa                          </td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td class="fontDocSmall">ช่องทาง</td>
+                                                <td class="fontDocSmall cssborderbottom">Bar Beer</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height: 10px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: right">
+                                                    <img height="15px" width="15px" src="/images/check_b.png">
+                                                </td>
+                                                <td class="fontDocSmall">จ่ายในแผน</td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">ระยะเวลากิจกรรม</td>
+                                                <td></td>
+                                                <td class="fontDocSmall">To
                                                 </td>
                                             </tr>
-                                            <tr style='mso-yfti-irow: 1; mso-yfti-lastrow: yes'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>เรียน:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span lang="TH" style='font-family: "Angsana New",serif; color: darkblue'>คุณการุณ ศรีวิจิตรานนท์</span><span lang="TH"
-                                                            style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; color: darkblue'> </span><span
-                                                                style='color: darkblue'>
-                                                                <o:p></o:p>
-                                                            </span>
-                                                    </p>
+                                            <tr>
+                                                <td style="text-align: right"></td>
+                                                <td class="fontDocSmall">จ่ายนอกแผน</td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">(Activity Period)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+
+
+                                                <td class="fontDocSmall"></td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">ระยะเวลาการให้ทุนพิเศษ</td>
+                                                <td></td>
+                                                <td class="fontDocSmall">To
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="fontDocSmall" style="text-align: right;">(Cost Period)</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div>
+                                    <table style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: gray; width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div style="width: 100%;">
+                                    <div class="fontDocSmall" style="margin-top: 5px;">
+                                        รายละเอียดของการทำกิจกรรม(Activity Detail)
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <table style="width: 100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="50%">
+                                                        <p class="fontDocSmall">
+                                                        </p>
+                                                    </td>
+
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
                                         </table>
-                                    </td>
-                                    <td width="305" valign="top" style='width: 228.75pt; border: solid black 1.0pt; border-left: none; padding: 0in .75pt .75pt .75pt'>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                                                <td width="30%" style='width: 30.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>วันที่:</span><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; color: #961930'> </span><span
-                                                                    style='color: #961930'>
-                                                                    <o:p></o:p>
-                                                                </span>
-                                                    </p>
-                                                </td>
-                                                <td width="70%" style='width: 70.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <span
-                                                            style='color: darkblue'>03/08/2020
-                                                            <o:p></o:p>
-                                                        </span>
-                                                    </p>
-                                                </td>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: gray; width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td>&nbsp;</td>
                                             </tr>
-                                            <tr style='mso-yfti-irow: 1'>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>เลขที่:</span><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri; color: #961930'> </span><span
-                                                                    style='color: #961930'>
-                                                                    <o:p></o:p>
-                                                                </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <span
-                                                            style='color: darkblue'>---
-                                                            <o:p></o:p>
-                                                        </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 2; mso-yfti-lastrow: yes'>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>งบประมาณเลขที่</span><span
-                                                                style='color: #961930'>EO:
-                                                                <o:p></o:p>
-                                                            </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        S03711B320/0312
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+
+                        <div style="margin-top: 5px; width: 100%;">
+                            โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
+                        </div>
+
+                        <div>
+                            <table style="width: 100%; border-style: solid; border-width: 1px 0px 0px 0px; border-collapse: collapse;">
+                                <tbody>
+                                    <tr style="background-color: #E5E2E2; height: 25px;">
+                                        <td rowspan="2" style="width: 30%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 1px; border-collapse: collapse; text-align: center;">ชื่อสินค้า (product Name)</td>
+                                        <td rowspan="2" style="width: 10%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align: center;">Std. Wholesales Price</td>
+                                        <td colspan="3" style="width: 20%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align: center;">Normal Discount (Baht)</td>
+                                        <td style="width: 7%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align: center;">Normal</td>
+                                        <td style="width: 7%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align: center;">Normal</td>
+                                        <td style="width: 7%; font-size: 12.5px; border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align: center;">Promotion</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">(1)</td>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">(2)</td>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">(3)</td>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">Cost</td>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">GP%</td>
+                                        <td style="font-size: 12.5px; border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">GP%</td>
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="5" style="border-style: solid; border-width: 1px 1px 1px 1px; border-collapse: collapse;" class="font11">&nbsp;</td>
+                                        <td style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+                                        <td style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+                                        <td style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+                                    </tr>
+
+                                </tbody>
                             </table>
-                        </td>
-                    </tr>
-                    <tr style='mso-yfti-irow: 2'>
-                        <td style='border-top: none; border-left: solid black 1.0pt; border-bottom: none; border-right: solid black 1.0pt; padding: .75pt .75pt .75pt .75pt'>
-                            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%"
-                                style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes; height: 15.0pt'>
-                                    <td width="300" valign="top" style='width: 225.0pt; border: solid black 1.0pt; border-right: none; padding: 0in .75pt .75pt .75pt; height: 15.0pt'>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; background: #CCFFFF; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>ส่วนที่ </span><span
-                                                                style='color: #961930'>1)
-                                                                <o:p></o:p>
-                                                            </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                                                <td width="75" valign="top" style='width: 56.25pt; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>วัตถุประสงค์:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">tttttt </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 1'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">&nbsp;Supplier: </p>
-                                                </td>
-                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span lang="TH" style='font-family: "Angsana New",serif'>เพาเวอร์ไทร์เซอร์วิส</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 2'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>ที่อยู่:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        269 <span lang="TH" style='font-family: "Angsana New",serif'>ถนนเฉลิมพระเกียรติ
-      ร.</span>9 <span lang="TH" style='font-family: "Angsana New",serif'>แขวงหนองบอน
-      เขตประเวศ กรุงเทพมหานคร </span>10250
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 3; mso-yfti-lastrow: yes'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">&nbsp;Tel/Fax: </p>
-                                                </td>
-                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">027263275 72...,0-2726-3927 </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; background: #CCFFFF; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>ส่วนที่ </span><span
-                                                                style='color: #961930'>2)
-                                                                <o:p></o:p>
-                                                            </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td width="75" valign="top" style='width: 56.25pt; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>เอกสารแนบ:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: darkblue'>1.</span><span lang="TH"
-                                                            style='font-family: "Angsana New",serif; color: darkblue'>สัญญา</span><span
-                                                                style='color: darkblue'><br>
-                                                                2.</span><span lang="TH" style='font-family: "Angsana New",serif; color: darkblue'>ใบเสนอราคา</span><span
-                                                                    style='color: darkblue'><br>
-                                                                    3.</span><span lang="TH" style='font-family: "Angsana New",serif; color: darkblue'>ใบอนุมัติงบประมาณ</span><span
-                                                                        style='color: darkblue'><o:p></o:p></span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            style='border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>ข้อมูลสนับสนุน/หมายเหตุ:</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            style='border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td valign="top" style='padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">&nbsp; </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='mso-fareast-font-family: "Times New Roman"'>
-                                            <o:p></o:p>
-                                        </span></p>
-                                    </td>
-                                    <td width="400" valign="top" style='width: 300.0pt; border: solid black 1.0pt; border-left: none; padding: 0in .75pt .75pt .75pt; height: 15.0pt'>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; background: #CCFFFF; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td width="5%" style='width: 5.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal"><span style='color: black'>&nbsp;</span></p>
-                                                </td>
-                                                <td width="30%" style='width: 30.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: black'>&nbsp;</span><span lang="TH"
-                                                            style='font-family: "Angsana New",serif; color: black'>ส่วนที่ </span><span
-                                                                style='color: black'>3) </span>
-                                                    </p>
-                                                </td>
-                                                <td width="20%" style='width: 20.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <span
-                                                            style='color: black'>&nbsp;</span><span lang="TH" style='font-family: "Angsana New",serif; color: black'>ส่วนที่ </span><span style='color: black'>4) </span>
-                                                    </p>
-                                                </td>
-                                                <td width="17%" style='width: 17.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <span
-                                                            style='color: black'>&nbsp;</span>
-                                                    </p>
-                                                </td>
-                                                <td width="28%" style='width: 28.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <span
-                                                            style='color: black'>&nbsp;</span><span lang="TH" style='font-family: "Angsana New",serif; color: black'>ส่วนที่ </span><span style='color: black'>5) </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal">
-                                            <o:p>&nbsp;</o:p>
-                                        </p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td width="5%" style='width: 5.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">&nbsp;</p>
-                                                </td>
-                                                <td width="30%" style='width: 30.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">IO (Internal Order: SAP) </p>
-                                                </td>
-                                                <td width="20%" style='width: 20.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>GL </p>
-                                                </td>
-                                                <td width="17%" style='width: 17.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>Ch + Reg. </p>
-                                                </td>
-                                                <td width="28%" style='width: 28.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>Brand </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal">
-                                            <o:p>&nbsp;</o:p>
-                                        </p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td width="5%" style='width: 5.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>1</p>
-                                                </td>
-                                                <td width="30%" style='width: 30.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal">86S02049L084 </p>
-                                                </td>
-                                                <td width="20%" style='width: 20.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>650007890 </p>
-                                                </td>
-                                                <td width="17%" style='width: 17.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>AG-01 </p>
-                                                </td>
-                                                <td width="28%" style='width: 28.0%; padding: .75pt .75pt .75pt .75pt'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>Blend285 </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='mso-fareast-font-family: "Times New Roman"'>
-                                            <o:p></o:p>
-                                        </span></p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr style='mso-yfti-irow: 3'>
-                        <td style='border-top: none; border-left: solid black 1.0pt; border-bottom: none; border-right: solid black 1.0pt; padding: .75pt .75pt .75pt .75pt'>
-                            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%"
-                                style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                    <td width="100%" valign="top" style='width: 100.0%; border: solid black 1.0pt; padding: 0in .75pt .75pt .75pt'>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; background: #CCFFFF; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <span style='color: #961930'>&nbsp;&nbsp;</span><span
-                                                            lang="TH" style='font-family: "Angsana New",serif; color: #961930'>ส่วนที่ </span><span
-                                                                style='color: #961930'>6)
-                                                                <o:p></o:p>
-                                                            </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='display: none; mso-hide: all'>
-                                            <o:p>&nbsp;</o:p>
-                                        </span></p>
-                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                                                <td colspan="3" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;&nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>รายละเอียด
-      ค่าใช้จ่าย ในงวดนี้</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>VAT
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <b><span
-                                                            lang="TH" style='font-family: "Angsana New",serif'>ครั้งที่</span></b><b><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                <o:p></o:p>
-                                                            </b>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <b><span
-                                                            lang="TH" style='font-family: "Angsana New",serif'>วันที่</span></b><b><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                <o:p></o:p>
-                                                            </b>
-                                                    </p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <b><span
-                                                            lang="TH" style='font-family: "Angsana New",serif'>จำนวนเงิน(บาท)</span></b><b><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                <o:p></o:p>
-                                                            </b>
-                                                    </p>
-                                                </td>
-                                                <td style='border: none; border-bottom: solid black 1.0pt; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>
-                                                        <b><span
-                                                            lang="TH" style='font-family: "Angsana New",serif'>เลขที่ใบสั่งจ่าย</span></b><b><span
-                                                                lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                <o:p></o:p>
-                                                            </b>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 1'>
-                                                <td width="11%" style='width: 11.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">&nbsp;&nbsp;86S02049L084 </p>
-                                                </td>
-                                                <td width="26%" style='width: 26.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        BL_<span lang="TH" style='font-family: "Angsana New",serif'>ซื้อพื้นที่บนชั้นวางสินค้า</span>7-11_Jan-Sep20
-                                                    </p>
-                                                </td>
-                                                <td width="12%" style='width: 12.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">80,000.00&nbsp;&nbsp; </p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>Vat
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>1
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>03/08/2020
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="right" style='text-align: right'>
-                                                        <b>80,000.00&nbsp;&nbsp;
-      <o:p></o:p>
-                                                        </b>
-                                                    </p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>--- </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 2'>
-                                                <td colspan="2" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="right" style='text-align: right'>
-                                                        <o:p>&nbsp;</o:p>
-                                                    </p>
-                                                    <div align="right">
-                                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                    <p class="MsoNormal">
-                                                                        <span lang="TH" style='font-family: "Angsana New",serif'>รวม</span><span
-                                                                            lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <p class="MsoNormal" align="right" style='text-align: right'>
-                                                        <span
-                                                            style='mso-fareast-font-family: "Times New Roman"'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                                    </p>
-                                                </td>
-                                                <td width="12%" style='width: 12.0%; padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <o:p>&nbsp;</o:p>
-                                                    </p>
-                                                    <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                        width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                        <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                            <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                <p class="MsoNormal">80,000.00&nbsp;&nbsp; </p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <p class="MsoNormal"><span style='mso-fareast-font-family: "Times New Roman"'>
-                                                        <o:p></o:p>
-                                                    </span></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>&nbsp; </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 3'>
-                                                <td colspan="2" style='padding: 0in 0in 0in 0in'>
-                                                    <div align="right">
-                                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                    <p class="MsoNormal">
-                                                                        <span lang="TH" style='font-family: "Angsana New",serif'>ภาษีมูลค่าเพิ่ม
-                                                                        </span>7%
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                                <td width="12%" style='width: 12.0%; padding: 0in 0in 0in 0in'>
-                                                    <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                        width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                        <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                            <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                <p class="MsoNormal">5,600.00&nbsp;&nbsp; </p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>&nbsp; </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 4'>
-                                                <td colspan="2" style='padding: 0in 0in 0in 0in'>
-                                                    <div align="right">
-                                                        <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                            width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                            <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                                <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                    <p class="MsoNormal">
-                                                                        <span lang="TH" style='font-family: "Angsana New",serif'>รวมทั้งสิ้น
-        (บาท)</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                                <td width="12%" style='width: 12.0%; padding: 0in 0in 0in 0in'>
-                                                    <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                        width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                        <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                            <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                <p class="MsoNormal">85,600.00&nbsp;&nbsp; </p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>&nbsp; </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 5'>
-                                                <td width="12%" colspan="3" style='width: 12.0%; padding: 0in 0in 0in 0in'>
-                                                    <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                        width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                        <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                            <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0"
-                                                                    width="100%" style='width: 100.0%; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                                                    <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes; mso-yfti-lastrow: yes'>
-                                                                        <td width="100" style='width: 75.0pt; padding: 0in .75pt .75pt .75pt'>
-                                                                            <p class="MsoNormal">
-                                                                                &nbsp;&nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>บาท
-          (ตัวอักษร)</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                                            </p>
-                                                                        </td>
-                                                                        <td style='padding: 0in .75pt .75pt .75pt'>
-                                                                            <p class="MsoNormal">
-                                                                                <span lang="TH" style='font-family: "Angsana New",serif'>แปดหมื่นห้าพันหกร้อยบาทถ้วน</span>
-                                                                                &nbsp;
-                                                                            </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'><b>&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" align="center" style='text-align: center'>&nbsp; </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 6'>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;&nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>งบฯ
-      ผูกพันรวม</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td colspan="5" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal" style='margin-left: -75.0pt'>385,000.00&nbsp;&nbsp; </p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal"><b>80,000.00&nbsp;&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;&nbsp;&lt;&lt; <span lang="TH" style='font-family: "Angsana New",serif'>งบฯ สะสม</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr style='mso-yfti-irow: 7; mso-yfti-lastrow: yes'>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;&nbsp;<span lang="TH" style='font-family: "Angsana New",serif'>บาท
-      (ตัวอักษร)</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                                <td colspan="5" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        <span lang="TH" style='font-family: "Angsana New",serif'>สามแสนแปดหมื่นห้าพันบาทถ้วน</span>&nbsp;&nbsp;
-                                                    </p>
-                                                </td>
-                                                <td valign="top" style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal"><b>305,000.00&nbsp;&nbsp;
-                                                        <o:p></o:p>
-                                                    </b></p>
-                                                </td>
-                                                <td style='padding: 0in 0in 0in 0in'>
-                                                    <p class="MsoNormal">
-                                                        &nbsp;&nbsp;&lt;&lt; <span lang="TH" style='font-family: "Angsana New",serif'>คงเหลือ (บาท)</span><span lang="TH" style='font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <p class="MsoNormal"><span style='mso-fareast-font-family: "Times New Roman"'>
-                                            <o:p></o:p>
-                                        </span></p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr style='mso-yfti-irow: 4; mso-yfti-lastrow: yes'>
-                        <td style='border: solid black 1.0pt; border-top: none; padding: .75pt .75pt .75pt .75pt'>
-                            <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0"
-                                style='mso-cellspacing: 0in; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in'>
-                                <tr style='mso-yfti-irow: 0; mso-yfti-firstrow: yes'>
-                                    <td width="120" style='width: 1.25in; padding: 0in 0in 0in 0in'>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้จัดทำ</span><span
-                                                        lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span><span style='font-size: 9.5pt'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span
-                                                    style='font-size: 9.5pt'>(Create By)
-                                                    <o:p></o:p>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td width="120" style='width: 1.25in; padding: 0in 0in 0in 0in'>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผ่าน</span><span
-                                                        lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span><span style='font-size: 9.5pt'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span
-                                                    style='font-size: 9.5pt'>(Verify by)
-                                                    <o:p></o:p>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td width="120" style='width: 1.25in; padding: 0in 0in 0in 0in'>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผ่าน</span><span
-                                                        lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span><span style='font-size: 9.5pt'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span
-                                                    style='font-size: 9.5pt'>(Verify by)
-                                                    <o:p></o:p>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td width="120" style='width: 1.25in; padding: 0in 0in 0in 0in'>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผ่าน</span><span
-                                                        lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span><span style='font-size: 9.5pt'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span
-                                                    style='font-size: 9.5pt'>(Verify by)
-                                                    <o:p></o:p>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td width="120" style='width: 1.25in; padding: 0in 0in 0in 0in'>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>เรียน/อนุมัติ</span><span
-                                                        lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri'> </span><span style='font-size: 9.5pt'>
-                                                            <o:p></o:p>
-                                                        </span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span
-                                                    style='font-size: 9.5pt'>(Approve by)
-                                                    <o:p></o:p>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style='mso-yfti-irow: 1'>
-                                    <td style='padding: 0in 0in 0in 0in'></td>
-                                    <td style='padding: 0in 0in 0in 0in'></td>
-                                    <td style='padding: 0in 0in 0in 0in'></td>
-                                    <td style='padding: 0in 0in 0in 0in'></td>
-                                    <td style='padding: 0in 0in 0in 0in'></td>
-                                </tr>
-                                <tr style='mso-yfti-irow: 2'>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <div style='margin-top: 3.75pt'>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>คุณพีรภพ
-    อินทรวิเชียร</span><span style='font-size: 9.5pt'><o:p></o:p></span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <div style='margin-top: 3.75pt'>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>คุณณัฐพล
-    บุญโสภาวงศ์</span><span style='font-size: 9.5pt'><o:p></o:p></span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <div style='margin-top: 3.75pt'>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>คุณพิมพ์พิชชา
-    ด่านขุนพลชัย</span><span style='font-size: 9.5pt'><o:p></o:p></span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <div style='margin-top: 3.75pt'>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>คุณรัตนา หิรัญเดช</span><span
-                                                        style='font-size: 9.5pt'><o:p></o:p></span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <div style='margin-top: 3.75pt'>
-                                            <p class="MsoNormal" align="center" style='text-align: center'>
-                                                <span lang="TH"
-                                                    style='font-size: 9.5pt; font-family: "Angsana New",serif'>คุณการุณ
-    ศรีวิจิตรานนท์</span><span style='font-size: 9.5pt'><o:p></o:p></span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style='mso-yfti-irow: 3; mso-yfti-lastrow: yes'>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <p class="MsoNormal" align="center" style='text-align: center'>
-                                            <span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้ช่วยผู้จัดการพัฒนาระบบงาน
-                                            </span><span style='font-size: 9.5pt'>RTM-</span><span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>เว๊บแอพพลิเคชั่น</span><span
-                                                    style='font-size: 9.5pt'><o:p></o:p></span>
-                                        </p>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <p class="MsoNormal" align="center" style='text-align: center'>
-                                            <span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้จัดการช่องทางการจัดจำหน่าย</span><span
-                                                    style='font-size: 9.5pt'><o:p></o:p></span>
-                                        </p>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <p class="MsoNormal" align="center" style='text-align: center'>
-                                            <span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้จัดการช่องทางการจัดจำหน่าย</span><span
-                                                    style='font-size: 9.5pt'><br>
-                                                </span><span lang="TH" style='font-size: 9.5pt; font-family: "Angsana New",serif'>อาวุโส</span><span
-                                                    style='font-size: 9.5pt'><o:p></o:p></span>
-                                        </p>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <p class="MsoNormal" align="center" style='text-align: center'>
-                                            <span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้จัดการฝ่ายบัญชีและการเงินอาวุโส</span><span
-                                                    style='font-size: 9.5pt'><o:p></o:p></span>
-                                        </p>
-                                    </td>
-                                    <td style='padding: 0in 0in 0in 0in'>
-                                        <p class="MsoNormal" align="center" style='text-align: center'>
-                                            <span lang="TH"
-                                                style='font-size: 9.5pt; font-family: "Angsana New",serif'>ผู้อำนวยการช่องทางการจัดจำหน่าย</span><span
-                                                    style='font-size: 9.5pt'><o:p></o:p></span>
-                                        </p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
 
-            </div>
 
-        </div>
+                        <div>
+                            <table style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: gray; width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        <div>
+                            <table class="tablethin" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr style="background-color: #E5E2E2; height: 25px;">
+                                        <td rowspan="2" width="15%" style="font-size: 12.5px;">ประเภทกิจกรรม</td>
+                                        <td rowspan="2" width="20%" style="font-size: 12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                                        <td colspan="3" style="font-size: 12.5px;">ประมาณการยอดขาย (Estimate)</td>
+                                        <td colspan="2" style="font-size: 12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td width="10%" style="font-size: 12.5px;">ยอดขายปกติ (Case)</td>
+                                        <td width="10%" style="font-size: 12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                                        <td width="6%" style="font-size: 12.5px;">% Growth</td>
+                                        <td width="10%" style="font-size: 12.5px;">Spending Exp. (Case)</td>
+                                        <td width="10%" style="font-size: 12.5px;">Spending Exp. (Bath)</td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="border: none; border-bottom: none;"></td>
+                                        <td style="text-align: right; border: none; border-bottom: none;">รวม</td>
+                                        <td class="textRight"></td>
+                                        <td class="textRight"></td>
+                                        <td class="textRight"></td>
+                                        <td class="textRight"></td>
+                                        <td class="textRight"></td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <div>
-
-        <div>
-
-            <div>
-
-                <p class="MsoNormal">&nbsp;Export To PDF </p>
-
-            </div>
-
-            <div>
-
-                <p class="MsoNormal">&nbsp;Close </p>
-
-            </div>
-
-            <div>
-
-                <p class="MsoNormal">&nbsp;Submit </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+</body>
+</html>
+}

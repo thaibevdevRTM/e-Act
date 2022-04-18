@@ -26,12 +26,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getAllowAutoApproveForFormHC >> " + ex.Message);
             }
         }
-        public static List<CashEmpModel> getCashLimitByEmpId(string empId)
+        public static List<CashEmpModel> getCashLimitByEmpId(string empId,string empLvl)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByEmpId"
-                     , new SqlParameter("@empId", empId));
+                     , new SqlParameter("@empId", empId)
+                , new SqlParameter("@empLvl", empLvl));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new CashEmpModel()
                              {

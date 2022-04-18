@@ -69,7 +69,7 @@ else
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
                             <td class="a-center ">
-                                @if (item.statusId == "2")
+                                @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
                                 {
                                     <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
                                 }

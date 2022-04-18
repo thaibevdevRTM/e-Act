@@ -56,15 +56,17 @@
                         </tr>
                         @foreach (var item in Model.ProductPriceList)
                         {
-                            @Html.HiddenFor(x => item.id,new { @id= "hdId_" + index})
+                            @Html.HiddenFor(x => item.id, new { @id = "hdId_" + index })
+                            @Html.HiddenFor(x => item.productCode, new { @id = "hdProductCode_" + index })
                             <tr>
                                 <td>@Html.DisplayFor(x => item.customerName)</td>
-                                <td>@Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @step = "0.01" , @id = "normalCost_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>
+                                <td>@Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @step = "0.01", @id = "normalCost_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
                                 <td>@Html.TextBoxFor(x => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
-                                <td>@Html.TextBoxFor(x => item.discount1, "{0:n2}", new {@id = "discount1_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>
-                                <td>@Html.TextBoxFor(x => item.discount2, "{0:n2}", new {@id = "discount2_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>
-                                <td>@Html.TextBoxFor(x => item.discount3, "{0:n2}", new { @id = "discount3_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>
-                                <td>@Html.TextBoxFor(x => item.saleNormal, "{0:n2}", new {@id = "saleNormal_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>
+                                <td>@Html.TextBoxFor(x => item.discount1, "{0:n2}", new { @id = "discount1_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
+                                <td>@Html.TextBoxFor(x => item.discount2, "{0:n2}", new { @id = "discount2_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
+                                <td>@Html.TextBoxFor(x => item.discount3, "{0:n2}", new { @id = "discount3_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
+                                <td>@Html.TextBoxFor(x => item.saleNormal, "{0:n2}", new { @id = "saleNormal_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")" })</td>
+
                             </tr>
                             index++;
                         }

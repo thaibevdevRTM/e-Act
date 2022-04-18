@@ -30,6 +30,7 @@
                     <th class="align-content-center font10">ProductCate</th>
                     <th class="align-content-center font10">ProductBrand</th>
                     <th class="align-content-center font10">Channel</th>
+                    <th class="align-content-center font10">actType</th>
                     <th class="align-content-center font10">Department</th>
                     <th class="align-content-center font10">Limit</th>
                     <th class="align-content-center font10">Rank</th>
@@ -46,35 +47,36 @@
             {
                 foreach (var item in Model.importFlowList)
                 {
-                    <tr>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.flowId))
-                            {
-                                if (item.checkFlowExist == true)
-                                {
-                                    <i class="btn glyphicon glyphicon-retweet"></i>
-                                }
-                                else
-                                {
-                                    <img src="~/images/check_b.png" height="20px" width="20px" />
-                                }
-                            }
-                        </td>
-                        <td class="font10 textLeft">@item.company</td>
-                        <td class="font10 textLeft">@item.subject</td>
-                        <td class="font10 textLeft">@item.customer</td>
-                        <td class="font10 textLeft">@item.productType</td>
-                        <td class="font10 textLeft">@item.productCate</td>
-                        <td class="font10 textLeft">@item.productBrand</td>
-                        <td class="font10 textLeft">@item.channel</td>
-                        <td class="font10 textLeft">@item.department</td>
-                        <td class="font10 textLeft">@item.limitDisplay</td>
-                        <td class="font10 textLeft">@item.rang</td>
-                        <td class="font10 textLeft">@item.approveGroup</td>
-                        <td class="font10 textLeft">@if (@item.IsShow == "1") { show = "Show"; } else { show = "No"; }@show</td>
-                        <td class="font10 textLeft">@if (@item.IsApprove == "1") { IsApprove = "Show"; } else { IsApprove = "No"; }@IsApprove</td>
-                        <td class="font10 textLeft">@item.empId (@item.name)</td>
-                    </tr>
+        <tr>
+            <td>
+                @if (!string.IsNullOrEmpty(item.flowId))
+                {
+                    if (item.checkFlowExist == true)
+                    {
+                        <i class="btn glyphicon glyphicon-retweet"></i>
+                    }
+                    else
+                    {
+                        <img src="~/images/check_b.png" height="20px" width="20px" />
+                    }
+                }
+            </td>
+            <td class="font10 textLeft">@item.company</td>
+            <td class="font10 textLeft">@item.subject</td>
+            <td class="font10 textLeft">@item.customer</td>
+            <td class="font10 textLeft">@item.productType</td>
+            <td class="font10 textLeft">@item.productCate</td>
+            <td class="font10 textLeft">@item.productBrand</td>
+            <td class="font10 textLeft">@item.channel</td>
+            <td class="font10 textLeft">@item.actType</td>
+            <td class="font10 textLeft">@item.department</td>
+            <td class="font10 textLeft">@item.limitDisplay</td>
+            <td class="font10 textLeft">@item.rang</td>
+            <td class="font10 textLeft">@item.approveGroup</td>
+            <td class="font10 textLeft">@if (@item.IsShow == "1") { show = "Show"; } else { show = "No"; }@show</td>
+            <td class="font10 textLeft">@if (@item.IsApprove == "1") { IsApprove = "Show"; } else { IsApprove = "No"; }@IsApprove</td>
+            <td class="font10 textLeft">@item.empId (@item.name)</td>
+        </tr>
                 }
             }
         </table>

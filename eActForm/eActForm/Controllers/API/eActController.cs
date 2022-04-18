@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -22,7 +23,7 @@ namespace eActForm.Controllers
             return View();
         }
 
- 
+
 
 
         public JsonResult getProductGroup(string cateId)
@@ -78,7 +79,7 @@ namespace eActForm.Controllers
                     getProductname = getProductBrand.Select(x => new
                     {
                         Value = x.id,
-                        Text = x.brandName
+                        Text = x.brandName,
                     }).ToList(),
                 };
                 result.Data = resultData;
@@ -90,6 +91,33 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getDetailBrandById(string brandId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.id.Trim() == brandId.Trim()).ToList();
+                var resultData = new
+                {
+
+                    Value = getProductBrand.FirstOrDefault().id,
+                    Text = getProductBrand.FirstOrDefault().brandName,
+                    EO = getProductBrand.FirstOrDefault().digit_EO
+,
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
         public JsonResult getALLProductBrand(string p_txtBrand)
         {
@@ -295,6 +323,22 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getAreaByRegion(string center, string txtCus,string type)
+        {
+
+           List<eForms.Models.MasterData.TB_Act_Area_Model> areaList = new List<eForms.Models.MasterData.TB_Act_Area_Model>();
+            try
+            {
+                areaList = QueryGetArea.getAreaByCondition(AppCode.StrCon, type).Where(x => x.center == center && x.area.Contains(txtCus)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+            }
+            return Json(areaList, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getCustomerMT(string companyId)
         {
 
@@ -356,13 +400,22 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAllRegion(string txtRegion)
+        public JsonResult getAllRegion(string txtRegion ,string condition)
         {
 
             List<TB_Act_Region_Model> regionList = new List<TB_Act_Region_Model>();
             try
             {
-                regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion)).ToList();
+                if(UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion) && x.condition.Equals(condition)).ToList();
+
+                }
+                else
+                {
+                    regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion) && x.descEn.Contains(Regex.Match(UtilsAppCode.Session.User.DepartmentName, @"\d+").Value) && x.condition.Equals(condition)).ToList();
+
+                }
 
             }
             catch (Exception ex)
@@ -399,13 +452,14 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getCashLimitByEmpId(string empId)
+        public JsonResult getCashLimitByEmpId(string empId, string empLvl)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId).ToList();
+
+                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, empLvl).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new
@@ -566,7 +620,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel ,string docDate)
+        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel, string docDate)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
@@ -697,7 +751,7 @@ namespace eActForm.Controllers
                     return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("genImageStream => " + ex.Message);
                 return File(Server.MapPath("~/images/noSigError.jpg"), "image/jpg");
@@ -706,6 +760,6 @@ namespace eActForm.Controllers
 
         }
 
-       
+
     }
 }

@@ -43,7 +43,7 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
-                sendEmailWithActId(actFormId, mailTo
+                sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
                     , strBody
@@ -136,13 +136,14 @@ namespace eActForm.BusinessLayer
                     #endregion
 
                     var empUser = models.approveDetailLists.Where(r => r.empId == currentEmpId).ToList(); // get current user
-                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
 
                     string emailRejectBody = "";
                     string emailRejectSubject = "";
                     string txtEmpUser = "";
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
+
+                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
 
                     emailRejectBody = ConfigurationManager.AppSettings["emailRejectBody"];
                     emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject"];
@@ -174,6 +175,12 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                EmailAppCodes.sendEmail(
+                   EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
+                  , ""
+                  , "eAct sendApprove non backgroup Error"
+                  , actFormId + " " + ex.Message
+                  , null);
                 //ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
                 throw new Exception("sendRejectActForm >>" + ex.Message + " " + actFormId);
             }
@@ -258,13 +265,36 @@ namespace eActForm.BusinessLayer
                                 }
                             }
 
+
+                            string pathFile = "";
+                            var tbActImageList = ImageAppCode.GetImage(actFormId);
+                            if (tbActImageList.Any())
+                            {
+                                int i = 1;
+                                foreach (var loop in tbActImageList)
+                                {
+                                    if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                    }
+                                    else
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"], loop._fileName), loop._fileName) + "<br/>";
+                                    }
+                                    i++;
+                                }
+                            }
+
+
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
                                 ? string.Format(txtemailAllApproveBody
                                     , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
                                     , createUsersName
+                                    ,pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
@@ -282,6 +312,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
                 throw new Exception("sendEmailApprove " + ex.Message);
             }
@@ -325,6 +356,8 @@ namespace eActForm.BusinessLayer
 
                 }
 
+
+
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
@@ -352,8 +385,6 @@ namespace eActForm.BusinessLayer
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
 
-
-
                             // all approved then send the email notification to user create
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
@@ -370,13 +401,34 @@ namespace eActForm.BusinessLayer
                                 }
                             }
 
+                            string pathFile = "";
+                            var tbActImageList = ImageAppCode.GetImage(actFormId);
+                            if (tbActImageList.Any())
+                            {
+                                int i = 1;
+                                foreach (var loop in tbActImageList)
+                                {
+                                    if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                    }
+                                    else
+                                    {
+                                        pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"], loop._fileName), loop._fileName) + "<br/>";
+                                    }
+                                    i++;
+                                }
+                            }
+
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
                                 ? string.Format(txtemailAllApproveBody
                                     , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
                                     , createUsersName
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             //=============New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
@@ -440,102 +492,101 @@ namespace eActForm.BusinessLayer
 
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
-            //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-
+            var checkMail = "";
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];
-            var checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
-            //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
-            //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
-
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+            string[] pathFile = new string[1];
+            try
             {
-                strBody += checkMail;
-            }
+                //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+                ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+                //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
 
-            switch (emailType)
-            {
-                case AppCode.ApproveType.Activity_Form:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
-                    activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
-                    break;
-                case AppCode.ApproveType.Report_Detail:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
+                //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
+                //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
+                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
 
-                    break;
-                case AppCode.ApproveType.Report_Summary:
-                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
-
-                    break;
-            }
-
-            TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
-            if (getImageModel.tbActImageList.Any())
-            {
-                int i = 1;
-                foreach (var item in getImageModel.tbActImageList)
+                if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
                 {
-                    //=== use case this background service (bg service cannot get data session)===
-                    string companyId = "";
-                    try
-                    {
-                        companyId = UtilsAppCode.Session.User.empCompanyId;
-                    }
-                    catch
-                    {
-                        companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
-                    }
-                    // ==================================================
-                    if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
-                    {
-                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-
-                    }
-                    else
-                    {
-                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                    }
-                    i++;
+                    strBody += checkMail;
                 }
-            }
 
-            var i_loop_change_name = 0;
-            foreach (var item in pathFile)
-            {
-                if (System.IO.File.Exists(item))
+                //Get Document
+                switch (emailType)
                 {
-                    string extTypeFile = Path.GetExtension(item);
-                    Attachment attachment;
-                    attachment = new Attachment(item);
-                    if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
-                    {
-                        attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
-                    }
+                    case AppCode.ApproveType.Activity_Form:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                        activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
 
-                    var dontAttach = 0;
-                    if (extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
-                    {
-                        dontAttach = 1;
-                    }
-                    if (dontAttach == 0)
-                    {
-                        files.Add(attachment);
-                    }
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
 
-                    i_loop_change_name++;
+                        break;
                 }
-            }
 
-            sendEmailWithActId(actFormId, mailTo
-                    , mailCC
-                    , strSubject
-                    , strBody
-                    , files);
+                var i_loop_change_name = 0;
+                foreach (var item in pathFile)
+                {
+                    if (System.IO.File.Exists(item))
+                    {
+                        string extTypeFile = Path.GetExtension(item);
+                        Attachment attachment;
+                        attachment = new Attachment(item);
+                        if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
+                        {
+                            attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
+                        }
+
+                        var dontAttach = 0;
+                        if (extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
+                        {
+                            dontAttach = 1;
+                        }
+                        if (dontAttach == 0)
+                        {
+                            files.Add(attachment);
+                        }
+
+                        i_loop_change_name++;
+                    }
+                }
+
+
+                sendEmail(mailTo
+                        , mailCC
+                        , strSubject
+                        , strBody
+                        , files);
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    sendEmail(mailTo
+                        , mailCC
+                        , strSubject
+                        , strBody
+                        , null);
+                }
+                catch (Exception exs)
+                {
+                    EmailAppCodes.sendEmail(
+                    EmailAppCodes.GetDataEmailIsDev(actFormId).FirstOrDefault().e_to
+                   , ""
+                   , "eAct sendApprove Catch in Catch"
+                   , actFormId + " " + exs.Message
+                   , null);
+                }
+
+                throw new Exception("sendEmailActForm >> " + ex.Message + "_" + checkMail);
+
+            }
         }
 
         public static string replaceWordDangerForNameFile(string txt)
@@ -643,8 +694,8 @@ namespace eActForm.BusinessLayer
                         }
                         if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess == true)
                         {
-                            strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > {9} </a>", "");
-                            strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > {9} </a>", "");
+                            strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > Click </a>", "");
+                            strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > Click </a>", "");
                         }
 
                         //==============peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========
@@ -663,6 +714,28 @@ namespace eActForm.BusinessLayer
                         }
                         //======END========peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========
 
+
+                        string pathFile = "";
+                        var tbActImageList = ImageAppCode.GetImage(actId);
+                        if (tbActImageList.Any())
+                        {
+                            int i = 1;
+                            foreach (var loop in tbActImageList)
+                            {
+                                if (loop.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                                {
+                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], loop._fileName)), loop._fileName) + "<br/>";
+                                }
+                                else
+                                {
+                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"],loop._fileName), loop._fileName) + "<br/>" ;
+                                }
+                                i++;
+                            }
+                        }
+
+
+
                         strBody = string.Format(strBody
                         , item.empPrefix + " " + empNameResult
                         , txtApprove
@@ -673,6 +746,7 @@ namespace eActForm.BusinessLayer
                         , String.Format("{0:0,0.00}", item.sumTotal)
                         , (models != null && models.Count > 0) ? txtCompanyname : ""
                         , txtcreateBy
+                        , pathFile
                         , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
                         break;
                     case AppCode.ApproveType.Report_Detail:
@@ -714,10 +788,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  //empEmail =  dr["empEmail"].ToString()
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -744,9 +815,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -770,9 +839,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -786,27 +853,8 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
         public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
-        {
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailTo = mailTo == null || mailTo == "" ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
-            GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
-            GMailer mailer = new GMailer();
-            mailer.ToEmail = mailTo;
-            mailer.Subject = subject;
-            mailer.Body = body;
-            mailer.p_Attachment = files;
-            if (!String.IsNullOrEmpty(cc))
-            {
-                mailer.CC = cc;
-            }
-
-            mailer.IsHtml = true;
-            mailer.Send();
-        }
-
-        public static void sendEmailWithActId(string actFormId, string mailTo, string cc, string subject, string body, List<Attachment> files)
         {
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
@@ -978,9 +1026,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
@@ -1091,10 +1137,7 @@ namespace eActForm.BusinessLayer
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
-                                  empName = dr["empName"].ToString(),
-                                  empName_EN = dr["empName_EN"].ToString(),
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),

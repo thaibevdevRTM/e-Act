@@ -1,9 +1,11 @@
-﻿using eForms.Models.Forms;
+﻿using eActForm.BusinessLayer;
+using eForms.Models.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static eActForm.Models.ApproveFlowModel;
 using static eActForm.Models.ApproveModel;
+using static eActForm.Models.TB_Act_Chanel_Model;
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
@@ -76,7 +78,8 @@ namespace eActForm.Models
             HCM,
             ITForm,
             HCForm,
-            OtherCompany
+            OtherCompany,
+            Beer
         }
         public enum groupCompany
         {
@@ -100,6 +103,15 @@ namespace eActForm.Models
 
         public class actForm : ActBaseModel
         {
+            public actForm(string empId)
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                if (model.Count > 0)
+                {
+                    this.createByUserName = model.Count > 0 ? model[0].empName : "";
+                }
+            }
+
             public string id { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
@@ -140,6 +152,7 @@ namespace eActForm.Models
             public DateTime? dateSentApprove { get; set; }
             public string companyId { get; set; }
             public string brandName { get; set; }
+            public string channelId { get; set; }
 
         }
 
@@ -154,6 +167,11 @@ namespace eActForm.Models
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<CompanyMTM> companyList { get; set; }
+        public List<TB_Act_Other_Model> departmentList { get; set; }
+        public List<Master_type_form_Model> masterTypeFormList { get; set; }
+        public List<Chanel_Model> channelList { get; set; }
+        public List<TB_Act_ProductBrand_Model> brandList { get; set; }
+
         public string typeForm { get; set; }
     }
 
@@ -231,6 +249,7 @@ namespace eActForm.Models
         public string companyId { get; set; }
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
+        public string actEO { get; set; }
         public string actClaim { get; set; }
         public int actClaimInt { get; set; }
         public string master_type_form_id { get; set; }
@@ -252,6 +271,11 @@ namespace eActForm.Models
         public Boolean chkAddDown { get; set; }
         public string subActivity { get; set; }
         public string txtSubActivity { get; set; }
+        public string txtMainAgency { get; set; }
+        public string txtSubAgency { get; set; }
+        public string txtPay { get; set; }
+        public string txtGame { get; set; }
+        public string txtArea { get; set; }
 
     }
 
@@ -270,16 +294,11 @@ namespace eActForm.Models
         public decimal? LE { get; set; }
         public decimal? compensate { get; set; }
         public int unit { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCase { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
@@ -300,6 +319,7 @@ namespace eActForm.Models
         public decimal? vat { get; set; }
         public decimal? balance { get; set; }
         public decimal? limit { get; set; }
+        public string actType { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -317,6 +337,7 @@ namespace eActForm.Models
         public string UseYearSelect { get; set; }
         public string EO { get; set; }
         public string glCodeId { get; set; }
+        public decimal? promotionCost { get; set; }
 
     }
 

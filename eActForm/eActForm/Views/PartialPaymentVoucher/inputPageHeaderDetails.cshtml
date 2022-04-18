@@ -42,10 +42,10 @@
                                         @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
                                         {
                                             @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
-                                       {
-                                           @class = "form-control selectpicker",
-                                           id = "ddlFiscalYear"
-                                       })
+                                          {
+                                              @class = "form-control selectpicker",
+                                              id = "ddlFiscalYear"
+                                          })
                                             <script>
                                             $('#ddlFiscalYear').change(function () {
                                                 bindDropdownEO();
@@ -105,7 +105,12 @@
                                         }
                                         else
                                         {
-                                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new { @class = "form-control textboxcss", @id = "txtfiscalYear", style = "" })
+                                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
+                                     {
+                                         @class = "form-control selectpicker",
+                                         id = "ddlFiscalYear"
+                                     })
+
                                         }
                                     </div>
                                 </div>
@@ -151,9 +156,9 @@
                                                 nonSelectedText: '',
                                                 buttonWidth: '100%',
                                                     onChange: function (option, checked) {
-                                                       
-                                                   
-                                                        
+
+
+
                                                      payByIOSelect = [];
                                                      payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
                                                         if ($("#ddl_EO_PV").val() != "")
@@ -172,10 +177,10 @@
                                                             var ActivityByEOSelect = "";
                                                             for (var iLoopEO = 0; iLoopEO < EOSelect.length; iLoopEO++) {
                                                                 if (iLoopEO > 0) { EOtext += "|"; ActivityByEOSelect += "|"; }
-                                                                EOtext += EOSelect[iLoopEO]; ActivityByEOSelect += subStringGetActId(valuesSelectChoiceFromDb[iLoopEO]);                                                              
+                                                                EOtext += EOSelect[iLoopEO]; ActivityByEOSelect += subStringGetActId(valuesSelectChoiceFromDb[iLoopEO]);
                                                             }
 
-                                                     
+
                                                             /*===END===วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
                                                             if (ActivityByEOSelect != "" && EOtext!="") {
                                                             var dataToBeSend = {

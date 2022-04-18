@@ -32,6 +32,31 @@ namespace updateDataReportTBM
 
         }
 
+
+        public static bool updateDataReportMaketingToTable()
+        {
+            bool result = false;
+            try
+            {
+
+                int rtn = 0;
+                Console.Write("waiting for update data");
+                waiting();
+                rtn = SqlHelper.ExecuteNonQuery(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_updateReportTBM_AP");
+                if (rtn > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw new Exception("updateDataReportMaketingToTable >>" + ex.Message);
+            }
+
+        }
+
         public static async Task waiting()
         {
             await Task.Run(() =>

@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
-                                 select new exPerryCashModel()
+                                 select new exPerryCashModel("")
                                  {
                                      id = dr["idCashType"].ToString(),
                                      cashName = dr["displayVal"].ToString(),
@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 if (ds.Tables.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
-                                 select new exPerryCashModel()
+                                 select new exPerryCashModel("")
                                  {
                                      cash = dr["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dr["total"].ToString())),
                                      cashTypeId = dr["productId"].ToString(),

@@ -247,6 +247,7 @@
             url: '@Url.Action("getCashLimitByEmpId", "eAct")',
             data: {
                 empId: $("#txtEmpId").val(),
+                 empLvl: $("#lblLvl").val(),
             }
         }).done(function (response) {
             console.log(response);

@@ -25,7 +25,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             eForms.Models.MasterData.ImportBudgetControlModel model = new eForms.Models.MasterData.ImportBudgetControlModel();
-
+            
             if (UtilsAppCode.Session.User.isSuperAdmin)
             {
                 model.companyList = MainAppCode.getOhterMaster(AppCode.StrCon, "company", "");
@@ -265,6 +265,7 @@ namespace eActForm.Controllers
         {
             eForms.Models.MasterData.ImportBudgetControlModel model = new eForms.Models.MasterData.ImportBudgetControlModel();
 
+            model.importTypeList = MainAppCode.getOhterMaster(AppCode.StrCon, "Import", "reportSap");
             if (UtilsAppCode.Session.User.isSuperAdmin)
             {
                 model.companyList = MainAppCode.getOhterMaster(AppCode.StrCon, "company", "");
@@ -283,6 +284,8 @@ namespace eActForm.Controllers
            
             try
             {
+
+
                 string resultFilePath = "";
                 TempData.Clear();
                 int CountFile = model.InputFiles.Count();
@@ -342,12 +345,21 @@ namespace eActForm.Controllers
                     modelBudgetRpt.returnAmount = decimal.Parse(dtBudget.Rows[i]["Return"].ToString());
                     modelBudgetRpt.actual = decimal.Parse(dtBudget.Rows[i]["Actual"].ToString());
                     modelBudgetRpt.accrued = decimal.Parse(dtBudget.Rows[i]["Accrued"].ToString());
-                    modelBudgetRpt.commitment = decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString());
-                    modelBudgetRpt.PR_PO = decimal.Parse(dtBudget.Rows[i]["PR/PO Outstanding"].ToString());
-                    modelBudgetRpt.prepaid = decimal.Parse(dtBudget.Rows[i]["Prepaid"].ToString());
-                    modelBudgetRpt.available = decimal.Parse(dtBudget.Rows[i]["Available"].ToString());
+                    if (model.typeImport.ToLower() == ConfigurationManager.AppSettings["typeImportYearly"])
+                    {
+                        modelBudgetRpt.commitment =  decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString());
+                    }
+                    else
+                    {
+                        modelBudgetRpt.commitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                        modelBudgetRpt.nonCommitment = dtBudget.Rows[i]["Person Responsible"].ToString().Trim().ToLower() == "Non Commit".Trim().ToLower() ? decimal.Parse(dtBudget.Rows[i]["Commitment"].ToString()) : 0;
+                    }
+
                     modelBudgetRpt.fiscalYear = dtBudget.Rows[i]["Fiscal Year"].ToString();
                     modelBudgetRpt.typeImport = importType;
+                    var dateStr = BaseAppCodes.converStrToDatetimeWithFormat(model.dateStr + "-" + "01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    modelBudgetRpt.date =  BaseAppCodes.converStrToDatetimeWithFormat(dateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+
                     //modelBudgetRpt.chanelId = ImportBudgetControlAppCode.getChannelIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Bnam_Eng"].ToString());
                     //modelBudgetRpt.activityTypeId = ImportBudgetControlAppCode.getActivityIdIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Activity"].ToString());
                     modelBudgetRpt.createdByUserId = UtilsAppCode.Session.User.empId;
@@ -355,19 +367,31 @@ namespace eActForm.Controllers
                 }
 
                 int result = 0;
-                result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon);
-
-                foreach (var item in modelBudgetRptList)
-                {
-                   
-                    result = +ImportBudgetControlAppCode.InsertBudgetRpt_Temp(AppCode.StrCon, item);
-                }
-
                 Models.ImportBudgetControlModel budgetModel = new Models.ImportBudgetControlModel();
-                //budgetModel.budgetReportChannelList = ImportBudgetControlAppCode.getBudgetChannelList(AppCode.StrCon);
-                budgetModel.budgetReportList = ImportBudgetControlAppCode.getBudgetList(AppCode.StrCon);
-                budgetModel.budgetReportList2 = ImportBudgetControlAppCode.getBudgetReportTBM_NotEO(AppCode.StrCon);
+                if (model.typeImport.ToLower() == ConfigurationManager.AppSettings["typeImportYearly"])
+                {
+                    budgetModel.typeImport = ConfigurationManager.AppSettings["typeImportYearly"];
+                    result = +ImportBudgetControlAppCode.delBudgetRpt_Temp(AppCode.StrCon);
+                    foreach (var item in modelBudgetRptList)
+                    {
 
+                        result = +ImportBudgetControlAppCode.InsertBudgetRpt_Temp(AppCode.StrCon, item);
+                    }
+
+                    budgetModel.budgetReportList = ImportBudgetControlAppCode.getBudgetList(AppCode.StrCon);
+                    budgetModel.budgetReportList2 = ImportBudgetControlAppCode.getBudgetReportTBM_NotEO(AppCode.StrCon);
+                }
+                else
+                {
+                    budgetModel.typeImport = ConfigurationManager.AppSettings["typeImportMonthly"];
+                    result = +ImportBudgetControlAppCode.delBudgetRptMonthly_Temp(AppCode.StrCon);
+                    foreach (var item in modelBudgetRptList)
+                    {
+                        result = +ImportBudgetControlAppCode.InsertBudgetTemp_Monthly(AppCode.StrCon, item);
+                    }
+
+                    budgetModel.budgetReportList = ImportBudgetControlAppCode.getDataSapMonthlyList(AppCode.StrCon);
+                }
 
                 TempData["budgetTemp"] = budgetModel;
                 resultAjax.Success = true;
@@ -412,6 +436,7 @@ namespace eActForm.Controllers
         public JsonResult confirmImportBudgetReport()
         {
             var resultAjax = new AjaxResult();
+            int result = 0;
             try
             {
                 Models.ImportBudgetControlModel model = new Models.ImportBudgetControlModel();
@@ -421,8 +446,14 @@ namespace eActForm.Controllers
                 modelBG_MD.budgetReportList = model.budgetReportList;
                 //modelBG_MD.budgetReportBrandList = model.budgetReportBrandList;
 
-
-                int result = ImportBudgetControlAppCode.insertDateReportBudgetTBM(AppCode.StrCon, modelBG_MD);
+                if (model.typeImport == ConfigurationManager.AppSettings["typeImportYearly"])
+                {
+                    result = ImportBudgetControlAppCode.insertDateReportBudgetTBM(AppCode.StrCon, modelBG_MD);
+                }
+                else
+                {
+                    result = ImportBudgetControlAppCode.insertDateReportMonthly_BudgetTBM(AppCode.StrCon, modelBG_MD);
+                }
 
                 resultAjax.Success = true;
             }

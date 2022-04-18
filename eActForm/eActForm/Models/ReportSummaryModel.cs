@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -95,6 +96,14 @@ namespace eActForm.Models
 
         public class actApproveSummaryDetailModel : ActBaseModel
         {
+            public actApproveSummaryDetailModel(string empId)
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                if (model.Count > 0)
+                {
+                    this.createName = model.Count > 0 ? model[0].empName : "";
+                }
+            }
             public string id { get; set; }
             public string statusId { get; set; }
             public string activityNo { get; set; }

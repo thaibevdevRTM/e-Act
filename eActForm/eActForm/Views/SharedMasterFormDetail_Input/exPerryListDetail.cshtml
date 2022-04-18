@@ -193,10 +193,7 @@
     });
 
 
-    if (@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-        document.getElementById("addEnt").style.display = "none";
-        document.getElementById("addEx").style.display = "none";
-    }
+
     function autocompleDetail(i) {
         console.log(i.id);
         $("#"+i.id).autocomplete({
@@ -265,10 +262,14 @@
     function getValues() {
         var totalAll = 0.00;
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
-
+            
         for (i = 0; i < rowCount; i++) {
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
+
+           
             var rowtotal = parseFloat($(x).val());
+
+            console.log(rowtotal);
             if (isNaN(rowtotal)) rowtotal = 0;
             totalAll = totalAll + rowtotal;
         }

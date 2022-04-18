@@ -63,6 +63,7 @@
     <Compile Include="MasterData\AmphuresPresenter.cs" />
     <Compile Include="MasterData\ProvincePresenter.cs" />
     <Compile Include="MasterData\QueryGetAllBrand.cs" />
+    <Compile Include="MasterData\QueryGetArea.cs" />
     <Compile Include="MasterData\QueryGetMasterForm.cs" />
     <Compile Include="MasterData\SalesTeamPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

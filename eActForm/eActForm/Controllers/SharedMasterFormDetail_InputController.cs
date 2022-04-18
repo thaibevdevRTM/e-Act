@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 using static eForms.Models.MasterData.ImportBudgetControlModel;
+using QueryGetAllActivityGroup = eActForm.BusinessLayer.QueryGetAllActivityGroup;
 
 namespace eActForm.Controllers
 {
@@ -40,6 +41,7 @@ namespace eActForm.Controllers
                 yearTo = (Convert.ToInt32(nowPhysicalYear) + 10).ToString();
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderBy(m => m.UseYear).ToList();
+            activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "actTbm").ToList();
 
             return PartialView(activity_TBMMKT_Model);
         }
@@ -61,6 +63,22 @@ namespace eActForm.Controllers
         }
         public ActionResult listDetailsPosPremium(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
+            Decimal? totalCostThisActivity = 0;
+            foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
+            {
+                #region formPosTbm
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                {
+                    totalCostThisActivity += item.unit;
+                }
+                else
+                {
+                    totalCostThisActivity += item.total;
+                }
+                #endregion
+            }
+            activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -70,7 +88,7 @@ namespace eActForm.Controllers
             //string en = ConfigurationManager.AppSettings["cultureEng"];
 
             activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId,
-              activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
+            activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
 
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
@@ -223,16 +241,12 @@ namespace eActForm.Controllers
 
                 List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
-                var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => x.EO).Select((group, index) => new BudgetTotal
+                var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO }).Select((group, index) => new BudgetTotal
                 {
                     EO = group.First().EO,
                     fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
-
-
-                result.Success = false;
-
 
                 var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
@@ -240,73 +254,126 @@ namespace eActForm.Controllers
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
 
 
-
-                List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
-                if (groupEO.Any())
+                if (status == "2" || status == "3")
                 {
-                    foreach (var item in groupEO)
-                    {
-                        BudgetTotal returnAmountModel = new BudgetTotal();
-                        var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId, item.fiscalYear);
-                        if (getAmountReturnEOIO.Any())
-                        {
-                            returnAmountModel.EO = item.EO;
-                            sumReturn = getAmountReturnEOIO.FirstOrDefault().returnAmount;
-                            returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
-                            returnAmountList.Add(returnAmountModel);
-                        }
+                    Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
 
-                    }
-                }
-
-
-                foreach (var item in groupEO)
-                {
-                    BudgetTotal budgetTotalModel = new BudgetTotal();
-                    var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear);
-                    if (getAmount.Any())
+                    //ดึงยอด ก่อนส่่งอนุมัติมาแสดง
+                    var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
+                    foreach (var item in getAmount)
                     {
 
-                        var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
-                        budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
-                        if (status == "2" || status == "3")
-                        {
-                            item.total = 0;
-                        }
-
+                        BudgetTotal budgetTotalModel = new BudgetTotal();
+                        budgetTotalModel.returnAmountBrand = item.returnAmount;
                         budgetTotalModel.EO = item.EO;
-                        budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
-                        budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
-                        budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
-                        budgetTotalModel.amountBalance = (getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance) - item.total + budgetTotalModel.returnAmountBrand;
-
-                        var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
-                        budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
+                        budgetTotalModel.useAmount = item.useAmount;
+                        budgetTotalModel.totalBudget = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
+                        budgetTotalModel.amount = item.budgetTotal;
+                        budgetTotalModel.amountBalance = item.amountBalance;
+                        budgetTotalModel.activityType = item.activityType;
+                        var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
+                        budgetTotalModel.amountBalancePercen = item.useAmount / amount;
                         budgetTotalModel.brandId = brandId;
+                        // budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
                         budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                         budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
-                        budgetTotalModel.activityType = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales : "";
                         budgetTotalsList.Add(budgetTotalModel);
-
-                        totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
-                        useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
-                        sumTotal_Input += item.total;
 
                     }
 
+                    totalBudgetChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
+                    useAmountTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountCumulative;
+                    amountBalanceTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountBalance;
+                    sumReturn = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+                }
+                else
+                {
+
+                    List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
+                    if (groupEO.Any())
+                    {
+                        foreach (var item in groupEO)
+                        {
+                            BudgetTotal returnAmountModel = new BudgetTotal();
+                            var getAmountReturnEOIO = ActFormAppCode.getAmountReturn(item.EO, channelId, brandId, getActTypeId, item.fiscalYear);
+                            if (getAmountReturnEOIO.Any())
+                            {
+                                returnAmountModel.EO = item.EO;
+                                sumReturn = getAmountReturnEOIO.FirstOrDefault().returnAmount;
+                                returnAmountModel.returnAmountBrand = getAmountReturnEOIO.FirstOrDefault().returnAmountBrand;
+                                returnAmountList.Add(returnAmountModel);
+                            }
+                        }
+                    }
+                    foreach (var item in groupEO)
+                    {
+                        BudgetTotal budgetTotalModel = new BudgetTotal();
+                        var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear);
+                        string[] ipArray = ConfigurationManager.AppSettings["Instock"].ToLower().Split(',');
+
+                        var getSum = getListEO.Where(x => x.EO == item.EO && !ipArray.Contains(x.IO.ToLower())
+                       ).GroupBy(x => new { x.EO }).Select((group, index) => new BudgetTotal
+                       {
+                           total = group.Sum(c => c.total),
+                       }).ToList();
+
+                        if (getAmount.Any())
+                        {
+
+                            var returnAmount = returnAmountList.Where(a => a.EO == item.EO).ToList();
+                            budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
+                            if (status == "2" || status == "3")
+                            {
+                                item.total = 0;
+                            }
+                            else
+                            {
+                                item.total = getSum.Any() ? getSum.FirstOrDefault().total : 0;
+                            }
+
+                            budgetTotalModel.EO = item.EO;
+                            budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
+                            budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
+                            budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
+                            budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
+
+                            var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
+                            budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
+                            budgetTotalModel.brandId = brandId;
+                            budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                            budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                            budgetTotalModel.activityType = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales : "";
+                            budgetTotalsList.Add(budgetTotalModel);
+
+                            totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
+                            useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
+                            sumTotal_Input += item.total;
+
+                        }
+                    }
+                    amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input + sumReturn;
+                    useAmountTotal = useAmountTotal + sumTotal_Input;
 
                 }
-                amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input;
-                useAmountTotal = useAmountTotal + sumTotal_Input;
 
 
 
+
+
+                //show budget ก้อนใหญ่
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 model.budgetTotalList = budgetTotalsList;
                 model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal + sumReturn;
+                model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
                 model.budgetTotalModel.returnAmount = sumReturn;
+
+
+
+
+
+
                 TempData["showBudget" + activityId] = model;
 
                 var resultData = new
@@ -331,7 +398,8 @@ namespace eActForm.Controllers
         {
 
             Activity_TBMMKT_Model model = TempData["showBudget" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudget" + activityId];
-            TempData.Keep();
+
+
             return PartialView(model);
         }
 

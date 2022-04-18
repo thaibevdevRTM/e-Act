@@ -1,0 +1,269 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+@{
+    Layout = null;
+}
+
+<div class="modal-body">
+    <div id="divForm" style="width:97%; margin-left:20px;">
+        <style>
+            .cssborderbottom {
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+                border-bottom-color: gray;
+            }
+
+            .font8 {
+                font-size: 8px;
+            }
+
+            .font11 {
+                font-size: 11px;
+            }
+
+            .textRight {
+                text-align: right;
+            }
+
+            .textLeft {
+                text-align: left;
+            }
+
+            .line-breaks {
+                white-space: pre-line;
+            }
+        </style>
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center; " class="fontDocV2">
+            @Model.activityFormTBMMKT.companyName<br />
+            @Model.activityFormTBMMKT.formName
+        </div>
+        <div>
+
+
+            <table style="width:100%; margin-top:30px;">
+                <tr>
+                    <td class="fontDocSmall" width="140px;">ชื่อกิจกรรม</td>
+                    <td class="cssborderbottom fontDocSmall" width="260px;" style="margin-left:10px;">@Html.DisplayFor(item => item.activityFormTBMMKT.activityName) </td>
+                    <td width="20px;"></td>
+                    <td class="fontDocSmall" width="150px;" style="text-align:right;">Activity No.</td>
+                    <td width="5px;"></td>
+                    <td class="cssborderbottom fontDocSmall" width="160px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.activityNo) </td>
+                </tr>
+                <tr>
+                    <td class="fontDocSmall">ประเภทกิจกรรม(Theme)</td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.txttheme) </td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">Document Date</td>
+                    <td></td>
+                    <td class="cssborderbottom fontDocSmall">@Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                </tr>
+                <tr>
+                    <td class="fontDocSmall">วัตถุประสงค์</td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.objective)</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">Reference</td>
+                    <td></td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.reference) </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    @{
+                        string agency = "หลัก : " + @Model.tB_Act_ActivityForm_DetailOther.other1 + "    ย่อย : " + @Model.tB_Act_ActivityForm_DetailOther.other2;
+                    }
+                    <td class="fontDocSmall">หน่วยงาน</td>
+                    <td class="fontDocSmall cssborderbottom">@agency</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">ศูนย์</td>
+                    <td></td>
+
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.regionName) </td>
+
+                </tr>
+                <tr>
+                    <td class="fontDocSmall">ส่วน(การจ่าย)</td>
+                    <td class="fontDocSmall cssborderbottom"> @Html.DisplayFor(item => item.activityFormTBMMKT.txtPay)</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">พื้นที่(Area)</td>
+                    <td></td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.customerName) </td>
+                </tr>
+
+                <tr>
+
+                    <td class="fontDocSmall">Game / พื้นที่ </td>
+                    <td class="fontDocSmall cssborderbottom">@Html.DisplayFor(item => item.activityFormTBMMKT.txtGame) &nbsp;/&nbsp; @Html.DisplayFor(item => item.activityFormTBMMKT.txtArea)</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">สินค้า(Product Brand)</td>
+                    <td></td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.brandName) </td>
+
+                </tr>
+                <tr>
+
+                    <td class="fontDocSmall">ช่องทาง</td>
+                    <td class="fontDocSmall cssborderbottom">@Html.DisplayFor(item => item.activityFormTBMMKT.chanel)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="height:10px;"></td>
+                </tr>
+                <tr>
+                    @if (Model.activityFormTBMMKT != null)
+                    {
+                        if (Model.activityFormTBMMKT.trade == "term")
+                        {
+                            <td style="text-align:right"> <img  height="15px" width="15px" src="~/images/check_b.png" /> </td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right"> </td>
+                        }
+                    }
+                    <td class="fontDocSmall">จ่ายในแผน</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">ระยะเวลากิจกรรม</td>
+                    <td></td>
+                    <td class="fontDocSmall">
+                        @if (Model.activityFormTBMMKT.activityPeriodSt != null)
+                        {
+                            @Model.activityFormTBMMKT.activityPeriodSt.Value.ToString("dd/MM/yyyy")
+                        }
+                        To
+                        @if (Model.activityFormTBMMKT.activityPeriodEnd != null)
+                        {
+                            @Model.activityFormTBMMKT.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    @if (Model.activityFormTBMMKT != null)
+                    {
+                        if (Model.activityFormTBMMKT.trade == "outterm")
+                        {
+                            <td style="text-align:right">
+                                <img height="15px" width="15px" src="~/images/check_b.png">
+                                &nbsp;
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right"></td>
+                        }
+                    }
+                    <td class="fontDocSmall">จ่ายนอกแผน</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">(Activity Period)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    @{
+                        string showIO = "";
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.actIO))
+                    {
+                        showIO = "EO:" + @Model.activityFormTBMMKT.actEO + " / IO:" + @Model.activityFormTBMMKT.actIO + " / Claim :" + @Model.activityFormTBMMKT.actClaim + "%";
+                    }
+                    <td class="fontDocSmall">@showIO</td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">ระยะเวลาการให้ทุนพิเศษ</td>
+                    <td></td>
+                    <td class="fontDocSmall">
+                        @if (Model.activityFormTBMMKT.costPeriodSt != null)
+                        {
+                            @Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MM/yyyy")
+                        }
+                        To
+                        @if (Model.activityFormTBMMKT.costPeriodEnd != null)
+                        {
+                            @Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MM/yyyy")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="fontDocSmall" style="text-align:right;">(Cost Period)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+        </div>
+
+        <div style="width:100%; ">
+            <div class="fontDocSmall" style="margin-top:5px;">
+                รายละเอียดของการทำกิจกรรม(Activity Detail)
+            </div>
+            @if (string.IsNullOrEmpty(Model.activityFormTBMMKT.chanel) && Model.activityFormTBMMKT.txttheme == "FOC")
+            {
+                <div>
+                    <p class="fontDocSmall">
+                        @System.Configuration.ConfigurationManager.AppSettings["mssFOCWording"]
+                    </p>
+                </div>
+            }
+            <div style="margin-top:15px;">
+                <table style="width:100%">
+                    <tr>
+                        <td width="50%">
+                            <p class="fontDocSmall">
+                                @Html.Raw(Model.activityFormTBMMKT.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                            </p>
+                        </td>
+
+                        @if (Model.productImageList.Any())
+                        {
+                            int index = 1;
+                            string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
+                            foreach (var item in Model.productImageList)
+                            {
+                                if (item.extension != ".pdf")
+                                {
+                                    if (Model.productImageList.Count == 1)
+                                    {
+                                        <td width="50%" style="text-align:right">
+                                            <img width="220" height="120" src="@string.Format(url, item._fileName)" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        if (index <= 2)
+                                        {
+                                            <td width="40%" style="text-align:right;">
+                                                <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                            </td>
+                                        }
+                                    }
+                                    index++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+        </div>
+    </div>
+</div>

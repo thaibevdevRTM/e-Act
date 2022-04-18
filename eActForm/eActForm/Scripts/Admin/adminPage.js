@@ -302,6 +302,7 @@
             var p_discount2 = $('#discount2_' + rowIndex).val();
             var p_discount3 = $('#discount3_' + rowIndex).val();
             var p_saleNormal = $('#saleNormal_' + rowIndex).val();
+            var p_productCode = $('#hdProductCode_' + rowIndex).val();
 
             $.ajax({
                 type: 'POST',
@@ -315,6 +316,7 @@
                     discount2: p_discount2.replace(",", ""),
                     discount3: p_discount3.replace(",", ""),
                     saleNormal: p_saleNormal.replace(",", ""),
+                    productCode: p_productCode.replace(",", ""),
                 }
             }).done(function (response) {
                 //CallChangefunc();

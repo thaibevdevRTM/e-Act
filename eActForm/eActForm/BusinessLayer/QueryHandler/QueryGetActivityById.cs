@@ -58,6 +58,7 @@ namespace eActForm.BusinessLayer
                                   chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
+                                  actEO = d["EO"].ToString(),
                                   companyId = d["companyId"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
                                   subActivity = d["subActivity"].ToString(),
@@ -68,8 +69,6 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                               });
-
-                var test = result.ToList();
                 return result.ToList();
             }
             catch (Exception ex)

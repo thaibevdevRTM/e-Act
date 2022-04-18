@@ -308,7 +308,3 @@ D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Deb
 D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.AssemblyReference.cache
-D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe.manifest
-D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.application
-D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe.manifest
-D:\project\GitHub\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.application
