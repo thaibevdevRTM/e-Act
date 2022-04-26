@@ -1,0 +1,82 @@
+﻿@*@model eActForm.Models.Budget_Activity_Model*@
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.TB_Bud_Image_Model
+
+<!--<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                Company<span class="required"></span>
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">-->
+@*@Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })*@
+
+<!--<select class="form-control" id="ddlFormType" name="ddlFormType">
+                    <option>Select All</option>
+                    <option>MT</option>
+                    <option>OMT</option>
+                </select>
+
+
+            </div>
+        </div>
+    </div>
+</div>-->
+
+@Html.HiddenFor(x => UtilsAppCode.Session.User.empCompanyName, new { @id = "hd_createUserId" })
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+            Start date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-15), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+        </div>
+
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+            End date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<hr />
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <a href="#" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#startDate").datepicker();
+        $("#endDate").datepicker();
+        //$("#ddlFormType").val("OMT");
+    });
+
+    //function toggle() {
+    //    if (document.getElementById("chk_all").checked) {
+    //        document.getElementById("startDate").disabled = true;
+    //        document.getElementById("endDate").disabled = true;
+    //    }
+    //    else {
+    //        document.getElementById("startDate").disabled = false;
+    //        document.getElementById("endDate").disabled = false;
+    //    }
+    //}
+
+</script>
