@@ -212,12 +212,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int insertImageBudget(TB_Bud_Image_Model.BudImageModel model)
+        public static int insertBudgetInvoice(TB_Bud_Image_Model.BudImageModel model)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInoive"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetImage"
                     , new SqlParameter[] {new SqlParameter("@imageType",model.imageType)
                     ,new SqlParameter("@image",model._image)
                     ,new SqlParameter("@fileName",model._fileName)

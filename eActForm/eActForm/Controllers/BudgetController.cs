@@ -543,7 +543,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.updatedDate = DateTime.Now;
 
-                    int resultImg = ImageAppCodeBudget.insertImageBudget(imageFormModel);
+                    int resultImg = ImageAppCodeBudget.insertBudgetInvoice(imageFormModel);
                 }
 
                 //manageInvoiceList(null);
