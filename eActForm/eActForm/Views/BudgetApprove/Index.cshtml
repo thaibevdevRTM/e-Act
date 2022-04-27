@@ -10,7 +10,7 @@
 }
 
 @Html.HiddenFor(m => var_budgetApproveId, new { id = "HbudgetApproveId" })
-<input type="hidden" id="lblActFormId" name="lblActFormId" value="@var_budgetApproveId" />
+
 
 <h2>การอนุมัติ</h2>
 <hr />
@@ -51,6 +51,7 @@
                 </div>
             </div>
 
+            <input type="hidden" id="lblActFormId" name="lblActFormId" value="@var_budgetApproveId" />
             if (Model.approveModel != null)
             {
                 <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
