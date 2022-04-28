@@ -272,8 +272,8 @@ namespace eActForm.Controllers  //update 21-04-2020
             return View(budget_activity);
         }
 
-        //----- invoice file upload --------------------------------------------------------------//
-        public JsonResult getImageInvoice(string imgInvoiceNo, string companyEN, string customerId)
+        //----- invoice file upload getImageInvoice--------------------------------------------------------------//
+        public JsonResult getBudgetInvoiceFillter(string imgInvoiceNo, string companyEN, string customerId)
         {
             List<TB_Bud_Image_Model.BudImageModel> imgInvoiceList = new List<TB_Bud_Image_Model.BudImageModel>();
             try
@@ -285,7 +285,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImageInvoice => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetInvoiceFillter => " + ex.Message);
             }
 
             return Json(imgInvoiceList, JsonRequestBehavior.AllowGet);

@@ -1079,7 +1079,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(actFormId);
                 if (getBudgetImageModel.BudImageList.Any())
                 {
                     int i = 1;

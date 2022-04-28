@@ -12,11 +12,12 @@ namespace eActForm.BusinessLayer
     public class ImageAppCodeBudget
     {
 
-        public static List<TB_Bud_Image_Model.BudImageModel> getImageBudgetByApproveId(string budgetApproveId)
+        //public static List<TB_Bud_Image_Model.BudImageModel> getImageBudgetByApproveId(string budgetApproveId)
+        public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoiceByApproveId(string budgetApproveId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImageByApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceByApproveId"
                     , new SqlParameter("@budgetApproveId", budgetApproveId)
                     //, new SqlParameter("@activityNo", activityNo)
                     //, new SqlParameter("@createdByUserId", createdByUserId)
@@ -42,7 +43,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImage getImageBudgetByApproveId => " + ex.Message);
+                ExceptionManager.WriteError("getinvoice getBudgetInoiveByApproveId => " + ex.Message);
                 return new List<TB_Bud_Image_Model.BudImageModel>();
             }
         }
@@ -159,7 +160,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInoive"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoice"
                     , new SqlParameter("@imageId", imageId)
                     , new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
                     , new SqlParameter("@budgetApproveId", budgetApproveId)

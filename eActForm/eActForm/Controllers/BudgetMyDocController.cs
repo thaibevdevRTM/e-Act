@@ -191,7 +191,7 @@ namespace eActForm.Controllers   //update 21-04-2020
 
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budgetApproveId);
 
                 string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
