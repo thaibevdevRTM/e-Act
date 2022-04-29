@@ -49,15 +49,42 @@
     <p></p>
 </div>
 
-
-<div class="row">
-    <div class="col-md-12">
-        <div id="divManageInvoiceList">
-
+<div class="row tile_count">
+    <div class="row tile_count">
+        <div class="col-md-12 col-xs-12">
+            @using (Ajax.BeginForm("manageInvoiceListSearch", "Budget"
+            , new { typeForm = @ViewBag.TypeForm }
+            , new AjaxOptions { UpdateTargetId = "divManageInvoiceList", HttpMethod = "post", OnBegin = "return beginQueryInvoice()", OnSuccess = "successQueryInvoice", OnFailure = "failureQueryInvoice", LoadingElementId = "WaitDialog" }
+            , new { id = "form", @class = "form-horizontal form-label-left" }))
+            {
+                @RenderPage("~/Views/Shared/_searchBudgetInvoice.cshtml")
+            }
         </div>
     </div>
 </div>
 
+
+@*<div class="row">
+        <div class="col-md-12">
+
+            <div id="divManageInvoiceList">
+
+            </div>
+
+        </div>
+    </div>*@
+
+
+
+	<div class="row">
+        <div class="col-md-12">
+
+            <div id="divManageInvoiceList">
+
+            </div>
+
+        </div>
+    </div>
 
 
 <hr />
@@ -118,8 +145,9 @@
             type: 'POST',
             url:  '@Url.Action("manageInvoiceList", "Budget")',
             data: {
-				companyTH: '@(var_companyEN)',
+				companyEN: '@(var_companyEN)',
 				createdByUserId: $("#hd_createUserId").val()
+
             }
         }).done(function (htmlResponse) {
 			$("#divManageInvoiceList").html(htmlResponse);
@@ -242,8 +270,22 @@
 				}
 
 				callManageInvoiceList();
-				//$("#divManageInvoiceView").html("");
 			}
 		})
 	}
+
+    function beginQueryInvoice() {
+        $("#divManageInvoiceList").fadeOut(300);
+    };
+
+    function successQueryInvoice(htmlResponse) {
+        $("#divManageInvoiceList").html(htmlResponse);
+        $("#divManageInvoiceList").fadeIn(300);
+	}
+
+	function failureQueryInvoice(data) {
+        doMsgFail(data.responseText);
+        $("#divManageInvoiceList").html(htmlResponse);
+    }
+
 </script>

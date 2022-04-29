@@ -12,11 +12,12 @@ namespace eActForm.BusinessLayer
     public class ImageAppCodeBudget
     {
 
-        public static List<TB_Bud_Image_Model.BudImageModel> getImageBudgetByApproveId(string budgetApproveId)
+        //public static List<TB_Bud_Image_Model.BudImageModel> getImageBudgetByApproveId(string budgetApproveId)
+        public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoiceByApproveId(string budgetApproveId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImageByApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceByApproveId"
                     , new SqlParameter("@budgetApproveId", budgetApproveId)
                     //, new SqlParameter("@activityNo", activityNo)
                     //, new SqlParameter("@createdByUserId", createdByUserId)
@@ -42,17 +43,124 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImage getImageBudgetByApproveId => " + ex.Message);
+                ExceptionManager.WriteError("getinvoice getBudgetInoiveByApproveId => " + ex.Message);
                 return new List<TB_Bud_Image_Model.BudImageModel>();
             }
         }
 
 
-        public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId)
+        //public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoiceList(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId)
+        //{
+        //    try
+        //    {
+        //        DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImage"
+        //            , new SqlParameter("@imageId", imageId)
+        //            , new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
+        //            , new SqlParameter("@budgetApproveId", budgetApproveId)
+        //            , new SqlParameter("@activityNo", activityNo)
+        //            , new SqlParameter("@createdByUserId", createdByUserId)
+        //            , new SqlParameter("@company", company)
+        //            , new SqlParameter("@customerId", customerId)
+        //            );
+        //        var lists = (from DataRow d in ds.Tables[0].Rows
+        //                     select new TB_Bud_Image_Model.BudImageModel()
+        //                     {
+        //                         id = d["imageId"].ToString(),
+
+        //                         count_budgetActivityId = int.Parse(d["count_budgetActivityId"].ToString()),
+        //                         count_activityNo = int.Parse(d["count_activityNo"].ToString()),
+        //                         count_budgetApproveId = int.Parse(d["count_budgetApproveId"].ToString()),
+
+        //                         invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
+        //                         imageType = d["imageType"].ToString(),
+        //                         _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
+        //                         _fileName = d["_fileName"].ToString(),
+        //                         extension = d["extension"].ToString(),
+        //                         remark = d["remark"].ToString(),
+
+        //                         companyId = d["companyId"].ToString(),
+        //                         regionId = d["regionId"].ToString(),
+        //                         customerId = d["customerId"].ToString(),
+
+        //                         company = d["company"].ToString(),
+        //                         regionName = d["regionName"].ToString(),
+        //                         customerName = d["cusNameTH"].ToString(),
+
+        //                         delFlag = bool.Parse(d["delFlag"].ToString()),
+        //                         createdDate = DateTime.Parse(d["createdDate"].ToString()),
+        //                         createdByUserId = d["createdByUserId"].ToString(),
+        //                         updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+        //                         updatedByUserId = d["updatedByUserId"].ToString(),
+
+        //                     });
+        //        return lists.ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionManager.WriteError("getImage budget => " + ex.Message);
+        //        return new List<TB_Bud_Image_Model.BudImageModel>();
+        //    }
+        //}
+
+        //public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoice(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId)
+        //{
+        //    try
+        //    {
+        //        DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImage"
+        //            , new SqlParameter("@imageId", imageId)
+        //            , new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
+        //            , new SqlParameter("@budgetApproveId", budgetApproveId)
+        //            , new SqlParameter("@activityNo", activityNo)
+        //            , new SqlParameter("@createdByUserId", createdByUserId)
+        //            , new SqlParameter("@company", company)
+        //            , new SqlParameter("@customerId", customerId)
+        //            );
+        //        var lists = (from DataRow d in ds.Tables[0].Rows
+        //                     select new TB_Bud_Image_Model.BudImageModel()
+        //                     {
+        //                         id = d["imageId"].ToString(),
+
+        //                         count_budgetActivityId = int.Parse(d["count_budgetActivityId"].ToString()),
+        //                         count_activityNo = int.Parse(d["count_activityNo"].ToString()),
+        //                         count_budgetApproveId = int.Parse(d["count_budgetApproveId"].ToString()),
+
+        //                         invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
+        //                         imageType = d["imageType"].ToString(),
+        //                         _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
+        //                         _fileName = d["_fileName"].ToString(),
+        //                         extension = d["extension"].ToString(),
+        //                         remark = d["remark"].ToString(),
+
+        //                         companyId = d["companyId"].ToString(),
+        //                         regionId = d["regionId"].ToString(),
+        //                         customerId = d["customerId"].ToString(),
+
+        //                         company = d["company"].ToString(),
+        //                         regionName = d["regionName"].ToString(),
+        //                         customerName = d["cusNameTH"].ToString(),
+
+        //                         delFlag = bool.Parse(d["delFlag"].ToString()),
+        //                         createdDate = DateTime.Parse(d["createdDate"].ToString()),
+        //                         createdByUserId = d["createdByUserId"].ToString(),
+        //                         updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+        //                         updatedByUserId = d["updatedByUserId"].ToString(),
+
+        //                     });
+        //        return lists.ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionManager.WriteError("getImage budget => " + ex.Message);
+        //        return new List<TB_Bud_Image_Model.BudImageModel>();
+        //    }
+        //}
+
+
+        public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoice(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId,string beginDateyyyymmdd, string endDateyyyymmdd)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImage"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoice"
                     , new SqlParameter("@imageId", imageId)
                     , new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
                     , new SqlParameter("@budgetApproveId", budgetApproveId)
@@ -60,6 +168,10 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter("@createdByUserId", createdByUserId)
                     , new SqlParameter("@company", company)
                     , new SqlParameter("@customerId", customerId)
+                    //, new SqlParameter("@beginDateyyyymmdd", null)
+                    //, new SqlParameter("@endDateyyyymmdd", null)
+                    , new SqlParameter("@beginDateyyyymmdd", beginDateyyyymmdd)
+                    , new SqlParameter("@endDateyyyymmdd", endDateyyyymmdd)
                     );
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Bud_Image_Model.BudImageModel()
@@ -101,7 +213,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int insertImageBudget(TB_Bud_Image_Model.BudImageModel model)
+        public static int insertBudgetInvoice(TB_Bud_Image_Model.BudImageModel model)
         {
             int result = 0;
             try

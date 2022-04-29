@@ -955,18 +955,30 @@ namespace eActForm.BusinessLayer
                 List<ApproveModel.approveEmailDetailModel> lists = getEmailApproveNextLevelBudget(actFormId);
                 if (lists.Count > 0)
                 {
-                    foreach (ApproveModel.approveEmailDetailModel item in lists)
-                    {
-                        strBody = getEmailBodyBudget(item, emailType, actFormId);
-                        strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
-                        strSubject = isResend ? "RE: " + strSubject : strSubject;
-                        sendEmailBudgetForm(actFormId
-                            , item.empEmail
-                            , ""
-                            , strSubject
-                            , strBody
-                            , emailType);
-                    }
+                    //foreach (ApproveModel.approveEmailDetailModel item in lists)
+                    //{
+                    //    strBody = getEmailBodyBudget(item, emailType, actFormId);
+                    //    strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
+                    //    strSubject = isResend ? "RE: " + strSubject : strSubject;
+                    //    sendEmailBudgetForm(actFormId
+                    //        , item.empEmail
+                    //        , ""
+                    //        , strSubject
+                    //        , strBody
+                    //        , emailType);
+                    //}
+
+                    ApproveModel.approveEmailDetailModel item = lists[0];
+                    strBody = getEmailBodyBudget(item, emailType, actFormId);
+                    strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
+                    strSubject = isResend ? "RE: " + strSubject : strSubject;
+                    sendEmailBudgetForm(actFormId
+                        , item.empEmail
+                        , ""
+                        , strSubject
+                        , strBody
+                        , emailType);
+
                 }
                 else
                 {
@@ -1067,7 +1079,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(actFormId);
                 if (getBudgetImageModel.BudImageList.Any())
                 {
                     int i = 1;
