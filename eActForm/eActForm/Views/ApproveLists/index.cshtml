@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer;
-
+@using System.Configuration;
+@using eActForm.Models;
 @model eActForm.Models.SearchActivityModels
 @{
     ViewBag.Title = "ApproveList";
@@ -22,10 +23,17 @@
     </div>
 </div>
 
-<div id="divShowSummary"><a href="#"><h4>Show Summary</h4></a></div>
-<div class="clsSummary" style="display: none;">
-    @Html.Action("approveListSummaryActBeer", "ApproveLists", new { })
-</div>
+@* empLevel ที่เป็นค่าว่างคือ คนที่ Lev สูงกว่า 15 เพราะไม่สามารถดึงตัวเลขได้ *@
+
+@if (@UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+    || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
+    || @UtilsAppCode.Session.User.empLevel == "")
+{
+    <div id="divShowSummary"><a href="#"><h4>Show Summary</h4></a></div>
+    <div id="divSummaryActBeer" class="clsSummary" style="display: none;">
+        @Html.Action("approveListSummaryActBeer", "ApproveLists", new { })
+    </div>
+}
 
 
 
@@ -53,15 +61,18 @@
     $(document).ready(function () {
         $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
 
-        $('#divShowSummary').click(function () {
-            $('.clsSummary').slideToggle("fast");
-        });
+     if ('@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
+    || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True') {
+            $('#divShowSummary').click(function () {
+                $('.clsSummary').slideToggle("fast");
+            });
+        }
     })
 
     function beginQuery() {
-        if ($("#ddlStatus").val() == "" && $("#txtActivityNo").val() == "") {
-            return false;
-        }
+        //if ($("#ddlStatus").val() == "" && $("#txtActivityNo").val() == "") {
+        //    return false;
+        //}
         $("#getQuery").fadeOut(300);
     }
 

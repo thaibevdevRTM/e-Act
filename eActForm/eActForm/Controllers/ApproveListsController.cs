@@ -1,8 +1,11 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.Forms;
+using eForms.Presenter.MasterData;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -24,15 +27,23 @@ namespace eActForm.Controllers
             });
             return View(models);
         }
-        public ActionResult approveListSummaryActBeer()
+        public ActionResult approveListSummaryActBeer(string[] actId)
         {
 
-            return PartialView();
+            ApproveModel.approveModels approveModels = new ApproveModel.approveModels();
+            if (actId != null)
+            {
+                approveModels.activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+
+                var conAr2Str = string.Join(",", actId);
+                approveModels.approveListSummaryList = ApproveListAppCode.callApproveListSummary(conAr2Str);
+                approveModels.activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("masterTG", "").ToList();
+                approveModels.activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("beerLitre", "").ToList();
+            }
+            return PartialView(approveModels);
         }
 
-
-
-            public ActionResult ListView(string fromPage, string StatusApprove)
+        public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
             ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
@@ -64,8 +75,6 @@ namespace eActForm.Controllers
                 {
                     model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
                 }
-
-
             }
             else
             {
@@ -77,38 +86,60 @@ namespace eActForm.Controllers
 
         public ActionResult searchActForm()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
-            Activity_Model.actForms model = new Activity_Model.actForms();
-            model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
+            try
+            {
+                string count = Request.Form.AllKeys.Count().ToString();
+                Activity_Model.actForms model = new Activity_Model.actForms();
+                model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
 
-            if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
-            {
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
+                {
+                    model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                }
+                if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlMainAgency"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.mainAgency == Request.Form["ddlMainAgency"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlActGroupBeer"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlActGroupBeer"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlRegion"]))
+                {
+                    //var getAreabyRegion = QueryGetArea.getAreaByCondition(AppCode.StrCon, ConfigurationManager.AppSettings["conditionActBeer"]).Where(x => x.center == Request.Form["ddlRegion"]).ToList();
+                    //string[] area_array = getAreabyRegion.Select(i => i.id.ToString()).ToArray();
+                    model.actLists = model.actLists.Where(x => x.regionId.Equals(Request.Form["ddlRegion"])).ToList();
+                }
+
+                //============เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+                if (!string.IsNullOrEmpty(Request.Form["startDate"]) && !string.IsNullOrEmpty(Request.Form["endDate"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.documentDate >= DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null) && r.documentDate <= DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null)).ToList();
+                }
+                //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+                TempData["ApproveSearchResult"] = model.actLists;
+                return RedirectToAction("ListView");
             }
-            if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
+            catch(Exception ex)
             {
-                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                return RedirectToAction("ListView");
             }
-            if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
-            {
-                model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
-            }
-            if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
-            {
-                model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
-            }
-            if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
-            {
-                model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
-            }
-            //============เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
-            if (!string.IsNullOrEmpty(Request.Form["startDate"]) && !string.IsNullOrEmpty(Request.Form["endDate"]))
-            {
-                model.actLists = model.actLists.Where(r => r.documentDate >= DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null) && r.documentDate <= DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null)).ToList();
-            }
-            //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
-            TempData["ApproveSearchResult"] = model.actLists;
-            return RedirectToAction("ListView");
         }
 
 

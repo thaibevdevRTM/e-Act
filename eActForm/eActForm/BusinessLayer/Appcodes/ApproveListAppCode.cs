@@ -67,7 +67,10 @@ namespace eActForm.BusinessLayer
                                  dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                                  brandName = dr["brandName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
+                                 mainAgency = dr["mainAgency"].ToString(),
+                                 regionId = dr["region"].ToString(),
                              }).ToList();
+
                 return lists;
             }
             catch (Exception ex)
@@ -130,5 +133,33 @@ namespace eActForm.BusinessLayer
                 return new List<Activity_Model.actForm>();
             }
         }
-    }
+
+
+        public static List<ApproveModel.approveListSummaryModels> callApproveListSummary(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_callApproveListSummary"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveListSummaryModels
+                             {
+                                 companyId = dr["companyId"].ToString(),
+                                 activityGroup = dr["activitySales"].ToString(),
+                                 channel = dr["chanelId"].ToString(),
+                                 budgetAmount = dr["budgetAmount"] is DBNull ? 0 : (decimal?)dr["budgetAmount"],
+                                 total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
+                                 balanceAmount = dr["balanceAmount"] is DBNull ? 0 : (decimal?)dr["balanceAmount"],
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("callApproveListSummary >> " + ex.Message);
+                return new List<ApproveModel.approveListSummaryModels>();
+            }
+        }
+
+
+    } 
 }

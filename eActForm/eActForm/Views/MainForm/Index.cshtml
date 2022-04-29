@@ -470,6 +470,14 @@
                 required += "ค่ารับรอง วงเงินเกินกำหนด! *<br>"; validate = false;
             }
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+
+            if ($("#txtActivityName").val() == "") { required += "&emsp;ชื่อกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; } 
+            if ($("#ddlMainAgency").val() == "") { required += "หน่วยงานหลัก*<br>"; validate = false; } 
+            if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+
+        }
         else {
 
         }

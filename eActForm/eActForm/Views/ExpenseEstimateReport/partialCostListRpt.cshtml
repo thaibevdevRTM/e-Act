@@ -11,19 +11,23 @@
 
 }
 <div>
+    <div style="margin-top:5px; width:100%;">
+        รายละเอียดค่าใช้จ่าย (Cost)
+    </div>
+
     <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
         <tr style="background-color: #E5E2E2; height: 25px;">
-            <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-            <td rowspan="2" width="20%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+            <td rowspan="2" width="10%" style="font-size:12.5px;">IO</td>
+            <td rowspan="2" width="10%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+            <td rowspan="2" width="30%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
             <td colspan="3" style="font-size:12.5px;">ประมาณการยอดขาย (Estimate)</td>
-            <td colspan="2" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+            <td colspan="1" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
 
         </tr>
         <tr>
             <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
-            <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
+            <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม</td>
             <td width="6%" style="font-size:12.5px;">% Growth</td>
-            <td width="10%" style="font-size:12.5px;">Spending Exp. (Case)</td>
             <td width="10%" style="font-size:12.5px;">Spending Exp. (Bath)</td>
 
         </tr>
@@ -32,6 +36,7 @@
             foreach (var item in Model.activityOfEstimateList)
             {
                 <tr>
+                    <td style="font-size:10px;" class="textLeft">@item.IO</td>
                     <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
                     @if (item.detailGroup != null && item.detailGroup.Count > 0)
                     {
@@ -46,7 +51,6 @@
                     <td class="font11 textRight">@string.Format("{0:n2}", item.normalCost)</td>
                     <td class="font11 textRight"> @string.Format("{0:n2}", item.themeCost)</td>
                     <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
-                    <td class="font11 textRight">@string.Format("{0:n2}", item.totalCase)</td>
                     <td class="font11 textRight">@string.Format("{0:n2}", item.total)</td>
 
                 </tr>
@@ -61,7 +65,7 @@
 
 
         <tr>
-            <td style="border:none; border-bottom:none;"></td>
+            <td colspan="2" style="border:none; border-bottom:none;"></td>
             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
             <td class="textRight">
                 @if (costProduct != 0)
@@ -79,21 +83,14 @@
             </td>
             <td class="textRight">
 
-                @if (costActivity != 0 && costProduct != 0)
+                @if (sumGrowth != 0)
                 {
-                    growthPerTotal = (costActivity - costProduct) / costProduct * 100;
-                    string result = String.Format("{0:n2}%", @growthPerTotal);
+                    string result = String.Format("{0:n2}%", @sumGrowth);
                     @result.ToString();
                 }
 
             </td>
-            <td class="textRight">
-                @if (totalCase != 0)
-                {
-                    string result = String.Format("{0:n2}", @totalCase);
-                    @result.ToString();
-                }
-            </td>
+
             <td class="textRight">
                 @if (totalActCost != 0)
                 {
@@ -106,3 +103,6 @@
 
     </table>
 </div>
+<br />
+<br />
+<br />

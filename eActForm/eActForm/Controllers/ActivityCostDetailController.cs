@@ -12,6 +12,7 @@ namespace eActForm.Controllers
     {
         public ActionResult activityCostDetail(string typeForm, string actId)
         {
+            Activity_TBMMKT_Model activityModel1 = TempData["actForm" + actId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["actForm" + actId];
             Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
             activityModel.activityFormModel.typeForm = typeForm;
             activityModel.activityFormModel.id = actId;

@@ -573,6 +573,7 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
+       
         public static int delBudgetRptMonthly_Temp(string strCon)
         {
             int result = 0;
@@ -722,7 +723,23 @@ namespace eForms.Presenter.AppCode
             return budgetList;
         }
 
+        public static int delBudgetMonthlyByDate(string strCon, ImportBudgetControlModel model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delBudgetMonthlyByDate"
+                    , new SqlParameter[] {new SqlParameter("@dateActual",model.budgetReportList.FirstOrDefault().date)
+                    ,new SqlParameter("@fiscalYear",model.budgetReportList.FirstOrDefault().fiscalYear)
+                      });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("delBudgetRpt_Temp => " + ex.Message);
+            }
 
+            return result;
+        }
 
         public static int insertDateReportMonthly_BudgetTBM(string strCon, ImportBudgetControlModel model)
         {

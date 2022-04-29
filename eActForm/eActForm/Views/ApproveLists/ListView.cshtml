@@ -36,7 +36,11 @@ else
             <table id="datatable" class="table table-striped table-hover">
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
-                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
+                            || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+                            || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
+                            || @UtilsAppCode.Session.User.empLevel == "")
+                            
                         {
                             <th width="20">
                                 <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
@@ -50,6 +54,7 @@ else
                         {
                             <th></th>
                         }
+                    
                         <th>Status</th>
                         <th>Doc.Date</th>
                         <th>Act.No</th>
@@ -66,19 +71,19 @@ else
                     @foreach (var item in Model.actLists)
                     {
                         <tr class="gradeX">
-                            @*@if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                                {
-                                    <td class="a-center ">
-                                        @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
-                                        {
-                                            <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
-                                        }
-                                    </td>
-                                }*@
+                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
+                                 || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+                                 || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
+                                )
+                            {
+                                <td class="a-center ">
+                                    @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
+                                    {
+                                        <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
+                                    }
+                                </td>
+                            }
 
-                            <td class="a-center ">
-                                <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve" onchange="onchangeFlag();">
-                            </td>
                             <td>
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
                                 <a onclick="callApproveList('@item.id');">
@@ -149,14 +154,25 @@ else
     function setFlagAll(ele) {
         var chkAll = ele.checked ? true : false;
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+        var empLvl = parseInt('@UtilsAppCode.Session.User.empLevel');
 
-        var favorite = [];
-        $.each($("input[name='chk_approve']:checked"), function (index, value) {
-            favorite.push($(this).val());
-        }).promise().done(function () {
+        if (('@Array.AsReadOnly(@AppCode.compPomForm).Contains(@UtilsAppCode.Session.User.empCompanyGroup)' == 'True'
+            || '@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
+            && empLvl > 10) || Number.isNaN(empLvl) == true)
+        {
+            console.log('True');
+            var favorite = [];
+            $.each($("input[name='chk_approve']:checked"), function (index, value) {
+                favorite.push($(this).val());
+            }).promise().done(function () {
 
-            summaryActBeerByActId(favorite);
-        });
+                summaryActBeerByActId(favorite);
+            });
+        }
+
+       
+
+
     }
 
     function onchangeFlag(ele) {
@@ -168,10 +184,24 @@ else
         });
     }
 
+    function summaryActBeerByActId(actId) {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveListSummaryActBeer", "ApproveLists")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            $("#divSummaryActBeer").html(htmlResponse)
+            $("#divSummaryActBeer").fadeIn(300);
+        });
+    }
+
+
     function submitApprove() {
         var favorite = [];
         var countDoc = document.querySelectorAll("input[name='chk_approve']:checked").length
-        console.log(countDoc);
 
         if (countDoc > 0) {
 
@@ -190,13 +220,13 @@ else
                     callback: function (result) {
                         if (result) {
 
-                            //$.each($("input[name='chk_approve']:checked"), function (index, value) {
-                            //    favorite.push($(this).val());
-                            //    setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
-                            //}).promise().done(function () {
-                            //    $("#WaitDialog").show();
-                            //    setTimeout(alertFunc, 5000);
-                            //});
+                            $.each($("input[name='chk_approve']:checked"), function (index, value) {
+                                favorite.push($(this).val());
+                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+                            }).promise().done(function () {
+                                $("#WaitDialog").show();
+                                setTimeout(alertFunc, 5000);
+                            });
 
                         }
 
@@ -278,4 +308,6 @@ else
             $('#ModalPreviewPDF').modal('show');
         });
     }
+
+
 </script>

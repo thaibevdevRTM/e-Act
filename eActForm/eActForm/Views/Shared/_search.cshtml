@@ -1,5 +1,6 @@
-﻿@using eActForm.BusinessLayer;
+﻿@using eActForm.BusinessLayer
 @using System.Configuration;
+@using eActForm.Models;
 @model eActForm.Models.SearchActivityModels
 
 <div class="form-group">
@@ -19,7 +20,8 @@
                 Status
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", @Resources.Global.dropdownStatus), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+
+                @Html.DropDownList("model.approveStatusList", new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
             </div>
         </div>
     </div>
@@ -47,6 +49,53 @@
 
 </div>
 
+@if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+    || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))
+{
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    หน่วยงาน
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownList("model.mainAgencyList", new SelectList(Model.mainAgencyList, "val1", "displayVal"), "Please Select", new { @class = "form-control", id = "ddlMainAgency", Name = "ddlMainAgency" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    ชื่อกิจกรรม
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownList("model.activityGroupBeerList" , new SelectList(Model.activityGroupBeerList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlActGroupBeer", Name = "ddlActGroupBeer" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    ภาค
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                     @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0), "Please Select", new
+                {
+                    @class = "form-control textboxcss",
+                    id = "ddlRegion",
+                    Name = "ddlRegion"
+                })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          
+        </div>
+    </div>
+
+}
 
 
 @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
@@ -65,7 +114,7 @@
                             id = "ddlMasterType",
                             Name = "ddlMasterType",
                             multiple = "multiple"
-                            
+
                    })
                 </div>
             </div>
@@ -173,12 +222,11 @@
         width: 100% !important;
         overflow-x: auto;
         overflow-y: hidden;
-
-    }
-    .btn{
-        text-align:left;
     }
 
+    .btn {
+        text-align: left;
+    }
 </style>
 
 <script>
@@ -190,7 +238,7 @@
             nonSelectedText: '',
             buttonWidth: '100%',
             onChange: function (option, checked) {
-            
+
             },
         });
 

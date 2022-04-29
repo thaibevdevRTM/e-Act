@@ -125,10 +125,11 @@ namespace eActForm.BusinessLayer
                 else if (typeForm == Activity_Model.activityType.Beer.ToString())
                 {
                     strCall = "usp_getActivityActBeerByEmpId";
-                    if (isAdmin())
+                    if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin)
                     {
                         strCall = "usp_getActivityActBeerFormAll";
                     }
+
                 }
                 else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                 {

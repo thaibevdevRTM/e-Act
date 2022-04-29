@@ -86,6 +86,7 @@ namespace eActForm.Models
             NUM,//คือ form HC 
             POM,
             CVM,
+            THAIBEV,
         }
 
         public enum typeFlow
@@ -153,6 +154,7 @@ namespace eActForm.Models
             public string companyId { get; set; }
             public string brandName { get; set; }
             public string channelId { get; set; }
+            public string mainAgency { get; set; }
 
         }
 
@@ -163,15 +165,18 @@ namespace eActForm.Models
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_ProductType_Model> productTypelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupBeerList { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }
+        public List<ApproveModel.approveStatus> approveStatusList2 { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<CompanyMTM> companyList { get; set; }
         public List<TB_Act_Other_Model> departmentList { get; set; }
+        public List<TB_Act_Other_Model> mainAgencyList { get; set; }
         public List<Master_type_form_Model> masterTypeFormList { get; set; }
         public List<Chanel_Model> channelList { get; set; }
         public List<TB_Act_ProductBrand_Model> brandList { get; set; }
-
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public string typeForm { get; set; }
     }
 
@@ -373,6 +378,7 @@ namespace eActForm.Models
 
     public class ProductCostOfGroupByPrice : ActBaseModel
     {
+        public string productCode { get; set; }
         public string id { get; set; }
         public string productGroupId { get; set; }
         public string activityId { get; set; }

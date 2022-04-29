@@ -12,7 +12,7 @@
             {
                 <li>@Html.ActionLink("TBM Import PRODUCT-POS/PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
                 <li>@Html.ActionLink("TBM Import Master AP", "Index", "ImportMasterAP", new { }, null)</li>
-                <li>@Html.ActionLink("TBM Import Budget Report", "Inddex_ImportBGMarketing", "ImportBudgetControl", new { }, null)</li>
+                <li>@Html.ActionLink("TBM Import Budget Monthly", "Inddex_ImportBGMarketing", "ImportBudgetControl", new { }, null)</li>
             }
 
             @if (UtilsAppCode.Session.User.isAdminCVM || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM)
@@ -20,10 +20,11 @@
 
                 <li>@Html.ActionLink("Import Hospital", "Index", "ImportMasterHospital", new { }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminPOM)
             {
 
                 <li>@Html.ActionLink(" Import Budget ", "index", "ImportBudgetControl")</li>
+                <li>@Html.ActionLink(" Import Flow ", "index", "ImportFlow")</li>
             }
         </ul>
     </li>

@@ -79,10 +79,10 @@ namespace eActForm.BusinessLayer
                                     UtilsAppCode.Session.User.isAdminBeer = true; break;
                             }
 
-                            UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();
+                            UtilsAppCode.Session.User.empCompanyId = !string.IsNullOrEmpty(dr["companyId"].ToString()) ? dr["companyId"].ToString() : UtilsAppCode.Session.User.empCompanyId;
                             UtilsAppCode.Session.User.regionId = dr["regionId"].ToString();
                             UtilsAppCode.Session.User.customerId = dr["customerId"].ToString();
-                            UtilsAppCode.Session.User.empCompanyGroup = ActFormAppCode.getGrpCompByCompId(dr["companyId"].ToString());
+                            UtilsAppCode.Session.User.empCompanyGroup = !string.IsNullOrEmpty(dr["companyId"].ToString()) ? ActFormAppCode.getGrpCompByCompId(dr["companyId"].ToString()) : UtilsAppCode.Session.User.empCompanyGroup;
 
 
                         }

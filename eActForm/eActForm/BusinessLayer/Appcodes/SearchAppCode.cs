@@ -27,8 +27,15 @@ namespace eActForm.BusinessLayer
                     channelList = QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel == "data").ToList(),
                     activityGroupList = !string.IsNullOrEmpty(typeForm) ?QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm))
                    .GroupBy(item => item.activitySales)
-                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList() : QueryGetAllActivityGroup.getAllActivityGroup()
+                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList() : QueryGetAllActivityGroup.getAllActivityGroup(),
+                    activityGroupBeerList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionActBeer"]))
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList(),
+                    mainAgencyList = QueryOtherMaster.getOhterMaster("mainAgency", "").ToList(),
+                    regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(ConfigurationManager.AppSettings["conditionActBeer"])).OrderBy(x => x.name).ToList(),
+
                 };
+
                 return models;
             }
             catch (Exception ex)
@@ -58,6 +65,7 @@ namespace eActForm.BusinessLayer
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm) & (x.activitySales == "Promotion Support" || x.activitySales == "Special Discount"))
                    .GroupBy(item => item.activitySales)
                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
+
                 };
                 return models;
             }
@@ -74,6 +82,7 @@ namespace eActForm.BusinessLayer
                 {
                     companyList = ReportSummaryAppCode.getCompanyMTMList(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
+                    approveStatusList2 = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
                     customerslist = @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() : QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getAllProductType(),
@@ -81,10 +90,25 @@ namespace eActForm.BusinessLayer
                     productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList(),
                     departmentList = QueryOtherMaster.getOhterMaster("department", "search").ToList(),
                     channelList = QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel == "data").ToList(),
-                    activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains("MT"))
                     .GroupBy(item => item.activitySales)
-                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
-                };
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList(),
+                    activityGroupBeerList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(ConfigurationManager.AppSettings["conditionActBeer"]))
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList(),
+                    mainAgencyList = QueryOtherMaster.getOhterMaster("mainAgency", "").ToList(),
+                    regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(ConfigurationManager.AppSettings["conditionActBeer"]))
+                    .GroupBy(item => new
+                    {
+                        item.name
+                    })
+                    .Select((group, index) => new TB_Act_Region_Model
+                    {
+                        id = group.First().id,
+                        name = group.First().name
+                    }).OrderBy(x => x.name).ToList()
+
+            };
 
                 return models;
             }
