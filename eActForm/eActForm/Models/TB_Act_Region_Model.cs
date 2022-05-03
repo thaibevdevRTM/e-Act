@@ -8,6 +8,5 @@
         public string descEn { get; set; }
         public string descTh { get; set; }
         public string condition { get; set; }
-
     }
 }

@@ -428,6 +428,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@subjectId",model.subjectId)
                     ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter("@regionId",model.regionId)
                     ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
@@ -438,13 +439,12 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@deparmentId",model.deparmentId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail("")
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  companyId = dr["companyId"].ToString(),
                                  flowId = dr["flowId"].ToString(),
                                  empId = dr["empId"].ToString(),
-                                 empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
                                  empGroup = dr["empGroup"].ToString(),
@@ -547,10 +547,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@channelId", channelId)
                     });
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                              select new RequestEmpModel
+                              select new RequestEmpModel(dr["empId"].ToString(),false,false)
                               {
-                                  empId = dr["empId"].ToString(),
-                                  empName = dr["empName"].ToString(),
                               }).ToList();
 
                 return result;

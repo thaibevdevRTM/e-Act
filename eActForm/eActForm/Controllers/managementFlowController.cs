@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using eForms.Presenter.AppCode;
@@ -46,6 +47,7 @@ namespace eActForm.Controllers
                 //  model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
+                model.regionList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == ConfigurationManager.AppSettings["conditionActBeer"] && x.nameShot == companyId).ToList();
                 if (ReportSummaryAppCode.getCompanyMTMList().Where(x => x.id.Equals(companyId)).Any())
                 {
                     model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
