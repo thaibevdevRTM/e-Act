@@ -232,7 +232,7 @@
 		$("#txt_invoice_no").autocomplete({
             source: function (request, response) {
                     $.ajax({
-                        url: '@Url.Action("getImageInvoice", "Budget")',
+                        url: '@Url.Action("getBudgetInvoiceFillter", "Budget")',
                         type: "POST",
                         dataType: "json",
                         data: {

@@ -71,7 +71,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             string act_year = null;
             try
             {
-                if (TempData["searchBudgetActivityForm"] != null)
+                if (TempData["searchBudgetActivityForm"] != null )
                 {
                     models = (Budget_Activity_Model)TempData["searchBudgetActivityForm"];
                 }
@@ -107,7 +107,8 @@ namespace eActForm.Controllers  //update 21-04-2020
             var_actNo = Budget_Model.Budget_Activity.act_activityNo;
             var_cusId = Budget_Model.Budget_Activity.act_customerId;
 
-            Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getImageBudget(null, null, null, var_actNo, null, null, var_cusId);
+            Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getBudgetInvoice(null, null, null, var_actNo, null, null, var_cusId,null,null);
+            //Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getBudgetInvoice(null, null, null, var_actNo, null, null, var_cusId);
 
             List<TB_Bud_Image_Model.BudImageModel> Result = new List<TB_Bud_Image_Model.BudImageModel>();
             foreach (var inv_his in Budget_Model.Budget_Invoce_History_list) // preview invoice pdf non approved
@@ -145,7 +146,8 @@ namespace eActForm.Controllers  //update 21-04-2020
                 if (string.IsNullOrEmpty(budgetInvoiceModel.invoiceNo) == false)
                 {
                     TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
-                    getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo, null, null, null, null, budgetInvoiceModel.actCustomerId);
+                    getBudImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, budgetInvoiceModel.invoiceNo, null, null, null, null, budgetInvoiceModel.actCustomerId, null, null);
+                    //getBudImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, budgetInvoiceModel.invoiceNo, null, null, null, null, budgetInvoiceModel.actCustomerId);
                     if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
                     {
                         if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
@@ -270,19 +272,20 @@ namespace eActForm.Controllers  //update 21-04-2020
             return View(budget_activity);
         }
 
-        //----- invoice file upload --------------------------------------------------------------//
-        public JsonResult getImageInvoice(string imgInvoiceNo, string companyEN, string customerId)
+        //----- invoice file upload getImageInvoice--------------------------------------------------------------//
+        public JsonResult getBudgetInvoiceFillter(string imgInvoiceNo, string companyEN, string customerId)
         {
             List<TB_Bud_Image_Model.BudImageModel> imgInvoiceList = new List<TB_Bud_Image_Model.BudImageModel>();
             try
             {
-                imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, companyEN, customerId)
+                imgInvoiceList = ImageAppCodeBudget.getBudgetInvoice(null, null, null, null, null, companyEN, customerId, null, null)
+                    //imgInvoiceList = ImageAppCodeBudget.getBudgetInvoice(null, null, null, null, null, companyEN, customerId)
                     .Where(x => x.invoiceNo.Contains(imgInvoiceNo))
                     .ToList();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImageInvoice => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetInvoiceFillter => " + ex.Message);
             }
 
             return Json(imgInvoiceList, JsonRequestBehavior.AllowGet);
@@ -308,25 +311,93 @@ namespace eActForm.Controllers  //update 21-04-2020
             return View();
         }
 
-        public ActionResult manageInvoiceList(String imageId, String imageInvoiceNo, String budgetApproveId, String activityNo, String createdByUserId, String companyTH)
+
+        public ActionResult manageInvoiceListSearch()
         {
+            //DateTime act_createdDateStart = DateTime.Now;
+            //DateTime act_createdDateEnd = DateTime.Now;
+            //TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+
+            TB_Bud_Image_Model models = new TB_Bud_Image_Model();
+            string companyEN = UtilsAppCode.Session.User.empCompanyGroup;
+            
+
             try
             {
-                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                {
-                    createdByUserId = null;
-                }
-                TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
-                budgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH, null);
-                return PartialView(budgetImageModel);
+                #region filter
+                DateTime date_inv_start = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
+                DateTime date_inv_end = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
+
+                string inv_createdDateStart = date_inv_start.ToString("yyyyMMdd");
+                string inv_createdDateEnd = date_inv_end.ToString("yyyyMMdd");
+
+                #endregion
+
+                //budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin, actYear).ToList();
+
+                models.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, null, null, null, null, companyEN, null, inv_createdDateStart, inv_createdDateEnd);
+                TempData["searchBudgetInvoiceList"] = models;
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("BudgetImageList => " + ex.Message);
+                ExceptionManager.WriteError("searchBudgetInvoiceList --> " + ex.Message);
             }
 
-            return PartialView();
+            return RedirectToAction("manageInvoiceList");
+            //return PartialView("manageInvoiceIndex",models);
         }
+
+
+        public ActionResult manageInvoiceList(string companyEN)
+        {
+            
+            TB_Bud_Image_Model models = new TB_Bud_Image_Model();
+            
+            DateTime act_createdDateStart = DateTime.Now.AddDays(-15);
+            DateTime act_createdDateEnd = DateTime.Now;
+
+            string inv_createdDateStart = act_createdDateStart.ToString("yyyyMMdd");
+            string inv_createdDateEnd = act_createdDateEnd.ToString("yyyyMMdd");
+
+            try
+            {
+                if (TempData["searchBudgetInvoiceList"] != null)
+                {
+                    models = (TB_Bud_Image_Model)TempData["searchBudgetInvoiceList"];
+                }
+                else
+                {
+                    models.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, null, null, null, null, companyEN, null, inv_createdDateStart, inv_createdDateEnd);
+                }
+                TempData["searchBudgetInvoiceList"] = null;
+                //return PartialView(models);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("activityList --> " + ex.Message);
+            }
+            return PartialView(models);
+        }
+
+        //public ActionResult manageInvoiceList(String imageId, String imageInvoiceNo, String budgetApproveId, String activityNo, String createdByUserId, String companyTH)
+        //{
+        //    try
+        //    {
+        //        if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        //        {
+        //            createdByUserId = null;
+        //        }
+        //        TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+        //        budgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH, null);
+        //        return PartialView(budgetImageModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionManager.WriteError("BudgetImageList => " + ex.Message);
+        //    }
+
+        //    return PartialView();
+        //}
 
         public JsonResult getCustomerInvoice(string customerTH, string companyEN, string regionId)
         {
@@ -367,7 +438,8 @@ namespace eActForm.Controllers  //update 21-04-2020
             TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
             try
             {
-                budgetImageModel.BudImage = ImageAppCodeBudget.getImageBudget(imageId, null, null, null, null, null, null).FirstOrDefault();
+                budgetImageModel.BudImage = ImageAppCodeBudget.getBudgetInvoice(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
+                //budgetImageModel.BudImage = ImageAppCodeBudget.getBudgetInvoice(imageId, null, null, null, null, null, null).FirstOrDefault();
                 budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
@@ -471,7 +543,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.updatedDate = DateTime.Now;
 
-                    int resultImg = ImageAppCodeBudget.insertImageBudget(imageFormModel);
+                    int resultImg = ImageAppCodeBudget.insertBudgetInvoice(imageFormModel);
                 }
 
                 //manageInvoiceList(null);
@@ -501,7 +573,8 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult manageInvoiceEdit(string imageId)
         {
             TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
-            getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId, null, null, null, null, null, null).FirstOrDefault();
+            getBudImageModel = ImageAppCodeBudget.getBudgetInvoice(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
+            //getBudImageModel = ImageAppCodeBudget.getBudgetInvoice(imageId, null, null, null, null, null, null).FirstOrDefault();
 
             return PartialView(getBudImageModel);
         }
@@ -524,7 +597,8 @@ namespace eActForm.Controllers  //update 21-04-2020
                 budgetInvoiceModel.updatedDate = DateTime.Now;
 
                 TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
-                getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo, null, null, null, budgetInvoiceModel.company, customerId);
+                getBudImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, budgetInvoiceModel.invoiceNo, null, null, null, budgetInvoiceModel.company, customerId, null, null);
+                //getBudImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoice(null, budgetInvoiceModel.invoiceNo, null, null, null, budgetInvoiceModel.company, customerId);
                 if (getBudImageModel.BudImageList.Any())
                 {
                     resultAjax.Code = 2;

@@ -397,7 +397,7 @@ namespace eActForm.Controllers //update 21-04-2020
                     Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budgetApproveId);
 
                 string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
@@ -729,7 +729,7 @@ namespace eActForm.Controllers //update 21-04-2020
 
 
                     TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                    getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);
+                    getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budget_approve_id);
 
                     string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
                     pathFile[0] = Server.MapPath(rootPathInsert);
@@ -796,7 +796,7 @@ namespace eActForm.Controllers //update 21-04-2020
                     Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budget_approve_id);
 
                 string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
