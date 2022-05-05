@@ -148,7 +148,7 @@
         <div class="col-md-12 col-xs-12">
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                    ชื่อร้านค้า
+                    ชื่อร้านค้า<span class="required">*</span>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { @class = "form-control textboxcss", @id = "txtShopName", autocomplete = "off" })
@@ -344,7 +344,7 @@
     <div class="col-md-12 col-xs-12">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-3" for="txtObjective">
-                วัตถุประสงค์
+                วัตถุประสงค์<span class="required">*</span>
             </label>
 
             <div class="col-md-9 col-sm-9 col-xs-9">
@@ -592,7 +592,7 @@
             $("#divRegion").show();
             $("#divProductGroup").hide();
             $("#divProductCate").hide();
-            document.getElementById('lblCustomer').innerHTML = 'Area'
+            document.getElementById('lblCustomer').innerHTML = 'Area*'
            // $("#divDetailContact").show();
 
         }
