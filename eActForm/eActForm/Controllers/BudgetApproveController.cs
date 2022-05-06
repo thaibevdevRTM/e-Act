@@ -11,6 +11,14 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using System.Threading.Tasks;
+
+using System.Web.Hosting;
+using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
+using System.Web;
+
+
 
 namespace eActForm.Controllers //update 21-04-2020
 {
@@ -703,7 +711,7 @@ namespace eActForm.Controllers //update 21-04-2020
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
         {
 
             var resultAjax = new AjaxResult();
@@ -717,6 +725,10 @@ namespace eActForm.Controllers //update 21-04-2020
                     budget_approve_id = BudgetApproveController.getApproveBudgetId(budgetActivityId); // get last approve id
                     BudgetApproveController.updateApproveWaitingByRangNo(budget_approve_id);
 
+                    TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+                    getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budget_approve_id);
+
+
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
 
@@ -727,9 +739,6 @@ namespace eActForm.Controllers //update 21-04-2020
                     if (folderExists)
                         Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
 
-
-                    TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                    getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budget_approve_id);
 
                     string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
                     pathFile[0] = Server.MapPath(rootPathInsert);
@@ -773,9 +782,84 @@ namespace eActForm.Controllers //update 21-04-2020
             return Json(resultAjax, "text/plain");
         }
 
+        // ---- backup 06-05-2022 ----
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
+        //{
+
+        //    var resultAjax = new AjaxResult();
+        //    try
+        //    {
+        //        string budget_approve_id = "";
+        //        int count_req_app = Int32.Parse(count_req_approve);
+
+        //        if (BudgetApproveController.insertApproveForBudgetForm(budgetActivityId, companyEN, count_req_app) > 0) //usp_insertApproveDetail
+        //        {
+        //            budget_approve_id = BudgetApproveController.getApproveBudgetId(budgetActivityId); // get last approve id
+        //            BudgetApproveController.updateApproveWaitingByRangNo(budget_approve_id);
+
+        //            var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
+        //            GridHtml = GridHtml.Replace("<br>", "<br/>");
+
+        //            AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+        //            //del signature file
+        //            bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
+        //            if (folderExists)
+        //                Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
+
+
+        //            TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+        //            getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(budget_approve_id);
+
+        //            string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
+        //            pathFile[0] = Server.MapPath(rootPathInsert);
+
+        //            if (getBudgetImageModel.BudImageList.Any())
+        //            {
+        //                int i = 1;
+        //                foreach (var item in getBudgetImageModel.BudImageList)
+        //                {
+        //                    if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+        //                    {
+        //                        pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+        //                    }
+        //                    else
+        //                    {
+        //                        pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+        //                    }
+        //                    i++;
+        //                }
+        //            }
+
+        //            var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
+        //            var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
+        //            BudgetApproveController.setCountWatingApproveBudget();
+        //            if (count_req_app > 0)
+        //            {
+        //                EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form, false);
+        //                //HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));
+        //            }
+        //        }
+
+
+        //        resultAjax.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        resultAjax.Success = false;
+        //        resultAjax.Message = ex.Message;
+        //        ExceptionManager.WriteError(ex.Message);
+        //    }
+        //    return Json(resultAjax, "text/plain");
+        //}
+
+
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreviewBudgetRegenPdf(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreviewBudgetRegenPdf(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
         {
 
             var resultAjax = new AjaxResult();
