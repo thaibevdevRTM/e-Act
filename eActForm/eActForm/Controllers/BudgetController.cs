@@ -68,6 +68,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             Budget_Activity_Model models = new Budget_Activity_Model();
             DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
             DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
+            string act_budgetStatusIdin = null;
             string act_year = null;
             try
             {
@@ -81,7 +82,11 @@ namespace eActForm.Controllers  //update 21-04-2020
                     {
                         act_year = (DateTime.Now.AddMonths(3).Year + 543).ToString();
                     }
-                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, null, act_year).ToList();
+                    if (act_budgetStatusIdin == null)
+                    {
+                        act_budgetStatusIdin = "2";
+                    }
+                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin, act_year).ToList();
                 }
                 TempData["searchBudgetActivityForm"] = null;
                 return PartialView(models);
