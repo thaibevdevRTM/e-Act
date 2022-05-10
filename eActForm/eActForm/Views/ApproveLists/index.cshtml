@@ -81,10 +81,11 @@
 
 <div class="tab">
     <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'divApprove')">Approve List</button>
-    @if (@UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
-   || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
-   || lvlEmp == 0
-   || lvlEmp > 9)
+    @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
+                             || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+                             || (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup) && @lvlEmp > 8)
+                             || @lvlEmp == 0
+                             )
     {
         <button class="tablinks" onclick="openCity(event, 'divSummary')">Summary Approve</button>
     }

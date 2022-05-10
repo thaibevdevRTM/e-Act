@@ -58,9 +58,6 @@ namespace eActForm.Controllers
                 DataTable dt = new DataTable();
                 DataTable dtBrand = new DataTable();
 
-                dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
-                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "Brand", "A:Z");
-
                 var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon, MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]).Year, model.companyId);
 
                 //------------------------ Prepare data for BudgetControl by Chanel -----------------
@@ -69,6 +66,7 @@ namespace eActForm.Controllers
                 List<BudgetControl_ActType> bgActTypeList = new List<BudgetControl_ActType>();
                 if (model.companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
                 {
+                    dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         typeImportCatch = ImportBudgetControlAppCode.channel;
@@ -136,6 +134,8 @@ namespace eActForm.Controllers
 
                 //------------------------ Prepare data for BudgetControl by Brand -----------------
                 rowImport = 1;
+
+                dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "Brand", "A:Z");
                 for (int i = 0; i < dtBrand.Rows.Count; i++)
                 {
                     if (!string.IsNullOrEmpty(dtBrand.Rows[i]["BRAND"].ToString()))

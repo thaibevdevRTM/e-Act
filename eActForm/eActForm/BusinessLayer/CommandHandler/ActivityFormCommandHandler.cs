@@ -293,22 +293,19 @@ namespace eActForm.BusinessLayer
                         result[0] = getActList.FirstOrDefault().activityNo.ToString();
                         //=====update by fream devDate 20200214=======
                         string typeFormCompany = "";
-                        if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] &&
-                           getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
-                        {
-                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
-                        }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
-                            getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
+                        else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             typeFormCompany = Activity_Model.activityType.MT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
-                            getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
+                        }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
                         }

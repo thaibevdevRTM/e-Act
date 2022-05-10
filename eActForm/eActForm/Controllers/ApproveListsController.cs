@@ -91,10 +91,14 @@ namespace eActForm.Controllers
                 string count = Request.Form.AllKeys.Count().ToString();
                 Activity_Model.actForms model = new Activity_Model.actForms();
                 model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
-
+                
                 if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
                 {
                     model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlMasterType"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.master_type_form_id == Request.Form["ddlMasterType"]).ToList();
                 }
                 if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
                 {

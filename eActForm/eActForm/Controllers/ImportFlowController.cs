@@ -20,7 +20,20 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ImportFlowModel model = new ImportFlowModel();
-            model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon);
+            if (UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon);
+            }
+            else if(AppCode.compPomForm.Contains(UtilsAppCode.Session.User.empCompanyGroup))
+            {
+                model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon).Where(x => x.department == ConfigurationManager.AppSettings["conditionActBeer"]).ToList();
+            }
+            else if(UtilsAppCode.Session.User.isAdminTBM)
+            {
+                model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon).Where(x => x.companyId == ConfigurationManager.AppSettings["companyId_TBM"]).ToList();
+            }
+
+
             return View(model);
         }
 

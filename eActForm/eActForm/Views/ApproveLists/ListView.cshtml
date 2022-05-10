@@ -43,7 +43,7 @@ else
                             || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
                             || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
                             || @lvlEmp == 0
-                            || @lvlEmp > 9)
+                            || @lvlEmp > 8)
                         {
                         <th width="20">
                             <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
@@ -78,7 +78,7 @@ else
                                  || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
                                  || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
                                  || @lvlEmp == 0
-                                 || @lvlEmp > 9
+                                 || @lvlEmp > 8
                                 )
                             {
                                 <td class="a-center ">
@@ -159,7 +159,6 @@ else
     function setFlagAll(ele) {
         var chkAll = ele.checked ? true : false;
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
-        var empLvl = parseInt('@UtilsAppCode.Session.User.empLevel');
 
         console.log('True');
         var favorite = [];

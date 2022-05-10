@@ -81,7 +81,7 @@
                     ภาค
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                     @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0), "Please Select", new
+                     @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0),new
                 {
                     @class = "form-control textboxcss",
                     id = "ddlRegion",
@@ -91,6 +91,22 @@
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    Document Type
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.masterTypeFormList, new SelectList(Model.masterTypeFormList, "id", "nameForm"), "Please Select",
+                  new
+                       {
+                      @class = "form-control",
+                           id = "ddlMasterType",
+                           Name = "ddlMasterType",
+                           multiple = "multiple"
+
+                  })
+                </div>
+            </div>
           
         </div>
     </div>
