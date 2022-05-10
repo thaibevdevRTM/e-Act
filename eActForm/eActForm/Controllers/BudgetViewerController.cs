@@ -42,7 +42,9 @@ namespace eActForm.Controllers //update 21-04-2020
 
         public ActionResult getPdfBudget(string budgetApproveId)
         {
-            string rootPath = "", mapPath = "";
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
 
             try
             {
@@ -52,16 +54,49 @@ namespace eActForm.Controllers //update 21-04-2020
                     budgetApproveId = "fileNotFound";
                 }
 
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+                                         FileMode.Open,
+                                         FileAccess.Read
+                                       );
+
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("getPdfBudget >>" + ex.Message);
             }
-            var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+
+             
+            return fsResult;
+        }
+
+        public ActionResult getInvoicePdfBudget(string fileName)
+        {
+            string rootPath = "" ;
+            FileStream fileStream = null ;
+            FileStreamResult fsResult = null ;
+
+            try
+            {
+                rootPath = ConfigurationManager.AppSettings["rootUploadfilesBudget"];
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, fileName))))
+                {
+                    fileName = "fileNotFound.pdf";
+                }
+
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, fileName)),
                                                      FileMode.Open,
                                                      FileAccess.Read
                                                    );
-            var fsResult = new FileStreamResult(fileStream, "application/pdf");
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getInvoicePdfBudget >>" + ex.Message);
+            }
+             
             return fsResult;
         }
 
@@ -76,29 +111,5 @@ namespace eActForm.Controllers //update 21-04-2020
         }
 
 
-        public ActionResult getInvoicePdfBudget(string fileName)
-        {
-            string rootPath = "", mapPath = "";
-
-            try
-            {
-                rootPath = ConfigurationManager.AppSettings["rootUploadfilesBudget"];
-                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, fileName))))
-                {
-                    fileName = "fileNotFound.pdf";
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message);
-            }
-            var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, fileName)),
-                                                     FileMode.Open,
-                                                     FileAccess.Read
-                                                   );
-            var fsResult = new FileStreamResult(fileStream, "application/pdf");
-            return fsResult;
-        }
     }
 }
