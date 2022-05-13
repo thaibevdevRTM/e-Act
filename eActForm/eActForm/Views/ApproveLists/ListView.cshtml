@@ -2,7 +2,7 @@
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @model eActForm.Models.Activity_Model.actForms
-@{ 
+@{
     int lvlEmp = 0;
     lvlEmp = @UtilsAppCode.Session.User.empLevel != "" ? int.Parse(@UtilsAppCode.Session.User.empLevel) : 0;
 }
@@ -36,7 +36,7 @@ else
         <div class="col-md-12 col-xs-12">
 
 
-            <table id="datatable" class="table table-striped table-hover">
+            <table id="dtApproveList" class="table table-striped table-hover">
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
@@ -45,17 +45,17 @@ else
                             || @lvlEmp == 0
                             || @lvlEmp > 8)
                         {
-                        <th width="20">
-                            <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
-                        </th>
+                            <th>
+                                <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
+                            </th>
 
-                        <th>
-                            <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:100px; height:25px; margin-bottom:1px" onclick="submitApprove();"> Approve </a>
-                        </th>
+                            <th style="width:150px;">
+                                <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:100px; height:25px; margin-bottom:1px" onclick="submitApprove();"> Approve </a>
+                            </th>
                         }
                         else
                         {
-                        <th></th>
+                            <th></th>
                         }
 
                         <th>Status</th>
@@ -135,7 +135,17 @@ else
 }
 <script>
     $(document).ready(function () {
-        $('#datatable').DataTable({
+
+        var setpaging = true;
+        if ('@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
+            || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True'
+            || '@lvlEmp' == '0'
+            || @lvlEmp > 8) {
+            setpaging = false;
+        }
+
+        $('#dtApproveList').DataTable({
+            "paging": setpaging,
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
                 , { "orderable": false, "targets": 1 }

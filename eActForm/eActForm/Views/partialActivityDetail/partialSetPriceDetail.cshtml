@@ -641,7 +641,10 @@
             $(this).data("uiAutocomplete").search($(this).val());
         });
 
-
+        $("#ddlRegion").change(function () {
+            $("#txtArea").val('')
+            $("#customerId").val('')
+        });
 
         $('#ddlRegion').selectpicker({
             liveSearch: true,
@@ -1026,6 +1029,21 @@
             data: {
                 typeForm: '@Model.activityFormModel.typeForm',
                 actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse)
+        });
+    }
+
+
+
+      function callPartialShowBudget(actId) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("showDetailBudgetControl", "SharedMasterFormDetail_Input")',
+            data: {
+                activityId: actId,
             }
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)

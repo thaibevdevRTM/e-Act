@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -90,6 +91,56 @@ namespace eActForm.Controllers
 
 
             return PartialView(activity_TBMMKT_Model);
+        }
+
+
+
+        //public JsonResult getBudgetBeer(string activityId ,string brandId ,string actType, string center, string channelId, string status)
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
+
+
+        //        if (status == "2" || status == "3")
+        //        {
+              
+        //        }
+        //        else
+        //        {
+
+                  
+
+        //        }
+
+
+        //        TempData["showBudgetBeer" + activityId] = model;
+
+        //        var resultData = new
+        //        {
+        //            budgetTotalsList = budgetTotalsList,
+        //            activityTypeId = getActTypeId,
+
+        //        };
+        //        result.Data = resultData;
+        //        result.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        ExceptionManager.WriteError("getBudgetByEO => " + activityId + "____" + ex.Message);
+        //    }
+
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult showDetailBudgetControl(string activityId)
+        {
+
+            Activity_TBMMKT_Model model = TempData["showBudget" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudget" + activityId];
+
+
+            return PartialView(model);
         }
 
 

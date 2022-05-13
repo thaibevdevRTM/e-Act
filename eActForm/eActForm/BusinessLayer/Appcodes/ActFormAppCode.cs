@@ -587,6 +587,38 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static List<BudgetControlModels> getBudgetActBeer(string actType, string brandId, string center, string channelId, string periodEndDate)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActBeer"
+                , new SqlParameter[] { new SqlParameter("@actType", actType)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@center", center)
+               ,new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@periodEndDate", periodEndDate)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
+                                 balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
+                                 amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
+                                 EO = dr["EO"].ToString(),
+                                 LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
+                                 totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getBudgetActBeer >>" + ex.Message);
+            }
+
+        }
+
+
+
         public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId,string fiscalYear)
         {
             try

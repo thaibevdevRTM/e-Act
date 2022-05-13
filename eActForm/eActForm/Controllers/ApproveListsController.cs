@@ -34,8 +34,9 @@ namespace eActForm.Controllers
             if (actId != null)
             {
                 approveModels.activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-
+                
                 var conAr2Str = string.Join(",", actId);
+                //var rep = conAr2Str.Replace("\\", "").Replace("\"", "").Replace(" ","");
                 approveModels.approveListSummaryList = ApproveListAppCode.callApproveListSummary(conAr2Str);
                 approveModels.activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("masterTG", "").ToList();
                 approveModels.activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("beerLitre", "").ToList();

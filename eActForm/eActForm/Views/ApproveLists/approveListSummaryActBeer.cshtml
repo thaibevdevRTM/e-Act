@@ -37,17 +37,23 @@
         .tscroll td, .tscroll th {
             border-bottom: dashed #888 1px;
         }
-
 </style>
 <div class="row">
     <div class="col-12">
-        <p class="lead">Senior Approval List</p>
+        <p class="lead">
+            Senior Approval List
+            @if (Model.approveListSummaryList.Count > 0)
+            {
+                @Model.approveListSummaryList[0].fiscalYear
+            }
+        </p>
     </div>
     <div class="col-md-12 col-xs-12 tscroll" style="width:100%;overflow-x:scroll;">
         <table class="table table-striped jambo_table bulk_action table-bordered fixed" id="tbl_sumaryList" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
             <thead>
                 <tr class="headings" style="text-align:center;">
                     <th class="align-content-center font10" width="200" rowspan="2">กลุ่มกิจกรรม</th>
+                    <th class="align-content-center font10" width="100" rowspan="2">ปีงบประมาณ</th>
                     <th class="align-content-center font10" width="500" colspan="6">งบประมาณ</th>
                     <th class="align-content-center font10" width="500" colspan="6">งบประมาณที่ขอ</th>
                     <th class="align-content-center font10" width="500" colspan="6">ขาด(เกิน)งบประมาณที่ขอ</th>
@@ -74,30 +80,30 @@
 
                 </tr>
             </thead>
-            @{ string keepActGroup = "";
+            @{ string keepActGroup = "", keepFiscal = "";
                 decimal? sumBudgetAmount = 0, sumTotal = 0, sumBalanceTotal = 0, sumRowBudget = 0, sumRowTotal = 0, sumRowBalance = 0,
                     sumBudgetARP = 0, sumBudgetDB = 0, sumBudgetEV = 0, sumBudgetOT = 0, sumBudgetTT = 0,
                     sumTotalARP = 0, sumTotalDB = 0, sumTotalEV = 0, sumTotalOT = 0, sumTotalTT = 0,
-                    sumBalanceARP = 0, sumBalanceDB = 0, sumBalanceEV = 0, sumBalanceOT = 0, sumBalanceTT = 0,
-                    TG = 0, TT = 0, OT = 0, sumChannel = 0, resultLiter_TT = 0, balancetLiter_TT = 0, resultLiter_OT = 0, balancetLiter_OT = 0
-                    ;
+                    sumBalanceARP = 0, sumBalanceDB = 0, sumBalanceEV = 0, sumBalanceOT = 0, sumBalanceTT = 0;
 
             }
             @foreach (var item in Model.approveListSummaryList)
             {
+
                 if (keepActGroup != item.activityGroup)
                 {
                     sumTotal = 0;
                     sumBudgetAmount = 0;
                     sumBalanceTotal = 0;
                     <tr>
-                        @if (keepActGroup != item.activityGroup)
+                        @if (keepActGroup != item.activityGroup )
                         {
                             <td class="align-content-center font10"> @item.activityGroup</td>
+                            <td class="align-content-center font10"> @item.fiscalYear</td>
                         }
                         @foreach (var subItem in Model.approveListSummaryList)
                         {
-                            if (item.activityGroup == subItem.activityGroup)
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
                             {
                                 <td class="align-content-center font10">
                                     @subItem.budgetAmount.Value.ToString("#,###.00")
@@ -114,7 +120,7 @@
 
                         @foreach (var subItem in Model.approveListSummaryList)
                         {
-                            if (item.activityGroup == subItem.activityGroup)
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
                             {
 
                                 if (subItem.total.ToString().Contains("-"))
@@ -141,7 +147,7 @@
 
                         @foreach (var subItem in Model.approveListSummaryList)
                         {
-                            if (item.activityGroup == subItem.activityGroup)
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
                             {
 
                                 if (subItem.balanceAmount.ToString().Contains("-"))
@@ -212,11 +218,13 @@
 
 
                 keepActGroup = item.activityGroup;
+                keepFiscal = item.fiscalYear;
             }
             <tr>
             </tr>
             <tr style="background-color:aquamarine">
                 <td>&nbsp;รวม</td>
+                <td class="align-content-center font10"><b>  </b></td>
                 <td class="align-content-center font10"><b> @sumBudgetARP.Value.ToString("#,###.00")  </b></td>
                 <td class="align-content-center font10"><b> @sumBudgetDB.Value.ToString("#,###.00")   </b></td>
                 <td class="align-content-center font10"><b> @sumBudgetEV.Value.ToString("#,###.00")   </b></td>
@@ -237,109 +245,109 @@
                 <td class="align-content-center font10"><b> @sumRowBalance.Value.ToString("#,###.00") </b></td>
             </tr>
             @*<tr>
-                <td class="align-content-center font10">
-                    &nbsp;ยอดขาย TG 22(ลิตร)
-                    @if (Model.activity_TBMMKT_Model != null)
-                    {
-                        foreach (var item in Model.activity_TBMMKT_Model.objExpenseCashList)
+                    <td class="align-content-center font10">
+                        &nbsp;ยอดขาย TG 22(ลิตร)
+                        @if (Model.activity_TBMMKT_Model != null)
                         {
-
-                            TG = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
-                            @TG.Value.ToString("#,###.00")
-                        }
-                    }
-                </td>
-
-
-                <td colspan="6" class="align-content-center font10"></td>
-                <td colspan="6" class="align-content-center font10"></td>
-                <td colspan="3" class="align-content-center font10">บาท/ลิตร เทียบ TG22</td>
-                <td colspan="3" class="align-content-center font10">ขาด (เกิน บาท/ลิตร)</td>
-            </tr>
-            <tr>
-                <td class="align-content-center font10">
-                    &nbsp;คชจ.บาท/ลิตร TT ปี 2022
-                    @if (Model.activity_TBMMKT_Model != null)
-                    {
-                        foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
-                        {
-                            if (item.subType == "TT")
+                            foreach (var item in Model.activity_TBMMKT_Model.objExpenseCashList)
                             {
-                                TT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
-                                @TT.Value.ToString("N2")
+
+                                TG = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                @TG.Value.ToString("#,###.00")
                             }
                         }
-                    }
-                </td>
+                    </td>
 
-                <td colspan="6" class="align-content-center font10"></td>
-                <td colspan="6" class="align-content-center font10"></td>
-                <td colspan="3" class="align-content-center font10">
-                    @if (sumTotalTT > 0 && TG > 0)
-                    {
-                        resultLiter_TT = sumTotalTT / TG;
-                        @resultLiter_TT.Value.ToString("N2")
-                    }
 
-                </td>
-                <td colspan="3" class="align-content-center font10">
-                    @if (TT > 0 && resultLiter_TT > 0)
-                    {
-                        balancetLiter_TT = TT - resultLiter_TT;
-                        @balancetLiter_TT.Value.ToString("N2")
-                    }
-
-                </td>
-            </tr>
-            <tr>
-                <td class="align-content-center font10">
-                    &nbsp;คชจ.บาท/ลิตร OT ปี 2022
-                    @if (Model.activity_TBMMKT_Model != null)
-                    {
-                        foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="3" class="align-content-center font10">บาท/ลิตร เทียบ TG22</td>
+                    <td colspan="3" class="align-content-center font10">ขาด (เกิน บาท/ลิตร)</td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร TT ปี 2022
+                        @if (Model.activity_TBMMKT_Model != null)
                         {
-                            if (item.subType == "OT")
+                            foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
                             {
-                                OT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
-                                @OT.Value.ToString("N2")
+                                if (item.subType == "TT")
+                                {
+                                    TT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                    @TT.Value.ToString("N2")
+                                }
                             }
                         }
-                    }
-                </td>
+                    </td>
 
-                <td colspan="6"></td>
-                <td colspan="6"></td>
-                <td colspan="3" class="align-content-center font10">
-                    @if (sumTotalOT > 0 && TG > 0)
-                    {
-                        resultLiter_OT = sumTotalOT / TG;
-                        @resultLiter_OT.Value.ToString("N2")
-                    }
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (sumTotalTT > 0 && TG > 0)
+                        {
+                            resultLiter_TT = sumTotalTT / TG;
+                            @resultLiter_TT.Value.ToString("N2")
+                        }
 
-                </td>
-                <td colspan="3" class="align-content-center font10">
-                    @if (OT > 0 && resultLiter_OT > 0)
-                    {
-                        balancetLiter_OT = OT - resultLiter_OT;
-                        @balancetLiter_OT.Value.ToString("N2")
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td class="align-content-center font10">
-                    &nbsp;คชจ.บาท/ลิตร TT+OT ปี 2022
-                    @{
-                        sumChannel = TT + OT;
-                    }
-                    @sumChannel
+                    </td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (TT > 0 && resultLiter_TT > 0)
+                        {
+                            balancetLiter_TT = TT - resultLiter_TT;
+                            @balancetLiter_TT.Value.ToString("N2")
+                        }
 
-                </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร OT ปี 2022
+                        @if (Model.activity_TBMMKT_Model != null)
+                        {
+                            foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
+                            {
+                                if (item.subType == "OT")
+                                {
+                                    OT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                    @OT.Value.ToString("N2")
+                                }
+                            }
+                        }
+                    </td>
 
-                <td colspan="6"></td>
-                <td colspan="6"></td>
-                <td colspan="3"></td>
-                <td colspan="3"></td>
-            </tr>*@
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (sumTotalOT > 0 && TG > 0)
+                        {
+                            resultLiter_OT = sumTotalOT / TG;
+                            @resultLiter_OT.Value.ToString("N2")
+                        }
+
+                    </td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (OT > 0 && resultLiter_OT > 0)
+                        {
+                            balancetLiter_OT = OT - resultLiter_OT;
+                            @balancetLiter_OT.Value.ToString("N2")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร TT+OT ปี 2022
+                        @{
+                            sumChannel = TT + OT;
+                        }
+                        @sumChannel
+
+                    </td>
+
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="3"></td>
+                    <td colspan="3"></td>
+                </tr>*@
         </table>
     </div>
 </div>

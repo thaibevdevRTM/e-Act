@@ -150,6 +150,7 @@ namespace eActForm.BusinessLayer
                                  budgetAmount = dr["budgetAmount"] is DBNull ? 0 : (decimal?)dr["budgetAmount"],
                                  total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
                                  balanceAmount = dr["balanceAmount"] is DBNull ? 0 : (decimal?)dr["balanceAmount"],
+                                 fiscalYear = dr["fiscalYear"].ToString(),
                              }).ToList();
                 return lists;
             }

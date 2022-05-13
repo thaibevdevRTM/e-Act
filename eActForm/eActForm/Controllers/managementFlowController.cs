@@ -235,12 +235,12 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmp(string subjectId, string limitId, string channelId)
+        public JsonResult getEmp(string subjectId, string limitId, string channelId,string actType,string customerId)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
             {
-                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId);
+                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId, actType, customerId);
             }
             catch (Exception ex)
             {

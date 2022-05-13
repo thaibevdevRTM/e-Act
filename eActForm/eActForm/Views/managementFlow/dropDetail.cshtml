@@ -229,7 +229,6 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                console.log(response.Data.length);
                 if (response.Data.length > 0) {
                     var data = [];
                      $("#ddlChanelGroup option[value !='']").remove();
@@ -276,6 +275,8 @@
                 subjectId: $("#ddlSubject").val(),
                 limitId : $("#ddlLimit").val(),
                 channelId: channel,
+                actType: $("#ddlActGroup").val(),
+                customerId: $("#ddlRegion").val(),
             },
             dataType: "json",
             type: 'POST',
@@ -287,10 +288,11 @@
                         $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] + " " + this['empName']));
 
                     });
-                     $("#ddlEmployee").selectpicker("refresh");
+                     
                      document.getElementById("ddlEmployee").disabled = false;
+                     $("#ddlEmployee").selectpicker("refresh");
                 }
-                else {
+                 else {
                      document.getElementById("ddlEmployee").disabled = true;
                 }
             }

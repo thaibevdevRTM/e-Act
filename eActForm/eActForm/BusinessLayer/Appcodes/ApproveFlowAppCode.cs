@@ -537,7 +537,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId)
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId,string actType,string customerId)
         {
             try
             {
@@ -545,6 +545,8 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
                     ,new SqlParameter("@flowLimitId", limitId)
                     ,new SqlParameter("@channelId", channelId)
+                    ,new SqlParameter("@actType", actType)
+                    ,new SqlParameter("@customerId", customerId)
                     });
                 var result = (from DataRow dr in ds.Tables[0].Rows
                               select new RequestEmpModel(dr["empId"].ToString(),false,false)

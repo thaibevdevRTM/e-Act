@@ -44,9 +44,7 @@
         <div class="col-md-9 col-sm-9 col-xs-12">
             <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
         </div>
-
     </div>
-
 </div>
 
 @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
@@ -69,7 +67,7 @@
                     ชื่อกิจกรรม
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownList("model.activityGroupBeerList" , new SelectList(Model.activityGroupBeerList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlActGroupBeer", Name = "ddlActGroupBeer" })
+                    @Html.DropDownList("model.activityGroupBeerList", new SelectList(Model.activityGroupBeerList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlActGroupBeer", Name = "ddlActGroupBeer" })
                 </div>
             </div>
         </div>
@@ -81,12 +79,12 @@
                     ภาค
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                     @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0),new
-                {
-                    @class = "form-control textboxcss",
-                    id = "ddlRegion",
-                    Name = "ddlRegion"
-                })
+                    @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0), new
+               {
+                   @class = "form-control textboxcss",
+                   id = "ddlRegion",
+                   Name = "ddlRegion"
+               })
                 </div>
             </div>
         </div>
@@ -107,7 +105,7 @@
                   })
                 </div>
             </div>
-          
+
         </div>
     </div>
 
