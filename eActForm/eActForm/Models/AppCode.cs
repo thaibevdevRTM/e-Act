@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
@@ -36,6 +37,28 @@ namespace eActForm.Models
         public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
         public static string[] compThaiBevForm = { Activity_Model.groupCompany.THAIBEV.ToString() };
+        public static string[] getEmpSearchBeer =  ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray() ;
+
+        
+        public static string[] checkFormApproveAll =
+        {
+                  ConfigurationManager.AppSettings["formBgTbmId"]
+                 ,ConfigurationManager.AppSettings["formAdvTbmId"]
+                 ,ConfigurationManager.AppSettings["formTrvTbmId"]
+                 ,ConfigurationManager.AppSettings["formPosTbmId"]
+                 ,ConfigurationManager.AppSettings["formTrvHcmId"]
+                 ,ConfigurationManager.AppSettings["formAdvHcmId"]
+                 ,ConfigurationManager.AppSettings["masterEmpExpense"]
+                 ,ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                 ,ConfigurationManager.AppSettings["formExpTrvNumId"]
+                 ,ConfigurationManager.AppSettings["formCR_IT_FRM_314"]
+                 ,ConfigurationManager.AppSettings["formExpMedNumId"]
+                 ,ConfigurationManager.AppSettings["formSetPriceMT"]
+                 ,ConfigurationManager.AppSettings["formReceptions"]
+                 ,ConfigurationManager.AppSettings["formTransferbudget"]
+                 ,ConfigurationManager.AppSettings["formSetPriceOMT"]
+                 ,ConfigurationManager.AppSettings["formEactBeer"]
+        };
 
 
 

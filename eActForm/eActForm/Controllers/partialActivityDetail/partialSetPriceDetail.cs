@@ -95,49 +95,52 @@ namespace eActForm.Controllers
 
 
 
-        //public JsonResult getBudgetBeer(string activityId ,string brandId ,string actType, string center, string channelId, string status)
-        //{
-        //    var result = new AjaxResult();
-        //    try
-        //    {
+        public JsonResult getBudgetBeer(string listTotal ,string activityId, string brandId, string actType, string center, string channelId,string periodEndDate, string status)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
+                var getListTotal = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listTotal);
+                var getSumAmount = getListTotal.Where(x => x.total > 0).Sum(x => x.total);
 
+                var getBudget = ActFormAppCode.getBudgetActBeer(actType, brandId, center, channelId, periodEndDate);
 
-        //        if (status == "2" || status == "3")
-        //        {
-              
-        //        }
-        //        else
-        //        {
+                foreach (var item in getBudget)
+                {
+                    BudgetTotal budgetTotalModel = new BudgetTotal();
 
-                  
+                    budgetTotalModel.totalBudget = item.totalBudget;
+                    budgetTotalModel.useAmountTotal = item.useAmountTotal + getSumAmount;
+                    budgetTotalModel.amountBalanceTotal = item.totalBudget - (item.useAmountTotal + getSumAmount);
+                    budgetTotalModel.amountBalancePercen = ((item.useAmountTotal + getSumAmount) / item.totalBudget) * 100;
+                    model.budgetTotalList.Add(budgetTotalModel);
+                }
 
-        //        }
+                TempData["showBudgetBeer" + activityId] = model;
+                
+                if (model.budgetTotalList.Any())
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("getBudgetBeer => " + activityId + "____" + ex.Message);
+            }
 
-
-        //        TempData["showBudgetBeer" + activityId] = model;
-
-        //        var resultData = new
-        //        {
-        //            budgetTotalsList = budgetTotalsList,
-        //            activityTypeId = getActTypeId,
-
-        //        };
-        //        result.Data = resultData;
-        //        result.Success = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Success = false;
-        //        ExceptionManager.WriteError("getBudgetByEO => " + activityId + "____" + ex.Message);
-        //    }
-
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult showDetailBudgetControl(string activityId)
         {
 
-            Activity_TBMMKT_Model model = TempData["showBudget" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudget" + activityId];
+            Activity_TBMMKT_Model model = TempData["showBudgetBeer" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudgetBeer" + activityId];
 
 
             return PartialView(model);

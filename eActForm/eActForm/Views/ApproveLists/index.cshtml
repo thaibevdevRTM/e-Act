@@ -68,7 +68,7 @@
         <div class="col-md-12 col-xs-12">
             @using (Ajax.BeginForm("searchActForm", "ApproveLists"
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
-, new { id = "form", @class = "form-horizontal form-label-left" }))
+, new { id = "seachApprove", @class = "form-horizontal form-label-left" }))
             {
                 @RenderPage("~/Views/Shared/_search.cshtml")
             }
@@ -81,11 +81,10 @@
 
 <div class="tab">
     <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'divApprove')">Approve List</button>
-    @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
-                             || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
-                             || (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup) && @lvlEmp > 8)
-                             || @lvlEmp == 0
-                             )
+    @if (@UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+         || (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup) && @lvlEmp > 8)
+         ||  @Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)
+        )
     {
         <button class="tablinks" onclick="openCity(event, 'divSummary')">Summary Approve</button>
     }
@@ -113,7 +112,7 @@
 <div id="divApprove" class="tabcontent">
     <div class="row tile_count">
         <div id="getQuery" class="col-md-12 col-xs-12">
-            @Html.Action("ListView", "ApproveLists", new { })
+            @Html.Action("ListView", "ApproveLists", new {})
         </div>
     </div>
 </div>
@@ -148,14 +147,21 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $("#seachApprove").submit();
+
+
         $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
         document.getElementById("defaultOpen").click();
 
      if ('@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
-    || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True') {
+         || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True'
+         || '@Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)' == 'True') {
             $('#divShowSummary').click(function () {
                 $('.clsSummary').slideToggle("fast");
             });
+
+         $("#ddlYears").prop('selectedIndex', 1);
+         $("#ddlStatus").prop('selectedIndex', 3);
         }
     })
 

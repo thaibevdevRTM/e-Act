@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.Forms;
@@ -137,12 +138,33 @@ namespace eActForm.Controllers
                 {
                     model.actLists = model.actLists.Where(r => r.documentDate >= DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null) && r.documentDate <= DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null)).ToList();
                 }
-                //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
-                TempData["ApproveSearchResult"] = model.actLists;
+                if (!string.IsNullOrEmpty(Request.Form["ddlYears"]))
+                {
+
+                    var conStr2Year =int.Parse(Request.Form["ddlYears"]);
+                    DateTime? startDateFiscal = null, endDateFiscal = null;
+                    try
+                    {
+                        startDateFiscal = BaseAppCodes.converStrToDatetimeWithFormat("01/10/" + (conStr2Year - 1), ConfigurationManager.AppSettings["formatDateUse"]);
+                        endDateFiscal = BaseAppCodes.converStrToDatetimeWithFormat("30/09/" + (conStr2Year), ConfigurationManager.AppSettings["formatDateUse"]);
+
+                        model.actLists = model.actLists.Where(r => r.activityPeriodEnd >= startDateFiscal).ToList();
+                        model.actLists = model.actLists.Where(r => r.activityPeriodEnd <= endDateFiscal).ToList();
+
+                    }
+                    catch(Exception ex)
+                    {
+                        ExceptionManager.WriteError("searchActForm >> ddlYears_s" + startDateFiscal + "e_"+ endDateFiscal  + ex.Message);
+                    }
+                }
+
+                    //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+                    TempData["ApproveSearchResult"] = model.actLists;
                 return RedirectToAction("ListView");
             }
             catch(Exception ex)
             {
+                ExceptionManager.WriteError("searchActForm >>" + ex.Message);
                 return RedirectToAction("ListView");
             }
         }

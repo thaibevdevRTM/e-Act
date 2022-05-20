@@ -208,7 +208,7 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("InsertBudgetLE => " + ex.Message);
+                ExceptionManager.WriteError("InsertBudgetLETemp => " + ex.Message);
             }
 
             return result;

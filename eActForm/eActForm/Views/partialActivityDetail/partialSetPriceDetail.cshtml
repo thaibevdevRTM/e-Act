@@ -491,7 +491,7 @@
                 รหัสเบิกเงิน
             </label>
             <div class="col-md-9 col-sm-9 col-xs-9">
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss", id = "txtEmpId", autocomplete = "off" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss", id = "txtEmpId", autocomplete = "off" , onchange = "getBudgetBeer()" })
             </div>
         </div>
     </div>
@@ -509,11 +509,10 @@
             @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
         </div>
     </div>
- 
+
 </div>
-
-
-
+<div id="divGetBudget" class="col-md-12 col-xs-12" style="margin-top:20px;">
+</div>
 <hr />
 <div id="getQuery" class="col-lg-12">
     @Html.Action("productSetPriceList", "ExpenseEstimateInput", new { typeForm = Model.activityFormTBMMKT.typeForm, actId = Model.activityFormModel.id })
@@ -574,13 +573,15 @@
 
 <script type="text/javascript">
 
-
+   
     $(document).ready(function () {
         $(".fv").each(function () {
             var v = $(this).val();
             if (v == '') {
                 $(this).focus();
             }
+
+          
         });
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
@@ -835,8 +836,6 @@
         }
     }
 
-
-
     function onchangeCate() {
 
         ObjModel = {};
@@ -1035,18 +1034,49 @@
         });
     }
 
+    function getBudgetBeer() {
 
+        var getTotal = [];
+        $('#tbCostList tr').each(function (row, tr) {
+            console.log('1');
+            getTotal.push({
+                total: $(".txttotal_" + row).val(),
+            });
 
-      function callPartialShowBudget(actId) {
+        });
+
+        $.ajax({
+            url: '@Url.Action("getBudgetBeer", "partialActivityDetail")',
+            data: {
+                listTotal: JSON.stringify(getTotal),
+                activityId: "@Model.activityFormModel.id",
+                brandId: $("#ddlProductBrand").val(),
+                actType: $("#ddlTheme").val(),
+                center: $("#ddlRegion").val(),
+                channelId: $("#ddlMainAgency").val(),
+                periodEndDate: $("#txtdateActivityEnd").val(),
+                status: "@Model.activityFormTBMMKT.statusId",
+
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (Response) {
+                callPartialShowBudget("@Model.activityFormModel.id");
+            }
+        });
+    }
+
+    function callPartialShowBudget(actId) {
 
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("showDetailBudgetControl", "SharedMasterFormDetail_Input")',
+            url: '@Url.Action("showDetailBudgetControl", "partialActivityDetail")',
             data: {
                 activityId: actId,
             }
         }).done(function (htmlResponse) {
-            $("#getQuery").html(htmlResponse)
+
+            $("#divGetBudget").html(htmlResponse)
         });
     }
 

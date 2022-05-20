@@ -178,6 +178,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> brandList { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public string typeForm { get; set; }
+        public DateTime? fiscalYear { get; set; }
     }
 
     public class CompanyMTM

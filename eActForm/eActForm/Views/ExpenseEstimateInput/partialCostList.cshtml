@@ -24,7 +24,7 @@
         <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
     </div>
     <div class="col-12">
-        <table class="table table-bordered" id="tbl_activityDetail">
+        <table class="table table-bordered" id="tbCostList">
             <thead class="thead-dark">
                 <tr>
                     <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
@@ -66,7 +66,7 @@
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost" /></td>
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblThemeCost_@index" onfocus="setZero(lblThemeCost_@index)" name="activityOfEstimateList[@index].themeCost" value="@item.themeCost" /></td>
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblGrowth_@index" onfocus="setZero(lblGrowth_@index)" name="activityOfEstimateList[@index].growth" value="@item.growth" /></td>
-                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calGrowthTotal('@item.productGroupId','@index')" id="lblTotal_@index" onfocus="setZero(lblTotal_@index)" name="activityOfEstimateList[@index].total" value="@item.total" /></td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight txttotal_@index" onchange="calGrowthTotal('@item.productGroupId','@index')" id="lblTotal_@index" onfocus="setZero(lblTotal_@index)" name="activityOfEstimateList[@index].total" value="@item.total" /></td>
 
 
 
@@ -135,6 +135,14 @@
 </div>
 
 <script>
+
+
+    $(document).ready(function () {
+         if ("@Model.activityFormTBMMKT.id" != '') {
+             getBudgetBeer();
+        }
+        
+    });
     function setZero(txtId) {
         if ($(txtId).val() == "0.00") {
             $(txtId).val("");
@@ -278,6 +286,7 @@
             }
         }).done(function (response) {
             callThemedetailcost('@Model.activityFormModel.id');
+            getBudgetBeer();
         });
 
     }

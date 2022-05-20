@@ -285,6 +285,10 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCForm.ToString();// result[1] = Activity_Model.activityType.NUM.ToString();
                             }
+                            else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                            {
+                                result[1] = Activity_Model.activityType.Beer.ToString();
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }

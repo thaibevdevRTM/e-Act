@@ -558,7 +558,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
@@ -587,26 +587,25 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<BudgetControlModels> getBudgetActBeer(string actType, string brandId, string center, string channelId, string periodEndDate)
+        public static List<BudgetTotal> getBudgetActBeer(string actType, string brandId, string center, string channelId, string periodEndDate)
         {
             try
             {
+                var conDate = BaseAppCodes.converStrToDatetimeWithFormat(periodEndDate, ConfigurationManager.AppSettings["formatDateUse"]);
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActBeer"
                 , new SqlParameter[] { new SqlParameter("@actType", actType)
                ,new SqlParameter("@brandId", brandId)
                ,new SqlParameter("@center", center)
                ,new SqlParameter("@channelId", channelId)
-               ,new SqlParameter("@periodEndDate", periodEndDate)});
+               ,new SqlParameter("@periodEndDate", conDate)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new BudgetControlModels
+                             select new BudgetTotal
                              {
-                                 balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
-                                 balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
-                                 amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
-                                 amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
-                                 EO = dr["EO"].ToString(),
-                                 LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
-                                 totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 useAmountTotal = string.IsNullOrEmpty(dr["total"].ToString()) ? 0 : (decimal?)dr["total"],
+                                 totalBudget = string.IsNullOrEmpty(dr["budgetAmount"].ToString()) ? 0 : (decimal?)dr["budgetAmount"],
+                                 amountBalanceTotal = string.IsNullOrEmpty(dr["balanceAmount"].ToString()) ? 0 : (decimal?)dr["balanceAmount"],
+
                              }).ToList();
                 return lists;
             }

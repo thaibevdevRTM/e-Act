@@ -272,8 +272,8 @@ namespace eActForm.Controllers
                         budgetTotalModel.amount = item.budgetTotal;
                         budgetTotalModel.amountBalance = item.amountBalance;
                         budgetTotalModel.activityType = item.activityType;
-                        var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
-                        budgetTotalModel.amountBalancePercen = item.useAmount / amount;
+                        var amount = item.budgetTotal > 0 ? item.budgetTotal : 1;
+                        budgetTotalModel.amountBalancePercen = (item.useAmount / amount) * 100;
                         budgetTotalModel.brandId = brandId;
                         // budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
                         budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
@@ -338,8 +338,8 @@ namespace eActForm.Controllers
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
                             budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
 
-                            var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
-                            budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
+                            var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount : 1;
+                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().balance + item.total) / amount) * 100;
                             budgetTotalModel.brandId = brandId;
                             budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                             budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";

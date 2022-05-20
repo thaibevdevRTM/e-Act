@@ -41,9 +41,8 @@ else
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
                             || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
-                            || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
-                            || @lvlEmp == 0
-                            || @lvlEmp > 8)
+                            || (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup) && @lvlEmp > 8)
+                            || @Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId))
                         {
                             <th>
                                 <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
@@ -75,11 +74,10 @@ else
                     {
                         <tr class="gradeX">
                             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
-                                 || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
-                                 || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
-                                 || @lvlEmp == 0
-                                 || @lvlEmp > 8
-                                )
+                                             || @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+                                             || (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup) && @lvlEmp > 8)
+                                             || @Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)
+                                            )
                             {
                                 <td class="a-center ">
                                     @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
@@ -138,9 +136,9 @@ else
 
         var setpaging = true;
         if ('@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
-            || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True'
-            || '@lvlEmp' == '0'
-            || @lvlEmp > 8) {
+            || ('@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True' && @lvlEmp > 8)
+            || '@Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)' == 'True')
+        {
             setpaging = false;
         }
 
@@ -229,7 +227,7 @@ else
                     callback: function (result) {
                         if (result) {
 
-                            $.each($("input[name='chk_approve']:checked"), function (index, value) {
+                            $.each($("input[name='chk_approve']:checked"), function (index, value,loop) {
                                 favorite.push($(this).val());
                                 setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
                             }).promise().done(function () {
@@ -269,12 +267,49 @@ else
                 approveType:'@AppCode.ApproveType.Activity_Form',
             }
         }).done(function (result) {
-            callPreviewApprove(actId)
+            checkFormApprove(actId)
         });
     }
 
-    function callPreviewApprove(actId) {
+    function checkFormApprove(actId) {
+
         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getMasterTypeIdByActId", "eAct")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (result) {
+            console.log(result.Success);
+            if (result.Success) {
+                console.log('master')
+                callPreviewApproveWithMasterForm(actId);
+            }
+            else {
+                console.log('Nonmaster')
+                callPreviewApproveNonMasterForm(actId);
+            }
+
+
+        });
+    }
+
+
+
+    function callPreviewApproveWithMasterForm(actId) {
+         $.ajax({
+                type: 'POST',
+                url: '@Url.Action("index", "MainReport")',
+                data: {
+                    activityId: actId,
+                }
+            }).done(function (htmlResponse) {
+                sentApprove_GenPdf(actId,htmlResponse);
+            });
+    }
+
+    function callPreviewApproveNonMasterForm(actId) {
+         $.ajax({
             type: 'POST',
             url: '@Url.Action("previewApprove", "Approve")',
             data: {
@@ -282,11 +317,11 @@ else
                 typeForm: '@AppCode.ApproveType.Activity_Form.ToString()',
             }
         }).done(function (htmlResponse) {
-            //$("#dataFromAct").val(htmlResponse);
-
             sentApprove_GenPdf(actId, htmlResponse);
         });
     }
+
+
 
     function sentApprove_GenPdf(actId, htmlResponse) {
         $.ajax({
@@ -300,7 +335,6 @@ else
             type: 'POST',
         }).done(function (response) {
             console.log('success' + actId);
-            console.log($("#dataFromAct").val());
         });
     }
 

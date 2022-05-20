@@ -2,7 +2,9 @@
 @using System.Configuration;
 @using eActForm.Models;
 @model eActForm.Models.SearchActivityModels
-
+@{
+    int year = DateTime.Today.Year;
+}
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
         <div class="row">
@@ -48,7 +50,9 @@
 </div>
 
 @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
-    || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))
+    || @Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)
+    || @Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)
+    )
 {
     <div class="form-group">
         <div class="col-md-6 col-xs-12">
@@ -108,6 +112,23 @@
 
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    ปีงบประมาณ
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownList("ddlYears",
+                      Enumerable.Range(year - 1, 3)
+                          .Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control",id= "ddlYears" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+    </div>
+
 
 }
 
@@ -259,6 +280,9 @@
 
         $(".multiselect .caret").css('float', 'right');
         $(".multiselect .caret").css('margin', '8px 0');
+
+
+
     });
 
     $(function () {

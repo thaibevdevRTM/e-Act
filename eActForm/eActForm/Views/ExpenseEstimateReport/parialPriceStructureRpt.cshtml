@@ -72,56 +72,56 @@
         {
             foreach (var item in Model.productcostdetaillist1)
             {
-                <tr>
-                    @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
-                    {
-                        <td style="border-style: solid; border-width: 1px 1px 0px 1px; border-collapse: collapse;" class="font11 text-center">@Html.DisplayFor(m => item.productCode)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.saleIn)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.saleOut)</td>
+    <tr>
+        @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+        {
+            <td style="border-style: solid; border-width: 1px 1px 0px 1px; border-collapse: collapse;" class="font11 text-center">@Html.DisplayFor(m => item.productCode)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.saleOut)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.saleIn)</td>
 
-                    }
-                    else
-                    {
-                        if (item.isShowGroup == true)
-                        {
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
-                        }
-                        else
-                        {
-                            if (item.detailGroup.Count >= 1)
-                            {
-                                <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
-                            }
-                        }
+        }
+        else
+        {
+            if (item.isShowGroup == true)
+            {
+                <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+            }
+            else
+            {
+                if (item.detailGroup.Count >= 1)
+                {
+                    <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
+                }
+            }
 
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-                        if (Model.activityFormTBMMKT.typeForm != Activity_TBMMKT_Model.activityType.OMT.ToString())
-                        {
-                            if (item.specialDiscBaht != 0)
-                            {
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
-                            }
-                            else
-                            {
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                            }
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
-                        }
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.rsp)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="font11">@Html.DisplayFor(m => item.unitTxt)</td>
-                    }
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+            if (Model.activityFormTBMMKT.typeForm != Activity_TBMMKT_Model.activityType.OMT.ToString())
+            {
+                if (item.specialDiscBaht != 0)
+                {
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                }
+                else
+                {
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                }
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+            }
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.rsp)</td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="font11">@Html.DisplayFor(m => item.unitTxt)</td>
+        }
 
 
 
-                </tr>
+    </tr>
 
             }
         }
