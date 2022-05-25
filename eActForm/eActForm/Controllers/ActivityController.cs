@@ -224,6 +224,34 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult copyAndSaveNewActivity_MasterForm(string activityId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                string new_actId = Guid.NewGuid().ToString();
+                Activity_TBMMKT_Model activityModel = new Activity_TBMMKT_Model();
+                activityModel = (Activity_TBMMKT_Model)TempData["actForm" + activityId];
+                activityModel.activityFormTBMMKT.activityNo = "";
+                activityModel.activityFormTBMMKT.statusId = 1;
+                activityModel.activityFormModel.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
+                activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]); 
+                activityModel.activityFormModel.activityPeriodEndStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
+                int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activityModel, new_actId);
+                TempData.Keep();
+                result.ActivityId = new_actId;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("copyAndSaveNewActivity_MasterForm => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public ActionResult uploadFilesImage(string actId)

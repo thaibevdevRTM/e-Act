@@ -683,5 +683,29 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+
+        public static bool copyDocument_MasterForm(string actId_old , string actId_new)
+        {
+            try
+            {
+                bool result = false;
+               
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CopyDocumentMasterForm"
+                    , new SqlParameter[] { new SqlParameter("@actId_old", actId_old)
+                     , new SqlParameter("@actId_new" ,actId_new)
+                     , new SqlParameter("@createByUser" ,UtilsAppCode.Session.User.empId)});
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("copyDocument_MasterForm >>" + ex.Message);
+            }
+
+        }
     }
 }

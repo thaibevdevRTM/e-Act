@@ -575,6 +575,11 @@
 
    
     $(document).ready(function () {
+
+
+       
+
+
         $(".fv").each(function () {
             var v = $(this).val();
             if (v == '') {
@@ -589,6 +594,7 @@
             $("#divRegion").show();
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+            getBudgetBeer();
             $("#txtArea").show();
             $("#divRegion").show();
             $("#divProductGroup").hide();
@@ -1038,7 +1044,6 @@
 
         var getTotal = [];
         $('#tbCostList tr').each(function (row, tr) {
-            console.log('1');
             getTotal.push({
                 total: $(".txttotal_" + row).val(),
             });

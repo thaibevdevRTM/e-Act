@@ -62,7 +62,7 @@
                         <td style="text-align:right"><input readonly type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblTypeTheme_@index" name="activityOfEstimateList[@index].typeTheme" value="@item.typeTheme" /> </td>
                         <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblProductName_@index" name="activityOfEstimateList[@index].productDetail" value="@item.productDetail" /> </td>
                         <td style="text-align:right"><input type="number" min="0" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblUnit_@index" name="activityOfEstimateList[@index].unit" value="@item.unit" onfocus="setZero(lblUnit_@index)" /> </td>
-                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId', '@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost" /></td>
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblThemeCost_@index" onfocus="setZero(lblThemeCost_@index)" name="activityOfEstimateList[@index].themeCost" value="@item.themeCost" /></td>
                         <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblGrowth_@index" onfocus="setZero(lblGrowth_@index)" name="activityOfEstimateList[@index].growth" value="@item.growth" /></td>
@@ -136,13 +136,6 @@
 
 <script>
 
-
-    $(document).ready(function () {
-         if ("@Model.activityFormTBMMKT.id" != '') {
-             getBudgetBeer();
-        }
-        
-    });
     function setZero(txtId) {
         if ($(txtId).val() == "0.00") {
             $(txtId).val("");
@@ -188,6 +181,9 @@
             }
         }).done(function (htmlResponse) {
             $("#divgetdetailcost").html(htmlResponse)
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+                getBudgetBeer();
+            }
         });
     }
 
@@ -286,7 +282,8 @@
             }
         }).done(function (response) {
             callThemedetailcost('@Model.activityFormModel.id');
-            getBudgetBeer();
+
+
         });
 
     }

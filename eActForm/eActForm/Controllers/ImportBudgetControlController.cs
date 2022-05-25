@@ -78,7 +78,7 @@ namespace eActForm.Controllers
                             modelBudget.id = genId;
                             modelBudget.companyId = model.companyId;
                             typeImportCatch = "/// brand : " + dt.Rows[i]["BRAND"].ToString();
-                            modelBudget.brandId = QueryGetAllBrand.GetAllBrand().Where(x => x.brandName.Trim().ToLower().Replace(" ", "").Contains(dt.Rows[i]["BRAND"].ToString().Trim().ToLower().Replace(" ", ""))).FirstOrDefault().id;
+                            modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
                             modelBudget.chanelName = dt.Columns[ii].ToString();
@@ -149,7 +149,7 @@ namespace eActForm.Controllers
                         modelBudget.id = genId;
                         modelBudget.companyId = model.companyId;
                         typeImportCatch = "/// brand : " + dtBrand.Rows[i]["BRAND"].ToString();
-                        modelBudget.brandId = QueryGetAllBrand.GetAllBrand().Where(x => x.brandName.Trim().ToLower().Replace(" ", "").Contains(dtBrand.Rows[i]["BRAND"].ToString().Trim().ToLower().Replace(" ", ""))).FirstOrDefault().id;
+                        modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
                         modelBudget.budgetGroupType = ImportBudgetControlAppCode.brand;
                         modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                         modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);

@@ -47,8 +47,8 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormTBMMKT.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormTBMMKT.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
-                    model.activityFormTBMMKT.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
-                    model.activityFormTBMMKT.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    model.activityFormTBMMKT.createdByUserId = UtilsAppCode.Session.User.empId;
+                    model.activityFormTBMMKT.createdDate =  DateTime.Now;
                     model.activityFormTBMMKT.updatedByUserId = UtilsAppCode.Session.User.empId;
                     model.activityFormTBMMKT.updatedDate = DateTime.Now;
                     model.activityFormTBMMKT.delFlag = false;
@@ -64,6 +64,7 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOtherList(rtn, model, activityId);
+
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                     rtn = ProcessInsertEstimateSub(rtn, model, activityId);
 
@@ -1440,13 +1441,13 @@ namespace eActForm.BusinessLayer
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertProductCostdetail"
-                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    , new SqlParameter[] {new SqlParameter("@productGroupId",model.productGroupId)
                     ,new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@productId",model.productId)
                     ,new SqlParameter("@productName",model.productName)
-                    ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
+                    ,new SqlParameter("@wholeSalesPrice", model.wholeSalesPrice)
                     ,new SqlParameter("@saleIn",model.saleIn)
-                    ,new SqlParameter("@saleOut", model.saleOut)
+                    ,new SqlParameter("@saleOut",model.saleOut)
                     ,new SqlParameter("@disCount1",model.disCount1)
                     ,new SqlParameter("@disCount2",model.disCount2)
                     ,new SqlParameter("@disCount3",model.disCount3)
@@ -1458,10 +1459,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@promotionCost",model.promotionCost)
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)
-                    ,new SqlParameter("@Date",model.DateInput)
-                    ,new SqlParameter("@place",model.place)
-                    ,new SqlParameter("@detail",model.detail)
-                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@rsp",model.rsp)
+                    ,new SqlParameter("@unitTxt",model.unitTxt)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
