@@ -95,14 +95,20 @@ namespace eActForm.Controllers
 
 
 
-        public JsonResult getBudgetBeer(string listTotal ,string activityId, string brandId, string actType, string center, string channelId,string periodEndDate, string status)
+        public JsonResult getBudgetBeer(string listTotal, string activityId, string brandId, string actType, string center, string channelId, string periodEndDate, string status)
         {
             var result = new AjaxResult();
+            decimal? getSumAmount = 0;
             try
             {
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 var getListTotal = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listTotal);
-                var getSumAmount = getListTotal.Where(x => x.total > 0).Sum(x => x.total);
+
+                if (status == "1" || status == "5")
+                {
+                    getSumAmount = getListTotal.Where(x => x.total > 0).Sum(x => x.total);
+                }
+
 
                 var getBudget = ActFormAppCode.getBudgetActBeer(actType, brandId, center, channelId, periodEndDate);
 
@@ -118,7 +124,7 @@ namespace eActForm.Controllers
                 }
 
                 TempData["showBudgetBeer" + activityId] = model;
-                
+
                 if (model.budgetTotalList.Any())
                 {
                     result.Success = true;

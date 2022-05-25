@@ -221,11 +221,11 @@ namespace eActForm.BusinessLayer
                 {
                     if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
                     {
-                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId == null ? model.tB_Act_ActivityForm_DetailOther.productBrandId : model.activityFormTBMMKT.BrandlId;
                     }
                     else
                     {
-                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId == null ? model.tB_Act_ActivityForm_DetailOther.channelId : model.activityFormTBMMKT.channelId;
                     }
                 }
                 else

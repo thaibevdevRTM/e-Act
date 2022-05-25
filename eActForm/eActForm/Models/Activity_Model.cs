@@ -440,6 +440,7 @@ namespace eActForm.Models
         public string detail { get; set; }
         public string customer { get; set; }
         public decimal? rsp { get; set; }
+        public string masterTypeId { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

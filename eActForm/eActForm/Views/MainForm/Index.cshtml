@@ -93,7 +93,7 @@
 
 <div style="margin-left:25px;" class="text-center">
 
-    @if ((Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3) && Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
+    @if ((Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3))
     {
         <div style="display: inline-block" id="divSaveAs">
             <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew_MasterForm()">&nbsp;Save As</button>
