@@ -69,6 +69,10 @@ namespace eActForm.Controllers
                     dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
+
+                        
+
+
                         typeImportCatch = ImportBudgetControlAppCode.channel;
                         rowImport = rowImport++;
                         for (int ii = 2; ii < dt.Columns.Count; ii++)
@@ -78,6 +82,14 @@ namespace eActForm.Controllers
                             modelBudget.id = genId;
                             modelBudget.companyId = model.companyId;
                             typeImportCatch = "/// brand : " + dt.Rows[i]["BRAND"].ToString();
+
+                            if (!QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(dt.Rows[i]["brandId"].ToString())).Any())
+                            {
+                                resultAjax.Message += "brandId is null &&";
+                                throw new Exception();
+                            }
+
+
                             modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                             modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
                             modelBudget.amount = decimal.Parse(AppCode.checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
@@ -149,6 +161,13 @@ namespace eActForm.Controllers
                         modelBudget.id = genId;
                         modelBudget.companyId = model.companyId;
                         typeImportCatch = "/// brand : " + dtBrand.Rows[i]["BRAND"].ToString();
+                        if (!QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(dtBrand.Rows[i]["brandId"].ToString())).Any())
+                        {
+                            resultAjax.Message += "brandId is null   &&   ";
+                                throw new Exception();
+                        }
+                            
+
                         modelBudget.brandId = dtBrand.Rows[i]["brandId"].ToString();
                         modelBudget.budgetGroupType = ImportBudgetControlAppCode.brand;
                         modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -258,7 +277,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                resultAjax.Message = ex.Message + "TypeImport : " + typeImportCatch + " Row : " + rowImport;
+                resultAjax.Message += ex.Message + "TypeImport : " + typeImportCatch + " Row : " + rowImport;
 
             }
             return Json(resultAjax, "text/plain");

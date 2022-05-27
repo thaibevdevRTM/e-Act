@@ -341,7 +341,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId,string statusNote)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -351,7 +351,6 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
                 if (countresult > 0)
                 {
-                    //GenPDFAppCode.doGen(GridHtml1, activityId, Server);
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     if (model.FirstOrDefault().statusId != 3)
                     {
@@ -359,25 +358,18 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                if (ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                    //ActFormAppCode.insertReserveBudget(activityId);
-                                }
                                 if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
                                     //waiting update budgetControl
                                     bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
                                 }
 
-                                //if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id) || ConfigurationManager.AppSettings["companyId_MT"] == model.FirstOrDefault().companyId)
-                                //{
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
-                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
+                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString());
                                 }
-                                //}
-                                //var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                              
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));

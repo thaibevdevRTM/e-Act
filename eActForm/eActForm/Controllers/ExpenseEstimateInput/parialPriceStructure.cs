@@ -100,7 +100,7 @@ namespace eActForm.Controllers
                 if (model.masterTypeId == ConfigurationManager.AppSettings["formSetPriceOMT"])
                 {
                     if (sNormal > 0 && model.normalCost > 0)
-                    p_normalGp = (sNormal - (decimal)model.normalCost) / sNormal;
+                    p_normalGp = ((sNormal - (decimal)model.normalCost) / sNormal)*100;
                     
                 }
                 else
