@@ -42,11 +42,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Equals(ConfigurationManager.AppSettings["productGroupBeer"])).ToList();
                     activity_TBMMKT_Model.activityFormModel.productGroupId = ConfigurationManager.AppSettings["productGroupBeer"];
 
-                    if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
-                    {
-                        activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup();
-                        activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("mainAgency", "");
-                    }
+                   
 
                 }
                 else
@@ -86,7 +82,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ActivityForm => " + ex.Message);
+                ExceptionManager.WriteError("partialSetPriceDetail => " + ex.Message);
             }
 
 
