@@ -944,7 +944,7 @@ namespace eActForm.BusinessLayer
                         foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
                         {
 
-                            if (!templistEoInDoc.Where(x => x.EO.Contains(itemGetEO.EO)).Any())
+                            if (!templistEoInDoc.Where(x => x.EO.Equals(itemGetEO.EO)).Any())
                             {
                                 detailEO detailEOModel = new detailEO();
                                 detailEOModel.EO = itemGetEO.EO;
