@@ -24,11 +24,11 @@ namespace eActForm.Controllers
             {
                 model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon);
             }
-            else if(AppCode.compPomForm.Contains(UtilsAppCode.Session.User.empCompanyGroup))
+            else if (AppCode.compPomForm.Contains(UtilsAppCode.Session.User.empCompanyGroup))
             {
                 model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon).Where(x => x.department == ConfigurationManager.AppSettings["conditionActBeer"]).ToList();
             }
-            else if(UtilsAppCode.Session.User.isAdminTBM)
+            else if (UtilsAppCode.Session.User.isAdminTBM)
             {
                 model.masterTypeFormList = QueryGetMasterForm.getAllMasterTypeForm(AppCode.StrCon).Where(x => x.companyId == ConfigurationManager.AppSettings["companyId_TBM"]).ToList();
             }
@@ -51,6 +51,7 @@ namespace eActForm.Controllers
             try
             {
                 string resultFilePath = "";
+                int resultInert = 0;
                 int CountFile = model.InputFile.Count();
                 for (int i = 0; i < CountFile; i++)
                 {
@@ -62,7 +63,9 @@ namespace eActForm.Controllers
                 }
                 DataTable dt = new DataTable();
                 dt = ExcelAppCode.ReadExcel(resultFilePath, "Import", "A:AB");
-                List<ImportFlowModel.ImportFlowModels> modelList = new List<ImportFlowModel.ImportFlowModels>();
+             
+
+                var rtnDelete = ImportFlowPresenter.deleteTempFlow(AppCode.StrCon, UtilsAppCode.Session.User.empId);
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     if (!string.IsNullOrEmpty(dt.Rows[i]["company"].ToString()))
@@ -98,22 +101,20 @@ namespace eActForm.Controllers
                         modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString();
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
-                        modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
-                        modelFlow.checkFlowExist = ImportFlowPresenter.checkFlowApprove(AppCode.StrCon, modelFlow);
-                        if(model.masterTypeId == ConfigurationManager.AppSettings["formEactBeer"])
-                        {
-                            modelFlow.actType = eForms.Presenter.MasterData.QueryGetAllActivityGroup.getAllActivityGroup(AppCode.StrCon).Where(x => x.activityCondition.Equals(ConfigurationManager.AppSettings["conditionActBeer"]) && x.activitySales.Contains(dt.Rows[i]["actType"].ToString())).FirstOrDefault().activitySales;
-                        }
-                        else
-                        {
-                            modelFlow.actType = dt.Rows[i]["actType"].ToString();
-                        }
-                        model.importFlowList.Add(modelFlow);
+                        //modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
+
+                        resultInert = ImportFlowPresenter.InserToTemptFlow(AppCode.StrCon, modelFlow);
+
                     }
-                    
+
                 }
+
+                model.importFlowList = ImportFlowPresenter.getFlowAterImport(AppCode.StrCon, UtilsAppCode.Session.User.empId);
                 TempData["importFlowModel"] = model;
-                resultAjax.Success = true;
+
+                if (model.importFlowList.Any())
+                resultAjax.Success = true; 
+
 
             }
             catch (Exception ex)

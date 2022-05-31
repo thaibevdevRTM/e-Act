@@ -92,7 +92,7 @@
                             else {
                                 doAlert(response.Message);
                             }
-                            $("#WaitDialog").hide();
+                           
                         }
                     });
                 }
@@ -110,7 +110,8 @@
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
-            $("#divGetDetail").html(htmlResponse)
+            $("#divGetDetail").html(htmlResponse);
+            $("#WaitDialog").hide();
         });
     }
 </script>
