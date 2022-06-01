@@ -147,9 +147,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#seachApprove").submit();
-
-
+        
+        $("#ddlStatus").prop('selectedIndex', 3);
+        $("#ddlYears").prop('selectedIndex', 1);
         $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
         document.getElementById("defaultOpen").click();
 
@@ -160,8 +160,8 @@
                 $('.clsSummary').slideToggle("fast");
             });
 
-         $("#ddlYears").prop('selectedIndex', 1);
-         $("#ddlStatus").prop('selectedIndex', 3);
+        
+         $("#seachApprove").submit();
         }
     })
 
