@@ -38,7 +38,8 @@
 </div>
 
 
-<a href="~/Uploadfiles/template/Template_Flow.xlsx">Download Template Flow</a>
+<a href="~/Uploadfiles/template/Template_Flow.xlsx">Download Template Flow(MT,OMT,TBM)</a><br />
+<a href="~/Uploadfiles/template/Template_FlowBeer.xlsx">Download Template Flow (ActBeer)</a>
 
 
 <div id="divGetDetail" class="col-lg-12">
@@ -92,7 +93,7 @@
                             else {
                                 doAlert(response.Message);
                             }
-                           
+
                         }
                     });
                 }
@@ -109,7 +110,7 @@
 
             }
         }).done(function (htmlResponse) {
-            $("#WaitDialog").hide();
+
             $("#divGetDetail").html(htmlResponse);
             $("#WaitDialog").hide();
         });
