@@ -1,0 +1,189 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+@model eActForm.Models.SearchActivityModels
+@{
+    int year = DateTime.Today.Year;
+    int lvlEmp = 0;
+    lvlEmp = @UtilsAppCode.Session.User.empLevel != "" ? int.Parse(@UtilsAppCode.Session.User.empLevel) : 0;
+}
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                Act No.
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                Status
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+
+                @Html.DropDownList("model.approveStatusList", new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+                Start date
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-7), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+            End date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                หน่วยงาน
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownList("model.mainAgencyList", new SelectList(Model.mainAgencyList, "val1", "displayVal"), "Please Select", new { @class = "form-control", id = "ddlMainAgency", Name = "ddlMainAgency" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                ชื่อกิจกรรม
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownList("model.activityGroupBeerList", new SelectList(Model.activityGroupBeerList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlActGroupBeer", Name = "ddlActGroupBeer" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                ภาค
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownList("model.regionGroupList", new SelectList(Model.regionGroupList, "name", "name", 0), new
+           {
+               @class = "form-control textboxcss",
+               id = "ddlRegion",
+               Name = "ddlRegion"
+           })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Document Type
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(model => model.masterTypeFormList, new SelectList(Model.masterTypeFormList, "id", "nameForm"), "Please Select",
+              new
+                   {
+                  @class = "form-control",
+                       id = "ddlMasterType",
+                       Name = "ddlMasterType",
+                       multiple = "multiple"
+
+              })
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                ปีงบประมาณ
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownList("ddlYears",
+                  Enumerable.Range(year - 1, 3)
+                      .Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", id = "ddlYears" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+    </div>
+</div>
+
+
+<hr />
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <a href="#" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                <button type="submit" id="btnSubmitSearch" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    td div span {
+        line-height: 0px;
+    }
+
+    .multiselect-container {
+        width: 100% !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .btn {
+        text-align: left;
+    }
+</style>
+
+<script>
+
+    $(document).ready(function () {
+        $('#ddlMasterType').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+
+
+        $(".multiselect .caret").css('float', 'right');
+        $(".multiselect .caret").css('margin', '8px 0');
+
+
+
+    });
+
+    $(function () {
+        $("#startDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#endDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+    });
+
+
+</script>
+
+

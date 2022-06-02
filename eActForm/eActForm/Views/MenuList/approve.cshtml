@@ -14,6 +14,17 @@
                     }
                 </a>
             </li>
+
+            <li>
+                <a href="@Url.Action("Index", "ApproveBeerLists")">
+                    Approve Form Beer
+                    @if (UtilsAppCode.Session.User.countWatingActForm != "0")
+                    {
+                        <span id="txtApproveCount" class='badge bg-green'> </span>
+                    }
+                </a>
+            </li>
+
             @if (UtilsAppCode.Session.User.isSuperAdmin ||
                 UtilsAppCode.Session.User.isApprove && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_HCM"])
             {
@@ -44,7 +55,7 @@
                         }
                     </a>
                 </li>
-                
+
             }
         </ul>
     </li>

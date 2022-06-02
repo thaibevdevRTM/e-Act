@@ -54,16 +54,19 @@
                                 if (item.checkFlowExist == true)
                                 {
 
-                                    <div id="divChkFalse">false</div>
+                                    <a>false</a>
+                                    <input type="hidden" id="hdCheckFlow" value="false" />
                                 }
                                 else
                                 {
-                                    <div>true</div>
+                                    <a>true</a>
+                                  
                                 }
                             }
                             else
                             {
-                                <div id="divChkFalse">ไม่พบflow</div>
+                                <a>ไม่พบflow</a>
+                                <input type="hidden" id="hdCheckFlow" value="notFlow" />
                             }
 
                         </td>
@@ -121,8 +124,8 @@
     });
 
     function checkData() {
-        var getTxtChk = document.getElementById("divChkFalse")
-        if (getTxtChk.innerHTML == 'false' || ($('#ddlMaster').val() == '@ConfigurationManager.AppSettings["formEactBeer"]' && getTxtChk.innerHTML == 'ไม่พบflow')) {
+        
+        if ($('#hdCheckFlow').val() == 'false' || ($('#ddlMaster').val() == '@ConfigurationManager.AppSettings["formEactBeer"]' && $('#hdCheckFlow').val() == 'notFlow')) {
             alert('ไม่สามารถ Importได้ เนื่องจากมี flow ซ้ำ');
         }
         else {
