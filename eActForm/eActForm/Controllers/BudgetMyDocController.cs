@@ -214,7 +214,7 @@ namespace eActForm.Controllers   //update 21-04-2020
                 }
 
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budgetApproveId);
 
                 resultAjax.Success = true;
             }
