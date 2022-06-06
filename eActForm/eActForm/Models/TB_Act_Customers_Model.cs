@@ -22,6 +22,7 @@ namespace eActForm.Models
             public string createdByUserId { get; set; }
             public DateTime updatedDate { get; set; }
             public string updatedByUserId { get; set; }
+            public string condition { get; set; }
         }
     }
 }

@@ -151,6 +151,7 @@ namespace eActForm.BusinessLayer
                                  cusNameTH = d["descTh"].ToString() + "(" + d["nameShot"].ToString() + ")",
                                  cusNameEN = d["descEn"].ToString(),
                                  delFlag = d["delFlag"].ToString(),
+                                 condition = d["condition"].ToString(),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
