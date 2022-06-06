@@ -377,7 +377,7 @@ namespace eActForm.Models
 
 
 
-        public static string mergePDF(string rootPathOutput, string[] pathFile)
+        public static string mergePDF(string rootPathOutput, string[] pathFile,string activityId)
         {
             string result = string.Empty;
             PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
@@ -413,7 +413,7 @@ namespace eActForm.Models
             {
                 EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
-                    , "eAct ApiApprove mergePDF 1 Error"
+                    , "eAct ApiApprove mergePDF 1 Error " + activityId
                     , ex.Message
                     , null);
                 try
@@ -431,7 +431,7 @@ namespace eActForm.Models
                     //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
                     EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
-                    , "eAct ApiApprove mergePDF 2 Error"
+                    , "eAct ApiApprove mergePDF 2 Error " + activityId
                     , ex.Message
                     , null);
                 }
