@@ -612,6 +612,8 @@ namespace eActForm.BusinessLayer
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
+                    
+
                     if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                     {
                         emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
@@ -734,6 +736,10 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                        {
+                            emailType = AppCode.ApproveType.ActivityBeer;
+                        }
 
 
                         strBody = string.Format(strBody

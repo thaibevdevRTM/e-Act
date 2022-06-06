@@ -18,9 +18,9 @@
             <li>
                 <a href="@Url.Action("Index", "ApproveBeerLists")">
                     Approve Form Beer
-                    @if (UtilsAppCode.Session.User.countWatingActForm != "0")
+                    @if (UtilsAppCode.Session.User.countWatingActFormBeer != "0")
                     {
-                        <span id="txtApproveCount" class='badge bg-green'> </span>
+                    <span id="txtApproveCount" class='badge bg-green'> @UtilsAppCode.Session.User.countWatingActFormBeer</span>
                     }
                 </a>
             </li>

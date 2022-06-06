@@ -358,7 +358,7 @@ namespace eForms.Presenter.AppCode
                                  company = d["company"].ToString(),
                                  companyId = d["companyId"].ToString(),
                                  actType = d["actTypeId"].ToString(),
-                                 subjectId = d["subjectId"].ToString(),
+                                 subject = d["subjectId"].ToString(),
                                  customer = d["customer"].ToString(),
                                  customerId = d["customerId"].ToString(),
                                  productCate = d["productCate"].ToString(),

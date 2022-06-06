@@ -94,6 +94,7 @@ namespace eActForm.Models
         public enum ApproveEmailype
         {
             approve
+                , approveBeer
                 , document
                 , budget_form
                 , attachment
@@ -101,6 +102,7 @@ namespace eActForm.Models
         public enum ApproveType
         {
             Activity_Form
+                ,ActivityBeer
                 , Report_Detail
                 , Report_Summary
                 , Budget_form
