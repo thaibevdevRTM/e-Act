@@ -92,7 +92,7 @@ else
                                 <a onclick="callApproveList('@item.id');">
                                     <i class="btn ink-reaction btn-dark fa fa-eye"></i>
                                 </a>
-                                @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
+                                @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.ActivityBeer }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                             </td>
                             @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
                             {
@@ -250,7 +250,7 @@ else
         bootbox.alert({
             message: "<div class= 'row' > <div class='text-center'><img width='150px' src='http://thaibevss.com/eAct/images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
             callback: function () {
-                var url = '@Url.Action("Index", "ApproveLists")';
+                var url = '@Url.Action("Index", "ApproveBeerLists")';
                 window.location.replace(url);
             }
         })
