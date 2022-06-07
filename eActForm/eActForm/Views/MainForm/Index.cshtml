@@ -307,7 +307,7 @@
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#txtOrerOf").val() == "") { required += "&emsp;ตามคำสั่ง*<br>"; validate = false; }
 
-            if (($("#txtDeparture_0").val() != "" &&
+            if (!($("#txtDeparture_0").val() != "" &&
                 $("#txtArrival_0").val() != "" &&
                 $("#txtForProject_0").val() != "" &&
                 $("#txtPeriod_0").val() != "")) {
