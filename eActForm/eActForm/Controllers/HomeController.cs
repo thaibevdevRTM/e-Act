@@ -242,6 +242,15 @@ namespace eActForm.Controllers
             return View();
         }
 
+        public ActionResult pdpa()
+        {
+            string secretKey = "1TTh@ib3v";
+            string body = "ticketgo" + "11035585" + "rtmDev" + DateTime.Now.ToString("yyyyMMdd");
+            var token = ActFormAppCode.getPDPAToken(body,secretKey);
+            ViewBag.PDPATOKEN = token;
+            return View();
+        }
+
         public JsonResult getStatusNote(string actId)
         {
             AjaxResult result = new AjaxResult();

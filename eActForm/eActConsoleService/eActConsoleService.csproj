@@ -94,6 +94,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\eActForm\eActForm.csproj">
+      <Project>{f2ed982e-1ccb-455b-ab47-758aec9c6a25}</Project>
+      <Name>eActForm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
       <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
       <Name>WebLibrary</Name>

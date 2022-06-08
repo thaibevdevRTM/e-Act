@@ -15,6 +15,20 @@ namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
+
+        public static string getPDPAToken(string body, string secretKey)
+        {
+            var endcoding = new System.Text.UTF8Encoding();
+            byte[] keyByte = endcoding.GetBytes(secretKey);
+            byte[] messageByte = endcoding.GetBytes(body);
+            var result = string.Empty;
+            using (var hmacsha256 = new System.Security.Cryptography.HMACSHA256(keyByte))
+            {
+                byte[] hashmessage = hmacsha256.ComputeHash(messageByte);
+                result = Convert.ToBase64String(hashmessage);
+            }
+            return result;
+        }
         public static int updateWaitingCancel(string actId, string remark, string statusNote)
         {
             try

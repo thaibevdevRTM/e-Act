@@ -1,0 +1,69 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://oth1dev.apps.thaibev.com/thaibevconsentapp/style.min.css">
+    <script src="http://oth1dev.apps.thaibev.com/thaibevconsentapp/main.js"></script>
+</head>
+<body id="data">
+    <div id="myHeader" style="z-index: 99999;">
+    </div>
+    <div class="container">
+        <article style="margin-top: 10px;">
+            <div id="consent-text" style="text-align:left;padding: 10px;"></div>
+            <thaibev-consent user="57468" appcode="06137164-B967-46D2-BB62-400B1AC65D20" lng="th|en" consentType="A">
+            </thaibev-consent>
+        </article>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
+<script type="text/javascript">
+	        $(document).ready(function () {
+				var tenant = "oishi";
+				var location = "www.demo.com";
+				var contact = "-1";
+				var sender = "thaibev-it";
+				var culture = "th";
+	            var d = new Date();
+	            var str1 = ("0" + d.getDate().toString()).slice(-2);
+	            var str2 = ("0" + (d.getMonth() + 1).toString()).slice(-2);
+	            var str3 = d.getFullYear().toString();
+	            var res = str3.concat(str2, str1);
+	            var hash = CryptoJS.HmacSHA256(`${location}${contact}${tenant}${res}`, "1TTh@ib3v");
+				var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+	            var pData = {
+	                "appCode": "D3693822-A329-437F-84F6-897930491030",
+	                "userId": "-1",
+	                "lang": culture,
+	                "consentType": "A"
+	            };
+
+	            $.ajax({
+	                type: 'POST',
+	                //url: ' https://api.thaibevapp.com/thaibevconsentapi/v1/Content/GetConsentByApp',
+	                //url: ' https://kongdev.thaibevapp.com/thaibevconsentapi/v1/Content/GetConsentByApp',
+					url: ' http://oth1dev.apps.thaibev.com/thaibevconsentapi/v1/Content/GetConsentByApp',
+	                dataType: 'json',
+	                data: JSON.stringify(pData),
+	                async: true,
+	                contentType: 'application/json',
+	                beforeSend: function (x) {
+	                    x.setRequestHeader("tenant", tenant);
+	                    x.setRequestHeader("location", location);
+	                    x.setRequestHeader("contact", contact);
+	                    x.setRequestHeader("sender", sender);
+						x.setRequestHeader("signature", hashInBase64);
+	                },
+
+	                success: function (data) {
+	                    $('#consent-text').html(data.content);
+	                },
+
+	                error: function (xhr, status, error) {
+	                    //ShowLoader(false);
+	                    //alert(666);
+	                }
+	            });
+	        });
+</script>

@@ -14,7 +14,12 @@
 
     @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/jquery")
 
-   
+    <!-- Another example script that we want to block -->
+    <script type="text/plain" data-type="default" src="~/Scripts/consentScript.js">
+    </script>
+
+    <!-- Include this css to your project -->
+    <link rel="stylesheet" type="text/css" href="~/Content/cookieconsent/cookieconsent/cookieconsent.min.css" />
 
 </head>
 <body class="nav-md">
@@ -223,5 +228,80 @@
 
         gtag('config', 'UA-138769477-1');
     </script>
+
+
+    <!-- thaibev consent cookie An example edit consent link -->
+    <div style="position:absolute; bottom:10px; left: 10px">
+        <a href="#" onclick="consentManager.revokeConsent(); return false;">Edit consent</a>
+    </div>
+
+    <!-- Include the following scripts to your project just before </body> -->
+    <script src="~/Content/cookieconsent/cookieconsent/cookieconsent.min.js" data-cfasync="false"></script>
+    <script src="~/Content/cookieconsent/consent-manager.js"></script>
+    <script>
+        function redirectPost(url, data) {
+
+            var form = document.createElement('form');
+            document.body.appendChild(form);
+            form.method = 'post';
+            form.action = 'https://oth1dev.apps.thaibev.com/thaibevconsentapp/PDPA.aspx';
+            form.target = '_blank';
+
+            user = document.createElement("input");
+            user.value = "#currentUser.username#";
+            user.name = "user";
+            user.type = 'hidden';
+
+            appcode = document.createElement("input");
+            appcode.value = "CFE0214C-11EF-4487-90D4-31EC66ACDF43";
+            appcode.name = "appcode";
+            appcode.type = 'hidden';
+
+            lng = document.createElement("input");
+            lng.value = "th";
+            lng.name = "lng";
+            lng.type = 'hidden';
+
+            consentType = document.createElement("input");
+            consentType.value = "A";
+            consentType.name = "consentType";
+            consentType.type = 'hidden';
+
+            form.appendChild(user);
+            form.appendChild(appcode);
+            form.appendChild(lng);
+            form.appendChild(consentType);
+            form.submit();
+        }
+    </script>
+
+    <script>
+        var consentManager = new ConsentManager({
+            palette: {
+                popup: {
+                    background: "#edeff5",
+                    text: "#838391"
+                },
+                button: {
+                    background: "#4b81e8"
+                },
+            },
+            content: {
+                message: 'เว็บไซต์นี้มีการติดตั้ง“คุกกี้”ไว้ในระบบของท่าน เพื่อให้ได้รับความสะดวกสบายในการใช้งานเว็บไซต์และช่วยให้บริษัทสามารถพัฒนา หรือปรับปรุงแก้ไขเว็บไซต์ให้ดียิ่งขึ้น อ่าน<a href="#" onclick="redirectPost();return false;" class="cc-link" target="blank">ประกาศการใช้งาน คุกกี้</a>',
+                allow: 'ยอมรับ',
+                deny: 'ปฏิเสธ'
+                // message: 'This website sets up “cookies” to your system in order to improve your experience while navigating our website and to help us develop or improve the quality of our website. To learn more, please read the <a href="#" class="cc-link">Announcement on the Personal Data Protection.</a>',
+                // allow: 'Accept',
+                // deny: 'Decline'
+            },
+            showLink: false
+        }, {
+            cookieList: [
+                // Remove all cookies in default path (/)
+                /.*/
+            ]
+        });
+    </script>
+
 </body>
 </html>

@@ -691,6 +691,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\cookieconsent\consent-manager.js" />
+    <Content Include="Content\cookieconsent\cookieconsent\cookieconsent.min.css" />
+    <Content Include="Content\cookieconsent\cookieconsent\cookieconsent.min.js" />
     <Content Include="Content\dist\css\bootstrap-select.css" />
     <Content Include="Content\dist\css\bootstrap-select.min.css" />
     <Content Include="Content\dist\js\bootstrap-select.js" />
@@ -2764,6 +2767,7 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\consentScript.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -2955,6 +2959,7 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\cookieconsent\cookieconsent\licence" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Scripts\bootstrap-select.min.js.map" />
@@ -3334,6 +3339,7 @@
     <Content Include="Views\ExpenseEstimateReport\partialCostListRpt.cshtml" />
     <Content Include="Views\partialActivityDetailReport\partialActBeerDetailRpt.cshtml" />
     <Content Include="Views\Shared\_searchBudgetInvoice.cshtml" />
+    <Content Include="Views\Home\pdpa.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
