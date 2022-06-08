@@ -294,7 +294,7 @@ namespace eActForm.BusinessLayer
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
                                     , createUsersName
-                                    ,pathFile
+                                    , pathFile
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
@@ -612,7 +612,6 @@ namespace eActForm.BusinessLayer
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
-                    
 
                     if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                     {
@@ -730,7 +729,7 @@ namespace eActForm.BusinessLayer
                                 }
                                 else
                                 {
-                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"],loop._fileName), loop._fileName) + "<br/>" ;
+                                    pathFile += string.Format(ConfigurationManager.AppSettings["formatLinkfiles"], string.Format(ConfigurationManager.AppSettings["controllerGetFile"], loop._fileName), loop._fileName) + "<br/>";
                                 }
                                 i++;
                             }
