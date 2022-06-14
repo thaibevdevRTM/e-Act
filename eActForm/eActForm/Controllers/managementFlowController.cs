@@ -25,29 +25,39 @@ namespace eActForm.Controllers
             if (UtilsAppCode.Session.User.isSuperAdmin)
             {
                 model.companyList = managementFlowAppCode.getCompany();
+                model.subjectList = new List<TB_Reg_Subject_Model>();
             }
             else
             {
                 model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+                model.subjectList = new List<TB_Reg_Subject_Model>();
             }
 
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId, string typeFlow)
+        public ActionResult dropDetail(string companyId, string typeFlow,string subjectId)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
             {
-                model.subjectList = managementFlowAppCode.getSubject(companyId);
+                
                 model.customerList = managementFlowAppCode.getCustomer(companyId);
-                //model.getLimitList = managementFlowAppCode.getLimit();
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-                //  model.chanelList = managementFlowAppCode.getChanel("data");
-                model.productBrandList = managementFlowAppCode.getProductBrand();
+               
                 model.productTypeList = managementFlowAppCode.getProductType();
-                model.regionList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == ConfigurationManager.AppSettings["conditionActBeer"] && x.nameShot == companyId).ToList();
+
+                if (subjectId == ConfigurationManager.AppSettings["subjectSetPriceOMT"])
+                {
+                    model.regionList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == "OMT").ToList();
+                }
+                else
+                {
+                    model.regionList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == ConfigurationManager.AppSettings["conditionActBeer"] && x.nameShot == companyId).ToList();
+
+                }
+
                 if (ReportSummaryAppCode.getCompanyMTMList().Where(x => x.id.Equals(companyId)).Any())
                 {
                     model.activityGroupList = BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup()
@@ -235,12 +245,12 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmp(string subjectId, string limitId, string channelId,string actType,string customerId)
+        public JsonResult getEmp(string subjectId, string limitId, string channelId,string actType,string customerId,string companyId)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
             {
-                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId, actType, customerId);
+                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId, actType, customerId, companyId);
             }
             catch (Exception ex)
             {
@@ -389,6 +399,44 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getBrandBySubject(string subjectId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+
+                var lists = QueryGetAllBrand.GetBrandBySubject(subjectId);
+                result.Data = lists;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getBrandBySubject => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public JsonResult getSubjectByCompany(string companyId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var lists = managementFlowAppCode.getSubject(companyId);
+                result.Data = lists;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getSubjectByCompany => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

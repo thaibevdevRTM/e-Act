@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @using System.Configuration;
+@using eActForm.Models;
 @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 {
     <li>
@@ -16,13 +17,18 @@
             </li>
 
             <li>
-                <a href="@Url.Action("Index", "ApproveBeerLists")">
-                    Approve Form Beer
-                    @if (UtilsAppCode.Session.User.countWatingActFormBeer != "0")
-                    {
-                    <span id="txtApproveCount" class='badge bg-green'> @UtilsAppCode.Session.User.countWatingActFormBeer</span>
-                    }
-                </a>
+                @if ((@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)) 
+                    || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_ChangBeer"]
+                    || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_BeerCo"] )
+                {
+                    <a href="@Url.Action("Index", "ApproveBeerLists")">
+                        Approve Form Beer
+                        @if (UtilsAppCode.Session.User.countWatingActFormBeer != "0")
+                        {
+                            <span id="txtApproveCount" class='badge bg-green'> @UtilsAppCode.Session.User.countWatingActFormBeer</span>
+                        }
+                    </a>
+                }
             </li>
 
             @if (UtilsAppCode.Session.User.isSuperAdmin ||

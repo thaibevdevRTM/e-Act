@@ -8,15 +8,8 @@
 
 <div class="row form-group">
 
-    <div id="divSubject" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Subject</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
-        </div>
-    </div>
-    <div id="divCus" class="col-md-3">
+
+    <div id="divCus" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Customer</label>
         </div>
@@ -32,15 +25,7 @@
             @Html.DropDownListFor(model => model.regionList, new SelectList(Model.regionList, "id", "descTh"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlRegion" })
         </div>
     </div>
-    <div id="divLimit" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Limit</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
-        </div>
-    </div>
-    <div id="divProductType" class="col-md-3">
+    <div id="divProductType" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>ProductType</label>
         </div>
@@ -48,7 +33,7 @@
             @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlProductType" })
         </div>
     </div>
-    <div id="divCate" class="col-md-3">
+    <div id="divCate" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Cate</label>
         </div>
@@ -57,7 +42,7 @@
         </div>
     </div>
 
-    <div id="divBrand" class="col-md-3">
+    <div id="divBrand" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Brand</label>
         </div>
@@ -65,7 +50,7 @@
             @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlBrand" })
         </div>
     </div>
-    <div id="divChanel" class="col-md-3">
+    <div id="divChanel" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Chanel</label>
         </div>
@@ -73,7 +58,15 @@
             @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlChanelGroup" })
         </div>
     </div>
-    <div id="divActivityGroup" class="col-md-3">
+    <div id="divLimit" class="col-md-3" style="display:none">
+        <div class="col-md-12 col-xs-12">
+            <label>Limit</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
+        </div>
+    </div>
+    <div id="divActivityGroup" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Activity Type</label>
         </div>
@@ -81,7 +74,7 @@
             @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlActGroup" })
         </div>
     </div>
-    <div id="divEmp" class="col-md-3">
+    <div id="divEmp" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Employee</label>
         </div>
@@ -89,7 +82,7 @@
             @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlEmployee" })
         </div>
     </div>
-    <div id="divDeparment" class="col-md-3">
+    <div id="divDeparment" class="col-md-3" style="display:none">
         <div class="col-md-12 col-xs-12">
             <label>Deparment</label>
         </div>
@@ -150,55 +143,21 @@
         });
     }
 
-    $('#ddlSubject').change(function () {
+    function setDivHidden() {
+        document.getElementById("divCus").style.display = "none";
+        document.getElementById("divCenter").style.display = "none";
+        document.getElementById("divLimit").style.display = "none";
+        document.getElementById("divProductType").style.display = "none";
+        document.getElementById("divCate").style.display = "none";
+        document.getElementById("divBrand").style.display = "none";
+        document.getElementById("divChanel").style.display = "none";
+        document.getElementById("divActivityGroup").style.display = "none";
+        document.getElementById("divEmp").style.display = "none";
+        document.getElementById("divDeparment").style.display = "none";
+    }
 
-        if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
-            document.getElementById("divProductType").style.display = "none";
-        }
-        else {
-            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
-                document.getElementById("divProductType").style.display = "block";
-            }
-            else {
-                document.getElementById("divProductType").style.display = "none";
-            }
-        }
-
-
-        var companyId = $("#ddlCompany").val();
-
-        if ($("#ddlSubject").val() == 'C67164E4-A891-43D6-B4F7-090F62C6290E' || $("#ddlSubject").val() == '30A230AB-42D4-4E48-8626-4366F5901C8B')//ใบเบิกค่าใช้จ่ายเดินทาง , ใบเบิกค่ารักษาพยาบาล ,
-            {
-            companyId = "";
-            document.getElementById("divDeparment").style.display = "none";
-            document.getElementById("divEmp").style.display = "block";
-            document.getElementById("divActivityGroup").style.display = "none";
-            document.getElementById("divCenter").style.display = "none";
-        }
-        else if ($("#ddlSubject").val() == '590BE88B-5FEE-4B96-9D68-EBCAC3703D7C' || $("#ddlSubject").val() == '01BAEFC4-1B6F-4327-A777-64046609F93D') // ใบเบิกค่าใช้จ่ายพนักงาน
-        {
-            document.getElementById("divDeparment").style.display = "none";
-            document.getElementById("divEmp").style.display = "block";
-            document.getElementById("divActivityGroup").style.display = "none";
-            document.getElementById("divCenter").style.display = "none";
-        }
-        else if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActBeer"]' ) // actBeer
-        {
-            document.getElementById("divDeparment").style.display = "none";
-            document.getElementById("divEmp").style.display = "block";
-            document.getElementById("divCenter").style.display = "block";
-            
-        }
-        else {
-            document.getElementById("divDeparment").style.display = "block";
-            document.getElementById("divEmp").style.display = "none";
-            document.getElementById("divCenter").style.display = "none";
-            document.getElementById("divActivityGroup").style.display = "none";
-            
-        }
-
-
-        $.ajax({
+    function getLimitBySubject(companyId) {
+         $.ajax({
             url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
             data: {
                 subjectId: $("#ddlSubject").val(),
@@ -220,8 +179,10 @@
                 }
             }
         });
+    }
 
-        $.ajax({
+    function getChannelBySubject() {
+          $.ajax({
             url: '@Url.Action("getChannelBySubject", "ManagementFlow")',
             data: {
                 subjectId: $("#ddlSubject").val(),
@@ -241,11 +202,110 @@
 
             }
         });
+    }
+
+    function getBrandBySubject() {
+          $.ajax({
+            url: '@Url.Action("getBrandBySubject", "ManagementFlow")',
+            data: {
+                subjectId: $("#ddlSubject").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.length > 0) {
+                    var data = [];
+                    $("#ddlBrand option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlBrand").append($("<option></option>").val(this['id']).html(this['brandName']));
+
+                    });
+                    $('.selectpicker').selectpicker('refresh');
+                }
+
+            }
+        });
+    }
 
 
-    });
 
-    
+    function setDropDownBySubject() {
+
+
+        if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+            document.getElementById("divProductType").style.display = "block";
+        }
+        else {
+            document.getElementById("divProductType").style.display = "none";
+        }
+
+        var companyId = $("#ddlCompany").val();
+
+        if ($("#ddlSubject").val() == 'C67164E4-A891-43D6-B4F7-090F62C6290E' || $("#ddlSubject").val() == '30A230AB-42D4-4E48-8626-4366F5901C8B')//ใบเบิกค่าใช้จ่ายเดินทาง , ใบเบิกค่ารักษาพยาบาล ,
+        {
+            companyId = "";
+            getEmp();     
+            document.getElementById("divEmp").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+        }
+        else if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActBeer"]') // actBeer
+        {
+            document.getElementById("divEmp").style.display = "block";
+            document.getElementById("divCenter").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divChanel").style.display = "block";
+            document.getElementById("divActivityGroup").style.display = "block";
+
+        }
+        else if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectSetPriceOMT"]') // OMT SET PRICE
+        {
+            document.getElementById("divCenter").style.display = "block";
+            document.getElementById("divCate").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+
+        }
+        else if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectSetPriceMT"]') // MT SET PRICE
+        {
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divCate").style.display = "block";
+            document.getElementById("divProductType").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+
+        }
+        else if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]') // Activity MT , OMT
+        {
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divCate").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+            if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_OMT"]') {
+                document.getElementById("divCate").style.display = "none";
+                document.getElementById("divLimit").style.display = "none";
+            }
+
+        }
+        else {
+            if($("#ddlCompany").val() == '3030')
+            {
+                document.getElementById("divBrand").style.display = "block";
+                document.getElementById("divChanel").style.display = "block";
+                document.getElementById("divSubject").style.display = "block";
+                document.getElementById("divLimit").style.display = "block";
+                document.getElementById("divEmp").style.display = "block";
+
+            }
+
+
+        }
+
+        getLimitBySubject(companyId);
+        getChannelBySubject();
+        getBrandBySubject();
+
+
+
+    };
+
+
     $('#ddlActGroup').change(function () {
         getEmp();
     });
@@ -277,6 +337,7 @@
                 channelId: channel,
                 actType: $("#ddlActGroup").val(),
                 customerId: $("#ddlRegion").val(),
+                companyId: $("#ddlCompany").val(),
             },
             dataType: "json",
             type: 'POST',
@@ -288,7 +349,7 @@
                         $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] + " " + this['empName']));
 
                     });
-                     
+
                      document.getElementById("ddlEmployee").disabled = false;
                      $("#ddlEmployee").selectpicker("refresh");
                 }
