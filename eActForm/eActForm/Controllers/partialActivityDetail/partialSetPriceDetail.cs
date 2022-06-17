@@ -65,7 +65,7 @@ namespace eActForm.Controllers
 
                 }
 
-                if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
+                if (activity_TBMMKT_Model.activityFormModel.mode == AppCode.Mode.edit.ToString())
                 {
                     activity_TBMMKT_Model.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activity_TBMMKT_Model.activityFormModel.productGroupId);
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activity_TBMMKT_Model.activityFormModel.productGroupId).ToList();

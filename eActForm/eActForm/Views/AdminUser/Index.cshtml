@@ -141,6 +141,10 @@
                 <input id="adminHCBP" type="checkbox" name="model.chkRole" value="12">
                 adminHCBP
             </div>
+            <div>
+                <input id="creatorMT_OMT" type="checkbox" name="model.chkRole" value="13">
+                isCreatorMT_OMT
+            </div>
         </div>
 
         <div id="divProductType">
@@ -427,6 +431,9 @@
                             break;
                         case "12":
                             document.getElementById("adminHCBP").checked = true;
+                            break;
+                        case "13":
+                            document.getElementById("creatorMT_OMT").checked = true;
                             break;
                     }
                 });

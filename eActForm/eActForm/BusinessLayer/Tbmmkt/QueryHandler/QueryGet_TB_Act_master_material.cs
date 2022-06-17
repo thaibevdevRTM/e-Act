@@ -20,7 +20,8 @@ namespace eActForm.BusinessLayer
                        , new SqlParameter("@select_tB_Act_master_list_choice_id", objGetData_Master_Material_Model.select_tB_Act_master_list_choice_id)
                        , new SqlParameter("@select_material", objGetData_Master_Material_Model.select_material)
                        , new SqlParameter("@select_materialDescription", objGetData_Master_Material_Model.select_materialDescription)
-                       , new SqlParameter("@tB_Act_master_list_choice_id_InOutStock", objGetData_Master_Material_Model.select_InOrOutStock));
+                       , new SqlParameter("@tB_Act_master_list_choice_id_InOutStock", objGetData_Master_Material_Model.select_InOrOutStock)
+                       , new SqlParameter("@activityNo", objGetData_Master_Material_Model.activityNo));
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new TB_Act_master_material_Model()
                               {

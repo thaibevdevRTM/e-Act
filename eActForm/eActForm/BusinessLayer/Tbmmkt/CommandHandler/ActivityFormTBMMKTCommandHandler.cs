@@ -556,7 +556,8 @@ namespace eActForm.BusinessLayer
                     if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                     {
                         #region FormPos
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
@@ -626,8 +627,8 @@ namespace eActForm.BusinessLayer
 
 
                             activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.select_list_choice_id ?? string.Empty;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.name?? string.Empty;
 
                             //activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
                             //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
@@ -650,7 +651,8 @@ namespace eActForm.BusinessLayer
                         }
                         #endregion
                         #region formTrvTbm formTrvHcm
-                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] 
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
@@ -1220,6 +1222,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@theme", model.theme)
                     ,new SqlParameter("@trade", model.trade)
                     ,new SqlParameter("@statusNote", model.statusNote)
+                    ,new SqlParameter("@referenceActNo",model.activityNoRef)
                   });
             }
             catch (Exception ex)

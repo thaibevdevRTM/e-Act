@@ -69,9 +69,18 @@
                     <tr>
                         <td>
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-xs-12">
-                                    ขอเบิก :
-                                </label>
+                                @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                {
+                                    <label class="control-label col-md-2 col-xs-12">
+                                        ขอคืน :
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="control-label col-md-2 col-xs-12">
+                                        ขอเบิก :
+                                    </label>
+                                }
                                 <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <style>
@@ -176,18 +185,32 @@
                                         </script>
                                     </div>
                                 </div>
-                                <label class="control-label col-md-3 col-xs-12">
-                                    เพื่อ :
-                                </label>
-                                <div class="col-md-4 col-xs-12">
-                                    <div class="row">
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
-                                        {
-                                            @class = "form-control selectpicker",
-                                            id = "ddlfor"
-                                        })
+                                @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                {
+                                    <label class="control-label col-md-3 col-xs-12">
+                                        เลขอ้างอิงค์ใบเบิก :
+                                    </label>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="row">
+                                            @Html.TextBoxFor(x => x.activityFormTBMMKT.activityNoRef, new { @class = "form-control textboxcss", @id = "txtActivityNoRef", style = "", @Value = Model.activityFormTBMMKT.activityNoRef, @readonly = "readonly" })
+                                        </div>
                                     </div>
-                                </div>
+                                }
+                                else
+                                {
+                                    <label class="control-label col-md-3 col-xs-12">
+                                        เพื่อ :
+                                    </label>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="row">
+                                            @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
+                                       {
+                                           @class = "form-control selectpicker",
+                                           id = "ddlfor"
+                                       })
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </td>
                     </tr>
@@ -215,14 +238,14 @@
                                             multiple = "multiple"
                                         })
                                         <script>
-                                        $("#ddlbrand_select").change(function () {
-                                            if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
+                                            $("#ddlbrand_select").change(function () {
+                                                if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
 
-                                                getCostCenter();
-                                            } else {
-                                              //  $("#txtCostCenter").val("");
-                                            }
-                                        });
+                                                    getCostCenter();
+                                                } else {
+                                                    //  $("#txtCostCenter").val("");
+                                                }
+                                            });
                                         </script>
                                     </div>
                                 </div>
@@ -234,7 +257,7 @@
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
                                         @* @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })*@
-                                
+
                                         @Html.DropDownList("activityFormTBMMKT.costCenter_multi_select", new SelectList(Model.TB_Act_master_cost_centerModel_List, "id", "costCenter"), new
                                            {
                                                @class = "form-control",

@@ -130,7 +130,7 @@ namespace eActForm.Controllers
                         r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = specDisc;
                         r.specialDiscBaht = specDiscBath;
-                        r.normalCost =  model.normalCost;
+                        r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
                         r.rsp = model.rsp;
                         r.unitTxt = model.unitTxt;

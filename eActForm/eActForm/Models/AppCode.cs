@@ -70,6 +70,7 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
             ConfigurationManager.AppSettings["formTransferbudget"],
+            ConfigurationManager.AppSettings["formReturnPosTbm"],
 
         };
 

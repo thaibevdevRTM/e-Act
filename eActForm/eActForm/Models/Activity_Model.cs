@@ -63,7 +63,7 @@ namespace eActForm.Models
 
         public enum modeForm
         {
-            insert,
+            addNew,
             edit
         }
 
@@ -363,6 +363,7 @@ namespace eActForm.Models
         public decimal? totalCase { get; set; }
         public decimal? perTotal { get; set; }
         public int unit { get; set; }
+        public int unitReturn { get; set; }
         public decimal? compensate { get; set; }
         public decimal? LE { get; set; }
         public decimal? wholeSalesPrice { get; set; }

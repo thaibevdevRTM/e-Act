@@ -27,12 +27,25 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
+
+
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+
+                   
 
                     if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
-                        activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
+                        activityFormTBMMKT.master_type_form_id = master_type_form_id;
                         activity_TBMMKT_Model = exPerryCashAppCode.processDataExpense(activity_TBMMKT_Model, activityId);
+                    }
+                    if (mode == AppCode.Mode.addNew.ToString() && master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                    {
+                        activity_TBMMKT_Model.activityFormTBMMKT.id = Guid.NewGuid().ToString();
+                        activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
+                        activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = master_type_form_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.activityNoRef = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
+      
+                        activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
                     }
 
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
@@ -82,7 +95,12 @@ namespace eActForm.Controllers
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
+
+                    
+
                     #endregion
+
+
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
 

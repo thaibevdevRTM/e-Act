@@ -707,5 +707,31 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+        public static List<CostThemeDetail> callUnitPOSAppCode(string productId, string activityNo)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_callUnitPOS"
+               , new SqlParameter[] { new SqlParameter("@productId", productId)
+                , new SqlParameter("@activityNo" ,activityNo)});
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new CostThemeDetail
+                             {
+                                 unit = string.IsNullOrEmpty(dr["unit"].ToString()) ? 0 : (int)dr["unit"],
+                                 unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
+
+                             });
+                return lists.ToList() ;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new Exception("callUnitPOSAppCode >>" + ex.Message);
+            }
+
+        }
     }
 }

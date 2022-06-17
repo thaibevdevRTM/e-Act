@@ -47,7 +47,7 @@
                         <th width="50px" class="align-content-center font10" rowspan="2"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </th>
                         <th width="170px" class="align-content-center font10" rowspan="2">ชื่อสินค้า (product Name)</th>
                         <th width="80px" class="align-content-center font10" rowspan="2">Std. Wholesales Price</th>
-                        <th width="170px" class="align-content-center font10" colspan="2">ราคาขาย</th>
+                        <th width="120px" class="align-content-center font10" colspan="1">ราคาขาย</th>
                         <th width="200px" class="align-content-center font10" colspan="3">Normal Discount (Baht)</th>
                         <th width="80px" class="align-content-center font10">Normal</th>
                         <th width="80px" class="align-content-center font10">Normal</th>
@@ -64,7 +64,6 @@
                     @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
                     {
                         <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
-                        <th class="align-content-center font8">Promotion</th>
                         <th class="align-content-center font10">(1)</th>
                         <th class="align-content-center font10">(2)</th>
                         <th class="align-content-center font10">(3)</th>
@@ -132,7 +131,7 @@
             {
                 <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(wholeSalesPrice_@index)" id="wholeSalesPrice_@index" name="productcostdetaillist1[@index].wholeSalesPrice" value="@item.wholeSalesPrice.Value.ToString("0.00")" /> </td>
                 <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(saleNormal_@index)" id="saleNormal_@index" name="productcostdetaillist1[@index].saleNormal" value="@item.saleNormal.Value.ToString("0.00")" /></td>
-                <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(saleIn_@index)" id="saleIn_@index" name="productcostdetaillist1[@index].saleIn" value="@item.saleIn.Value.ToString("0.00")" /></td>
+                @*<td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(saleIn_@index)" id="saleIn_@index" name="productcostdetaillist1[@index].saleIn" value="@item.saleIn.Value.ToString("0.00")" /></td>*@
                 <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount1_@index)" id="disCount1_@index" name="productcostdetaillist1[@index].disCount1" value="@item.disCount1.Value.ToString("0.00")" /></td>
                 <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount2_@index)" id="disCount2_@index" name="productcostdetaillist1[@index].disCount2" value="@item.disCount2.Value.ToString("0.00")" /></td>
                 <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount3_@index)" id="disCount3_@index" name="productcostdetaillist1[@index].disCount3" value="@item.disCount3.Value.ToString("0.00")" /></td>
@@ -244,7 +243,6 @@
             var productId = $('#hdProductId_' + rowIndex).val();
             var wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
             var saleNormal = $('#saleNormal_' + rowIndex).val();
-            var saleIn = $('#saleIn_' + rowIndex).val();
             var disCount1 = $('#disCount1_' + rowIndex).val();
             var disCount2 = $('#disCount2_' + rowIndex).val();
             var disCount3 = $('#disCount3_' + rowIndex).val();
@@ -264,7 +262,6 @@
                  productId: productId,
                  wholeSalesPrice: wholeSalesPrice.replace(",", ""),
                  saleNormal: saleNormal.replace(",", ""),
-                 saleIn: saleIn.replace(",", ""),
                  disCount1: disCount1.replace(",", ""),
                  disCount2: disCount2.replace(",", ""),
                  disCount3: disCount3.replace(",", ""),

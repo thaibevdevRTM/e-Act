@@ -402,5 +402,28 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        public JsonResult callUnitPOS(string productId, string activityNo)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var getUnit = ActFormAppCode.callUnitPOSAppCode(productId, activityNo);
+
+                var resultData = new
+                {
+                    unit = getUnit.FirstOrDefault().unit,
+                    unitReturn = getUnit.FirstOrDefault().unitReturn,
+                };
+                result.Data = resultData;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("callUnitPOS => " + activityNo + "____" + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

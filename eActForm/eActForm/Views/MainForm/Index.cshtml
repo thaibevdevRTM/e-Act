@@ -150,6 +150,7 @@
 <script>
 
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+        console.log('@Model.activityFormTBMMKT.master_type_form_id')
 
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
@@ -179,22 +180,29 @@
                     $("#txtSubUnitPrice_" + i + "").prop("readonly", false);
                     $("#txtSubVat_" + i + "").prop("readonly", false);
                 }
-                @*else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                    $("#txtGlCode_" + i + "").prop("readonly", false);
-                }*@
+
             }
         }
 
-        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
-            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
-
-            $("#divExpensesMed :input").prop("disabled", false);
-            $("#divExpensesMed :input").prop("readonly", true);
-            if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                $("#txtGlCode_0").prop("readonly", false);
-            }
-        }*@
     }
+
+
+    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
+        && '@Model.activityFormTBMMKT.statusId' == '1') {
+        console.log('return');
+        $("#GridPDF :input").prop("readonly", true);
+
+        $("#txttoName").prop("readonly", false);
+        $("#txttoContact").prop("readonly", false);
+        $("#txtdateActivitySt").prop("readonly", false);
+        $("#txtdetailContact").prop("readonly", false);
+        $("#txttoAddress").prop("readonly", false);
+        $("#txtObjective").prop("readonly", false);
+
+        $("#tabelFormDetails :input").prop("readonly", false);
+
+    }
+
 
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
         var arrayOfElements = document.getElementsByClassName('clstxtIO');
@@ -698,7 +706,7 @@ function CallImageView(obj) {
                         if (response.Success) {
 
                             var url = '@Url.Action("Index", "MainForm")';
-                            window.location.href = url + "?ActivityId=" + response.ActivityId + "&mode="+ '@Activity_Model.modeForm.edit' + "&typeForm=" + '@Model.activityFormTBMMKT.typeForm' + "&master_type_form_id=" + '@Model.activityFormTBMMKT.master_type_form_id';
+                            window.location.href = url + "?ActivityId=" + response.ActivityId + "&mode="+ '@AppCode.Mode.edit' + "&typeForm=" + '@Model.activityFormTBMMKT.typeForm' + "&master_type_form_id=" + '@Model.activityFormTBMMKT.master_type_form_id';
 
                         } else {
                             doMsgFail(response.Message);
