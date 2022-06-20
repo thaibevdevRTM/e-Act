@@ -110,7 +110,10 @@
                                 <script>
                                     $(".txtunit_@index").blur(function () {
                                         sumall();
-                                        getUnitPOS(@index);
+                                        if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                        {
+                                            getUnitPOS(@index);
+                                        }
                                     });
                                 </script>
                             </td>
@@ -211,7 +214,7 @@
 
                                     $(".txtunit_" + rowId).val('0')
                                 }
-                               
+
                             }
                         });
                     }
