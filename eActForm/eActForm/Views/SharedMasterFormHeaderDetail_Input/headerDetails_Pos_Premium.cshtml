@@ -427,9 +427,18 @@
                     <tr>
                         <td>
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-xs-12">
-                                    วัตถุประสงค์ที่ขอเบิก :
-                                </label>
+                                @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                {
+                                    <label class="control-label col-md-2 col-xs-12">
+                                        วัตถุประสงค์ที่ขอคืน :
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="control-label col-md-2 col-xs-12">
+                                        วัตถุประสงค์ที่ขอเบิก :
+                                    </label>
+                                }
 
                                 <div class="col-md-10 col-xs-12">
                                     <div class="row">
