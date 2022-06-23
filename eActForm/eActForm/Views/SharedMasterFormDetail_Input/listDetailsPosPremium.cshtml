@@ -207,12 +207,8 @@
                             type: 'POST',
                             success: function (response) {
                                 var getUnitBalance = parseInt($(".txtunit_" + rowId).val()) + parseInt(response.Data.unitReturn);
-
-                                console.log(getUnitBalance + ' ttt ' + response.Data.unit)
-
                                 if (getUnitBalance > parseInt(response.Data.unit)) {
-                                    doAlert('<b>จำนวนที่ ขอเบิก = ' + response.Data.unit + '<br/>' + 'จำนวนที่ คืนของแล้ว = ' + response.Data.unitReturn + '<b/>')
-
+                                    doAlert('<b>กรุณาตรวจสอบ ห้ามคืนสินค้าเกินจำนวนที่ขอเบิก <br/> จำนวนที่ ขอเบิก = ' + response.Data.unit + '<br/>' + 'จำนวนที่ คืนของแล้ว = ' + response.Data.unitReturn + '<b/>')
                                     $(".txtunit_" + rowId).val('0')
                                 }
 

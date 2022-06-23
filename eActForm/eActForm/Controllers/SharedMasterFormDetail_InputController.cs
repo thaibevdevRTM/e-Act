@@ -68,7 +68,8 @@ namespace eActForm.Controllers
             foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
             {
                 #region formPosTbm
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                 {
                     totalCostThisActivity += item.unit;
                 }
