@@ -318,8 +318,7 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();" })
                             }
-                            @if (item.statusId == "2" || item.statusId == "3" ||
-                                (Model.typeForm == Activity_Model.activityType.MT.ToString() || Model.typeForm == Activity_Model.activityType.OMT.ToString() && item.statusId != "1" || Model.typeForm == Activity_Model.activityType.SetPrice.ToString()))
+                            @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
                             }
@@ -436,6 +435,7 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceOMT"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formEactBeer"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formReturnPosTbm"]"
+             || master_type_form_id == "@ConfigurationManager.AppSettings["formPurchaseTbm"]"
         ) {
              $.ajax({
                 type: 'POST',

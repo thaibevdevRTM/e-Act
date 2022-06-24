@@ -686,7 +686,7 @@
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
         }
         else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]") {
-            $("#divRadioRef").append('<input type="checkbox" id="chkFresh" name="formatCus" value="Go Fresh" onchange = "onchangeRdbRef(this);">Go Fresh</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkGoFresh" name="formatCus" value="GoFresh" onchange = "onchangeRdbRef(this);">GoFresh</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkExpress" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkTalad" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
@@ -696,7 +696,7 @@
             document.getElementById("txtReference").readOnly = false;
         }
 
-        var cus = ["Hyper", "Market", "Mini", "Depot","Donjai","Express","Talad","Hyper"];
+        var cus = ["Hyper", "Market", "Mini", "Depot", "Donjai", "Express", "Talad","GoFresh"];
         cus.forEach(chkTrueRef);
     }
 

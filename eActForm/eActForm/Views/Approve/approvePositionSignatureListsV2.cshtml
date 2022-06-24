@@ -24,7 +24,8 @@
     Model.activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
 }
 
-@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]
+    || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
 {
     ApproveFlowModel.flowApproveDetail flowApproveDetail = new ApproveFlowModel.flowApproveDetail("");
     flowApproveDetail.approveGroupName = "ผู้รับของ";
@@ -34,6 +35,19 @@
     flowApproveDetail.empPositionTitleTH = "";
     flowApproveDetail.isShowInDoc = true;
     Model.approveFlowDetail.Add(flowApproveDetail);
+
+    if (Model.approveDetailLists.Count > 0)
+    {
+        ApproveModel.approveDetailModel approveDetail = new ApproveModel.approveDetailModel("");
+        approveDetail.approveGroupNameTH = "ผู้รับของ";
+        approveDetail.approveGroupnameEN = "Received By";
+        approveDetail.empName = "                                    ";
+        approveDetail.empName_EN = "                                    ";
+        approveDetail.empPositionTitleTH = "";
+        approveDetail.isShowInDoc = true;
+        Model.approveDetailLists.Add(approveDetail);
+    }
+
 }
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
@@ -153,7 +167,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png" />
+                                                    <img width="100" height="80" src="https://eact.thaibev.com/images/blank.png" />
                                                 }
                                             }
                                         </td>
@@ -298,7 +312,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <img width="100" height="80" src="http://thaibevss.com/eAct/images/blank.png" />
+                                                    <img width="100" height="80" src="https://eact.thaibev.com/images/blank.png" />
                                                 }
                                             }
                                         </td>

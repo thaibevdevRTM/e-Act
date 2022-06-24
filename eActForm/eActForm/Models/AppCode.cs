@@ -34,7 +34,7 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
-        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
+        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
         public static string[] compThaiBevForm = { Activity_Model.groupCompany.THAIBEV.ToString() };
         public static string[] getEmpSearchBeer =  ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray() ;
@@ -58,6 +58,7 @@ namespace eActForm.Models
                  ,ConfigurationManager.AppSettings["formTransferbudget"]
                  ,ConfigurationManager.AppSettings["formSetPriceOMT"]
                  ,ConfigurationManager.AppSettings["formEactBeer"]
+                 ,ConfigurationManager.AppSettings["formPurchaseTbm"]
         };
 
 
@@ -69,6 +70,7 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formTrvTbmId"],
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
+             ConfigurationManager.AppSettings["formPurchaseTbm"],
             ConfigurationManager.AppSettings["formTransferbudget"],
             ConfigurationManager.AppSettings["formReturnPosTbm"],
 

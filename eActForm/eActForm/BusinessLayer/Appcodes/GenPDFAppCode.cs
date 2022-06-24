@@ -40,7 +40,8 @@ namespace eActForm.BusinessLayer
                 var rootPathOutput = server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
-                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] 
+                    || getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
                 }

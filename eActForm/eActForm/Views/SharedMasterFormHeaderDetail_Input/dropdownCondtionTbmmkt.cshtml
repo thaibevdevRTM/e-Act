@@ -230,7 +230,8 @@
                         }
                     }
 
-                    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
+                    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+                    ||'@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
                         $("#ddl_EO_PV").multiselect('dataprovider', null);
                         $('#ddlBrand').val("");
                         $('#ddlChannel').val("");
@@ -244,7 +245,8 @@
                     $('#ddlChannel').change(function () {
                         $('#ddlBrand').val('');
                         bindDropdownSubject();
-                       if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+                        || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]')
                         {
                            if ($('#ddlChannel').val() == "") {
                                $("#ddl_EO_PV").multiselect('dataprovider', null);
@@ -260,7 +262,8 @@
                     $('#ddlBrand').change(function () {
                         $('#ddlChannel').val('');
                         bindDropdownSubject();
-                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+                        || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]')
                         {
                             if ($('#ddlBrand').val() == "") {
                                 $("#ddl_EO_PV").multiselect('dataprovider', null);
