@@ -420,7 +420,6 @@
 
     function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
         waitpopup();
-
         if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
@@ -462,7 +461,6 @@
 
 
     function genPdf(actId, statusId, htmlResponse) {
-
         $("#newGenReportFromMaster").html(htmlResponse);
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Documents")',
