@@ -338,7 +338,7 @@
                             }
                         </td>
                         <td>@{ date = item.createdDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.createdDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date</td>
-                        <td>@item.createByUserName</td>
+                        <td>@item.createdByUserId</td>
                     </tr>
                 }
             </tbody>

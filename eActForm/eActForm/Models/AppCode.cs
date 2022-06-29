@@ -397,7 +397,6 @@ namespace eActForm.Models
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
-
                     int pages = get_pageCcount(pathFile[f]);
                     reader = new PdfReader(System.IO.File.ReadAllBytes(pathFile[f]));
                     reader.ConsolidateNamedDestinations();

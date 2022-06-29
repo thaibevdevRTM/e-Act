@@ -37,13 +37,24 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+
+        public ActionResult detailSectionSix_Purchase(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
+            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
+            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+            return PartialView(activity_TBMMKT_Model);
+        }
+
         public ActionResult inputPageHeaderDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             string yearFrom = "";
             string yearTo = "";
             string nowPhysicalYear = "";
 
-            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย dev date 20200408 Peerapop
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
             {
                 //ฟอร์มนี้Defaultไว้ดึง2ปีก่อน (ปีปัจจุบันกับย้อนหลัง1ปี) ถ้าเข้ามาครั้งแรกจะDefault ปีงบประมาณปัจจุบันให้ (ของเดิม)
                 //(ปีปัจจุบันกับย้อนหลัง10ปี) ถ้าเข้ามาครั้งแรกจะDefault ปีงบประมาณปัจจุบันให้ update 10 ปี 2020-10-01 Peerapop
@@ -57,13 +68,6 @@ namespace eActForm.Controllers
                 }
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderByDescending(m => m.UseYear).ToList();
-
-            if (activity_TBMMKT_Model.listGetDataEO == null)
-            {
-                List<GetDataEO> getDataEO = new List<GetDataEO>();
-                activity_TBMMKT_Model.listGetDataEO = getDataEO;
-            }
-
 
 
             return PartialView(activity_TBMMKT_Model);
@@ -138,13 +142,12 @@ namespace eActForm.Controllers
                 List<GetDataPVPrevious> getDataPVPrevious = new List<GetDataPVPrevious>();
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo != null)
                 {
-                    if (int.Parse(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo) >= 2)
-                    {
+
                         ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
                         objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                         objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
                         getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
-                    }
+                   
                 }
                 activity_TBMMKT_Model.listGetDataPVPrevious = getDataPVPrevious;
             }

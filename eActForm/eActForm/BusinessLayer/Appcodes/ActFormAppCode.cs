@@ -181,7 +181,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm("")
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),

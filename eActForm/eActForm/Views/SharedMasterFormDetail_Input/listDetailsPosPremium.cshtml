@@ -109,12 +109,14 @@
                                 <input type="hidden" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
                                 @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "activityOfEstimateList[" + index + "].unit", Name = "activityOfEstimateList[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
                                 <script>
-                                    $(".txtunit_@index").blur(function () {
-                                        sumall();
+                                    $(".txtunit_@index").change(function () {
+                                       
                                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]')
                                         {
                                             getUnitPOS(@index);
                                         }
+
+                                        sumall();
                                     });
                                 </script>
                             </td>
@@ -167,6 +169,8 @@
                             var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replaceAll(",", ""));
                             $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
                             totalAll = totalAll + rowunit;
+
+                            console.log(rowunit);
                         }
 
                         $("#totalEstimate").text(totalAll.format());
@@ -206,10 +210,11 @@
                             dataType: "json",
                             type: 'POST',
                             success: function (response) {
-                                var getUnitBalance = parseInt($(".txtunit_" + rowId).val()) + parseInt(response.Data.unitReturn);
+                                var getUnitBalance = parseInt($(".txtunit_" + rowId).val()) + response.Data.unitReturn;
                                 if (getUnitBalance > parseInt(response.Data.unit)) {
-                                    doAlert('<b>กรุณาตรวจสอบ ห้ามคืนสินค้าเกินจำนวนที่ขอเบิก <br/> จำนวนที่ ขอเบิก = ' + response.Data.unit + '<br/>' + 'จำนวนที่ คืนของแล้ว = ' + response.Data.unitReturn + '<b/>')
                                     $(".txtunit_" + rowId).val('0')
+                                    doAlert('<b>กรุณาตรวจสอบ ห้ามคืนสินค้าเกินจำนวนที่ขอเบิก <br/> จำนวนที่ ขอเบิก = ' + response.Data.unit + '<br/>' + 'จำนวนที่ คืนของแล้ว = ' + response.Data.unitReturn + '<b/>')
+                                    sumall();
                                 }
 
                             }
