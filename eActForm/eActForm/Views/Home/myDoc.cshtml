@@ -299,7 +299,7 @@
 
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
                                 }
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] && item.statusId == "3")
                                 {

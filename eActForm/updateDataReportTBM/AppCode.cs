@@ -16,7 +16,9 @@ namespace updateDataReportTBM
                
                 int rtn = 0;
                 Console.Write("waiting for update data");
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
                 waiting();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
                  rtn = SqlHelper.ExecuteNonQuery(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_updateReportTBMToTB");
                 if (rtn > 0)
                 {
@@ -41,7 +43,9 @@ namespace updateDataReportTBM
 
                 int rtn = 0;
                 Console.Write("waiting for update data");
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
                 waiting();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
                 rtn = SqlHelper.ExecuteNonQuery(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_updateReportTBM_AP");
                 if (rtn > 0)
                 {
