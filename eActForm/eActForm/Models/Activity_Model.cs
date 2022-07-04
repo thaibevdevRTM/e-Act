@@ -106,10 +106,13 @@ namespace eActForm.Models
         {
             public actForm(string empId)
             {
-                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-                if (model.Count > 0)
+                if (!string.IsNullOrEmpty(empId))
                 {
-                    this.createByUserName = model.Count > 0 ? model[0].empName : "";
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    if (model.Count > 0)
+                    {
+                        this.createByUserName = model.Count > 0 ? model[0].empName : "";
+                    }
                 }
             }
 

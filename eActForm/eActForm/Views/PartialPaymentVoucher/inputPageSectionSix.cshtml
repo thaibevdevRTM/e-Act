@@ -172,7 +172,7 @@
             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 @Html.DropDownList("activityOfEstimateList[" + index + "].listChoiceId", new SelectList(Model.list_1, "id", "name", item.listChoiceId), "", new { @class = "form-control" })
                 <script>
-                    $('#activityOfEstimateList_0__listChoiceId').change(function () {
+                    $('#activityOfEstimateList_' + @index +'__listChoiceId').change(function () {
                         calCulateAll();
                     });
                 </script>
