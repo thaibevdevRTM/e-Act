@@ -16,7 +16,7 @@
     <tr>
         <td>
             <div class="form-group">
-                <label class="control-label col-md-2 col-xs-12">
+                <label id="lblCount" class="control-label col-md-2 col-xs-12">
                     สั่งจ่ายครั้งที่ :
                 </label>
 
@@ -75,7 +75,7 @@
                         </script>
                     </div>
                 </div>
-                <label class="control-label col-md-2 col-xs-12" style="text-align:left;">
+                <label id="lblDoc" class="control-label col-md-2 col-xs-12" style="text-align:left;">
                     สั่งจ่ายต่อจากเอกสาร :
                 </label>
                 <div class="col-md-4 col-xs-12">
@@ -253,6 +253,13 @@
 <div style="height:10px;">&nbsp;</div>
 <script>
     $(function () {
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
+            document.getElementById('lblCount').innerHTML = 'ผูกพันซื้อครั้งที่ :';
+            document.getElementById('lblDoc').innerHTML = 'ผูกพันซื้อต่อจากเอกสาร :';
+        }
+
+
          @if (Model.listGetDataIO != null)
                         {
              @:payByIOSelect.push('');
