@@ -120,6 +120,8 @@
     }
 
     function submitPreview() {
+        $("#WaitDialog").show();
+
          $.ajax({
             type: 'POST',
             url: '@Url.Action("genDataApproveList", "ManagementFlow")',
@@ -140,6 +142,7 @@
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);
+            $("#WaitDialog").hide();
         });
     }
 
@@ -292,6 +295,11 @@
                 document.getElementById("divLimit").style.display = "block";
                 document.getElementById("divEmp").style.display = "block";
 
+            }
+            else if ($("#ddlCompany").val() == '4800') {
+                document.getElementById("divChanel").style.display = "block";
+                document.getElementById("divSubject").style.display = "block";
+                document.getElementById("divLimit").style.display = "block";
             }
 
 

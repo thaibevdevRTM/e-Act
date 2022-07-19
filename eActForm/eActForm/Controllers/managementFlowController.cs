@@ -385,8 +385,6 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
-
                 var lists = QueryGetAllChanel.getChanelBySubjectId(subjectId);
                 result.Data = lists;
             }

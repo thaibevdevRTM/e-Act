@@ -70,9 +70,6 @@ namespace eActForm.Controllers
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
 
-                        
-
-
                         typeImportCatch = ImportBudgetControlAppCode.channel;
                         rowImport = rowImport++;
                         for (int ii = 2; ii < dt.Columns.Count; ii++)
