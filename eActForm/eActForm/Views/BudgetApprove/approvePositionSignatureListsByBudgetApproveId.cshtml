@@ -32,7 +32,8 @@
                 if (item.isShowInDoc)
                 {
                     if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3") // show img for approv only
-                    {
+                    //if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index &&  Model.approveDetailLists[index].statusId == "3") // show img for approv only
+                        {
                         <td width="130">
                             @if (Model.approveDetailLists[index].signature.Length > 0)
                             {
