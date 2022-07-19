@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,25 +22,27 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.customerslist = QueryGetAllCustomers.getCustomersMT();
 
                 activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-               
 
-                if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
                 {
                     activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                      .Where(x => x.activityCondition.ToLower().Equals("actbeer_cost"))
                      .GroupBy(item => item.activitySales)
                      .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-                    activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.ToLower().Equals(ConfigurationManager.AppSettings["conditionGetMaster"].ToLower())).ToList();
+                    activity_TBMMKT_Model.activityTypeList = QueryGetAllActivityGroup.getActivityGroupByEmpId(UtilsAppCode.Session.User.empId, ConfigurationManager.AppSettings["conditionActBeer"]);
                     var empDepartmentEN = !string.IsNullOrEmpty(UtilsAppCode.Session.User.empDepartmentEN) ? Regex.Replace(UtilsAppCode.Session.User.empDepartmentEN, @"\D", "") : "";
-                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(ConfigurationManager.AppSettings["conditionGetMaster"]) && x.name.Contains(empDepartmentEN)).OrderBy(x => x.descTh).ToList();
-                    activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMaster("mainAgency", "");
+                    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(ConfigurationManager.AppSettings["conditionActBeer"]) && x.name.Contains(empDepartmentEN)).OrderBy(x => x.descTh).ToList();
+                    activity_TBMMKT_Model.otherList_1 = QueryOtherMaster.getOhterMasterByEmpId("mainAgency", "", UtilsAppCode.Session.User.empId);
                     activity_TBMMKT_Model.otherList_2 = QueryOtherMaster.getOhterMaster("subAgency", "");
                     activity_TBMMKT_Model.otherList_3 = QueryOtherMaster.getOhterMaster("pay", "");
                     activity_TBMMKT_Model.otherList_4 = QueryOtherMaster.getOhterMaster("game", "");
                     activity_TBMMKT_Model.otherList_5 = QueryOtherMaster.getOhterMaster("area", "");
-                    activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt.Equals(ConfigurationManager.AppSettings["conditionGetMaster"])).ToList();
+                    activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt.Equals(ConfigurationManager.AppSettings["conditionActBeer"])).ToList();
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Equals(ConfigurationManager.AppSettings["productGroupBeer"])).ToList();
                     activity_TBMMKT_Model.activityFormModel.productGroupId = ConfigurationManager.AppSettings["productGroupBeer"];
+
+                   
 
                 }
                 else
@@ -61,8 +64,8 @@ namespace eActForm.Controllers
                     }
 
                 }
-                    
-                if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
+
+                if (activity_TBMMKT_Model.activityFormModel.mode == AppCode.Mode.edit.ToString())
                 {
                     activity_TBMMKT_Model.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activity_TBMMKT_Model.activityFormModel.productGroupId);
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activity_TBMMKT_Model.activityFormModel.productGroupId).ToList();
@@ -74,16 +77,75 @@ namespace eActForm.Controllers
 
                 }
 
-                
+
                 TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] = activity_TBMMKT_Model;
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ActivityForm => " + ex.Message);
+                ExceptionManager.WriteError("partialSetPriceDetail => " + ex.Message);
             }
 
 
             return PartialView(activity_TBMMKT_Model);
+        }
+
+
+
+        public JsonResult getBudgetBeer(string listTotal, string activityId, string brandId, string actType, string center, string channelId, string periodEndDate, string status)
+        {
+            var result = new AjaxResult();
+            decimal? getSumAmount = 0;
+            try
+            {
+                Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
+                var getListTotal = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listTotal);
+
+                if (status == "1" || status == "5")
+                {
+                    getSumAmount = getListTotal.Where(x => x.total > 0).Sum(x => x.total);
+                }
+
+
+                var getBudget = ActFormAppCode.getBudgetActBeer(actType, brandId, center, channelId, periodEndDate);
+
+                foreach (var item in getBudget)
+                {
+                    BudgetTotal budgetTotalModel = new BudgetTotal();
+
+                    budgetTotalModel.totalBudget = item.totalBudget;
+                    budgetTotalModel.useAmountTotal = item.useAmountTotal + getSumAmount;
+                    budgetTotalModel.amountBalanceTotal = item.totalBudget - (item.useAmountTotal + getSumAmount);
+                    budgetTotalModel.amountBalancePercen = ((item.useAmountTotal + getSumAmount) / item.totalBudget) * 100;
+                    model.budgetTotalList.Add(budgetTotalModel);
+                }
+
+                TempData["showBudgetBeer" + activityId] = model;
+
+                if (model.budgetTotalList.Any())
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("getBudgetBeer => " + activityId + "____" + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult showDetailBudgetControl(string activityId)
+        {
+
+            Activity_TBMMKT_Model model = TempData["showBudgetBeer" + activityId] == null ? new Activity_TBMMKT_Model() : (Activity_TBMMKT_Model)TempData["showBudgetBeer" + activityId];
+
+
+            return PartialView(model);
         }
 
 

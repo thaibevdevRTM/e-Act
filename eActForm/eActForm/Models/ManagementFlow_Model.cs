@@ -23,6 +23,7 @@ namespace eActForm.Models
         public List<RequestEmpModel> empList { get; set; }
         public List<ManagentFlowModel.flowSubject> flowSubjectList { get; set; }
         public List<departmentMasterModel> departmentMasterList { get; set; }
+        public List<TB_Act_Region_Model> regionList { get; set; }
         public List<string> addOn_Id { get; set; }
         public List<string> p_idList { get; set; }
         public List<string> p_rangNoList { get; set; }
@@ -77,5 +78,6 @@ namespace eActForm.Models
         public string activityGroup { get; set; }
         public string empId { get; set; }
         public string deparmentId { get; set; }
+        public string regionId { get; set; }
     }
 }

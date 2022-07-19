@@ -26,33 +26,8 @@ namespace eForms.Presenter.AppCode
                 }
                 else
                 {
-                    DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowIdByDetail"
-                    , new SqlParameter("@companyId", model.companyId)
-                    , new SqlParameter("@masterTypeId", model.masterTypeId)
-                    , new SqlParameter("@subjectId", getSubjectId)
-                    , new SqlParameter("@customerId", model.customerId)
-                    , new SqlParameter("@productCateId", model.productCateId)
-                    , new SqlParameter("@productTypeId", model.productTypeId)
-                    , new SqlParameter("@productBrandId", model.productBrandId)
-                    , new SqlParameter("@channelId", model.channelId)
-                    , new SqlParameter("@departmentId", model.departmentId)
-                    , new SqlParameter("@actTypeId", model.actType)
-                    , new SqlParameter("@limitTo", model.limitTo)
-                    , new SqlParameter("@limitBegin", model.limitBegin)
-                    , new SqlParameter("@empGroup", model.empGroup));
-                    if (ds.Tables.Count > 0)
-                    {
-                        var lists = (from DataRow d in ds.Tables[0].Rows
-                                     select new ImportFlowModel.ImportFlowModels()
-                                     {
-                                         flowId = d["id"].ToString(),
-                                     });
-                        return lists.Any() ? lists.FirstOrDefault().flowId : "";
-                    }
-                    else
-                    {
-                        return "";
-                    }
+                    return model.flowId;
+                    
                 }
 
             }
@@ -62,25 +37,16 @@ namespace eForms.Presenter.AppCode
                 return null;
             }
         }
-        public static bool checkFlowApprove(string strCon, ImportFlowModel.ImportFlowModels model)
+        public static bool checkFlowApprove(string strCon,string flowId,string companyId , string masterTypeId,string empGroup)
         {
             try
             {
 
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowApproveExist"
-                , new SqlParameter("@companyId", model.companyId)
-                , new SqlParameter("@masterTypeId", model.masterTypeId)
-                , new SqlParameter("@subjectId", "")
-                , new SqlParameter("@customerId", model.customerId)
-                , new SqlParameter("@productCateId", model.productCateId)
-                , new SqlParameter("@productTypeId", model.productTypeId)
-                , new SqlParameter("@productBrandId", model.productBrandId)
-                , new SqlParameter("@channelId", model.channelId)
-                , new SqlParameter("@departmentId", model.departmentId)
-                , new SqlParameter("@limitTo", model.limitTo)
-                , new SqlParameter("@limitBegin", model.limitBegin)
-                , new SqlParameter("@empGroup", model.empGroup)
-                , new SqlParameter("@actTypeId", model.actType));
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowApproveExistNew"
+                , new SqlParameter("@flowId", flowId)
+                , new SqlParameter("@companyId", companyId)
+                , new SqlParameter("@masterTypeId", masterTypeId)
+                , new SqlParameter("@empGroup", empGroup));
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new
@@ -94,7 +60,7 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getFlowIdByDetail => " + ex.Message);
+                ExceptionManager.WriteError("checkFlowApprove => " + ex.Message);
                 return false;
             }
         }
@@ -128,6 +94,27 @@ namespace eForms.Presenter.AppCode
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("InsertFlow => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int deleteTempFlow(string strCon, string empId)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_deleteTempImportFlow"
+                , new SqlParameter[] {new SqlParameter("@empId",empId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("deleteTempFlow => " + ex.Message);
             }
 
             return result;
@@ -300,6 +287,113 @@ namespace eForms.Presenter.AppCode
             {
                 ExceptionManager.WriteError("insertFlowMain => " + ex.Message);
                 return result;
+            }
+        }
+
+
+        public static int InserToTemptFlow(string strCon, ImportFlowModel.ImportFlowModels model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTempFlow"
+                , new SqlParameter[] {new SqlParameter("@masterTypeId",model.masterTypeId)
+                         ,new SqlParameter("@companyId",model.companyId)
+                         ,new SqlParameter("@company",model.company)
+                         ,new SqlParameter("@actType",model.actType)
+                         ,new SqlParameter("@subject",model.subject)
+                         ,new SqlParameter("@customerId",model.customerId)
+                         ,new SqlParameter("@customer",model.customer)
+                         ,new SqlParameter("@productCateId",model.productCateId)
+                         ,new SqlParameter("@productCate",model.productCate)
+                         ,new SqlParameter("@productTypeId",model.productTypeId)
+                         ,new SqlParameter("@productType",model.productType)
+                         ,new SqlParameter("@productBrand",model.productBrand)
+                         ,new SqlParameter("@productBrandId",model.productBrandId)
+                         ,new SqlParameter("@channel",model.channel)
+                         ,new SqlParameter("@channelId",model.channelId)
+                         ,new SqlParameter("@departmentId",model.departmentId)
+                         ,new SqlParameter("@department",model.department)
+                         ,new SqlParameter("@limitBegin",model.limitBegin)
+                         ,new SqlParameter("@limitTo",model.limitTo)
+                         ,new SqlParameter("@limitDisplay",model.limitDisplay)
+                         ,new SqlParameter("@rang",model.rang)
+                         ,new SqlParameter("@approveGroupId",model.approveGroupId)
+                         ,new SqlParameter("@approveGroup",model.approveGroup)
+                         ,new SqlParameter("@IsShow",model.IsShow)
+                         ,new SqlParameter("@IsApprove",model.IsApprove)
+                         ,new SqlParameter("@empId",model.empId)
+                         ,new SqlParameter("@empGroup",model.empGroup)
+                         ,new SqlParameter("@name",model.name)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InserToTemptFlow => " + ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public static List<ImportFlowModel.ImportFlowModels> getFlowAterImport(string strCon, string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getFlowDetailTemp"
+                    , new SqlParameter[] { new SqlParameter("@empId",empId)
+                    });
+
+
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new ImportFlowModel.ImportFlowModels()
+                             {
+                                 flowId = d["flowId"].ToString(),
+                                 masterTypeId = d["masterTypeId"].ToString(),
+                                 company = d["company"].ToString(),
+                                 companyId = d["companyId"].ToString(),
+                                 actType = d["actTypeId"].ToString(),
+                                 subject = d["subjectId"].ToString(),
+                                 customer = d["customer"].ToString(),
+                                 customerId = d["customerId"].ToString(),
+                                 productCate = d["productCate"].ToString(),
+                                 productCateId = d["productCateId"].ToString(),
+                                 productType = d["productType"].ToString(),
+                                 productTypeId = d["productTypeId"].ToString(),
+                                 productBrand = d["productBrand"].ToString(),
+                                 productBrandId = d["productBrandId"].ToString(),
+                                 channel = d["channel"].ToString(),
+                                 channelId = d["channelId"].ToString(),
+                                 department = d["department"].ToString(),
+                                 departmentId = d["departmentId"].ToString(),
+                                 limitBegin = d["limitBegin"].ToString(),
+                                 limitTo = d["limitTo"].ToString(),
+                                 limitDisplay = d["limitDisplay"].ToString(),
+                                 rang = d["rang"].ToString(),
+                                 approveGroup = d["approveGroup"].ToString(),
+                                 approveGroupId = d["approveGroupId"].ToString(),
+                                 IsShow = d["IsShow"].ToString(),
+                                 IsApprove = d["IsApprove"].ToString(),
+                                 empId = d["empId"].ToString(),
+                                 empGroup = d["empGroup"].ToString(),
+                                 name = d["name"].ToString(),
+                                 createdByUserId = d["createdByUserId"].ToString(),
+                                 checkFlowExist = bool.Parse(d["checkFlow"].ToString()),
+
+                             }); 
+                    return lists.ToList();
+                
+                
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowAterImport => " + ex.Message);
+                return null;
             }
         }
     }

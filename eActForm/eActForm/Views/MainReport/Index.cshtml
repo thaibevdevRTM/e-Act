@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
+@using eActForm.BusinessLayer
 @using eActForm.Models;
 
 <div class="modal-dialog modal-lg">
@@ -14,6 +15,18 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
+                    @if (Model.approveFlowDetail.Count > 0)
+                    {
+                        if (Model.approveFlowDetail[0].empId == UtilsAppCode.Session.User.empId)
+                        {
+                            <div style="display:inline-block;" class="pull-left">
+
+                                @Html.TextArea("statusNote", new { @class = "form-control textboxcss", @id = "txtRemarkApprove", rows = "3", cols = "50",  style = "background-color:#F6E3E6;" , @placeholder = "Remark Status Note" })
+
+                            </div>
+                        }
+                    }
+
                     <div style="display:inline-block;">
                         @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
                         {
@@ -111,6 +124,7 @@
                                     GridHtml1: htmlstr,
                                     status: 2,
                                     activityId: '@Model.activityFormTBMMKT.id',
+                                    statusNote: $("#txtRemarkApprove").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',

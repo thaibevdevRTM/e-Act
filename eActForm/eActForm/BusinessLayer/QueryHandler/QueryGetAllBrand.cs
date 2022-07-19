@@ -3,6 +3,7 @@ using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
 
@@ -35,6 +36,28 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("GetAllBrand => " + ex.Message);
+                return new List<TB_Act_ProductBrand_Model>();
+            }
+        }
+
+        public static List<TB_Act_ProductBrand_Model> GetBrandBySubject(string subjectId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBrandBySubjectId"
+                    , new SqlParameter("@subjectId", subjectId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new TB_Act_ProductBrand_Model()
+                             {
+                                 id = d["id"].ToString(),
+                                 brandName = d["brandName"].ToString(),
+                                
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetBrandBySubject => " + ex.Message);
                 return new List<TB_Act_ProductBrand_Model>();
             }
         }

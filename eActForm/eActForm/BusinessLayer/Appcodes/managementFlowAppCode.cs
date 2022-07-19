@@ -28,7 +28,18 @@ namespace eActForm.BusinessLayer.Appcodes
         public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId, string companyId)
         {
             var result = QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
-            return result.Where(x => x.companyId.Equals(companyId)).ToList();
+
+
+            if (subjectId == ConfigurationManager.AppSettings["subjectActBeer"])
+            {
+                return result;
+            }
+            else
+            {
+                return result.Where(x => x.companyId.Equals(companyId)).ToList();
+            }
+
+
         }
 
         public static List<TB_Act_Other_Model> getApproveShow()
@@ -55,7 +66,6 @@ namespace eActForm.BusinessLayer.Appcodes
             else
             {
                 return QueryGetAllCustomers.getCustomersOMT();
-
             }
         }
 
@@ -96,7 +106,7 @@ namespace eActForm.BusinessLayer.Appcodes
                       , new SqlParameter("@empId", model.p_empGroup[0])
                       });
 
-                string getLimitId = "",flowId = model.p_flowId[0];
+                string getLimitId = "", flowId = model.p_flowId[0];
                 if (string.IsNullOrEmpty(model.p_flowId[0]))
                 {
                     flowId = getFlowtLimitByCondition(AppCode.StrCon, model);
@@ -122,7 +132,7 @@ namespace eActForm.BusinessLayer.Appcodes
                       });
                     i++;
                 }
-               
+
             }
             catch (Exception ex)
             {

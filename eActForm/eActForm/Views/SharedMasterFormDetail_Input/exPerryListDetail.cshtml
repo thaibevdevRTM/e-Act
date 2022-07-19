@@ -35,7 +35,7 @@
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].compensate, "{0:0.000}",new { @class = "form-control textboxcss font10 textRight" ,@type = "number", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal", onkeyup = "getValues()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
@@ -122,7 +122,7 @@
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal_tbEtt", onkeyup = "getTotal()" })</td>
 
                 </tr>
             </tbody>
@@ -253,28 +253,24 @@
     }
 
     function cashDelete(btn) {
+
         var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
         getValues();
+        getTotal();
     }
 
 
     function getValues() {
         var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
-            
-        for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
 
-           
-            var rowtotal = parseFloat($(x).val());
-
-            console.log(rowtotal);
-            if (isNaN(rowtotal)) rowtotal = 0;
-            totalAll = totalAll + rowtotal;
-        }
-        //convertBaht2Text(totalAll);
+        $(".clsTotal").each(function () {
+            totalAll += parseInt(this.value);
+            console.log(totalAll);
+        });
         document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+
         totalExpenExMaket();
         totalAllExpenses();
     }
@@ -351,16 +347,15 @@
 
 
     function getTotal() {
-        var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
+        var totalAll2 = 0.00;
 
-        for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList2[" + i + "].total");
-            var rowtotal = parseFloat($(x).val());
-            if (isNaN(rowtotal)) rowtotal = 0;
-           var totalAll = totalAll + rowtotal;
-        }
-        document.getElementById('lbltotalExMaket').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        $(".clsTotal_tbEtt").each(function () {
+            totalAll2 += parseInt(this.value);
+            console.log(totalAll2);
+        });
+
+       
+        document.getElementById('lbltotalExMaket').innerHTML = totalAll2.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         totalExpenExMaket();
         totalAllExpenses();
     }

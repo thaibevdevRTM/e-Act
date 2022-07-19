@@ -8,11 +8,11 @@
     <li>
         <a><i class="fa fa-tasks"></i>&nbsp;Import Data <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
+            @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("TBM Import PRODUCT-POS/PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
                 <li>@Html.ActionLink("TBM Import Master AP", "Index", "ImportMasterAP", new { }, null)</li>
-                <li>@Html.ActionLink("TBM Import Budget Report", "Inddex_ImportBGMarketing", "ImportBudgetControl", new { }, null)</li>
+                <li>@Html.ActionLink("TBM Import Report SAP Budget", "Inddex_ImportBGMarketing", "ImportBudgetControl", new { }, null)</li>
             }
 
             @if (UtilsAppCode.Session.User.isAdminCVM || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM)
@@ -20,10 +20,15 @@
 
                 <li>@Html.ActionLink("Import Hospital", "Index", "ImportMasterHospital", new { }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminPOM)
             {
-
                 <li>@Html.ActionLink(" Import Budget ", "index", "ImportBudgetControl")</li>
+            }
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminPOM
+                || UtilsAppCode.Session.User.isAdmin ||  UtilsAppCode.Session.User.isAdminCVM ||  UtilsAppCode.Session.User.isAdminHCBP
+                || UtilsAppCode.Session.User.isAdminHCM || UtilsAppCode.Session.User.isAdminNUM || UtilsAppCode.Session.User.isAdminOMT)
+            {
+                <li>@Html.ActionLink(" Import Flow ", "index", "ImportFlow")</li>
             }
         </ul>
     </li>

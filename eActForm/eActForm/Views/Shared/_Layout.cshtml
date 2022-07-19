@@ -184,7 +184,7 @@
 
 
         function doMsgSuccess(msg) {
-            bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
+            bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='https://eact.thaibev.com/images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
         }
         function doMsgFail(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><br/>" + msg + "</div></div>");
@@ -196,14 +196,14 @@
 
         function doAlert(msg) {
             bootbox.dialog({
-                message: "<div class='row'><div class='text-center'><img width='80px' src='../images/warning_error.png' class='text - center'/><br/>" + msg + "</div></div>"
+                message: "<div class='row'><div class='text-center'><img width='80px' src='https://eact.thaibev.com/images/warning_error.png' class='text - center'/><br/>" + msg + "</div></div>"
             });
             closeButton: false
         }
 
         function doMsgSuccessAction(msg, action) {
             bootbox.alert({
-                message: "<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
+                message: "<div class='row'><div class='text-center'><img width='150px' src='https://eact.thaibev.com/images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
                 callback: function () {
                     var url = action;
                     window.location.href = url;

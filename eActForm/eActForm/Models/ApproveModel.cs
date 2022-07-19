@@ -5,6 +5,8 @@ namespace eActForm.Models
 {
     public class ApproveModel
     {
+
+
         public class approveWaitingModels
         {
             public List<approveWaitingModel> waitingLists { get; set; }
@@ -28,12 +30,13 @@ namespace eActForm.Models
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
             public Activity_TBMMKT_Model activity_TBMMKT_Model { get; set; }//fream dev date 20200114
             public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
-
+            public List<approveListSummaryModels> approveListSummaryList { get; set; }
             public approveModels()
             {
                 approveModel = new approveModel();
                 approveDetailLists = new List<approveDetailModel>();
                 approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
+                approveListSummaryList = new List<approveListSummaryModels>();
             }
 
         }
@@ -53,7 +56,7 @@ namespace eActForm.Models
             {
                 if (empId != "")
                 {
-                    List<RequestEmpModel> model =  QueryGet_empDetailById.getEmpDetailById(empId) ;
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
                     if (model.Count > 0)
                     {
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
@@ -114,12 +117,12 @@ namespace eActForm.Models
 
         public class approveEmailDetailModel : ActBaseModel
         {
-            public approveEmailDetailModel(string empId,string emailDB)
+            public approveEmailDetailModel(string empId, string emailDB)
             {
-                if( empId != "")
+                if (empId != "")
                 {
                     List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-                    if(model.Count > 0)
+                    if (model.Count > 0)
                     {
                         empEmail = model[0].email;
                         empName = model[0].empName;
@@ -148,6 +151,18 @@ namespace eActForm.Models
             public string approveGroupTH { get; set; }
             public string approveGroupEN { get; set; }
             public string statusId { get; set; }
+        }
+
+        public class approveListSummaryModels : ActBaseModel
+        {
+            public string id { get; set; }
+            public string companyId { get; set; }
+            public string activityGroup { get; set; }
+            public string channel { get; set; }
+            public decimal? budgetAmount { get; set; }
+            public decimal? total { get; set; }
+            public decimal? balanceAmount { get; set; }
+            public string fiscalYear { get; set; }
         }
     }
 }

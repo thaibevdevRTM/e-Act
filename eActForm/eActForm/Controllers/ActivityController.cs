@@ -171,7 +171,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + "actId :"+ activityFormModel.id);
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + "actId :" + activityFormModel.id);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -220,6 +220,34 @@ namespace eActForm.Controllers
                 result.Success = false;
                 result.Message = ex.Message;
                 ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult copyAndSaveNewActivity_MasterForm(string activityId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                string new_actId = Guid.NewGuid().ToString();
+                Activity_TBMMKT_Model activityModel = new Activity_TBMMKT_Model();
+                activityModel = (Activity_TBMMKT_Model)TempData["actForm" + activityId];
+                activityModel.activityFormTBMMKT.activityNo = "";
+                activityModel.activityFormTBMMKT.statusId = 1;
+                activityModel.activityFormModel.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
+                activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]); 
+                activityModel.activityFormModel.activityPeriodEndStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
+                int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activityModel, new_actId);
+                TempData.Keep();
+                result.ActivityId = new_actId;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("copyAndSaveNewActivity_MasterForm => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -313,7 +341,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId,string statusNote)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -323,7 +351,6 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
                 if (countresult > 0)
                 {
-                    //GenPDFAppCode.doGen(GridHtml1, activityId, Server);
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     if (model.FirstOrDefault().statusId != 3)
                     {
@@ -331,25 +358,18 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                if (ConfigurationManager.AppSettings["formBgTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                    //ActFormAppCode.insertReserveBudget(activityId);
-                                }
                                 if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
                                     //waiting update budgetControl
                                     bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
                                 }
 
-                                if (AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id) || ConfigurationManager.AppSettings["companyId_MT"] == model.FirstOrDefault().companyId)
+                                // case form benefit will auto approve
+                                if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
-                                    // case form benefit will auto approve
-                                    if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
-                                    {
-                                        ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
-                                    }
+                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString());
                                 }
-                                //var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                              
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));

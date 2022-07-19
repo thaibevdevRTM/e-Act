@@ -8,17 +8,17 @@
     <li>
         <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+            @if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+            @if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            @if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents Beer", "Index", "Home", new { typeForm = Activity_Model.activityType.Beer.ToString() }, null)</li>
             }
@@ -30,10 +30,10 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents Horeca", "Index", "Home", new { typeForm = Activity_Model.activityType.HCM.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            @if (UtilsAppCode.Session.User.isAdminHCM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents HC", "Index", "Home", new { typeForm = Activity_Model.activityType.HCForm.ToString() }, null)</li>
-                <li onclick="waitpopup();">@Html.ActionLink(" Documents Entertain", "Index", "Home", new { typeForm = Activity_Model.activityType.EXPENSE.ToString() }, null)</li>
+                @*<li onclick="waitpopup();">@Html.ActionLink(" Documents Entertain", "Index", "Home", new { typeForm = Activity_Model.activityType.EXPENSE.ToString() }, null)</li>*@
             }
             @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isCreator)
             {

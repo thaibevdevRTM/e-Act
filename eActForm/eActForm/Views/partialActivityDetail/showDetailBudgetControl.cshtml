@@ -1,0 +1,42 @@
+﻿
+@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+@if (Model.budgetTotalList.Count > 0)
+{
+    <div class="col-md-6 col-sm-5 col-xs-5">
+    </div>
+    <div class="col-md-6 col-sm-7 col-xs-7 widget_tally_box">
+        <div class="x_panel">
+            <div class="col-xs-12 bg-white progress_summary">
+                <div id="divProgress" class="row">
+
+                    @foreach (var item in Model.budgetTotalList)
+                    {
+                        string result = String.Format("{0:n2}", item.amountBalancePercen);
+                        string intBalance = item.amountBalancePercen.ToString() + "%";
+                        <div class="pull-right">
+                            <span>
+
+                                งบประมาณทั้งปี  @item.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @item.useAmountTotal.Value.ToString("#,##0.00")
+                                คงเหลือ @item.amountBalanceTotal.Value.ToString("#,##0.00")
+
+                            </span>
+                        </div>
+                        <div class="col-xs-6 pull-right" style="margin-right:30px;">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" style="width: @intBalance" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><span style="color:black">@result%</span></div>
+                            </div>
+
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

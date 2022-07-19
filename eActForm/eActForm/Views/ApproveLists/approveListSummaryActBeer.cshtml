@@ -1,0 +1,353 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.ApproveModel.approveModels
+
+<style>
+    table.fixed {
+        table-layout: fixed;
+        width: 100px;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    .tscroll {
+        width: 400px;
+        overflow-x: scroll;
+        margin-bottom: 10px;
+        border: solid black 1px;
+    }
+
+        .tscroll table td:first-child {
+            position: sticky;
+            left: 0;
+            background-color: #ddd;
+        }
+
+        .tscroll td, .tscroll th {
+            border-bottom: dashed #888 1px;
+        }
+</style>
+<div class="row">
+    <div class="col-12">
+        <p class="lead">
+            Senior Approval List
+            @if (Model.approveListSummaryList.Count > 0)
+            {
+                @Model.approveListSummaryList[0].fiscalYear
+            }
+        </p>
+    </div>
+    <div class="col-md-12 col-xs-12 tscroll" style="width:100%;overflow-x:scroll;">
+        <table class="table table-striped jambo_table bulk_action table-bordered fixed" id="tbl_sumaryList" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+            <thead>
+                <tr class="headings" style="text-align:center;">
+                    <th class="align-content-center font10" width="200" rowspan="2">กลุ่มกิจกรรม</th>
+                    <th class="align-content-center font10" width="100" rowspan="2">ปีงบประมาณ</th>
+                    <th class="align-content-center font10" width="500" colspan="6">งบประมาณ</th>
+                    <th class="align-content-center font10" width="500" colspan="6">งบประมาณที่ขอ</th>
+                    <th class="align-content-center font10" width="500" colspan="6">ขาด(เกิน)งบประมาณที่ขอ</th>
+                </tr>
+                <tr>
+                    <th class="align-content-center font10">ARP</th>
+                    <th class="align-content-center font10">DB</th>
+                    <th class="align-content-center font10">EV</th>
+                    <th class="align-content-center font10">OT</th>
+                    <th class="align-content-center font10">TT</th>
+                    <th class="align-content-center font10">งบประมาณ</th>
+                    <th class="align-content-center font10">ARP</th>
+                    <th class="align-content-center font10">DB</th>
+                    <th class="align-content-center font10">EV</th>
+                    <th class="align-content-center font10">OT</th>
+                    <th class="align-content-center font10">TT</th>
+                    <th class="align-content-center font10">งบประมาณ</th>
+                    <th class="align-content-center font10">ARP</th>
+                    <th class="align-content-center font10">DB</th>
+                    <th class="align-content-center font10">EV</th>
+                    <th class="align-content-center font10">OT</th>
+                    <th class="align-content-center font10">TT</th>
+                    <th class="align-content-center font10">งบประมาณ</th>
+
+                </tr>
+            </thead>
+            @{ string keepActGroup = "", keepFiscal = "";
+                decimal? sumBudgetAmount = 0, sumTotal = 0, sumBalanceTotal = 0, sumRowBudget = 0, sumRowTotal = 0, sumRowBalance = 0,
+                    sumBudgetARP = 0, sumBudgetDB = 0, sumBudgetEV = 0, sumBudgetOT = 0, sumBudgetTT = 0,
+                    sumTotalARP = 0, sumTotalDB = 0, sumTotalEV = 0, sumTotalOT = 0, sumTotalTT = 0,
+                    sumBalanceARP = 0, sumBalanceDB = 0, sumBalanceEV = 0, sumBalanceOT = 0, sumBalanceTT = 0;
+
+            }
+            @foreach (var item in Model.approveListSummaryList)
+            {
+
+                if (keepActGroup != item.activityGroup)
+                {
+                    sumTotal = 0;
+                    sumBudgetAmount = 0;
+                    sumBalanceTotal = 0;
+                    <tr>
+                        @if (keepActGroup != item.activityGroup )
+                        {
+                            <td class="align-content-center font10"> @item.activityGroup</td>
+                            <td class="align-content-center font10"> @item.fiscalYear</td>
+                        }
+                        @foreach (var subItem in Model.approveListSummaryList)
+                        {
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
+                            {
+                                <td class="align-content-center font10">
+                                    @subItem.budgetAmount.Value.ToString("#,###.00")
+                                </td>
+
+                                sumBudgetAmount = sumBudgetAmount + subItem.budgetAmount;
+                            }
+                        }
+                        <td class="align-content-center font10">@sumBudgetAmount.Value.ToString("#,###.00")</td>
+                        @{
+                            sumRowBudget += sumBudgetAmount;
+                        }
+
+
+                        @foreach (var subItem in Model.approveListSummaryList)
+                        {
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
+                            {
+
+                                if (subItem.total.ToString().Contains("-"))
+                                {
+                                    <td class="align-content-center font10" style="color:red;">
+                                        @subItem.total.Value.ToString("#,###.00")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="align-content-center font10">
+                                        @subItem.total.Value.ToString("#,###.00")
+                                    </td>
+                                }
+
+
+                                sumTotal = sumTotal + subItem.total;
+                            }
+                        }
+                        <td class="align-content-center font10">@sumTotal.Value.ToString("#,###.00")</td>
+                        @{
+                            sumRowTotal += sumTotal;
+                        }
+
+                        @foreach (var subItem in Model.approveListSummaryList)
+                        {
+                            if (item.activityGroup == subItem.activityGroup && item.fiscalYear == subItem.fiscalYear)
+                            {
+
+                                if (subItem.balanceAmount.ToString().Contains("-"))
+                                {
+                                    <td class="align-content-center font10" style="color:red;">
+                                        @subItem.balanceAmount.Value.ToString("#,###.00")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="align-content-center font10">
+                                        @subItem.balanceAmount.Value.ToString("#,###.00")
+                                    </td>
+                                }
+
+                                sumBalanceTotal = sumBalanceTotal + subItem.balanceAmount;
+                            }
+                        }
+
+                        @if (sumBalanceTotal.ToString().Contains("-"))
+                        {
+                            <td class="align-content-center font10" style="color:red;">@sumBalanceTotal.Value.ToString("#,###.00")</td>
+                        }
+                        else
+                        {
+                            <td class="align-content-center font10">@sumBalanceTotal.Value.ToString("#,###.00")</td>
+                        }
+                        @{
+                            sumRowBalance += sumBalanceTotal;
+                        }
+
+
+
+
+                    </tr>
+
+                }
+                if (item.channel.ToUpper() == "ARP")
+                {
+                    sumBudgetARP = sumBudgetARP + item.budgetAmount;
+                    sumTotalARP = sumTotalARP + item.total;
+                    sumBalanceARP = sumBalanceARP + item.balanceAmount;
+                }
+                else if (item.channel.ToUpper() == "DB")
+                {
+                    sumBudgetDB = sumBudgetDB + item.budgetAmount;
+                    sumTotalDB = sumTotalDB + item.total;
+                    sumBalanceDB = sumBalanceDB + item.balanceAmount;
+                }
+                else if (item.channel.ToUpper() == "EV")
+                {
+                    sumBudgetEV = sumBudgetEV + item.budgetAmount;
+                    sumTotalEV = sumTotalEV + item.total;
+                    sumBalanceEV = sumBalanceEV + item.balanceAmount;
+                }
+                else if (item.channel.ToUpper() == "OT")
+                {
+                    sumBudgetOT = sumBudgetOT + item.budgetAmount;
+                    sumTotalOT = sumTotalOT + item.total;
+                    sumBalanceOT = sumBalanceOT + item.balanceAmount;
+                }
+                else if (item.channel.ToUpper() == "TT")
+                {
+                    sumBudgetTT = sumBudgetTT + item.budgetAmount;
+                    sumTotalTT = sumTotalTT + item.total;
+                    sumBalanceTT = sumBalanceTT + item.balanceAmount;
+                }
+
+
+                keepActGroup = item.activityGroup;
+                keepFiscal = item.fiscalYear;
+            }
+            <tr>
+            </tr>
+            <tr style="background-color:aquamarine">
+                <td>&nbsp;รวม</td>
+                <td class="align-content-center font10"><b>  </b></td>
+                <td class="align-content-center font10"><b> @sumBudgetARP.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumBudgetDB.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumBudgetEV.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumBudgetOT.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumBudgetTT.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumRowBudget.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumTotalARP.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumTotalDB.Value.ToString("#,###.00")    </b></td>
+                <td class="align-content-center font10"><b> @sumTotalEV.Value.ToString("#,###.00")    </b></td>
+                <td class="align-content-center font10"><b> @sumTotalOT.Value.ToString("#,###.00")    </b></td>
+                <td class="align-content-center font10"><b> @sumTotalTT.Value.ToString("#,###.00")    </b></td>
+                <td class="align-content-center font10"><b> @sumRowTotal.Value.ToString("#,###.00")   </b></td>
+                <td class="align-content-center font10"><b> @sumBalanceARP.Value.ToString("#,###.00") </b></td>
+                <td class="align-content-center font10"><b> @sumBalanceDB.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumBalanceEV.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumBalanceOT.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumBalanceTT.Value.ToString("#,###.00")  </b></td>
+                <td class="align-content-center font10"><b> @sumRowBalance.Value.ToString("#,###.00") </b></td>
+            </tr>
+            @*<tr>
+                    <td class="align-content-center font10">
+                        &nbsp;ยอดขาย TG 22(ลิตร)
+                        @if (Model.activity_TBMMKT_Model != null)
+                        {
+                            foreach (var item in Model.activity_TBMMKT_Model.objExpenseCashList)
+                            {
+
+                                TG = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                @TG.Value.ToString("#,###.00")
+                            }
+                        }
+                    </td>
+
+
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="3" class="align-content-center font10">บาท/ลิตร เทียบ TG22</td>
+                    <td colspan="3" class="align-content-center font10">ขาด (เกิน บาท/ลิตร)</td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร TT ปี 2022
+                        @if (Model.activity_TBMMKT_Model != null)
+                        {
+                            foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
+                            {
+                                if (item.subType == "TT")
+                                {
+                                    TT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                    @TT.Value.ToString("N2")
+                                }
+                            }
+                        }
+                    </td>
+
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="6" class="align-content-center font10"></td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (sumTotalTT > 0 && TG > 0)
+                        {
+                            resultLiter_TT = sumTotalTT / TG;
+                            @resultLiter_TT.Value.ToString("N2")
+                        }
+
+                    </td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (TT > 0 && resultLiter_TT > 0)
+                        {
+                            balancetLiter_TT = TT - resultLiter_TT;
+                            @balancetLiter_TT.Value.ToString("N2")
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร OT ปี 2022
+                        @if (Model.activity_TBMMKT_Model != null)
+                        {
+                            foreach (var item in Model.activity_TBMMKT_Model.otherList_1)
+                            {
+                                if (item.subType == "OT")
+                                {
+                                    OT = !string.IsNullOrEmpty(item.val1) ? decimal.Parse(item.val1) : 0;
+                                    @OT.Value.ToString("N2")
+                                }
+                            }
+                        }
+                    </td>
+
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (sumTotalOT > 0 && TG > 0)
+                        {
+                            resultLiter_OT = sumTotalOT / TG;
+                            @resultLiter_OT.Value.ToString("N2")
+                        }
+
+                    </td>
+                    <td colspan="3" class="align-content-center font10">
+                        @if (OT > 0 && resultLiter_OT > 0)
+                        {
+                            balancetLiter_OT = OT - resultLiter_OT;
+                            @balancetLiter_OT.Value.ToString("N2")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-content-center font10">
+                        &nbsp;คชจ.บาท/ลิตร TT+OT ปี 2022
+                        @{
+                            sumChannel = TT + OT;
+                        }
+                        @sumChannel
+
+                    </td>
+
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="3"></td>
+                    <td colspan="3"></td>
+                </tr>*@
+        </table>
+    </div>
+</div>

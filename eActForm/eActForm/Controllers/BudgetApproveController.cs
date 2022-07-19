@@ -428,7 +428,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 }
 
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budgetApproveId);
 
 
 
@@ -761,7 +761,7 @@ namespace eActForm.Controllers //update 21-04-2020
                     }
 
                     var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
-                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budget_approve_id);
 
                     BudgetApproveController.setCountWatingApproveBudget();
                     if (count_req_app > 0)
@@ -903,7 +903,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 }
 
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budget_approve_id);
 
 
                 resultAjax.Success = true;

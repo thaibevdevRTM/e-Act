@@ -46,10 +46,11 @@
                                               @class = "form-control selectpicker",
                                               id = "ddlFiscalYear"
                                           })
-                                            <script>
+                                        <script>
                                             $('#ddlFiscalYear').change(function () {
                                                 bindDropdownEO();
-                                                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                                                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+                                                || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]')
                                                 {
                                                     if ($('#ddlFiscalYear').val()=="") {
                                                        $("#ddl_EO_PV").multiselect('dataprovider', null);
@@ -101,7 +102,7 @@
                                                     });
                                             }
 
-                                            </script>
+                                        </script>
                                         }
                                         else
                                         {

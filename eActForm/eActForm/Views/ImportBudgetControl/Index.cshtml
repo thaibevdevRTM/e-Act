@@ -68,8 +68,9 @@
 
 
 
-<a href="~/Uploadfiles/template/Template Budget.xlsx">Download Template Budget</a>
-
+<a href="~/Uploadfiles/template/Template Budget.xlsx">Download Template Budget(TBM)</a>
+<br />
+<a href="~/Uploadfiles/template/TemplateBudgetBeer.xlsx">Download Template Budget(Beer)</a>
 
 <div id="divView" class="col-md-12">
 </div>
@@ -92,7 +93,7 @@
             return false;
         }
         bootbox.confirm({
-            message: "<p class='lead text-center'>คุณต้องการ Import Flow ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            message: "<p class='lead text-center'>คุณต้องการ Import Budget ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
                 confirm: {
                     label: 'Yes',
@@ -136,7 +137,7 @@
             type: 'POST',
             url: '@Url.Action("showImportBGlist", "ImportBudgetControl")',
             data: {
-
+                companyId: $("#ddlCompany").val(),
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
