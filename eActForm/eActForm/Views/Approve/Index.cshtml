@@ -211,7 +211,7 @@ else
 
     function successQuery(response) {
         if (response.Success) {
-            if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
+            if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()' || '@type' == '@AppCode.ApproveType.ActivityBeer.ToString()') {
                 $("#WaitDialog").show();
                 callPreviewApprove('@actId');
             }
@@ -276,6 +276,9 @@ else
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formReceptions"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formTransferbudget"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formEactBeer"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]'
 
         ) {
             $.ajax({
@@ -353,8 +356,15 @@ else
                 },
                 callback: function (result) {
 
-                    var url = '@Url.Action("Index", "ApproveLists")';
-                    window.location.replace(url);// = url;
+                    if ('@type' == '@AppCode.ApproveType.ActivityBeer.ToString()') {
+                       var url = '@Url.Action("Index", "ApproveBeerLists")';
+                       window.location.replace(url);// = url;
+                    }
+                    else {
+                        var url = '@Url.Action("Index", "ApproveLists")';
+                        window.location.replace(url);// = url;
+                    }
+
 
                 }
             });

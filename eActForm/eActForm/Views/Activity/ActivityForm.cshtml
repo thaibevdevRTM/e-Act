@@ -686,16 +686,21 @@
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
         }
         else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]") {
-            $("#divRadioRef").append('<input type="checkbox" id="chkExpress" name="formatCus" value="Go Fresh" onchange = "onchangeRdbRef(this);">Go Fresh</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkGoFresh" name="formatCus" value="GoFresh" onchange = "onchangeRdbRef(this);">GoFresh</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkExpress" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkTalad" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+        }
+        else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusCJ"]") {
+            $("#divRadioRef").append('<input type="checkbox" id="chkTD" name="formatCus" value="TD" onchange = "onchangeRdbRef(this);">TD</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkCJ" name="formatCus" value="CJ" onchange = "onchangeRdbRef(this);">CJ</input>&nbsp;&nbsp;');
         }
         else {
             document.getElementById("txtReference").readOnly = false;
         }
 
-        var cus = ["Hyper", "Market", "Mini", "Depot","Donjai","Express","Talad","Hyper"];
+        var cus = ["Hyper", "Market", "Mini", "Depot", "Donjai", "Express", "Talad","GoFresh","TD","CJ"];
         cus.forEach(chkTrueRef);
     }
 
@@ -1002,7 +1007,7 @@
 
            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
             $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
-        
+
         if ($("#ddlTheme option:selected").text() == 'FOC') {
             var rowCount = parseInt($('#tbl_activityDetail tr.tagTR').length);
             for (i = 0; i < rowCount; i++) {

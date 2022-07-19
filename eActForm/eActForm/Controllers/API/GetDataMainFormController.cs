@@ -159,7 +159,8 @@ namespace eActForm.Controllers
             {
                 if (objGetDataEO.channelId == null) { objGetDataEO.channelId = ""; }
                 if (objGetDataEO.productBrandId == null) { objGetDataEO.productBrandId = ""; }
-                if (objGetDataEO.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+                if (objGetDataEO.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] ||
+                    objGetDataEO.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
 
                 List<GetDataEO> tbToAjax = new List<GetDataEO>();
                 tbToAjax = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);

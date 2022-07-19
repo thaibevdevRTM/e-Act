@@ -41,7 +41,7 @@
                     <label>Company</label>
                 </div>
                 <div class="col-md-10 col-xs-12">
-                    @Html.DropDownList("companyList", new SelectList("", "value", "text"), new { @class = "multiselect form-control", multiple = "multiple" , @id = "ddlCompanyMulti" })
+                    @Html.DropDownList("companyList", new SelectList("", "value", "text"), new { @class = "multiselect form-control", multiple = "multiple", @id = "ddlCompanyMulti" })
                     @*@Html.ListBox("companyList", new MultiSelectList("", "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })*@
                 </div>
             </div>
@@ -65,6 +65,14 @@
             </div>
             <div class="col-md-12 col-xs-12">
                 @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+            </div>
+        </div>
+        <div id="divSubject" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Subject</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
             </div>
         </div>
     }
@@ -94,6 +102,10 @@
             }
         });
 
+        $('.selectpicker').selectpicker({
+            liveSearch: true,
+            showSubtext: true
+        });
 
         $("#txtEmpId").autocomplete({
         source: function (request, response) {
@@ -169,16 +181,49 @@
     $("#ddlCompany").change(function () {
         $("#WaitDialog").show();
         $.ajax({
+            url: '@Url.Action("getSubjectByCompany", "ManagementFlow")',
+            data: {
+                companyId: $("#ddlCompany").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.length > 0) {
+                    $("#ddlSubject option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlSubject").append($("<option></option>").val(this['id']).html(this['nameTH']));
+
+                    });
+                    $('.selectpicker').selectpicker('refresh');
+                }
+                $("#WaitDialog").hide();
+            }
+        });
+    });
+
+    $("#ddlSubject").change(function () {
+        $("#WaitDialog").show();
+        $.ajax({
         type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
             data: {
             companyId: $("#ddlCompany").val(),
                 typeFlow: '@typeFlow',
+                subjectId: $("#ddlSubject").val(),
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
             $("#divDrop").html(htmlResponse);
-            setShowDrop();
+            setDivHidden();
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                setShowDropflowAddOn();
+            }
+            else {
+                setDropDownBySubject();
+
+                
+            }
+
         });
     });
 
@@ -196,38 +241,17 @@
     }
 
 
-    function setShowDrop() {
+    function setShowDropflowAddOn() {
 
         if ($("#ddlCompany").val() == '5600') {
-            document.getElementById("divBrand").style.display = "none";
-            document.getElementById("divChanel").style.display = "none";
-            document.getElementById("divEmp").style.display = "none";
-            document.getElementById("divSubject").style.display = "block";
-            document.getElementById("divCus").style.display = "block";
-            document.getElementById("divLimit").style.display = "block";
-            document.getElementById("divCate").style.display = "block";
-            document.getElementById("divProductType").style.display = "none";
-            document.getElementById("divDeparment").style.display = "none";
-            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+
                 document.getElementById("divBrand").style.display = "block";
                 document.getElementById("divCus").style.display = "none";
                 document.getElementById("divProductType").style.display = "block";
                 document.getElementById("divActivityGroup").style.display = "block";
-            }
 
         }
         else if ($("#ddlCompany").val() == '5601') {
-            document.getElementById("divBrand").style.display = "none";
-            document.getElementById("divChanel").style.display = "none";
-            document.getElementById("divEmp").style.display = "none";
-            document.getElementById("divSubject").style.display = "block";
-            document.getElementById("divCus").style.display = "block";
-            document.getElementById("divLimit").style.display = "none";
-            document.getElementById("divCate").style.display = "none";
-            document.getElementById("divProductType").style.display = "none";
-            document.getElementById("divDeparment").style.display = "none";
-
-            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
 
                 document.getElementById("divCus").style.display = "block";
                 document.getElementById("divLimit").style.display = "block";
@@ -236,8 +260,6 @@
                 document.getElementById("divBrand").style.display = "block";
                 document.getElementById("divActivityGroup").style.display = "block";
 
-
-            }
         }
         else if ($("#ddlCompany").val() == '3030') {
 

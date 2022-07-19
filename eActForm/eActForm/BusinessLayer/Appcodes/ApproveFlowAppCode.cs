@@ -291,7 +291,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "c"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetail"
                     , new SqlParameter[] { new SqlParameter("@flowId", flowId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
@@ -321,7 +321,6 @@ namespace eActForm.BusinessLayer
             try
             {
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-                string[] comp = new string[] { "5600", "5601" };
 
                 var callStored = getActList.FirstOrDefault().companyId == ("5600") || getActList.FirstOrDefault().companyId == ("5601") ? "usp_getFlowApproveDetailForActFormMT" : "usp_getFlowApproveDetailForActForm";
 
@@ -429,6 +428,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@subjectId",model.subjectId)
                     ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter("@regionId",model.regionId)
                     ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
@@ -439,13 +439,12 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@deparmentId",model.deparmentId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail("")
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  companyId = dr["companyId"].ToString(),
                                  flowId = dr["flowId"].ToString(),
                                  empId = dr["empId"].ToString(),
-                                 empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
                                  empGroup = dr["empGroup"].ToString(),
@@ -538,7 +537,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId)
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId,string actType,string customerId,string companyId)
         {
             try
             {
@@ -546,12 +545,15 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
                     ,new SqlParameter("@flowLimitId", limitId)
                     ,new SqlParameter("@channelId", channelId)
+                    ,new SqlParameter("@actType", actType)
+                    ,new SqlParameter("@customerId", customerId)
+                    ,new SqlParameter("@companyId", companyId)
                     });
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                              select new RequestEmpModel
+                              select new RequestEmpModel()
                               {
-                                  empId = dr["empId"].ToString(),
                                   empName = dr["empName"].ToString(),
+                                  empId = dr["empId"].ToString(),
                               }).ToList();
 
                 return result;

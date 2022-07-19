@@ -25,12 +25,14 @@ namespace eActForm.BusinessLayer
                         , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
                     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {
+                        UtilsAppCode.Session.User.countWatingActFormBeer = ds.Tables[0].Rows[0]["actBeer"].ToString();
                         UtilsAppCode.Session.User.countWatingActForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
                     }
                     else
                     {
+                        UtilsAppCode.Session.User.countWatingActFormBeer = "0";
                         UtilsAppCode.Session.User.countWatingActForm = "0";
                         UtilsAppCode.Session.User.counteatingRepDetail = "0";
                         UtilsAppCode.Session.User.counteatingSummaryDetail = "0";

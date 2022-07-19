@@ -48,7 +48,8 @@ namespace eActForm.Controllers
                     ViewBag.classFont = "formBorderStyle1";
                     ViewBag.padding = "paddingFormV3";
                 }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
                 {
                     ViewBag.classFont = "formBorderStyle2";
                     ViewBag.padding = "paddingFormV3";
@@ -79,7 +80,8 @@ namespace eActForm.Controllers
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
 
                 //=====layout doc=============
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
                     objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";

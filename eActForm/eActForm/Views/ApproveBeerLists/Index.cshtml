@@ -1,0 +1,192 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@using eActForm.Models;
+@model eActForm.Models.SearchActivityModels
+@{
+    ViewBag.Title = "ApproveList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int lvlEmp = 0;
+    lvlEmp = @UtilsAppCode.Session.User.empLevel != "" ? int.Parse(@UtilsAppCode.Session.User.empLevel) : 0;
+
+}
+
+
+<style>
+    table.fixed {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+
+
+
+
+<h2>Approve Lists</h2>
+<hr />
+<div class="row tile_count">
+
+    <div class="row tile_count">
+        <div class="col-md-12 col-xs-12">
+            @using (Ajax.BeginForm("searchActForm", "ApproveBeerLists"
+, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new { id = "seachApprove", @class = "form-horizontal form-label-left" }))
+            {
+                @RenderPage("~/Views/Shared/_searchBeer.cshtml")
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="tab">
+    <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'divApprove')">Approve List</button>
+    <button class="tablinks" onclick="openCity(event, 'divSummary')">Summary Approve</button>
+</div>
+
+
+
+
+
+
+
+@if (ViewBag.messCannotFindSignature != null)
+{
+    <div class="loading" style="text-align: center;">
+        <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
+        <div style="margin-top: 10px; color: white">
+            <p class="text-danger"><h2>@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</h2></p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
+        </div>
+
+    </div>
+}
+
+
+<div id="divApprove" class="tabcontent">
+    <div class="row tile_count">
+        <div id="getQuery" class="col-md-12 col-xs-12">
+            @Html.Action("ListView", "ApproveBeerLists", new { })
+        </div>
+    </div>
+</div>
+
+
+
+<div id="divSummary" class="tabcontent">
+
+    <div id="divSummaryActBeer" class="clsSummary" style="display: none;">
+        @Html.Action("approveListSummaryActBeer", "ApproveLists", new { })
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <div text-align:center" id="divSubmit" style="display:none">
+                        <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:100px; height:30px; margin-bottom:1px" onclick="submitApprove();"> Approve </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+   $(document).ready(function () {
+
+        $("#ddlStatus").prop('selectedIndex', 3);
+        $("#ddlYears").prop('selectedIndex', 1);
+        $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
+        document.getElementById("defaultOpen").click();
+
+     if ('@UtilsAppCode.Session.User.empCompanyId' == '@ConfigurationManager.AppSettings["companyId_ChangBeer"]'
+         || '@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)' == 'True'
+         || '@Array.AsReadOnly(AppCode.getEmpSearchBeer).Contains(UtilsAppCode.Session.User.empId)' == 'True') {
+            $('#divShowSummary').click(function () {
+                $('.clsSummary').slideToggle("fast");
+            });
+
+
+         $("#seachApprove").submit();
+        }
+    })
+
+
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function beginQuery() {
+        //if ($("#ddlStatus").val() == "" && $("#txtActivityNo").val() == "") {
+        //    return false;
+        //}
+        $("#getQuery").fadeOut(300);
+    }
+
+    function successQuery(htmlResponse) {
+        $("#getQuery").html(htmlResponse)
+        $("#getQuery").fadeIn(300);
+    }
+
+    function failureQuery(data) {
+        doMsgFail(data.responseText);
+    }
+
+</script>

@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
@@ -40,14 +41,14 @@
                     @{ var index = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
                     {
-                <tr class="tagCountRowinTable">
-                    <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@item.productId" id="activityOfEstimateList[@index].productId" name="activityOfEstimateList[@index].productId" class="form-control textboxcss txtInTable_productId_@index" />
-                        <div id="suggesstion_box_@index" class="suggesstion_box"></div>
-                        <script>
+                        <tr class="tagCountRowinTable">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.productId" id="activityOfEstimateList[@index].productId" name="activityOfEstimateList[@index].productId" class="form-control textboxcss txtInTable_productId_@index" />
+                                <div id="suggesstion_box_@index" class="suggesstion_box"></div>
+                                <script>
                                 $(".txtInTable_productId_@index").keyup(function () {
                                     var v_select_tB_Act_master_list_choice_id = "";
                                     $('#ddlproduct_pos_premium option:selected').each(function () {
@@ -99,33 +100,39 @@
                                         selectData("@index", "", "","");
                                     }
                                 });
-                        </script>
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss txtInTable_productDetail_@index" readonly="readonly" />
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="hidden" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
-                        @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "activityOfEstimateList[" + index + "].unit", Name = "activityOfEstimateList[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
-                        <script>
-                            $(".txtunit_@index").blur(function () {
-                                    sumall();
-                                });
-                        </script>
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss txtInTable_QtyName_@index" readonly="readonly" />
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss txtInTable_IO_@index" />
-                    </td>
-                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        <input type="text" value="@item.remark" id="activityOfEstimateList[@index].remark" name="activityOfEstimateList[@index].remark" class="form-control textboxcss txtInTable_remark_@index" />
-                    </td>
-                </tr>
+                                </script>
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss txtInTable_productDetail_@index" readonly="readonly" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="hidden" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
+                                @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "activityOfEstimateList[" + index + "].unit", Name = "activityOfEstimateList[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
+                                <script>
+                                    $(".txtunit_@index").change(function () {
+                                       
+                                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]')
+                                        {
+                                            getUnitPOS(@index);
+                                        }
+
+                                        sumall();
+                                    });
+                                </script>
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss txtInTable_QtyName_@index" readonly="readonly" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss txtInTable_IO_@index" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.remark" id="activityOfEstimateList[@index].remark" name="activityOfEstimateList[@index].remark" class="form-control textboxcss txtInTable_remark_@index" />
+                            </td>
+                        </tr>
                         index++;
                     }
                     <tr style="height:34px;">
@@ -162,6 +169,8 @@
                             var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replaceAll(",", ""));
                             $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
                             totalAll = totalAll + rowunit;
+
+                            console.log(rowunit);
                         }
 
                         $("#totalEstimate").text(totalAll.format());
@@ -188,6 +197,30 @@
                         $(".txtInTable_QtyName_" + indexObj).attr('title', QtyName)
                         $("#suggesstion_box_" + indexObj).hide();
                     }
+
+                    function getUnitPOS(rowId) {
+                        console.log(rowId);
+
+                        $.ajax({
+                            url: '@Url.Action("callUnitPOS", "SharedMasterFormDetail_Input")',
+                            data: {
+                                productId: $(".txtInTable_productId_" + rowId).val(),
+                                activityNo: $("#txtActivityNoRef").val(),
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                            success: function (response) {
+                                var getUnitBalance = parseInt($(".txtunit_" + rowId).val()) + response.Data.unitReturn;
+                                if (getUnitBalance > parseInt(response.Data.unit)) {
+                                    $(".txtunit_" + rowId).val('0')
+                                    doAlert('<b>กรุณาตรวจสอบ ห้ามคืนสินค้าเกินจำนวนที่ขอเบิก <br/> จำนวนที่ ขอเบิก = ' + response.Data.unit + '<br/>' + 'จำนวนที่ คืนของแล้ว = ' + response.Data.unitReturn + '<b/>')
+                                    sumall();
+                                }
+
+                            }
+                        });
+                    }
+
                 </script>
             </div>
         </td>

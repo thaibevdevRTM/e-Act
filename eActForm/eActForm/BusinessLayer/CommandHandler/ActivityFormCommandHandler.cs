@@ -269,17 +269,6 @@ namespace eActForm.BusinessLayer
                         }
                         else//other company
                         {
-                            //==========แบบเก่า================
-                            //int genNumber = int.Parse(getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo);
-                            //var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
-                            //result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ?
-                            //    QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt
-                            //    : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
-                            //result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
-                            //result[0] += "/";
-                            //result[0] += string.Format("{0:0000}", genNumber);
-                            //==========แบบเก่า================
-
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
 
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId,"").FirstOrDefault().docNo;
@@ -296,6 +285,10 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCForm.ToString();// result[1] = Activity_Model.activityType.NUM.ToString();
                             }
+                            else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                            {
+                                result[1] = Activity_Model.activityType.Beer.ToString();
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }
@@ -304,24 +297,25 @@ namespace eActForm.BusinessLayer
                         result[0] = getActList.FirstOrDefault().activityNo.ToString();
                         //=====update by fream devDate 20200214=======
                         string typeFormCompany = "";
-                        if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] &&
-                           getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
-                        {
-                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
-                        }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
-                            getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
+                        else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             typeFormCompany = Activity_Model.activityType.MT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
-                            getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
+                        }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
+                        }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.Beer.ToString();
                         }
 
                         else

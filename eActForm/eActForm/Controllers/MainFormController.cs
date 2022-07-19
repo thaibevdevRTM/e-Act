@@ -27,12 +27,25 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
+
+
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+
+                   
 
                     if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
-                        activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
+                        activityFormTBMMKT.master_type_form_id = master_type_form_id;
                         activity_TBMMKT_Model = exPerryCashAppCode.processDataExpense(activity_TBMMKT_Model, activityId);
+                    }
+                    if (mode == AppCode.Mode.addNew.ToString() && master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                    {
+                        activity_TBMMKT_Model.activityFormTBMMKT.id = Guid.NewGuid().ToString();
+                        activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
+                        activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = master_type_form_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.activityNoRef = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
+      
+                        activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
                     }
 
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
@@ -61,12 +74,14 @@ namespace eActForm.Controllers
                     #endregion
 
                     #region getEO formPaymentVoucherTbm
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                     {
                         ObjGetDataEO objGetDataEO = new ObjGetDataEO();
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == "") { objGetDataEO.channelId = ""; } else { objGetDataEO.channelId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId; }
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId == "") { objGetDataEO.productBrandId = ""; } else { objGetDataEO.productBrandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; }
-                        if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+                        if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                            || activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
                         objGetDataEO.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
                         activity_TBMMKT_Model.listGetDataEO = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
 
@@ -82,7 +97,12 @@ namespace eActForm.Controllers
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
+
+                    
+
                     #endregion
+
+
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
 
@@ -95,14 +115,23 @@ namespace eActForm.Controllers
                     activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
-                    activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+                    if(activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                    {
+                        activityFormTBMMKT.formCompanyId = @UtilsAppCode.Session.User.empCompanyId;
+                    }
+                    else
+                    {
+                        activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+                    }
+
                     //activityFormTBMMKT.formCompanyId = !string.IsNullOrEmpty(activityFormTBMMKT.formCompanyId) ? activityFormTBMMKT.formCompanyId : @UtilsAppCode.Session.User.empCompanyId;
                     activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
 
                     #region mock data for first input
                     //===mock data for first input====
                     int rowEstimateTable = 14;
-                    if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย
+                    if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่าย
                     {
                         rowEstimateTable = 1;
                     }

@@ -90,7 +90,15 @@
 
 </div>
 
+
 <div style="margin-left:25px;" class="text-center">
+
+    @if ((Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3))
+    {
+        <div style="display: inline-block" id="divSaveAs">
+            <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew_MasterForm()">&nbsp;Save As</button>
+        </div>
+    }
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
             || Model.activityFormTBMMKT.statusId == 1
@@ -100,7 +108,7 @@
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
     {
-        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+        <button id="btnsubmit" style="display:inline-block; text-align:center" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
 </div>
 
@@ -142,6 +150,7 @@
 <script>
 
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+        console.log('@Model.activityFormTBMMKT.master_type_form_id')
 
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
@@ -171,22 +180,29 @@
                     $("#txtSubUnitPrice_" + i + "").prop("readonly", false);
                     $("#txtSubVat_" + i + "").prop("readonly", false);
                 }
-                @*else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                    $("#txtGlCode_" + i + "").prop("readonly", false);
-                }*@
+
             }
         }
 
-        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
-            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
-
-            $("#divExpensesMed :input").prop("disabled", false);
-            $("#divExpensesMed :input").prop("readonly", true);
-            if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                $("#txtGlCode_0").prop("readonly", false);
-            }
-        }*@
     }
+
+
+    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
+        && '@Model.activityFormTBMMKT.statusId' == '1') {
+        console.log('return');
+        $("#GridPDF :input").prop("readonly", true);
+
+        $("#txttoName").prop("readonly", false);
+        $("#txttoContact").prop("readonly", false);
+        $("#txtdateActivitySt").prop("readonly", false);
+        $("#txtdetailContact").prop("readonly", false);
+        $("#txttoAddress").prop("readonly", false);
+        $("#txtObjective").prop("readonly", false);
+
+        $("#tabelFormDetails :input").prop("readonly", false);
+
+    }
+
 
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
         var arrayOfElements = document.getElementsByClassName('clstxtIO');
@@ -249,9 +265,7 @@
 
             if (!($("#txtPlace_0").val() != "" &&
                 $("#txtForProject_0").val() != "" &&
-                $("#txtPeriod_0").val() != "" &&
-                $("#txtDepartureDate_0").val() != "" &&
-                $("#txtArrivalDate_0").val() != "")) {
+                $("#txtPeriod_0").val() != "")) {
                 required += "&emsp;รายละเอียดของกิจกรรม/Description of activity*<br>"; validate = false;
             }
 
@@ -304,9 +318,7 @@
             if (!($("#txtDeparture_0").val() != "" &&
                 $("#txtArrival_0").val() != "" &&
                 $("#txtForProject_0").val() != "" &&
-                $("#txtPeriod_0").val() != "" &&
-                $("#txtDepartureDate_0").val() != "" &&
-                $("#txtArrivalDate_0").val() != "")) {
+                $("#txtPeriod_0").val() != "")) {
                 required += "&emsp;รายละเอียดการเดินทาง*<br>"; validate = false;
             }
 
@@ -469,6 +481,18 @@
             if (getCumulaEntertain > getLimitEntertain) {
                 required += "ค่ารับรอง วงเงินเกินกำหนด! *<br>"; validate = false;
             }
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+
+            if ($("#txtActivityName").val() == "") { required += "&emsp;ชื่อกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlMainAgency").val() == "") { required += "หน่วยงานหลัก*<br>"; validate = false; }
+            if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#txtArea").val() == "") { required += "Area*<br>"; validate = false; }
+            if ($("#txtShopName").val() == "") { required += "ชื่อร้านค้า*<br>"; validate = false; }
+            if ($("#txtdateActivityEnd").val() == "") { required += "เวลากิจกรรม*<br>"; validate = false; }
+
         }
         else {
 
@@ -633,4 +657,65 @@ function CallImageView(obj) {
             event.returnValue = false;
         }
     }
+
+    function copyAndSaveNew_MasterForm() {
+
+        var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+         cusId = $("#ddlCustomer").val()
+        }
+        else if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+         cusId = $("#customerId").val()
+        }
+
+        if ('@Model.activityFormModel.statusId' == "5") {
+            $("#hdReferenceActNo").val($("#txtActivityNo").val());
+        }
+        else {
+            $("#hdReferenceActNo").val('');
+        }
+
+
+
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("copyAndSaveNewActivity_MasterForm", "Activity")',
+                        data: {
+                            activityId: '@Model.activityFormModel.id',
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+
+                            var url = '@Url.Action("Index", "MainForm")';
+                            window.location.href = url + "?ActivityId=" + response.ActivityId + "&mode="+ '@AppCode.Mode.edit' + "&typeForm=" + '@Model.activityFormTBMMKT.typeForm' + "&master_type_form_id=" + '@Model.activityFormTBMMKT.master_type_form_id';
+
+                        } else {
+                            doMsgFail(response.Message);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 </script>

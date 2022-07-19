@@ -2,7 +2,10 @@
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @model eActForm.Models.Activity_Model.actForms
-
+@{
+    int lvlEmp = 0;
+ 
+}
 
 @if (ViewBag.messCannotFindSignature != null)
 {
@@ -33,16 +36,16 @@ else
         <div class="col-md-12 col-xs-12">
 
 
-            <table id="datatable" class="table table-striped table-hover">
+            <table id="dtApproveList" class="table table-striped table-hover">
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <th width="20">
+                            <th>
                                 <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
                             </th>
 
-                            <th>
+                            <th style="width:150px;">
                                 <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:100px; height:25px; margin-bottom:1px" onclick="submitApprove();"> Approve </a>
                             </th>
                         }
@@ -50,6 +53,7 @@ else
                         {
                             <th></th>
                         }
+
                         <th>Status</th>
                         <th>Doc.Date</th>
                         <th>Act.No</th>
@@ -65,43 +69,44 @@ else
                 <tbody>
                     @foreach (var item in Model.actLists)
                     {
-                    <tr class="gradeX">
-                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            <td class="a-center ">
-                                @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
-                                {
-                                    <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
-                                }
+                        <tr class="gradeX">
+                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                            {
+                                <td class="a-center ">
+                                    @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
+                                    {
+                                        <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve" onchange="onchangeFlag();">
+                                    }
+                                </td>
+                            }
+
+                            <td>
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
+                                <a onclick="callApproveList('@item.id');">
+                                    <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                                </a>
+                                @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                             </td>
-                        }
-                        <td>
-                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
-                            <a onclick="callApproveList('@item.id');">
-                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
-                            </a>
-                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
-                        </td>
-                        @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
-                        {
-                            <td>@item.statusNameEN</td>
-                        }
-                        else
-                        {
-                            <td>@item.statusName</td>
-                        }
-                        <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
-                        <td>@item.activityNo</td>
-                        <td>@item.brandName</td>
-                        <td>@item.objective</td>
-                        <td align="center">@string.Format("{0:n2}", item.themeCost)</td>
-                        <td align="center">@string.Format("{0:n2}", @item.totalCost)</td>
-                        <td align="center">
-                            @string.Format("{0:n2}", @item.perTotal)
-                        </td>
-                        <td>@item.createByUserName</td>
-                        <td>@DocumentsAppCode.convertDateTHToShowCultureDateEN(item.dateSentApprove, ConfigurationManager.AppSettings["formatDateUse"])</td>
-                    </tr>
+                            @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
+                            {
+                                <td>@item.statusNameEN</td>
+                            }
+                            else
+                            {
+                                <td>@item.statusName</td>
+                            }
+                            <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
+                            <td>@item.activityNo</td>
+                            <td>@item.brandName</td>
+                            <td>@item.objective</td>
+                            <td align="center">@string.Format("{0:n2}", item.themeCost)</td>
+                            <td align="center">@string.Format("{0:n2}", @item.totalCost)</td>
+                            <td align="center">
+                                @string.Format("{0:n2}", @item.perTotal)
+                            </td>
+                            <td>@item.createByUserName</td>
+                            <td>@DocumentsAppCode.convertDateTHToShowCultureDateEN(item.dateSentApprove, ConfigurationManager.AppSettings["formatDateUse"])</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -121,7 +126,9 @@ else
 }
 <script>
     $(document).ready(function () {
-        $('#datatable').DataTable({
+
+        $('#dtApproveList').DataTable({
+            "paging": true,
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
                 , { "orderable": false, "targets": 1 }
@@ -145,12 +152,48 @@ else
     function setFlagAll(ele) {
         var chkAll = ele.checked ? true : false;
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+        var empLvl = parseInt('@UtilsAppCode.Session.User.empLevel');
+
+        console.log('True');
+        var favorite = [];
+        $.each($("input[name='chk_approve']:checked"), function (index, value) {
+            favorite.push($(this).val());
+        }).promise().done(function () {
+
+            summaryActBeerByActId(favorite);
+              document.getElementById("divSubmit").style.display = "block";
+        });
+
     }
+
+    function onchangeFlag(ele) {
+        var favorite = [];
+        $.each($("input[name='chk_approve']:checked"), function (index, value) {
+            favorite.push($(this).val());
+        }).promise().done(function () {
+            summaryActBeerByActId(favorite);
+            document.getElementById("divSubmit").style.display = "block";
+        });
+    }
+
+    function summaryActBeerByActId(actId) {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveListSummaryActBeer", "ApproveLists")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            $("#divSummaryActBeer").html(htmlResponse)
+            $("#divSummaryActBeer").fadeIn(300);
+        });
+    }
+
 
     function submitApprove() {
         var favorite = [];
         var countDoc = document.querySelectorAll("input[name='chk_approve']:checked").length
-        console.log(countDoc);
 
         if (countDoc > 0) {
 
@@ -169,7 +212,7 @@ else
                     callback: function (result) {
                         if (result) {
 
-                            $.each($("input[name='chk_approve']:checked"), function (index, value) {
+                            $.each($("input[name='chk_approve']:checked"), function (index, value,loop) {
                                 favorite.push($(this).val());
                                 setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
                             }).promise().done(function () {
@@ -190,7 +233,7 @@ else
 
     function alertFunc() {
         bootbox.alert({
-            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
+            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='http://thaibevss.com/eAct/images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
             callback: function () {
                 var url = '@Url.Action("Index", "ApproveLists")';
                 window.location.replace(url);
@@ -209,12 +252,49 @@ else
                 approveType:'@AppCode.ApproveType.Activity_Form',
             }
         }).done(function (result) {
-            callPreviewApprove(actId)
+            checkFormApprove(actId)
         });
     }
 
-    function callPreviewApprove(actId) {
+    function checkFormApprove(actId) {
+
         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getMasterTypeIdByActId", "eAct")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (result) {
+            console.log(result.Success);
+            if (result.Success) {
+                console.log('master')
+                callPreviewApproveWithMasterForm(actId);
+            }
+            else {
+                console.log('Nonmaster')
+                callPreviewApproveNonMasterForm(actId);
+            }
+
+
+        });
+    }
+
+
+
+    function callPreviewApproveWithMasterForm(actId) {
+         $.ajax({
+                type: 'POST',
+                url: '@Url.Action("index", "MainReport")',
+                data: {
+                    activityId: actId,
+                }
+            }).done(function (htmlResponse) {
+                sentApprove_GenPdf(actId,htmlResponse);
+            });
+    }
+
+    function callPreviewApproveNonMasterForm(actId) {
+         $.ajax({
             type: 'POST',
             url: '@Url.Action("previewApprove", "Approve")',
             data: {
@@ -222,11 +302,11 @@ else
                 typeForm: '@AppCode.ApproveType.Activity_Form.ToString()',
             }
         }).done(function (htmlResponse) {
-            //$("#dataFromAct").val(htmlResponse);
-
             sentApprove_GenPdf(actId, htmlResponse);
         });
     }
+
+
 
     function sentApprove_GenPdf(actId, htmlResponse) {
         $.ajax({
@@ -240,7 +320,6 @@ else
             type: 'POST',
         }).done(function (response) {
             console.log('success' + actId);
-            console.log($("#dataFromAct").val());
         });
     }
 
@@ -257,4 +336,6 @@ else
             $('#ModalPreviewPDF').modal('show');
         });
     }
+
+
 </script>

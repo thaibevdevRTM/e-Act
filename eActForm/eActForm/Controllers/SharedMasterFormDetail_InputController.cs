@@ -68,7 +68,8 @@ namespace eActForm.Controllers
             foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
             {
                 #region formPosTbm
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                 {
                     totalCostThisActivity += item.unit;
                 }
@@ -160,7 +161,6 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
-
 
         public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
@@ -272,8 +272,8 @@ namespace eActForm.Controllers
                         budgetTotalModel.amount = item.budgetTotal;
                         budgetTotalModel.amountBalance = item.amountBalance;
                         budgetTotalModel.activityType = item.activityType;
-                        var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
-                        budgetTotalModel.amountBalancePercen = item.useAmount / amount;
+                        var amount = item.budgetTotal > 0 ? item.budgetTotal : 1;
+                        budgetTotalModel.amountBalancePercen = (item.useAmount / amount) * 100;
                         budgetTotalModel.brandId = brandId;
                         // budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
                         budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
@@ -338,8 +338,8 @@ namespace eActForm.Controllers
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
                             budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
 
-                            var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount * 100 : 1;
-                            budgetTotalModel.amountBalancePercen = (getAmount.FirstOrDefault().balance + item.total) / amount;
+                            var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount : 1;
+                            budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().balance + item.total) / amount) * 100;
                             budgetTotalModel.brandId = brandId;
                             budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
                             budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
@@ -403,5 +403,28 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        public JsonResult callUnitPOS(string productId, string activityNo)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var getUnit = ActFormAppCode.callUnitPOSAppCode(productId, activityNo);
+
+                var resultData = new
+                {
+                    unit = getUnit.FirstOrDefault().unit,
+                    unitReturn = getUnit.FirstOrDefault().unitReturn,
+                };
+                result.Data = resultData;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("callUnitPOS => " + activityNo + "____" + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

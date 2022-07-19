@@ -125,10 +125,11 @@ namespace eActForm.BusinessLayer
                 else if (typeForm == Activity_Model.activityType.Beer.ToString())
                 {
                     strCall = "usp_getActivityActBeerByEmpId";
-                    if (isAdmin())
+                    if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin)
                     {
                         strCall = "usp_getActivityActBeerFormAll";
                     }
+
                 }
                 else if (typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                 {
@@ -180,7 +181,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm("")
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -557,7 +558,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEONew"
+               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
@@ -584,6 +585,37 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+
+        public static List<BudgetTotal> getBudgetActBeer(string actType, string brandId, string center, string channelId, string periodEndDate)
+        {
+            try
+            {
+                var conDate = BaseAppCodes.converStrToDatetimeWithFormat(periodEndDate, ConfigurationManager.AppSettings["formatDateUse"]);
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActBeer"
+                , new SqlParameter[] { new SqlParameter("@actType", actType)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@center", center)
+               ,new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@periodEndDate", conDate)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetTotal
+                             {
+                                 useAmountTotal = string.IsNullOrEmpty(dr["total"].ToString()) ? 0 : (decimal?)dr["total"],
+                                 totalBudget = string.IsNullOrEmpty(dr["budgetAmount"].ToString()) ? 0 : (decimal?)dr["budgetAmount"],
+                                 amountBalanceTotal = string.IsNullOrEmpty(dr["balanceAmount"].ToString()) ? 0 : (decimal?)dr["balanceAmount"],
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getBudgetActBeer >>" + ex.Message);
+            }
+
+        }
+
 
 
         public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId,string fiscalYear)
@@ -648,6 +680,56 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("insertReserveBudget >>" + ex.Message);
+            }
+
+        }
+
+
+        public static bool copyDocument_MasterForm(string actId_old , string actId_new)
+        {
+            try
+            {
+                bool result = false;
+               
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CopyDocumentMasterForm"
+                    , new SqlParameter[] { new SqlParameter("@actId_old", actId_old)
+                     , new SqlParameter("@actId_new" ,actId_new)
+                     , new SqlParameter("@createByUser" ,UtilsAppCode.Session.User.empId)});
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("copyDocument_MasterForm >>" + ex.Message);
+            }
+
+        }
+
+        public static List<CostThemeDetail> callUnitPOSAppCode(string productId, string activityNo)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_callUnitPOS"
+               , new SqlParameter[] { new SqlParameter("@productId", productId)
+                , new SqlParameter("@activityNo" ,activityNo)});
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new CostThemeDetail
+                             {
+                                 unit = string.IsNullOrEmpty(dr["unit"].ToString()) ? 0 : (int)dr["unit"],
+                                 unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
+
+                             });
+                return lists.ToList() ;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new Exception("callUnitPOSAppCode >>" + ex.Message);
             }
 
         }

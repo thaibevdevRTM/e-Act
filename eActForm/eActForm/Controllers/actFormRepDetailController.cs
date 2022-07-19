@@ -30,7 +30,7 @@ namespace eActForm.Controllers
             }
             else
             {
-                models.customerslist = QueryGetAllCustomers.getAllRegion();
+                models.customerslist = QueryGetAllCustomers.getAllRegion().Where(x => x.condition.Equals("OMT")).OrderBy(x => x.cusNameTH).ToList();
             }
 
 

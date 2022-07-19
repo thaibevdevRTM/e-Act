@@ -14,7 +14,8 @@
             if (item.approveGroupId == AppCode.ApproveGroup.Applicant)//ผู้ขอเบิก
             {
                 signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                    || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM , ใบคืน POS
                 {
                     signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
                 }
@@ -71,7 +72,8 @@
                         <td>
                             <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                                 <tr class="hDetailtr">
-                                    <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
+
+
                                     @{
                                         var lblInOrOutStock = "";
                                         if (Model.activityFormTBMMKT.list_0_select == "0AD2C9AA-730B-471C-8CA0-581254823F2D")//OutStock ID
@@ -79,9 +81,24 @@
                                             lblInOrOutStock = ("(" + Model.activityFormTBMMKT.labelInOrOutStock + ")");
                                         }
                                     }
-                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
-                                    <td style="width:140px;vertical-align:top;">&nbsp;เพื่อ</td>
-                                    <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.labelFor</td>
+
+                                    @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                    {
+                                        <td style="width:150px;vertical-align:top;">&nbsp;ขอคืน</td>
+                                        <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
+                                        <td style="width:140px;vertical-align:top;">&nbsp;อ้างอิงค์ใบเบิก</td>
+                                        <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.activityNoRef</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
+                                        <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
+                                        <td style="width:140px;vertical-align:top;">&nbsp;เพื่อ</td>
+                                        <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.labelFor</td>
+                                    }
+
+
+
                                 </tr>
                             </table>
                         </td>
@@ -101,7 +118,7 @@
                                         @foreach (string loopbrand in brandList)
                                         {
 
-                                            @:&nbsp;@loopbrand
+                                            @:&nbsp;@loopbrand.Replace(".", "")
                                             <br />
                                         }
 
@@ -197,7 +214,14 @@
                         <td>
                             <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                                 <tr class="hDetailtr">
-                                    <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
+                                    @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
+                                    {
+                                        <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอคืน</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
+                                    }
                                     <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: @Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;&nbsp;").Replace("\r\n", "<br/>&nbsp;&nbsp;"))</td>
                                 </tr>
                             </table>

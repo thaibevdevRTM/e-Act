@@ -107,6 +107,8 @@ namespace eActForm.Models
             otherList_3 = new List<TB_Act_Other_Model>();
             otherList_4 = new List<TB_Act_Other_Model>();
             otherList_5 = new List<TB_Act_Other_Model>();
+            objExpenseCashList = new List<TB_Act_Other_Model>();
+            listGetDataEO = new List<GetDataEO>();
         }
 
     }
@@ -149,6 +151,7 @@ namespace eActForm.Models
         public string createdByNameEN { get; set; }
         public string[] list_chooseRequest_multi_select { get; set; }
         public Boolean chkTemp { get; set; }
+        public string remarkApprove { get; set; }
 
     }
 

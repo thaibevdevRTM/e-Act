@@ -2,6 +2,7 @@
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -78,6 +79,7 @@ namespace eActForm.Controllers
         public bool calProductDetail(ProductCostOfGroupByPrice model)
         {
             bool success = true;
+            decimal p_normalGp = 0;
             try
             {
                 decimal fixFormula = (decimal)1.07;
@@ -94,8 +96,18 @@ namespace eActForm.Controllers
 
                 // % normalGP
                 decimal sNormal = (decimal)model.saleNormal;/// getPackProduct;
-                decimal p_normalGp = sNormal == 0 ? 0 : ((sNormal - ((p_disCount3 * fixFormula) / getPackProduct)) / sNormal) * 100;
-                p_normalGp = p_normalGp < 0 ? p_normalGp * -1 : p_normalGp;
+
+                if (model.masterTypeId == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                {
+                    if (sNormal > 0 && model.normalCost > 0)
+                    p_normalGp = ((sNormal - (decimal)model.normalCost) / sNormal)*100;
+                    
+                }
+                else
+                {
+                    p_normalGp = sNormal == 0 ? 0 : ((sNormal - ((p_disCount3 * fixFormula) / getPackProduct)) / sNormal) * 100;
+                    p_normalGp = p_normalGp < 0 ? p_normalGp * -1 : p_normalGp;
+                }
 
                 // % promotionGP
                 decimal pPromotion = decimal.Parse(AppCode.checkNullorEmpty(model.saleIn.ToString()));/// getPackProduct;

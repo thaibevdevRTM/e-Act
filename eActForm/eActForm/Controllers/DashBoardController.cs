@@ -34,6 +34,10 @@ namespace eActForm.Controllers
                 {
                     return RedirectToAction("index", "BudgetApproveList", new { actId = Request.QueryString["actId"] });
                 }
+                else if (Request.QueryString["s"] == AppCode.ApproveEmailype.approveBeer.ToString())
+                {
+                    return RedirectToAction("index", "ApproveBeerLists", new { actId = Request.QueryString["actId"] });
+                }
             }
             return View(model);
         }

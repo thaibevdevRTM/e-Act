@@ -3,7 +3,8 @@
 
 <div style="height:5px;" id="tbSigPage"></div>
 
-@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+    || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
 {
     <div id="divAddSubject" style="width: 100%; align-content: center; text-align: center;padding:5px;" class="fontRedV1">
         @Html.Action("headerPv", "PartialPaymentVoucher", new { activity_TBMMKT_Model = Model })

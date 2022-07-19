@@ -47,13 +47,12 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormTBMMKT.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormTBMMKT.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
-                    model.activityFormTBMMKT.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
-                    model.activityFormTBMMKT.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    model.activityFormTBMMKT.createdByUserId = UtilsAppCode.Session.User.empId;
+                    model.activityFormTBMMKT.createdDate =  DateTime.Now;
                     model.activityFormTBMMKT.updatedByUserId = UtilsAppCode.Session.User.empId;
                     model.activityFormTBMMKT.updatedDate = DateTime.Now;
                     model.activityFormTBMMKT.delFlag = false;
                     model.activityFormTBMMKT.companyId = model.activityFormTBMMKT.formCompanyId;
-                    model.activityFormTBMMKT.remark = model.activityFormModel.remark;
                     model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
                     model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
@@ -64,6 +63,7 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOtherList(rtn, model, activityId);
+
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                     rtn = ProcessInsertEstimateSub(rtn, model, activityId);
 
@@ -220,11 +220,11 @@ namespace eActForm.BusinessLayer
                 {
                     if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
                     {
-                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId == null ? model.tB_Act_ActivityForm_DetailOther.productBrandId : model.activityFormTBMMKT.BrandlId;
                     }
                     else
                     {
-                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId == null ? model.tB_Act_ActivityForm_DetailOther.channelId : model.activityFormTBMMKT.channelId;
                     }
                 }
                 else
@@ -556,7 +556,8 @@ namespace eActForm.BusinessLayer
                     if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                     {
                         #region FormPos
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
@@ -626,8 +627,8 @@ namespace eActForm.BusinessLayer
 
 
                             activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.select_list_choice_id ?? string.Empty;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.name?? string.Empty;
 
                             //activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
                             //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
@@ -650,14 +651,16 @@ namespace eActForm.BusinessLayer
                         }
                         #endregion
                         #region formTrvTbm formTrvHcm
-                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] 
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
                         }
                         #endregion
                         #region formPaymentVoucherTbm
-                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                         {
                             var countlist_2_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "attachPV").Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[countlist_2_multi_select];
@@ -896,7 +899,8 @@ namespace eActForm.BusinessLayer
                     foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
                     {
                         #region formPosTbm
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM ,ใบคืน
                         {
                             totalCostThisActivity += item.unit;
                         }
@@ -911,7 +915,8 @@ namespace eActForm.BusinessLayer
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
                     {
                         #region formPaymentVoucherTbm
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                         {
                             var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).Count();
                             activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
@@ -931,7 +936,9 @@ namespace eActForm.BusinessLayer
 
                     #region Get All EO In Doc
                     List<detailEO> templistEoInDoc = new List<detailEO>();
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] 
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                     {
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != "" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
                         {
@@ -944,7 +951,7 @@ namespace eActForm.BusinessLayer
                         foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
                         {
 
-                            if (!templistEoInDoc.Where(x => x.EO.Contains(itemGetEO.EO)).Any())
+                            if (!templistEoInDoc.Where(x => x.EO.Equals(itemGetEO.EO)).Any())
                             {
                                 detailEO detailEOModel = new detailEO();
                                 detailEOModel.EO = itemGetEO.EO;
@@ -1220,6 +1227,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@theme", model.theme)
                     ,new SqlParameter("@trade", model.trade)
                     ,new SqlParameter("@statusNote", model.statusNote)
+                    ,new SqlParameter("@referenceActNo",model.activityNoRef)
                   });
             }
             catch (Exception ex)
@@ -1440,13 +1448,13 @@ namespace eActForm.BusinessLayer
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertProductCostdetail"
-                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    , new SqlParameter[] {new SqlParameter("@productGroupId",model.productGroupId)
                     ,new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@productId",model.productId)
                     ,new SqlParameter("@productName",model.productName)
-                    ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
+                    ,new SqlParameter("@wholeSalesPrice", model.wholeSalesPrice)
                     ,new SqlParameter("@saleIn",model.saleIn)
-                    ,new SqlParameter("@saleOut", model.saleOut)
+                    ,new SqlParameter("@saleOut",model.saleOut)
                     ,new SqlParameter("@disCount1",model.disCount1)
                     ,new SqlParameter("@disCount2",model.disCount2)
                     ,new SqlParameter("@disCount3",model.disCount3)
@@ -1458,10 +1466,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@promotionCost",model.promotionCost)
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)
-                    ,new SqlParameter("@Date",model.DateInput)
-                    ,new SqlParameter("@place",model.place)
-                    ,new SqlParameter("@detail",model.detail)
-                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@rsp",model.rsp)
+                    ,new SqlParameter("@unitTxt",model.unitTxt)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -1869,7 +1875,8 @@ namespace eActForm.BusinessLayer
             var indexEach = 0;
             if (model.activityFormTBMMKT.list_1_multi_select != null)
             {
-                if (model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                if (model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     tB_Act_ActivityForm_DetailOtherList.typeKeep = ConfigurationManager.AppSettings["typeEOPaymentVoucher"];
                     rtn += delete_TB_Act_ActivityForm_DetailOtherList(activityId, tB_Act_ActivityForm_DetailOtherList.typeKeep);
@@ -1893,7 +1900,8 @@ namespace eActForm.BusinessLayer
 
             if (model.tB_Act_ActivityForm_DetailOtherList != null)
             {
-                if (model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                if (model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     tB_Act_ActivityForm_DetailOtherList.typeKeep = ConfigurationManager.AppSettings["typePVSectionThreeToFive"];
 

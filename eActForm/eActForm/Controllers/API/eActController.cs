@@ -761,5 +761,25 @@ namespace eActForm.Controllers
         }
 
 
+        public JsonResult getMasterTypeIdByActId(string actId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getActDetailList = QueryGetActivityById.getActivityById(actId);
+                if(!string.IsNullOrEmpty(QueryGetActivityById.getActivityById(actId).FirstOrDefault().master_type_form_id))
+                {
+                    result.Success = true;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

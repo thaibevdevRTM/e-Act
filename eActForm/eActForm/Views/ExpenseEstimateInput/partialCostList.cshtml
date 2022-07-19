@@ -24,23 +24,22 @@
         <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
     </div>
     <div class="col-12">
-        <table class="table table-bordered" id="tbl_activityDetail">
+        <table class="table table-bordered" id="tbCostList">
             <thead class="thead-dark">
                 <tr>
                     <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
-                    <th class="align-content-center font10" rowspan="2" style="width:15%;">ประเภทการจ่าย</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">IO</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">ประเภทค่าใช้จ่าย</th>
                     <th class="align-content-center font10" rowspan="2" style="width:14%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:6%;">Unit</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
-                    <th class="align-content-center font10" colspan="3" style="width:20%;">ประมาณการยอดขาย (Estimate)</th>
-                    <th class="align-content-center font10" colspan="4" style="width:30%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">Unit</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">Price Per Unit</th>
+                    <th class="align-content-center font10" colspan="3" style="width:30%;">ประมาณการยอดขาย (Estimate)</th>
+                    <th class="align-content-center font10" colspan="1" style="width:15%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
                 </tr>
                 <tr>
                     <th class="align-content-center font10">ยอดขายปกติ (Case)</th>
                     <th class="align-content-center font10">ยอดขายข่วงทำกิจกรรม (Case)</th>
                     <th class="align-content-center font10">% Growth</th>
-                    <th class="align-content-center font10">%SE</th>
-                    <th class="align-content-center font10">Spending Exp. (Case)</th>
                     <th class="align-content-center font10">Spending Exp. (Bath)</th>
 
                 </tr>
@@ -59,17 +58,15 @@
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
 
                         </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblIO_@index" name="activityOfEstimateList[@index].IO" value="@item.IO" /> </td>
                         <td style="text-align:right"><input readonly type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblTypeTheme_@index" name="activityOfEstimateList[@index].typeTheme" value="@item.typeTheme" /> </td>
-
                         <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblProductName_@index" name="activityOfEstimateList[@index].productDetail" value="@item.productDetail" /> </td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblUnit_@index" name="activityOfEstimateList[@index].unit" value="@item.unit" onfocus="setZero(lblUnit_@index)" /> </td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost" /></td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblThemeCost_@index" onfocus="setZero(lblThemeCost_@index)" name="activityOfEstimateList[@index].themeCost" value="@item.themeCost" /></td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblGrowth_@index" onfocus="setZero(lblGrowth_@index)" name="activityOfEstimateList[@index].growth" value="@item.growth" /></td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblLE_@index" onfocus="setZero(lblLE_@index)" name="activityOfEstimateList[@index].LE" value="@item.LE" /></td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblTotalCase_@index" onfocus="setZero(lblTotalCase_@index)" name="activityOfEstimateList[@index].totalCase" value="@item.totalCase" /></td>
-                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calGrowthTotal('@item.productGroupId','@index')" id="lblTotal_@index" onfocus="setZero(lblTotal_@index)" name="activityOfEstimateList[@index].total" value="@item.total" /></td>
+                        <td style="text-align:right"><input type="number" min="0" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblUnit_@index" name="activityOfEstimateList[@index].unit" value="@item.unit" onfocus="setZero(lblUnit_@index)" /> </td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId', '@index')" id="lblCompensate_@index" onfocus="setZero(lblCompensate_@index)" name="activityOfEstimateList[@index].compensate" value="@item.compensate" /> </td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblNormalCost_@index" onfocus="setZero(lblNormalCost_@index)" name="activityOfEstimateList[@index].normalCost" value="@item.normalCost" /></td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblThemeCost_@index" onfocus="setZero(lblThemeCost_@index)" name="activityOfEstimateList[@index].themeCost" value="@item.themeCost" /></td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight" onchange="calActivityDetailCost('@item.productGroupId','@index')" id="lblGrowth_@index" onfocus="setZero(lblGrowth_@index)" name="activityOfEstimateList[@index].growth" value="@item.growth" /></td>
+                        <td style="text-align:right"><input type="number" class="form-control textboxcss font10 textRight txttotal_@index" onchange="calGrowthTotal('@item.productGroupId','@index')" id="lblTotal_@index" onfocus="setZero(lblTotal_@index)" name="activityOfEstimateList[@index].total" value="@item.total" /></td>
 
 
 
@@ -87,7 +84,7 @@
 
             <tr>
 
-                <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                <td colspan="6" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
 
                 <td>
                     <p class="text-success textRight">
@@ -110,36 +107,17 @@
                 <td>
                     <p class="text-success textRight">
 
-                        @if (activityTotal != 0 && normalTotal != 0)
+                        @if (sumGrowth != 0 )
                         {
-                            growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
-                            string result = String.Format("{0:n2}%", @growthTotal);
+     
+                            string result = String.Format("{0:n2}%", @sumGrowth);
                             @result.ToString();
                         }
 
 
                     </p>
                 </td>
-                <td>
-                    <p class="text-success textRight">
-                        @if (LE != 0)
-                        {
-                            string result = String.Format("{0:n2}%", @LE);
-                            @result.ToString();
-                        }
-                    </p>
-                </td>
-
-                <td>
-                    <p class="text-success textRight">
-
-                        @if (totalCase != 0)
-                        {
-                            string result = String.Format("{0:n2}", @totalCase);
-                            @result.ToString();
-                        }
-                    </p>
-                </td>
+            
                 <td>
                     <p class="text-success textRight">
                         @if (total != 0)
@@ -157,6 +135,7 @@
 </div>
 
 <script>
+
     function setZero(txtId) {
         if ($(txtId).val() == "0.00") {
             $(txtId).val("");
@@ -175,6 +154,7 @@
             bootbox.alert(required);
             return false;
         }
+        console.log($("#hdActivityId").val() + 'act');
 
         $("#WaitDialog").show();
         $.ajax({
@@ -183,7 +163,7 @@
             data: {
                 themeId: $("#ddlThemeDetail").val(),
                 txttheme: txtddlTheme,
-                actId: '@Model.activityFormModel.id',
+                actId: $("#hdActivityId").val(),
                 brandId: $("#ddlProductBrand").val(),
             }
         }).done(function (response) {
@@ -201,6 +181,9 @@
             }
         }).done(function (htmlResponse) {
             $("#divgetdetailcost").html(htmlResponse)
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formEactBeer"]') {
+                getBudgetBeer();
+            }
         });
     }
 
@@ -216,7 +199,7 @@
             data: {
                 productGroupId: id,
                 perTotal: perTotal,
-                actId: '@Model.activityFormModel.id',
+                actId: $("#hdActivityId").val(),
 
             }
         }).done(function (response) {
@@ -245,7 +228,7 @@
                 productId: productId,
                 total: total,
                 themeCost: themeCost,
-                actId: '@Model.activityFormModel.id'
+                actId: $("#hdActivityId").val(),
 
             }
         }).done(function (response) {
@@ -273,12 +256,15 @@
         var productId = $("#hdProductId_" + rowIndex).val();
         var totalCase = $("#lblTotalCase_" + rowIndex).val();
         totalCase = totalCase == "" ? 0 : totalCase;
+        var growth = $("#lblGrowth_" + rowIndex).val();
+        growth = growth == "" ? 0 : growth;
 
 
         $.ajax({
             type: 'POST',
             url: '@Url.Action("calActivityDetailCost", "ExpenseEstimateInput")',
             data: {
+                IO: $("#lblIO_" + rowIndex).val(),
                 name: name,
                 mechanics: mechanics,
                 productGroupId: id,
@@ -290,10 +276,14 @@
                 LE: LE,
                 totalCase: totalCase,
                 typeForm: '@Model.activityFormModel.typeForm',
-                actId: '@Model.activityFormModel.id'
+                actId: $("#hdActivityId").val(),
+                growth: growth
+
             }
         }).done(function (response) {
             callThemedetailcost('@Model.activityFormModel.id');
+
+
         });
 
     }
@@ -304,7 +294,7 @@
             url: '@Url.Action("delActCostDetail", "ExpenseEstimateInput")',
             data: {
                 rowid: id,
-                actId: '@Model.activityFormModel.id'
+                actId: $("#hdActivityId").val(),
             },
             dataType: "json",
             type: 'POST',

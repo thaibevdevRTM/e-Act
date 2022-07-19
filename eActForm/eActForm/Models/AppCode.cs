@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
@@ -33,8 +34,32 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
-        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
+        public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
+        public static string[] compThaiBevForm = { Activity_Model.groupCompany.THAIBEV.ToString() };
+        public static string[] getEmpSearchBeer =  ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray() ;
+
+        
+        public static string[] checkFormApproveAll =
+        {
+                  ConfigurationManager.AppSettings["formBgTbmId"]
+                 ,ConfigurationManager.AppSettings["formAdvTbmId"]
+                 ,ConfigurationManager.AppSettings["formTrvTbmId"]
+                 ,ConfigurationManager.AppSettings["formPosTbmId"]
+                 ,ConfigurationManager.AppSettings["formTrvHcmId"]
+                 ,ConfigurationManager.AppSettings["formAdvHcmId"]
+                 ,ConfigurationManager.AppSettings["masterEmpExpense"]
+                 ,ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                 ,ConfigurationManager.AppSettings["formExpTrvNumId"]
+                 ,ConfigurationManager.AppSettings["formCR_IT_FRM_314"]
+                 ,ConfigurationManager.AppSettings["formExpMedNumId"]
+                 ,ConfigurationManager.AppSettings["formSetPriceMT"]
+                 ,ConfigurationManager.AppSettings["formReceptions"]
+                 ,ConfigurationManager.AppSettings["formTransferbudget"]
+                 ,ConfigurationManager.AppSettings["formSetPriceOMT"]
+                 ,ConfigurationManager.AppSettings["formEactBeer"]
+                 ,ConfigurationManager.AppSettings["formPurchaseTbm"]
+        };
 
 
 
@@ -45,7 +70,9 @@ namespace eActForm.Models
             ConfigurationManager.AppSettings["formTrvTbmId"],
             ConfigurationManager.AppSettings["formPosTbmId"],
             ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
+             ConfigurationManager.AppSettings["formPurchaseTbm"],
             ConfigurationManager.AppSettings["formTransferbudget"],
+            ConfigurationManager.AppSettings["formReturnPosTbm"],
 
         };
 
@@ -70,6 +97,7 @@ namespace eActForm.Models
         public enum ApproveEmailype
         {
             approve
+                , approveBeer
                 , document
                 , budget_form
                 , attachment
@@ -77,6 +105,7 @@ namespace eActForm.Models
         public enum ApproveType
         {
             Activity_Form
+                ,ActivityBeer
                 , Report_Detail
                 , Report_Summary
                 , Budget_form
@@ -312,8 +341,8 @@ namespace eActForm.Models
         {
 
             //===========ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
-            GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
-            GridHtml = GridHtml.Replace(ConfigurationManager.AppSettings["renderHostPublicIP"], ConfigurationManager.AppSettings["renderHost"]);
+            //GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
+            //GridHtml = GridHtml.Replace(ConfigurationManager.AppSettings["renderHostPublicIP"], ConfigurationManager.AppSettings["renderHost"]);
             //====END=======ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
@@ -353,7 +382,7 @@ namespace eActForm.Models
 
 
 
-        public static string mergePDF(string rootPathOutput, string[] pathFile)
+        public static string mergePDF(string rootPathOutput, string[] pathFile,string activityId)
         {
             string result = string.Empty;
             PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
@@ -368,7 +397,6 @@ namespace eActForm.Models
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
-
                     int pages = get_pageCcount(pathFile[f]);
                     reader = new PdfReader(System.IO.File.ReadAllBytes(pathFile[f]));
                     reader.ConsolidateNamedDestinations();
@@ -389,7 +417,7 @@ namespace eActForm.Models
             {
                 EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
-                    , "eAct ApiApprove mergePDF 1 Error"
+                    , "eAct ApiApprove mergePDF 1 Error " + activityId
                     , ex.Message
                     , null);
                 try
@@ -407,7 +435,7 @@ namespace eActForm.Models
                     //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
                     EmailAppCodes.sendEmail(ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
-                    , "eAct ApiApprove mergePDF 2 Error"
+                    , "eAct ApiApprove mergePDF 2 Error " + activityId
                     , ex.Message
                     , null);
                 }

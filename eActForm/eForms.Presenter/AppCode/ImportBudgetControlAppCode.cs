@@ -4,6 +4,7 @@ using eForms.Presenter.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,13 +21,15 @@ namespace eForms.Presenter.AppCode
         public static string brand = "brand";
 
 
-        public static string getLE_No(string strCon,int year)
+        public static string getLE_No(string strCon, int year,string companyId)
         {
             string result = "";
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getLE_No"
                      , new SqlParameter[] {new SqlParameter("@year",year)
+                      ,new SqlParameter("@companyId",companyId)
+
                      });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new
@@ -105,13 +108,22 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int InsertBudgetControlTemp(string strCon, ImportBudgetControlModel.BudgetControlModels model)
+        public static int InsertBudgetControlTemp(string strCon, ImportBudgetControlModel.BudgetControlModels model,string companyId)
         {
             int result = 0;
+            string selectStored = "";
             try
             {
+                if (companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    selectStored = "usp_insertBudgetControlTemp";
+                }
+                else
+                {
+                    selectStored = "usp_insertBudgetControlTemp_ActBeer";
+                }
 
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetControlTemp"
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, selectStored
                 , new SqlParameter[] {new SqlParameter("@id",model.id)
                          ,new SqlParameter("@budgetNo",model.budgetNo)
                          ,new SqlParameter("@EO",model.EO)
@@ -167,19 +179,28 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int InsertBudgetLETemp(string strCon, ImportBudgetControlModel.BudgetControl_LEModel model)
+        public static int InsertBudgetLETemp(string strCon, ImportBudgetControlModel.BudgetControl_LEModel model, string companyId)
         {
             int result = 0;
             try
             {
-
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLETemp"
+                string selectStored = "";
+                if (companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    selectStored = "usp_insertBudgetLETemp";
+                }
+                else
+                {
+                    selectStored = "usp_insertBudgetLETemp_ActBeer";
+                }
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, selectStored
                 , new SqlParameter[] {new SqlParameter("@id",model.id)
                          ,new SqlParameter("@budgetId",model.budgetId)
                          ,new SqlParameter("@startDate",model.startDate)
                          ,new SqlParameter("@endDate",model.endDate)
                          ,new SqlParameter("@description",model.descripion)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                         ,new SqlParameter("@companyId",companyId)
                   });
                 result++;
 
@@ -187,18 +208,20 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("InsertBudgetLE => " + ex.Message);
+                ExceptionManager.WriteError("InsertBudgetLETemp => " + ex.Message);
             }
 
             return result;
         }
 
-        public static int InsertBudgetLE_History(string strCon)
+        public static int InsertBudgetLE_History(string strCon,string companyId)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetLE_History"
+                     , new SqlParameter[] { new SqlParameter("@companyId", companyId) 
+                     });
                 result++;
             }
             catch (Exception ex)
@@ -209,12 +232,24 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
-        public static int deleteBudgetTemp_ImportBudgetBG(string strCon)
+        public static int deleteBudgetTemp_ImportBudgetBG(string strCon, string companyId)
         {
             int result = 0;
+            string selectStored = "";
+
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_deleteBudgetTemp");
+                if (companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    selectStored = "usp_deleteBudgetTemp";
+                }
+                else
+                {
+                    selectStored = "usp_deleteBudgetTempActBeer";
+                }
+
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, selectStored);
                 result++;
             }
             catch (Exception ex)
@@ -253,12 +288,22 @@ namespace eForms.Presenter.AppCode
         }
 
 
-        public static List<BudgetControlModels> getBudgetTemp(string strCon)
+        public static List<BudgetControlModels> getBudgetTemp(string strCon,string companyId)
         {
-           
+            string selectStored = "";
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getBudgetTemp");
+                if (companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    selectStored = "usp_getBudgetTemp";
+                }
+                else
+                {
+                    selectStored = "usp_getBudgetTempActBeer";
+                }
+
+
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, selectStored);
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
@@ -291,12 +336,14 @@ namespace eForms.Presenter.AppCode
         }
 
 
-        public static int confirmImportBudget(string strCon)
+        public static int confirmImportBudget(string strCon,string companyId)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_confirmImportBudgetTemp");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_confirmImportBudgetTemp"
+                    , new SqlParameter[] { new SqlParameter("@companyId",companyId)
+                    });
                 return result;
             }
             catch (Exception ex)
@@ -307,13 +354,22 @@ namespace eForms.Presenter.AppCode
 
         }
 
-        public static int InsertBudgetActTypeTemp(string strCon, ImportBudgetControlModel.BudgetControl_ActType model)
+        public static int InsertBudgetActTypeTemp(string strCon, ImportBudgetControlModel.BudgetControl_ActType model, string companyId)
         {
             int result = 0;
+            string selectStored = "";
             try
             {
+                if (companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    selectStored = "usp_insertBudgetActTypeTemp";
+                }
+                else
+                {
+                    selectStored = "usp_insertBudgetActTypeTemp_ActBeer";
+                }
 
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActTypeTemp"
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, selectStored
                 , new SqlParameter[] {new SqlParameter("@id",model.id)
                          ,new SqlParameter("@budgetId",model.budgetId)
                          ,new SqlParameter("@budgetLEId",model.budgetLEId)
@@ -321,6 +377,7 @@ namespace eForms.Presenter.AppCode
                          ,new SqlParameter("@amount",model.amount)
                          ,new SqlParameter("@description",model.description)
                          ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                         ,new SqlParameter("@companyId",companyId)
                   });
                 result++;
 
@@ -333,12 +390,14 @@ namespace eForms.Presenter.AppCode
 
             return result;
         }
-        public static int InsertBudgetActType_History(string strCon)
+        public static int InsertBudgetActType_History(string strCon,string companyId)
         {
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History");
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetActType_History"
+                    , new SqlParameter[] { new SqlParameter("@companyId", companyId) 
+                    });
                 result++;
 
             }
@@ -430,7 +489,7 @@ namespace eForms.Presenter.AppCode
             int result = 0;
             try
             {
-         
+
                 result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertBudgetRpt_Temp"
                       , new SqlParameter[] {new SqlParameter("@EO",model.EO)
                       ,new SqlParameter("@approveNo",model.approveNo)
@@ -514,6 +573,7 @@ namespace eForms.Presenter.AppCode
             return result;
         }
 
+       
         public static int delBudgetRptMonthly_Temp(string strCon)
         {
             int result = 0;
@@ -539,7 +599,9 @@ namespace eForms.Presenter.AppCode
                 result = QueryGetAllChanel.getAllChanel(strCon).Where(x => x.cust.Contains(p_channelTxt)).FirstOrDefault().id;
                 return result;
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 return "";
             }
@@ -553,7 +615,9 @@ namespace eForms.Presenter.AppCode
                 result = QueryGetAllActivityGroup.getAllActivityGroup(strCon).Where(x => x.activityCondition.Equals("bg") && x.activitySales.ToLower().Equals(p_ActTypeTxt.ToLower())).FirstOrDefault().id;
                 return result;
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 return "";
             }
@@ -575,7 +639,7 @@ namespace eForms.Presenter.AppCode
                                  EO = d["EO"].ToString(),
                                  orderNo = d["orderNo"].ToString(),
                                  approve_Amount = decimal.Parse(d["approveAmount"].ToString()),
-                                 budget_Amount2 = decimal.Parse(d["approveAmount_Sap"].ToString()),  
+                                 budget_Amount2 = decimal.Parse(d["approveAmount_Sap"].ToString()),
                                  replaceEO = d["replaceEO"].ToString(),
                                  actual = decimal.Parse(d["actual"].ToString()),
                                  accrued = decimal.Parse(d["accrued"].ToString()),
@@ -650,7 +714,7 @@ namespace eForms.Presenter.AppCode
                                  EO = d["EO"].ToString(),
                                  orderNo = d["orderNo"].ToString(),
                                  description = d["description"].ToString(),
-                                
+
                              });
 
                 return lists.ToList(); ;
@@ -663,7 +727,23 @@ namespace eForms.Presenter.AppCode
             return budgetList;
         }
 
+        public static int delBudgetMonthlyByDate(string strCon, ImportBudgetControlModel model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_delBudgetMonthlyByDate"
+                    , new SqlParameter[] {new SqlParameter("@dateActual",model.budgetReportList.FirstOrDefault().date)
+                    ,new SqlParameter("@fiscalYear",model.budgetReportList.FirstOrDefault().fiscalYear)
+                      });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("delBudgetRpt_Temp => " + ex.Message);
+            }
 
+            return result;
+        }
 
         public static int insertDateReportMonthly_BudgetTBM(string strCon, ImportBudgetControlModel model)
         {
@@ -703,7 +783,7 @@ namespace eForms.Presenter.AppCode
 
         public static int insertDateReportBudgetTBM(string strCon, ImportBudgetControlModel model)
         {
-            
+
             int result = 0;
             try
             {

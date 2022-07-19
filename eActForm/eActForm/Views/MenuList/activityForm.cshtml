@@ -8,20 +8,20 @@
     <li>
         <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            @if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("MT Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 <li>@Html.ActionLink("MT Set Price", "Index", "MainForm", new { typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formSetPriceMT"] }, null)</li>
 
             }
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+            @if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("OMT Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li>@Html.ActionLink("OMT Set Price", "Index", "MainForm", new { typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formSetPriceOMT"] }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            @if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
-                <li>@Html.ActionLink("Activity Beer", "Index", "MainForm", new { typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formEactBeer"] }, null)</li>
+                <li>@Html.ActionLink(" Beer Activity Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formEactBeer"] }, null)</li>
 
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
@@ -33,6 +33,7 @@
                 <li>@Html.ActionLink("TBM เบิกผลิตภัณฑ์ POS/PREMIUM ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"] }, null)</li>
                 <li>@Html.ActionLink("TBM ใบเบิกค่าใช้จ่ายพนักงาน", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, null)</li>
                 <li>@Html.ActionLink("TBM ใบสั่งจ่าย", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] }, null)</li>
+                <li>@Html.ActionLink("TBM ใบผูกพันซื้อสินค้า", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPurchaseTbm"] }, null)</li>
                 <li>@Html.ActionLink("TBM โอนงบประมาณ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTransferbudget"] }, null)</li>
 
             }

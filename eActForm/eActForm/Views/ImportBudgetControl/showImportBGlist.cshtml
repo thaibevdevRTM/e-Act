@@ -63,6 +63,7 @@
             type: 'POST',
             url: '@Url.Action("confirmImportBudget", "ImportBudgetControl")',
             data: {
+                companyId: $("#ddlCompany").val(),
             }
         }).done(function (response) {
             $("#WaitDialog").hide();
