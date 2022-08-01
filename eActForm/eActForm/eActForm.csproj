@@ -3314,7 +3314,7 @@
     <Content Include="Views\partialActivityDetail\partialCumulative.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\reportExpenseEntertain.cshtml" />
     <Content Include="Views\managementFlow\getFlowSwap.cshtml" />
-    <Content Include="Views\Shared\_searchReportPostEVACompareChart.cshtml" />
+    <Content Include="Views\actFormRepPostEva\sharePostEvaViewCompareChart.cshtml" />
     <Content Include="Views\actFormRepPostEva\previewEvaByActId.cshtml" />
     <Content Include="Views\actFormRepPostEva\sharePostEvaViewList.cshtml" />
     <Content Include="Views\ImportFlow\Index.cshtml" />
