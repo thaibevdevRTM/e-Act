@@ -7,6 +7,19 @@ using static eActForm.Models.TB_Bud_Activity_Model;
 
 namespace eActForm.Models //update 21-04-2020
 {
+
+    public class SearchBudgetActivityPosEVAModels
+    {
+        public List<Customers_Model> customerslist { get; set; }
+
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+
+        public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
+
+        public List<Budget_Activity_Model.Budget_Activity_Status_Att> budgetStstuslist { get; set; }
+
+    }
+
     public class SearchBudgetActivityModels
     {
         public List<Customers_Model> customerslist { get; set; }

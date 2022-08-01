@@ -1,299 +1,265 @@
-﻿@model eForms.Models.Reports.RepPostEvaModels
+﻿
+
+@model eForms.Models.Reports.RepPostEvaModels
+@*@modelGroupBudgetStatus eForms.Models.Reports.RepPostEvaGroupBudgetStatusModels*@
 
 
 
-<div class="row" style="width:1100px;overflow-x:scroll;">
-    @if (Model != null && Model.repPostEvaLists != null && Model.repPostEvaLists.Count > 0)
-    {
+<div class="row">
         <div class="col-md-12 col-xs-12">
-            @*<div class="row">
-                <table>
-                    <tr>
-                        <td>
-                            บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย  @Model.repPostEvaLists[0].customerName
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            ประจำเดือน @ViewBag.mountText
-                        </td>
-                    </tr>
-                </table>
-            </div>*@
             <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    @Html.Action("PostEvaGroupBrandView", "actFormRepPostEva", new { model = Model })
-                </div>
-            </div>
-            <div class="row">
+                @Html.Action("postEvaGroupBrandView", "actFormRepPostEva", new { model = Model })
 
-                @using (Html.BeginForm("repExportExcel", "actFormRepPostEva", FormMethod.Post))
+                @if (Model != null && Model.repPostEvaLists != null && Model.repPostEvaLists.Count > 0)
                 {
-                    <div class="col-md-12 col-xs-12">
-                        <input type="hidden" name="gridHtml" id="gridHtml" />
-                        <button type="submit" class="btn ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
-                            <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
-                        </button>
-                    </div>
-                    <div id="gridDataPostEva" class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
-                        <table id="datatable" border="0" class="table table-striped jambo_table bulk_action fixed" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
-                            <thead>
-                                <tr class="headings">
-                                    <th width="50px" style="text-align:right; display:normal;">ลำดับ</th>
-                                    <th style="text-align:center; display:normal;">ประเภทกิจกรรม</th>
-                                    <th style="text-align:center; display:none;">Activity No.</th>
-                                    <th style="text-align:left; display:normal;">Name</th>
+                    using (Html.BeginForm("repExportExcel", "actFormRepPostEva", FormMethod.Post))
+                    {
+                        <div class="col-md-12 col-xs-12">
+                            <input type="hidden" name="gridHtml" id="gridHtml" />
+                            <button type="submit" class="btn ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                                <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                            </button>
+                        </div>
+                        <div id="gridDataPostEva" class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
+                            <table id="datatable" border="0" class="table table-striped jambo_table bulk_action fixed" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+                                <thead>
+                                    <tr class="headings">
+                                        <th width="50px" style="text-align:right; display:normal;">ลำดับ</th>
+                                        <th style="text-align:center; display:normal;">ประเภทกิจกรรม</th>
+                                        <th style="text-align:center; display:none;">Activity No.</th>
+                                        <th style="text-align:left; display:normal;">Name</th>
 
-                                    <th style="text-align:center; display:none;">Brand Name</th>
-                                    <th style="text-align:center; display:none;">ลูกค้า</th>
-                                    <th style="text-align:center; display:none;">กลุ่มสินค้า</th>
-                                    <th style="text-align:center; display:none;">productCode</th>
-                                    <th style="text-align:center; display:none;">size</th>
+                                        <th style="text-align:center; display:none;">Brand Name</th>
+                                        <th style="text-align:center; display:none;">ลูกค้า</th>
+                                        <th style="text-align:center; display:none;">กลุ่มสินค้า</th>
+                                        <th style="text-align:center; display:none;">productCode</th>
+                                        <th style="text-align:center; display:none;">size</th>
 
-                                    <th style="text-align:center; display:none;">ระยะเวลากิจกรรม</th>
-                                    <th style="text-align:center; display:none;">สิ้นสุดเวลากิจกรรม</th>
-                                    <th style="text-align:center; display:none;">ระยะเวลาการให้ทุน</th>
-                                    <th style="text-align:center; display:none;">สิ้นสุดเวลาให้ทุน</th>
+                                        <th style="text-align:center; display:none;">ระยะเวลากิจกรรม</th>
+                                        <th style="text-align:center; display:none;">สิ้นสุดเวลากิจกรรม</th>
+                                        <th style="text-align:center; display:none;">ระยะเวลาการให้ทุน</th>
+                                        <th style="text-align:center; display:none;">สิ้นสุดเวลาให้ทุน</th>
 
-                                    <th style="text-align:center; display:none;">SE</th>
-                                    <th style="text-align:center; display:none;">Unit</th>
-                                    <th style="text-align:center; display:none;">compensate</th>
-                                    <th style="text-align:center; display:none;">normalCase</th>
+                                        <th style="text-align:center; display:none;">SE</th>
+                                        <th style="text-align:center; display:none;">Unit</th>
+                                        <th style="text-align:center; display:none;">compensate</th>
+                                        <th style="text-align:center; display:none;">normalCase</th>
 
-                                    <th style="text-align:center; display:normal;">Promotion Case</th>
-                                    <th style="text-align:center; display:normal;">ยอดขายข่วงทำกิจกรรม(Baht-ALL)</th>
+                                        <th style="text-align:center; display:normal;">Promotion Case</th>
+                                        <th style="text-align:center; display:normal;">ยอดขายข่วงทำกิจกรรม(Baht-ALL)</th>
 
-                                    <th style="text-align:center; display:normal;">FCT Spending Exp. (Bath)</th>
-                                    <th style="text-align:center; display:normal;">FCT %To Sales</th>
-                                    <th style="text-align:center; display:none;">Normal Cost PerCase</th>
-
-
-                                    <th style="text-align:center; display:normal;">Sell-In Case</th>
-                                    <th style="text-align:center; display:none;">Sell-In Liter</th>
-                                    <th style="text-align:center; display:normal;">Sell-In Bath</th>
-
-                                    <th style="text-align:center; display:normal;">ตัดจ่ายจริง</th>
-
-                                    <th style="text-align:center; display:none;">SDBath</th>
-                                    <th style="text-align:center; display:normal;">ACT SE % ToSales</th>
-                                    <th style="text-align:center; display:none;">Sales-Parti (Case)</th>
-                                    <th style="text-align:center; display:none;">Sales-Parti (Baht)</th>
-
-                                    <th style="text-align:center; display:normal;">%Accuracy Sales Case</th>
-                                    <th style="text-align:center; display:none;">%Accuracy Sales Baht</th>
-                                    <th style="text-align:center; display:none;">Accuracy Spending (Baht)</th>
+                                        <th style="text-align:center; display:normal;">FCT Spending Exp. (Bath)</th>
+                                        <th style="text-align:center; display:normal;">FCT %To Sales</th>
+                                        <th style="text-align:center; display:none;">Normal Cost PerCase</th>
 
 
-                                    <th style="text-align:center; display:normal;">%Accuracy Spending Exp.</th>
+                                        <th style="text-align:center; display:normal;">Sell-In Case</th>
+                                        <th style="text-align:center; display:none;">Sell-In Liter</th>
+                                        <th style="text-align:center; display:normal;">Sell-In Bath</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{ var index = 1; string strActNo = "";}
-                                @foreach (var item in Model.repPostEvaLists)
-                                {
+                                        <th style="text-align:center; display:normal;">ตัดจ่ายจริง</th>
 
-                                <tr class="even pointer">
-                                    <td style="text-align:right; display:normal;">@index</td>
-                                    @*ประเภทกิจกรรม*@
-                                    <td style="text-align:center; display:normal;">@item.activitySales</td>
-                                    @*Activity No.*@
-                                    <td style="text-align:center; display:none;">@item.activityNo</td>
-                                    @*Name*@
-                                    <td style="text-align:left; display:normal;">@item.activityName</td>
+                                        <th style="text-align:center; display:none;">SDBath</th>
+                                        <th style="text-align:center; display:normal;">ACT SE % ToSales</th>
+                                        <th style="text-align:center; display:none;">Sales-Parti (Case)</th>
+                                        <th style="text-align:center; display:none;">Sales-Parti (Baht)</th>
+
+                                        <th style="text-align:center; display:normal;">%Accuracy Sales Case</th>
+                                        <th style="text-align:center; display:none;">%Accuracy Sales Baht</th>
+                                        <th style="text-align:center; display:none;">Accuracy Spending (Baht)</th>
 
 
-                                    @*Brand Name*@
-                                    <td style="text-align:center; display:none;">@item.brandName</td>
-                                    @*ลูกค้า*@
-                                    <td style="text-align:center; display:none;">@item.customerName</td>
-                                    @*กลุ่มสินค้า*@
-                                    <td style="text-align:center; display:none;">@item.groupName</td>
-                                    @*productCode*@
-                                    <td style="text-align:center; display:none;">@item.productCode</td>
-                                    @*size*@
-                                    <td style="text-align:center; display:none;">@item.size</td>
+                                        <th style="text-align:center; display:normal;">%Accuracy Spending Exp.</th>
 
-
-                                    @*ระยะเวลากิจกรรม*@
-                                    @if (item.activityPeriodSt != null)
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var index = 1; string strActNo = "";}
+                                    @foreach (var item in Model.repPostEvaLists)
                                     {
-                                        <td width="100px" style="text-align:center; display:none;">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="text-align:center; display:none;"></td>
-                                    }
 
-                                    @*สิ้นสุดเวลากิจกรรม*@
-                                    @if (item.activityPeriodEnd != null)
-                                    {
-                                        <td width="100px" style="text-align:center; display:none;">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="text-align:center; display:none;"></td>
-                                    }
-
-                                    @*ระยะเวลาการให้ทุน*@
-                                    @if (item.costPeriodSt != null)
-                                    {
-                                        <td width="100px" style="text-align:center; display:none;">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="text-align:center; display:none;"></td>
-                                    }
-
-                                    @*สิ้นสุดเวลาให้ทุน*@
-                                    @if (item.costPeriodEnd != null)
-                                    {
-                                        <td width="100px" style="text-align:center; display:none;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="text-align:center; display:none;"></td>
-                                    }
-
-                                    @*SE*@
-                                    <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.le)</td>
-                                    @*unit*@
-                                    <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.unit)</td>
-                                    @*compensate*@
-                                    <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.compensate)</td>
-                                    @*normalCase*@
-                                    <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.normalCost)</td>
+                                        <tr class="even pointer">
+                                            <td style="text-align:right; display:normal;">@index</td>
+                                            @*ประเภทกิจกรรม*@
+                                            <td style="text-align:center; display:normal;">@item.activitySales</td>
+                                            @*Activity No.*@
+                                            <td style="text-align:center; display:none;">@item.activityNo</td>
+                                            @*Name*@
+                                            <td style="text-align:left; display:normal;">@item.activityName</td>
 
 
-                                    @*Promotion Case*@
-                                    <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.themeCost)</td>
-                                    @*ยอดขายข่วงทำกิจกรรม(Baht-ALL)*@
-                                    <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.estimateSaleBathAll)</td>
-                                    @*FCT Spending Exp. (Bath)*@
-                                    <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.total)</td>
-                                    @*FCT %To Sales*@
-                                    <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.presentToSale)</td>
-                                    @*Normal Cost PerCase*@
-                                    <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.tempAPNormalCost)</td>
+                                            @*Brand Name*@
+                                            <td style="text-align:center; display:none;">@item.brandName</td>
+                                            @*ลูกค้า*@
+                                            <td style="text-align:center; display:none;">@item.customerName</td>
+                                            @*กลุ่มสินค้า*@
+                                            <td style="text-align:center; display:none;">@item.groupName</td>
+                                            @*productCode*@
+                                            <td style="text-align:center; display:none;">@item.productCode</td>
+                                            @*size*@
+                                            <td style="text-align:center; display:none;">@item.size</td>
 
 
-
-
-                                    @if (item.activitySales == "Promotion Support")
-                                    {
-                                        @*Sell-In Case*@
-                                        <td style="text-align:right; display:normal; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actReportQuantity)</td>
-                                        @*Sell-In Liter*@
-                                        <td style="text-align:right; display:none; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actVolumeQuantity)</td>
-                                        @*Sell-In Bath*@
-                                        <td style="text-align:right; display:normal; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actAmount)</td>
-
-                                        @*ตัดจ่ายจริง*@
-                                        <td style="text-align:right; display:normal;">@string.Format("{0:n2}", @item.saleActual)</td>
-
-                                        @*SDBath*@
-                                        <td style="text-align:right; display:none; background-color:#f0ffcb; "></td>
-                                        @*ACT SE % ToSales*@
-                                        <td style="text-align:right; display:normal; background-color:#f0ffcb; ">
-                                            @{
-                                                double? perSE = (item.saleActual / item.actAmount) * 100;
+                                            @*ระยะเวลากิจกรรม*@
+                                            @if (item.activityPeriodSt != null)
+                                            {
+                                                <td width="100px" style="text-align:center; display:none;">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
                                             }
-                                            @string.Format("{0:n2}", @perSE) %
-                                        </td>
-
-
-                                        @*Sales - Parti(Case)*@
-                                        <td style="text-align:right; display:none; background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiCase)</td>
-                                        @*Sales - Parti(Baht)*@
-                                        <td style="text-align:right; display:none; background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiBath)</td>
-
-
-                                        @*%Accuracy Sales Case*@
-                                        <td style="text-align:right; display:normal; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                        @*%Accuracy Sales Baht*@
-                                        <td style="text-align:right; display:none; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleBath)</td>
-
-                                        @*Accuracy Spending(Baht)*@
-                                        <td style="text-align:right; display:none; background-color:#beefff;"></td>
-                                        @*%Accuracy Spending Exp.*@
-                                        <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.presentAcctual)</td>
-
-                                    }
-                                    else
-                                    {
-                                        @*Sell-In Case*@
-                                        <td style="text-align: right; display:normal; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.billedQuantityMT)</td>
-                                        @*Sell-In Liter*@
-                                        <td style="text-align: right; display:none; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.volumeMT)</td>
-                                        @*Sell-In Bath*@
-                                        <td style="text-align: right; display:normal; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.netValueMT)</td>
-
-                                        //ตัดจ่ายจริง
-                                        <td style="text-align:center; display:normal;"></td>
-
-                                        @*SDBath*@
-                                        <td style="text-align:right; display:none; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.specialDiscountMT)</td>
-                                        @*SE % ToSales*@
-                                        <td style="text-align:right; display:normal; background-color:#f0ffcb;">
-                                            @{
-                                                double? perSE = (item.saleActual / item.actAmount) * 100;
+                                            else
+                                            {
+                                                <td style="text-align:center; display:none;"></td>
                                             }
-                                            @string.Format("{0:n2}", @perSE)
-                                        </td>
+
+                                            @*สิ้นสุดเวลากิจกรรม*@
+                                            @if (item.activityPeriodEnd != null)
+                                            {
+                                                <td width="100px" style="text-align:center; display:none;">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:center; display:none;"></td>
+                                            }
+
+                                            @*ระยะเวลาการให้ทุน*@
+                                            @if (item.costPeriodSt != null)
+                                            {
+                                                <td width="100px" style="text-align:center; display:none;">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:center; display:none;"></td>
+                                            }
+
+                                            @*สิ้นสุดเวลาให้ทุน*@
+                                            @if (item.costPeriodEnd != null)
+                                            {
+                                                <td width="100px" style="text-align:center; display:none;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:center; display:none;"></td>
+                                            }
+
+                                            @*SE*@
+                                            <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.le)</td>
+                                            @*unit*@
+                                            <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.unit)</td>
+                                            @*compensate*@
+                                            <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.compensate)</td>
+                                            @*normalCase*@
+                                            <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.normalCost)</td>
 
 
-                                        @*Sales - Parti(Case)*@
-                                        <td style="text-align: right; display:none; background-color: #f0ffcb;"></td>
-                                        @*Sales - Parti(Baht)*@
-                                        <td style="text-align: right; display:none; background-color: #f0ffcb;"></td>
+                                            @*Promotion Case*@
+                                            <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.themeCost)</td>
+                                            @*ยอดขายข่วงทำกิจกรรม(Baht-ALL)*@
+                                            <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.estimateSaleBathAll)</td>
+                                            @*FCT Spending Exp. (Bath)*@
+                                            <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.total)</td>
+                                            @*FCT %To Sales*@
+                                            <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.presentToSale)</td>
+                                            @*Normal Cost PerCase*@
+                                            <td style="text-align:right; display:none;">@string.Format("{0:n2}", item.tempAPNormalCost)</td>
 
-                                        @*%Accuracy Sales Case*@
-                                        <td style="text-align:right; display:normal; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                        @*%Accuracy Sales Bsht*@
-                                        <td style="text-align:right; display:none; background-color:#beefff; "></td>
 
-                                        @*Accuracy Spending(Baht)*@
-                                        <td style="text-align:right; display:none; background-color:#beefff; ">@string.Format("{0:n2}", item.accuracySpendingBath)</td>
-                                        @*%Accuracy Spending Exp.*@
-                                        <td style="text-align:center; display:normal;"></td>
 
+
+                                            @if (item.activitySales == "Promotion Support")
+                                            {
+                                                @*Sell-In Case*@
+                                                <td style="text-align:right; display:normal; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actReportQuantity)</td>
+                                                @*Sell-In Liter*@
+                                                <td style="text-align:right; display:none; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actVolumeQuantity)</td>
+                                                @*Sell-In Bath*@
+                                                <td style="text-align:right; display:normal; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.actAmount)</td>
+
+                                                @*ตัดจ่ายจริง*@
+                                                <td style="text-align:right; display:normal;">@string.Format("{0:n2}", @item.saleActual)</td>
+
+                                                @*SDBath*@
+                                                <td style="text-align:right; display:none; background-color:#f0ffcb; "></td>
+                                                @*ACT SE % ToSales*@
+                                                <td style="text-align:right; display:normal; background-color:#f0ffcb; ">
+                                                    @{
+                                                        double? perSE = (item.saleActual / item.actAmount) * 100;
+                                                    }
+                                                    @string.Format("{0:n2}", @perSE) %
+                                                </td>
+
+
+                                                @*Sales - Parti(Case)*@
+                                                <td style="text-align:right; display:none; background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiCase)</td>
+                                                @*Sales - Parti(Baht)*@
+                                                <td style="text-align:right; display:none; background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiBath)</td>
+
+
+                                                @*%Accuracy Sales Case*@
+                                                <td style="text-align:right; display:normal; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
+                                                @*%Accuracy Sales Baht*@
+                                                <td style="text-align:right; display:none; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleBath)</td>
+
+                                                @*Accuracy Spending(Baht)*@
+                                                <td style="text-align:right; display:none; background-color:#beefff;"></td>
+                                                @*%Accuracy Spending Exp.*@
+                                                <td style="text-align:right; display:normal;">@string.Format("{0:n2}", item.presentAcctual)</td>
+
+                                            }
+                                            else
+                                            {
+                                                @*Sell-In Case*@
+                                                <td style="text-align: right; display:normal; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.billedQuantityMT)</td>
+                                                @*Sell-In Liter*@
+                                                <td style="text-align: right; display:none; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.volumeMT)</td>
+                                                @*Sell-In Bath*@
+                                                <td style="text-align: right; display:normal; background-color: #f0ffcb; ">@string.Format("{0:n2}", item.netValueMT)</td>
+
+                                                //ตัดจ่ายจริง
+                                                <td style="text-align:center; display:normal;"></td>
+
+                                                @*SDBath*@
+                                                <td style="text-align:right; display:none; background-color:#f0ffcb; ">@string.Format("{0:n2}", item.specialDiscountMT)</td>
+                                                @*SE % ToSales*@
+                                                <td style="text-align:right; display:normal; background-color:#f0ffcb;">
+                                                    @{
+                                                        double? perSE = (item.saleActual / item.actAmount) * 100;
+                                                    }
+                                                    @string.Format("{0:n2}", @perSE)
+                                                </td>
+
+
+                                                @*Sales - Parti(Case)*@
+                                                <td style="text-align: right; display:none; background-color: #f0ffcb;"></td>
+                                                @*Sales - Parti(Baht)*@
+                                                <td style="text-align: right; display:none; background-color: #f0ffcb;"></td>
+
+                                                @*%Accuracy Sales Case*@
+                                                <td style="text-align:right; display:normal; background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
+                                                @*%Accuracy Sales Bsht*@
+                                                <td style="text-align:right; display:none; background-color:#beefff; "></td>
+
+                                                @*Accuracy Spending(Baht)*@
+                                                <td style="text-align:right; display:none; background-color:#beefff; ">@string.Format("{0:n2}", item.accuracySpendingBath)</td>
+                                                @*%Accuracy Spending Exp.*@
+                                                <td style="text-align:center; display:normal;"></td>
+
+                                            }
+
+                                            @{strActNo = item.activityNo;
+                                                index++;
+                                            }
+                                        </tr>
                                     }
-
-                                    @{strActNo = item.activityNo;
-                                        index++;
-                                    }
-                                </tr>
-
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 }
-
             </div>
-
         </div>
-    }
 </div>
 
-
-
-
 <script>
-
-
     $(document).ready(function () {
 
-
     })
-
 </script>

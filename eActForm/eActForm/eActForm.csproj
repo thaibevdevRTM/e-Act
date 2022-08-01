@@ -232,7 +232,7 @@
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveRepDetailAppCode.cs" />
-    <Compile Include="BusinessLayer\Appcodes\BudgetApproveListAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\BudgetMTMAppCode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\AdminCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ProductCommand.cs" />
@@ -3314,7 +3314,7 @@
     <Content Include="Views\partialActivityDetail\partialCumulative.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\reportExpenseEntertain.cshtml" />
     <Content Include="Views\managementFlow\getFlowSwap.cshtml" />
-    <Content Include="Views\Shared\chartHorizontalBar.cshtml" />
+    <Content Include="Views\Shared\_searchReportPostEVACompareChart.cshtml" />
     <Content Include="Views\actFormRepPostEva\previewEvaByActId.cshtml" />
     <Content Include="Views\actFormRepPostEva\sharePostEvaViewList.cshtml" />
     <Content Include="Views\ImportFlow\Index.cshtml" />

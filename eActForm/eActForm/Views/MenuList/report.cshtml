@@ -12,11 +12,15 @@
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
             {
 
-                if (UtilsAppCode.Session.User.isAdmin  || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
-                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                }
+
+                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                {
+                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>   
                 }
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
@@ -40,7 +44,7 @@
                     <li>@Html.ActionLink(" Report Budget Activity MT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 }
 
-                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin )
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     <li>@Html.ActionLink(" Report Budget Activity OMT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Claim PDG OMT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
@@ -49,7 +53,7 @@
             }
 
 
-            @if (UtilsAppCode.Session.User.isAdminHCBP || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM ||  UtilsAppCode.Session.User.isSuperAdmin)
+            @if (UtilsAppCode.Session.User.isAdminHCBP || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink(" Report Medical", "ReportIndex", "MainReport", new { typeForm = Activity_Model.activityType.HCForm.ToString(), typeFormId = ConfigurationManager.AppSettings["formExpMedNumId"] }, null)</li>
             }
