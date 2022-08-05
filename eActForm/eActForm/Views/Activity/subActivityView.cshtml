@@ -1,0 +1,334 @@
+﻿
+@model eActForm.Models.Activity_Model
+@using eActForm.Models;
+@using System.Configuration;
+@using eActForm.BusinessLayer
+@{
+    int tb_row = 0;
+}
+<style>
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+
+        <h2 class="center" style="width:40%">
+            <label class="control-label font10"> @Model.activityFormModel.activityNo</label>
+        </h2>
+
+
+        @using (Ajax.BeginForm("submit_SubActivity", "Activity"
+        , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
+        , new { id = "submitData", @class = "form-horizontal form-label-left" }))
+        {
+
+            for (int i = 0; i < Model.activityFormModel.countMonth; i++)
+            {
+
+                var row = i + 1;
+                string getId = Guid.NewGuid().ToString();
+                if (!string.IsNullOrEmpty(Model.activityModelList[i].id))
+                {
+                    getId = Model.activityModelList[i].id;
+                }
+
+                <div class="center" style="margin-left:15px;">
+                    <label class="control-label font10"> ปันส่วน งวดที่ @row</label>
+                </div>
+                <div style="width:80%" class="center">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12 font10" for="txtdateDoc">
+                            เวลากิจกรรม<span class="required">*</span>
+                        </label>
+
+                        @if (Model.activitydetaillist_0.Count > 0)
+                        {
+
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBox("activityModelList[" + i + "].activityPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityModelList[i].activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss clsDateActivity", id = "txtdateActivitySt_" + @i, autocomplete = "off" })
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBox("activityModelList[" + i + "].activityPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityModelList[i].activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss clsDateActivity", id = "txtdateActivityEnd_" + @i, autocomplete = "off" })
+                                </div>
+                            </div>
+
+                            if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                            {
+                                <script>
+                                    document.getElementById('txtdateActivitySt_' + @i).disabled = true;
+                                    document.getElementById('txtdateActivityEnd_' + @i).disabled = true;
+                                </script>
+                            }
+                            else
+                            {
+                                <script>
+                                    document.getElementById('txtdateActivitySt_' + @i).disabled = false;
+                                    document.getElementById('txtdateActivityEnd_' + @i).disabled = false;
+                                </script>
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBox("activityModelList[" + i + "].activityPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss clsDateActivity", id = "txtdateActivitySt_" + @i, autocomplete = "off" })
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBox("activityModelList[" + i + "].activityPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss clsDateActivity", id = "txtdateActivityEnd_" + @i, autocomplete = "off" })
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    @Html.Hidden("activityModelList[" + i + "].reference", getId, null)
+                    @Html.Hidden("activityModelList[" + i + "].id", Model.activityFormModel.id, null)
+                    @Html.Hidden("activityModelList[" + i + "].statusNote", Model.activityModelList[i].statusNote, null)
+                </div>
+
+
+
+                <table class="table table-striped jambo_table bulk_action center" id="tbl_budgetControl" cellpadding="0" cellspacing="0" style="background-color:#ffffff; width:80%">
+                    <thead>
+                        <tr class="headings" style="text-align:center;">
+                            <th class="font10" style="text-align:center"> Product</th>
+                            <th class="font10" style="text-align:center"> Amount </th>
+
+                        </tr>
+                    </thead>
+
+                    @for (int ii = 0; ii < Model.activitydetaillist.Count; ii++)
+                    {
+
+                        <tbody id=first>
+                            <tr class="tagCountRowBudgetControl tRow_@ii">
+                                @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].subActivityId", getId)
+                                @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].productId", Model.activitydetaillist[ii].productId)
+                                @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist[ii].id)
+                                <td>@Html.DisplayFor(x => x.activitydetaillist[ii].productName)</td>
+
+                                @if (Model.activitydetaillist_0.Count > 0)
+                                {
+
+                                    if (i == 0)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_0[ii].total, new { @id = "total_0" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_0'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 1)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_1[ii].total, new { @id = "total_1" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_1'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_2[ii].total, new { @id = "total_2" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_2'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_3[ii].total, new { @id = "total_3" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_3'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_4[ii].total, new { @id = "total_4" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_4'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_5[ii].total, new { @id = "total_5" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_5'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 6)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_6[ii].total, new { @id = "total_6" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_6'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 7)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_7[ii].total, new { @id = "total_7" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_7'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 8)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_8[ii].total, new { @id = "total_8" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_8'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+                                    else if (i == 9)
+                                    {
+                                        <td style="text-align:right">
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_9[ii].total, new { @id = "total_9" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                    document.getElementById('total_9'+@ii).disabled = true;
+                                                </script>
+                                            }
+                                        </td>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <td style="text-align:right">
+                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist[ii].wholeSalesPrice, new { @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                    </td>
+                                }
+
+                            </tr>
+
+                        </tbody>
+
+                    }
+                </table>
+                <br />
+            }
+
+        }
+
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+
+                    <button type="button" id="btnSubmit" class="btn ink-reaction btn-success" onclick="submitData();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+
+
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="divDrop" class="col-md-12">
+</div>
+
+
+
+<script type="text/javascript">
+
+    function submitData() {
+
+        $("#submitData").submit();
+
+    }
+
+
+
+    $(document).ready(function () {
+        $('form input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        $('.selectpicker').selectpicker({
+            liveSearch: true,
+            showSubtext: true
+        });
+
+     $(".clsDateActivity").datepicker({
+           format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+    });
+
+
+
+
+    function successQuery_Index(htmlResponse) {
+        doMsgSuccess("บันทึก เรียบร้อย")
+        document.getElementById("btnSubmit").disabled = true;
+    }
+
+    function failureQuery_Index(data) {
+        bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+    }
+
+    function beginQuery_Index() {
+
+    }
+
+
+
+</script>
+
+

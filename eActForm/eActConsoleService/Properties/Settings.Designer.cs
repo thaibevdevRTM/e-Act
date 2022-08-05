@@ -97,7 +97,7 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http:\\\\thaibevss.com/eact/?s=approve")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https:\\\\eact.thaibev.com/?s=approve")]
         public string strUrlApprove {
             get {
                 return ((string)(this["strUrlApprove"]));

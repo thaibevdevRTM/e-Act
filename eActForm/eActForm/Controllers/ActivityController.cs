@@ -235,7 +235,7 @@ namespace eActForm.Controllers
                 activityModel.activityFormTBMMKT.activityNo = "";
                 activityModel.activityFormTBMMKT.statusId = 1;
                 activityModel.activityFormModel.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
-                activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]); 
+                activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 activityModel.activityFormModel.activityPeriodEndStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activityModel, new_actId);
                 TempData.Keep();
@@ -341,7 +341,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId,string statusNote)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId, string statusNote)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -369,7 +369,7 @@ namespace eActForm.Controllers
                                 {
                                     ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString());
                                 }
-                              
+
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));
@@ -423,7 +423,198 @@ namespace eActForm.Controllers
             return resultAjax;
         }
 
+
+        public ActionResult subActivityView(string activityId)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            try
+            {
+                var getModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityFormModel = getModel;
+                activityModel.activityFormModel.countMonth = (getModel.activityPeriodEnd.Value.Month + getModel.activityPeriodEnd.Value.Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+
+                activityModel.activityModelList = QueryGetActivityById.getSubActivityByActId(activityId);
+
+                if (activityModel.activityModelList.Any())
+                {
+                    foreach (var item in activityModel.activityModelList)
+                    {
+                        switch (item.countAct)
+                        {
+                            case 1:
+                                activityModel.activitydetaillist_0 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 2:
+                                activityModel.activitydetaillist_1 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 3:
+                                activityModel.activitydetaillist_2 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 4:
+                                activityModel.activitydetaillist_3 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 5:
+                                activityModel.activitydetaillist_4 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 6:
+                                activityModel.activitydetaillist_5 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 7:
+                                activityModel.activitydetaillist_6 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 8:
+                                activityModel.activitydetaillist_7 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 9:
+                                activityModel.activitydetaillist_8 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+                            case 10:
+                                activityModel.activitydetaillist_9 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
+                                break;
+
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("subActivityView => " + ex.Message);
+            }
+
+            return PartialView(activityModel);
+
+        }
+
+
+
+        public JsonResult submit_SubActivity(Activity_Model model)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            var result = new AjaxResult();
+            try
+            {
+                int countAct = 1;
+                foreach (var item in model.activityModelList)
+                {
+                    if (string.IsNullOrEmpty(item.statusNote))
+                    {
+                        item.countAct = countAct++;
+                        item.statusId = 3;
+                        result.Code = ActFormAppCode.insertSubActivity(item);
+                    }
+                }
+
+                if (model.activitydetaillist_0.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_0[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_0)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_1.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_1[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_1)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_2.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_2[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_2)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_3.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_3[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_3)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_4.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_4[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_4)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_5.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_5[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_5)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_6.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_6[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_6)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_7.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_7[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_7)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_8.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_8[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_8)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+                if (model.activitydetaillist_9.Any())
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_9[0].total.ToString()))
+                    {
+                        foreach (var item in model.activitydetaillist_9)
+                        {
+                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                        }
+                    }
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("submit_SubActivity => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
+
+
+
 }
+
+
+
+
 
 

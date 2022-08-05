@@ -733,5 +733,51 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+
+        public static int insertSubActivity(ActivityForm model)
+        {
+            try
+            {
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSubActivity"
+                    , new SqlParameter[] { new SqlParameter("@id", model.reference)
+                    , new SqlParameter("@activityId" ,model.id)
+                    , new SqlParameter("@statusId" ,model.statusId)
+                    , new SqlParameter("@activityPeriodSt" ,model.activityPeriodSt)
+                    , new SqlParameter("@activityPeriodEnd" ,model.activityPeriodEnd)
+                    , new SqlParameter("@count" ,model.countAct)
+                    , new SqlParameter("@createdByUserId" ,UtilsAppCode.Session.User.empId)
+
+                    });
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertSubActivity >>" + ex.Message);
+            }
+
+        }
+
+        public static int insertSubActivityDetail(CostThemeDetailOfGroupByPrice model)
+        {
+            try
+            {
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSubActivityDetail"
+                    , new SqlParameter[] { new SqlParameter("@subActivityId", model.subActivityId)
+                    , new SqlParameter("@ref_Estimate" ,model.id)
+                    , new SqlParameter("@total" ,model.promotionCost)
+                    , new SqlParameter("@createdByUserId" ,UtilsAppCode.Session.User.empId)
+
+                    });
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertSubActivityDetail >>" + ex.Message);
+            }
+
+        }
     }
 }
