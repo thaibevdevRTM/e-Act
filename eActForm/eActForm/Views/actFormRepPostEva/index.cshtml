@@ -22,18 +22,22 @@
 </div>
 
 
-<div class="row tile_count">
-    <div id="getQuery" class="col-md-12 col-xs-12">
+<div id="getQuery">
 
-    </div>
 </div>
+
 
 <script type="text/javascript">
 
     function beginQuery() {
 
         if ($("#ddlCustomer").val() == "") {
-            doMsgFail("กรุณาระบุ Customer ครับ");
+            doMsgFail("กรุณาระบุ Customer");
+            return false;
+        }
+
+        if ($("#ddlTheme").val() == "") {
+            doMsgFail("กรุณาระบุ Activity Type");
             return false;
         }
 

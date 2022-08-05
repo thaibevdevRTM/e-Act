@@ -9,20 +9,27 @@ namespace eForms.Models.Reports
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
         public List<RepPostEvaModel> repPostEvaTopLists { get; set; }
         public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
+
+        //public List<RepPostEvaModel> repPostEvaGroupBudgetStatus { get; set; }
         //public List<RepPostEvaModel> repPostEvaBudgetActivity { get; set; }
 
         //public List<RepPostEvaModel> repPostEvaGroupActBudgetActive { get; set; }
     }
 
+    public class RepPostEvaGroupBudgetStatusModels
+    {
+        public List<RepPostEvaGroupBudgetStatus> repPostEvaGroupBudgetStatus { get; set; }
 
-    //public class RepPostEvaBudgetAct
-    //{
-    //    public double? countActApprove { get; set; }
-    //    public double? countBudgetActive { get; set; }
-    //    public double? countBudgetInactive { get; set; }
-    //}
+    }
 
 
+    public class RepPostEvaGroupBudgetStatus
+    {
+        public double? countActApprove { get; set; }
+        public double? countBudgetActive { get; set; }
+        public double? countBudgetInactive { get; set; }
+
+    }
     public class RepPostEvaGroup
     {
         public string name { get; set; }
