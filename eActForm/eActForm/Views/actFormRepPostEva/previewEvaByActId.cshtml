@@ -31,7 +31,7 @@
                 <div id="GridPDF" class="row" style="background-color:white;">
 
                     @Html.Action("activityPDFView", "ActivityViewer", new { actId = @ViewBag.actId })
-                    @RenderPage("~/Views/Shared/chartHorizontalBar.cshtml")
+                    @RenderPage("~/Views/actFormRepPostEva/sharePostEvaViewCompareChart.cshtml")
                     @RenderPage("~/Views/actFormRepPostEva/sharePostEvaViewList.cshtml")
 
                 </div>
@@ -106,13 +106,13 @@
 
         jsondata.forEach(function (e) {
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.tempAPNormalCost);
+            //mybarChart.data.datasets[0].data.push(e.tempAPNormalCost);
+            mybarChart.data.datasets[0].data.push(e.actAmount);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
         mybarChart.update();
     }
-
 
     function genMonthlyCompareSEActual(jsondata) {
         var labels = [];
@@ -148,7 +148,8 @@
         jsondata.forEach(function (e) {
             console.log(e);
             labels.push([e.name]);
-            mybarChart.data.datasets[0].data.push(e.estimateSaleBathAll);
+            /*mybarChart.data.datasets[0].data.push(e.estimateSaleBathAll);*/
+            mybarChart.data.datasets[0].data.push(e.total);
             mybarChart.data.datasets[1].data.push(e.saleActual);
         })
 
