@@ -424,17 +424,28 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult subActivityView(string activityId)
+        public ActionResult subActivityView(string activityId, string count)
         {
             Activity_Model activityModel = new Activity_Model();
             try
             {
                 var getModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityModelList = QueryGetActivityById.getSubActivityByActId(activityId);
                 activityModel.activityFormModel = getModel;
-                activityModel.activityFormModel.countMonth = (getModel.activityPeriodEnd.Value.Month + getModel.activityPeriodEnd.Value.Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
+
+                if (!string.IsNullOrEmpty(count))
+                {
+                    activityModel.activityFormModel.countMonth = int.Parse(count);
+                }
+                else
+                {
+                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count : (getModel.activityPeriodEnd.Value.Month + getModel.activityPeriodEnd.Value.Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
+
+                }
+                activityModel.activityFormModel.delFlag = activityModel.activityModelList.Any() ? true : false;
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
 
-                activityModel.activityModelList = QueryGetActivityById.getSubActivityByActId(activityId);
+
 
                 if (activityModel.activityModelList.Any())
                 {
@@ -503,12 +514,16 @@ namespace eActForm.Controllers
                     {
                         item.countAct = countAct++;
                         item.statusId = 3;
+                        item.activityPeriodSt = string.IsNullOrEmpty(item.str_activityPeriodSt) ? (DateTime?)null :
+                  BaseAppCodes.converStrToDatetimeWithFormat(item.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
+                        item.activityPeriodEnd = string.IsNullOrEmpty(item.str_activityPeriodEnd) ? (DateTime?)null :
+                  BaseAppCodes.converStrToDatetimeWithFormat(item.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                         result.Code = ActFormAppCode.insertSubActivity(item);
                     }
                 }
 
                 if (model.activitydetaillist_0.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_0[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_0[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_0)
                         {
@@ -517,7 +532,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_1.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_1[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_1[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_1)
                         {
@@ -526,7 +541,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_2.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_2[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_2[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_2)
                         {
@@ -535,7 +550,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_3.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_3[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_3[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_3)
                         {
@@ -544,7 +559,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_4.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_4[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_4[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_4)
                         {
@@ -553,7 +568,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_5.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_5[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_5[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_5)
                         {
@@ -562,7 +577,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_6.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_6[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_6[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_6)
                         {
@@ -571,7 +586,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_7.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_7[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_7[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_7)
                         {
@@ -580,7 +595,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_8.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_8[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_8[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_8)
                         {
@@ -589,7 +604,7 @@ namespace eActForm.Controllers
                     }
 
                 if (model.activitydetaillist_9.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_9[0].total.ToString()))
+                    if (!string.IsNullOrEmpty(model.activitydetaillist_9[0].promotionCost.ToString()))
                     {
                         foreach (var item in model.activitydetaillist_9)
                         {

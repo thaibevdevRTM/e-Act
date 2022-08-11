@@ -352,7 +352,7 @@
                     });
 
 
-                    if ('@Model.activityFormTBMMKT.mode' =='@AppCode.Mode.edit.ToString()') {
+                    @*if ('@Model.activityFormTBMMKT.mode' =='@AppCode.Mode.edit.ToString()') {
 
                         var percent = @Model.tB_Act_ActivityForm_DetailOther.hospPercent;
                         var amount = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amount);
@@ -373,7 +373,7 @@
                         $("#hdBalance").val(balance);
                         $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                         $("#hdReceived").val(received);
-                    }
+                    }*@
                 });
 
                 </script>

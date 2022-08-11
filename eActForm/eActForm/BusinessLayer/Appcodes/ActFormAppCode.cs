@@ -766,7 +766,8 @@ namespace eActForm.BusinessLayer
                 int rtn = 0;
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSubActivityDetail"
                     , new SqlParameter[] { new SqlParameter("@subActivityId", model.subActivityId)
-                    , new SqlParameter("@ref_Estimate" ,model.id)
+                    , new SqlParameter("@id" ,model.id)
+                    , new SqlParameter("@ref_Estimate" ,model.ref_Estimate)
                     , new SqlParameter("@total" ,model.promotionCost)
                     , new SqlParameter("@createdByUserId" ,UtilsAppCode.Session.User.empId)
 

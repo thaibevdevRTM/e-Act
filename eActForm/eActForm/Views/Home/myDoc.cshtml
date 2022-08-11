@@ -150,16 +150,20 @@
 
     function callSubActivityView(actId) {
         $("#WaitDialog").show();
+        $("#divModalApprovelist").html('')
         $.ajax({
             type: 'POST',
             url: '@Url.Action("subActivityView", "Activity")',
             data: {
-                activityId: actId
+                activityId: actId,
+                count: $("#txtcount").val(),
             }
         }).done(function (response) {
             $("#WaitDialog").hide();
+
             $("#divModalApprovelist").html(response)
             $('#modalApprovelist').modal('show');
+
         });
     }
 
@@ -226,7 +230,7 @@
         <a class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px" href="#"></a>คือ PostEva
         <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
         <a class="btn ink-reaction btn-warning  fa fa-archive" href="#"></a>คืนสินค้า
-
+        <a class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px" href="#"></a>ปันส่วน
         <table id="datatable" class="table table-striped table-hover">
             <thead>
                 <tr style="background-color:#2B5D95;color:#ffffff;">
@@ -281,10 +285,12 @@
                                 <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
                                     <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
                                 </a>
-                                <a href="javascript:" onclick="return callSubActivityView('@item.id');">
-                                    <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
-                                </a>
-        
+                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
+                                {
+                                    <a href="javascript:" onclick="return callSubActivityView('@item.id');">
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                    </a>
+                                }
 
                             }
                             @*@Html.ActionLink(" ", "previewEvaByActId", "actFormRepPostEva", new { actId = @item.id }, new { @class = "btn glyphicon glyphicon-stats", target = "_blank" })*@
@@ -301,6 +307,14 @@
                             else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.statusId == "3")
+                                {
+                                    <a href="javascript:" onclick="return callSubActivityView('@item.id');">
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                    </a>
+                                }
+
                             }
                             else if (Model.typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                             {
