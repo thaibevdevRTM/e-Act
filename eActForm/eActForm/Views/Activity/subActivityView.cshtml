@@ -3,14 +3,16 @@
 @using eActForm.Models;
 @using System.Configuration;
 @using eActForm.BusinessLayer
+@using System.Globalization;
 @{
-    int tb_row = 0;
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
 }
 <style>
     .center {
         margin: auto;
         width: 50%;
-        padding: 10px;
+        padding: 5px;
     }
 </style>
 
@@ -23,9 +25,15 @@
         </div>
 
         <div class="center">
-            <h2 class="center">
+            <h2 style="text-align:center">
                 @Model.activityFormModel.activityNo
             </h2>
+        </div>
+        <div class="center">
+            <p style="text-align:center">ระยะเวลากิจกรรม</p>
+            <p style="text-align:center">
+                <u>@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish) -   @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)</u>
+            </p>
         </div>
 
         @if (Model.activityFormModel.delFlag == false)
@@ -140,30 +148,30 @@
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_0[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
-                                            <script>
-                                                document.getElementById('total_0' +@ii).disabled = true;
-
-                                            </script>
+                                                <script>
+                                                        document.getElementById('total_0' +@ii).disabled = true;
+                                                </script>
                                             }
+
                                         </td>
                                     }
                                     else if (i == 1)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_1[ii].total, "{0:n2}", new { @id = "total_1" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" , onfocus= "removeComma(total_1" + @ii +")" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_1[ii].total, "{0:n2}", new { @id = "total_1" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", onfocus = "removeComma(total_1" + @ii + ")", onchange = "removeComma(total_1" + @ii + ")" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_1[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
-                                            <script>
+                                                <script>
                                                  document.getElementById('total_1' +@ii).disabled = true;
-                                            </script>
+                                                </script>
                                             }
                                         </td>
                                     }
                                     else if (i == 2)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_2[ii].total, "{0:n2}", new { @id = "total_2" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_2[ii].total, "{0:n2}", new { @id = "total_2" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_2[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -176,7 +184,7 @@
                                     else if (i == 3)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_3[ii].total, "{0:n2}", new { @id = "total_3" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_3[ii].total, "{0:n2}", new { @id = "total_3" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_3[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -189,7 +197,7 @@
                                     else if (i == 4)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_4[ii].total, "{0:n2}", new { @id = "total_4" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_4[ii].total, "{0:n2}", new { @id = "total_4" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_4[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -202,7 +210,7 @@
                                     else if (i == 5)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_5[ii].total, "{0:n2}", new { @id = "total_5" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_5[ii].total, "{0:n2}", new { @id = "total_5" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_5[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -215,7 +223,7 @@
                                     else if (i == 6)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_6[ii].total, "{0:n2}", new { @id = "total_6" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_6[ii].total, "{0:n2}", new { @id = "total_6" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_6[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -228,7 +236,7 @@
                                     else if (i == 7)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_7[ii].total, "{0:n2}", new { @id = "total_7" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_7[ii].total, "{0:n2}", new { @id = "total_7" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_7[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -241,7 +249,7 @@
                                     else if (i == 8)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_8[ii].total, "{0:n2}", new { @id = "total_8" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_8[ii].total, "{0:n2}", new { @id = "total_8" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_8[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -254,7 +262,7 @@
                                     else if (i == 9)
                                     {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_9[ii].total, "{0:n2}", new { @id = "total_9" + @ii, @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_9[ii].total, "{0:n2}", new { @id = "total_9" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
                                             @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_9[ii].id)
                                             @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                                             {
@@ -272,7 +280,8 @@
                                     decimal? calCost = Model.activitydetaillist[ii].total / Model.activityFormModel.countMonth;
 
                                     <td style="text-align:right">
-                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
+
                                     </td>
                                 }
 
@@ -307,14 +316,23 @@
 
     function submitData() {
 
+        $('.clsTotal').each((index, input) => {
+
+            const $input = $(input);
+            console.log($input.val().length)
+            if ($input.val().length == 0) {
+                $input.val($input.val().replace('', '0'));
+            }
+            $input.val($input.val().replace(/,/g, ''));
+
+        });
+
         $("#submitData").submit();
     }
 
 
     function removeComma(txtId) {
-
         $(txtId).val($(txtId).val().replace(",", ""));
-
     }
 
     $(function () {

@@ -22,6 +22,7 @@ namespace eActForm.Controllers
                 return View();
             }
         }
+
         public ActionResult Index()
         {
             string user = "";
@@ -69,7 +70,6 @@ namespace eActForm.Controllers
                     newCookie["chkRemember"] = chkRemember.ToString();
                     newCookie.Expires = DateTime.Today.AddDays(7);
                     Response.Cookies.Add(newCookie);
-
                 }
 
                 ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);

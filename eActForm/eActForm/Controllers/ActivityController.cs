@@ -523,94 +523,109 @@ namespace eActForm.Controllers
                 }
 
                 if (model.activitydetaillist_0.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_0[0].promotionCost.ToString()))
+
+                    foreach (var item in model.activitydetaillist_0)
                     {
-                        foreach (var item in model.activitydetaillist_0)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_1.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_1[0].promotionCost.ToString()))
+
+                    foreach (var item in model.activitydetaillist_1)
                     {
-                        foreach (var item in model.activitydetaillist_1)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_2.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_2[0].promotionCost.ToString()))
+
+                    foreach (var item in model.activitydetaillist_2)
                     {
-                        foreach (var item in model.activitydetaillist_2)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_3.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_3[0].promotionCost.ToString()))
+                    foreach (var item in model.activitydetaillist_3)
                     {
-                        foreach (var item in model.activitydetaillist_3)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_4.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_4[0].promotionCost.ToString()))
+
+                    foreach (var item in model.activitydetaillist_4)
                     {
-                        foreach (var item in model.activitydetaillist_4)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_5.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_5[0].promotionCost.ToString()))
+
+                    foreach (var item in model.activitydetaillist_5)
                     {
-                        foreach (var item in model.activitydetaillist_5)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_6.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_6[0].promotionCost.ToString()))
+                    foreach (var item in model.activitydetaillist_6)
                     {
-                        foreach (var item in model.activitydetaillist_6)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_7.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_7[0].promotionCost.ToString()))
+                    foreach (var item in model.activitydetaillist_7)
                     {
-                        foreach (var item in model.activitydetaillist_7)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
                 if (model.activitydetaillist_8.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_8[0].promotionCost.ToString()))
+                    foreach (var item in model.activitydetaillist_8)
                     {
-                        foreach (var item in model.activitydetaillist_8)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
 
+
                 if (model.activitydetaillist_9.Any())
-                    if (!string.IsNullOrEmpty(model.activitydetaillist_9[0].promotionCost.ToString()))
+                    foreach (var item in model.activitydetaillist_9)
                     {
-                        foreach (var item in model.activitydetaillist_9)
+                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
                         {
                             result.Code = ActFormAppCode.insertSubActivityDetail(item);
                         }
                     }
+
 
             }
             catch (Exception ex)

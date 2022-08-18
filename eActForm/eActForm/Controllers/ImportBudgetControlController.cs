@@ -458,7 +458,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public FileResult ExportExcel(string gridHtml, string type)
+        public FileResult ExportExcel(string gridHtml, string type,string fileName)
         {
             try
             {
@@ -469,7 +469,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "ReportTBM_" + type + ".xls");
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", fileName + type + ".xls");
         }
 
         public ActionResult showBudgetListAfterImport()
