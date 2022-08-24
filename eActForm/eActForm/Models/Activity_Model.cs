@@ -312,6 +312,7 @@ namespace eActForm.Models
         public int countMonth { get; set; }
         public int countAct { get; set; }
         public int status_rp { get; set; }
+        public decimal? sumTotal { get; set; }
 
     }
 

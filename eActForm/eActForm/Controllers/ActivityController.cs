@@ -439,12 +439,17 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count : (getModel.activityPeriodEnd.Value.Month + getModel.activityPeriodEnd.Value.Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
-
+                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count : 
+                        (getModel.activityPeriodEnd.Value.AddDays(1).Month + getModel.activityPeriodEnd.Value.AddDays(1).Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
                 }
+
+                if (activityModel.activityFormModel.countMonth == 0)
+                    activityModel.activityFormModel.countMonth = 1;
+
+
                 activityModel.activityFormModel.delFlag = activityModel.activityModelList.Any() ? true : false;
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-
+                activityModel.activityFormModel.sumTotal = activityModel.activitydetaillist.Select(x => x.total).Sum();
 
 
                 if (activityModel.activityModelList.Any())

@@ -285,7 +285,7 @@
                                 <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
                                     <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
                                 </a>
-                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
+                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
                                         <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
@@ -308,7 +308,7 @@
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
-                                if (item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
+                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
                                         <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>

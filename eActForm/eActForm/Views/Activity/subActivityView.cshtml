@@ -280,7 +280,8 @@
                                     decimal? calCost = Model.activitydetaillist[ii].total / Model.activityFormModel.countMonth;
 
                                     <td style="text-align:right">
-                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
+                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", @onchange = "sumall()" })
+
 
                                     </td>
                                 }
@@ -292,9 +293,18 @@
                     }
                 </table>
                 <br />
+
             }
 
         }
+        <div class="center" style="margin-left:15px;">
+            <div class="row">
+                <label>Grand Total :</label><label id="lblGrandTT"></label>
+            </div>
+            <div class="row">
+                <label>Activity Total :</label><label id="lblActTT">@string.Format("{0:n2}", @Model.activityFormModel.sumTotal) </label>
+            </div>
+        </div>
 
         <div class="modal-footer">
             <div>
@@ -314,15 +324,36 @@
 
 <script type="text/javascript">
 
+
+    $(document).ready(function () {
+        sumall();
+    });
+
+    function sumall() {
+        var totalAll = 0.00;
+        $('.clsTotal').each((index, input) => {
+
+            const $input = $(input);
+            if ($input.val().length == 0) {
+                $input.val($input.val().replace('', '0'));
+            }
+
+            console.log($input.val().replace(/,/g, ''));
+            totalAll += parseFloat($input.val().replace(/,/g, ''));
+
+
+        });
+        document.getElementById("lblGrandTT").innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+
+    }
+
     function submitData() {
 
         $('.clsTotal').each((index, input) => {
 
             const $input = $(input);
-            console.log($input.val().length)
-            if ($input.val().length == 0) {
-                $input.val($input.val().replace('', '0'));
-            }
+
             $input.val($input.val().replace(/,/g, ''));
 
         });
