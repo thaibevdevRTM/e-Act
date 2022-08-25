@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActConsoleServiceWeekly", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "updateDataReportTBM", "updateDataReportTBM\updateDataReportTBM.csproj", "{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaUnitTest", "..\..\..\..\..\KafkaUnitTest\KafkaUnitTest\KafkaUnitTest.csproj", "{417E460F-500C-433A-827A-2311F13F99F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActApprover", "..\..\..\..\..\KafkaUnitTest\KafkaUnitTest\eActApprover.csproj", "{417E460F-500C-433A-827A-2311F13F99F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
