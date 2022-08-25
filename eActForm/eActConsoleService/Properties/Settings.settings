@@ -6,7 +6,7 @@
       <Value Profile="(Default)">{0}\logs\logs_{1}.txt</Value>
     </Setting>
     <Setting Name="strDefaultEmail" Type="System.String" Scope="User">
-      <Value Profile="(Default)">parnupong.k@thaibev.com</Value>
+      <Value Profile="(Default)">tanapong.w@thaibev.com</Value>
     </Setting>
     <Setting Name="isDevelop" Type="System.String" Scope="User">
       <Value Profile="(Default)">true</Value>
@@ -27,10 +27,10 @@
       <Value Profile="(Default)">thaibevdevrtm@gmail.com</Value>
     </Setting>
     <Setting Name="emailForDevelopSite" Type="System.String" Scope="User">
-      <Value Profile="(Default)">parnupong.k@thaibev.com</Value>
+      <Value Profile="(Default)">parnupong.k@thaibev.com,tanapong.w@thaibev.com</Value>
     </Setting>
     <Setting Name="strConn" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=10.6.241.71; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=ThaibevRTM@DB;Max Pool Size=200;</Value>
+      <Value Profile="(Default)">Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB;Max Pool Size=200;</Value>
     </Setting>
     <Setting Name="strBody" Type="System.String" Scope="User">
       <Value Profile="(Default)">

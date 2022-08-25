@@ -37,7 +37,7 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@thaibev.com")]
         public string strDefaultEmail {
             get {
                 return ((string)(this["strDefaultEmail"]));
@@ -121,7 +121,7 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com,tanapong.w@thaibev.com")]
         public string emailForDevelopSite {
             get {
                 return ((string)(this["emailForDevelopSite"]));
@@ -133,8 +133,8 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.71; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=Thaib" +
-            "evRTM@DB;Max Pool Size=200;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM" +
+            "@DB;Max Pool Size=200;")]
         public string strConn {
             get {
                 return ((string)(this["strConn"]));
