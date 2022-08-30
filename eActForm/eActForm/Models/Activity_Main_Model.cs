@@ -56,6 +56,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList2 { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
+        public List<BudgetTotal> budgetMainTotalList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<TB_Act_AmountBudget> amountBudgetList { get; set; }
@@ -109,6 +110,7 @@ namespace eActForm.Models
             otherList_5 = new List<TB_Act_Other_Model>();
             objExpenseCashList = new List<TB_Act_Other_Model>();
             listGetDataEO = new List<GetDataEO>();
+            budgetMainTotalList = new List<BudgetTotal>();
         }
 
     }

@@ -576,6 +576,7 @@ namespace eActForm.BusinessLayer
                                  EO = dr["EO"].ToString(),
                                  LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
                                  totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 year = dr["year"].ToString(),
                              }).ToList();
                 return lists;
             }

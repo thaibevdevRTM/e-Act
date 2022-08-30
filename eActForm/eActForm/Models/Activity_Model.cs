@@ -543,6 +543,7 @@ namespace eActForm.Models
         public decimal? returnAmount { get; set; }
         public decimal? returnAmountBrand { get; set; }
         public string fiscalYear { get; set; }
+        public string year { get; set; }
     }
 
 }

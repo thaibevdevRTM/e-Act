@@ -86,7 +86,7 @@ namespace eForms.Models.MasterData
             public decimal? actualTotal { get; set; }
             public double runingNo { get; set; }
             public string fiscalYear { get; set; }
-
+            public string year { get; set; }
             public List<HttpPostedFileBase> InputFiles { get; set; }
 
         }

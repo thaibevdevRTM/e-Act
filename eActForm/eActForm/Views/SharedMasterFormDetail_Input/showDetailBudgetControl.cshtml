@@ -4,13 +4,13 @@
 
 @if (Model.budgetTotalList.Count > 0)
 {
-    <div class="col-md-5 col-sm-5">
+    <div class="col-md-4 col-sm-4">
     </div>
-    <div class="col-md-7 col-sm-7 col-xs-12 widget_tally_box">
+    <div class="col-md-8 col-sm-8 col-xs-12 widget_tally_box">
         <div class="x_panel">
             <div class="col-xs-12 bg-white progress_summary">
                 <div id="divProgress" class="row">
-                    @{ int row = 0; }
+                    @{ int row = 0, subRow = 0;}
                     @foreach (var item in Model.budgetTotalList)
                     {
 
@@ -20,35 +20,38 @@
 
                             @if (row == 0)
                             {
-                                if (!string.IsNullOrEmpty(item.brandId))
-                                {
-                                    <span>
-                                        งบประมาณทั้งปี  @item.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") return @Model.budgetTotalModel.returnAmount.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
 
-                                    </span>
-                                }
-                                else
+                                foreach (var subItem in Model.budgetMainTotalList)
                                 {
-                                    <span>
-                                        งบประมาณทั้งปี  @item.channelName ทั้งปี  @Model.budgetTotalModel.totalBudgetChannel.Value.ToString("#,##0.00") ใช้ไปสะสม  @Model.budgetTotalModel.useAmountTotal.Value.ToString("#,##0.00") return @Model.budgetTotalModel.returnAmount.Value.ToString("#,##0.00") คงเหลือ @Model.budgetTotalModel.amountBalanceTotal.Value.ToString("#,##0.00")
-                                    </span>
-                                }
+                                    if (!string.IsNullOrEmpty(item.brandId))
+                                    {
+                                        <span>
+                                            ปีงบ @subItem.fiscalYear งบประมาณทั้งปี  @subItem.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @subItem.useAmountTotal.Value.ToString("#,##0.00") return @subItem.returnAmount.Value.ToString("#,##0.00") คงเหลือ @subItem.amountBalanceTotal.Value.ToString("#,##0.00") <br />
 
-                                @Html.HiddenFor(x => item.totalBudget, new { @id = "tB_Act_ActivityForm_DetailOther.amountLimit", Name = "tB_Act_ActivityForm_DetailOther.amountLimit", @class = "form-control textboxcss text-right txtTotalBudget" })
-                                @Html.HiddenFor(x => Model.budgetTotalModel.useAmountTotal, new { @id = "tB_Act_ActivityForm_DetailOther.amountCumulative", Name = "tB_Act_ActivityForm_DetailOther.amountCumulative", @class = "form-control textboxcss text-right txtUseAmountTotal" })
-                                @Html.HiddenFor(x => Model.budgetTotalModel.returnAmount, new { @id = "tB_Act_ActivityForm_DetailOther.amountReceived", Name = "tB_Act_ActivityForm_DetailOther.amountReceived", @class = "form-control textboxcss text-right txtReturnAmount" })
-                                @Html.HiddenFor(x => Model.budgetTotalModel.amountBalanceTotal, new { @id = "tB_Act_ActivityForm_DetailOther.amountBalance", Name = "tB_Act_ActivityForm_DetailOther.amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
-                                @Html.HiddenFor(x => Model.budgetTotalModel.totalBudgetChannel, new { @id = "tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate", Name = "tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate", @class = "form-control textboxcss text-right txtTotalBudgetChannel" })
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            ปีงบ @subItem.fiscalYear งบประมาณทั้งปี  @subItem.channelName ทั้งปี  @subItem.totalBudgetChannel.Value.ToString("#,##0.00") ใช้ไปสะสม  @subItem.useAmountTotal.Value.ToString("#,##0.00") return @subItem.returnAmount.Value.ToString("#,##0.00") คงเหลือ @subItem.amountBalanceTotal.Value.ToString("#,##0.00") <br />
+                                        </span>
+                                    }
+
+                                    @Html.HiddenFor(x => subItem.totalBudget, new { @id = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountLimit", Name = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountLimit", @class = "form-control textboxcss text-right txtTotalBudget" })
+                                    @Html.HiddenFor(x => subItem.useAmountTotal, new { @id = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountCumulative", Name = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountCumulative", @class = "form-control textboxcss text-right txtUseAmountTotal" })
+                                    @Html.HiddenFor(x => subItem.returnAmount, new { @id = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountReceived", Name = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountReceived", @class = "form-control textboxcss text-right txtReturnAmount" })
+                                    @Html.HiddenFor(x => subItem.amountBalanceTotal, new { @id = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountBalance", Name = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
+                                    @Html.HiddenFor(x => subItem.totalBudgetChannel, new { @id = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].totalnormalCostEstimate", Name = "tB_Act_ActivityForm_DetailOtherList[" + subRow + "].totalnormalCostEstimate", @class = "form-control textboxcss text-right txtTotalBudgetChannel" })
+                                }
                             }
                             <br />
                             @if (!string.IsNullOrEmpty(item.brandId))
                             {
-                                <span>งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
+                                <span>ปีงบ @item.year งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
                             }
                             else
                             {
-                                <span>งบ @item.brandName ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
-
+                                <span>ปีงบ @item.year งบ @item.brandName ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span>
                             }
 
                             @Html.HiddenFor(x => item.amount, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtBudgetTotal__" + row })
@@ -69,11 +72,11 @@
                                 <div class="progress-bar bg-green" role="progressbar" style="width: @intBalance" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                       
+
                         <div class="col-xs-2 more_info">
                             <span>@result%</span>
                         </div>
-
+                        <br />
                         row++;
                     }
 
