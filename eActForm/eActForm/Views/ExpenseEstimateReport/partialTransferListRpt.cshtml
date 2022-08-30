@@ -48,7 +48,7 @@
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">@string.Format("{0:n2}", @item.normalCost)</td>
                                 @if (@item.themeCost.ToString().Contains("-"))
                                 {
-                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">(@string.Format("{0:n2}", float.Parse(@item.themeCost.ToString().Replace("-",""))))</td>
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDoc12">( @string.Format("{0:n2}", decimal.Parse(@item.themeCost.ToString().Replace("-",""))) )</td>
                                 }
                                 else
                                 {

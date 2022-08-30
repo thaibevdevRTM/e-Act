@@ -26,7 +26,7 @@
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        <button id="btnDel1_0" name="btnDel_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel1" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
@@ -112,7 +112,9 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        <button id="btnDel2_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel2" onclick="cashDelete(this);"></button>
+
+                        
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                     </td>
                     <td style="text-align:right">
@@ -190,6 +192,9 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+
+        document.getElementById('btnDel1_0').disabled = true;
+        document.getElementById('btnDel2_0').disabled = true;
     });
 
 
@@ -240,11 +245,26 @@
 
             var elms = document.getElementsByClassName('hindenTypeId')
             for (var i = 0; i < elms.length; i++) {
-                    elms[i].setAttribute("value", "1");
+                elms[i].setAttribute("value", "1");
             }
+
+            //change id Btn
+            var elms1 = document.getElementsByClassName('clsDel1')
+            for (var i = 0; i < elms1.length; i++) {
+                elms1[i].setAttribute("id", "btnDel1_" + i);
+                elms1[i].setAttribute("name", "btnDel1_" + i);
+            }
+
         }
         );
         newRow.insertBefore('#tbl_CashDetail tbody>tr:last');
+
+         //undisabled Btn
+        var elmsDel = document.getElementsByClassName('clsDel1')
+        for (var i = 1; i < elmsDel.length; i++) {
+            document.getElementById('btnDel1_' + i).disabled = false;
+        }
+
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -329,16 +349,31 @@
         var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
-        newRow.find("input").each(function () {
-            $(this).attr("id", $(this).attr("name").replace("[0]", "_" + RowCount + "_"));
-            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+         newRow.find("input").each(function () {
+             $(this).attr("id", $(this).attr("name").replace("[0]", "_" + RowCount + "_"));
+             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
 
-            var elms = document.getElementsByClassName('hindenTypeId2')
-            for (var i = 0; i < elms.length; i++) {
-                    elms[i].setAttribute("value", "2");
-            }
-        }
+             var elms = document.getElementsByClassName('hindenTypeId2')
+             for (var i = 0; i < elms.length; i++) {
+                 elms[i].setAttribute("value", "2");
+             }
+
+             var elms1 = document.getElementsByClassName('clsDel2')
+             for (var i = 0; i < elms1.length; i++) {
+                 elms1[i].setAttribute("id", "btnDel2_" + i);
+                 elms1[i].setAttribute("name", "btnDel2_" + i);
+             }
+         }
         );
+
+
+         var elmsDel = document.getElementsByClassName('clsDel2')
+         for (var i = 1; i < elmsDel.length; i++) {
+             document.getElementById('btnDel2_' + i).disabled = false;
+         }
+
+
+
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -354,7 +389,7 @@
             console.log(totalAll2);
         });
 
-       
+
         document.getElementById('lbltotalExMaket').innerHTML = totalAll2.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         totalExpenExMaket();
         totalAllExpenses();

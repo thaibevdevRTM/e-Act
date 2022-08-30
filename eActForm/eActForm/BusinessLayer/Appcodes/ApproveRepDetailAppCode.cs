@@ -113,6 +113,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc(typeForm, "","").FirstOrDefault().docNo));
+
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
@@ -138,6 +139,7 @@ namespace eActForm.BusinessLayer
                     {
                         if (actIdTemp != item.id)
                         {
+
                             SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRepDetailMapActForm"
                             , new SqlParameter[] {
                                 new SqlParameter("@id",Guid.NewGuid().ToString())

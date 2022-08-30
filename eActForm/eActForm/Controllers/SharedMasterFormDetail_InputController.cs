@@ -357,10 +357,6 @@ namespace eActForm.Controllers
 
                 }
 
-
-
-
-
                 //show budget ก้อนใหญ่
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 model.budgetTotalList = budgetTotalsList;
@@ -368,10 +364,6 @@ namespace eActForm.Controllers
                 model.budgetTotalModel.useAmountTotal = useAmountTotal;
                 model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
                 model.budgetTotalModel.returnAmount = sumReturn;
-
-
-
-
 
 
                 TempData["showBudget" + activityId] = model;

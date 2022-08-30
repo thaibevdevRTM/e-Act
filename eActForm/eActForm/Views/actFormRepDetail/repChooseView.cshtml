@@ -58,12 +58,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{ var index = 1; string strActNo = "";
+                        @{ var index = 1; string strActNo = "" , activityPeriodSt ="";
                         }
                         @foreach (var item in Model.actFormRepDetailGroupLists)
                         {
 
-                            if (item.activityNo != strActNo)
+                            if (item.id != strActNo)
                             {
                                 <tr class="even pointer">
                                     <td class="a-center ">
@@ -114,7 +114,8 @@
                                     {
                                         <td></td>
                                     }
-                                    @{strActNo = item.activityNo;
+                                    @{strActNo = item.id;
+                                        activityPeriodSt = item.activityPeriodSt.ToString();
                                         index++;
                                     }
                                 </tr>
