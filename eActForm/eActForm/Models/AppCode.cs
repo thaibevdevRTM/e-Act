@@ -137,6 +137,11 @@ namespace eActForm.Models
             Active = 0,
             Inactive = 1
         }
+        public enum typeShowBudget
+        {
+            main = 0,
+            subMain = 1
+        }
 
 
         public static class ApproveGroup

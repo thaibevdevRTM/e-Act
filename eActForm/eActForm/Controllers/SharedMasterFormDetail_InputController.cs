@@ -256,19 +256,16 @@ namespace eActForm.Controllers
 
                 if (status == "2" || status == "3")
                 {
-                    Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-
                     //ดึงยอด ก่อนส่่งอนุมัติมาแสดง
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
-                    foreach (var item in getAmount)
+                    foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.subMain.ToString()))
                     {
 
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         budgetTotalModel.returnAmountBrand = item.returnAmount;
                         budgetTotalModel.EO = item.EO;
                         budgetTotalModel.useAmount = item.useAmount;
-                        budgetTotalModel.totalBudget = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
+                        budgetTotalModel.totalBudget = item.budgetTotal;
                         budgetTotalModel.amount = item.budgetTotal;
                         budgetTotalModel.amountBalance = item.amountBalance;
                         budgetTotalModel.activityType = item.activityType;
@@ -276,23 +273,33 @@ namespace eActForm.Controllers
                         budgetTotalModel.amountBalancePercen = (item.useAmount / amount) * 100;
                         budgetTotalModel.brandId = brandId;
                         // budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
-                        budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                        budgetTotalModel.brandName = item.brandName;
                         budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                        budgetTotalModel.yearBG = item.yearBG;
+                        budgetTotalModel.typeShowBudget = item.typeShowBudget;
                         budgetTotalsList.Add(budgetTotalModel);
 
                     }
 
-                    totalBudgetChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
-                    useAmountTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountCumulative;
-                    amountBalanceTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountBalance;
-                    sumReturn = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+                    foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.main.ToString()))
+                    {
+                        BudgetTotal budgetMainModel = new BudgetTotal();
+                        budgetMainModel.totalBudget = item.budgetTotal;
+                        budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                        budgetMainModel.amountBalanceTotal = item.amountBalance;
+                        budgetMainModel.useAmountTotal = item.useAmount;
+                        budgetMainModel.returnAmount = item.returnAmount;
+                        budgetMainModel.yearBG = item.yearBG;
+                        budgetMainModel.brandId = brandId;
+                        budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                        budgetMainModel.typeShowBudget = AppCode.typeShowBudget.main.ToString();
+                        model.budgetMainTotalList.Add(budgetMainModel);
+                    }
                 }
                 else
                 {
 
                     List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
-
-
                     if (groupEO.Any())
                     {
                         foreach (var item in groupEO)
@@ -309,6 +316,8 @@ namespace eActForm.Controllers
                             }
                         }
                     }
+
+                    //budget submain
                     foreach (var item in groupEO)
                     {
 
@@ -339,7 +348,6 @@ namespace eActForm.Controllers
 
                             budgetTotalModel.EO = item.EO;
                             budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
-                            //budgetTotalModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
                             budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
                             budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
 
@@ -350,26 +358,14 @@ namespace eActForm.Controllers
                             budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
                             budgetTotalModel.activityType = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().activitySales : "";
                             budgetTotalModel.fiscalYear = item.fiscalYear;
-                            budgetTotalModel.year = getAmount.FirstOrDefault().year;
-                            budgetTotalModel.useAmountTotal =  item.total;
+                            budgetTotalModel.yearBG = getAmount.FirstOrDefault().year;
+                            budgetTotalModel.useAmountTotal = item.total;
+                            budgetTotalModel.typeShowBudget = AppCode.typeShowBudget.subMain.ToString();
                             budgetTotalsList.Add(budgetTotalModel);
 
-                            //totalBudgetChannel = getAmount.FirstOrDefault().amountTotal;
-                            //useAmountTotal = getAmount.FirstOrDefault().balanceTotal;
-                            // sumTotal_Input += item.total;
-                            //    budgetMainModel.totalBudget = getAmount.FirstOrDefault().amountTotal;
-                            //    budgetMainModel.totalBudgetChannel = totalBudgetChannel;
-                            //    budgetMainModel.amountBalanceTotal = totalBudgetChannel - useAmountTotal - item.total + sumReturn;
-                            //    budgetMainModel.useAmountTotal = useAmountTotal + sumTotal_Input;
-                            //    budgetMainModel.returnAmount = sumReturn;
-                            //    budgetMainModel.fiscalYear = getAmount.FirstOrDefault().fiscalYear;
-                            //    budgetMainModel.brandId = brandId;
-                            //    budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
-                            //    model.budgetMainTotalList.Add(budgetMainModel);
                         }
                     }
-                    // amountBalanceTotal = totalBudgetChannel - useAmountTotal - sumTotal_Input + sumReturn;
-                    //  useAmountTotal = useAmountTotal + sumTotal_Input;
+
 
                     var groupYear = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.UseYearSelect }).Select((group, index) => new BudgetTotal
                     {
@@ -377,11 +373,11 @@ namespace eActForm.Controllers
                     }).ToList();
 
 
-                    // List Budget Total
+                    // List Budget Main
                     foreach (var item in groupYear)
                     {
                         //get sum input
-                        var budgetTotal = budgetTotalsList.Where(x => x.fiscalYear == item.fiscalYear).ToList() ;
+                        var budgetTotal = budgetTotalsList.Where(x => x.fiscalYear == item.fiscalYear).ToList();
                         //get budgetTotal
                         var getAmount = ActFormAppCode.getBalanceByEO(groupEO.FirstOrDefault().EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear).AsEnumerable();
                         // get return
@@ -396,34 +392,16 @@ namespace eActForm.Controllers
                         budgetMainModel.amountBalanceTotal = totalBudget - balanceTotal - sumTotal + returnAmount;
                         budgetMainModel.useAmountTotal = balanceTotal + sumTotal;
                         budgetMainModel.returnAmount = returnAmount;
-                        budgetMainModel.fiscalYear = getAmount.FirstOrDefault().year;
+                        budgetMainModel.yearBG = getAmount.FirstOrDefault().year;
                         budgetMainModel.brandId = brandId;
                         budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                        budgetMainModel.typeShowBudget = AppCode.typeShowBudget.main.ToString();
                         model.budgetMainTotalList.Add(budgetMainModel);
                     }
                 }
 
 
-
-
-
-
-
-
-
-                //show budget ก้อนใหญ่
-
                 model.budgetTotalList = budgetTotalsList;
-                // model.budgetMainTotal = budgetTotalsList;
-                //model.budgetTotalModel.totalBudgetChannel = totalBudgetChannel;
-                //model.budgetTotalModel.useAmountTotal = useAmountTotal;
-                // model.budgetTotalModel.amountBalanceTotal = amountBalanceTotal;
-                // model.budgetTotalModel.returnAmount = sumReturn;
-
-
-
-
-
 
                 TempData["showBudget" + activityId] = model;
 

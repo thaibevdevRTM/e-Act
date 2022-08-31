@@ -482,7 +482,10 @@ namespace eActForm.BusinessLayer
                                   returnAmount = d["returnAmount"].ToString() == "" ? 0 : decimal.Parse(d["returnAmount"].ToString()),
                                   amountBalance = d["amountBalance"].ToString() == "" ? 0 : decimal.Parse(d["amountBalance"].ToString()),
                                   EO = d["EO"].ToString(),
-                                  activityType = d["activityType"].ToString()
+                                  activityType = d["activityType"].ToString(),
+                                  brandName = d["brandName"].ToString(),
+                                  typeShowBudget = d["budgetType"].ToString(),
+                                  yearBG = d["yearBG"].ToString(),
                               });
 
                 return result.ToList();
