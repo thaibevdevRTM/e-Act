@@ -73,7 +73,8 @@ namespace eActForm.BusinessLayer.QueryHandler
                                   invoiceCreatedDate = d["invoiceCreatedDate"].ToString(),
                                   act_status = d["act_status"].ToString(),
                                   actForm_CreatedByUserId = d["actForm_CreatedByUserId"].ToString(),
-                                  actForm_CreatedByName = d["actForm_CreatedByName"].ToString()
+                                  actForm_CreatedByName = d["actForm_CreatedByName"].ToString(),
+                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString()
                               });
 
                 return result.ToList();
