@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\AjaxResult.cs" />
     <Compile Include="AppCode\ImportBudgetControlAppCode.cs" />
     <Compile Include="AppCode\ImportFlowPresenter.cs" />
     <Compile Include="AppCode\MainAppCode.cs" />
