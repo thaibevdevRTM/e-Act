@@ -471,7 +471,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetAmountList"
                  , new SqlParameter("@activityId", activityId)
                  );
-                 
+
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new TB_Act_AmountBudget()
                               {

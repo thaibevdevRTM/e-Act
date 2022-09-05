@@ -51,7 +51,7 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  brandName = d["brandName"].ToString(),
-                                
+
                              });
                 return lists.ToList();
             }

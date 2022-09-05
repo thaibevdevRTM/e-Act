@@ -439,7 +439,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count : 
+                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count :
                         (getModel.activityPeriodEnd.Value.AddDays(1).Month + getModel.activityPeriodEnd.Value.AddDays(1).Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
                 }
 

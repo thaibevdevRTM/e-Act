@@ -6,8 +6,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebLibrary;
 
 namespace eForms.Presenter.AppCode
@@ -22,7 +20,7 @@ namespace eForms.Presenter.AppCode
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
         }
-        public static List<Models.MasterData.TB_Act_Other_Model> getOhterMaster(string strCon ,string type, string subtype)
+        public static List<Models.MasterData.TB_Act_Other_Model> getOhterMaster(string strCon, string type, string subtype)
         {
             try
             {

@@ -36,16 +36,16 @@ namespace eActForm.Controllers
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId, string typeFlow,string subjectId)
+        public ActionResult dropDetail(string companyId, string typeFlow, string subjectId)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
             {
-                
+
                 model.customerList = managementFlowAppCode.getCustomer(companyId);
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-               
+
                 model.productTypeList = managementFlowAppCode.getProductType();
 
                 if (subjectId == ConfigurationManager.AppSettings["subjectSetPriceOMT"])
@@ -245,7 +245,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmp(string subjectId, string limitId, string channelId,string actType,string customerId,string companyId)
+        public JsonResult getEmp(string subjectId, string limitId, string channelId, string actType, string customerId, string companyId)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try

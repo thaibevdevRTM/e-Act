@@ -3,18 +3,16 @@ using eActForm.Models;
 using eForms.Models.Forms;
 using eForms.Models.Reports;
 using eForms.Presenter.Reports;
-
+using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
-using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-
+using System.Text;
+using System.Web.Mvc;
 using WebLibrary;
-using Microsoft.ApplicationBlocks.Data;
 
 
 namespace eActForm.Controllers
@@ -196,7 +194,7 @@ namespace eActForm.Controllers
             try
             {
                 ViewBag.actId = actId;
-                model = getDataPostEva(AppCode.StrCon, "", "", "", actId, null,null);
+                model = getDataPostEva(AppCode.StrCon, "", "", "", actId, null, null);
                 Session["postEvaModel"] = model;
             }
             catch (Exception ex)
@@ -241,7 +239,7 @@ namespace eActForm.Controllers
         public ActionResult postEvaGroupBudgetStatusData()
         {
             List<RepPostEvaGroupBudgetStatus> list = null;
-            
+
             try
             {
                 RepPostEvaGroupBudgetStatusModels model = (RepPostEvaGroupBudgetStatusModels)Session["postEvaGroupBudgetStatus"];
@@ -427,8 +425,8 @@ namespace eActForm.Controllers
             return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
-        
-        
+
+
     }
 
 }

@@ -312,8 +312,8 @@ namespace eActForm.BusinessLayer
                 }
 
                 //var result = updateBudgetControl_Balance(actFormId);
-               
-                
+
+
 
 
                 return rtn;
@@ -328,7 +328,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetControl_Balance"
-                    ,new SqlParameter[] { new SqlParameter("@actFormId", actId)
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
             }
             catch (Exception ex)

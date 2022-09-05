@@ -11,7 +11,7 @@ namespace eActForm.BusinessLayer.QueryHandler
 {
     public class QueryGetBudgetReport
     {
-        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd , string actYear)
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd, string actYear)
         {
             try
             {

@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                                  brandName = d["brandName"].ToString(),
                                  size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
                                  wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
-                                 typeTheme = !string.IsNullOrEmpty(d["activityTypeId"].ToString())  ?  QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales : "" ,
+                                 typeTheme = !string.IsNullOrEmpty(d["activityTypeId"].ToString()) ? QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales : "",
                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                  isShowGroup = true,
@@ -57,7 +57,7 @@ namespace eActForm.BusinessLayer
                 var tt = lists.ToList();
 
                 groupByPrice = lists.OrderBy(x => x.rowNo).ToList();
-               
+
                 return groupByPrice;
             }
             catch (Exception ex)
@@ -82,7 +82,7 @@ namespace eActForm.BusinessLayer
                                  id = d["Id"].ToString(),
                                  subActivityId = d["subActivityId"].ToString(),
                                  ref_Estimate = d["ref_Estimate"].ToString(),
-                                 total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()), 
+                                 total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

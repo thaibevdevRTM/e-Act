@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eForms.Models.Reports
 {
@@ -10,7 +7,7 @@ namespace eForms.Models.Reports
     public class RepMedicalModels
     {
         public List<RepMedicalModel> repMedicalists { get; set; }
-      //  public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
+        //  public List<RepPostEvaModel> repPostEvaGroupBrand { get; set; }
     }
 
     //public class RepPostEvaGroup
@@ -49,6 +46,6 @@ namespace eForms.Models.Reports
         public decimal? amountReceived { get; set; }
         public string departmentIdFlow { get; set; }
 
-     
+
     }
 }

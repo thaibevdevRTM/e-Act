@@ -73,7 +73,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Act_ActivityGroup_Model> getActivityGroupByEmpId(string empId , string activityCondition)
+        public static List<TB_Act_ActivityGroup_Model> getActivityGroupByEmpId(string empId, string activityCondition)
         {
             try
             {

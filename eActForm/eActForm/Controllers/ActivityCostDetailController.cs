@@ -236,7 +236,7 @@ namespace eActForm.Controllers
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
 
-                if(p_totalCase > 0)
+                if (p_totalCase > 0)
                 {
                     p_total = p_totalCase * getNormalCost;
                 }

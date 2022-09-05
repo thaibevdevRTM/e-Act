@@ -319,7 +319,7 @@ namespace eActForm.BusinessLayer
 
                 //add Sales Forecast
                 ReportSummaryModels resultModel = new ReportSummaryModels();
-                ReportSummaryModel forecastlist = new ReportSummaryModel();              
+                ReportSummaryModel forecastlist = new ReportSummaryModel();
 
                 if (listForSale != null && listForSale.Count > 0)
                 {
@@ -337,7 +337,7 @@ namespace eActForm.BusinessLayer
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
                     });
-                    
+
                 }
                 resultModel.activitySummaryGroupList = groupList.OrderBy(x => x.customerName).ToList();
                 resultModel.activitySummaryList = list.ToList();
@@ -483,7 +483,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId,string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId, string txtCompanyId)
         {
             try
             {
@@ -495,7 +495,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo,string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo, string txtCompanyId)
         {
             try
             {
@@ -539,7 +539,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail", "","").FirstOrDefault().docNo));
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail", "", "").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)

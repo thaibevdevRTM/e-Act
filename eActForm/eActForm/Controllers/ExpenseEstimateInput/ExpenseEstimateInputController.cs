@@ -24,7 +24,7 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-                
+
                 lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, AppCode.GLType.GLSaleSupport).OrderBy(x => x.orderNum).ToList();
 
                 // listChoiceName,listChoiceId
@@ -38,7 +38,7 @@ namespace eActForm.Controllers
                         unit = 0,
                         unitPrice = 0,
                         total = 0,
-                        vat =0,
+                        vat = 0,
                         displayType = lst[i].displayType,
                         subDisplayType = lst[i].subDisplayType,
                         glCode = "",
@@ -47,7 +47,7 @@ namespace eActForm.Controllers
 
                 #region "เพิ่มกรณ๊รายละเอียดของค่าที่พักราคาไม่เท่ากัน ไม่ให้เกิน 7 ราคา"
 
-           
+
                 if (activity_TBMMKT_Model.expensesDetailSubModel == null || activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists.Any())
                 {
 
@@ -56,12 +56,12 @@ namespace eActForm.Controllers
                         modelSub.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
                             listChoiceId = AppCode.Expenses.hotelExpense,
-                            rowNo=i+1,
+                            rowNo = i + 1,
                             unit = 0,
                             unitPrice = 0,
-                            vat=0,
+                            vat = 0,
                             total = 0,
-                        
+
                         });
                     }
                 }

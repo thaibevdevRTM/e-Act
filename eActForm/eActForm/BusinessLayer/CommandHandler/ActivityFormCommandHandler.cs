@@ -192,7 +192,7 @@ namespace eActForm.BusinessLayer
             {
 
                 String[] result = new String[2];
-                string getYear = "" , getYearEN = "";
+                string getYear = "", getYearEN = "";
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
                 {
@@ -271,7 +271,7 @@ namespace eActForm.BusinessLayer
                         {
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
 
-                            result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId,"").FirstOrDefault().docNo;
+                            result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId, "").FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
                                 result[1] = Activity_Model.activityType.TBM.ToString();

@@ -1,6 +1,6 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
@@ -95,7 +95,7 @@ namespace eActForm.Controllers
             //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
             DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
             //====END=======Set Language By Document Dev date 20200310 Peerapop==================
-            
+
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -109,7 +109,7 @@ namespace eActForm.Controllers
                 //activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
                 //activityId = "0a8517fb-0bc1-4c63-a545-718af4b9095c";
                 //==END===========for test=====================
-              
+
                 if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
                 {
                     activity_Model = activity_TBMMKT_Model;
@@ -246,9 +246,9 @@ namespace eActForm.Controllers
                 //return View(activity_Model); // test
                 return PartialView(activity_Model);// production
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ExceptionManager.WriteError("ReportPettyCashNum>>"+ ex.Message);
+                ExceptionManager.WriteError("ReportPettyCashNum>>" + ex.Message);
             }
             return PartialView(activity_Model);
         }

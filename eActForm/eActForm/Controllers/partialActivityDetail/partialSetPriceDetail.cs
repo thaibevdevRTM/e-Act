@@ -42,7 +42,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Equals(ConfigurationManager.AppSettings["productGroupBeer"])).ToList();
                     activity_TBMMKT_Model.activityFormModel.productGroupId = ConfigurationManager.AppSettings["productGroupBeer"];
 
-                   
+
 
                 }
                 else

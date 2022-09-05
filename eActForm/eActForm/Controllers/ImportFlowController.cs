@@ -63,7 +63,7 @@ namespace eActForm.Controllers
                 }
                 DataTable dt = new DataTable();
                 dt = ExcelAppCode.ReadExcel(resultFilePath, "Import", "A:AB");
-             
+
 
                 var rtnDelete = ImportFlowPresenter.deleteTempFlow(AppCode.StrCon, UtilsAppCode.Session.User.empId);
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -113,7 +113,7 @@ namespace eActForm.Controllers
                 TempData["importFlowModel"] = model;
 
                 if (model.importFlowList.Any())
-                resultAjax.Success = true; 
+                    resultAjax.Success = true;
 
 
             }

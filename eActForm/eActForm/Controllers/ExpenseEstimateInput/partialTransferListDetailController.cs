@@ -1,10 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
-using System.Collections.Generic;
 
 
 namespace eActForm.Controllers
@@ -21,11 +21,11 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityOfEstimateList[i].productName = QueryGetAllBrand.GetAllBrand().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].productId)).FirstOrDefault().brandName;
                 if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme))
                 {
-                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllChanel.getAllChanel().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme)).FirstOrDefault().chanelGroup ;
+                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllChanel.getAllChanel().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme)).FirstOrDefault().chanelGroup;
                 }
                 else
                 {
-                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllActivityGroup.getActivityGroupBudgetControl().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].activityTypeId)).FirstOrDefault().activitySales  + "," + activity_TBMMKT_Model.activityOfEstimateList[i].UseYearSelect;
+                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllActivityGroup.getActivityGroupBudgetControl().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].activityTypeId)).FirstOrDefault().activitySales + "," + activity_TBMMKT_Model.activityOfEstimateList[i].UseYearSelect;
 
                 }
 

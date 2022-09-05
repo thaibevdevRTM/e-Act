@@ -90,7 +90,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getApproveRepDetailListsByEmpId >>" + ex.Message);
             }
         }
-        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model,string typeForm)
+        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model, string typeForm)
         {
             try
             {
@@ -101,9 +101,9 @@ namespace eActForm.BusinessLayer
                     typeForm = ConfigurationManager.AppSettings["reportSetPrice"];
                     TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportSetPrice"];
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
-                     typeForm = ConfigurationManager.AppSettings["reportOMT"];
+                    typeForm = ConfigurationManager.AppSettings["reportOMT"];
                     TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportOMT"];
                 }
                 else
@@ -112,7 +112,7 @@ namespace eActForm.BusinessLayer
                     TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportMT"];
                 }
 
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc(typeForm, "","").FirstOrDefault().docNo));
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc(typeForm, "", "").FirstOrDefault().docNo));
 
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {

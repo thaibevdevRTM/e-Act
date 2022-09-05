@@ -13,7 +13,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetGL
     {
-        public static string getGL(List<GetDataGL> glList,string glCodeId ,string empId)
+        public static string getGL(List<GetDataGL> glList, string glCodeId, string empId)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace eActForm.BusinessLayer
                 return rtn;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getGL >> " + ex.Message);
             }
@@ -36,7 +36,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataGLByDivisionId"
                     , new SqlParameter("@divisionId", divisionId));
                 var lists = (from DataRow d in ds.Tables[0].Rows

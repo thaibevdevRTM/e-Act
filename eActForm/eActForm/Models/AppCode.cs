@@ -37,9 +37,9 @@ namespace eActForm.Models
         public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
         public static string[] compThaiBevForm = { Activity_Model.groupCompany.THAIBEV.ToString() };
-        public static string[] getEmpSearchBeer =  ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray() ;
+        public static string[] getEmpSearchBeer = ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray();
 
-        
+
         public static string[] checkFormApproveAll =
         {
                   ConfigurationManager.AppSettings["formBgTbmId"]
@@ -105,7 +105,7 @@ namespace eActForm.Models
         public enum ApproveType
         {
             Activity_Form
-                ,ActivityBeer
+                , ActivityBeer
                 , Report_Detail
                 , Report_Summary
                 , Budget_form
@@ -387,7 +387,7 @@ namespace eActForm.Models
 
 
 
-        public static string mergePDF(string rootPathOutput, string[] pathFile,string activityId)
+        public static string mergePDF(string rootPathOutput, string[] pathFile, string activityId)
         {
             string result = string.Empty;
             PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;

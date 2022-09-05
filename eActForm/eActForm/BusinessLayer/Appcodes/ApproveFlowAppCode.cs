@@ -112,7 +112,7 @@ namespace eActForm.BusinessLayer
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
-                string stor = AppCode.expenseForm.Contains(getMasterType)  ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+                string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
@@ -139,7 +139,7 @@ namespace eActForm.BusinessLayer
                         var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
                         var getLimitAmount = estimateList.Sum(x => x.total);
 
-                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList() ;
+                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
                         if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                         {
                             if (purpose.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]))
@@ -163,7 +163,7 @@ namespace eActForm.BusinessLayer
 
                                 }
                             }
-                                
+
                         }
 
                     }
@@ -178,7 +178,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static flowApproveDetail getAddOn_TrvTBM(string empId,int rangNo ,string approveGroupId,bool isShowInDoc)
+        public static flowApproveDetail getAddOn_TrvTBM(string empId, int rangNo, string approveGroupId, bool isShowInDoc)
         {
             var result = new ApproveFlowModel.flowApproveDetail(empId)
             {
@@ -191,8 +191,8 @@ namespace eActForm.BusinessLayer
                 approveGroupName = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameTH,
                 approveGroupNameEN = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameEN,
                 isShowInDoc = isShowInDoc,
-                empGroup ="",
-                isApproved =  true,
+                empGroup = "",
+                isApproved = true,
 
             };
 
@@ -200,7 +200,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-            public static string checkFlowBeforeByActId(string actFormId)
+        public static string checkFlowBeforeByActId(string actFormId)
         {
             try
             {
@@ -344,8 +344,8 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                // bu = dr["empDivisionTH"].ToString(),
-                                // buEN = dr["empDivisionEN"].ToString(),
+                                 // bu = dr["empDivisionTH"].ToString(),
+                                 // buEN = dr["empDivisionEN"].ToString(),
                                  //empFNameEN = dr["empFNameEN"].ToString(),
                                  //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
@@ -418,7 +418,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model,string typeFlow)
+        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model, string typeFlow)
         {
             try
             {
@@ -537,7 +537,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId,string actType,string customerId,string companyId)
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId, string actType, string customerId, string companyId)
         {
             try
             {

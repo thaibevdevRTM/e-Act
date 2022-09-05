@@ -42,7 +42,7 @@ namespace eActForm.Controllers
                 {
                     var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var txtStamp = "เอกสารถูกยกเลิก";
-                    bool success = AppCode.stampCancel(Server , rootPathMap , txtStamp);
+                    bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
                 }
@@ -58,7 +58,7 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                
+
                 throw new Exception("apiApprove genPdfApprove >> " + ex.Message);
             }
 

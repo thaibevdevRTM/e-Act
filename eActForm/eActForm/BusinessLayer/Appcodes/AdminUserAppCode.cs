@@ -152,7 +152,7 @@ namespace eActForm.BusinessLayer.Appcodes
             int rtn = 0;
             try
             {
-                
+
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCustomer"
                            , new SqlParameter[] {new SqlParameter("@id",model.customerModel.id)
                             ,new SqlParameter("@companyId",model.customerModel.companyId)
@@ -166,7 +166,7 @@ namespace eActForm.BusinessLayer.Appcodes
 
                 return rtn;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message + "  " + "insertCustomer");
             }

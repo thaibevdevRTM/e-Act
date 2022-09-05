@@ -143,11 +143,11 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo != null)
                 {
 
-                        ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
-                        objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                        objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-                        getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
-                   
+                    ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
+                    objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+                    objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                    getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
+
                 }
                 activity_TBMMKT_Model.listGetDataPVPrevious = getDataPVPrevious;
             }

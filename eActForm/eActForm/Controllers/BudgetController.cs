@@ -72,7 +72,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             string act_year = null;
             try
             {
-                if (TempData["searchBudgetActivityForm"] != null )
+                if (TempData["searchBudgetActivityForm"] != null)
                 {
                     models = (Budget_Activity_Model)TempData["searchBudgetActivityForm"];
                 }
@@ -112,7 +112,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             var_actNo = Budget_Model.Budget_Activity.act_activityNo;
             var_cusId = Budget_Model.Budget_Activity.act_customerId;
 
-            Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getBudgetInvoice(null, null, null, var_actNo, null, null, var_cusId,null,null);
+            Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getBudgetInvoice(null, null, null, var_actNo, null, null, var_cusId, null, null);
             //Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getBudgetInvoice(null, null, null, var_actNo, null, null, var_cusId);
 
             List<TB_Bud_Image_Model.BudImageModel> Result = new List<TB_Bud_Image_Model.BudImageModel>();
@@ -228,7 +228,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceList(string activityId, string activityOfEstimateId)
         {
             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null,null).FirstOrDefault(); ;
+            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault(); ;
             budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
             budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 
@@ -325,7 +325,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
             TB_Bud_Image_Model models = new TB_Bud_Image_Model();
             string companyEN = UtilsAppCode.Session.User.empCompanyGroup;
-            
+
 
             try
             {
@@ -355,9 +355,9 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         public ActionResult manageInvoiceList(string companyEN)
         {
-            
+
             TB_Bud_Image_Model models = new TB_Bud_Image_Model();
-            
+
             DateTime act_createdDateStart = DateTime.Now.AddDays(-15);
             DateTime act_createdDateEnd = DateTime.Now;
 

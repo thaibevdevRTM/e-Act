@@ -62,7 +62,7 @@ namespace eActForm.Controllers
                 var getLE = ImportBudgetControlAppCode.getLE_No(AppCode.StrCon, MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]).Year, model.companyId);
 
                 //------------------------ Prepare data for BudgetControl by Chanel -----------------
-                
+
                 if (model.companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
                 {
                     dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
@@ -340,7 +340,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public FileResult ExportExcel(string gridHtml, string type,string fileName)
+        public FileResult ExportExcel(string gridHtml, string type, string fileName)
         {
             try
             {

@@ -18,11 +18,11 @@ namespace eActForm.BusinessLayer
             try
             {
                 string stored = "";
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     stored = "usp_GetActivityRepDetailAll";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     stored = "usp_GetActivityRepDetailOMTAll";
                 }
@@ -253,12 +253,12 @@ namespace eActForm.BusinessLayer
         }
         public static string convertDateTHToShowCultureDateTH(DateTime? dateToShow, string formatDatetime)
         {
-            string valResult = "";       
+            string valResult = "";
 
-                if (dateToShow != null)
-                {
-                    valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureThai"], true));
-                }
+            if (dateToShow != null)
+            {
+                valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureThai"], true));
+            }
             return valResult;
         }
 

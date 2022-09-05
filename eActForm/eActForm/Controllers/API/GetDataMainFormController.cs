@@ -26,7 +26,7 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
             try
-            { 
+            {
                 List<TB_Reg_Subject> tB_Reg_Subject = new List<TB_Reg_Subject>();
                 tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
 
@@ -314,7 +314,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getIOByEO(string txtEO,string txtIO)
+        public JsonResult getIOByEO(string txtEO, string txtIO)
         {
             var result = new AjaxResult();
             List<TransferBudgetModels> transfersList = new List<TransferBudgetModels>();
@@ -337,9 +337,9 @@ namespace eActForm.Controllers
             {
                 List<User> userList = new List<User>();
 
-                var userResult = QueryGet_empByComp.getEmpGroupByChannelId(objGetDataSubjectBy.channelId , objGetDataSubjectBy.master_type_form_id);
+                var userResult = QueryGet_empByComp.getEmpGroupByChannelId(objGetDataSubjectBy.channelId, objGetDataSubjectBy.master_type_form_id);
 
-              
+
                 var resultData = new
                 {
                     userList = userResult.ToList(),
@@ -356,6 +356,6 @@ namespace eActForm.Controllers
 
     }
 
-   
-    
+
+
 }

@@ -76,7 +76,7 @@ namespace eActForm.Models
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
         public List<string> listEoInDoc { get; set; }
         public List<detailEO> eoList { get; set; }
-        
+
         public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
 
 
@@ -137,7 +137,7 @@ namespace eActForm.Models
         public string[] brand_multi_select { get; set; }
         public string[] costCenter_multi_select { get; set; }
 
-        
+
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -315,7 +315,7 @@ namespace eActForm.Models
         {
 
         }
-        public RequestEmpModel(string empId,bool langEn,bool chkFormHc)
+        public RequestEmpModel(string empId, bool langEn, bool chkFormHc)
         {
             if (empId != "")
             {
@@ -557,7 +557,7 @@ namespace eActForm.Models
                 {
                     this.empName = "";
                     this.empDepartment = "";
-                    this.empPhone ="";
+                    this.empPhone = "";
                     this.empCompany = "";
                     this.empEmail = "";
                 }

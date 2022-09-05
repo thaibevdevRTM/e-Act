@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace eForms.Models.MasterData
+﻿namespace eForms.Models.MasterData
 {
     public class TB_Act_Chanel_Model : DefaultFieldModel
     {

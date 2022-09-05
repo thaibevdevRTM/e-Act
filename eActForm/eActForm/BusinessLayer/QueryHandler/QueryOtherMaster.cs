@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
         }
 
-        public static List<TB_Act_Other_Model> getOhterMasterByEmpId(string type, string subtype , string empId)
+        public static List<TB_Act_Other_Model> getOhterMasterByEmpId(string type, string subtype, string empId)
         {
             try
             {

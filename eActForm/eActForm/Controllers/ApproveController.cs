@@ -200,7 +200,7 @@ namespace eActForm.Controllers
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = getApproveSigList(actId,subId);
+                models = getApproveSigList(actId, subId);
             }
             catch (Exception ex)
             {

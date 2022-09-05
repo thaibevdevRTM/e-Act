@@ -273,7 +273,7 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ? 
+                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ?
                     dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
             }
             catch (Exception ex)
@@ -417,7 +417,7 @@ namespace eActForm.BusinessLayer
                                                          perGrowth = dr["growth"] is DBNull ? 0 : Convert.ToDecimal(dr["growth"]),
                                                          perSE = dr["Le"] is DBNull ? 0 : Convert.ToDecimal(dr["Le"]),
                                                          perToSale = dr["perToSale"] is DBNull ? 0 : Convert.ToDecimal(dr["perToSale"]),
-                                                         rowNo =  int.Parse(dr["rowNo"].ToString()),
+                                                         rowNo = int.Parse(dr["rowNo"].ToString()),
                                                          #endregion
 
                                                      }).ToList();

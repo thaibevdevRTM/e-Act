@@ -171,7 +171,7 @@ namespace eActForm.BusinessLayer
                         strCall = "usp_getActivityFormAll";
                     }
                 }
-                
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
@@ -554,12 +554,12 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId,string fiscalYear)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId, string fiscalYear)
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
-                   , new SqlParameter[] { new SqlParameter("@EO", EO)
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
@@ -619,7 +619,7 @@ namespace eActForm.BusinessLayer
 
 
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId,string fiscalYear)
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId, string actTypeId, string fiscalYear)
         {
             try
             {
@@ -651,7 +651,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
-               , new SqlParameter[] { new SqlParameter("@EO", EO)});
+               , new SqlParameter[] { new SqlParameter("@EO", EO) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
@@ -686,12 +686,12 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool copyDocument_MasterForm(string actId_old , string actId_new)
+        public static bool copyDocument_MasterForm(string actId_old, string actId_new)
         {
             try
             {
                 bool result = false;
-               
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CopyDocumentMasterForm"
                     , new SqlParameter[] { new SqlParameter("@actId_old", actId_old)
                      , new SqlParameter("@actId_new" ,actId_new)
@@ -724,7 +724,7 @@ namespace eActForm.BusinessLayer
                                  unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
 
                              });
-                return lists.ToList() ;
+                return lists.ToList();
 
             }
             catch (Exception ex)
