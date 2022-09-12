@@ -5,9 +5,17 @@
     CultureInfo DateEnglish = new CultureInfo("en-US");
     int count = 0;
 }
-
+@using (Html.BeginForm("ExportExcel", "ImportBudgetControl", FormMethod.Post))
+{
+    <input type="hidden" name="gridHtml" />
+    <input type="hidden" name="type" />
+    <input type="hidden" name="fileName" />
+    <button type="submit" class="btn ink-reaction btn-success" id="btnExportExcel" value="ExportExcel">
+        <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+    </button>
+}
 <div id="getHtml" class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll; margin-bottom:80px;">
-    <table id="tbSuccess" class="table table-striped jambo_table bulk_action fixed" id="tbl_Budget" height="200" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+    <table id="tbl_Budget" class="table table-striped jambo_table bulk_action fixed" height="200" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
         <thead>
             <tr class="headings" style="text-align:center;">
                 <th width="170px" class="center">StartDate</th>
@@ -55,6 +63,17 @@
 
 <script>
 
+    $(function () {
+
+
+        $("#btnExportExcel").click(function () {
+
+            $("input[name='fileName']").val('ImportBudget');
+            $("input[name='gridHtml']").val($("#getHtml").html());
+            $("input[name='type']").val('');
+        });
+
+    });
 
 
     function submmitBtn() {

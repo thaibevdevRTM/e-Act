@@ -79,14 +79,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
+                                    @{ var index = 1; string strActNo = "", activityPeriodSt = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
                                     @foreach (var item in Model.actFormRepDetailGroupLists)
                                     {
                                         if ((item.delFlag == false && item.typeTheme != "" && item.total > 0) || (item.delFlag == false && item.activityDetail != ""))
                                         {
                                             <tr class="gradeX">
 
-                                                @if (item.activityNo == strActNo)
+                                                @if (item.id == strActNo)
                                                 {
                                                     <td></td>
                                                     <td></td>
@@ -140,7 +140,7 @@
 
                                                 <td>@item.productName</td>
                                                 <td>@item.size</td>
-                                                @if (item.activityDetail == strActDetail && item.activityNo == strActNo)
+                                                @if (item.activityDetail == strActDetail && item.id == strActNo)
                                                 {
                                                     <td></td>
                                                 }
@@ -165,8 +165,7 @@
                                                 <td></td>
                                             </tr>
                                             strActDetail = item.activityDetail;
-                                            strActNo = item.activityNo;
-
+                                            strActNo = item.id;
                                             sumTotal = sumTotal + item.total;
                                             sumTotalCase = sumTotalCase + item.totalCase;
                                             sumNormalSale = item.normalSale == 0 ? sumNormalSale : sumNormalSale + item.normalSale;

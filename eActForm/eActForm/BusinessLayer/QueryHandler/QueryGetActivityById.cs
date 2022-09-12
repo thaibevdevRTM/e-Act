@@ -79,5 +79,38 @@ namespace eActForm.BusinessLayer
 
         }
 
+        public static List<ActivityForm> getSubActivityByActId(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSubActivityByActId"
+                 , new SqlParameter("@activityId", activityId));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new ActivityForm()
+                              {
+                                  id = d["Id"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  statusId = int.Parse(d["statusId"].ToString()),
+                                  activityPeriodSt = !string.IsNullOrEmpty(d["activityPeriodSt"].ToString()) ? DateTime.Parse(d["activityPeriodSt"].ToString()) : (DateTime?)null,
+                                  activityPeriodEnd = !string.IsNullOrEmpty(d["activityPeriodEnd"].ToString()) ? DateTime.Parse(d["activityPeriodEnd"].ToString()) : (DateTime?)null,
+                                  countAct = int.Parse(d["count"].ToString()),
+                                  statusNote = d["status_rp"].ToString(),
+                                  delFlag = bool.Parse(d["delFlag"].ToString()),
+                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
+                                  createdByUserId = d["createdByUserId"].ToString(),
+                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+                                  updatedByUserId = d["updatedByUserId"].ToString(),
+                              });
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getSubActivityByActId => " + ex.Message);
+                return new List<ActivityForm>();
+            }
+
+        }
+
     }
 }

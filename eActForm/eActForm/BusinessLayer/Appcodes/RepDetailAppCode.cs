@@ -426,6 +426,7 @@ namespace eActForm.BusinessLayer
                     .GroupBy(item => new
                     {
                         item.activityNo,
+                        item.activityPeriodSt,
                         item.productGroupid,
                         item.theme
                     })
@@ -475,7 +476,7 @@ namespace eActForm.BusinessLayer
                         #endregion
 
 
-                    }).OrderBy(x => x.activityNo).ThenBy(x => x.rowNo).ToList();
+                    }).OrderBy(x => x.activityNo).ThenBy(x => x.activityPeriodSt).ThenBy(x => x.rowNo).ToList();
 
                 return actRepModel;
             }

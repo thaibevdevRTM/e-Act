@@ -148,6 +148,24 @@
         });
     }
 
+    function callSubActivityView(actId) {
+        $("#WaitDialog").show();
+        $("#divModalApprovelist").html('')
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("subActivityView", "Activity")',
+            data: {
+                activityId: actId,
+                count: $("#txtcount").val(),
+            }
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+
+            $("#divModalApprovelist").html(response)
+            $('#modalApprovelist').modal('show');
+
+        });
+    }
 
 
         function resendApprove(actId) {
@@ -212,7 +230,7 @@
         <a class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px" href="#"></a>คือ PostEva
         <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
         <a class="btn ink-reaction btn-warning  fa fa-archive" href="#"></a>คืนสินค้า
-
+        <a class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px" href="#"></a>ปันส่วน
         <table id="datatable" class="table table-striped table-hover">
             <thead>
                 <tr style="background-color:#2B5D95;color:#ffffff;">
@@ -267,56 +285,71 @@
                                 <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
                                     <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
                                 </a>
+                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
+                                {
+                                    <a href="javascript:" onclick="return callSubActivityView('@item.id');">
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                    </a>
+                                }
+
                             }
                             @*@Html.ActionLink(" ", "previewEvaByActId", "actFormRepPostEva", new { actId = @item.id }, new { @class = "btn glyphicon glyphicon-stats", target = "_blank" })*@
 
 
                             @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
                             {
-                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.SetPrice.ToString())
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
                             {
-                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
+                                {
+                                    <a href="javascript:" onclick="return callSubActivityView('@item.id');">
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                    </a>
+                                }
+
                             }
                             else if (Model.typeForm == Activity_Model.activityType.SetPriceOMT.ToString())
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.Beer.ToString())
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
 
 
                             else if ((@Array.AsReadOnly(AppCode.checkDocTBM).Contains(item.master_type_form_id)) || (@Array.AsReadOnly(AppCode.expenseForm).Contains(item.master_type_form_id)))
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
                                 }
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formReturnPosTbm"] }, new { @class = "btn ink-reaction btn-warning  fa fa-archive", onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formReturnPosTbm"] }, new { @class = "btn ink-reaction btn-warning  fa fa-archive", onclick = "waitpopup();", })
                                 }
                             }
                             else if ((@Array.AsReadOnly(AppCode.checkDocHC).Contains(item.master_type_form_id)))
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if ((@Array.AsReadOnly(AppCode.checkDocIT).Contains(item.master_type_form_id)))
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.ITForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.ITForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if ((@Array.AsReadOnly(AppCode.checkDocAll).Contains(item.master_type_form_id)))
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode =  AppCode.Mode.edit, typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();" })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();" })
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {

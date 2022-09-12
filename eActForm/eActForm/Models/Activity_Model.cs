@@ -26,6 +26,17 @@ namespace eActForm.Models
         // ***************************** class is duplicat ***********************************/
         public List<CostThemeDetail> costthemedetail { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_0 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_1 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_2 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_3 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_4 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_5 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_6 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_7 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_8 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist_9 { get; set; }
+
         // **********************************************************************************/
 
 
@@ -35,6 +46,7 @@ namespace eActForm.Models
 
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
+        public List<ActivityForm> activityModelList { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
 
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
@@ -57,8 +69,19 @@ namespace eActForm.Models
             productBrandList = new List<TB_Act_ProductBrand_Model>();
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
             activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_0 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_1 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_2 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_3 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_4 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_5 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_6 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_7 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_8 = new List<CostThemeDetailOfGroupByPrice>();
+            activitydetaillist_9 = new List<CostThemeDetailOfGroupByPrice>();
             activityFormModel = new ActivityForm();
             customerModel = new Customers_Model();
+            activityModelList = new List<ActivityForm>();
         }
 
         public enum modeForm
@@ -192,6 +215,7 @@ namespace eActForm.Models
     public class ActivityForm
     {
         public string id { get; set; }
+        public string activityId { get; set; }
         public int statusId { get; set; }
         public string activityNo { get; set; }
         public string activityNoRef { get; set; }
@@ -285,6 +309,10 @@ namespace eActForm.Models
         public string txtPay { get; set; }
         public string txtGame { get; set; }
         public string txtArea { get; set; }
+        public int countMonth { get; set; }
+        public int countAct { get; set; }
+        public int status_rp { get; set; }
+        public decimal? sumTotal { get; set; }
 
     }
 
@@ -347,7 +375,8 @@ namespace eActForm.Models
         public string EO { get; set; }
         public string glCodeId { get; set; }
         public decimal? promotionCost { get; set; }
-
+        public string subActivityId { get; set; }
+        public string ref_Estimate { get; set; }
     }
 
     public class CostThemeDetail : ActBaseModel
