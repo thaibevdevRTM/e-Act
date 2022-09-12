@@ -13,18 +13,22 @@
     <tbody>
         @foreach (var item in Model.approveDetailLists)
         {
-        <tr class="gradeX">
-            <td>@item.rangNo</td>
-            <td>@item.empName</td>
-            <td>@{ var status = item.statusId == "" ? "ยังไม่อนุมัติ" : item.statusName;} @status</td>
-            <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy") : "";} @date</td>
-            <td>
-                @if (@item.remark != "")
-                {
-                    <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
-                }
-            </td>
-        </tr>
+            <tr class="gradeX">
+                <td>@item.rangNo</td>
+                <td>@item.empName</td>
+                <td>@{ var status = item.statusId == "" ? "ยังไม่อนุมัติ" : item.statusName;} @status</td>
+                <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy") : "";} @date</td>
+                <td>
+                    @if (@item.remark != "")
+                    {
+
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');">Try it 6</button>
+
+                        @*@item.remark.Replace("(\r\n|\n)", "xx").Replace(",","yy").Replace("/", "zz").Replace(";", "zz");*@
+
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>
@@ -54,8 +58,18 @@
 </div>
 
 <script>
+    function onShowRemark_test(txtRemark) {
+        alert(txtRemark);
+        //$("#lblRemark").text(txtRemark);
+        //$("#myModal").modal('show');
+    }
+
     function onShowRemark(txtRemark) {
+        console.log(txtRemark);
+
         $("#lblRemark").text(txtRemark);
         $("#myModal").modal('show');
     }
+
+     
 </script>
