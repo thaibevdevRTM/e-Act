@@ -1,35 +1,19 @@
-﻿using eActForm.BusinessLayer.QueryHandler;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Controllers;
 using eActForm.Models;
 using eForms.Models.Forms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using WebLibrary;
+
 namespace eActForm.BusinessLayer
 {
     public class ReportAppCode
     {
-        //public static ReportTypeModel getReporttypeByTypeFormId(string typeFormId)
-        //{
-        //    try
-        //    {
-        //      ReportTypeModel models = new ReportTypeModel
-        //        {
-        //           // showUIModel = new searchParameterFilterModel(),
-        //           // approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
-        //           // productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
-        //           // customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),
-        //           // productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
-        //           // activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-        //           //.GroupBy(item => item.activitySales)
-        //           //.Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
-        //        };
-        //        return ReportTypeModel;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("getMasterDataForSearchForDetailReport >>" + ex.Message);
-        //    }
-        //}
+
         public static SearchActivityModels getMasterDataForSearch()
         {
             try
@@ -79,53 +63,6 @@ namespace eActForm.BusinessLayer
                 }
 
 
-                //if (actType == Activity_Model.activityType.HCForm.ToString())
-                //{
-
-                //    if (UtilsAppCode.Session.User.isSuperAdmin)
-                //    {
-                //        List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
-                //        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.NUM.ToString());
-                //        foreach (var item in lst)
-                //        {
-                //            compId += item.val1 + ",";
-                //        }
-
-                //        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.POM.ToString());
-                //        foreach (var item in lst)
-                //        {
-                //            compId += item.val1 + ",";
-                //        }
-
-                //        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.CVM.ToString());
-                //        foreach (var item in lst)
-                //        {
-                //            compId += item.val1 + ",";
-                //        }
-
-                //        compId = compId.Substring(0, compId.Length - 1);
-                //    }
-                //    else
-                //    {
-
-                //    }
-
-
-
-                //    //    List<CompanyModel> getCompanyByTypeFormId
-                //    //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAuthorizedByEmpId"
-                //    //    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-                //    //var lists = (from DataRow dr in ds.Tables[0].Rows
-                //    //             select new CompanyModel
-                //    //             {
-                //    //                 empId = dr["empId"].ToString(),
-                //    //                 customerId = dr["customerId"].ToString(),
-                //    //                 productCateId = dr["productCateId"].ToString(),
-                //    //                 productTypeId = dr["productTypeId"].ToString(),
-                //    //                 companyId = dr["companyId"].ToString()
-                //    //             }).ToList();
-                //    //return lists;
-                //}
                 return companyList; //ถ้าเป็น superadmim ถึงจะดึงทั้ง 8 ถ้าไม่ดึงตัวเอง
             }
             catch (Exception ex)
@@ -133,5 +70,80 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getCompanyByRole >>" + ex.Message);
             }
         }
+
+        public static Activity_TBMMKT_Model mainReport(string activityId, string empId)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            try
+            {
+                ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+
+                if (!string.IsNullOrEmpty(empId))
+                {
+                    UtilsAppCode.Session.User = new ActUserModel.User();
+                    UtilsAppCode.Session.User.empId = empId;
+                }
+
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+                activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = listMasterType.FirstOrDefault().nameForm;
+                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = listMasterType.FirstOrDefault().nameForm_EN;
+                activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = listMasterType.FirstOrDefault().companyId;
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+
+                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                {
+                    activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
+                }
+                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+
+                //=====layout doc=============
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                {
+                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
+                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
+                    objGetDataLayoutDoc.activityId = activityId;
+                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
+                }
+                //===END==layout doc===========
+
+                //===========Set Language By Document Dev date 20200310 Peerapop=====================
+                //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
+                DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
+                //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("reportAppCode >> mainReport >>" + activityId + "___" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
+
+
+        public static Activity_Model previewApprove(string actId, string empId)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
+                activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
+                activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
+                activityModel.approveModels = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("reportAppCode >> previewApprove >>" + actId + "___" + ex.Message);
+            }
+            return activityModel;
+        }
+
     }
 }

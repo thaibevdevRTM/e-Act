@@ -1,6 +1,8 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Controllers;
 using eActForm.Models;
+using eForms.Models.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -362,6 +364,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
+                        ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI","").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
                         strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
@@ -801,6 +804,8 @@ namespace eActForm.BusinessLayer
                                   createBy = dr["createBy"].ToString(),
                                   createBy_EN = dr["createBy_EN"].ToString(),
                                   statusId = dr["statusId"].ToString(),
+                                  empId = dr["empId"].ToString(),
+
                               }).ToList();
                 return models;
             }

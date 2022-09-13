@@ -187,7 +187,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType, UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }

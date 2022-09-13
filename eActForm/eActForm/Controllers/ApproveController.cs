@@ -55,7 +55,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"], UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }
@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType, UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }
@@ -107,11 +107,9 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             try
             {
-                activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
-                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-                activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-                activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
+                activityModel = ReportAppCode.previewApprove(actId, UtilsAppCode.Session.User.empId);
+                activityModel.activityFormModel.callFrom = "app";
+
             }
             catch (Exception ex)
             {
@@ -162,6 +160,7 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
+                    ApproveAppCode.apiProducerApproveAsync(UtilsAppCode.Session.User.empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, UtilsAppCode.Session.User.empId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
@@ -187,7 +186,7 @@ namespace eActForm.Controllers
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = getApproveSigList(actId, subId);
+                models = getApproveSigList(actId, subId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
@@ -200,7 +199,7 @@ namespace eActForm.Controllers
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = getApproveSigList(actId, subId);
+                models = getApproveSigList(actId, subId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
@@ -210,12 +209,12 @@ namespace eActForm.Controllers
         }
 
 
-        public ApproveModel.approveModels getApproveSigList(string actId, string subId)
+        public ApproveModel.approveModels getApproveSigList(string actId, string subId,string empId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = ApproveAppCode.getApproveByActFormId(actId);
+                models = ApproveAppCode.getApproveByActFormId(actId,empId);
                 models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
                 //เพิ่มตัดตำแหน่ง
                 newlinePosition(models);

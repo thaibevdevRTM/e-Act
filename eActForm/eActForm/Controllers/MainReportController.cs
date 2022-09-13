@@ -24,77 +24,46 @@ namespace eActForm.Controllers
 
             if (!string.IsNullOrEmpty(activityId))
             {
-                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-                activity_TBMMKT_Model.activityFormTBMMKT.formName = listMasterType.FirstOrDefault().nameForm;
-                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = listMasterType.FirstOrDefault().nameForm_EN;
-                activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = listMasterType.FirstOrDefault().companyId;
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
-                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
-
-                #region set viewbag
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
-                    // (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                    )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-                {
-                    ViewBag.classFont = "fontDocSmall";
-                    ViewBag.padding = "paddingFormV2";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
-                {
-                    ViewBag.classFont = "formBorderStyle1";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
-                {
-                    ViewBag.classFont = "formBorderStyle2";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
-                {
-                    ViewBag.classFont = "fontDocSmall";
-                    ViewBag.padding = "paddingFormV2";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                {
-                    ViewBag.classFont = "formBorderStyle3";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else
-                {
-                    ViewBag.classFont = "fontDocV1";
-                    ViewBag.padding = "paddingFormV1";
-                }
-                #endregion
-                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
-                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                {
-                    activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                    //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
-                }
-                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-
-                //=====layout doc=============
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-                {
-                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
-                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
-                    objGetDataLayoutDoc.activityId = activityId;
-                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
-                }
-                //===END==layout doc===========
+                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId,UtilsAppCode.Session.User.empId);
             }
 
-            //===========Set Language By Document Dev date 20200310 Peerapop=====================
-            //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
-            DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
-            //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+            #region set viewbag
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                // (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            {
+                ViewBag.classFont = "fontDocSmall";
+                ViewBag.padding = "paddingFormV2";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
+            {
+                ViewBag.classFont = "formBorderStyle1";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
+            {
+                ViewBag.classFont = "formBorderStyle2";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+            {
+                ViewBag.classFont = "fontDocSmall";
+                ViewBag.padding = "paddingFormV2";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+            {
+                ViewBag.classFont = "formBorderStyle3";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else
+            {
+                ViewBag.classFont = "fontDocV1";
+                ViewBag.padding = "paddingFormV1";
+            }
+            #endregion
 
             return PartialView(activity_TBMMKT_Model);
         }

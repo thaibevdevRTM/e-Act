@@ -18,12 +18,19 @@ namespace eActForm.Controllers
     {
 
         // GET: eAct
-        public ActionResult Index()
+        public ActionResult Index(string activityId)
         {
-            return View();
+            //Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            //activity_TBMMKT_Model = mainReport(activityId,null);
+            return PartialView();
         }
 
-
+        public ActionResult previewActMT(string activityId)
+        {
+            //Activity_Model activityModel = new Activity_Model();
+            //activityModel = ReportAppCode.previewApprove(activityId,"70008316");
+            return PartialView();
+        }
 
 
         public JsonResult getProductGroup(string cateId)

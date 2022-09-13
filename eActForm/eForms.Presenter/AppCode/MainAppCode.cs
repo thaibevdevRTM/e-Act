@@ -20,6 +20,15 @@ namespace eForms.Presenter.AppCode
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
         }
+
+
+        public enum ApproveStatus
+        {
+            CREATE
+           , APPROVE = 3
+           , REJECT = 5
+        }
+
         public static List<Models.MasterData.TB_Act_Other_Model> getOhterMaster(string strCon, string type, string subtype)
         {
             try

@@ -1,19 +1,61 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Controllers;
 using eActForm.Models;
+using eForms.Models.MasterData;
+using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using WebLibrary;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Web.Hosting;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
 
+
+
+        public static string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            var context = HttpContext.Current;
+            var contextBase = new HttpContextWrapper(context);
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", controllerName);
+
+            var controllerContext = new ControllerContext(contextBase,
+                                                          routeData,
+                                                          new MainReportController());
+
+            var razorViewEngine = new RazorViewEngine();
+            var razorViewResult = razorViewEngine.FindView(controllerContext,
+                                                           viewName,
+                                                           "",
+                                                           false);
+
+            var writer = new StringWriter();
+            var viewContext = new ViewContext(controllerContext,
+                                              razorViewResult.View,
+                                              new ViewDataDictionary(viewData),
+                                              new TempDataDictionary(),
+                                              writer);
+            razorViewResult.View.Render(viewContext, writer);
+
+            return writer.ToString();
+        }
 
         public static void setCountWatingApprove()
         {
@@ -202,18 +244,18 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(string actFormId, string statusId, string remark, string approveType)
+        public static int updateApprove(string actFormId, string statusId, string remark, string approveType, string empId)
         {
             try
             {
                 // update approve detail
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
                         , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
-                    , new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
+                    , new SqlParameter("@empId",empId)
                     ,new SqlParameter("@statusId",statusId)
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateBy",empId)
                         });
 
                 if (approveType == AppCode.ApproveType.Report_Detail.ToString())
@@ -591,6 +633,101 @@ namespace eActForm.BusinessLayer
             }
 
             return result;
+        }
+
+
+        public static async Task<Controllers.AjaxResult> apiProducerApproveAsync(string empId, string activityId,string status)
+        {
+            var resultAjax = new Controllers.AjaxResult();
+            ConsumerApproverBevAPI response = null;
+            var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
+            if (getDetailApprove.Count > 0)
+            {
+                foreach (var item in getDetailApprove)
+                {
+                    try
+                    {
+                        item.producerDetail.companyName = item.companyName;
+                        item.producerDetail.attachedFileName = item.attachedFileName;
+                        item.producerDetail.attachedUrl = item.attachedUrl;
+
+                        
+                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToString(), item);
+
+                        string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                        using (var httpClient = new HttpClient())
+                        {
+                            //using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                            //{
+                            //    var contentList = new List<string>();
+
+                            //    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                            //    requestAPI.Content = new StringContent(string.Join("&", contentList));
+                            //    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                            //    var responseAPI = await httpClient.SendAsync(requestAPI);
+                            //    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                            //    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                            //    if(response.messageResponse.Contains("SUCCESS"))
+                            //    {
+                            //        resultAjax.Success = true;
+                            //    }
+                            //    else
+                            //    {
+                            //        ExceptionManager.WriteError("submit_SubActivity => Non Error" + response.messageResponse);
+                            //    }
+                            //}
+                        }
+                        return resultAjax;
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionManager.WriteError("apiProducerApproveAsync => ERROR_" + ex.Message);
+                    }
+
+                }
+            }
+            return resultAjax;
+        }
+
+        public static List<ApproverModel> getWaitApprove(string empId, string activityId)
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getWaitApprover"
+                     , new SqlParameter[] { new SqlParameter("@empId", empId)
+                      ,new SqlParameter("@activityId",activityId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproverModel()
+                             {
+                                 appId = dr["appId"].ToString(),
+                                 appName = dr["appName"].ToString(),
+                                 docNo = dr["docNo"].ToString(),
+                                 refId = dr["refId"].ToString(),
+                                 orderRank = dr["orderRank"].ToString(),
+                                 subject = dr["subject"].ToString(),
+                                 requesterDate = DateTime.Parse(dr["requesterDate"].ToString()),
+                                 totalAmount = dr["totalAmount"].ToString(),
+                                 currency = dr["currency"].ToString(),
+                                 approver = dr["approver"].ToString(),
+                                 companyName = dr["companyName"].ToString(),
+                                 organizationUnitName = dr["organizationUnitName"].ToString(),
+                                 detail = dr["detail"].ToString(),
+                                 attachedFileName = dr["attachedFileName"].ToString(),
+                                 attachedUrl = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId)),
+            }).ToList();
+
+                return lists;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getWaitApprove >>" + ex.Message);
+            }
+
         }
 
     }

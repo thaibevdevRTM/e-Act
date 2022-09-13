@@ -113,12 +113,8 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
-            activityModel.approveModels = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], activityId);
+            activityModel = ReportAppCode.previewApprove(activityId, UtilsAppCode.Session.User.empId);
+            activityModel.activityFormModel.callFrom = "app";
             return PartialView(activityModel);
         }
 
@@ -367,7 +363,7 @@ namespace eActForm.Controllers
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
-                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString());
+                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString(), UtilsAppCode.Session.User.empId);
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
@@ -403,12 +399,22 @@ namespace eActForm.Controllers
                     var txtStamp = "เอกสารถูกยกเลิก";
                     bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
+                    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
+
+
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
+                    if (statusId == "3")
+                    {
+                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+
+
                 }
                 resultAjax.Success = true;
             }

@@ -56,6 +56,7 @@ namespace eActForm.Models
 
         public approveFlowModel approveModels { get; set; }
 
+
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
@@ -313,6 +314,7 @@ namespace eActForm.Models
         public int countAct { get; set; }
         public int status_rp { get; set; }
         public decimal? sumTotal { get; set; }
+        public string callFrom { get; set; }
 
     }
 

@@ -1,0 +1,135 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForm.Approve\\eForm.Approve.csproj": {}
+  },
+  "projects": {
+    "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForm.Approve\\eForm.Approve.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForm.Approve\\eForm.Approve.csproj",
+        "projectName": "eForm.Approve",
+        "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForm.Approve\\eForm.Approve.csproj",
+        "packagesPath": "C:\\Users\\70008316\\.nuget\\packages\\",
+        "outputPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForm.Approve\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\70008316\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
+                "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj"
+              },
+              "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Presenter\\eForms.Presenter.csproj": {
+                "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Presenter\\eForms.Presenter.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[108.0.1, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj",
+        "projectName": "eForms.Models",
+        "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Presenter\\eForms.Presenter.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Presenter\\eForms.Presenter.csproj",
+        "projectName": "eForms.Presenter",
+        "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Presenter\\eForms.Presenter.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
+                "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj"
+              },
+              "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\WebLibrary\\WebLibrary.csproj": {
+                "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\WebLibrary\\WebLibrary.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\WebLibrary\\WebLibrary.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\WebLibrary\\WebLibrary.csproj",
+        "projectName": "WebLibrary",
+        "projectPath": "D:\\project\\GitHub\\e-Act\\e-Act\\eActForm\\WebLibrary\\WebLibrary.csproj",
+        "frameworks": {
+          "net35": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net35": {}
+      }
+    }
+  }
+}

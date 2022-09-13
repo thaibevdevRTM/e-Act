@@ -151,6 +151,7 @@ namespace eActForm.Models
             public string approveGroupTH { get; set; }
             public string approveGroupEN { get; set; }
             public string statusId { get; set; }
+            public string empId { get; set; }
         }
 
         public class approveListSummaryModels : ActBaseModel
