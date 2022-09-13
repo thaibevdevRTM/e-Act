@@ -21,57 +21,58 @@
 		<div id="GridView">
 			<table class="table table-hover border-dark" id="datatable" style="width:100%;">
 				<thead>
-					<tr style="background-color:#2B5D95;color:#ffffff;">
-						<td> no.</td>
-						<td style="text-align:left;"> เลขที่กิจกรรม </td>
-						<td style="text-align:left;"> ประเภทกิจกรรม </td>
-						<td style="text-align:left;"> ลูกค้า </td>
-						<td style="text-align:left;"> รายละเอียด (50) </td>
-						
-						<td style="text-align:right;"> ยอดยกมา </td>
-						<td style="text-align:right;"> ยอดตัดจ่าย </td>
-						<td style="text-align:right;"> ค่าใช้จ่ายคงเหลือ </td>
-						<td style="text-align:left;"> สถานะ </td>
-						<td style="text-align:left;"> สถานะกิจกรรม </td>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td> no.</td>
+                        <td style="text-align:left;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:left;"> ประเภทกิจกรรม </td>
+                        <td style="text-align:left;"> ลูกค้า </td>
+                        <td style="text-align:left;"> รายละเอียด (50) </td>
 
-					</tr>
+                        <td style="text-align:right;"> ยอดยกมา </td>
+                        <td style="text-align:right;"> ยอดตัดจ่าย </td>
+                        <td style="text-align:right;"> ค่าใช้จ่ายคงเหลือ </td>
+                        <td style="text-align:left;"> สถานะ </td>
+                        <td style="text-align:left;"> สถานะกิจกรรม </td>
+                        <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
+
+                    </tr>
 				</thead>
 				@{ var index_view = 1; }
 				@foreach (var item in Model.Report_Budget_Activity_List)
 				{
-				<tr class="gradeX">
-					<td>@index_view</td>
-					<td>@item.act_activityNo </td>
-					<td>@item.Theme </td>
-					<td>@item.cus_cusNameEN </td>
-					<td>@item.prd_productDetail50 </td>
-					
-					<td style="text-align:right;">
-						@if (@item.activityTotalBath != null)
-						{
-							string result = String.Format("{0:n2}", @item.activityTotalBath);
-							@result.ToString();
-						}
-					</td>
-					<td style="text-align:right;">
-						@if (@item.activityInvoiceTotalBath != null)
-						{
-							string result = String.Format("{0:n2}", @item.activityInvoiceTotalBath);
-							@result.ToString();
-						}
-					</td>
-					<td style="text-align:right;">
-						@if (@item.activityCostRemainBath != null)
-						{
-							string result = String.Format("{0:n2}", @item.activityCostRemainBath);
-							@result.ToString();
-						}
-					</td>
-					<td style="text-align:center;">@item.productBudgetStatusNameTH </td>
-					<td style="text-align:center;">@item.act_status </td>
+            <tr class="gradeX">
+                <td>@index_view</td>
+                <td>@item.act_activityNo </td>
+                <td>@item.Theme </td>
+                <td>@item.cus_cusNameEN </td>
+                <td>@item.prd_productDetail50 </td>
 
+                <td style="text-align:right;">
+                    @if (@item.activityTotalBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.activityTotalBath);
+                        @result.ToString();
+                    }
+                </td>
+                <td style="text-align:right;">
+                    @if (@item.activityInvoiceTotalBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.activityInvoiceTotalBath);
+                        @result.ToString();
+                    }
+                </td>
+                <td style="text-align:right;">
+                    @if (@item.activityCostRemainBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.activityCostRemainBath);
+                        @result.ToString();
+                    }
+                </td>
+                <td style="text-align:center;">@item.productBudgetStatusNameTH </td>
+                <td style="text-align:center;">@item.act_status </td>
+                <td style="text-align:left;">@item.budget_CurrentApproveName </td>
 
-				</tr>
+            </tr>
 					index_view++;
 				}
 			</table>
@@ -122,6 +123,7 @@
                         <td style="text-align:left;"> สถานะกิจกรรม </td>
                         <td style="text-align:center;"> รหัสผู้สร้างกิจกรรม </td>
                         <td style="text-align:left;"> ชื่อผู้สร้างกิจกรรม </td>
+                        <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
                     </tr>
 				</thead>
 				@{ var index = 1;}
@@ -187,6 +189,7 @@
                 <td> @item.act_status </td>
                 <td class="text-hide">@item.actForm_CreatedByUserId </td>
                 <td class="text-hide">@item.actForm_CreatedByName </td>
+                <td class="text-hide">@item.budget_CurrentApproveName </td>
             </tr>
 					index++;
 				}
