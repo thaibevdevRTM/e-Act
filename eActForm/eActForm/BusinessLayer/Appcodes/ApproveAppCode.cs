@@ -269,7 +269,7 @@ namespace eActForm.BusinessLayer
                 else
                 {
                     // default Activity Form
-                    rtn = updateActFormStatus(statusId, actFormId);
+                    rtn = updateActFormStatus(statusId, actFormId,empId);
                 }
 
                 return rtn;
@@ -329,7 +329,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        private static int updateActFormStatus(string statusId, string actFormId)
+        private static int updateActFormStatus(string statusId, string actFormId,string empId)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace eActForm.BusinessLayer
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
-                    rtn += updateActFormWithApproveReject(actFormId);
+                    rtn += updateActFormWithApproveReject(actFormId,empId);
 
                     List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
                     if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
@@ -350,13 +350,10 @@ namespace eActForm.BusinessLayer
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
-                    rtn += updateActFormWithApproveDetail(actFormId);
+                    rtn += updateActFormWithApproveDetail(actFormId, empId);
                 }
 
                 //var result = updateBudgetControl_Balance(actFormId);
-
-
-
 
                 return rtn;
             }
@@ -379,28 +376,28 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int updateActFormWithApproveReject(string actId)
+        public static int updateActFormWithApproveReject(string actId,string empId)
         {
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActFormByApproveReject"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+                    ,new SqlParameter("@updateBy",empId)});
             }
             catch (Exception ex)
             {
                 throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
             }
         }
-        public static int updateActFormWithApproveDetail(string actId)
+        public static int updateActFormWithApproveDetail(string actId,string empId)
         {
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActFormByApproveDetail"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+                    ,new SqlParameter("@updateBy",empId)});
             }
             catch (Exception ex)
             {

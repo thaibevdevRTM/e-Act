@@ -62,41 +62,34 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                ConsumerApproverBevAPI consumerModel = new ConsumerApproverBevAPI();
                 if (data != null)
                 {
-                    //consumerModel = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(data);
-
-                    if (consumerModel != null)
+                    if (ApproveAppCode.updateApprove(data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == eventName).FirstOrDefault().val1, data.message, null, data.approver) > 0)
                     {
-                        consumerModel.eventName = consumerModel.eventName == MainAppCode.ApproveStatus.APPROVE.ToString() ? ((int)MainAppCode.ApproveStatus.APPROVE).ToString() : ((int)MainAppCode.ApproveStatus.REJECT).ToString();
-
-                        if (ApproveAppCode.updateApprove(consumerModel.data.refId, consumerModel.eventName, consumerModel.data.message, null, consumerModel.data.approver) > 0)
-                        {
-                            resultAjax.Success = true;
-                        }
-
-                        if (resultAjax.Success)
-                        {
-                            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                            activity_TBMMKT_Model = ReportAppCode.mainReport(consumerModel.data.refId, consumerModel.data.approver);
-                            string outputHtml = "";
-                            if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                            {
-                                outputHtml = ApproveAppCode.RenderViewToString("eAct", "Index", activity_TBMMKT_Model);
-                            }
-                            else
-                            {
-                                outputHtml = ApproveAppCode.RenderViewToString("eAct", "previewActMT", ReportAppCode.previewApprove(consumerModel.data.refId, consumerModel.data.approver));
-
-                                ApproveModel.approveModels models = new ApproveModel.approveModels();
-                                models = new ApproveController().getApproveSigList(consumerModel.data.refId, ConfigurationManager.AppSettings["subjectActivityFormId"], UtilsAppCode.Session.User.empId);
-                                outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", ReportAppCode.previewApprove(consumerModel.data.refId, consumerModel.data.approver));
-                            }
-
-                            HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(outputHtml, consumerModel.data.approver, consumerModel.eventName, consumerModel.data.refId));
-                        }
+                        resultAjax.Success = true;
                     }
+
+                    if (resultAjax.Success)
+                    {
+                        Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                        activity_TBMMKT_Model = ReportAppCode.mainReport(data.refId, data.approver);
+                        string outputHtml = "";
+                        if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        {
+                            outputHtml = ApproveAppCode.RenderViewToString("eAct", "Index", activity_TBMMKT_Model);
+                        }
+                        else
+                        {
+                            outputHtml = ApproveAppCode.RenderViewToString("eAct", "previewActMT", ReportAppCode.previewApprove(data.refId, data.approver));
+
+                            ApproveModel.approveModels models = new ApproveModel.approveModels();
+                            models = new ApproveController().getApproveSigList(data.refId, ConfigurationManager.AppSettings["subjectActivityFormId"], data.approver);
+                            outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", models);
+                        }
+
+                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(outputHtml, data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == eventName).FirstOrDefault().val1, data.refId));
+                    }
+
                 }
 
                 resultAjax.Success = true;
@@ -136,7 +129,7 @@ namespace eActForm.Controllers
                     }
 
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                  EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                 }
                 resultAjax.Success = true;
             }
