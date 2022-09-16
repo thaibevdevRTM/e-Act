@@ -269,7 +269,7 @@ namespace eActForm.BusinessLayer
                 else
                 {
                     // default Activity Form
-                    rtn = updateActFormStatus(statusId, actFormId,empId);
+                    rtn = updateActFormStatus(statusId, actFormId, empId);
                 }
 
                 return rtn;
@@ -329,7 +329,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        private static int updateActFormStatus(string statusId, string actFormId,string empId)
+        private static int updateActFormStatus(string statusId, string actFormId, string empId)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace eActForm.BusinessLayer
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
-                    rtn += updateActFormWithApproveReject(actFormId,empId);
+                    rtn += updateActFormWithApproveReject(actFormId, empId);
 
                     List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
                     if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
@@ -376,7 +376,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int updateActFormWithApproveReject(string actId,string empId)
+        public static int updateActFormWithApproveReject(string actId, string empId)
         {
             try
             {
@@ -390,7 +390,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
             }
         }
-        public static int updateActFormWithApproveDetail(string actId,string empId)
+        public static int updateActFormWithApproveDetail(string actId, string empId)
         {
             try
             {
@@ -633,7 +633,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static async Task<Controllers.AjaxResult> apiProducerApproveAsync(string empId, string activityId,string status)
+        public static async Task<Controllers.AjaxResult> apiProducerApproveAsync(string empId, string activityId, string status)
         {
             var resultAjax = new Controllers.AjaxResult();
             ConsumerApproverBevAPI response = null;
@@ -642,46 +642,40 @@ namespace eActForm.BusinessLayer
             {
                 foreach (var item in getDetailApprove)
                 {
-                    try
+
+                    item.producerDetail.companyName = item.companyName;
+                    item.producerDetail.attachedFileName = item.attachedFileName;
+                    item.producerDetail.attachedUrl = item.attachedUrl;
+
+
+                    ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToString(), item);
+
+                    string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                    using (var httpClient = new HttpClient())
                     {
-                        item.producerDetail.companyName = item.companyName;
-                        item.producerDetail.attachedFileName = item.attachedFileName;
-                        item.producerDetail.attachedUrl = item.attachedUrl;
-
-                        
-                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToString(), item);
-
-                        string conjson = JsonConvert.SerializeObject(request).ToString();
-
-                        using (var httpClient = new HttpClient())
+                        using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
                         {
-                            //using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
-                            //{
-                            //    var contentList = new List<string>();
+                            var contentList = new List<string>();
 
-                            //    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
-                            //    requestAPI.Content = new StringContent(string.Join("&", contentList));
-                            //    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+                            contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                            requestAPI.Content = new StringContent(string.Join("&", contentList));
+                            requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-                            //    var responseAPI = await httpClient.SendAsync(requestAPI);
-                            //    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
-                            //    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
-                            //    if(response.messageResponse.Contains("SUCCESS"))
-                            //    {
-                            //        resultAjax.Success = true;
-                            //    }
-                            //    else
-                            //    {
-                            //        ExceptionManager.WriteError("submit_SubActivity => Non Error" + response.messageResponse);
-                            //    }
-                            //}
+                            var responseAPI = await httpClient.SendAsync(requestAPI);
+                            var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                            response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                            if (response.messageResponse.Contains("SUCCESS"))
+                            {
+                                resultAjax.Success = true;
+                            }
+                            else
+                            {
+                                ExceptionManager.WriteError("submit_SubActivity => Non Error" + response.messageResponse);
+                            }
                         }
-                        return resultAjax;
                     }
-                    catch (Exception ex)
-                    {
-                        ExceptionManager.WriteError("apiProducerApproveAsync => ERROR_" + ex.Message);
-                    }
+                    return resultAjax;
 
                 }
             }
@@ -714,7 +708,7 @@ namespace eActForm.BusinessLayer
                                  detail = dr["detail"].ToString(),
                                  attachedFileName = dr["attachedFileName"].ToString(),
                                  attachedUrl = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId)),
-            }).ToList();
+                             }).ToList();
 
                 return lists;
 

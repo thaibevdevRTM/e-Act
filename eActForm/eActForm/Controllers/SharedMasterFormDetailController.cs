@@ -238,6 +238,7 @@ namespace eActForm.Controllers
                     budgetMainModel.returnAmount = item.returnAmount;
                     budgetMainModel.yearBG = item.yearBG;
                     budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; ;
+                    budgetMainModel.brandName = item.brandName;
                     budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
                     activity_TBMMKT_Model.budgetMainTotalList.Add(budgetMainModel);
                 }

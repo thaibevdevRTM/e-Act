@@ -64,6 +64,9 @@ namespace eActForm.Controllers
             {
                 if (data != null)
                 {
+
+
+
                     if (ApproveAppCode.updateApprove(data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == eventName).FirstOrDefault().val1, data.message, null, data.approver) > 0)
                     {
                         resultAjax.Success = true;

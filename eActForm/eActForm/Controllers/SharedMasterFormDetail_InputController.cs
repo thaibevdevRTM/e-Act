@@ -291,6 +291,7 @@ namespace eActForm.Controllers
                         budgetMainModel.returnAmount = item.returnAmount;
                         budgetMainModel.yearBG = item.yearBG;
                         budgetMainModel.brandId = brandId;
+                        budgetMainModel.brandName = item.brandName;
                         budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
                         budgetMainModel.typeShowBudget = AppCode.typeShowBudget.main.ToString();
                         model.budgetMainTotalList.Add(budgetMainModel);
