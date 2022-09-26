@@ -256,7 +256,7 @@ namespace eActForm.Controllers
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
 
 
-                if (status == "2" || status == "3")
+               if (status == "2" || status == "3")
                 {
                     //ดึงยอด ก่อนส่่งอนุมัติมาแสดง
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
