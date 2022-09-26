@@ -237,10 +237,39 @@ namespace eActForm.Controllers
                     budgetMainModel.useAmountTotal = item.useAmount;
                     budgetMainModel.returnAmount = item.returnAmount;
                     budgetMainModel.yearBG = item.yearBG;
-                    budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; ;
+                    budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
                     budgetMainModel.brandName = item.brandName;
                     budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
                     activity_TBMMKT_Model.budgetMainTotalList.Add(budgetMainModel);
+                }
+                foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.actMain.ToString()))
+                {
+                    BudgetTotal budgetMainModel = new BudgetTotal();
+                    budgetMainModel.totalBudget = item.budgetTotal;
+                    budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                    budgetMainModel.amountBalanceTotal = item.amountBalance;
+                    budgetMainModel.useAmountTotal = item.useAmount;
+                    budgetMainModel.returnAmount = item.returnAmount;
+                    budgetMainModel.yearBG = item.yearBG;
+                    budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                    budgetMainModel.brandName = item.brandName;
+                    budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityType) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityType).FirstOrDefault().activitySales : "";
+                    budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                    activity_TBMMKT_Model.budgetMainActTypelList.Add(budgetMainModel);
+                }
+                foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.subActMain.ToString()))
+                {
+                    BudgetTotal budgetMainModel = new BudgetTotal();
+                    budgetMainModel.totalBudget = item.budgetTotal;
+                    budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                    budgetMainModel.amountBalanceTotal = item.amountBalance;
+                    budgetMainModel.useAmountTotal = item.useAmount;
+                    budgetMainModel.returnAmount = item.returnAmount;
+                    budgetMainModel.yearBG = item.yearBG;
+                    budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; 
+                    budgetMainModel.brandName = item.brandName;
+                    budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                    activity_TBMMKT_Model.budgetTotalActTypeList.Add(budgetMainModel);
                 }
                 activity_TBMMKT_Model.budgetTotalList = budgetTotalsList;
 

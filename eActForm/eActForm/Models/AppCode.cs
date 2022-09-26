@@ -140,7 +140,10 @@ namespace eActForm.Models
         public enum typeShowBudget
         {
             main = 0,
-            subMain = 1
+            subMain = 1,
+            actMain = 2,
+            subActMain = 3,
+
         }
 
 

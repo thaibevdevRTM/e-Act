@@ -587,6 +587,39 @@ namespace eActForm.BusinessLayer
 
         }
 
+        public static List<BudgetControlModels> getBalanceByActType(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId, string fiscalYear)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBalanceEvenTBM"
+                    , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter("@companyId", companyId)
+               ,new SqlParameter("@actTypeId", getActTypeId)
+               ,new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@activityId", activityId)
+               ,new SqlParameter("@fiscalYear", fiscalYear)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
+                                 balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
+                                 amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
+                                 EO = dr["EO"].ToString(),
+                                 LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
+                                 totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 year = dr["year"].ToString(),
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
+        }
+
 
         public static List<BudgetTotal> getBudgetActBeer(string actType, string brandId, string center, string channelId, string periodEndDate)
         {

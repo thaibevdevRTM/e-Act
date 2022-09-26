@@ -240,6 +240,7 @@ namespace eActForm.Controllers
 
                 Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
                 List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
+                List<BudgetTotal> budgetTotalActTypeList = new List<BudgetTotal>();
                 var getListEO = JsonConvert.DeserializeObject<List<CostThemeDetailOfGroupByPriceTBMMKT>>(listEO);
                 var groupEO = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.UseYearSelect }).Select((group, index) => new BudgetTotal
                 {
@@ -247,6 +248,7 @@ namespace eActForm.Controllers
                     fiscalYear = group.First().UseYearSelect,
                     total = group.Sum(c => c.total),
                 }).ToList();
+
 
                 var getTxtActGroup = !string.IsNullOrEmpty(subjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id.Equals(subjectId)).FirstOrDefault().description : "";
                 var getActTypeId = !string.IsNullOrEmpty(getTxtActGroup) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Equals("bg") && x.activitySales.Equals(getTxtActGroup)).FirstOrDefault().id : "";
@@ -321,13 +323,12 @@ namespace eActForm.Controllers
                     //budget submain
                     foreach (var item in groupEO)
                     {
-
                         BudgetTotal budgetTotalModel = new BudgetTotal();
                         BudgetTotal budgetMainModel = new BudgetTotal();
                         var getAmount = ActFormAppCode.getBalanceByEO(item.EO, companyId, getActTypeId, channelId, brandId, activityId, item.fiscalYear);
-                        string[] ipArray = ConfigurationManager.AppSettings["Instock"].ToLower().Split(',');
+                        string[] stockArray = ConfigurationManager.AppSettings["Instock"].ToLower().Split(',');
 
-                        var getSum = getListEO.Where(x => x.EO == item.EO && x.UseYearSelect == item.fiscalYear && !ipArray.Contains(x.IO.ToLower())
+                        var getSum = getListEO.Where(x => x.EO == item.EO && x.UseYearSelect == item.fiscalYear && !stockArray.Contains(x.IO.ToLower())
                        ).GroupBy(x => new { x.EO, x.UseYearSelect }).Select((group, index) => new BudgetTotal
                        {
                            total = group.Sum(c => c.total),
@@ -368,6 +369,105 @@ namespace eActForm.Controllers
                     }
 
 
+
+                    var groupAct = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.EO, x.UseYearSelect, x.activityTypeId }).Select((group, index) => new BudgetTotal
+                    {
+                        EO = group.First().EO,
+                        fiscalYear = group.First().UseYearSelect,
+                        activityTypeId = group.First().activityTypeId,
+                        total = group.Sum(c => c.total),
+                    }).ToList();
+                    foreach (var item in groupAct)
+                    {
+                        BudgetTotal budgetTotalModel = new BudgetTotal();
+                        BudgetTotal budgetMainModel = new BudgetTotal();
+                        var getAmount = ActFormAppCode.getBalanceByActType(item.EO, companyId, item.activityTypeId, channelId, brandId, activityId, item.fiscalYear);
+                        if (getAmount.Any())
+                        {
+                            string[] stockArray = ConfigurationManager.AppSettings["Instock"].ToLower().Split(',');
+
+                            var getSum = getListEO.Where(x => x.EO == item.EO && x.UseYearSelect == item.fiscalYear && x.activityTypeId == item.activityTypeId && !stockArray.Contains(x.IO.ToLower())
+                           ).GroupBy(x => new { x.EO, x.UseYearSelect }).Select((group, index) => new BudgetTotal
+                           {
+                               total = group.Sum(c => c.total),
+                           }).ToList();
+
+                            if (getAmount.Any())
+                            {
+
+                                var returnAmount = returnAmountList.Where(a => a.EO == item.EO && a.fiscalYear == item.fiscalYear).ToList();
+                                budgetTotalModel.returnAmountBrand = returnAmount.Any() ? returnAmount.FirstOrDefault().returnAmountBrand : 0;
+                                if (status == "2" || status == "3")
+                                {
+                                    item.total = 0;
+                                }
+                                else
+                                {
+                                    item.total = getSum.Any() ? getSum.FirstOrDefault().total : 0;
+                                }
+
+                                budgetTotalModel.EO = item.EO;
+                                budgetTotalModel.useAmount = getAmount.FirstOrDefault().balance + item.total;
+                                budgetTotalModel.amount = getAmount.FirstOrDefault().amount;
+                                budgetTotalModel.amountBalance = getAmount.FirstOrDefault().amount - getAmount.FirstOrDefault().balance - item.total + budgetTotalModel.returnAmountBrand;
+
+                                var amount = getAmount.FirstOrDefault().amount > 0 ? getAmount.FirstOrDefault().amount : 1;
+                                budgetTotalModel.amountBalancePercen = ((getAmount.FirstOrDefault().balance + item.total) / amount) * 100;
+                                budgetTotalModel.brandId = brandId;
+                                budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                                budgetTotalModel.activityTypeId = item.activityTypeId;
+                                budgetTotalModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                                budgetTotalModel.activityType = !string.IsNullOrEmpty(item.activityTypeId) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityTypeId).FirstOrDefault().activitySales : "";
+                                budgetTotalModel.fiscalYear = item.fiscalYear;
+                                budgetTotalModel.yearBG = getAmount.FirstOrDefault().year;
+                                budgetTotalModel.useAmountTotal = item.total;
+                                budgetTotalModel.typeShowBudget = AppCode.typeShowBudget.subActMain.ToString();
+                                budgetTotalActTypeList.Add(budgetTotalModel);
+
+                            }
+                        }
+                    }
+
+
+
+                    var groupYearAndAct = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.UseYearSelect, x.activityTypeId }).Select((group, index) => new BudgetTotal
+                    {
+                        fiscalYear = group.First().UseYearSelect,
+                        activityTypeId = group.First().activityTypeId,
+                    }).ToList();
+
+                    foreach (var item in groupYearAndAct)
+                    {
+                        var getAmount = ActFormAppCode.getBalanceByActType(groupEO.FirstOrDefault().EO, companyId, item.activityTypeId, channelId, brandId, activityId, item.fiscalYear).AsEnumerable();
+                        if (getAmount.Any())
+                        {
+                            //get sum input
+                            var budgetTotal = budgetTotalActTypeList.Where(x => x.fiscalYear == item.fiscalYear && x.activityTypeId == item.activityTypeId).ToList();
+                            //get budgetTotal
+                            
+                            // get return
+                            var returnAmount = returnAmountList.Where(a => a.fiscalYear == item.fiscalYear).FirstOrDefault().returnAmount;
+                            var totalBudget = getAmount.FirstOrDefault().amountTotal;
+                            var balanceTotal = getAmount.FirstOrDefault().balanceTotal;
+                            var sumTotal = budgetTotal.Select(c => c.useAmountTotal).Sum();
+
+                            BudgetTotal budgetMainModel = new BudgetTotal();
+                            budgetMainModel.totalBudget = totalBudget;
+                            budgetMainModel.totalBudgetChannel = totalBudget;
+                            budgetMainModel.amountBalanceTotal = totalBudget - balanceTotal - sumTotal + returnAmount;
+                            budgetMainModel.useAmountTotal = balanceTotal + sumTotal;
+                            budgetMainModel.returnAmount = returnAmount;
+                            budgetMainModel.yearBG = getAmount.FirstOrDefault().year;
+                            budgetMainModel.brandId = brandId;
+                            budgetMainModel.activityTypeId = item.activityTypeId;
+                            budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityTypeId) ? QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id.Equals(item.activityTypeId)).FirstOrDefault().activityAccount : "";
+                            budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                            budgetMainModel.typeShowBudget = AppCode.typeShowBudget.actMain.ToString();
+                            model.budgetMainActTypelList.Add(budgetMainModel);
+                        }
+                    }
+
+
                     var groupYear = getListEO.Where(x => !string.IsNullOrEmpty(x.EO)).GroupBy(x => new { x.UseYearSelect }).Select((group, index) => new BudgetTotal
                     {
                         fiscalYear = group.First().UseYearSelect,
@@ -401,7 +501,7 @@ namespace eActForm.Controllers
                     }
                 }
 
-
+                model.budgetTotalActTypeList = budgetTotalActTypeList;
                 model.budgetTotalList = budgetTotalsList;
 
                 TempData["showBudget" + activityId] = model;
