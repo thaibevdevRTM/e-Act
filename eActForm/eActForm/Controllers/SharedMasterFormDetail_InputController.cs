@@ -256,7 +256,7 @@ namespace eActForm.Controllers
                 decimal? sumTotal_Input = 0, amountBalanceTotal = 0, useAmountTotal = 0, totalBudgetChannel = 0, sumReturn = 0;
 
 
-               if (status == "2" || status == "3")
+                if (status == "2" || status == "3")
                 {
                     //ดึงยอด ก่อนส่่งอนุมัติมาแสดง
                     var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activityId);
@@ -298,6 +298,42 @@ namespace eActForm.Controllers
                         budgetMainModel.typeShowBudget = AppCode.typeShowBudget.main.ToString();
                         model.budgetMainTotalList.Add(budgetMainModel);
                     }
+
+                    foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.actMain.ToString()))
+                    {
+                        BudgetTotal budgetMainModel = new BudgetTotal();
+                        budgetMainModel.totalBudget = item.budgetTotal;
+                        budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                        budgetMainModel.amountBalanceTotal = item.amountBalance;
+                        budgetMainModel.useAmountTotal = item.useAmount;
+                        budgetMainModel.returnAmount = item.returnAmount;
+                        budgetMainModel.yearBG = item.yearBG;
+                        budgetMainModel.EO = item.EO;
+                        budgetMainModel.brandId = item.brandName;
+                        budgetMainModel.brandName = item.brandName;
+                        budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityType) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityType).FirstOrDefault().activitySales : "";
+                        budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                        model.budgetMainActTypelList.Add(budgetMainModel);
+                    }
+                    foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.subActMain.ToString()))
+                    {
+                        BudgetTotal budgetMainModel = new BudgetTotal();
+                        budgetMainModel.totalBudget = item.budgetTotal;
+                        budgetMainModel.amount = item.budgetTotal;
+                        budgetMainModel.amountBalance = item.amountBalance;
+                        budgetMainModel.useAmount = item.useAmount;
+                        budgetMainModel.returnAmountBrand = item.returnAmount;
+                        budgetMainModel.yearBG = item.yearBG;
+                        budgetMainModel.EO = item.EO;
+                        budgetMainModel.brandId = item.brandName;
+                        budgetMainModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                        budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityType) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityType).FirstOrDefault().activitySales : "";
+                        budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
+                        model.budgetTotalActTypeList.Add(budgetMainModel);
+                    }
+
+
+
                 }
                 else
                 {
@@ -422,7 +458,7 @@ namespace eActForm.Controllers
                                 budgetTotalModel.yearBG = getAmount.FirstOrDefault().year;
                                 budgetTotalModel.useAmountTotal = item.total;
                                 budgetTotalModel.typeShowBudget = AppCode.typeShowBudget.subActMain.ToString();
-                                budgetTotalActTypeList.Add(budgetTotalModel);
+                                model.budgetTotalActTypeList.Add(budgetTotalModel);
 
                             }
                         }
@@ -444,7 +480,7 @@ namespace eActForm.Controllers
                             //get sum input
                             var budgetTotal = budgetTotalActTypeList.Where(x => x.fiscalYear == item.fiscalYear && x.activityTypeId == item.activityTypeId).ToList();
                             //get budgetTotal
-                            
+
                             // get return
                             var returnAmount = returnAmountList.Where(a => a.fiscalYear == item.fiscalYear).FirstOrDefault().returnAmount;
                             var totalBudget = getAmount.FirstOrDefault().amountTotal;
@@ -500,8 +536,7 @@ namespace eActForm.Controllers
                         model.budgetMainTotalList.Add(budgetMainModel);
                     }
                 }
-
-                model.budgetTotalActTypeList = budgetTotalActTypeList;
+               
                 model.budgetTotalList = budgetTotalsList;
 
                 TempData["showBudget" + activityId] = model;
