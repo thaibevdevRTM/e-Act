@@ -862,14 +862,13 @@ namespace eForms.Presenter.AppCode
 
                         modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
                         modelBudget.budgetGroupType = ImportBudgetType;
-                        modelBudget.chanelName = dt.Rows[i]["channel"].ToString();
+                        //modelBudget.chanelName = dt.Rows[i]["channel"].ToString();
                         modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                         modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                         modelBudget.createdByUserId = empId;
                         modelBudget.LE = int.Parse(getLE) + 1;
 
-                        typeImportCatch += "//// column name : " + dt.Rows[i]["channel"].ToString();
-                        modelBudget.chanelId = dt.Rows[i]["channel"].ToString();
+                        //modelBudget.chanelId = dt.Rows[i]["channel"].ToString();
                         modelBudget.amount = 0;
                         modelBudget.EO = ImportBudgetControlAppCode.genEO(strCon, modelBudget); //genauto
                         budgetList.Add(modelBudget);
@@ -890,7 +889,11 @@ namespace eForms.Presenter.AppCode
                         }
                         if (BudgetLEList.Any())
                         {
-                            int setIndex = 3;
+                            int setIndex = 2;
+                            if (model.companyId != ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                            {
+                                setIndex = 3;
+                            }
 
                             for (int ii = setIndex; ii < dt.Columns.Count; ii++)
                             {
@@ -964,6 +967,130 @@ namespace eForms.Presenter.AppCode
 
             return resultAjax;
         }
+
+        public static AjaxResult PrepareData_ImportBudgetChannel(string strCon, string ImportBudgetType, DataTable dt, BudgetControlModels model, string getLE, string empId)
+        {
+            var resultAjax = new AjaxResult();
+            string typeImportCatch = "", genId = "", genIdLE = "";
+            int rowImport = 0;
+            List<BudgetControlModels> budgetList = new List<BudgetControlModels>();
+            List<BudgetControl_LEModel> BudgetLEList = new List<BudgetControl_LEModel>();
+            List<BudgetControl_ActType> bgActTypeList = new List<BudgetControl_ActType>();
+            try
+            {
+               // var resultAjax_ = ImportBudgetControlAppCode.PrepareData_ImportBudget(strCon, ImportBudgetControlAppCode.channel, dt, model, getLE, empId);
+                //resultAjax.Success = resultAjax_.Success;
+                //resultAjax.Message = resultAjax_.Message;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+
+                    typeImportCatch = ImportBudgetControlAppCode.channel;
+                    rowImport = rowImport++;
+                    for (int ii = 2; ii < dt.Columns.Count; ii++)
+                    {
+                        BudgetControlModels modelBudget = new BudgetControlModels();
+                        genId = Guid.NewGuid().ToString();
+                        modelBudget.id = genId;
+                        modelBudget.companyId = model.companyId;
+                        typeImportCatch = "/// brand : " + dt.Rows[i]["BRAND"].ToString();
+
+                        if (!QueryGetAllBrand.GetAllBrand(strCon).Where(x => x.id.Equals(dt.Rows[i]["brandId"].ToString())).Any())
+                        {
+                            resultAjax.Message += "brandId is null &&";
+                            throw new Exception();
+                        }
+
+
+                        modelBudget.brandId = dt.Rows[i]["brandId"].ToString();
+                        modelBudget.budgetGroupType = ImportBudgetControlAppCode.channel;
+                        modelBudget.amount = decimal.Parse(checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                        modelBudget.chanelName = dt.Columns[ii].ToString();
+                        modelBudget.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                        modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                        modelBudget.createdByUserId = empId;
+                        modelBudget.LE = int.Parse(getLE) + 1;
+
+                        if (model.companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                        {
+                            typeImportCatch += "//// column name : " + dt.Columns[ii].ToString();
+                            modelBudget.chanelId = QueryGetAllChanel.getAllChanel(strCon).Where(x => x.cust.Equals(dt.Columns[ii].ToString())).FirstOrDefault().id;
+                            modelBudget.EO = ImportBudgetControlAppCode.genEO(strCon, modelBudget); //genauto
+                        }
+                        else
+                        {
+                            modelBudget.chanelId = dt.Columns[ii].ToString();
+                            modelBudget.EO = ""; //genauto
+                        }
+
+                        budgetList.Add(modelBudget);
+
+
+                        if (budgetList.Any())
+                        {
+                            //Add Model LE
+                            BudgetControl_LEModel modelLE = new BudgetControl_LEModel();
+                            genIdLE = Guid.NewGuid().ToString();
+                            modelLE.id = genIdLE;
+                            modelLE.budgetId = genId;
+                            modelLE.startDate = MainAppCode.convertStrToDate(model.startDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                            modelLE.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                            modelLE.descripion = "";
+                            modelLE.createdByUserId = empId;
+                            BudgetLEList.Add(modelLE);
+                        }
+                        if (BudgetLEList.Any())
+                        {
+                            BudgetControl_ActType bgActTypeModel = new BudgetControl_ActType();
+                            bgActTypeModel.id = Guid.NewGuid().ToString();
+                            bgActTypeModel.budgetId = genId;
+                            bgActTypeModel.budgetLEId = genIdLE;
+                            bgActTypeModel.actTypeId = "";
+                            bgActTypeModel.amount = decimal.Parse(checkNullorEmpty(dt.Rows[i][dt.Columns[ii].ToString()].ToString()));
+                            bgActTypeModel.createdByUserId = empId;
+                            bgActTypeList.Add(bgActTypeModel);
+                        }
+                    }
+
+                }
+
+                if (budgetList.Any())
+                {
+
+                    foreach (var item in budgetList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetControlTemp(strCon, item, model.companyId);
+                    }
+                }
+
+                if (BudgetLEList.Any())
+                {
+                    //var delCount = +ImportBudgetControlAppCode.InsertBudgetLE_History(AppCode.StrCon, BudgetLEList.FirstOrDefault().endDate);
+                    foreach (var item in BudgetLEList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetLETemp(strCon, item, model.companyId);
+                    }
+                }
+                if (bgActTypeList.Any())
+                {
+                    //var delCount = +ImportBudgetControlAppCode.InsertBudgetActType_History(AppCode.StrCon , BudgetLEList.FirstOrDefault().endDate);
+                    foreach (var item in bgActTypeList)
+                    {
+                        int result = +ImportBudgetControlAppCode.InsertBudgetActTypeTemp(strCon, item, model.companyId);
+                    }
+                }
+
+                resultAjax.Success = true;
+                resultAjax.Message = "Type Import Success : " + ImportBudgetType;
+            }
+            catch (Exception ex)
+            {
+                resultAjax.Success = false;
+                resultAjax.Message = "Type Import : " + ImportBudgetType + "Error : " + typeImportCatch + "EX : " + ex;
+            }
+
+            return resultAjax;
+        }
+
 
         public static string checkNullorEmpty(string p)
         {

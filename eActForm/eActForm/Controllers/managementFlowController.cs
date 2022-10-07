@@ -86,25 +86,32 @@ namespace eActForm.Controllers
 
         public ActionResult genDataApproveList(getDataList_Model model, string typeFlow)
         {
-            ManagementFlow_Model management_Model = new ManagementFlow_Model();
-            management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
-            management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
-            management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
-            management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
-            management_Model.getDDLActiveList = managementFlowAppCode.getActive();
-            management_Model.typeFlow = typeFlow;
-            management_Model.p_productType = model.productTypeId;
-            management_Model.p_productCateId = model.productCateId;
-            management_Model.p_productBrandId = model.productBrandId;
-            management_Model.p_flowLimitId = model.flowLimitId;
-            management_Model.p_channelId = model.channelId;
-            management_Model.p_subjectId = model.subjectId;
-            management_Model.activityTypeId = model.activityGroup;
-            management_Model.customerId = model.customerId;
-            management_Model.p_deparmentId = model.deparmentId;
-            management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
+            try
+            {
+                ManagementFlow_Model management_Model = new ManagementFlow_Model();
+                management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
+                management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
+                management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
+                management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
+                management_Model.getDDLActiveList = managementFlowAppCode.getActive();
+                management_Model.typeFlow = typeFlow;
+                management_Model.p_productType = model.productTypeId;
+                management_Model.p_productCateId = model.productCateId;
+                management_Model.p_productBrandId = model.productBrandId;
+                management_Model.p_flowLimitId = model.flowLimitId;
+                management_Model.p_channelId = model.channelId;
+                management_Model.p_subjectId = model.subjectId;
+                management_Model.activityTypeId = model.activityGroup;
+                management_Model.customerId = model.customerId;
+                management_Model.p_deparmentId = model.deparmentId;
+                management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
 
-            TempData["management_Model"] = management_Model;
+                TempData["management_Model"] = management_Model;
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("ManagementFlowController >> genDataApproveList => " + ex.Message);
+            }
             return RedirectToAction("approveList");
         }
 

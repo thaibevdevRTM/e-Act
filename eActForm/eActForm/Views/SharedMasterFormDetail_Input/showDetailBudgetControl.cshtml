@@ -1,145 +1,246 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
+@{
+    int row = 0;
+}
 
+
+<style type="text/css">
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    }
+</style>
 
 @if (Model.budgetTotalList.Count > 0)
 {
-    <div class="col-md-4 col-sm-4">
-    </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 widget_tally_box">
 
-        <div class="col-xs-12 bg-white progress_summary">
-            <div id="divProgress" class="row">
-
-                @{ int row = 0; }
-
-                @foreach (var subItem in Model.budgetMainTotalList)
-                {
+    foreach (var subItem in Model.budgetMainTotalList)
+    {
+        <div class="col-md-6 col-sm-12 col-xs-12 widget_tally_box">
                     <div class="x_panel">
+                        <h2>  @subItem.yearBG </h2>
+                        <table id="datatable" class="table table-striped table-hover">
+                            <thead>
+                                <tr style="background-color:#2B5D95;color:#ffffff;" class="font10">
+                                    <th scope="col" style="text-align:center">งบ</th>
+                                    <th scope="col" style="text-align:center">ทั้งปี</th>
+                                    <th scope="col" style="text-align:center">สะสม</th>
+                                    <th scope="col" style="text-align:center">return</th>
+                                    <th scope="col" style="text-align:center">คงเหลือ</th>
+                                    <th scope="col" style="text-align:center">Percen</th>
+                                </tr>
+                            </thead>
 
-                        <div class="col-md-12 col-sm-12 col-xs-12 widget_tally_box" style="background-color: #2f74b5; color: white; ">
-                            @if (!string.IsNullOrEmpty(subItem.brandId))
-                            {
-                                <span>
-                                    ปีงบ @subItem.yearBG งบประมาณทั้งปี  @subItem.totalBudget.Value.ToString("#,##0.00") ใช้ไปสะสม @subItem.useAmountTotal.Value.ToString("#,##0.00") return @subItem.returnAmount.Value.ToString("#,##0.00") คงเหลือ @subItem.amountBalanceTotal.Value.ToString("#,##0.00") <br />
-                                </span>
-                            }
-                            else
-                            {
-                                <span>
-                                    ปีงบ @subItem.yearBG งบประมาณทั้งปี  @subItem.channelName ทั้งปี  @subItem.totalBudgetChannel.Value.ToString("#,##0.00") ใช้ไปสะสม  @subItem.useAmountTotal.Value.ToString("#,##0.00") return @subItem.returnAmount.Value.ToString("#,##0.00") คงเหลือ @subItem.amountBalanceTotal.Value.ToString("#,##0.00") <br />
-                                </span>
-                            }
+                            <tbody>
 
-                            @Html.HiddenFor(x => subItem.totalBudget, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtTotalBudget" })
-                            @Html.HiddenFor(x => subItem.useAmountTotal, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmountTotal" })
-                            @Html.HiddenFor(x => subItem.returnAmount, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmount" })
-                            @Html.HiddenFor(x => subItem.amountBalanceTotal, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
-                            @Html.HiddenFor(x => subItem.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget" })
-                            @Html.HiddenFor(x => subItem.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
-                        </div>
+                                <tr class="gradeX font10">
 
-                        @{
-                            row++;
-                        }
-
-                        @foreach (var item in Model.budgetTotalList)
-                        {
-                            if (item.yearBG == subItem.yearBG)
-                            {
-
-                                string result = String.Format("{0:n2}", item.amountBalancePercen);
-                                string intBalance = item.amountBalancePercen.ToString() + "%";
-                                <div class="col-md-12 col-sm-12 col-xs-12 widget_tally_box" style="background-color: #808080; color: white;">
-                                    @if (!string.IsNullOrEmpty(item.brandId))
+                                    @if (!string.IsNullOrEmpty(subItem.brandId))
                                     {
-                                        <span>ปีงบ @item.yearBG งบ @item.activityType ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span> <br />
+                                        <td>
+                                            @subItem.brandName
+                                        </td>
                                     }
                                     else
                                     {
-                                        <span>ปีงบ @item.yearBG งบ @item.brandName ทั้งปี  @item.amount.Value.ToString("#,##0.00")  ใช้ไปสะสม  @item.useAmount.Value.ToString("#,##0.00") return @item.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ  @item.amountBalance.Value.ToString("#,##0.00")</span> <br />
+                                        <td>
+                                            @subItem.channelName
+                                        </td>
                                     }
 
-                                    @Html.HiddenFor(x => item.amount, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtBudgetTotal__" + row })
-                                    @Html.HiddenFor(x => item.useAmount, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmount__" + row })
-                                    @Html.HiddenFor(x => item.returnAmountBrand, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmountBrand__" + row })
-                                    @Html.HiddenFor(x => item.amountBalance, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalance__" + row })
-                                    @Html.HiddenFor(x => item.EO, new { @id = "amountBudgetList[" + row + "].EO", Name = "amountBudgetList[" + row + "].EO", @class = "form-control textboxcss text-right txtEO__" + row })
-                                    @Html.HiddenFor(x => item.activityType, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
-                                    @Html.HiddenFor(x => item.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget__" + row })
-                                    @Html.HiddenFor(x => item.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
-                                    <div class="clearfix"></div>
-                                </div>
+                                    <td>
+                                        @subItem.totalBudget.Value.ToString("#,##0.00")
+                                    </td>
+                                    <td>
+                                        @subItem.useAmountTotal.Value.ToString("#,##0.00")
+                                    </td>
+                                    <td>
+                                       @subItem.returnAmount.Value.ToString("#,##0.00")
+                                    </td>
+                                    <td>
+                                        @subItem.amountBalanceTotal.Value.ToString("#,##0.00")
+                                    </td>
+                                    <td>
+                                        @{
+                                            decimal? intBalance1 = (subItem.useAmountTotal / subItem.totalBudget) * 100;
+                                            string result1 = String.Format("{0:n2}", intBalance1) + "%";
+                                        }
+                                        <div class="">
+                                            <div class="progress-bar bg-green font10" role="progressbar" style="margin:0px; color: black; width: @result1" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@result1</div>
+                                        </div>
+                                    </td>
+                                    @Html.HiddenFor(x => subItem.totalBudget, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtTotalBudget" })
+                                    @Html.HiddenFor(x => subItem.useAmountTotal, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmountTotal" })
+                                    @Html.HiddenFor(x => subItem.returnAmount, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmount" })
+                                    @Html.HiddenFor(x => subItem.amountBalanceTotal, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
+                                    @Html.HiddenFor(x => subItem.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget" })
+                                    @Html.HiddenFor(x => subItem.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
 
-                                <div class="col-xs-4">
-                                    <span>@item.EO</span>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-green" role="progressbar" style="width: @intBalance" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-2 more_info">
-                                    <span>@result%</span>
-                                </div>
+                                </tr>
+                                @{
+                                    row++;
+                                }
 
 
-                                row++;
-                            }
-                        }
+                                @foreach (var item in Model.budgetTotalList)
+                                {
+                                    <tr class="font10">
+                                        @if (item.yearBG == subItem.yearBG)
+                                        {
 
-                        @if (Model.budgetMainActTypelList.Count > 0)
-                        {
-                            <div class="col-md-12 col-sm-12 col-xs-12 widget_tally_box">
-                                @foreach (var itemAct in Model.budgetMainActTypelList)
+                                            if (!string.IsNullOrEmpty(item.brandId))
+                                            {
+                                                <td>
+                                                    @item.EO
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @item.brandName
+                                                </td>
+                                            }
+                                            <td>
+                                                @item.amount.Value.ToString("#,##0.00")
+                                            </td>
+                                            <td>
+                                                @item.useAmount.Value.ToString("#,##0.00")
+                                            </td>
+                                            <td>
+                                                @item.returnAmountBrand.Value.ToString("#,##0.00")
+                                            </td>
+                                            <td>
+                                                @item.amountBalance.Value.ToString("#,##0.00")
+                                            </td>
+                                            <td>
+                                                @{
+                                                    decimal? intBalance2 = (item.useAmount / item.amount) * 100;
+                                                    string result2 = String.Format("{0:n2}", intBalance2) + "%";
+                                                }
+                                                <div class="">
+                                                    <div class="progress-bar bg-green font10" role="progressbar" style="margin:0px; color: black; width: @result2" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@result2</div>
+                                                </div>
+
+                                            </td>
+                                            @Html.HiddenFor(x => item.amount, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtBudgetTotal__" + row })
+                                            @Html.HiddenFor(x => item.useAmount, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmount__" + row })
+                                            @Html.HiddenFor(x => item.returnAmountBrand, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmountBrand__" + row })
+                                            @Html.HiddenFor(x => item.amountBalance, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalance__" + row })
+                                            @Html.HiddenFor(x => item.EO, new { @id = "amountBudgetList[" + row + "].EO", Name = "amountBudgetList[" + row + "].EO", @class = "form-control textboxcss text-right txtEO__" + row })
+                                            @Html.HiddenFor(x => item.activityType, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
+                                            @Html.HiddenFor(x => item.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget__" + row })
+                                            @Html.HiddenFor(x => item.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
+                                            row++;
+                                        }
+                                    </tr>
+                                }
+                                @*@if (Model.budgetMainActTypelList.Count > 0)
                                 {
 
-                                    if (!string.IsNullOrEmpty(itemAct.channelName) && itemAct.yearBG == subItem.yearBG)
+                                    foreach (var itemAct in Model.budgetMainActTypelList)
                                     {
-                                        <span style="color:black">งบประมาณกิจกรรม @itemAct.activityType.Substring(0, 2) ทั้งปี @itemAct.totalBudgetChannel.Value.ToString("#,##0.00")  ใช้ไปสะสม  @itemAct.useAmountTotal.Value.ToString("#,##0.00") return @itemAct.returnAmount.Value.ToString("#,##0.00") คงเหลือ  @itemAct.amountBalanceTotal.Value.ToString("#,##0.00")</span> <br />
 
-                                        @Html.HiddenFor(x => itemAct.totalBudget, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtTotalBudget" })
-                                        @Html.HiddenFor(x => itemAct.useAmountTotal, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmountTotal" })
-                                        @Html.HiddenFor(x => itemAct.returnAmount, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmount" })
-                                        @Html.HiddenFor(x => itemAct.amountBalanceTotal, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
-                                        @Html.HiddenFor(x => itemAct.activityTypeId, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
-                                        @Html.HiddenFor(x => itemAct.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget" })
-                                        @Html.HiddenFor(x => itemAct.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
-                                        row++;
 
-                                        foreach (var itemSubAct in Model.budgetTotalActTypeList)
+                                        if (!string.IsNullOrEmpty(itemAct.channelName) && itemAct.yearBG == subItem.yearBG)
                                         {
-                                            if (itemSubAct.activityType == itemAct.activityType)
-                                            {
-                                                <span>
-                                                    @itemSubAct.brandName ทั้งปี  @itemSubAct.amount.Value.ToString("#,##0.00") ใช้ไปสะสม  @itemSubAct.useAmount.Value.ToString("#,##0.00") return @itemSubAct.returnAmountBrand.Value.ToString("#,##0.00") คงเหลือ @itemSubAct.amountBalance.Value.ToString("#,##0.00") <br />
-                                                </span>
-                                                @Html.HiddenFor(x => itemSubAct.amount, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtBudgetTotal__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.useAmount, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmount__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.returnAmountBrand, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmountBrand__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.amountBalance, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalance__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.EO, new { @id = "amountBudgetList[" + row + "].EO", Name = "amountBudgetList[" + row + "].EO", @class = "form-control textboxcss text-right txtEO__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.activityTypeId, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget__" + row })
-                                                @Html.HiddenFor(x => itemSubAct.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
-                                                row++;
-                                            }
+                                            <tr style="background-color: #2f74b5; color: white;">
+                                                <td>
+                                                    @itemAct.activityType.Substring(0, 2)
+                                                </td>
+                                                <td>
+                                                    @itemAct.totalBudgetChannel.Value.ToString("#,##0.00")
+                                                </td>
+                                                <td>
+                                                    @itemAct.useAmountTotal.Value.ToString("#,##0.00")
+                                                </td>
+                                                <td>
+                                                    @itemAct.returnAmount.Value.ToString("#,##0.00")
+                                                </td>
+                                                <td>
+                                                    @itemAct.amountBalanceTotal.Value.ToString("#,##0.00")
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        decimal? intBalance3 = (itemAct.useAmountTotal / itemAct.totalBudgetChannel) * 100;
+                                                        string result3 = String.Format("{0:n2}", intBalance3) + "%";
+                                                    }
+                                                    <div class="">
+                                                        <div class="progress-bar bg-green" role="progressbar" style="margin:0px; color: black; width: @result3" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@result3</div>
+                                                    </div>
 
+                                                </td>
+                                            </tr>
+                                            @Html.HiddenFor(x => itemAct.totalBudget, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtTotalBudget" })
+                                            @Html.HiddenFor(x => itemAct.useAmountTotal, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmountTotal" })
+                                            @Html.HiddenFor(x => itemAct.returnAmount, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmount" })
+                                            @Html.HiddenFor(x => itemAct.amountBalanceTotal, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalanceTotal" })
+                                            @Html.HiddenFor(x => itemAct.activityTypeId, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
+                                            @Html.HiddenFor(x => itemAct.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget" })
+                                            @Html.HiddenFor(x => itemAct.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
+                                            row++;
+
+                                            foreach (var itemSubAct in Model.budgetTotalActTypeList)
+                                            {
+                                                if (itemSubAct.activityType == itemAct.activityType && itemSubAct.yearBG == itemAct.yearBG)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @itemSubAct.brandName
+                                                        </td>
+                                                        <td>
+                                                            @itemSubAct.amount.Value.ToString("#,##0.00")
+                                                        </td>
+                                                        <td>
+                                                            @itemSubAct.useAmount.Value.ToString("#,##0.00")
+                                                        </td>
+                                                        <td>
+                                                            @itemSubAct.returnAmountBrand.Value.ToString("#,##0.00")
+                                                        </td>
+                                                        <td>
+                                                            @itemSubAct.amountBalance.Value.ToString("#,##0.00")
+                                                        </td>
+                                                        <td>
+                                                            @{
+                                                                decimal? intBalance4 = (itemSubAct.useAmount / itemSubAct.amount) * 100;
+                                                                string result4 = String.Format("{0:n2}", intBalance4) + "%";
+                                                            }
+
+                                                            <div class="">
+                                                                <div class="progress-bar bg-green" role="progressbar" style="margin:0px; color: black; width: @result4" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@result4</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    @Html.HiddenFor(x => itemSubAct.amount, new { @id = "amountBudgetList[" + row + "].budgetTotal", Name = "amountBudgetList[" + row + "].budgetTotal", @class = "form-control textboxcss text-right txtBudgetTotal__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.useAmount, new { @id = "amountBudgetList[" + row + "].useAmount", Name = "amountBudgetList[" + row + "].useAmount", @class = "form-control textboxcss text-right txtUseAmount__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.returnAmountBrand, new { @id = "amountBudgetList[" + row + "].returnAmount", Name = "amountBudgetList[" + row + "].returnAmount", @class = "form-control textboxcss text-right txtReturnAmountBrand__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.amountBalance, new { @id = "amountBudgetList[" + row + "].amountBalance", Name = "amountBudgetList[" + row + "].amountBalance", @class = "form-control textboxcss text-right txtAmountBalance__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.EO, new { @id = "amountBudgetList[" + row + "].EO", Name = "amountBudgetList[" + row + "].EO", @class = "form-control textboxcss text-right txtEO__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.activityTypeId, new { @id = "amountBudgetList[" + row + "].activityType", Name = "amountBudgetList[" + row + "].activityType", @class = "form-control textboxcss text-right txtActivityType__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.typeShowBudget, new { @id = "amountBudgetList[" + row + "].typeShowBudget", Name = "amountBudgetList[" + row + "].typeShowBudget", @class = "form-control textboxcss text-right txttypeShowBudget__" + row })
+                                                    @Html.HiddenFor(x => itemSubAct.yearBG, new { @id = "amountBudgetList[" + row + "].yearBG", Name = "amountBudgetList[" + row + "].yearBG" })
+                                                    row++;
+
+                                                }
+
+                                            }
                                         }
+
                                     }
-                                }
-                            </div>
-                        }
+
+                                }*@
+
+                            </tbody>
+                        </table>
 
 
                     </div>
-                }
 
-
-            </div>
         </div>
+    }
 
-    </div>
+
 }
 

@@ -178,7 +178,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if (HttpContext.Current != null && checkModeEdit(statusId))
+                if (HttpContext.Current != null && checkModeEdit(statusId,""))
                 {
                     //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
                     if (culture == cultureLocal) chk = true;
@@ -205,16 +205,15 @@ namespace eActForm.BusinessLayer
             return chk;
         }
 
-        public static bool checkModeEdit(int statusId, string formTYpeId = "")
+        public static bool checkModeEdit(int statusId, string formTYpeId)
         {
             bool chk = true; //แก้ไขได้
 
             try
             {
-
-
-
-                if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"])) || (statusId == 3))
+                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM == false) 
+                    || formTYpeId == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    || (statusId == 3))
                 {
                     chk = false;//แก้ไข้ไม่ได้
                 }

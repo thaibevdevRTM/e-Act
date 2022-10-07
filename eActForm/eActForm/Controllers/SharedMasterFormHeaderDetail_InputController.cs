@@ -23,7 +23,7 @@ namespace eActForm.Controllers
         public ActionResult dropdownCondtionBudgetControl(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.GetChannelBudgetControl().ToList();
-            activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getActivityGroupBudgetControl().ToList();
+            activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getActivityGroupBudgetControl("bg").ToList();
             activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetBrandBudgetControl().ToList();
             activity_TBMMKT_Model.tB_Reg_Subject = new List<TB_Reg_Subject>();
             return PartialView(activity_TBMMKT_Model);

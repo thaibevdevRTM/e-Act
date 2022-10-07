@@ -78,11 +78,6 @@ namespace eActForm.BusinessLayer
             {
                 ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
-                if (!string.IsNullOrEmpty(empId))
-                {
-                    UtilsAppCode.Session.User = new ActUserModel.User();
-                    UtilsAppCode.Session.User.empId = empId;
-                }
 
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                 List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
@@ -115,6 +110,8 @@ namespace eActForm.BusinessLayer
                 //===========Set Language By Document Dev date 20200310 Peerapop=====================
                 //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
                 DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
+
+
                 //====END=======Set Language By Document Dev date 20200310 Peerapop==================
             }
             catch (Exception ex)

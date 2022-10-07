@@ -399,7 +399,7 @@ namespace eActForm.Controllers
                     var txtStamp = "เอกสารถูกยกเลิก";
                     bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
-                    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    //var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
 
@@ -407,15 +407,16 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
-                    if (statusId == "3")
-                    {
-                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
-                    }
+                    //if (statusId == "3")
+                    //{
+                    //    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    //}
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
 
 
                 }
+                var tt = UtilsAppCode.Session.User.empId;
                 resultAjax.Success = true;
             }
             catch (Exception ex)

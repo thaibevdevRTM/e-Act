@@ -243,15 +243,7 @@
 
     function setShowDropflowAddOn() {
 
-        if ($("#ddlCompany").val() == '5600') {
-
-                document.getElementById("divBrand").style.display = "block";
-                document.getElementById("divCus").style.display = "none";
-                document.getElementById("divProductType").style.display = "block";
-                document.getElementById("divActivityGroup").style.display = "block";
-
-        }
-        else if ($("#ddlCompany").val() == '5601') {
+        if ($("#ddlCompany").val() == '5601' || $("#ddlCompany").val() == '5600') {
 
                 document.getElementById("divCus").style.display = "block";
                 document.getElementById("divLimit").style.display = "block";
@@ -286,6 +278,9 @@
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divDeparment").style.display = "block";
         }
+
+        getLimitBySubject($("#ddlCompany").val());
+        getBrandBySubject();
     }
 
 

@@ -68,7 +68,7 @@ namespace eActForm.Controllers
                 if (model.companyId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
                 {
                     dt = ExcelAppCode.ReadExcel(resultFilePath, "Chanel", "A:Z");
-                    var resultAjax_ = ImportBudgetControlAppCode.PrepareData_ImportBudget(AppCode.StrCon, ImportBudgetControlAppCode.channel, dt, model, getLE, UtilsAppCode.Session.User.empId);
+                    var resultAjax_ = ImportBudgetControlAppCode.PrepareData_ImportBudgetChannel(AppCode.StrCon, ImportBudgetControlAppCode.channel, dt, model, getLE, UtilsAppCode.Session.User.empId);
                     resultAjax.Success = resultAjax_.Success;
                     resultAjax.Message = resultAjax_.Message;
                 }

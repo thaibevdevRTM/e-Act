@@ -25,7 +25,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllActivityGroup.getActivityGroupBudgetControl().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].activityTypeId)).FirstOrDefault().activitySales + "," + activity_TBMMKT_Model.activityOfEstimateList[i].UseYearSelect;
+                    activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllActivityGroup.getActivityGroupBudgetControl("bg").Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].activityTypeId)).FirstOrDefault().activitySales + "," + activity_TBMMKT_Model.activityOfEstimateList[i].UseYearSelect;
 
                 }
 
