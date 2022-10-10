@@ -58,7 +58,6 @@ D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.
 D:\Thaibev\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
 D:\Thaibev\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
 D:\Thaibev\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
-D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
@@ -66,3 +65,4 @@ D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.AssemblyReference.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.AssemblyReference.cache

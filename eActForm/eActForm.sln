@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActForm", "eActForm\eActForm.csproj", "{F2ED982E-1CCB-455B-AB47-758AEC9C6A25}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActConsoleServiceWeekly", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "updateDataReportTBM", "updateDataReportTBM\updateDataReportTBM.csproj", "{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActApprover", "..\..\..\..\..\KafkaUnitTest\KafkaUnitTest\eActApprover.csproj", "{417E460F-500C-433A-827A-2311F13F99F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eForms.Web", "eForms.Web\eForms.Web.csproj", "{79523A27-9B14-4B24-97D5-E3A485ECB88F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{417E460F-500C-433A-827A-2311F13F99F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{417E460F-500C-433A-827A-2311F13F99F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{417E460F-500C-433A-827A-2311F13F99F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{417E460F-500C-433A-827A-2311F13F99F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79523A27-9B14-4B24-97D5-E3A485ECB88F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79523A27-9B14-4B24-97D5-E3A485ECB88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79523A27-9B14-4B24-97D5-E3A485ECB88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79523A27-9B14-4B24-97D5-E3A485ECB88F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
