@@ -224,7 +224,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm,string productType)
         {
             try
             {
@@ -249,6 +249,7 @@ namespace eActForm.BusinessLayer
                 , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        ,new SqlParameter("@productType",productType)
                 });
                 }
                 else

@@ -21,7 +21,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
                 activity_TBMMKT_Model.customerslist = QueryGetAllCustomers.getCustomersMT();
 
-                activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
+                activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().Where(x => !x.cateName.ToLower().Contains("food")).ToList();
 
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])

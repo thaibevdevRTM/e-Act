@@ -129,18 +129,20 @@ namespace eActForm.Controllers
             try
             {
                 ReportSummaryModels model = new ReportSummaryModels();
-                model.activitySummaryList = ReportSummaryAppCode.getSummaryDetailReportByDate(Request.Form["startDate"], Request.Form["endDate"]);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                model.activitySummaryList = ReportSummaryAppCode.getSummaryDetailReportByDate(startDate, endDate);
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
 
                 if (Request.Form["txtRepDetailNo"] != "")
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"], Request.Form["ddlCompany"]);
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
                 }
                 if (Request.Form["ddlProductType"] != "")
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"], Request.Form["ddlCompany"]);
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
                 }
 
                 if (chk == "true")

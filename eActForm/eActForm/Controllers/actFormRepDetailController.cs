@@ -51,7 +51,7 @@ namespace eActForm.Controllers
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm, Request.Form["ddlProductType"]);
                 model.typeForm = typeForm;
                 model.dateReport = Request.Form["reportDate"];
 
@@ -83,10 +83,7 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
                     }
-                    if (Request.Form["ddlProductType"] != "")
-                    {
-                        model = RepDetailAppCode.getFilterRepDetailByProductType(model, Request.Form["ddlProductType"]);
-                    }
+                    
                     if (Request.Form["ddlProductGrp"] != "")
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);

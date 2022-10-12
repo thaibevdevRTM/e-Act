@@ -123,14 +123,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getSummaryDetailReportByDate(string startDate, string endDate)
+        public static List<ReportSummaryModels.ReportSummaryModel> getSummaryDetailReportByDate(DateTime startDate, DateTime endDate)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDetailSummarybyDate"
                       , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ReportSummaryModels.ReportSummaryModel()
@@ -483,11 +483,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId, string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId)
         {
             try
             {
-                return lists.Where(r => r.productTypeId == producttypeId && r.companyId.Equals(txtCompanyId)).ToList();
+                return lists.Where(r => r.productTypeId == producttypeId).ToList();
             }
             catch (Exception ex)
             {
@@ -495,11 +495,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo, string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo)
         {
             try
             {
-                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo) && r.companyId.Equals(txtCompanyId)).ToList();
+                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo)).ToList();
             }
             catch (Exception ex)
             {

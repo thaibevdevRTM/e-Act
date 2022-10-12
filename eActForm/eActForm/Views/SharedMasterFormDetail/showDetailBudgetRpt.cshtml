@@ -22,26 +22,23 @@
                 if (!string.IsNullOrEmpty(mainItem.brandId))
                 {
 
-                    <tr style="background-color: #C2EAF4; color: black; ">
-                        <td style="background-color:#2f74b5;color:white; border-style: solid; border-width: 1px 0px 1px 1px; border-collapse: collapse;" class="cssborderbottom"> </td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ปีงบ @mainItem.yearBG &nbsp;งบประมาณ @mainItem.brandName </td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.totalBudget.Value.ToString("#,##0.00")</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.useAmountTotal.Value.ToString("#,##0.00")</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;return&nbsp;&nbsp;</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.returnAmount.Value.ToString("#,##0.00")</td>
-                        <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;คงเหลือ&nbsp;&nbsp; </td>
-                        <td style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse;">@mainItem.amountBalanceTotal.Value.ToString("#,##0.00")&nbsp;&nbsp;</td>
-                    </tr>
+            <tr style="background-color: #C2EAF4; color: black; ">
+                <th style="border-style: solid; border-width: 1px 0px 1px 1px; border-collapse: collapse;">ปีงบ @mainItem.yearBG &nbsp;งบประมาณ @mainItem.brandName </th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.totalBudget.Value.ToString("#,##0.00")</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.useAmountTotal.Value.ToString("#,##0.00")</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;return&nbsp;&nbsp;</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">@mainItem.returnAmount.Value.ToString("#,##0.00")</th>
+                <th style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;คงเหลือ&nbsp;&nbsp; </th>
+                <th style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse;">@mainItem.amountBalanceTotal.Value.ToString("#,##0.00")&nbsp;&nbsp;</th>
+            </tr>
                 }
                 else
                 {
                     <tr style="background-color:#C2EAF4; color: black;">
-                        <td style="border-style: solid; border-width: 1px 0px 1px 1px; border-collapse: collapse;">
-                        </td>
                         <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">
-                            &nbsp;ปีงบ @mainItem.yearBG &nbsp; งบประมาณช่องทาง @mainItem.channelName
+                           ปีงบ @mainItem.yearBG &nbsp; งบประมาณช่องทาง @mainItem.channelName
                         </td>
                         <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
                         <td style="border-style: solid; border-width: 1px 0px 1px 0px; border-collapse: collapse;">
@@ -81,8 +78,7 @@
                             if (!string.IsNullOrEmpty(item.brandId))
                             {
                                 <tr>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align:right;"> </td>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.activityType </td>
+                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.activityType </td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">@item.amount.Value.ToString("#,##0.00")</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
@@ -97,8 +93,7 @@
                             else
                             {
                                 <tr>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;"> </td>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.brandName </td>
+                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.brandName </td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">@item.amount.Value.ToString("#,##0.00")</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
@@ -115,8 +110,7 @@
                             if (!string.IsNullOrEmpty(item.brandId))
                             {
                                 <tr>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;"> </td>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.activityType </td>
+                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp;งบ @item.activityType </td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">@item.amount.Value.ToString("#,##0.00")</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
@@ -131,8 +125,7 @@
                             else
                             {
                                 <tr>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;"> </td>
-                                    <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp; งบ @item.brandName </td>
+                                    <td style="border-style: solid; border-width: 0px 0px 1px 1px; border-collapse: collapse; text-align: right;">&nbsp;ปีงบ @item.yearBG &nbsp; งบ @item.brandName </td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ทั้งปี&nbsp;&nbsp;</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">@item.amount.Value.ToString("#,##0.00")</td>
                                     <td style="border-style: solid; border-width: 0px 0px 1px 0px; border-collapse: collapse;">&nbsp;ใช้ไปสะสม&nbsp;&nbsp;</td>
@@ -144,9 +137,6 @@
                                 </tr>
                             }
                         }
-
-
-
 
 
                         row++;

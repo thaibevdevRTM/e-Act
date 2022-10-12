@@ -20,6 +20,7 @@ using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class ImportBudgetControlController : Controller
     {
         // GET: ImportBudgetControl
@@ -215,9 +216,9 @@ namespace eActForm.Controllers
                     }
 
                     modelBudgetRpt.typeImport = importType;
-                    var dateStr = BaseAppCodes.converStrToDatetimeWithFormat(model.dateStr + "-" + "01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
-                    modelBudgetRpt.date = BaseAppCodes.converStrToDatetimeWithFormat(dateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    modelBudgetRpt.fiscalYear = modelBudgetRpt.date.Value.Year.ToString();
+                    //var dateStr = BaseAppCodes.converStrToDatetimeWithFormat(model.dateStr + "-" + "01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    //modelBudgetRpt.date = BaseAppCodes.converStrToDatetimeWithFormat(dateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    modelBudgetRpt.fiscalYear = dtBudget.Rows[i]["Fiscal Year"].ToString();
                     //modelBudgetRpt.chanelId = ImportBudgetControlAppCode.getChannelIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Bnam_Eng"].ToString());
                     //modelBudgetRpt.activityTypeId = ImportBudgetControlAppCode.getActivityIdIdForTxt(AppCode.StrCon, dtChannel.Rows[i]["Activity"].ToString());
                     modelBudgetRpt.createdByUserId = UtilsAppCode.Session.User.empId;
