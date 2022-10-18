@@ -224,7 +224,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm,string productType)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(DateTime startDate, DateTime endDate, string typeForm,string productType)
         {
             try
             {
@@ -247,8 +247,8 @@ namespace eActForm.BusinessLayer
 
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                 , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@productType",productType)
                 });
                 }
@@ -258,8 +258,8 @@ namespace eActForm.BusinessLayer
                     {
                         ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndEmp"
                         , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         });
                     }
@@ -267,8 +267,8 @@ namespace eActForm.BusinessLayer
                     {
                         ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailOMTByCreateDateAndEmp"
                         , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         });
                     }

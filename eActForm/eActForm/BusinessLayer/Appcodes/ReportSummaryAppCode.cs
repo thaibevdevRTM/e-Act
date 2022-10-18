@@ -461,6 +461,7 @@ namespace eActForm.BusinessLayer
                         soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD")).FirstOrDefault().month,
                     });
 
                 }
@@ -469,7 +470,6 @@ namespace eActForm.BusinessLayer
 
                 }
 
-                groupList.Add(forecastlist);
                 resultModel.activitySummaryForecastList.Add(forecastlist);
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
@@ -534,7 +534,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string insertActivitySummaryDetail(string customerId, string productTypeId, string startDate, string endDate, ReportSummaryModels model)
+        public static string insertActivitySummaryDetail(string customerId, string productTypeId, DateTime startDate, DateTime endDate, ReportSummaryModels model)
         {
             try
             {
@@ -545,8 +545,8 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@activityNo",docNo)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
-                        ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate)
                         ,new SqlParameter("@customerId",customerId)
                         ,new SqlParameter("@productTypeId",productTypeId)
                         ,new SqlParameter("@delFlag",false)

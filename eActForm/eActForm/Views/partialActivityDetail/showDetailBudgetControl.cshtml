@@ -14,8 +14,6 @@
 
                     @foreach (var item in Model.budgetTotalList)
                     {
-                        string result = String.Format("{0:n2}", item.amountBalancePercen);
-                        string intBalance = item.amountBalancePercen.ToString() + "%";
                         <div class="pull-right">
                             <span>
 
@@ -25,8 +23,12 @@
                             </span>
                         </div>
                         <div class="col-xs-6 pull-right" style="margin-right:30px;">
+                            @{
+                                decimal? intBalance = (item.useAmountTotal / item.totalBudget) * 100;
+                                string result = String.Format("{0:n2}", intBalance) + "%";
+                            }
                             <div class="progress">
-                                <div class="progress-bar bg-green" role="progressbar" style="width: @intBalance" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><span style="color:black">@result%</span></div>
+                                <div class="progress-bar bg-green" role="progressbar" style="margin:0px; color: black; max-width:250px; width: @result" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@result</div>
                             </div>
 
                         </div>

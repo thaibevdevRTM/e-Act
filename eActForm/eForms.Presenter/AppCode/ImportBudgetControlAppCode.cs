@@ -867,8 +867,10 @@ namespace eForms.Presenter.AppCode
                         modelBudget.endDate = MainAppCode.convertStrToDate(model.endDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                         modelBudget.createdByUserId = empId;
                         modelBudget.LE = int.Parse(getLE) + 1;
-
-                        //modelBudget.chanelId = dt.Rows[i]["channel"].ToString();
+                        if (model.companyId != ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                        {
+                            modelBudget.chanelId = dt.Rows[i]["channel"].ToString();
+                        }
                         modelBudget.amount = 0;
                         modelBudget.EO = ImportBudgetControlAppCode.genEO(strCon, modelBudget); //genauto
                         budgetList.Add(modelBudget);

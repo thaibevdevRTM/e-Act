@@ -67,7 +67,7 @@ namespace eActForm.Controllers
             }
 
 
-            return RedirectToAction(redirect, new { startDate = Request.Form["startDate"] });
+            return RedirectToAction(redirect, new { startDate = startDate });
         }
 
 
@@ -78,6 +78,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -96,6 +97,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -207,6 +209,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -252,7 +255,10 @@ namespace eActForm.Controllers
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
-                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
+                DateTime p_startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(startDate, "dd/MM/yyyy", null);
+                DateTime p_endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(endDate, "dd/MM/yyyy", null);
+
+                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, p_startDate, p_endDate, model);
                 if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId, model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));

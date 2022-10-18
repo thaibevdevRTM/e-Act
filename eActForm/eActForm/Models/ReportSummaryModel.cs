@@ -78,6 +78,8 @@ namespace eActForm.Models
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? sangsom { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? oishiFood { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? readytodrink { get; set; }
 
 

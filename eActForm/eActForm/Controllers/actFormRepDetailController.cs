@@ -51,7 +51,9 @@ namespace eActForm.Controllers
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm, Request.Form["ddlProductType"]);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(startDate, endDate, typeForm, Request.Form["ddlProductType"]);
                 model.typeForm = typeForm;
                 model.dateReport = Request.Form["reportDate"];
 
@@ -307,7 +309,9 @@ namespace eActForm.Controllers
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model, typeForm);
+                DateTime cstartDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(startDate, "dd/MM/yyyy", null);
+                DateTime cendDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, cstartDate, cendDate, model, typeForm);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);

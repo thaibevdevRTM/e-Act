@@ -90,7 +90,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getApproveRepDetailListsByEmpId >>" + ex.Message);
             }
         }
-        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model, string typeForm)
+        public static string insertActivityRepDetail(string customerId, string productTypeId, DateTime startDate, DateTime endDate, RepDetailModel.actFormRepDetails model, string typeForm)
         {
             try
             {
@@ -120,8 +120,8 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
                         ,new SqlParameter("@typeForm",TxtDoc)
                         ,new SqlParameter("@actNo",docNo)
-                        ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate)
                         ,new SqlParameter("@reference","")
                         ,new SqlParameter("@customerId",model.actFormRepDetailLists.FirstOrDefault().customerId)
                         ,new SqlParameter("@productTypeId",productTypeId)
