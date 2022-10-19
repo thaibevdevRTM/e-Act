@@ -230,10 +230,12 @@ namespace eActForm.Controllers
             try
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
-                model.activitySummaryList
-                    .Where(r => r.repDetailId == repId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
+                foreach (var item in model.activitySummaryList.Where(r => r.repDetailId == repId))
+                {
+                    item.delFlag = !delFlag;
+                }
+
+
                 Session["SummaryDetailModel"] = model;
                 result.Success = true;
             }

@@ -131,6 +131,8 @@
 
     $(function () {
         $("#btnSelected").click(function () {
+            $("#WaitDialog").hide();
+
             $('#divSummaryPreview').load('@Url.Action("getPreviewSummary", "SummaryReport", new { startDate = @ViewBag.startDate })');
             $("#previewSummaryModal").modal('show');
         });
