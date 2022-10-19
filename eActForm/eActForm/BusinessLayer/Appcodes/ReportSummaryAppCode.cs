@@ -260,6 +260,7 @@ namespace eActForm.BusinessLayer
                                 oishi = decimal.Parse(AppCode.checkNullorEmpty(d["oishi"].ToString())),
                                 soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                 water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
+                                oishiFood = decimal.Parse(AppCode.checkNullorEmpty(d["food"].ToString())),
                             }).OrderBy(x => x.activitySales).ToList();
                 List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
                 groupList = list
@@ -278,6 +279,7 @@ namespace eActForm.BusinessLayer
                         oishi = group.Sum(s => s.oishi),
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
+                        oishiFood = group.Sum(s => s.oishiFood),
                     }).ToList();
 
 
@@ -296,6 +298,7 @@ namespace eActForm.BusinessLayer
                         oishi = group.Sum(s => s.oishi),
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
+                        oishiFood = group.Sum(s => s.oishiFood),
                     }).ToList();
 
 
@@ -336,6 +339,7 @@ namespace eActForm.BusinessLayer
                         soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD")).FirstOrDefault().month,
                     });
 
                 }
@@ -461,7 +465,7 @@ namespace eActForm.BusinessLayer
                         soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
-                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD")).FirstOrDefault().month,
+                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD") && x.brandId != null).FirstOrDefault().month,
                     });
 
                 }

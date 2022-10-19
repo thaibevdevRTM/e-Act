@@ -30,6 +30,7 @@ namespace eActForm.Models
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
+        public static string Food = "6309F37D-03C1-4F2A-9DDC-2D997A440F1B";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };

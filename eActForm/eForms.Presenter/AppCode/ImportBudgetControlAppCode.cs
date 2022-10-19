@@ -1057,7 +1057,6 @@ namespace eForms.Presenter.AppCode
 
                 if (budgetList.Any())
                 {
-
                     foreach (var item in budgetList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetControlTemp(strCon, item, model.companyId);

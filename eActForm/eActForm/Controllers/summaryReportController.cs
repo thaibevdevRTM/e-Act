@@ -12,6 +12,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class SummaryReportController : Controller
     {
         // GET: summaryReport
@@ -40,7 +41,8 @@ namespace eActForm.Controllers
 
                 if (model.activitySummaryList.Any())
                 {
-                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL 
+                      || model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.Food)
                     {
                         modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
                         modelResult.producttype_id = AppCode.nonAL;
