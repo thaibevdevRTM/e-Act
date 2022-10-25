@@ -261,6 +261,7 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@startDate",startDate)
                         ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                         ,new SqlParameter("@productType",productType)
                         });
                     }
                     else
@@ -270,6 +271,7 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@startDate",startDate)
                         ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                         ,new SqlParameter("@productType",productType)
                         });
                     }
                 }
@@ -391,6 +393,7 @@ namespace eActForm.BusinessLayer
                                                          regionId = dr["regionId"].ToString(),
                                                          productCateId = dr["productCateId"].ToString(),
                                                          productGroupid = dr["productGroupid"].ToString(),
+                                                         groupId = dr["groupId"].ToString(),
                                                          cusNameTH = dr["cusNameTH"].ToString(),
                                                          productId = dr["productId"].ToString(),
                                                          productName = dr["productName"].ToString(),
@@ -428,7 +431,7 @@ namespace eActForm.BusinessLayer
                     {
                         item.activityNo,
                         item.activityPeriodSt,
-                        item.productGroupid,
+                        item.groupId,
                         item.theme
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
@@ -446,6 +449,7 @@ namespace eActForm.BusinessLayer
                         regionId = group.First().regionId,
                         productCateId = group.First().productCateId,
                         productGroupid = group.First().productGroupid,
+                        groupId = group.First().groupId,
                         cusNameTH = group.First().cusNameTH,
                         productId = group.First().productId,
                         productName = group.First().productName,
