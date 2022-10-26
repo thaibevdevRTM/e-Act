@@ -104,6 +104,7 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)
             || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
@@ -211,7 +212,13 @@
             arrayOfElements[i].disabled = 'disabled';
         }
     }
-
+    else {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            document.getElementById("activityOfEstimateList["+i+"].IO").disabled = false;
+        }
+    }
 
 
     $("#btnExportPDF").click(function () {

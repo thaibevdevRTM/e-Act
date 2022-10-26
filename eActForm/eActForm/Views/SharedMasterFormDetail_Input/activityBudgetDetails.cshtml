@@ -76,11 +76,11 @@
                                 <div style="display:inline-block;">
                                     @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isCreator))
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" />
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" />
                                     }
                                     else
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
                                     <script>
 
@@ -262,6 +262,7 @@
         if ("@Model.activityFormTBMMKT.id" != '') {
             getBudgetTotal();
         }
+
 
     });
 
