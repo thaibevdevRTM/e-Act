@@ -303,8 +303,8 @@ namespace eActForm.BusinessLayer
 
 
 
-                string txtMonth = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("MMM").ToLower();
-                string txtYear = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("yyyy");
+                string txtMonth = DateTime.ParseExact(txtDate, "dd/MM/yyyy", null).ToString("MMM").ToLower();
+                string txtYear = DateTime.ParseExact(txtDate, "dd/MM/yyyy", null).ToString("yyyy");
                 DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_SaleForcast"
                     , new SqlParameter[] {
                         new SqlParameter("@year",txtYear)

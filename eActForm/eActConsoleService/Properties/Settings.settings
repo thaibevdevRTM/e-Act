@@ -15,10 +15,10 @@
       <Value Profile="(Default)">[e-ActivityForm] แจ้งเอกสาร รออนุมัติ จากระบบอัตโนมัติ</Value>
     </Setting>
     <Setting Name="strMailUser" Type="System.String" Scope="User">
-      <Value Profile="(Default)">devrtm@thaibev.com</Value>
+      <Value Profile="(Default)">thaibevrtm-eact@thaibev.com</Value>
     </Setting>
     <Setting Name="strMailPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Thaibev@dev20i9</Value>
+      <Value Profile="(Default)">Eaf#2160</Value>
     </Setting>
     <Setting Name="strUrlApprove" Type="System.String" Scope="User">
       <Value Profile="(Default)">https:\\eact.thaibev.com/?s=approve</Value>

@@ -33,7 +33,7 @@ namespace eActForm.Controllers
                 ReportSummaryModels model = new ReportSummaryModels();
                 ReportSummaryModels modelResult = new ReportSummaryModels();
 
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
@@ -80,7 +80,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -139,14 +139,16 @@ namespace eActForm.Controllers
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
-
-                if (Request.Form["txtRepDetailNo"] != "")
+                if (model.activitySummaryList.Any())
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
-                }
-                if (Request.Form["ddlProductType"] != "")
-                {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
+                    if (Request.Form["txtRepDetailNo"] != "")
+                    {
+                        model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
+                    }
+                    if (Request.Form["ddlProductType"] != "")
+                    {
+                        model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
+                    }
                 }
 
                 if (chk == "true")
@@ -211,11 +213,12 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 ExceptionManager.WriteError(ex.Message);
             }
 

@@ -155,227 +155,256 @@
                             }
 
 
-                        <tr class="gradeX">
-                            <td></td>
-                            <td>
-                                Total
-                            </td>
-                            <td>
-                                @{
-                                    string ttEst = String.Format("{0:n2}", @sumEst);
-                                    @ttEst.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttCrystal = String.Format("{0:n2}", @sumCrystal);
-                                    @ttCrystal.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttWranger = String.Format("{0:n2}", @sumWranger);
-                                    @ttWranger.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string tt100plus = String.Format("{0:n2}", @sumPlus100);
-                                    @tt100plus.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttJubjai = String.Format("{0:n2}", @sumJubjai);
-                                    @ttJubjai.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttOishi = String.Format("{0:n2}", @sumOishi);
-                                    @ttOishi.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttSoda = String.Format("{0:n2}", @sumSoda);
-                                    @ttSoda.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttWater = String.Format("{0:n2}", @sumWater);
-                                    @ttWater.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttFood = String.Format("{0:n2}", sumFood);
-                                    @ttFood.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string ttTotal = String.Format("{0:n2}", @totalAct);
-                                    @ttTotal.ToString();
-                                }
-                            </td>
-                            <td></td>
+                            <tr class="gradeX">
+                                <td></td>
+                                <td>
+                                    Total
+                                </td>
+                                <td>
+                                    @{
+                                        string ttEst = String.Format("{0:n2}", @sumEst);
+                                        @ttEst.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttCrystal = String.Format("{0:n2}", @sumCrystal);
+                                        @ttCrystal.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttWranger = String.Format("{0:n2}", @sumWranger);
+                                        @ttWranger.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string tt100plus = String.Format("{0:n2}", @sumPlus100);
+                                        @tt100plus.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttJubjai = String.Format("{0:n2}", @sumJubjai);
+                                        @ttJubjai.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttOishi = String.Format("{0:n2}", @sumOishi);
+                                        @ttOishi.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttSoda = String.Format("{0:n2}", @sumSoda);
+                                        @ttSoda.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttWater = String.Format("{0:n2}", @sumWater);
+                                        @ttWater.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttFood = String.Format("{0:n2}", sumFood);
+                                        @ttFood.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        string ttTotal = String.Format("{0:n2}", @totalAct);
+                                        @ttTotal.ToString();
+                                    }
+                                </td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
 
 
                             @if (Model.activitySummaryForecastList != null && Model.activitySummaryForecastList.Count > 0)
                             {
-                        <tr class="gradeX">
-                            <td></td>
-                            <td>
-                                Sales Forecast
-                            </td>
-                            <td>
-                                @{
-                                    string fEst = String.Format("{0:n2}", Model.activitySummaryForecastList[0].est);
-                                    @fEst.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fCrystal = String.Format("{0:n2}", Model.activitySummaryForecastList[0].crystal);
-                                    @fCrystal.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fWranger = String.Format("{0:n2}", Model.activitySummaryForecastList[0].wranger);
-                                    @fWranger.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string f100plus = String.Format("{0:n2}", Model.activitySummaryForecastList[0].plus100);
-                                    @f100plus.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fJubjai = String.Format("{0:n2}", Model.activitySummaryForecastList[0].jubjai);
-                                    @fJubjai.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fOishi = String.Format("{0:n2}", Model.activitySummaryForecastList[0].oishi);
-                                    @fOishi.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fSoda = String.Format("{0:n2}", Model.activitySummaryForecastList[0].soda);
-                                    @fSoda.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fWater = String.Format("{0:n2}", Model.activitySummaryForecastList[0].water);
-                                    @fWater.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string fFood = String.Format("{0:n2}", Model.activitySummaryForecastList[0].oishiFood);
-                                    @fFood.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    sumfTotal = (@Model.activitySummaryForecastList[0].est +
-                                        Model.activitySummaryForecastList[0].crystal +
-                                        Model.activitySummaryForecastList[0].wranger +
-                                        Model.activitySummaryForecastList[0].plus100 +
-                                        Model.activitySummaryForecastList[0].jubjai +
-                                        Model.activitySummaryForecastList[0].oishi +
-                                        Model.activitySummaryForecastList[0].soda +
-                                        Model.activitySummaryForecastList[0].water +
-                                        Model.activitySummaryForecastList[0].oishiFood);
+                                <tr class="gradeX">
+                                    <td></td>
+                                    <td>
+                                        Sales Forecast
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fEst = String.Format("{0:n2}", Model.activitySummaryForecastList[0].est);
+                                            @fEst.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fCrystal = String.Format("{0:n2}", Model.activitySummaryForecastList[0].crystal);
+                                            @fCrystal.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fWranger = String.Format("{0:n2}", Model.activitySummaryForecastList[0].wranger);
+                                            @fWranger.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string f100plus = String.Format("{0:n2}", Model.activitySummaryForecastList[0].plus100);
+                                            @f100plus.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fJubjai = String.Format("{0:n2}", Model.activitySummaryForecastList[0].jubjai);
+                                            @fJubjai.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fOishi = String.Format("{0:n2}", Model.activitySummaryForecastList[0].oishi);
+                                            @fOishi.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fSoda = String.Format("{0:n2}", Model.activitySummaryForecastList[0].soda);
+                                            @fSoda.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fWater = String.Format("{0:n2}", Model.activitySummaryForecastList[0].water);
+                                            @fWater.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string fFood = String.Format("{0:n2}", Model.activitySummaryForecastList[0].oishiFood);
+                                            @fFood.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            sumfTotal = (@Model.activitySummaryForecastList[0].est +
+                                                Model.activitySummaryForecastList[0].crystal +
+                                                Model.activitySummaryForecastList[0].wranger +
+                                                Model.activitySummaryForecastList[0].plus100 +
+                                                Model.activitySummaryForecastList[0].jubjai +
+                                                Model.activitySummaryForecastList[0].oishi +
+                                                Model.activitySummaryForecastList[0].soda +
+                                                Model.activitySummaryForecastList[0].water +
+                                                Model.activitySummaryForecastList[0].oishiFood);
 
-                                    string fTotal = String.Format("{0:n2}", @sumfTotal);
-                                    @fTotal.ToString();
-                                }
-                            </td>
-                            <td></td>
+                                            string fTotal = String.Format("{0:n2}", @sumfTotal);
+                                            @fTotal.ToString();
+                                        }
+                                    </td>
+                                    <td></td>
 
-                        </tr>
+                                </tr>
 
-                        <tr class="gradeX">
-                            <td></td>
-                            <td>
-                                % To Sales
-                            </td>
-                            <td>
-                                @{
+                                <tr class="gradeX">
+                                    <td></td>
+                                    <td>
+                                        % To Sales
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].est > 0)
+                                            {
+                                                string perEst = String.Format("{0:n2}", sumEst / Model.activitySummaryForecastList[0].est * 100);
+                                                @perEst.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].crystal > 0)
+                                            {
+                                                string perCrystal = String.Format("{0:n2}", sumCrystal / Model.activitySummaryForecastList[0].crystal * 100);
+                                                @perCrystal.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].wranger > 0)
+                                            {
+                                                string perWranger = String.Format("{0:n2}", sumWranger / Model.activitySummaryForecastList[0].wranger * 100);
+                                                @perWranger.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].plus100 > 0)
+                                            {
+                                                string perPlus100 = String.Format("{0:n2}", sumPlus100 / Model.activitySummaryForecastList[0].plus100 * 100);
+                                                @perPlus100.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].jubjai > 0)
+                                            {
+                                                string perJubjai = String.Format("{0:n2}", sumJubjai / Model.activitySummaryForecastList[0].jubjai * 100);
+                                                @perJubjai.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].oishi > 0)
+                                            {
+                                                string perOishi = String.Format("{0:n2}", sumOishi / Model.activitySummaryForecastList[0].oishi * 100);
+                                                @perOishi.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].soda > 0)
+                                            {
+                                                string perSoda = String.Format("{0:n2}", sumSoda / Model.activitySummaryForecastList[0].soda * 100);
+                                                @perSoda.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].water > 0)
+                                            {
+                                                string perWater = String.Format("{0:n2}", sumWater / Model.activitySummaryForecastList[0].water * 100);
+                                                @perWater.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (Model.activitySummaryForecastList[0].oishiFood > 0)
+                                            {
+                                                string perFood = String.Format("{0:n2}", sumFood / Model.activitySummaryForecastList[0].oishiFood * 100);
+                                                @perFood.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (totalAct > 0)
+                                            {
+                                                string perTotal = String.Format("{0:n2}", totalAct / sumfTotal * 100);
+                                                @perTotal.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td></td>
 
-                                    string perEst = String.Format("{0:n2}", sumEst / Model.activitySummaryForecastList[0].est * 100);
-                                    @perEst.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perCrystal = String.Format("{0:n2}", sumCrystal / Model.activitySummaryForecastList[0].crystal * 100);
-                                    @perCrystal.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perWranger = String.Format("{0:n2}", sumWranger / Model.activitySummaryForecastList[0].wranger * 100);
-                                    @perWranger.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perPlus100 = String.Format("{0:n2}", sumPlus100 / Model.activitySummaryForecastList[0].plus100 * 100);
-                                    @perPlus100.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perJubjai = String.Format("{0:n2}", sumJubjai / Model.activitySummaryForecastList[0].jubjai * 100);
-                                    @perJubjai.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perOishi = String.Format("{0:n2}", sumOishi / Model.activitySummaryForecastList[0].oishi * 100);
-                                    @perOishi.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perSoda = String.Format("{0:n2}", sumSoda / Model.activitySummaryForecastList[0].soda * 100);
-                                    @perSoda.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perWater = String.Format("{0:n2}", sumWater / Model.activitySummaryForecastList[0].water * 100);
-                                    @perWater.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perFood = String.Format("{0:n2}", sumFood / Model.activitySummaryForecastList[0].oishiFood * 100);
-                                    @perFood.ToString();
-                                }
-                            </td>
-                            <td>
-                                @{
-                                    string perTotal = String.Format("{0:n2}", totalAct / sumfTotal * 100);
-                                    @perTotal.ToString();
-                                }
-                            </td>
-                            <td></td>
-
-                        </tr>
+                                </tr>
                             }
 
 
@@ -440,102 +469,102 @@
                             @foreach (var item in Model.activitySummaryGroupList)
                             {
 
-                            <tr class="gradeX">
-                                <td>
-                                    @if (customer != item.customerName)
-                                    {
-                                        @countRow
-                                        countRow++;
-                                    }
-                                </td>
-                                <td>
-                                    @if (customer != item.customerName)
-                                    {
-                                        @item.customerName
-                                        customer = item.customerName;
-                                    }
-                                </td>
-                                <td>
-                                    @item.activitySales
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGEst = String.Format("{0:n2}", @item.est);
-                                        @sumAGEst.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGcrystal = String.Format("{0:n2}", @item.crystal);
-                                        @sumAGcrystal.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGwranger = String.Format("{0:n2}", @item.wranger);
-                                        @sumAGwranger.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGplus100 = String.Format("{0:n2}", @item.plus100);
-                                        @sumAGplus100.ToString();
-                                    }
+                                <tr class="gradeX">
+                                    <td>
+                                        @if (customer != item.customerName)
+                                        {
+                                            @countRow
+                                            countRow++;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (customer != item.customerName)
+                                        {
+                                            @item.customerName
+                                            customer = item.customerName;
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.activitySales
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGEst = String.Format("{0:n2}", @item.est);
+                                            @sumAGEst.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGcrystal = String.Format("{0:n2}", @item.crystal);
+                                            @sumAGcrystal.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGwranger = String.Format("{0:n2}", @item.wranger);
+                                            @sumAGwranger.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGplus100 = String.Format("{0:n2}", @item.plus100);
+                                            @sumAGplus100.ToString();
+                                        }
 
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGjubjai = String.Format("{0:n2}", @item.jubjai);
-                                        @sumAGjubjai.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGoishi = String.Format("{0:n2}", @item.oishi);
-                                        @sumAGoishi.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGsoda = String.Format("{0:n2}", @item.soda);
-                                        @sumAGsoda.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGwater = String.Format("{0:n2}", @item.water);
-                                        @sumAGwater.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string sumAGFood = String.Format("{0:n2}", @item.oishiFood);
-                                        @sumAGFood.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        decimal? total = 0;
-                                        total = item.est +
-                                                item.crystal +
-                                                item.wranger +
-                                                item.plus100 +
-                                                item.jubjai +
-                                                item.oishi +
-                                                item.soda +
-                                                item.water +
-                                                item.oishiFood;
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGjubjai = String.Format("{0:n2}", @item.jubjai);
+                                            @sumAGjubjai.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGoishi = String.Format("{0:n2}", @item.oishi);
+                                            @sumAGoishi.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGsoda = String.Format("{0:n2}", @item.soda);
+                                            @sumAGsoda.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGwater = String.Format("{0:n2}", @item.water);
+                                            @sumAGwater.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGFood = String.Format("{0:n2}", @item.oishiFood);
+                                            @sumAGFood.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            decimal? total = 0;
+                                            total = item.est +
+                                                    item.crystal +
+                                                    item.wranger +
+                                                    item.plus100 +
+                                                    item.jubjai +
+                                                    item.oishi +
+                                                    item.soda +
+                                                    item.water +
+                                                    item.oishiFood;
 
-                                        string result = String.Format("{0:n2}", @total);
-                                        @result.ToString();
+                                            string result = String.Format("{0:n2}", @total);
+                                            @result.ToString();
 
-                                    }
-                                </td>
-                                <td>
-                                    @item.remark
-                                </td>
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.remark
+                                    </td>
 
-                            </tr>
+                                </tr>
 
                                 //if (customer != Model.activitySummaryGroupList[i].customerName)
                                 //{

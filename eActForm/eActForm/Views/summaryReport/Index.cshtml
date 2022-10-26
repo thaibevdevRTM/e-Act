@@ -1,5 +1,4 @@
 ﻿
-
 @{
     ViewBag.Title = "index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +15,7 @@
             , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
             , new { id = "form", @class = "form-horizontal form-label-left" }))
             {
-            @RenderPage("~/Views/Shared/_searchForSummaryReport.cshtml")
+                @RenderPage("~/Views/Shared/_searchForSummaryReport.cshtml")
             }
         </div>
     </div>
@@ -41,7 +40,7 @@
             doMsgFail("กรุณาระบุ ลูกค้า ครับ");
             return false;
         }
-         if ($("#ddlProductType").val() == "") {
+        if ($("#ddlProductType").val() == "") {
             doMsgFail("กรุณาระบุ Product Type ครับ");
             return false;
         }
@@ -51,11 +50,13 @@
     }
 
     function successQuery(htmlResponse) {
+        $("#getQuery").fadeOut(300);
         $("#getQuery").html(htmlResponse)
         $("#getQuery").fadeIn(300);
     }
 
     function failureQuery(data) {
+        console.log('error');
         doMsgFail(data.responseText);
     }
 
