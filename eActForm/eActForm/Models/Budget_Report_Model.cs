@@ -66,7 +66,7 @@ namespace eActForm.Models
             public string act_status { get; set; }
             public string actForm_CreatedByUserId { get; set; }
             public string actForm_CreatedByName { get; set; }
-
+            public string budget_CurrentApproveName { get; set; }
         }
     }
 }
