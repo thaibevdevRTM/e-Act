@@ -113,7 +113,7 @@ namespace eActForm.BusinessLayer
 
                 var getData = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
                 var getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-                var getChannel = getData.tB_Act_ActivityForm_DetailOther.channelId;
+                bool chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
 
                 string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
@@ -143,11 +143,11 @@ namespace eActForm.BusinessLayer
                         var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
-                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType && !string.IsNullOrEmpty(getChannel))
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType )
                         {
 
                             string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
-                            if (purpose.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]))
+                            if (purpose.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
                             {
                                 if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
                                 { 
@@ -164,7 +164,7 @@ namespace eActForm.BusinessLayer
                                     model.flowDetail.OrderBy(X => X.rangNo);
                                 }
                             }
-                            else if (getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]))
+                            else if ((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"])) || (purpose.Any() && !chkChannel))
                             {
                                 if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
                                 {
@@ -183,6 +183,7 @@ namespace eActForm.BusinessLayer
                                     model.flowDetail.OrderBy(X => X.rangNo);
                                 }
                             }
+                            
 
                         }
 

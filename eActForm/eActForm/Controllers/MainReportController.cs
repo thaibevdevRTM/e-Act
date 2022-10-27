@@ -90,7 +90,7 @@ namespace eActForm.Controllers
                     activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                     activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
                     //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId, UtilsAppCode.Session.User.empId);
                     //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 }
 

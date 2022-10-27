@@ -1,5 +1,7 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -162,9 +164,17 @@ namespace eActForm.BusinessLayer
 
             //เพื่อเช็คการใช้ภาษาในหน้า input form
             string cultureLocal = "";
+
             if (HttpContext.Current != null)
             {
-                cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+                try
+                {
+                    cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+                }
+                catch(Exception ex)
+                {
+                    cultureLocal = cultureDoc;
+                }
             }
             else
             {

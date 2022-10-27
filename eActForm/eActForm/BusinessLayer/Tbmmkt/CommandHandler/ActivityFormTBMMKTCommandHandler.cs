@@ -993,10 +993,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activity_TBMMKT_Model.activityFormTBMMKT.id);
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
-                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
-                , en
-                , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
 
 
                 bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
@@ -1618,12 +1615,12 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId)
+        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId,string empId)
         {
             try
             {
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
-                models = ApproveAppCode.getApproveByActFormId(activityId);
+                models = ApproveAppCode.getApproveByActFormId(activityId, empId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(SubjectId, activityId);
                 models.approveFlowDetail = flowModel.flowDetail;
 
