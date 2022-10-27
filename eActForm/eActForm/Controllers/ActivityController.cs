@@ -403,7 +403,6 @@ namespace eActForm.Controllers
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
 
-
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
@@ -414,9 +413,7 @@ namespace eActForm.Controllers
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
 
-
                 }
-                var tt = UtilsAppCode.Session.User.empId;
                 resultAjax.Success = true;
             }
             catch (Exception ex)
