@@ -107,13 +107,17 @@ namespace eActForm.BusinessLayer
         /// <returns></returns>
         public static ApproveFlowModel.approveFlowModel getFlowId(string subId, string actFormId)
         {
+            bool chkChannel = false;
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getData = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
                 var getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-                bool chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
+                if (getData.tB_Act_ActivityForm_DetailOther != null)
+                {
+                     chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
+                }
 
                 string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 

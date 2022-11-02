@@ -4,7 +4,9 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using eForms.Presenter.AppCode;
+using iTextSharp.tool.xml.html;
 using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using WebLibrary;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace eActForm.Controllers
 {
@@ -72,19 +75,36 @@ namespace eActForm.Controllers
                     if (resultAjax.Success)
                     {
                         Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                        ApproveModel.approveModels approveModels = new ApproveModel.approveModels();
                         activity_TBMMKT_Model = ReportAppCode.mainReport(data.refId, data.approver);
+                       
+
                         string outputHtml = "";
                         if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                         {
-                            outputHtml = ApproveAppCode.RenderViewToString("eAct", "Index", activity_TBMMKT_Model);
+                            approveModels = new ApproveController().getApproveSigList(data.refId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, data.approver);
+                            foreach (var item in activity_TBMMKT_Model.master_Type_Form_Detail_Models)
+                            {
+
+                                var estimateList = activity_TBMMKT_Model.activityOfEstimateList;
+                                activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
+                                activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
+                                activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
+
+                                outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", approveModels);
+
+
+                            }
+
+                            //outputHtml = ApproveAppCode.RenderViewToString("eAct", "Index", activity_TBMMKT_Model);
                         }
                         else
                         {
                             outputHtml = ApproveAppCode.RenderViewToString("eAct", "previewActMT", ReportAppCode.previewApprove(data.refId, data.approver));
 
-                            ApproveModel.approveModels models = new ApproveModel.approveModels();
-                            models = new ApproveController().getApproveSigList(data.refId, ConfigurationManager.AppSettings["subjectActivityFormId"], data.approver);
-                            outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", models);
+
+                            approveModels = new ApproveController().getApproveSigList(data.refId, ConfigurationManager.AppSettings["subjectActivityFormId"], data.approver);
+                            outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", approveModels);
                         }
 
                         HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(outputHtml, data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == eventName).FirstOrDefault().val1, data.refId));
@@ -129,7 +149,7 @@ namespace eActForm.Controllers
                     }
 
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                  EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                 }
                 resultAjax.Success = true;
             }

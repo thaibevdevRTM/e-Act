@@ -396,6 +396,7 @@
     <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\DataMasterModels\salesTeamModel.cs" />
+    <Compile Include="Models\SentKafkaLogModel.cs" />
     <Compile Include="Models\positionModel.cs" />
     <Compile Include="Models\HospitalModel.cs" />
     <Compile Include="Models\RegionalModel.cs" />

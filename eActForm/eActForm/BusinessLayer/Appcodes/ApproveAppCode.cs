@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Web.Hosting;
+using System.Globalization;
 
 namespace eActForm.BusinessLayer
 {
@@ -643,12 +644,7 @@ namespace eActForm.BusinessLayer
                 foreach (var item in getDetailApprove)
                 {
 
-                    item.producerDetail.companyName = item.companyName;
-                    item.producerDetail.attachedFileName = item.attachedFileName;
-                    item.producerDetail.attachedUrl = item.attachedUrl;
-
-
-                    ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToString(), item);
+                    ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), item);
 
                     string conjson = JsonConvert.SerializeObject(request).ToString();
 
@@ -668,10 +664,14 @@ namespace eActForm.BusinessLayer
                             if (response.messageResponse.Contains("SUCCESS"))
                             {
                                 resultAjax.Success = true;
+
+                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(),"");
+                                var resultLog = insertLog_Kafka(kafka);
                             }
                             else
                             {
-                                ExceptionManager.WriteError("submit_SubActivity => Non Error" + response.messageResponse);
+                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
+                                ExceptionManager.WriteError("apiProducerApproveAsync >>" + response.messageResponse);
                             }
                         }
                     }
@@ -690,7 +690,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getWaitApprover"
                      , new SqlParameter[] { new SqlParameter("@empId", empId)
                       ,new SqlParameter("@activityId",activityId) });
-                var lists = (from DataRow dr in ds.Tables[0].Rows
+                var result = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproverModel()
                              {
                                  appId = dr["appId"].ToString(),
@@ -699,18 +699,30 @@ namespace eActForm.BusinessLayer
                                  refId = dr["refId"].ToString(),
                                  orderRank = dr["orderRank"].ToString(),
                                  subject = dr["subject"].ToString(),
-                                 requesterDate = DateTime.Parse(dr["requesterDate"].ToString()),
+                                 requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
                                  totalAmount = dr["totalAmount"].ToString(),
                                  currency = dr["currency"].ToString(),
                                  approver = dr["approver"].ToString(),
+                                 requester = dr["requester"].ToString(),
+                                 requesterNameTh = dr["requesterNameTh"].ToString(),
+                                 requesterNameEn = "",
                                  companyName = dr["companyName"].ToString(),
-                                 organizationUnitName = dr["organizationUnitName"].ToString(),
-                                 detail = dr["detail"].ToString(),
-                                 attachedFileName = dr["attachedFileName"].ToString(),
-                                 attachedUrl = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId)),
                              }).ToList();
 
-                return lists;
+
+                foreach(var item in result)
+                {
+
+                    item.requestDetail.companyName = result.FirstOrDefault().companyName;
+                    item.requestDetail.organizationUnitName = "";
+                    item.requestDetail.detail = "";
+                    item.requestDetail.attachedFileName = "เอกสารอนุมัติ";
+                    item.requestDetail.attachedUrl = string.Format(ConfigurationManager.AppSettings["urlGetPdf"], activityId);
+                }
+
+
+
+                return result;
 
 
             }
@@ -719,6 +731,33 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getWaitApprove >>" + ex.Message);
             }
 
+        }
+
+
+        public static int insertLog_Kafka(SentKafkaLogModel model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertLogKafka"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@empId",model.empId)
+                    ,new SqlParameter("@statusKafka",model.statusKafka)
+                     ,new SqlParameter("@status",model.status)
+                    ,new SqlParameter("@type",model.type)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@path",model.path)
+                    ,new SqlParameter("@massage",model.massage)
+
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertLog_Kafka");
+            }
+
+            return result;
         }
 
     }

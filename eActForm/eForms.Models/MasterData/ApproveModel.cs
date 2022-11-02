@@ -1,15 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
-
+using System.Web.UI.WebControls.WebParts;
 
 namespace eForms.Models.MasterData
 {
 
     public class ProducerApproverBevAPI
     {
-        public string topic { get; set; }
-        public string userName { get; set; }
         public string messageKey { get; set; }
         public string eventName { get; set; }
         public string messageVersion { get; set; }
@@ -26,7 +24,7 @@ namespace eForms.Models.MasterData
         }
     }
 
-    public class ApproverModel : ProducerDetailModel
+    public class ApproverModel
     {
         public string appId { get; set; }
         public string appName { get; set; }
@@ -34,20 +32,21 @@ namespace eForms.Models.MasterData
         public string refId { get; set; }
         public string orderRank { get; set; }
         public string subject { get; set; }
+        public string requester { get; set; }
         public string requesterNameTh { get; set; }
         public string requesterNameEn { get; set; }
-        public DateTime? requesterDate { get; set; }
+        public string requestDate { get; set; }
         public string totalAmount { get; set; }
         public string currency { get; set; }
         public string approver { get; set; }
         public string message { get; set; }
-        public ProducerDetailModel producerDetail { get; set; }
+        public string companyName { get; set; }
+        public ProducerDetailModel requestDetail { get; set; }
 
         public ApproverModel()
         {
-            producerDetail = new ProducerDetailModel();
+            requestDetail = new ProducerDetailModel();
         }
-
     }
 
     public class ProducerDetailModel

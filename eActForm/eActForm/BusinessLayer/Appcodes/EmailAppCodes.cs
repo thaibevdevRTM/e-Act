@@ -365,7 +365,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        //ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI","").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                        ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI","").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
                         strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
