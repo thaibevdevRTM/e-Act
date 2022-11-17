@@ -29,17 +29,6 @@ namespace eActForm.Controllers
 
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
 
-            //TBM
-            //activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, "70008316");
-            //string output = ApproveAppCode.RenderViewToString("eAct", "Index", activity_TBMMKT_Model);
-
-            //MT
-            //string outputHtml = ApproveAppCode.RenderViewToString("eAct", "previewActMT", ReportAppCode.previewApprove(activityId, "70008316"));
-            //ApproveModel.approveModels models = new ApproveModel.approveModels();
-            //models = new ApproveController().getApproveSigList("4002da07-59c8-4310-9341-daedbe8f5a12", ConfigurationManager.AppSettings["subjectActivityFormId"], "70008316");
-            //outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", models);
-
-
             string empId = UtilsAppCode.Session.User.empId;
 
             ApproveAppCode.setCountWatingApprove();
@@ -126,7 +115,7 @@ namespace eActForm.Controllers
         }
 
 
-        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
+        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
@@ -165,10 +154,5 @@ namespace eActForm.Controllers
         }
 
 
-        // GET: ApiApprove
-        public ActionResult Index()
-        {
-            return View();
-        }
     }
 }

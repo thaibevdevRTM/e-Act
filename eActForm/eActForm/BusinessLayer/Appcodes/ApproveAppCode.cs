@@ -664,15 +664,14 @@ namespace eActForm.BusinessLayer
                             if (response.messageResponse.Contains("SUCCESS"))
                             {
                                 resultAjax.Success = true;
-
-                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(),"");
-                                var resultLog = insertLog_Kafka(kafka);
                             }
                             else
                             {
-                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
                                 ExceptionManager.WriteError("apiProducerApproveAsync >>" + response.messageResponse);
                             }
+
+                            SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
+                            var resultLog = insertLog_Kafka(kafka);
                         }
                     }
                     return resultAjax;

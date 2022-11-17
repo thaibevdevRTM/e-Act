@@ -72,4 +72,11 @@ namespace eForms.Models.MasterData
 
     }
 
+    public class ConsumerMassage
+    {
+        public string timeResponse { get; set; }
+        public string messageResponse { get; set; }
+    }
+        
+
 }
