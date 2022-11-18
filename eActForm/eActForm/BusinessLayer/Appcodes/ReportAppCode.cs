@@ -78,7 +78,6 @@ namespace eActForm.BusinessLayer
             {
                 ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
-
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                 List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
@@ -89,12 +88,113 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
 
                 activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId, empId);
-                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
                 }
-                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                {
+                    ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
+                    objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
+                    objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                    activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+                }
+                else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
+                    objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
+                    objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                    activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+                }
+                else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
+                {
+                    try
+                    {
+                        List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
+
+
+                        var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                        foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.subMain.ToString()))
+                        {
+                            BudgetTotal budgetTotalModel = new BudgetTotal();
+                            budgetTotalModel.returnAmount = item.returnAmount;
+                            budgetTotalModel.EO = item.EO;
+                            budgetTotalModel.useAmount = item.useAmount;
+                            //budgetTotalModel.totalBudget = item.budgetTotal;
+                            budgetTotalModel.amount = item.budgetTotal;
+                            budgetTotalModel.amountBalance = item.amountBalance;
+                            budgetTotalModel.activityType = item.activityType;
+                            var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
+                            budgetTotalModel.amountBalancePercen = item.useAmount / amount;
+                            budgetTotalModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                            budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                            budgetTotalModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                            budgetTotalModel.yearBG = item.yearBG;
+                            activity_TBMMKT_Model.budgetTotalList.Add(budgetTotalModel);
+
+                        }
+                        foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.main.ToString()))
+                        {
+                            BudgetTotal budgetMainModel = new BudgetTotal();
+                            budgetMainModel.totalBudget = item.budgetTotal;
+                            budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                            budgetMainModel.amountBalanceTotal = item.amountBalance;
+                            budgetMainModel.useAmountTotal = item.useAmount;
+                            budgetMainModel.returnAmount = item.returnAmount;
+                            budgetMainModel.yearBG = item.yearBG;
+                            budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                            budgetMainModel.brandName = item.brandName;
+                            budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                            activity_TBMMKT_Model.budgetMainTotalList.Add(budgetMainModel);
+                        }
+                        foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.actMain.ToString()))
+                        {
+                            BudgetTotal budgetMainModel = new BudgetTotal();
+                            budgetMainModel.totalBudget = item.budgetTotal;
+                            budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                            budgetMainModel.amountBalanceTotal = item.amountBalance;
+                            budgetMainModel.useAmountTotal = item.useAmount;
+                            budgetMainModel.returnAmount = item.returnAmount;
+                            budgetMainModel.yearBG = item.yearBG;
+                            budgetMainModel.EO = item.EO;
+                            budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                            budgetMainModel.brandName = item.brandName;
+                            budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityType) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityType).FirstOrDefault().activitySales : "";
+                            budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                            activity_TBMMKT_Model.budgetMainActTypelList.Add(budgetMainModel);
+                        }
+                        foreach (var item in getAmount.Where(x => x.typeShowBudget == AppCode.typeShowBudget.subActMain.ToString()))
+                        {
+                            BudgetTotal budgetMainModel = new BudgetTotal();
+                            budgetMainModel.totalBudget = item.budgetTotal;
+                            budgetMainModel.totalBudgetChannel = item.budgetTotal;
+                            budgetMainModel.amountBalanceTotal = item.amountBalance;
+                            budgetMainModel.useAmountTotal = item.useAmount;
+                            budgetMainModel.returnAmount = item.returnAmount;
+                            budgetMainModel.yearBG = item.yearBG;
+                            budgetMainModel.EO = item.EO;
+                            budgetMainModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                            budgetMainModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
+                            budgetMainModel.activityType = !string.IsNullOrEmpty(item.activityType) ? BusinessLayer.QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == item.activityType).FirstOrDefault().activitySales : "";
+                            budgetMainModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
+                            activity_TBMMKT_Model.budgetTotalActTypeList.Add(budgetMainModel);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionManager.WriteError("showDetailBudgetRpt => " + ex.Message);
+                    }
+                }
+                else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                {
+                    var estimateList = activity_TBMMKT_Model.activityOfEstimateList;
+                    activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
+                    activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
+                    activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
+                }
+
 
                 //=====layout doc=============
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]

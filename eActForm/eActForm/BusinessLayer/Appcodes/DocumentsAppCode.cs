@@ -188,7 +188,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if (HttpContext.Current != null && checkModeEdit(statusId, ""))
+                if (HttpContext.Current != null)
                 {
                     //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
                     if (culture == cultureLocal) chk = true;

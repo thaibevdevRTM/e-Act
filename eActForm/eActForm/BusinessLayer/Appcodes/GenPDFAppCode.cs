@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer
 
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 log = "rootPathInsert >>" + rootPathInsert;
-                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), server.MapPath(rootPathInsert), server.MapPath("~"));
+                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), HostingEnvironment.MapPath(rootPathInsert), HostingEnvironment.MapPath("~"));
 
 
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels
@@ -34,17 +34,17 @@ namespace eActForm.BusinessLayer
 
 
                 string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
-                pathFile[0] = server.MapPath(rootPathInsert);
+                pathFile[0] = HostingEnvironment.MapPath(rootPathInsert);
                 if (getImageModel.tbActImageList.Any())
                 {
                     int i = 1;
                     foreach (var item in getImageModel.tbActImageList)
                     {
-                        pathFile[i] = server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                         i++;
                     }
                 }
-                var rootPathOutput = server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                var rootPathOutput = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 log += "rootPathOutput >>" + rootPathOutput;
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);

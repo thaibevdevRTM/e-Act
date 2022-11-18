@@ -1,5 +1,6 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using OfficeOpenXml.ConditionalFormatting;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,50 +23,47 @@ namespace eActForm.BusinessLayer
                 ResponseUserAPI response = null;
                 try
                 {
-                    if (HttpContext.Current == null || HttpContext.Current.Session[empId] == null)
+                    if (!string.IsNullOrEmpty(empId))
                     {
                         response = AuthenAppCode.doAuthenInfo(empId);
-                    }
-                    else if (HttpContext.Current.Session[empId] != null)
-                    {
-                        response = (ResponseUserAPI)HttpContext.Current.Session[empId];
                     }
 
                 }
                 catch
                 {
-                    response = AuthenAppCode.doAuthenInfo(empId); // fixed case for backgroup process 
-                }
-                finally
-                {
-                    if (HttpContext.Current != null)
-                    {
-                        HttpContext.Current.Session[empId] = response;
-                    }
-                }
-                var lists = (from User d in response.userModel
-                             select new RequestEmpModel()
-                             {
-                                 empId = d.empId,
-                                 empName = d.empFNameTH + " " + d.empLNameTH,
-                                 position = d.empPositionTitleTH,
-                                 level = d.empLevel,
-                                 department = d.empDepartmentTH,
-                                 bu = d.empDivisionTH,
-                                 companyName = "บริษัท " + d.empCompanyNameTH,
-                                 empNameEN = d.empFNameEN + " " + d.empLNameEN,
-                                 positionEN = d.empPositionTitleEN,
-                                 departmentEN = d.empDepartmentEN,
-                                 buEN = d.empDivisionEN,
-                                 companyNameEN = d.empCompanyName,
-                                 compId = d.empCompanyId,
-                                 email = d.empEmail,
-                                 hireDate = d.empProbationEndDate,
-                                 empGroupName = d.empGroupName,
-                                 empGroupNameTH = d.empGroupNameTH
 
-                             });
-                return lists.OrderBy(x => x.empName).ToList();
+                }
+
+                if (response != null)
+                {
+                    var lists = (from User d in response.userModel
+                                 select new RequestEmpModel()
+                                 {
+                                     empId = d.empId,
+                                     empName = d.empFNameTH + " " + d.empLNameTH,
+                                     position = d.empPositionTitleTH,
+                                     level = d.empLevel,
+                                     department = d.empDepartmentTH,
+                                     bu = d.empDivisionTH,
+                                     companyName = "บริษัท " + d.empCompanyNameTH,
+                                     empNameEN = d.empFNameEN + " " + d.empLNameEN,
+                                     positionEN = d.empPositionTitleEN,
+                                     departmentEN = d.empDepartmentEN,
+                                     buEN = d.empDivisionEN,
+                                     companyNameEN = d.empCompanyName,
+                                     compId = d.empCompanyId,
+                                     email = d.empEmail,
+                                     hireDate = d.empProbationEndDate,
+                                     empGroupName = d.empGroupName,
+                                     empGroupNameTH = d.empGroupNameTH
+
+                                 });
+                    return lists.OrderBy(x => x.empName).ToList();
+                }
+                else {
+                    return null;
+
+                }
             }
             catch (Exception ex)
             {

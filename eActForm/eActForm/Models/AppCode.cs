@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -603,7 +604,7 @@ namespace eActForm.Models
                 byte[] PreviewBytes = new byte[0];
                 var bytes = File.ReadAllBytes(rootPathMap);
                 var loadFont = default(BaseFont);
-                loadFont = BaseFont.CreateFont(server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                loadFont = BaseFont.CreateFont(HostingEnvironment.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 var useFont = new Font(loadFont, 80);
 
                 var red = 242;

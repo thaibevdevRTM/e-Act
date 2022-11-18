@@ -1,4 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@{ 
+    Layout = null;
+}
 <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
     <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -82,7 +85,7 @@
             </tr>
             <tr>
                 <td colspan="6" style="width: 85%;text-align:right;">
-                    @Html.Action("showDetailBudgetRpt", "SharedMasterFormDetail", new { activity_TBMMKT_Model = Model })
+                    @RenderPage("~/Views/SharedMasterFormDetail/showDetailBudgetRpt.cshtml")
                 </td>
             </tr>
         }
@@ -98,7 +101,7 @@
             </tr>
             <tr>
                 <td colspan="5" style="width: 85%;text-align:right;">
-                    @Html.Action("showDetailBudgetRpt", "SharedMasterFormDetail", new { activity_TBMMKT_Model = Model })
+                    @RenderPage("~/Views/SharedMasterFormDetail/showDetailBudgetRpt.cshtml")
                 </td>
             </tr>
         }

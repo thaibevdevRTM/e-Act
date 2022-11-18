@@ -387,7 +387,7 @@ namespace eActForm.Controllers
         }
 
 
-        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
+        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
@@ -395,21 +395,22 @@ namespace eActForm.Controllers
 
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+
+                    var rootPathMap = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var txtStamp = "เอกสารถูกยกเลิก";
                     bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
-                    //var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
 
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
-                    //if (statusId == "3")
-                    //{
-                    //    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
-                    //}
+                    if (statusId == "3")
+                    {
+                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
 

@@ -4,6 +4,7 @@
 @using System.Configuration;
 @using eActForm.Models;
 @{
+    Layout = null;
     var dearGroup = "คุณกมล เศวตทวี"; //form pos/premium fixคนนี้เลยจนกว่าจะลาออก
     var signBook = "";
     var signBookDepartment = "";
@@ -14,7 +15,7 @@
             if (item.approveGroupId == AppCode.ApproveGroup.Applicant)//ผู้ขอเบิก
             {
                 signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]
                     || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM , ใบคืน POS
                 {
                     signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย

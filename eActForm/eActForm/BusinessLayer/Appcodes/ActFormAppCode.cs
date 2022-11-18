@@ -814,5 +814,24 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+        public static bool OnOff_Func_apiProducerApproveAsync(string function)
+        {
+            try
+            {
+                bool result = false;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkOnOffFunction"
+                    , new SqlParameter[] { new SqlParameter("@function", function) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkActInvoice >>" + ex.Message);
+            }
+        }
     }
 }

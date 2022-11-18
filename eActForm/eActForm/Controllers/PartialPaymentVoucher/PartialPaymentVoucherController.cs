@@ -30,20 +30,14 @@ namespace eActForm.Controllers
         }
         public ActionResult detailSectionSix(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
-            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
-            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+            
             return PartialView(activity_TBMMKT_Model);
         }
 
 
         public ActionResult detailSectionSix_Purchase(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
-            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
-            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+            
             return PartialView(activity_TBMMKT_Model);
         }
 

@@ -637,46 +637,55 @@ namespace eActForm.BusinessLayer
         public static async Task<Controllers.AjaxResult> apiProducerApproveAsync(string empId, string activityId, string status)
         {
             var resultAjax = new Controllers.AjaxResult();
-            ConsumerApproverBevAPI response = null;
-            var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
-            if (getDetailApprove.Count > 0)
+            try
             {
-                foreach (var item in getDetailApprove)
+                if (ActFormAppCode.OnOff_Func_apiProducerApproveAsync("apiProducerApproveAsync"))
                 {
-
-                    ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), item);
-
-                    string conjson = JsonConvert.SerializeObject(request).ToString();
-
-                    using (var httpClient = new HttpClient())
+                    ConsumerApproverBevAPI response = null;
+                    var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
+                    if (getDetailApprove.Count > 0)
                     {
-                        using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                        foreach (var item in getDetailApprove)
                         {
-                            var contentList = new List<string>();
 
-                            contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
-                            requestAPI.Content = new StringContent(string.Join("&", contentList));
-                            requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+                            ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), item);
 
-                            var responseAPI = await httpClient.SendAsync(requestAPI);
-                            var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
-                            response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
-                            if (response.messageResponse.Contains("SUCCESS"))
+                            string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                            using (var httpClient = new HttpClient())
                             {
-                                resultAjax.Success = true;
-                            }
-                            else
-                            {
-                                ExceptionManager.WriteError("apiProducerApproveAsync >>" + response.messageResponse);
+                                using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                                {
+                                    var contentList = new List<string>();
+
+                                    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                                    requestAPI.Content = new StringContent(string.Join("&", contentList));
+                                    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                                    var responseAPI = await httpClient.SendAsync(requestAPI);
+                                    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                                    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                                    if (response.messageResponse.Contains("SUCCESS"))
+                                    {
+                                        resultAjax.Success = true;
+                                    }
+                                    else
+                                    {
+                                        resultAjax.Success = false;
+                                    }
+
+                                    SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
+                                    var resultLog = insertLog_Kafka(kafka);
+                                }
                             }
 
-                            SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
-                            var resultLog = insertLog_Kafka(kafka);
                         }
                     }
-                    return resultAjax;
-
                 }
+            }
+            catch (Exception ex)
+            {
+                return resultAjax;
             }
             return resultAjax;
         }
@@ -690,26 +699,26 @@ namespace eActForm.BusinessLayer
                      , new SqlParameter[] { new SqlParameter("@empId", empId)
                       ,new SqlParameter("@activityId",activityId) });
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproverModel()
-                             {
-                                 appId = dr["appId"].ToString(),
-                                 appName = dr["appName"].ToString(),
-                                 docNo = dr["docNo"].ToString(),
-                                 refId = dr["refId"].ToString(),
-                                 orderRank = dr["orderRank"].ToString(),
-                                 subject = dr["subject"].ToString(),
-                                 requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
-                                 totalAmount = dr["totalAmount"].ToString(),
-                                 currency = dr["currency"].ToString(),
-                                 approver = dr["approver"].ToString(),
-                                 requester = dr["requester"].ToString(),
-                                 requesterNameTh = dr["requesterNameTh"].ToString(),
-                                 requesterNameEn = "",
-                                 companyName = dr["companyName"].ToString(),
-                             }).ToList();
+                              select new ApproverModel()
+                              {
+                                  appId = dr["appId"].ToString(),
+                                  appName = dr["appName"].ToString(),
+                                  docNo = dr["docNo"].ToString(),
+                                  refId = dr["refId"].ToString(),
+                                  orderRank = dr["orderRank"].ToString(),
+                                  subject = dr["subject"].ToString(),
+                                  requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                                  totalAmount = dr["totalAmount"].ToString(),
+                                  currency = dr["currency"].ToString(),
+                                  approver = dr["approver"].ToString(),
+                                  requester = dr["requester"].ToString(),
+                                  requesterNameTh = dr["requesterNameTh"].ToString(),
+                                  requesterNameEn = "",
+                                  companyName = dr["companyName"].ToString(),
+                              }).ToList();
 
 
-                foreach(var item in result)
+                foreach (var item in result)
                 {
 
                     item.requestDetail.companyName = result.FirstOrDefault().companyName;
