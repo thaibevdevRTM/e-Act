@@ -147,14 +147,14 @@ namespace eActForm.BusinessLayer
                         var getLimitAmount = estimateList.Sum(x => x.total);
 
                         var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
-                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType )
+                        if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                         {
 
                             string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
                             if (purpose.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
                             {
                                 if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
-                                { 
+                                {
                                     var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
                                     foreach (var item in changeApproveGroup)
                                     {
@@ -187,8 +187,10 @@ namespace eActForm.BusinessLayer
                                     model.flowDetail.OrderBy(X => X.rangNo);
                                 }
                             }
-                            
-
+                        }
+                        else if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formReturnPosTbm"] == getMasterType)
+                        {
+                            model.flowDetail.RemoveAll(x => x.empId == ConfigurationManager.AppSettings["KSansiri"]);
                         }
 
                     }

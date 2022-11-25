@@ -643,40 +643,37 @@ namespace eActForm.BusinessLayer
                 {
                     ConsumerApproverBevAPI response = null;
                     var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
-                    if (getDetailApprove.Count > 0)
+                    if (getDetailApprove != null)
                     {
-                        foreach (var item in getDetailApprove)
+
+                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
+
+                        string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                        using (var httpClient = new HttpClient())
                         {
-
-                            ProducerApproverBevAPI request = new ProducerApproverBevAPI(item.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), item);
-
-                            string conjson = JsonConvert.SerializeObject(request).ToString();
-
-                            using (var httpClient = new HttpClient())
+                            using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
                             {
-                                using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                                var contentList = new List<string>();
+
+                                contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                                requestAPI.Content = new StringContent(string.Join("&", contentList));
+                                requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                                var responseAPI = await httpClient.SendAsync(requestAPI);
+                                var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                                response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                                if (response.messageResponse.Contains("SUCCESS"))
                                 {
-                                    var contentList = new List<string>();
-
-                                    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
-                                    requestAPI.Content = new StringContent(string.Join("&", contentList));
-                                    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-
-                                    var responseAPI = await httpClient.SendAsync(requestAPI);
-                                    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
-                                    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
-                                    if (response.messageResponse.Contains("SUCCESS"))
-                                    {
-                                        resultAjax.Success = true;
-                                    }
-                                    else
-                                    {
-                                        resultAjax.Success = false;
-                                    }
-
-                                    SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, item.requestDetail.attachedUrl, resultAjax.Success.ToString(), "");
-                                    var resultLog = insertLog_Kafka(kafka);
+                                    resultAjax.Success = true;
                                 }
+                                else
+                                {
+                                    resultAjax.Success = false;
+                                }
+
+                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
+                                var resultLog = insertLog_Kafka(kafka);
                             }
 
                         }
@@ -690,8 +687,9 @@ namespace eActForm.BusinessLayer
             return resultAjax;
         }
 
-        public static List<ApproverModel> getWaitApprove(string empId, string activityId)
+        public static ApproverModel getWaitApprove(string empId, string activityId)
         {
+            ApproverModel ApproverModel = new ApproverModel();
             try
             {
 
@@ -699,7 +697,7 @@ namespace eActForm.BusinessLayer
                      , new SqlParameter[] { new SqlParameter("@empId", empId)
                       ,new SqlParameter("@activityId",activityId) });
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproverModel()
+                              select new ApproverDetailModel()
                               {
                                   appId = dr["appId"].ToString(),
                                   appName = dr["appName"].ToString(),
@@ -713,24 +711,41 @@ namespace eActForm.BusinessLayer
                                   approver = dr["approver"].ToString(),
                                   requester = dr["requester"].ToString(),
                                   requesterNameTh = dr["requesterNameTh"].ToString(),
-                                  requesterNameEn = "",
+                                  requesterNameEn = dr["requesterNameEn"].ToString(),
                                   companyName = dr["companyName"].ToString(),
+                                  organizationUnitName = dr["organizationUnitName"].ToString(),
+                                  detail = dr["detail"].ToString(),
+
                               }).ToList();
 
 
-                foreach (var item in result)
+                if (result.Any())
                 {
 
-                    item.requestDetail.companyName = result.FirstOrDefault().companyName;
-                    item.requestDetail.organizationUnitName = "";
-                    item.requestDetail.detail = "";
-                    item.requestDetail.attachedFileName = "เอกสารอนุมัติ";
-                    item.requestDetail.attachedUrl = string.Format(ConfigurationManager.AppSettings["urlGetPdf"], activityId);
+                    ApproverModel.appId = result.FirstOrDefault().appId;
+                    ApproverModel.appName = result.FirstOrDefault().appName;
+                    ApproverModel.docNo = result.FirstOrDefault().docNo;
+                    ApproverModel.refId = result.FirstOrDefault().refId;
+                    ApproverModel.orderRank = result.FirstOrDefault().orderRank;
+                    ApproverModel.subject = result.FirstOrDefault().subject;
+                    ApproverModel.requestDate = result.FirstOrDefault().requestDate;
+                    ApproverModel.totalAmount = result.FirstOrDefault().totalAmount;
+                    ApproverModel.currency = result.FirstOrDefault().currency;
+                    ApproverModel.approver = result.FirstOrDefault().approver;
+                    ApproverModel.requester = result.FirstOrDefault().requester;
+                    ApproverModel.requesterNameTh = result.FirstOrDefault().requesterNameTh;
+                    ApproverModel.requesterNameEn = result.FirstOrDefault().requesterNameEn;
+                    ApproverModel.companyName = result.FirstOrDefault().companyName;
+
+                    ApproverModel.requestDetail.companyName = result.FirstOrDefault().companyName;
+                    ApproverModel.requestDetail.organizationUnitName = result.FirstOrDefault().organizationUnitName;
+                    ApproverModel.requestDetail.detail = result.FirstOrDefault().detail;
+                    ApproverModel.requestDetail.attachedFileName = "เอกสาร";
+                    ApproverModel.requestDetail.attachedUrl =  string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
+
                 }
 
-
-
-                return result;
+                return ApproverModel;
 
 
             }

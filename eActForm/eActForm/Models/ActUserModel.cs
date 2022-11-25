@@ -111,6 +111,8 @@ namespace eActForm.Models
             public string tokenType { get; set; }
             public string DepartmentName { get; set; }
             public string DepartmentNameTH { get; set; }
+            public string BUSUName { get; set; }
+            public string BUSUNameTH { get; set; }
         }
     }
 }

@@ -82,7 +82,7 @@
                                     {
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
-                                    <script>
+                                <script>
 
                                           $(document).ready(function () {
                                                 $(function () {
@@ -122,10 +122,18 @@
                                             });
 
                                         $(".clstxtIO_@index").blur(function () {
-                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                            var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
+
+                                            $(".clstxtIO_@index").val(txtIO);
                                             getBudgetTotal();
+
+                                            if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
+                                            {
+                                                checkIOPV(txtIO,@index);
+
+                                            }
                                         });
-                                    </script>
+                                </script>
 
                                 </div>
                                 <div>
@@ -266,13 +274,28 @@
 
     });
 
+    function checkIOPV(p_IO, index) {
+        $.ajax({
+            url: '@Url.Action("checkIOPV", "eAct")',
+            data: {
+                IO: p_IO,
+            },
+            dataType: "json",
+            type: 'POST'
+        }).done(function (response) {
 
+            if (response.Success) {
+                doAlert('IO ถูกนำไปใช้งานแล้ว');
+                  $(".clstxtIO_"+index).val('');
+            }
+            console.log(response);
+        });
+    }
 
     function getBudgetTotal(row) {
 
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
-
 
             getEOBudget.push({
                 EO: $(".clstxtEO_" + row).val(),

@@ -151,36 +151,6 @@ namespace eActForm.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string statusId, string activityId)
-        {
-            var resultAjax = new AjaxResult();
-            try
-            {
-                if (statusId == ConfigurationManager.AppSettings["statusReject"])
-                {
-                    ApproveAppCode.apiProducerApproveAsync(UtilsAppCode.Session.User.empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, UtilsAppCode.Session.User.empId);
-                }
-                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {
-                    GenPDFAppCode.doGen(GridHtml, activityId, Server);
-
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
-                    ApproveAppCode.setCountWatingApprove();
-                }
-                resultAjax.Success = true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
-                resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
-            }
-            return Json(resultAjax, "text/plain");
-        }
-
         public ActionResult approvePositionSignatureLists(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
@@ -206,6 +176,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
             }
             return PartialView(models);
+
         }
 
 

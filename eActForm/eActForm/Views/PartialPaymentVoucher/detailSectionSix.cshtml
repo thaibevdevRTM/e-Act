@@ -7,6 +7,7 @@
     Layout = null;
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
+    decimal? sumVat = 0;
 }
 <table id="tbRowCountCheck" class="boxTableFormMainV1 fontDocV1">
     <tr>
@@ -144,7 +145,15 @@
                                     else
                                     {
                                         vatTxt = item.vat;
+
                                     }
+
+                                    @if (item.vat == "Vat")
+                                    {
+                                        sumVat = sumVat + item.normalCost.Value;
+                                    }
+
+
                                     @vatTxt
                                 </td>
 
@@ -171,6 +180,12 @@
                                         else
                                         {
                                             vatTxt = NowPayOnlyArray[index].vat;
+
+                                        }
+
+                                        @if (vatTxt == "Vat")
+                                        {
+                                            sumVat = sumVat + NowPayOnlyArray[index].normalCost.Value;
                                         }
                                         @vatTxt
                                     </td>
@@ -275,6 +290,11 @@
                                                 {
                                                     vatTxt = item.vat;
                                                 }
+
+                                                @if (item.vat == "Vat")
+                                                {
+                                                    sumVat = sumVat + item.normalCost.Value;
+                                                }
                                                 @vatTxt
                                             </td>
                                         </tr>
@@ -324,6 +344,10 @@
                                                     else
                                                     {
                                                         vatTxt = NowPayOnlyArray[index].vat;
+                                                    }
+                                                    @if (NowPayOnlyArray[index].vat == "Vat")
+                                                    {
+                                                        sumVat = sumVat + NowPayOnlyArray[index].normalCost.Value;
                                                     }
                                                     @vatTxt
                                                 </td>
@@ -490,12 +514,18 @@
                             </tr>
                             <tr>
                                 <td class="paddingRowTableV2N txtRight fontBlueV1">
-                                    @Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                    @{
+                                        sumVat = (sumVat / 100) * 7;
+                                    }
+                                    @string.Format("{0:n2}", sumVat) &nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td class="paddingRowTableV2N txtRight fontBlueV1">
-                                    @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                    @{ 
+                                        decimal? getTotal = Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value + sumVat;
+                                    }
+                                    @getTotal.Value.ToString("#,##0.00")&nbsp;&nbsp;
                                 </td>
                             </tr>
                         </table>
@@ -556,7 +586,7 @@
                         @Model.tB_Act_ActivityForm_DetailOther.totalallPayNo.Value.ToString("#,##0.00")&nbsp;&nbsp;
                     </td>
                     <td class="txtLeft pvNoWidth fontRedV1 borderTop">
-                        &nbsp;&nbsp;<< งบฯ สะสม
+                        &nbsp;&nbsp; งบฯ สะสม
                     </td>
                 </tr>
                 <tr>
@@ -573,7 +603,7 @@
                         @Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance.Value.ToString("#,##0.00")&nbsp;&nbsp;
                     </td>
                     <td class="txtLeft pvNoWidth fontRedV1 borderBottomV2">
-                        &nbsp;&nbsp;<< คงเหลือ (บาท)
+                        &nbsp;&nbsp; คงเหลือ (บาท)
                     </td>
                 </tr>
             </table>

@@ -128,17 +128,6 @@ namespace eActForm.Models
 
         public class actForm : ActBaseModel
         {
-            public actForm(string empId)
-            {
-                if (!string.IsNullOrEmpty(empId))
-                {
-                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-                    if (model.Count > 0)
-                    {
-                        this.createByUserName = model.Count > 0 ? model[0].empName : "";
-                    }
-                }
-            }
 
             public string id { get; set; }
             public string statusId { get; set; }

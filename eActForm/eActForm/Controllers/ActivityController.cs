@@ -368,7 +368,7 @@ namespace eActForm.Controllers
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId,""));
                             }
                         }
                     }
@@ -387,7 +387,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId)
+        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId,string approveFrom)
         {
             var resultAjax = new AjaxResult();
             try
@@ -400,14 +400,17 @@ namespace eActForm.Controllers
                     var txtStamp = "เอกสารถูกยกเลิก";
                     bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
-                    var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    if (approveFrom != "Consumer")
+                    {
+                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    }
 
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
 
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
-                    if (statusId == "3")
+                    if (statusId == "3" && approveFrom != "Consumer")
                     {
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }

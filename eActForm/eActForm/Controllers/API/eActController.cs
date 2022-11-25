@@ -788,5 +788,20 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult checkIOPV(string IO)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                result.Success = ActFormAppCode.checkIOPV(IO);
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

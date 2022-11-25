@@ -150,7 +150,7 @@ namespace eActForm.Controllers.API
                         //outputHtml += "</div>";
                         outputHtml += "</div>";
 
-                        HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId));
+                        HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
                     }
 
                 }

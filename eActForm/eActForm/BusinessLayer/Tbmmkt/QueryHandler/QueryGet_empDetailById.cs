@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer
                                      position = d.empPositionTitleTH,
                                      level = d.empLevel,
                                      department = d.empDepartmentTH,
-                                     bu = d.empDivisionTH,
+                                     bu = d.BUSUName,
                                      companyName = "บริษัท " + d.empCompanyNameTH,
                                      empNameEN = d.empFNameEN + " " + d.empLNameEN,
                                      positionEN = d.empPositionTitleEN,
