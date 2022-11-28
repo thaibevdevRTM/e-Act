@@ -645,9 +645,6 @@ namespace eActForm.BusinessLayer
                                 activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
                             }
 
-
-
-
                         }
                         #endregion
                         #region formTrvTbm formTrvHcm

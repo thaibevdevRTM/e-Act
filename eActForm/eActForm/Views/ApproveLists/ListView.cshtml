@@ -7,6 +7,12 @@
  
 }
 
+<style>
+    table th{
+        text-align:center;
+    }
+</style>
+
 @if (ViewBag.messCannotFindSignature != null)
 {
     <div class="loading" style="text-align: center;">
@@ -59,11 +65,11 @@ else
                         <th>Act.No</th>
                         <th>Brand</th>
                         <th>@Resources.Global.headerTableObjective</th>
-                        <th align="center">@Resources.Global.headerTableSales</th>
-                        <th align="center">@Resources.Global.headerTableCost</th>
-                        <th align="center">@Resources.Global.headerTableSalesPercent</th>
-                        <th align="center">createBy</th>
-                        <th align="center">วันที่ส่งอนุมัติ</th>
+                        <th>@Resources.Global.headerTableSales</th>
+                        <th>@Resources.Global.headerTableCost</th>
+                        <th>@Resources.Global.headerTableSalesPercent</th>
+                        <th>createBy</th>
+                        <th>วันที่ส่งอนุมัติ</th>
                     </tr>
                 </thead>
                 <tbody>

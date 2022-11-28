@@ -17,6 +17,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
         public List<TB_Act_master_cost_centerModel> TB_Act_master_cost_centerModel_List { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
+        public TB_Act_ActivityForm_SelectBrandOrChannel tB_Act_ActivityForm_SelectBrandOrChannelModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList { get; set; }
@@ -29,6 +30,8 @@ namespace eActForm.Models
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel2 { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel3 { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
@@ -115,6 +118,7 @@ namespace eActForm.Models
             budgetMainTotalList = new List<BudgetTotal>();
             budgetMainActTypelList = new List<BudgetTotal>();
             budgetTotalActTypeList = new List<BudgetTotal>();
+            tB_Act_ActivityForm_SelectBrandOrChannelModel = new TB_Act_ActivityForm_SelectBrandOrChannel();
         }
 
     }
