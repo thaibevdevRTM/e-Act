@@ -124,6 +124,7 @@
                         <td style="text-align:center;"> รหัสผู้สร้างกิจกรรม </td>
                         <td style="text-align:left;"> ชื่อผู้สร้างกิจกรรม </td>
                         <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
+                        <td style="text-align:left;"> ยอดตัดจ่ายรออนุมัติ </td>
                     </tr>
 				</thead>
 				@{ var index = 1;}
@@ -190,6 +191,7 @@
                 <td class="text-hide">@item.actForm_CreatedByUserId </td>
                 <td class="text-hide">@item.actForm_CreatedByName </td>
                 <td class="text-hide">@item.budget_CurrentApproveName </td>
+                <td class="text-hide">@item.wait_activityInvoiceTotalBath </td>
             </tr>
 					index++;
 				}

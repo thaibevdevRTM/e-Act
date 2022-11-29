@@ -4,76 +4,75 @@
 
 @if (Model.approveFlowDetail != null)
 {
-    <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
-        <tr>
+<table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
+    <tr>
 
-            @foreach (var item in Model.approveFlowDetail)
+        @foreach (var item in Model.approveDetailLists)
+        {
+            if (item.isShowInDoc==true)
             {
-                if (item.isShowInDoc)
-                {
-                    <td style="width:160px;height:40px;">
-                        <div style="font-size:11px;">
-                            @item.approveGroupName
-                        </div>
-                        <div style="font-size:11px;">
-                            (@item.approveGroupNameEN)
-                        </div>
-                    </td>
-                }
+                <td style="width:160px;height:40px;">
+                    <div style="font-size:11px;">
+                        @item.approveGroupNameTH
+                    </div>
+                    <div style="font-size:11px;">
+                        (@item.approveGroupnameEN)
+                    </div>
+                </td>
             }
+        }
 
-        </tr>
+    </tr>
 
-        <tr>
-            @{ var index = 0;}
-            @foreach (var item in Model.approveFlowDetail)
+    <tr>
+        @{ var index = 0;}
+        @foreach (var item in Model.approveDetailLists)
+        {
+            if (item.isShowInDoc == true)
             {
-                if (item.isShowInDoc)
+                if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index
+                                                     && Model.approveDetailLists[index].statusId == "3") // show img for approv only
                 {
-                    if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index 
-                                                         && Model.approveDetailLists[index].empId == item.empId 
-                                                         && Model.approveDetailLists[index].statusId == "3") // show img for approv only
+                    <td width="130">
+                        @if (Model.approveDetailLists[index].signature.Length > 0)
                         {
-                        <td width="130">
-                            @if (Model.approveDetailLists[index].signature.Length > 0)
-                            {
-                                <img width="120" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)"/>
-                            }
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <div style="text-align:center;height:80px;"></div>
-                        </td>
-                    }
+                            <img width="120" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)" />
+                        }
+                    </td>
                 }
-                index++;
-            }
-        </tr>
-
-        <tr>
-            @foreach (var item in Model.approveFlowDetail)
-            {
-                if (item.isShowInDoc)
+                else
                 {
                     <td>
-                        <div style="text-align:center; height:20px; margin-top:20px; font-size:11px;">@item.empFNameTH @item.empLNameTH</div>
+                        <div style="text-align:center;height:80px;"></div>
                     </td>
                 }
             }
-        </tr>
-        <tr>
-            @foreach (var item in Model.approveFlowDetail)
-            {
-                if (item.isShowInDoc)
-                {
-                    <td>
-                        <div style="text-align:center; height:40px; font-size:11px;">@item.empPositionTitleTH</div>
-                    </td>
-                }
-            }
-        </tr>
+            index++;
+        }
+    </tr>
 
-    </table>
+    <tr>
+        @foreach (var item in Model.approveDetailLists)
+        {
+            if (item.isShowInDoc == true)
+            {
+                <td>
+                    <div style="text-align:center; height:20px; margin-top:20px; font-size:11px;">@item.empName</div>
+                </td>
+            }
+        }
+    </tr>
+    <tr>
+        @foreach (var item in Model.approveDetailLists)
+        {
+            if (item.isShowInDoc == true)
+            {
+                <td>
+                    <div style="text-align:center; height:40px; font-size:11px;">@item.empPositionTitleTH</div>
+                </td>
+            }
+        }
+    </tr>
+
+</table>
 }
