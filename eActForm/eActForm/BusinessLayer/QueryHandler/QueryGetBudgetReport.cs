@@ -74,7 +74,8 @@ namespace eActForm.BusinessLayer.QueryHandler
                                   act_status = d["act_status"].ToString(),
                                   actForm_CreatedByUserId = d["actForm_CreatedByUserId"].ToString(),
                                   actForm_CreatedByName = d["actForm_CreatedByName"].ToString(),
-                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString()
+                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString(),
+                                  wait_activityInvoiceTotalBath = d["wait_activityInvoiceTotalBath"].ToString()
                               });
 
                 return result.ToList();
