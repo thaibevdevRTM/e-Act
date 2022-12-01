@@ -321,7 +321,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend,bool callKafka)
         {
             try
             {
@@ -365,7 +365,11 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI","").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                        if (callKafka)
+                        {
+                            ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                        }
+
                         strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId

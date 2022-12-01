@@ -270,7 +270,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
                     result.Success = true;
                 }
                 else
@@ -325,7 +325,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
                     Session["SummaryDetailModel"] = null;
                 }
             }

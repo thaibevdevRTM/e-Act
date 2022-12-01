@@ -18,7 +18,7 @@ namespace eActForm.Controllers
             try
             {
                 EmailAppCodes.resendHistory(actId);
-                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Activity_Form, true);
+                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Activity_Form, true,false);
                 result.Success = true;
             }
             catch (Exception ex)

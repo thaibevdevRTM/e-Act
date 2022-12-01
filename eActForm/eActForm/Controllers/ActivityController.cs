@@ -415,7 +415,7 @@ namespace eActForm.Controllers
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false,true);
 
                 }
                 resultAjax.Success = true;
