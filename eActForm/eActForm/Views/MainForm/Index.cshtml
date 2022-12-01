@@ -188,6 +188,23 @@
     }
 
 
+    if ('@UtilsAppCode.Session.User.isAdminTBM' == 'True' && '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+        if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3') {
+
+            $("#tableDetailsBG :input").prop("disabled", false);
+            $("#tableDetailsBG :input").prop("readonly", true);
+
+            var arrayOfElements = document.getElementsByClassName('clstxtIO');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                document.getElementById("activityOfEstimateList[" + i + "].IO").disabled = false;
+                document.getElementById("activityOfEstimateList[" + i + "].IO").readOnly = false;
+            }
+        }
+
+    }
+
+
     if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
         && '@Model.activityFormTBMMKT.statusId' == '1') {
         console.log('return');
@@ -205,20 +222,7 @@
     }
 
 
-    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-        var arrayOfElements = document.getElementsByClassName('clstxtIO');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].disabled = 'disabled';
-        }
-    }
-    else {
-        var arrayOfElements = document.getElementsByClassName('clstxtIO');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            document.getElementById("activityOfEstimateList["+i+"].IO").disabled = false;
-        }
-    }
+
 
 
     $("#btnExportPDF").click(function () {

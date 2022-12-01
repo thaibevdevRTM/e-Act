@@ -190,7 +190,24 @@ namespace eActForm.BusinessLayer
                         }
                         else if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formReturnPosTbm"] == getMasterType)
                         {
-                            model.flowDetail.RemoveAll(x => x.empId == ConfigurationManager.AppSettings["KSansiri"]);
+                            var getDataRow = model.flowDetail.Where(x => x.empId == ConfigurationManager.AppSettings["KSansiri"]).AsEnumerable();
+                            if (getDataRow.Any() && !string.IsNullOrEmpty(getData.tB_Act_ActivityForm_DetailOther.productBrandId))
+                            {
+
+                                var getRank = getDataRow.Where(x => x.empId == ConfigurationManager.AppSettings["KSansiri"]).FirstOrDefault().rangNo;
+                                getRank = getRank - 1;
+                                //model.flowDetail.Where(x => x.rangNo == getRank).Select(c => c.rangNo = c.rangNo - 1).ToList();
+                                var changeApproveGroup = model.flowDetail.Where(x => x.rangNo == getRank);
+                                foreach (var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Approveby;
+                                    item.approveGroupName = "เรียน/อนุมัติ";
+                                    item.approveGroupNameEN = "Approve by";
+                                }
+                                model.flowDetail.RemoveAll(x => x.empId == ConfigurationManager.AppSettings["KSansiri"]);
+                            }
+
+
                         }
 
                     }

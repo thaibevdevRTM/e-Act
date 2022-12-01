@@ -87,6 +87,12 @@
                                           $(document).ready(function () {
                                                 $(function () {
 
+                                                     if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
+                                                     {
+                                                          var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
+                                                          checkIOPV(txtIO,@index);
+                                                      }
+
                                                     $(".clstxtIO_@index").autocomplete({
                                                         source: function (request, response) {
                                                             $.ajax({
@@ -127,11 +133,7 @@
                                             $(".clstxtIO_@index").val(txtIO);
                                             getBudgetTotal();
 
-                                            if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
-                                            {
-                                                checkIOPV(txtIO,@index);
 
-                                            }
                                         });
                                 </script>
 
@@ -285,10 +287,9 @@
         }).done(function (response) {
 
             if (response.Success) {
-                doAlert('IO ถูกนำไปใช้งานแล้ว');
-                  $(".clstxtIO_"+index).val('');
+
+                document.getElementById("activityOfEstimateList[" + index + "].IO").readOnly = true;
             }
-            console.log(response);
         });
     }
 

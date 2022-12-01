@@ -26,10 +26,14 @@ namespace eActForm.BusinessLayer
                 if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 || model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
-
+                    
                     if (model.activityFormTBMMKT.statusId != 3)
                     {
                         rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+                    }
+                    else if(model.activityFormTBMMKT.statusId == 3 && model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
+                    {
+                        rtn = ProcessInsertEstimate(rtn, model, activityId);
                     }
                 }
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
