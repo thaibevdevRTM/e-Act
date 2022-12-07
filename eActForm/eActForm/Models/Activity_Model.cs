@@ -171,6 +171,7 @@ namespace eActForm.Models
             public string brandName { get; set; }
             public string channelId { get; set; }
             public string mainAgency { get; set; }
+            public string piorityDoc { get; set; }
 
         }
 

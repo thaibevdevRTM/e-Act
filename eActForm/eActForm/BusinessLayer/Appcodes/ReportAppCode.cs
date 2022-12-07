@@ -212,14 +212,11 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt = lists.Count.ToString();
                     activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.val = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
 
-
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
                     if (activity_TBMMKT_Model.approveModels.approveDetailLists.Count > 0)
                     {
                         activity_TBMMKT_Model.approveModels.approveDetailLists = activity_TBMMKT_Model.approveModels.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
                     }
-
-
 
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
                     {
@@ -391,6 +388,10 @@ namespace eActForm.BusinessLayer
 
                     }
 
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                {
+                    activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 }
                 //===END==layout doc===========
 

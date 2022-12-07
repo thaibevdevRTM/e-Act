@@ -2764,6 +2764,7 @@
     <Content Include="Content\vendors\nprogress\nprogress.js" />
     <Content Include="Content\vendors\nprogress\support\extras.css" />
     <Content Include="Content\vendors\nprogress\support\style.css" />
+    <Content Include="images\ThaiBevLogo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

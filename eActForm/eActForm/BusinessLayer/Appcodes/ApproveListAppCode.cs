@@ -73,6 +73,8 @@ namespace eActForm.BusinessLayer
                                  mainAgency = dr["mainAgency"].ToString(),
                                  regionId = dr["region"].ToString(),
                                  createByUserName = dr["createByName"].ToString(),
+                                 piorityDoc = dr["piorityDoc"].ToString(),
+
                              }).ToList();
 
                 return lists;

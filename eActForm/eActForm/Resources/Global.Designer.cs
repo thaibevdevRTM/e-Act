@@ -376,6 +376,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to วันที่ส่งอนุมัติ.
+        /// </summary>
+        public static string headerTableDateRequest {
+            get {
+                return ResourceManager.GetString("headerTableDateRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to วัตถุประสงค์.
         /// </summary>
         public static string headerTableObjective {
