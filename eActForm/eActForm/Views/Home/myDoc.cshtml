@@ -221,13 +221,13 @@
 
     </div>
     <div class="col-md-12 col-xs-12">
-        <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>คือ Regen PDF
-        <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
-        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
-        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
-        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
-        <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
-        <a class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px" href="#"></a>คือ PostEva
+        <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>Regen PDF
+        <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>Delete
+        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>Edit
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>History Approve
+        <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>Resend Email
+        <a class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px" href="#"></a>PostEva
         <a class="btn ink-reaction btn-warning  fa fa-archive" href="#"></a>คืนสินค้า
         <a class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px" href="#"></a>ปันส่วน
         <table id="datatable" class="table table-striped table-hover">
@@ -253,7 +253,7 @@
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm','@item.master_type_form_id');">
-                                    <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+                                    <i class="btn glyphicon glyphicon-retweet" title="Regen PDF"></i>&nbsp;
                                 </a>
                             }
                             @if (item.statusId == "1" || item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()) ||
@@ -262,32 +262,32 @@
                                                                 || (item.statusId == "3" && item.companyId == ConfigurationManager.AppSettings["companyId_TBM"]))
                             {
                                 <a href="javascript:" onclick="return checkBeforeDelete('@item.id','@item.statusId');">
-                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o" title="Delete"></i>&nbsp;
                                 </a>
                             }
 
 
                             <a onclick="callApproveList('@item.id');">
-                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                                <i class="btn ink-reaction btn-dark fa fa-eye" title="History Approve"></i>
                             </a>
 
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
 
                                 <a onclick="resendApprove('@item.id');">
-                                    <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
+                                    <i class="btn ink-reaction btn-info fa fa-envelope-o" title="Resend Mail"></i>
                                 </a>
                             }
 
                             @if (item.companyId == ConfigurationManager.AppSettings["companyId_MT"] && item.statusId == "3")
                             {
                                 <a href="javascript:" onclick="return callPreviewPostEva('@item.id');">
-                                    <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" style="height:28px; margin-bottom:5px"></i>
+                                    <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" title="PostEva" style="height:28px; margin-bottom:5px"></i>
                                 </a>
                                 if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
-                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
                                     </a>
                                 }
 
@@ -310,7 +310,7 @@
                                 if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin))
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
-                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" style="height:28px; margin-bottom:5px"></i>
+                                        <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
                                     </a>
                                 }
 
@@ -331,11 +331,11 @@
 
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", title = "ใบเบิกค่าใช้จ่าย" ,onclick = "waitpopup();", })
                                 }
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formReturnPosTbm"] }, new { @class = "btn ink-reaction btn-warning  fa fa-archive", onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formReturnPosTbm"] }, new { @class = "btn ink-reaction btn-warning  fa fa-archive", title = "คืนสินค้า", onclick = "waitpopup();", })
                                 }
                             }
                             else if ((@Array.AsReadOnly(AppCode.checkDocHC).Contains(item.master_type_form_id)))
@@ -352,7 +352,7 @@
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
-                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search",title="View PDF", target = "_blank" })
                             }
                         </td>
                         <td>@item.statusName</td>
