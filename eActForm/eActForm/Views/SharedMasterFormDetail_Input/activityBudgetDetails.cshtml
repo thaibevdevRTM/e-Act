@@ -90,7 +90,7 @@
                                                      if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
                                                      {
                                                           var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
-                                                          checkIOPV(txtIO,@index);
+                                                          checkIOPV(txtIO,@index,'disable');
                                                       }
 
                                                     $(".clstxtIO_@index").autocomplete({
@@ -129,8 +129,8 @@
 
                                         $(".clstxtIO_@index").blur(function () {
                                             var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
-
-                                            $(".clstxtIO_@index").val(txtIO);
+                                             checkIOPV(txtIO,@index,'popup');
+                 
                                             getBudgetTotal();
 
 
@@ -276,7 +276,7 @@
 
     });
 
-    function checkIOPV(p_IO, index) {
+    function checkIOPV(p_IO, index,type) {
         $.ajax({
             url: '@Url.Action("checkIOPV", "eAct")',
             data: {
@@ -287,8 +287,18 @@
         }).done(function (response) {
 
             if (response.Success) {
+                if (type == 'disable') {
+                    document.getElementById("activityOfEstimateList[" + index + "].IO").readOnly = true;
+                }
+                else {
 
-                document.getElementById("activityOfEstimateList[" + index + "].IO").readOnly = true;
+
+                    bootbox.alert({
+                        message: 'IO นี้ถูกใช้งานแล้ว!',
+                        size: 'small'
+                    });
+                   
+                }
             }
         });
     }

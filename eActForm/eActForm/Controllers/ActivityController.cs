@@ -430,8 +430,6 @@ namespace eActForm.Controllers
 
             return resultAjax;
         }
-
-
         public ActionResult subActivityView(string activityId, string count)
         {
             Activity_Model activityModel = new Activity_Model();

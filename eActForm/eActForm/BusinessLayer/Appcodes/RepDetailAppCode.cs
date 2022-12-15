@@ -422,6 +422,7 @@ namespace eActForm.BusinessLayer
                                                          perSE = dr["Le"] is DBNull ? 0 : Convert.ToDecimal(dr["Le"]),
                                                          perToSale = dr["perToSale"] is DBNull ? 0 : Convert.ToDecimal(dr["perToSale"]),
                                                          rowNo = int.Parse(dr["rowNo"].ToString()),
+                                                         actRef = dr["actRef"].ToString(),
                                                          #endregion
 
                                                      }).ToList();
@@ -478,6 +479,7 @@ namespace eActForm.BusinessLayer
                         perSE = group.Sum(x => x.perSE),
                         perToSale = group.Sum(x => x.perToSale),
                         rowNo = group.First().rowNo,
+                        actRef = group.First().actRef,
                         #endregion
 
 

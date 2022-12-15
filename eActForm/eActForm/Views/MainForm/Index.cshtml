@@ -191,8 +191,11 @@
     if ('@UtilsAppCode.Session.User.isAdminTBM' == 'True' && '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
         if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3') {
 
-            $("#tableDetailsBG :input").prop("disabled", false);
-            $("#tableDetailsBG :input").prop("readonly", true);
+            $("#GridPDF :input").prop("disabled", false);
+            $("#txtdescAttach").prop("disabled", false);
+
+            $("#ProductDetail_5").prop("disabled", false);
+            $("#ProductDetail_6").prop("disabled", false);
 
             var arrayOfElements = document.getElementsByClassName('clstxtIO');
             var lengthOfArray = arrayOfElements.length;
