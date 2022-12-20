@@ -11,6 +11,11 @@
     table th{
         text-align:center;
     }
+
+    .btnSize{
+        height:28px;
+        width:40px;
+    }
 </style>
 
 @if (ViewBag.messCannotFindSignature != null)
@@ -37,7 +42,8 @@ else
         </div>
         <div class="col-md-12 col-xs-12">
             <a class="btn ink-reaction btn-info fa fa-search" href="#"></a>@Resources.Global.toViewDocument
-            <a class="btn ink-reaction btn-success bi bi-person-check-fill" href="#"></a>@Resources.Global.toApproveDocument
+            <i class="btn ink-reaction btn-dark fa fa-eye"></i>@Resources.Global.toHistoryAppprove
+            <a class="btn ink-reaction btn-success bi bi-person-check-fill btnSize" href="#"></a>@Resources.Global.toApproveDocument
         </div>
         <div class="col-md-12 col-xs-12">
 
@@ -91,7 +97,7 @@ else
                                 <a onclick="callApproveList('@item.id');">
                                     <i class="btn ink-reaction btn-dark fa fa-eye"></i>
                                 </a>
-                                @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success bi bi-person-check-fill" })
+                                @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success bi bi-person-check-fill btnSize" })
 
                             </td>
                             <td>
@@ -138,7 +144,9 @@ else
     $(document).ready(function () {
 
         $('#dtApproveList').DataTable({
-            "paging": true,
+            "scrollY": 500,
+            "scrollX": true,
+            "paging": false,
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
 
@@ -169,18 +177,23 @@ else
         }).promise().done(function () {
 
             summaryActBeerByActId(favorite);
-              document.getElementById("divSubmit").style.display = "block";
+          //  document.getElementById("divSubmit").style.display = "block";
         });
 
     }
 
     function onchangeFlag(ele) {
+
+
         var favorite = [];
         $.each($("input[name='chk_approve']:checked"), function (index, value) {
             favorite.push($(this).val());
         }).promise().done(function () {
+
+            console.log(favorite)
+
             summaryActBeerByActId(favorite);
-            document.getElementById("divSubmit").style.display = "block";
+          //  document.getElementById("divSubmit").style.display = "block";
         });
     }
 
@@ -222,7 +235,9 @@ else
 
                             $.each($("input[name='chk_approve']:checked"), function (index, value,loop) {
                                 favorite.push($(this).val());
-                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+
+                                console.log(favorite[favorite.length - 1])
+                               // setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
                             }).promise().done(function () {
                                 $("#WaitDialog").show();
                                 setTimeout(alertFunc, 5000);

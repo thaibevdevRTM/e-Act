@@ -95,6 +95,12 @@ namespace eActForm.BusinessLayer
             for (int i = 0; i < strInteger.Length; i++)
             {
                 string number = strInteger.Substring(i, 1);
+                if(number == "-")
+                {
+                    number = strInteger.Substring(i+1, 1);
+                }
+
+
                 if (number != "0")
                 {
                     if (i == strLength - 1 && number == "1" && strLength != 1)

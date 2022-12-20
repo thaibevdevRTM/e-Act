@@ -324,4 +324,7 @@
   <data name="headerTableDateRequest" xml:space="preserve">
     <value>Date of Request </value>
   </data>
+  <data name="toHistoryAppprove" xml:space="preserve">
+    <value>History Appprove</value>
+  </data>
 </root>

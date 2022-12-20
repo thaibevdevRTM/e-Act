@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
+@using eActForm.BusinessLayer
 @using eActForm.Models
 @{
     var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
@@ -64,7 +65,7 @@
                 <label>Company</label>
             </div>
             <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", @onchange = "getSubjectByComp();" })
             </div>
         </div>
         <div id="divSubject" class="col-md-3">
@@ -75,6 +76,24 @@
                 @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
             </div>
         </div>
+
+        <div id="divInputSubject" class="col-md-3" style="display:none;">
+            <div class="col-md-12 col-xs-12">
+                <label>Subject</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.TextBox("txtSubject", "", new { @class = "form-control textboxcss", @id = "txtSubject" })
+            </div>
+        </div>
+
+        if (UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            <div style="margin-top:30px;">
+                <i id="btnEditSubject" class="btn ink-reaction btn-info fa fa-edit" onclick="callEditSubject();">Edit</i>
+                <i id="btnSubmitSubject" class="btn ink-reaction btn-success fa fa-check" onclick="submitSubject();">Done</i>
+            </div>
+        }
+
     }
 </div>
 
@@ -83,7 +102,7 @@
 <div id="divDrop" class="col-md-12">
 </div>
 
-
+@Html.Hidden("hdSubjectId")
 <script type="text/javascript">
 
     function SubmitDataIndex() {
@@ -92,9 +111,93 @@
         }
     }
 
+    function callEditSubject() {
+        $("#divInputSubject").show();
+        $("#divSubject").hide();
+        $("#btnEditSubject").hide();
+        $("#btnSubmitSubject").show();
 
+        $("#txtSubject").val($("#ddlSubject option:selected").text());
+        $("#hdSubjectId").val($("#ddlSubject option:selected").val());
+
+
+    }
+
+    function submitSubject() {
+        $("#btnEditSubject").show();
+        $("#btnSubmitSubject").hide();
+
+
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("editSubject", "ManagementFlow")',
+            data: {
+                subjectId: $("#hdSubjectId").val(),
+                subjectTxt: $("#txtSubject").val(),
+            }
+         }).done(function (response) {
+
+             if (response.Success) {
+                 $("#divDrop").hide();
+                 doMsgSuccess("ดำเนินการเรียบร้อย");
+                 getSubjectByComp();
+
+                 $("#divInputSubject").hide();
+                 $("#divSubject").show();
+             }
+             else {
+                 getSubjectByComp();
+                 $("#divInputSubject").hide();
+                 $("#divSubject").show();
+
+
+             }
+
+        });
+
+
+
+
+    }
+
+      function getEmpDetail() {
+
+        ddlCompanyMulti = $("#ddlCompanyMulti")
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCompanyByEmpId", "ManagementFlow")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+
+            if (response.Data.companyList.length > 0) {
+                document.getElementById("divCompanyMulti").style.display = "block";
+                document.getElementById("divSubmit").style.display = "block";
+
+                $("#ddlCompanyMulti option").remove();
+                $('#ddlCompanyMulti').multiselect('refresh');
+                $('#ddlCompanyMulti').multiselect('destroy');
+
+                $.each(response.Data.companyList, function () {
+                    ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+
+                $('#ddlCompanyMulti').multiselect({
+                    includeSelectAllOption: true
+                });
+            }
+            else {
+                var url = '@Url.Action("Index", "ManagementFlow", new { typeFlow = @Activity_Model.typeFlow.swap.ToString() })';
+                window.location.href = url;
+            }
+        });
+    }
 
     $(document).ready(function () {
+        $("#btnSubmitSubject").hide();
+
         $('form input').keydown(function (e) {
             if (e.keyCode == 13) {
                 e.preventDefault();
@@ -178,8 +281,9 @@
         });
     }
 
-    $("#ddlCompany").change(function () {
-        $("#WaitDialog").show();
+
+    function getSubjectByComp() {
+         $("#WaitDialog").show();
         $.ajax({
             url: '@Url.Action("getSubjectByCompany", "ManagementFlow")',
             data: {
@@ -199,7 +303,8 @@
                 $("#WaitDialog").hide();
             }
         });
-    });
+
+    }
 
     $("#ddlSubject").change(function () {
         $("#WaitDialog").show();
@@ -221,7 +326,7 @@
             else {
                 setDropDownBySubject();
 
-                
+
             }
 
         });

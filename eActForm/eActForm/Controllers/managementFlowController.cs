@@ -445,5 +445,33 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult editSubject(string subjectId , string subjectTxt)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var lists = managementFlowAppCode.updateSubject(subjectId, subjectTxt);
+
+                if(lists > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getSubjectByCompany => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

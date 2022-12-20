@@ -601,6 +601,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ประวัติอนุมัติ.
+        /// </summary>
+        public static string toHistoryAppprove {
+            get {
+                return ResourceManager.GetString("toHistoryAppprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to จ่ายให้.
         /// </summary>
         public static string toPay {
