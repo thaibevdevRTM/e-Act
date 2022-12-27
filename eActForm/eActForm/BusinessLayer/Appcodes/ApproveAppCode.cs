@@ -704,7 +704,7 @@ namespace eActForm.BusinessLayer
                                   docNo = dr["docNo"].ToString(),
                                   refId = dr["refId"].ToString(),
                                   orderRank = dr["orderRank"].ToString(),
-                                  subject = dr["subject"].ToString(),
+                                  subject = dr["brandName"].ToString() +" "+ dr["subject"].ToString(),
                                   requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                                   totalAmount = dr["totalAmount"].ToString(),
                                   currency = dr["currency"].ToString(),
@@ -715,7 +715,6 @@ namespace eActForm.BusinessLayer
                                   companyName = dr["companyName"].ToString(),
                                   organizationUnitName = dr["organizationUnitName"].ToString(),
                                   detail = dr["detail"].ToString(),
-
                               }).ToList();
 
 

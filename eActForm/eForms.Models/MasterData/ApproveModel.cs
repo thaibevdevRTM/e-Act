@@ -66,6 +66,7 @@ namespace eForms.Models.MasterData
         public string companyName { get; set; }
         public string organizationUnitName { get; set; }
         public string detail { get; set; }
+        public string brandName { get; set; }
 
     }
 
