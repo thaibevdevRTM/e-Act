@@ -43,6 +43,7 @@ namespace eActForm.Controllers
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
                 activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activitySales.Contains("FOC")).ToList();
+                activityModel.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.orderNum).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
@@ -63,6 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+                   
                     TempData["actForm" + activityId] = activityModel;
                     ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }

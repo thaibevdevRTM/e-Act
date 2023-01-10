@@ -3,6 +3,7 @@ using eForms.Models.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.UI.WebControls.WebParts;
 using static eActForm.Models.ApproveFlowModel;
 using static eActForm.Models.ApproveModel;
 using static eActForm.Models.TB_Act_Chanel_Model;
@@ -13,7 +14,6 @@ namespace eActForm.Models
 {
     public class Activity_Model
     {
-
         public List<TB_Act_ProductCate_Model> productcatelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
@@ -39,22 +39,18 @@ namespace eActForm.Models
 
         // **********************************************************************************/
 
-
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
         //public List<Productcostdetail> productcostdetaillist { get; set; }
-
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ActivityForm> activityModelList { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
-
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<scriptModel> scristModelList { get; set; }
-
         public List<TB_Act_Other_Model> companyList { get; set; }
-
         public approveFlowModel approveModels { get; set; }
+        public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
 
 
         public Activity_Model()
@@ -305,6 +301,7 @@ namespace eActForm.Models
         public int status_rp { get; set; }
         public decimal? sumTotal { get; set; }
         public string callFrom { get; set; }
+        public string piority { get; set; }
 
     }
 
