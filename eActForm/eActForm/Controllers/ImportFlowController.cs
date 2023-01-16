@@ -97,8 +97,8 @@ namespace eActForm.Controllers
                         modelFlow.approveGroupId = ImportFlowPresenter.checkValueForImport(dt.Rows[i]["approveGroupId"].ToString());
                         modelFlow.IsShow = dt.Rows[i]["IsShow"].ToString().ToLower() == "Yes".ToLower() ? "1" : "0";
                         modelFlow.IsApprove = dt.Rows[i]["IsApprove"].ToString().ToLower() == "Yes".ToLower() ? "1" : "0";
-                        modelFlow.empId = dt.Rows[i]["empId"].ToString();
-                        modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString();
+                        modelFlow.empId = dt.Rows[i]["empId"].ToString().Trim();
+                        modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString().Trim();
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         //modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
