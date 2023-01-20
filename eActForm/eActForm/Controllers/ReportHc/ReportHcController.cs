@@ -1,19 +1,19 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Controllers;
 using eActForm.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using eActForm.Controllers;
-using Newtonsoft.Json.Linq;
-using System.Web.Helpers;
-using Newtonsoft.Json;
-using WebLibrary;
 using System.Text;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers.ReportHc
 {
@@ -126,11 +126,11 @@ namespace eActForm.Controllers.ReportHc
                 }
                 else
                 {
-                   // empId = Request.Form["ddlMutiEmp"];
+                    // empId = Request.Form["ddlMutiEmp"];
                     //  List<MedAllDetail> medAllDetail = new List<MedAllDetail>();
                     //medAllDetail.Add(new MedAllDetail() { activityNo = "", documentDate = "" });
                     //models.medAllDetail = medAllDetail;
-                    models.medAllDetail = QueryGetReport.getReportMedAllDetail(companyId,department, typeFormId, startDate, endDate);
+                    models.medAllDetail = QueryGetReport.getReportMedAllDetail(companyId, department, typeFormId, startDate, endDate);
                 }
             }
 

@@ -45,7 +45,7 @@ namespace eForms.Presenter.MasterData
             }
         }
 
-        public static List<Master_type_form_Model> getmastertypeformByEmpId(string strConn ,string empId)
+        public static List<Master_type_form_Model> getmastertypeformByEmpId(string strConn, string empId)
         {
             try
             {

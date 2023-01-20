@@ -43,6 +43,7 @@ namespace eActForm.Controllers
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
                 activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activitySales.Contains("FOC")).ToList();
+                activityModel.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.orderNum).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
@@ -63,6 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+                   
                     TempData["actForm" + activityId] = activityModel;
                     ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }
@@ -113,12 +115,8 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
-            activityModel.approveModels = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], activityId);
+            activityModel = ReportAppCode.previewApprove(activityId, UtilsAppCode.Session.User.empId);
+            activityModel.activityFormModel.callFrom = "app";
             return PartialView(activityModel);
         }
 
@@ -367,12 +365,12 @@ namespace eActForm.Controllers
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
-                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString());
+                                    ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), statusNote, AppCode.ApproveType.Activity_Form.ToString(), UtilsAppCode.Session.User.empId);
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId));
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId,""));
                             }
                         }
                     }
@@ -391,7 +389,7 @@ namespace eActForm.Controllers
         }
 
 
-        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
+        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId,string approveFrom)
         {
             var resultAjax = new AjaxResult();
             try
@@ -399,16 +397,28 @@ namespace eActForm.Controllers
 
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+
+                    var rootPathMap = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var txtStamp = "เอกสารถูกยกเลิก";
                     bool success = AppCode.stampCancel(Server, rootPathMap, txtStamp);
 
+                    if (approveFrom != "Consumer")
+                    {
+                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    }
+
                     EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
+
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
+                    if (statusId == "3" && approveFrom != "Consumer")
+                    {
+                        var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
+                    }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false,true);
+
                 }
                 resultAjax.Success = true;
             }
@@ -422,8 +432,6 @@ namespace eActForm.Controllers
 
             return resultAjax;
         }
-
-
         public ActionResult subActivityView(string activityId, string count)
         {
             Activity_Model activityModel = new Activity_Model();
@@ -439,7 +447,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count : 
+                    activityModel.activityFormModel.countMonth = activityModel.activityModelList.Any() ? activityModel.activityModelList.Count :
                         (getModel.activityPeriodEnd.Value.AddDays(1).Month + getModel.activityPeriodEnd.Value.AddDays(1).Year * 12) - (getModel.activityPeriodSt.Value.Month + getModel.activityPeriodSt.Value.Year * 12);
                 }
 

@@ -61,17 +61,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qt4KL8R3132axV/N2cbihqsAbPl9L9IoRiSgB98qDE4=</dsig:DigestValue>
+        <dsig:DigestValue>hS/Zxy0skKnQbhdbdIXbck46vISm0ZhkDq2yeowzWvY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="updateDataReportTBM.exe.config" size="1791">
+  <file name="updateDataReportTBM.exe.config" size="1793">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>2tSQ2t7Pe4dwLvsy8ssLpr/FcHlkao6lhs43U61c+6Y=</dsig:DigestValue>
+      <dsig:DigestValue>GFPf40NDcTGrEF8ZiPAOTImq+Wt3fum3cT8X8Zj1CSc=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

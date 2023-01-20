@@ -214,6 +214,19 @@ namespace eActForm.BusinessLayer.Appcodes
             return result;
         }
 
+        public static int updateSubject(string subjectId , string subjectTxt)
+        {
+
+            var result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateSubject"
+                   , new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
+                   ,new SqlParameter("@subjectTxt",subjectTxt)
+                   ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                   ,new SqlParameter("@updatedByDate",DateTime.Now)
+                });
+
+            return result;
+        }
+
 
         public static string getFlowtLimitByCondition(string strCon, ManagementFlow_Model model)
         {

@@ -2,7 +2,7 @@
 @using System.Configuration;
 @using eActForm.Models;
 
-@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin
+@if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin
     || UtilsAppCode.Session.User.isCreator)
 {
     <li>
@@ -57,11 +57,11 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Report Detail OMT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
             }
-            @*@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-        {
-            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-        }*@
-            <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
+            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+            }
+           
         </ul>
     </li>
 }

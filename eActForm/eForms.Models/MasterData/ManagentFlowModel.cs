@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eForms.Models.MasterData
 {
@@ -28,7 +25,7 @@ namespace eForms.Models.MasterData
             public string cusNameTH { get; set; }
             public Boolean selectRow { get; set; }
             public string flowId { get; set; }
-            public  string limitName { get; set; }
+            public string limitName { get; set; }
             public List<string> flowApproveIdList { get; set; }
 
 

@@ -25,8 +25,8 @@ namespace updateDataReportTBM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.101; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevR" +
-            "TM@DB101;Max Pool Size=200;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.5.56.33; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=Thaibe" +
+            "vRTM@DB101;Max Pool Size=200;")]
         public string strConn {
             get {
                 return ((string)(this["strConn"]));

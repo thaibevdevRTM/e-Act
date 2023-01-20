@@ -1,7 +1,9 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
 <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="">
-    @{ string address = ""; }
+    @{ 
+        Layout = null;
+        string address = ""; }
     @if (Model.activityFormTBMMKT.companyId == ConfigurationManager.AppSettings["companyId_TBM"])
     {
         address = "15 หมู่ 14 ถนนวิภาวดี - รังสิต แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900";

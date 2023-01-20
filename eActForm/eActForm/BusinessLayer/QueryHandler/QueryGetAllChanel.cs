@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  chanelGroup = d["chanelGroup"].ToString(),
-                                
+
                              });
                 return lists.ToList();
             }
@@ -74,7 +74,7 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  chanelGroup = d["chanelGroup"].ToString(),
-                                 
+
                              });
                 return lists.ToList();
             }
@@ -85,6 +85,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-       
+
     }
 }

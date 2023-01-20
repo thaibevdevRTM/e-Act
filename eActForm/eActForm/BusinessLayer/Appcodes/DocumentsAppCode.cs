@@ -1,5 +1,7 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,11 +20,11 @@ namespace eActForm.BusinessLayer
             try
             {
                 string stored = "";
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     stored = "usp_GetActivityRepDetailAll";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     stored = "usp_GetActivityRepDetailOMTAll";
                 }
@@ -93,6 +95,12 @@ namespace eActForm.BusinessLayer
             for (int i = 0; i < strInteger.Length; i++)
             {
                 string number = strInteger.Substring(i, 1);
+                if(number == "-")
+                {
+                    number = strInteger.Substring(i+1, 1);
+                }
+
+
                 if (number != "0")
                 {
                     if (i == strLength - 1 && number == "1" && strLength != 1)
@@ -162,9 +170,17 @@ namespace eActForm.BusinessLayer
 
             //เพื่อเช็คการใช้ภาษาในหน้า input form
             string cultureLocal = "";
+
             if (HttpContext.Current != null)
             {
-                cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+                try
+                {
+                    cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+                }
+                catch(Exception ex)
+                {
+                    cultureLocal = cultureDoc;
+                }
             }
             else
             {
@@ -178,7 +194,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if (HttpContext.Current != null && checkModeEdit(statusId))
+                if (HttpContext.Current != null)
                 {
                     //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
                     if (culture == cultureLocal) chk = true;
@@ -205,26 +221,25 @@ namespace eActForm.BusinessLayer
             return chk;
         }
 
-        public static bool checkModeEdit(int statusId, string formTYpeId = "")
+        public static bool checkModeEdit(int statusId, string formTYpeId)
         {
             bool chk = true; //แก้ไขได้
 
             try
             {
-
-
-
-                if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"])) || (statusId == 3))
+                if (UtilsAppCode.Session.User != null)
                 {
-                    chk = false;//แก้ไข้ไม่ได้
+                    if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"] || formTYpeId == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]))
+
+                        || (statusId == 3))
+                    {
+                        chk = false;//แก้ไข้ไม่ได้
+                    }
+                    else
+                    {
+                        chk = true;
+                    }
                 }
-                else
-                {
-                    chk = true;
-                }
-
-
-
             }
             catch (Exception ex)
             {
@@ -253,12 +268,12 @@ namespace eActForm.BusinessLayer
         }
         public static string convertDateTHToShowCultureDateTH(DateTime? dateToShow, string formatDatetime)
         {
-            string valResult = "";       
+            string valResult = "";
 
-                if (dateToShow != null)
-                {
-                    valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureThai"], true));
-                }
+            if (dateToShow != null)
+            {
+                valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureThai"], true));
+            }
             return valResult;
         }
 

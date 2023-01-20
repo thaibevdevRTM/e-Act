@@ -67,7 +67,7 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new ProductCostOfGroupByPrice()
                              {
-                                
+
                                  id = Guid.NewGuid().ToString(),
                                  productCode = d["productCode"].ToString(),
                                  productId = d["productId"].ToString(),
@@ -109,7 +109,7 @@ namespace eActForm.BusinessLayer
 
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   
+
                    productGroupId = Guid.NewGuid().ToString(),
                    productCode = group.First().productCode,
                    brandId = group.First().brandId,

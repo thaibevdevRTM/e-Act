@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eForms.Presenter.AppCode
 {
@@ -22,9 +20,9 @@ namespace eForms.Presenter.AppCode
                      ,new SqlParameter("@empId",empId)
                      ,new SqlParameter("@tokenAccess",tokenAccess)
                      ,new SqlParameter("@tokenType",tokenType)
-                     ,new SqlParameter("@createDate",DateTime.Now) 
+                     ,new SqlParameter("@createDate",DateTime.Now)
                      });
- 
+
 
                 return result;
             }
@@ -40,7 +38,7 @@ namespace eForms.Presenter.AppCode
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getUsersToken"
-                     , new SqlParameter[] { new SqlParameter("@empId", empId) }) ;
+                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new tokenModel()
                              {

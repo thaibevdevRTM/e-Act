@@ -156,7 +156,7 @@ namespace eActForm.BusinessLayer
         //}
 
 
-        public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoice(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId,string beginDateyyyymmdd, string endDateyyyymmdd)
+        public static List<TB_Bud_Image_Model.BudImageModel> getBudgetInvoice(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId, string beginDateyyyymmdd, string endDateyyyymmdd)
         {
             try
             {

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.ApplicationBlocks.Data;
+﻿using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -13,13 +13,13 @@ namespace updateDataReportTBM
             bool result = false;
             try
             {
-               
+
                 int rtn = 0;
                 Console.Write("waiting for update data");
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
                 waiting();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
-                 rtn = SqlHelper.ExecuteNonQuery(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_updateReportTBMToTB");
+                rtn = SqlHelper.ExecuteNonQuery(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_updateReportTBMToTB");
                 if (rtn > 0)
                 {
                     result = true;

@@ -59,10 +59,10 @@ namespace eActForm.Controllers
                 if (string.IsNullOrEmpty(typeForm))
                 {
                     //support click link from email
-                    var getCompany =  QueryGetActivityById.getActivityById(actId).FirstOrDefault().companyId;
+                    var getCompany = QueryGetActivityById.getActivityById(actId).FirstOrDefault().companyId;
                     typeForm = BaseAppCodes.getactivityTypeByCompanyId(getCompany);
                     getDateStart = DateTime.Now.AddDays(-100);
-                } 
+                }
                 model = new Activity_Model.actForms();
                 model.actLists = ActFormAppCode.getActFormByEmpId(getDateStart, DateTime.Now, typeForm);
                 model.typeForm = typeForm;

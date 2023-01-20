@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer.Appcodes
     public class TransferBudgetAppcode
     {
 
-        public static List<TransferBudgetModels> GetBudgetBalanceByEOIO(string EO, string IO,string fiscalYear)
+        public static List<TransferBudgetModels> GetBudgetBalanceByEOIO(string EO, string IO, string fiscalYear)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
-        public static List<TransferBudgetModels> GetBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId ,string bgYear)
+        public static List<TransferBudgetModels> GetBudgetBalanceNonEO(string brandId, string channelId, string activityGroupId, string bgYear)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 bool result = false;
                 int rtn = 0;
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_transferBudgetAllApprove"
-                    , new SqlParameter[] { new SqlParameter("@activityId", actId)});
+                    , new SqlParameter[] { new SqlParameter("@activityId", actId) });
                 if (rtn > 0)
                 {
                     result = true;

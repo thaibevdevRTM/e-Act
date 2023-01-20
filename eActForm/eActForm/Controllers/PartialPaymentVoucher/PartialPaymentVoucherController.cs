@@ -30,20 +30,14 @@ namespace eActForm.Controllers
         }
         public ActionResult detailSectionSix(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
-            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
-            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+            
             return PartialView(activity_TBMMKT_Model);
         }
 
 
         public ActionResult detailSectionSix_Purchase(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
-            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
-            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+            
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -143,11 +137,11 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo != null)
                 {
 
-                        ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
-                        objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                        objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-                        getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
-                   
+                    ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
+                    objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+                    objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                    getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
+
                 }
                 activity_TBMMKT_Model.listGetDataPVPrevious = getDataPVPrevious;
             }

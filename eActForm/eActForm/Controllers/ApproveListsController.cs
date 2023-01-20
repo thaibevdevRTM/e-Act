@@ -35,7 +35,7 @@ namespace eActForm.Controllers
             if (actId != null)
             {
                 approveModels.activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                
+
                 var conAr2Str = string.Join(",", actId);
                 //var rep = conAr2Str.Replace("\\", "").Replace("\"", "").Replace(" ","");
                 approveModels.approveListSummaryList = ApproveListAppCode.callApproveListSummary(conAr2Str);
@@ -56,7 +56,12 @@ namespace eActForm.Controllers
             if (TempData["ApproveSearchResult"] == null)
             {
                 model = new Activity_Model.actForms();
-                model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+
+      
+                DateTime? startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime? endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+
+                model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate);
                 TempData["ApproveFormLists"] = model.actLists;
 
                 if (fromPage != null && StatusApprove != null)
@@ -93,7 +98,7 @@ namespace eActForm.Controllers
                 string count = Request.Form.AllKeys.Count().ToString();
                 Activity_Model.actForms model = new Activity_Model.actForms();
                 model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
-                
+
                 if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
                 {
                     model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
@@ -141,7 +146,7 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(Request.Form["ddlYears"]))
                 {
 
-                    var conStr2Year =int.Parse(Request.Form["ddlYears"]);
+                    var conStr2Year = int.Parse(Request.Form["ddlYears"]);
                     DateTime? startDateFiscal = null, endDateFiscal = null;
                     try
                     {
@@ -152,17 +157,17 @@ namespace eActForm.Controllers
                         model.actLists = model.actLists.Where(r => r.activityPeriodEnd <= endDateFiscal).ToList();
 
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        ExceptionManager.WriteError("searchActForm >> ddlYears_s" + startDateFiscal + "e_"+ endDateFiscal  + ex.Message);
+                        ExceptionManager.WriteError("searchActForm >> ddlYears_s" + startDateFiscal + "e_" + endDateFiscal + ex.Message);
                     }
                 }
 
-                    //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
-                    TempData["ApproveSearchResult"] = model.actLists;
+                //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+                TempData["ApproveSearchResult"] = model.actLists;
                 return RedirectToAction("ListView");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("searchActForm >>" + ex.Message);
                 return RedirectToAction("ListView");
@@ -187,7 +192,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType, UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }

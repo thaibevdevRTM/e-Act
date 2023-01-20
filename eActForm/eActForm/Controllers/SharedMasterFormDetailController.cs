@@ -80,12 +80,6 @@ namespace eActForm.Controllers
         }
         public ActionResult exPerryCashReport(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            var estimateList = activity_TBMMKT_Model.activityOfEstimateList;
-            activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
-            activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
-            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
-
-
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -200,49 +194,6 @@ namespace eActForm.Controllers
 
         public ActionResult showDetailBudgetRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            var result = new AjaxResult();
-            try
-            {
-
-                List<BudgetTotal> budgetTotalsList = new List<BudgetTotal>();
-                List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
-
-
-                var getAmount = QueryGetBudgetActivity.getBudgetAmountList(activity_TBMMKT_Model.activityFormTBMMKT.id);
-                foreach (var item in getAmount)
-                {
-                    BudgetTotal budgetTotalModel = new BudgetTotal();
-                    budgetTotalModel.returnAmount = item.returnAmount;
-                    budgetTotalModel.EO = item.EO;
-                    budgetTotalModel.useAmount = item.useAmount;
-                    //budgetTotalModel.totalBudget = item.budgetTotal;
-                    budgetTotalModel.amount = item.budgetTotal;
-                    budgetTotalModel.amountBalance = item.amountBalance;
-                    budgetTotalModel.activityType = item.activityType;
-                    var amount = item.budgetTotal > 0 ? item.budgetTotal * 100 : 1;
-                    budgetTotalModel.amountBalancePercen = item.useAmount / amount;
-                    budgetTotalModel.brandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
-                    // budgetTotalModel.amountBalanceTotal = (getAmount.FirstOrDefault().totalBudgetChannel - getAmount.FirstOrDefault().balanceTotal) - item.total;
-                    budgetTotalModel.brandName = QueryGetAllBrand.GetAllBrand().Where(x => x.digit_EO.Contains(item.EO.Substring(0, 4))).FirstOrDefault().brandName;
-                    budgetTotalModel.channelName = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId)).FirstOrDefault().no_tbmmkt : "";
-                    budgetTotalsList.Add(budgetTotalModel);
-
-                }
-
-
-                activity_TBMMKT_Model.budgetTotalModel.totalBudget = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
-                activity_TBMMKT_Model.budgetTotalModel.useAmountTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountCumulative;
-                activity_TBMMKT_Model.budgetTotalModel.amountBalanceTotal = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountBalance;
-                activity_TBMMKT_Model.budgetTotalModel.returnAmount = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
-                activity_TBMMKT_Model.budgetTotalList = budgetTotalsList;
-
-
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("showDetailBudgetRpt => " + ex.Message);
-            }
 
             return PartialView(activity_TBMMKT_Model);
         }

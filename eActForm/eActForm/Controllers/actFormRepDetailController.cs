@@ -51,7 +51,9 @@ namespace eActForm.Controllers
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(startDate, endDate, typeForm, Request.Form["ddlProductType"]);
                 model.typeForm = typeForm;
                 model.dateReport = Request.Form["reportDate"];
 
@@ -83,10 +85,7 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
                     }
-                    if (Request.Form["ddlProductType"] != "")
-                    {
-                        model = RepDetailAppCode.getFilterRepDetailByProductType(model, Request.Form["ddlProductType"]);
-                    }
+                    
                     if (Request.Form["ddlProductGrp"] != "")
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
@@ -310,11 +309,13 @@ namespace eActForm.Controllers
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model, typeForm);
+                DateTime cstartDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(startDate, "dd/MM/yyyy", null);
+                DateTime cendDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, cstartDate, cendDate, model, typeForm);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
-                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
+                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false,false);
                     Session["ActFormRepDetail"] = null;
                     result.Success = true;
                 }
@@ -404,7 +405,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
+                    EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false,false);
                     Session["ActFormRepDetail"] = null;
                 }
             }

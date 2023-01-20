@@ -18,12 +18,19 @@ namespace eActForm.Controllers
     {
 
         // GET: eAct
-        public ActionResult Index()
+        public ActionResult Index(string activityId)
         {
-            return View();
+            //Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            //activity_TBMMKT_Model = mainReport(activityId,null);
+            return PartialView();
         }
 
-
+        public ActionResult previewActMT(string activityId)
+        {
+            //Activity_Model activityModel = new Activity_Model();
+            //activityModel = ReportAppCode.previewApprove(activityId,"70008316");
+            return PartialView();
+        }
 
 
         public JsonResult getProductGroup(string cateId)
@@ -323,10 +330,10 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAreaByRegion(string center, string txtCus,string type)
+        public JsonResult getAreaByRegion(string center, string txtCus, string type)
         {
 
-           List<eForms.Models.MasterData.TB_Act_Area_Model> areaList = new List<eForms.Models.MasterData.TB_Act_Area_Model>();
+            List<eForms.Models.MasterData.TB_Act_Area_Model> areaList = new List<eForms.Models.MasterData.TB_Act_Area_Model>();
             try
             {
                 areaList = QueryGetArea.getAreaByCondition(AppCode.StrCon, type).Where(x => x.center == center && x.area.Contains(txtCus)).ToList();
@@ -400,13 +407,13 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAllRegion(string txtRegion ,string condition)
+        public JsonResult getAllRegion(string txtRegion, string condition)
         {
 
             List<TB_Act_Region_Model> regionList = new List<TB_Act_Region_Model>();
             try
             {
-                if(UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion) && x.condition.Equals(condition)).ToList();
 
@@ -767,11 +774,11 @@ namespace eActForm.Controllers
             try
             {
                 var getActDetailList = QueryGetActivityById.getActivityById(actId);
-                if(!string.IsNullOrEmpty(QueryGetActivityById.getActivityById(actId).FirstOrDefault().master_type_form_id))
+                if (!string.IsNullOrEmpty(QueryGetActivityById.getActivityById(actId).FirstOrDefault().master_type_form_id))
                 {
                     result.Success = true;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -780,6 +787,24 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult checkIOPV(string IO)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                result.Success = ActFormAppCode.checkIOPV(IO);
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        
 
     }
 }

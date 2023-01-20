@@ -1,6 +1,6 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
@@ -24,79 +24,55 @@ namespace eActForm.Controllers
 
             if (!string.IsNullOrEmpty(activityId))
             {
-                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                List<Master_type_form_Model> listMasterType = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
-                activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-                activity_TBMMKT_Model.activityFormTBMMKT.formName = listMasterType.FirstOrDefault().nameForm;
-                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = listMasterType.FirstOrDefault().nameForm_EN;
-                activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = listMasterType.FirstOrDefault().companyId;
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
-                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
-
-                #region set viewbag
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
-                    // (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                    )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-                {
-                    ViewBag.classFont = "fontDocSmall";
-                    ViewBag.padding = "paddingFormV2";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
-                {
-                    ViewBag.classFont = "formBorderStyle1";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
-                {
-                    ViewBag.classFont = "formBorderStyle2";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
-                {
-                    ViewBag.classFont = "fontDocSmall";
-                    ViewBag.padding = "paddingFormV2";
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                {
-                    ViewBag.classFont = "formBorderStyle3";
-                    ViewBag.padding = "paddingFormV3";
-                }
-                else
-                {
-                    ViewBag.classFont = "fontDocV1";
-                    ViewBag.padding = "paddingFormV1";
-                }
-                #endregion
-                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
-                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
-                {
-                    activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                    //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
-                }
-                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-
-                //=====layout doc=============
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-                {
-                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
-                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
-                    objGetDataLayoutDoc.activityId = activityId;
-                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
-                }
-                //===END==layout doc===========
+                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId,UtilsAppCode.Session.User.empId);
             }
 
-            //===========Set Language By Document Dev date 20200310 Peerapop=====================
-            //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
-            DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
-            //====END=======Set Language By Document Dev date 20200310 Peerapop==================
-            
+            #region set viewbag
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                // (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            {
+                ViewBag.classFont = "fontDocSmall";
+                ViewBag.padding = "paddingFormV2";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
+            {
+                ViewBag.classFont = "formBorderStyle1";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
+            {
+                ViewBag.classFont = "formBorderStyle2";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+            {
+                ViewBag.classFont = "fontDocSmall";
+                ViewBag.padding = "paddingFormV2";
+            }
+            else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+            {
+                ViewBag.classFont = "formBorderStyle3";
+                ViewBag.padding = "paddingFormV3";
+            }
+            else
+            {
+                ViewBag.classFont = "fontDocV1";
+                ViewBag.padding = "paddingFormV1";
+            }
+            #endregion
+
             return PartialView(activity_TBMMKT_Model);
+        }
+
+
+        public ActionResult styleView()
+        {
+
+            return PartialView();
         }
 
         public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -109,7 +85,7 @@ namespace eActForm.Controllers
                 //activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
                 //activityId = "0a8517fb-0bc1-4c63-a545-718af4b9095c";
                 //==END===========for test=====================
-              
+
                 if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
                 {
                     activity_Model = activity_TBMMKT_Model;
@@ -121,7 +97,7 @@ namespace eActForm.Controllers
                     activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                     activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
                     //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId, UtilsAppCode.Session.User.empId);
                     //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 }
 
@@ -246,9 +222,9 @@ namespace eActForm.Controllers
                 //return View(activity_Model); // test
                 return PartialView(activity_Model);// production
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ExceptionManager.WriteError("ReportPettyCashNum>>"+ ex.Message);
+                ExceptionManager.WriteError("ReportPettyCashNum>>" + ex.Message);
             }
             return PartialView(activity_Model);
         }

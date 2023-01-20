@@ -66,3 +66,11 @@ D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.AssemblyReference.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
+D:\Github\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\Github\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\Github\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
+D:\Github\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.AssemblyReference.cache
+D:\Github\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\Github\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
+D:\Github\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\Github\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb

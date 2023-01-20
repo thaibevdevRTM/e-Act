@@ -87,6 +87,9 @@ namespace eActForm.Models
             public string companyId { get; set; }
             public string brandName { get; set; }
             public string channelId { get; set; }
+            public string groupId { get; set; }
+            public string actRef { get; set; }
+
         }
 
         public class actApproveRepDetailModels

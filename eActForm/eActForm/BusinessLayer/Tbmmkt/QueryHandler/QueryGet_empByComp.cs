@@ -52,9 +52,9 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new RequestEmpModel()
                              {
-                                 empId = d["empId"].ToString(),                               
-                                 empName = d["empName"].ToString() ,
-                                 departmentEN = d["empDepartmentEN"].ToString(),                             
+                                 empId = d["empId"].ToString(),
+                                 empName = d["empName"].ToString(),
+                                 departmentEN = d["empDepartmentEN"].ToString(),
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }

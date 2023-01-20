@@ -55,7 +55,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"], UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }
@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType, UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;
                 }
@@ -107,11 +107,9 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             try
             {
-                activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
-                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-                activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-                activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
+                activityModel = ReportAppCode.previewApprove(actId, UtilsAppCode.Session.User.empId);
+                activityModel.activityFormModel.callFrom = "app";
+
             }
             catch (Exception ex)
             {
@@ -153,41 +151,12 @@ namespace eActForm.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string statusId, string activityId)
-        {
-            var resultAjax = new AjaxResult();
-            try
-            {
-                if (statusId == ConfigurationManager.AppSettings["statusReject"])
-                {
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, UtilsAppCode.Session.User.empId);
-                }
-                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {
-                    GenPDFAppCode.doGen(GridHtml, activityId, Server);
-
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
-                    ApproveAppCode.setCountWatingApprove();
-                }
-                resultAjax.Success = true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
-                resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
-            }
-            return Json(resultAjax, "text/plain");
-        }
-
         public ActionResult approvePositionSignatureLists(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = getApproveSigList(actId, subId);
+                models = getApproveSigList(actId, subId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
@@ -200,22 +169,23 @@ namespace eActForm.Controllers
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = getApproveSigList(actId,subId);
+                models = getApproveSigList(actId, subId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
             }
             return PartialView(models);
+
         }
 
 
-        public ApproveModel.approveModels getApproveSigList(string actId, string subId)
+        public ApproveModel.approveModels getApproveSigList(string actId, string subId,string empId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = ApproveAppCode.getApproveByActFormId(actId);
+                models = ApproveAppCode.getApproveByActFormId(actId,empId);
                 models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
                 //เพิ่มตัดตำแหน่ง
                 newlinePosition(models);

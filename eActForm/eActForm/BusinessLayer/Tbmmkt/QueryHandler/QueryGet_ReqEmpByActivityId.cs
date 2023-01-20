@@ -36,7 +36,7 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                                  empTel = d["empTel"].ToString(),
-                                 detail = d["detail"].ToString(),                    
+                                 detail = d["detail"].ToString(),
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }
@@ -56,7 +56,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel(d["empId"].ToString(),false,false)
+                             select new RequestEmpModel(d["empId"].ToString(), false, false)
                              {
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),

@@ -32,7 +32,7 @@ namespace eActForm.Controllers
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
                 costThemeDetailOfGroupByPriceModel.typeTheme = txttheme;
                 activityModel.activityOfEstimateList.Add(costThemeDetailOfGroupByPriceModel);
-               
+
                 TempData.Keep();
 
             }
@@ -49,7 +49,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calActivityDetailCost(string IO ,string name, string mechanics, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string totalCase, string growth, string typeForm, string actId)
+        public JsonResult calActivityDetailCost(string IO, string name, string mechanics, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string totalCase, string growth, string typeForm, string actId)
         {
             var result = new AjaxResult();
 
@@ -82,7 +82,7 @@ namespace eActForm.Controllers
                         p_total = (getNormalCost) * p_promotionCase;
 
 
-                       // p_growth = AppCode.checkNullorEmpty(normalCase) == "0" ? 0 : (p_promotionCase - p_normalCase) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
+                        // p_growth = AppCode.checkNullorEmpty(normalCase) == "0" ? 0 : (p_promotionCase - p_normalCase) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
                     }
                 }
 
@@ -96,7 +96,7 @@ namespace eActForm.Controllers
                 getNormalCost = getNormalCost == 0 ? 1 : getNormalCost;
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (p_promotionCase * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
                 p_total = p_unit * p_compensate;
-                
+
 
                 activityModel.activityOfEstimateList
                         .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
@@ -108,7 +108,7 @@ namespace eActForm.Controllers
                             //r.detailGroup[0].productName = name;
                             r.normalCost = Math.Round(p_normalCase, 2);
                             r.growth = Math.Round(p_growth, 2);
-                            r.themeCost = Math.Round(p_promotionCase, 2); 
+                            r.themeCost = Math.Round(p_promotionCase, 2);
                             r.total = Math.Round(p_total, 2);
                             r.totalCase = Math.Round(p_totalCase, 2);
                             r.perTotal = Math.Round(get_PerTotal, 2);

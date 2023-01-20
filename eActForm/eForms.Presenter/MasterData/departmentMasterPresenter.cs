@@ -68,9 +68,9 @@ namespace eForms.Presenter.MasterData
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new departmentMasterModel()
                              {
-                                
+
                                  name = dr["empDepartmentEN"].ToString(),
-                                
+
                              }).ToList();
                 return lists;
             }

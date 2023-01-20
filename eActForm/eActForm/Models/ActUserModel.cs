@@ -28,7 +28,7 @@ namespace eActForm.Models
             public string userName { get; set; }
             public string keyToken { get; set; }
             public string tokenType { get; set; }
-            public RequestUserInfoAPI(string user, string token,string tokenType)
+            public RequestUserInfoAPI(string user, string token, string tokenType)
             {
                 userName = user;
                 keyToken = token;
@@ -111,6 +111,8 @@ namespace eActForm.Models
             public string tokenType { get; set; }
             public string DepartmentName { get; set; }
             public string DepartmentNameTH { get; set; }
+            public string BUSUName { get; set; }
+            public string BUSUNameTH { get; set; }
         }
     }
 }

@@ -48,6 +48,39 @@
 
 <div class="row">
     <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
+
+        <div class="form-group">
+            <div class="col-md-12 col-xs-12">
+                <div style="height:10px" class="row">
+                    <label class="control-label col-md-12 col-xs-12"></label>
+                </div>
+                <div class="row" style="width: 100%;">
+                    @*<label class="control-label col-md-1 col-xs-12"></label>*@
+                    <div class="col-md-7 col-xs-12">
+                        <div class="row">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <label class="control-label col-md-3 col-xs-12">
+                        @Resources.Global.piorityDoc :
+                    </label>
+                    <div class="col-md-2 col-xs-12">
+
+                        <div class="row">
+                            @Html.DropDownListFor(x => x.activityFormModel.piorityDoc, new SelectList(Model.listPiority, "id", "name", "AA21FB12-B80A-4A0B-B9CA-78B8D7899D44"), "", new
+                       {
+                           @class = "form-control",
+                           id = "ddlPiority"
+                       })
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
@@ -1074,6 +1107,7 @@
                     actClaim: $("#txtActClaim").val(),
                     typeForm: '@Model.activityFormModel.typeForm',
                     subActivity: $("#ddlSubActivity").val(),
+                    piorityDoc: $("#ddlPiority").val(),
                 },
                 dataType: "json",
                 type: 'POST',
@@ -1209,6 +1243,7 @@
                             actIO: $("#txtActIO").val(),
                             actClaim: $("#txtActClaim").val(),
                             subActivity: $("#ddlSubActivity").val(),
+                            piorityDoc: $("#ddlPiority").val(),
                         },
                         dataType: "json",
                         type: 'POST',

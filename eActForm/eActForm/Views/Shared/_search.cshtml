@@ -4,8 +4,6 @@
 @model eActForm.Models.SearchActivityModels
 @{
     int year = DateTime.Today.Year;
-    int lvlEmp = 0;
-    lvlEmp = @UtilsAppCode.Session.User.empLevel != "" ? int.Parse(@UtilsAppCode.Session.User.empLevel) : 0;
 }
 <div class="form-group">
     <div class="col-md-6 col-xs-12">

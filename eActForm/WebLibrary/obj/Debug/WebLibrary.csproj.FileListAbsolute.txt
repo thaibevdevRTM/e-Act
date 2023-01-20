@@ -66,3 +66,10 @@ D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.Co
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.AssemblyReference.cache
+D:\Github\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\Github\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\Github\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.AssemblyReference.cache
+D:\Github\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\Github\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\Github\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\Github\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb

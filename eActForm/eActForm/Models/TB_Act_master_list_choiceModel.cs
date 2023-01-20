@@ -12,6 +12,6 @@
         public string displayType { get; set; }
         public string subDisplayType { get; set; }
         public string glCodeId { get; set; }
-        
+
     }
 }

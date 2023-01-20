@@ -29,7 +29,7 @@
                         <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
                             <th rowspan="2">ลำดับที่</th>
                             <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
-                            <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
+                            <th colspan="10" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
                             <th rowspan="2">หมายเหตุ</th>
                         </tr>
                         <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
@@ -42,6 +42,7 @@
                             <th>Oishi</th>
                             <th>Soda</th>
                             <th>Water</th>
+                            <th>Food</th>
                             <th>รวม</th>
                         </tr>
                         <tbody>
@@ -56,7 +57,8 @@
                                 decimal? sumSoda = 0;
                                 decimal? sumWater = 0;
                                 decimal? totalAct = 0;
-                                decimal? sumfTotal = 0;}
+                                decimal? sumfTotal = 0;
+                                decimal? sumFood = 0;}
 
                             @for (int i = 0; i < Model.activitySummaryGroupActivityList.Count; i++)
                             {
@@ -117,6 +119,12 @@
                                         }
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(x => x.activitySummaryGroupActivityList[i].oishiFood)
+                                        @{
+                                            sumFood = Model.activitySummaryGroupActivityList[i].oishiFood + sumFood;
+                                        }
+                                    </td>
+                                    <td>
                                         @{
 
                                             totalAct = Model.activitySummaryGroupActivityList[i].est +
@@ -126,7 +134,8 @@
                                                     Model.activitySummaryGroupActivityList[i].jubjai +
                                                     Model.activitySummaryGroupActivityList[i].oishi +
                                                     Model.activitySummaryGroupActivityList[i].soda +
-                                                    Model.activitySummaryGroupActivityList[i].water;
+                                                    Model.activitySummaryGroupActivityList[i].water +
+                                                    Model.activitySummaryGroupActivityList[i].oishiFood;
 
                                             string sumActTotal = String.Format("{0:n2}", @totalAct);
                                             @sumActTotal.ToString();
@@ -201,6 +210,12 @@
                                 </td>
                                 <td>
                                     @{
+                                        string ttFood = String.Format("{0:n2}", sumFood);
+                                        @ttFood.ToString();
+                                    }
+                                </td>
+                                <td>
+                                    @{
                                         string ttTotal = String.Format("{0:n2}", @totalAct);
                                         @ttTotal.ToString();
                                     }
@@ -268,6 +283,12 @@
                                     </td>
                                     <td>
                                         @{
+                                            string fFood = String.Format("{0:n2}", Model.activitySummaryForecastList[0].oishiFood);
+                                            @fFood.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
                                             sumfTotal = (@Model.activitySummaryForecastList[0].est +
                                                 Model.activitySummaryForecastList[0].crystal +
                                                 Model.activitySummaryForecastList[0].wranger +
@@ -275,7 +296,8 @@
                                                 Model.activitySummaryForecastList[0].jubjai +
                                                 Model.activitySummaryForecastList[0].oishi +
                                                 Model.activitySummaryForecastList[0].soda +
-                                                Model.activitySummaryForecastList[0].water);
+                                                Model.activitySummaryForecastList[0].water +
+                                                Model.activitySummaryForecastList[0].oishiFood);
 
                                             string fTotal = String.Format("{0:n2}", @sumfTotal);
                                             @fTotal.ToString();
@@ -292,57 +314,92 @@
                                     </td>
                                     <td>
                                         @{
-
-                                            string perEst = String.Format("{0:n2}", sumEst / Model.activitySummaryForecastList[0].est * 100);
-                                            @perEst.ToString();
+                                            if (Model.activitySummaryForecastList[0].est > 0)
+                                            {
+                                                string perEst = String.Format("{0:n2}", sumEst / Model.activitySummaryForecastList[0].est * 100);
+                                                @perEst.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perCrystal = String.Format("{0:n2}", sumCrystal / Model.activitySummaryForecastList[0].crystal * 100);
-                                            @perCrystal.ToString();
+                                            if (Model.activitySummaryForecastList[0].crystal > 0)
+                                            {
+                                                string perCrystal = String.Format("{0:n2}", sumCrystal / Model.activitySummaryForecastList[0].crystal * 100);
+                                                @perCrystal.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perWranger = String.Format("{0:n2}", sumWranger / Model.activitySummaryForecastList[0].wranger * 100);
-                                            @perWranger.ToString();
+                                            if (Model.activitySummaryForecastList[0].wranger > 0)
+                                            {
+                                                string perWranger = String.Format("{0:n2}", sumWranger / Model.activitySummaryForecastList[0].wranger * 100);
+                                                @perWranger.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perPlus100 = String.Format("{0:n2}", sumPlus100 / Model.activitySummaryForecastList[0].plus100 * 100);
-                                            @perPlus100.ToString();
+                                            if (Model.activitySummaryForecastList[0].plus100 > 0)
+                                            {
+                                                string perPlus100 = String.Format("{0:n2}", sumPlus100 / Model.activitySummaryForecastList[0].plus100 * 100);
+                                                @perPlus100.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perJubjai = String.Format("{0:n2}", sumJubjai / Model.activitySummaryForecastList[0].jubjai * 100);
-                                            @perJubjai.ToString();
+                                            if (Model.activitySummaryForecastList[0].jubjai > 0)
+                                            {
+                                                string perJubjai = String.Format("{0:n2}", sumJubjai / Model.activitySummaryForecastList[0].jubjai * 100);
+                                                @perJubjai.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perOishi = String.Format("{0:n2}", sumOishi / Model.activitySummaryForecastList[0].oishi * 100);
-                                            @perOishi.ToString();
+                                            if (Model.activitySummaryForecastList[0].oishi > 0)
+                                            {
+                                                string perOishi = String.Format("{0:n2}", sumOishi / Model.activitySummaryForecastList[0].oishi * 100);
+                                                @perOishi.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perSoda = String.Format("{0:n2}", sumSoda / Model.activitySummaryForecastList[0].soda * 100);
-                                            @perSoda.ToString();
+                                            if (Model.activitySummaryForecastList[0].soda > 0)
+                                            {
+                                                string perSoda = String.Format("{0:n2}", sumSoda / Model.activitySummaryForecastList[0].soda * 100);
+                                                @perSoda.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perWater = String.Format("{0:n2}", sumWater / Model.activitySummaryForecastList[0].water * 100);
-                                            @perWater.ToString();
+                                            if (Model.activitySummaryForecastList[0].water > 0)
+                                            {
+                                                string perWater = String.Format("{0:n2}", sumWater / Model.activitySummaryForecastList[0].water * 100);
+                                                @perWater.ToString();
+                                            }
                                         }
                                     </td>
                                     <td>
                                         @{
-                                            string perTotal = String.Format("{0:n2}", totalAct / sumfTotal * 100);
-                                            @perTotal.ToString();
+                                            if (Model.activitySummaryForecastList[0].oishiFood > 0)
+                                            {
+                                                string perFood = String.Format("{0:n2}", sumFood / Model.activitySummaryForecastList[0].oishiFood * 100);
+                                                @perFood.ToString();
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (totalAct > 0)
+                                            {
+                                                string perTotal = String.Format("{0:n2}", totalAct / sumfTotal * 100);
+                                                @perTotal.ToString();
+                                            }
                                         }
                                     </td>
                                     <td></td>
@@ -388,7 +445,7 @@
                             <th rowspan="2">ลำดับที่</th>
                             <th rowspan="2" width="80px" style="text-align:center;">ชื่อลูกค้า</th>
                             <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
-                            <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
+                            <th colspan="10" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
                             <th rowspan="2">หมายเหตุ</th>
                         </tr>
                         <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
@@ -401,6 +458,7 @@
                             <th>Oishi</th>
                             <th>Soda</th>
                             <th>Water</th>
+                            <th>Food</th>
                             <th>รวม</th>
                         </tr>
                         <tbody>
@@ -480,6 +538,12 @@
                                     </td>
                                     <td>
                                         @{
+                                            string sumAGFood = String.Format("{0:n2}", @item.oishiFood);
+                                            @sumAGFood.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
                                             decimal? total = 0;
                                             total = item.est +
                                                     item.crystal +
@@ -488,7 +552,8 @@
                                                     item.jubjai +
                                                     item.oishi +
                                                     item.soda +
-                                                    item.water;
+                                                    item.water +
+                                                    item.oishiFood;
 
                                             string result = String.Format("{0:n2}", @total);
                                             @result.ToString();

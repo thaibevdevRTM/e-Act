@@ -12,7 +12,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })
+                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:320px;" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtactivityProduct", style = "width:320px;" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtactivityProduct" })
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly", style = "width:320px;" })
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly"})
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "width:320px;" })
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
                     </div>
                 </div>
                 @*===============ต้องเก็บไว้เพราะเอกสารก่อนทำMulti EOใส่ในตารางEstimateมีใช้งาน=========================*@
@@ -119,7 +119,7 @@
                 </label>
                 <div class="col-md-4 col-xs-12" style="@displayEOOld">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO", style = "width:320px;" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO" })
                     </div>
                 </div>
                 @*===END============ต้องเก็บไว้เพราะเอกสารก่อนทำMulti EOใส่ในตารางEstimateมีใช้งาน=========================*@
@@ -135,19 +135,19 @@
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-5 col-sm-5 col-xs-12">
+                            <div class="col-md-5 col-xs-12">
                                 <div class="row">
                                     @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })*@
-                                    @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })
+                                    @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
                                 </div>
                             </div>
                             <label class="control-label col-md-1 col-xs-12">
                                 ถึง
                             </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
                                 <div class="row">
                                     @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })*@
-                                    @Html.TextBox("activityFormModel.activityPeriodEndStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })
+                                    @Html.TextBox("activityFormModel.activityPeriodEndStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
@@ -162,11 +162,11 @@
 
                         @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)|| (UtilsAppCode.Session.User.isAdminTBM))
                         {
-                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;" })
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;", @readonly = "readonly" })
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", @readonly = "readonly" })
                         }
 
 

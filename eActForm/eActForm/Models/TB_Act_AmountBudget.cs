@@ -15,6 +15,9 @@ namespace eActForm.Models
         public decimal? returnAmount { get; set; }
         public decimal? amountBalance { get; set; }
         public string activityType { get; set; }
+        public string typeShowBudget { get; set; }
+        public string yearBG { get; set; }
+        public string brandName { get; set; }
 
     }
 

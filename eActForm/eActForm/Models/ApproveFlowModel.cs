@@ -31,7 +31,7 @@ namespace eActForm.Models
             {
                 if (empId != "")
                 {
-                    List<RequestEmpModel> model =  QueryGet_empDetailById.getEmpDetailById(empId) ;
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
                     if (model.Count > 0)
                     {
 
@@ -46,17 +46,19 @@ namespace eActForm.Models
                             this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                             this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
                         }
-                      
+
                         this.empFNameTH = model.Count > 0 ? model[0].empName : "";
                         this.empFNameEN = model.Count > 0 ? model[0].empNameEN : "";
+                        this.bu = model.Count > 0 ? model[0].bu : "";
+                        this.buEN = model.Count > 0 ? model[0].buEN : "";
                         //HttpContext.Current.Session[empId] = model;
                     }
                     else
                     {
                         this.empPositionTitleTH = "";
                         this.empPositionTitleEN = "";
-                        this.empFNameTH="";
-                        this.empFNameEN="";
+                        this.empFNameTH = "";
+                        this.empFNameEN = "";
                     }
                 }
             }

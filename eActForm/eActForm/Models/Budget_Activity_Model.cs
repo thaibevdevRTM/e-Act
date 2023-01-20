@@ -39,7 +39,7 @@ namespace eActForm.Models //update 21-04-2020
 
         public List<TB_Bud_Image_Model.BudImageModel> Budget_ImageList { get; set; }
 
-       
+
         public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
         public List<Budget_Activity_Status_Att> Budget_Activity_Ststus_list { get; set; }
         public List<Budget_Activity_Product_Att> Budget_Activity_Product_list { get; set; }
@@ -112,7 +112,7 @@ namespace eActForm.Models //update 21-04-2020
             public string invoiceApproveStatusName { get; set; }
 
             public string invoiceRemark { get; set; }
-            
+
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal productSumInvoiceBath { get; set; }
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]

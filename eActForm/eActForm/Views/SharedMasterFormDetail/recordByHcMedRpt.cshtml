@@ -2,7 +2,7 @@
 @using System.Configuration;
 @using eActForm.Models;
 @{
-
+    Layout = null;
     var percent = Model.hospPercent;
     var amount = Model.amount > 0 ? Model.amount.ToString("#,###.00") : "0";
     var limit = Model.amountLimit > 0 ? Model.amountLimit.ToString("#,###.00") : "0";

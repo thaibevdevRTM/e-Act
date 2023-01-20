@@ -171,7 +171,7 @@ namespace eActForm.BusinessLayer
                         strCall = "usp_getActivityFormAll";
                     }
                 }
-                
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
@@ -181,7 +181,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm("")
+                             select new Activity_Model.actForm()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -243,7 +243,7 @@ namespace eActForm.BusinessLayer
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -277,6 +277,7 @@ namespace eActForm.BusinessLayer
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
+                                 createByUserName = dr["createByUserName"].ToString(),
 
                              }).ToList();
 
@@ -554,12 +555,12 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
-        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId,string fiscalYear)
+        public static List<BudgetControlModels> getBalanceByEO(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId, string fiscalYear)
         {
             try
             {
-               DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
-                   , new SqlParameter[] { new SqlParameter("@EO", EO)
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
+                    , new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
@@ -576,6 +577,40 @@ namespace eActForm.BusinessLayer
                                  EO = dr["EO"].ToString(),
                                  LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
                                  totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 year = dr["year"].ToString(),
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getBalanceByEO >>" + ex.Message);
+            }
+
+        }
+
+        public static List<BudgetControlModels> getBalanceByActType(string EO, string companyId, string getActTypeId, string channelId, string brandId, string activityId, string fiscalYear)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBalanceEvenTBM"
+                    , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter("@companyId", companyId)
+               ,new SqlParameter("@actTypeId", getActTypeId)
+               ,new SqlParameter("@channelId", channelId)
+               ,new SqlParameter("@brandId", brandId)
+               ,new SqlParameter("@activityId", activityId)
+               ,new SqlParameter("@fiscalYear", fiscalYear)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new BudgetControlModels
+                             {
+                                 balance = string.IsNullOrEmpty(dr["balance"].ToString()) ? 0 : (decimal?)dr["balance"],
+                                 balanceTotal = string.IsNullOrEmpty(dr["balanceTotal"].ToString()) ? 0 : (decimal?)dr["balanceTotal"],
+                                 amountTotal = string.IsNullOrEmpty(dr["amountTotal"].ToString()) ? 0 : (decimal?)dr["amountTotal"],
+                                 amount = string.IsNullOrEmpty(dr["amountEvent"].ToString()) ? 0 : (decimal?)dr["amountEvent"],
+                                 EO = dr["EO"].ToString(),
+                                 LE = dr["LE"] is DBNull ? 0 : int.Parse(dr["LE"].ToString()),
+                                 totalBudgetChannel = string.IsNullOrEmpty(dr["totalBrandChannel"].ToString()) ? 0 : (decimal?)dr["totalBrandChannel"],
+                                 year = dr["year"].ToString(),
                              }).ToList();
                 return lists;
             }
@@ -618,7 +653,7 @@ namespace eActForm.BusinessLayer
 
 
 
-        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId,string actTypeId,string fiscalYear)
+        public static List<BudgetControlModels> getAmountReturn(string EO, string channelId, string brandId, string actTypeId, string fiscalYear)
         {
             try
             {
@@ -650,7 +685,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAmountReturnByEOIO"
-               , new SqlParameter[] { new SqlParameter("@EO", EO)});
+               , new SqlParameter[] { new SqlParameter("@EO", EO) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new BudgetControlModels
                              {
@@ -685,12 +720,12 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool copyDocument_MasterForm(string actId_old , string actId_new)
+        public static bool copyDocument_MasterForm(string actId_old, string actId_new)
         {
             try
             {
                 bool result = false;
-               
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CopyDocumentMasterForm"
                     , new SqlParameter[] { new SqlParameter("@actId_old", actId_old)
                      , new SqlParameter("@actId_new" ,actId_new)
@@ -723,7 +758,7 @@ namespace eActForm.BusinessLayer
                                  unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
 
                              });
-                return lists.ToList() ;
+                return lists.ToList();
 
             }
             catch (Exception ex)
@@ -779,6 +814,44 @@ namespace eActForm.BusinessLayer
                 throw new Exception("insertSubActivityDetail >>" + ex.Message);
             }
 
+        }
+
+        public static bool OnOff_Func_apiProducerApproveAsync(string function)
+        {
+            try
+            {
+                bool result = false;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkOnOffFunction"
+                    , new SqlParameter[] { new SqlParameter("@function", function) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkActInvoice >>" + ex.Message);
+            }
+        }
+
+        public static bool checkIOPV(string IO)
+        {
+            bool result = false;
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkIOPV"
+                    , new SqlParameter[] { new SqlParameter("@IO", IO) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkIOPV >>" + ex.Message);
+            }
         }
     }
 }

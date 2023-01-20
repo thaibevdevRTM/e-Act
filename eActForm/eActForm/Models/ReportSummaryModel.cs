@@ -14,6 +14,7 @@ namespace eActForm.Models
         public List<ReportSummaryModel> activitySummaryForecastList { get; set; }
         public ApproveFlowModel.approveFlowModel flowList { get; set; }
         public List<actApproveSummaryDetailModel> summaryDetailLists { get; set; }
+        public List<ReportSummaryModel> activitySummaryFullList { get; set; }
         public string producttype_id { get; set; }
         public string subId { get; set; }
         public string cusId { get; set; }
@@ -22,6 +23,8 @@ namespace eActForm.Models
             activitySummaryList = new List<ReportSummaryModel>();
             summaryDetailLists = new List<actApproveSummaryDetailModel>();
             activitySummaryForecastList = new List<ReportSummaryModel>();
+            activitySummaryFullList = new List<ReportSummaryModel>();
+
         }
 
 
@@ -77,6 +80,8 @@ namespace eActForm.Models
             public decimal? blend285 { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? sangsom { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? oishiFood { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? readytodrink { get; set; }
 

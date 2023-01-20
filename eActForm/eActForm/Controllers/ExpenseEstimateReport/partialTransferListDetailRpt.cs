@@ -1,10 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
-using System.Collections.Generic;
 
 
 namespace eActForm.Controllers
@@ -28,7 +28,7 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.activityOfEstimateList[i].productName += ", " + QueryGetAllChanel.getAllChanel().Where(x => x.id.Contains(activity_TBMMKT_Model.activityOfEstimateList[i].typeTheme)).FirstOrDefault().chanelGroup;
                 }
-               
+
             }
             return PartialView(activity_TBMMKT_Model);
         }

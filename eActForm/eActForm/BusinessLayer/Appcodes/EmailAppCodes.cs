@@ -1,6 +1,8 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Controllers;
 using eActForm.Models;
+using eForms.Models.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -43,6 +45,7 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
+                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
@@ -318,7 +321,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend,bool callKafka)
         {
             try
             {
@@ -362,6 +365,11 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
+                        if (callKafka)
+                        {
+                            ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                        }
+
                         strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
@@ -605,7 +613,7 @@ namespace eActForm.BusinessLayer
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
-                string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formReceptions"] , ConfigurationManager.AppSettings["formPurchaseTbm"] };
+                string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
                 string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                 string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                 string[] arrayFormStyleV4 = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
@@ -801,6 +809,8 @@ namespace eActForm.BusinessLayer
                                   createBy = dr["createBy"].ToString(),
                                   createBy_EN = dr["createBy_EN"].ToString(),
                                   statusId = dr["statusId"].ToString(),
+                                  empId = dr["empId"].ToString(),
+
                               }).ToList();
                 return models;
             }

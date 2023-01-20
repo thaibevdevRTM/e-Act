@@ -17,6 +17,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
         public List<TB_Act_master_cost_centerModel> TB_Act_master_cost_centerModel_List { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
+        public TB_Act_ActivityForm_SelectBrandOrChannel tB_Act_ActivityForm_SelectBrandOrChannelModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList { get; set; }
@@ -29,6 +30,8 @@ namespace eActForm.Models
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel2 { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel3 { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
@@ -56,6 +59,9 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList2 { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityTypeList { get; set; }
         public List<BudgetTotal> budgetTotalList { get; set; }
+        public List<BudgetTotal> budgetTotalActTypeList { get; set; }
+        public List<BudgetTotal> budgetMainTotalList { get; set; }
+        public List<BudgetTotal> budgetMainActTypelList { get; set; }
         public BudgetTotal budgetTotalModel { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
         public List<TB_Act_AmountBudget> amountBudgetList { get; set; }
@@ -75,7 +81,7 @@ namespace eActForm.Models
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
         public List<string> listEoInDoc { get; set; }
         public List<detailEO> eoList { get; set; }
-        
+
         public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
 
 
@@ -109,6 +115,10 @@ namespace eActForm.Models
             otherList_5 = new List<TB_Act_Other_Model>();
             objExpenseCashList = new List<TB_Act_Other_Model>();
             listGetDataEO = new List<GetDataEO>();
+            budgetMainTotalList = new List<BudgetTotal>();
+            budgetMainActTypelList = new List<BudgetTotal>();
+            budgetTotalActTypeList = new List<BudgetTotal>();
+            tB_Act_ActivityForm_SelectBrandOrChannelModel = new TB_Act_ActivityForm_SelectBrandOrChannel();
         }
 
     }
@@ -135,7 +145,7 @@ namespace eActForm.Models
         public string[] brand_multi_select { get; set; }
         public string[] costCenter_multi_select { get; set; }
 
-        
+
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -313,7 +323,7 @@ namespace eActForm.Models
         {
 
         }
-        public RequestEmpModel(string empId,bool langEn,bool chkFormHc)
+        public RequestEmpModel(string empId, bool langEn, bool chkFormHc)
         {
             if (empId != "")
             {
@@ -555,7 +565,7 @@ namespace eActForm.Models
                 {
                     this.empName = "";
                     this.empDepartment = "";
-                    this.empPhone ="";
+                    this.empPhone = "";
                     this.empCompany = "";
                     this.empEmail = "";
                 }
