@@ -4,6 +4,21 @@
     "D:\\Github\\e-Act\\eActForm\\eForms.UI\\eForms.UI.csproj": {}
   },
   "projects": {
+    "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj",
+        "projectName": "eForms.Models",
+        "projectPath": "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "D:\\Github\\e-Act\\eActForm\\eForms.UI\\eForms.UI.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -32,7 +47,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
+                "projectPath": "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -44,6 +63,16 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "RepoDb": {
+              "target": "Package",
+              "version": "[1.13.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
