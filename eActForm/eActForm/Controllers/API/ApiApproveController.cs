@@ -32,7 +32,7 @@ namespace eActForm.Controllers
             string empId = UtilsAppCode.Session.User.empId;
 
             ApproveAppCode.setCountWatingApprove();
-            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, empId, statusId, activityId,""));
+            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, empId, statusId, activityId, ""));
 
             return Json(resultAjax, "text/plain");
         }

@@ -64,7 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-                   
+
                     TempData["actForm" + activityId] = activityModel;
                     ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }
@@ -370,7 +370,7 @@ namespace eActForm.Controllers
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 string empId = UtilsAppCode.Session.User.empId;
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId,""));
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
                             }
                         }
                     }
@@ -389,7 +389,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId,string approveFrom)
+        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId, string approveFrom)
         {
             var resultAjax = new AjaxResult();
             try
@@ -417,7 +417,7 @@ namespace eActForm.Controllers
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false,true);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 
                 }
                 resultAjax.Success = true;

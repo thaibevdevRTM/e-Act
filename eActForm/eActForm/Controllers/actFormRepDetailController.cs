@@ -85,7 +85,7 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
                     }
-                    
+
                     if (Request.Form["ddlProductGrp"] != "")
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
@@ -315,7 +315,7 @@ namespace eActForm.Controllers
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
-                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false,false);
+                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false, false);
                     Session["ActFormRepDetail"] = null;
                     result.Success = true;
                 }
@@ -405,7 +405,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false,false);
+                    EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false, false);
                     Session["ActFormRepDetail"] = null;
                 }
             }

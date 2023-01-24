@@ -24,7 +24,7 @@ namespace eActForm.Controllers
 
             if (!string.IsNullOrEmpty(activityId))
             {
-                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId,UtilsAppCode.Session.User.empId);
+                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, UtilsAppCode.Session.User.empId);
             }
 
             #region set viewbag

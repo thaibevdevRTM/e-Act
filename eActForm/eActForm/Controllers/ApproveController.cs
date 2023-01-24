@@ -180,12 +180,12 @@ namespace eActForm.Controllers
         }
 
 
-        public ApproveModel.approveModels getApproveSigList(string actId, string subId,string empId)
+        public ApproveModel.approveModels getApproveSigList(string actId, string subId, string empId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
-                models = ApproveAppCode.getApproveByActFormId(actId,empId);
+                models = ApproveAppCode.getApproveByActFormId(actId, empId);
                 models.approveFlowDetail = ApproveFlowAppCode.getFlowId(subId, actId).flowDetail;
                 //เพิ่มตัดตำแหน่ง
                 newlinePosition(models);

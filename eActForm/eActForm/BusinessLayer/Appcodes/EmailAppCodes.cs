@@ -321,7 +321,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend,bool callKafka)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend, bool callKafka)
         {
             try
             {

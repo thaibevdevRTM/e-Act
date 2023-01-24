@@ -934,7 +934,7 @@ namespace eForms.Presenter.AppCode
 
                 if (budgetList.Any())
                 {
-                    
+
                     foreach (var item in budgetList)
                     {
                         int result = +ImportBudgetControlAppCode.InsertBudgetControlTemp(strCon, item, model.companyId);
@@ -961,10 +961,10 @@ namespace eForms.Presenter.AppCode
                 resultAjax.Success = true;
                 resultAjax.Message = "Type Import Success : " + ImportBudgetType;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 resultAjax.Success = false;
-                resultAjax.Message = "Type Import : "+ ImportBudgetType + "Error : " + typeImportCatch + "EX : " + ex;
+                resultAjax.Message = "Type Import : " + ImportBudgetType + "Error : " + typeImportCatch + "EX : " + ex;
             }
 
             return resultAjax;
@@ -980,7 +980,7 @@ namespace eForms.Presenter.AppCode
             List<BudgetControl_ActType> bgActTypeList = new List<BudgetControl_ActType>();
             try
             {
-               // var resultAjax_ = ImportBudgetControlAppCode.PrepareData_ImportBudget(strCon, ImportBudgetControlAppCode.channel, dt, model, getLE, empId);
+                // var resultAjax_ = ImportBudgetControlAppCode.PrepareData_ImportBudget(strCon, ImportBudgetControlAppCode.channel, dt, model, getLE, empId);
                 //resultAjax.Success = resultAjax_.Success;
                 //resultAjax.Message = resultAjax_.Message;
                 for (int i = 0; i < dt.Rows.Count; i++)

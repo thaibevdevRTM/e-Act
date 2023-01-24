@@ -47,7 +47,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityGroupBGControl"
-                    , new SqlParameter("@condition", condition) );
+                    , new SqlParameter("@condition", condition));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ActivityGroup_Model()
                              {

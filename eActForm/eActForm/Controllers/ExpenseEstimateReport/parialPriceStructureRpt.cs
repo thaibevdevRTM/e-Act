@@ -9,7 +9,7 @@ namespace eActForm.Controllers
         // GET: parialPriceStructureRpt
         public ActionResult parialPriceStructureRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            
+
             return PartialView(activity_TBMMKT_Model);
         }
     }

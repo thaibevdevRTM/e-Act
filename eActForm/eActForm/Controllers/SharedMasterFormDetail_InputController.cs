@@ -533,14 +533,14 @@ namespace eActForm.Controllers
                             budgetMainModel.returnAmount = returnAmount;
                             budgetMainModel.yearBG = getAmount.FirstOrDefault().year;
                             budgetMainModel.brandId = brandId;
-                            budgetMainModel.brandName = !string.IsNullOrEmpty(brandId) ? QueryGetAllBrand.GetAllBrand().Where(x => x.id == brandId).FirstOrDefault().brandName :"";
+                            budgetMainModel.brandName = !string.IsNullOrEmpty(brandId) ? QueryGetAllBrand.GetAllBrand().Where(x => x.id == brandId).FirstOrDefault().brandName : "";
                             budgetMainModel.channelName = !string.IsNullOrEmpty(channelId) ? QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(channelId)).FirstOrDefault().no_tbmmkt : "";
                             budgetMainModel.typeShowBudget = AppCode.typeShowBudget.main.ToString();
                             model.budgetMainTotalList.Add(budgetMainModel);
                         }
                     }
                 }
-               
+
                 model.budgetTotalList = budgetTotalsList;
 
                 TempData["showBudget" + activityId] = model;

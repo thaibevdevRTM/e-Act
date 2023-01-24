@@ -47,13 +47,13 @@ namespace eActForm.Controllers.API
                 SentKafkaLogModel kafka1 = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, "Consumer", DateTime.Now, "", "", getMdodel.messagedata);
                 var resultLog1 = ApproveAppCode.insertLog_Kafka(kafka1);
 
-               // ApproveAppCode.apiProducerApproveAsync(response.data.approver, response.data.refId, response.eventName);
+                // ApproveAppCode.apiProducerApproveAsync(response.data.approver, response.data.refId, response.eventName);
 
                 if (response != null)
                 {
                     if (ApproveAppCode.updateApprove(response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.message, null, response.data.approver) > 0)
                     {
-                        string padding = "" , classFont="";
+                        string padding = "", classFont = "";
                         Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                         ApproveModel.approveModels approveModels = new ApproveModel.approveModels();
                         activity_TBMMKT_Model = ReportAppCode.mainReport(response.data.refId, response.data.approver);
@@ -108,8 +108,8 @@ namespace eActForm.Controllers.API
                             }
 
 
-                           // outputHtml += "<div class=\"" + padding + "\">";
-                           // outputHtml += "<table style=\"width: 100 %;\" id=\"tabel_report\" class=\"" + classFont + "\">";
+                            // outputHtml += "<div class=\"" + padding + "\">";
+                            // outputHtml += "<table style=\"width: 100 %;\" id=\"tabel_report\" class=\"" + classFont + "\">";
 
                             foreach (var item in activity_TBMMKT_Model.master_Type_Form_Detail_Models)
                             {

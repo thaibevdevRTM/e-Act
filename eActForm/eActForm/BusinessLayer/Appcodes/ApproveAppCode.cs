@@ -5,23 +5,23 @@ using eForms.Models.MasterData;
 using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using WebLibrary;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Web;
 using System.Web.Hosting;
-using System.Globalization;
+using System.Web.Mvc;
+using System.Web.Routing;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -704,7 +704,7 @@ namespace eActForm.BusinessLayer
                                   docNo = dr["docNo"].ToString(),
                                   refId = dr["refId"].ToString(),
                                   orderRank = dr["orderRank"].ToString(),
-                                  subject = dr["brandName"].ToString() +" "+ dr["subject"].ToString(),
+                                  subject = dr["brandName"].ToString() + " " + dr["subject"].ToString(),
                                   requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                                   totalAmount = dr["totalAmount"].ToString(),
                                   currency = dr["currency"].ToString(),
@@ -740,7 +740,7 @@ namespace eActForm.BusinessLayer
                     ApproverModel.requestDetail.organizationUnitName = result.FirstOrDefault().organizationUnitName;
                     ApproverModel.requestDetail.detail = result.FirstOrDefault().detail;
                     ApproverModel.requestDetail.attachedFileName = "เอกสาร";
-                    ApproverModel.requestDetail.attachedUrl =  string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
+                    ApproverModel.requestDetail.attachedUrl = string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
 
                 }
 

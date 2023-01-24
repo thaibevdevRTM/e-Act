@@ -41,7 +41,7 @@ namespace eActForm.Controllers
 
                 if (model.activitySummaryList.Any())
                 {
-                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL 
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL
                       || model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.Food)
                     {
                         modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
@@ -270,7 +270,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false, false);
                     result.Success = true;
                 }
                 else
@@ -325,7 +325,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false, false);
                     Session["SummaryDetailModel"] = null;
                 }
             }
