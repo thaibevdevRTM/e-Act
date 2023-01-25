@@ -3,3 +3,60 @@
 *@
 @{
 }
+
+@using eForms.Models.MasterData
+@model ActivityModel
+
+@*<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-6" style="text-align:left;">
+            Company<span class="required">*</span>
+        </label>
+        <div class="col-md-4">
+            @Html.DropDownList("company", new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+        </div>
+    </div>
+</div>
+*@
+
+<div class="row">
+    <div class="col-md-4">
+        <label class="control-label col-md-6" style="text-align:left;">
+            &nbsp;Brand<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12">
+            @Html.DropDownList("ddlBrand", new SelectList(Model.brandList, "id", "brandName", 0), "", new
+            {
+            @class = "form-control",
+            id = "ddlBrand_BG"
+            })
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label class="control-label col-md-6" style="text-align:left;">
+            &nbsp;Channel<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12">
+            @Html.DropDownList("ddlChannel", new SelectList(Model.chanelList, "id", "chanelGroup", 0), "", new
+            {
+            @class = "form-control",
+            id = "ddlChannel_BG"
+            })
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label class="control-label col-md-6" style="text-align:left;">
+            &nbsp;ActivityType<span class="required">&nbsp;:&nbsp;</span>
+        </label>
+        <div class="col-md-12">
+            @Html.DropDownList("ddlActivity", new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
+            {
+            @class = "form-control",
+            id = "ddlActType_BG"
+            })
+        </div>
+    </div>
+
+</div>

@@ -584,6 +584,21 @@
         "runtime": {
           "bin/placeholder/eForms.Models.dll": {}
         }
+      },
+      "eForms.UI.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "RepoDb": "1.13.0",
+          "System.Data.SqlClient": "4.8.5",
+          "eForms.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/eForms.UI.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/eForms.UI.Data.dll": {}
+        }
       }
     }
   },
@@ -2725,13 +2740,19 @@
       "type": "project",
       "path": "../eForms.Models/eForms.Models.csproj",
       "msbuildProject": "../eForms.Models/eForms.Models.csproj"
+    },
+    "eForms.UI.Data/1.0.0": {
+      "type": "project",
+      "path": "../eForms.UI.Data/eForms.UI.Data.csproj",
+      "msbuildProject": "../eForms.UI.Data/eForms.UI.Data.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "RepoDb >= 1.13.0",
       "System.Data.SqlClient >= 4.8.5",
-      "eForms.Models >= 1.0.0"
+      "eForms.Models >= 1.0.0",
+      "eForms.UI.Data >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2769,6 +2790,9 @@
           "projectReferences": {
             "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj": {
               "projectPath": "D:\\Github\\e-Act\\eActForm\\eForms.Models\\eForms.Models.csproj"
+            },
+            "D:\\Github\\e-Act\\eActForm\\eForms.UI.Data\\eForms.UI.Data.csproj": {
+              "projectPath": "D:\\Github\\e-Act\\eActForm\\eForms.UI.Data\\eForms.UI.Data.csproj"
             }
           }
         }

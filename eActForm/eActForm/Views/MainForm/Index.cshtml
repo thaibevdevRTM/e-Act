@@ -150,6 +150,19 @@
 
 <script>
 
+
+    if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3') {
+
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        console.log(lengthOfArray)
+
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
+    }
+
+
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
         console.log('@Model.activityFormTBMMKT.master_type_form_id')
 
@@ -158,6 +171,7 @@
 
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
+
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
 

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eForms.Models\eForms.Models.csproj" />
+    <ProjectReference Include="..\eForms.UI.Data\eForms.UI.Data.csproj" />
   </ItemGroup>
 
 </Project>
