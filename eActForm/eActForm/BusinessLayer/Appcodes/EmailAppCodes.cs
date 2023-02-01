@@ -45,11 +45,14 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
+                string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
+                    
                 mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
-                    , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
+                    , getSubject
                     , strBody
+                    , actFormId
                     , null);
             }
             catch (Exception ex)
@@ -75,6 +78,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
+                    ,""
                     , null);
             }
             catch (Exception ex)
@@ -101,6 +105,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
+                    ,""
                     , null);
             }
             catch (Exception ex)
@@ -183,6 +188,7 @@ namespace eActForm.BusinessLayer
                   , ""
                   , "eAct sendApprove non backgroup Error"
                   , actFormId + " " + ex.Message
+                  , actFormId
                   , null);
                 //ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
                 throw new Exception("sendRejectActForm >>" + ex.Message + " " + actFormId);
@@ -569,6 +575,7 @@ namespace eActForm.BusinessLayer
                         , mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , files);
 
             }
@@ -580,6 +587,7 @@ namespace eActForm.BusinessLayer
                         , mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , null);
                 }
                 catch (Exception exs)
@@ -589,6 +597,7 @@ namespace eActForm.BusinessLayer
                    , ""
                    , "eAct sendApprove Catch in Catch"
                    , actFormId + " " + exs.Message
+                   , actFormId
                    , null);
                 }
 
@@ -869,10 +878,21 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
+        public static void sendEmail(string mailTo, string cc, string subject, string body,string actFormId, List<Attachment> files)
         {
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
+
+            string checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + cc;
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+            cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
+
+            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+            {
+                body += checkMail;
+            }
+
+
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;
@@ -1105,6 +1125,7 @@ namespace eActForm.BusinessLayer
                         , mailCC == "" ? ConfigurationManager.AppSettings["emailBudgetApproveCC"] : mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , files);
 
             }
