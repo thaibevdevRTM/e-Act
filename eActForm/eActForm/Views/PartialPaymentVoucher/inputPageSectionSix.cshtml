@@ -109,7 +109,9 @@
                                         if ($('#ddlActivityNoSub').val() != '') {
                                             activeLinkViewPreviousPV();
                                    //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
-                                    $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
+                                            $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
+                                            console.log($("#ddlActivityNoSub").val())
+
                                     $('#linkViewActNoOld').show();
                                         } else {
                                     //$("#pvPrevious_totalallPayByIO").val('');//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream

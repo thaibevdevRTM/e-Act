@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -83,7 +84,7 @@ namespace eActForm.BusinessLayer
                                  payNo = d["payNo"].ToString(),
                                  statusId = d["statusId"].ToString(),
                                  totalallPayByIO = d["totalallPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString())),
-                                 totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()))
+                                 totalallPayNo = objGetGetDataPVPrevious.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] ? GetBalancePV(d["activityId"].ToString()) : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString()) )
                              });
                 return lists.ToList();
             }
@@ -93,6 +94,26 @@ namespace eActForm.BusinessLayer
                 return new List<GetDataPVPrevious>();
             }
         }
+
+        public static decimal? GetBalancePV(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetBalancePV", new SqlParameter("@activityId", activityId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new GetDataPVPrevious()
+                             {
+                                 totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()))
+                             });
+                return lists.FirstOrDefault()?.totalallPayNo;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetBalancePV => " + ex.Message);
+                return 0;
+            }
+        }
+
 
         public static List<GetDataDetailPaymentAll> GetDetailPaymentAll(ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll)
         {

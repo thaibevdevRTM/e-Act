@@ -47,7 +47,6 @@ namespace eActForm.BusinessLayer
 
                 string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
                     
-                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , getSubject
