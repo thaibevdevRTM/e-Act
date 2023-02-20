@@ -69,3 +69,7 @@ eActForm/eActForm/bin/eActForm.dll
 eActForm/eActForm/bin/eActForm.pdb
 eActForm/eActForm/bin/en/eActForm.resources.dll
 eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.csprojAssemblyReference.cache
+*.pdb
+eActForm/eActForm/bin/eForms.Presenter.pdb
+*.pdb
+*.cache
