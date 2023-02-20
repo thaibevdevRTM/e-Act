@@ -36,16 +36,16 @@ namespace eActForm.Controllers
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId, string typeFlow,string subjectId)
+        public ActionResult dropDetail(string companyId, string typeFlow, string subjectId)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
             {
-                
+
                 model.customerList = managementFlowAppCode.getCustomer(companyId);
                 model.departmentMasterList = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, companyId);
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
-               
+
                 model.productTypeList = managementFlowAppCode.getProductType();
 
                 if (subjectId == ConfigurationManager.AppSettings["subjectSetPriceOMT"])
@@ -87,24 +87,33 @@ namespace eActForm.Controllers
         public ActionResult genDataApproveList(getDataList_Model model, string typeFlow)
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
-            management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
-            management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
-            management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
-            management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
-            management_Model.getDDLActiveList = managementFlowAppCode.getActive();
-            management_Model.typeFlow = typeFlow;
-            management_Model.p_productType = model.productTypeId;
-            management_Model.p_productCateId = model.productCateId;
-            management_Model.p_productBrandId = model.productBrandId;
-            management_Model.p_flowLimitId = model.flowLimitId;
-            management_Model.p_channelId = model.channelId;
-            management_Model.p_subjectId = model.subjectId;
-            management_Model.activityTypeId = model.activityGroup;
-            management_Model.customerId = model.customerId;
-            management_Model.p_deparmentId = model.deparmentId;
-            management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
+            try
+            {
+                
+                management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
+                management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
+                management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
+                management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
+                management_Model.getDDLActiveList = managementFlowAppCode.getActive();
+                management_Model.typeFlow = typeFlow;
+                management_Model.p_productType = model.productTypeId;
+                management_Model.p_productCateId = model.productCateId;
+                management_Model.p_productBrandId = model.productBrandId;
+                management_Model.p_flowLimitId = model.flowLimitId;
+                management_Model.p_channelId = model.channelId;
+                management_Model.p_subjectId = model.subjectId;
+                management_Model.activityTypeId = model.activityGroup;
+                management_Model.customerId = model.customerId;
+                management_Model.p_deparmentId = model.deparmentId;
+                management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
 
-            TempData["management_Model"] = management_Model;
+                TempData["management_Model"] = management_Model;
+            }
+            catch(Exception ex)
+            {
+                TempData["management_Model"] = new ManagementFlow_Model() ;
+                ExceptionManager.WriteError("ManagementFlowController >> genDataApproveList => " + ex.Message);
+            }
             return RedirectToAction("approveList");
         }
 
@@ -245,7 +254,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmp(string subjectId, string limitId, string channelId,string actType,string customerId,string companyId)
+        public JsonResult getEmp(string subjectId, string limitId, string channelId, string actType, string customerId, string companyId)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
@@ -426,6 +435,34 @@ namespace eActForm.Controllers
 
                 var lists = managementFlowAppCode.getSubject(companyId);
                 result.Data = lists;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getSubjectByCompany => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult editSubject(string subjectId , string subjectTxt)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                var lists = managementFlowAppCode.updateSubject(subjectId, subjectTxt);
+
+                if(lists > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                }
+
             }
             catch (Exception ex)
             {

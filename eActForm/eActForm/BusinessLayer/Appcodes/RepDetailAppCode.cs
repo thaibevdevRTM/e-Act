@@ -224,7 +224,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(DateTime startDate, DateTime endDate, string typeForm,string productType)
         {
             try
             {
@@ -247,8 +247,9 @@ namespace eActForm.BusinessLayer
 
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                 , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
+                        ,new SqlParameter("@productType",productType)
                 });
                 }
                 else
@@ -257,23 +258,25 @@ namespace eActForm.BusinessLayer
                     {
                         ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndEmp"
                         , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                         ,new SqlParameter("@productType",productType)
                         });
                     }
                     else
                     {
                         ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailOMTByCreateDateAndEmp"
                         , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                         ,new SqlParameter("@productType",productType)
                         });
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ? 
+                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ?
                     dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
             }
             catch (Exception ex)
@@ -390,6 +393,7 @@ namespace eActForm.BusinessLayer
                                                          regionId = dr["regionId"].ToString(),
                                                          productCateId = dr["productCateId"].ToString(),
                                                          productGroupid = dr["productGroupid"].ToString(),
+                                                         groupId = dr["groupId"].ToString(),
                                                          cusNameTH = dr["cusNameTH"].ToString(),
                                                          productId = dr["productId"].ToString(),
                                                          productName = dr["productName"].ToString(),
@@ -417,7 +421,8 @@ namespace eActForm.BusinessLayer
                                                          perGrowth = dr["growth"] is DBNull ? 0 : Convert.ToDecimal(dr["growth"]),
                                                          perSE = dr["Le"] is DBNull ? 0 : Convert.ToDecimal(dr["Le"]),
                                                          perToSale = dr["perToSale"] is DBNull ? 0 : Convert.ToDecimal(dr["perToSale"]),
-                                                         rowNo =  int.Parse(dr["rowNo"].ToString()),
+                                                         rowNo = int.Parse(dr["rowNo"].ToString()),
+                                                         actRef = dr["actRef"].ToString(),
                                                          #endregion
 
                                                      }).ToList();
@@ -427,7 +432,7 @@ namespace eActForm.BusinessLayer
                     {
                         item.activityNo,
                         item.activityPeriodSt,
-                        item.productGroupid,
+                        item.groupId,
                         item.theme
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
@@ -445,6 +450,7 @@ namespace eActForm.BusinessLayer
                         regionId = group.First().regionId,
                         productCateId = group.First().productCateId,
                         productGroupid = group.First().productGroupid,
+                        groupId = group.First().groupId,
                         cusNameTH = group.First().cusNameTH,
                         productId = group.First().productId,
                         productName = group.First().productName,
@@ -473,6 +479,7 @@ namespace eActForm.BusinessLayer
                         perSE = group.Sum(x => x.perSE),
                         perToSale = group.Sum(x => x.perToSale),
                         rowNo = group.First().rowNo,
+                        actRef = group.First().actRef,
                         #endregion
 
 

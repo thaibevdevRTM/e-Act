@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebLibrary;
 
 namespace eForms.Presenter.AppCode
@@ -27,7 +25,7 @@ namespace eForms.Presenter.AppCode
                 else
                 {
                     return model.flowId;
-                    
+
                 }
 
             }
@@ -37,7 +35,7 @@ namespace eForms.Presenter.AppCode
                 return null;
             }
         }
-        public static bool checkFlowApprove(string strCon,string flowId,string companyId , string masterTypeId,string empGroup)
+        public static bool checkFlowApprove(string strCon, string flowId, string companyId, string masterTypeId, string empGroup)
         {
             try
             {
@@ -385,10 +383,10 @@ namespace eForms.Presenter.AppCode
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  checkFlowExist = bool.Parse(d["checkFlow"].ToString()),
 
-                             }); 
-                    return lists.ToList();
-                
-                
+                             });
+                return lists.ToList();
+
+
             }
             catch (Exception ex)
             {

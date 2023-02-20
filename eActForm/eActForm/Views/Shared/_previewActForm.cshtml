@@ -540,20 +540,22 @@
             ประมาณการ(Estimate)
         </div>
 
-        <div style="margin-bottom:10px;">
-            @if (Model.activityFormModel != null)
-            {
-                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
-            }
-        </div>
+        @if (Model.activityFormModel.callFrom != null)
+        {
+            <div style="margin-bottom:10px;">
+                @if (Model.activityFormModel != null)
+                {
+                    @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
+                }
+            </div>
 
-        <div>
-            @if (Model.activityFormModel != null)
-            {
-                @Html.Action("getApproveComment", "Approve", new { actId = Model.activityFormModel.id, actTypeName = Model.activityFormModel.txttheme })
-            }
-        </div>
-
+            <div>
+                @if (Model.activityFormModel != null)
+                {
+                    @Html.Action("getApproveComment", "Approve", new { actId = Model.activityFormModel.id, actTypeName = Model.activityFormModel.txttheme })
+                }
+            </div>
+        }
 
     </div>
 </div>

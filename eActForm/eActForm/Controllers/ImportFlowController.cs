@@ -63,7 +63,7 @@ namespace eActForm.Controllers
                 }
                 DataTable dt = new DataTable();
                 dt = ExcelAppCode.ReadExcel(resultFilePath, "Import", "A:AB");
-             
+
 
                 var rtnDelete = ImportFlowPresenter.deleteTempFlow(AppCode.StrCon, UtilsAppCode.Session.User.empId);
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -97,8 +97,8 @@ namespace eActForm.Controllers
                         modelFlow.approveGroupId = ImportFlowPresenter.checkValueForImport(dt.Rows[i]["approveGroupId"].ToString());
                         modelFlow.IsShow = dt.Rows[i]["IsShow"].ToString().ToLower() == "Yes".ToLower() ? "1" : "0";
                         modelFlow.IsApprove = dt.Rows[i]["IsApprove"].ToString().ToLower() == "Yes".ToLower() ? "1" : "0";
-                        modelFlow.empId = dt.Rows[i]["empId"].ToString();
-                        modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString();
+                        modelFlow.empId = dt.Rows[i]["empId"].ToString().Trim();
+                        modelFlow.empGroup = dt.Rows[i]["empGroup"].ToString().Trim();
                         modelFlow.name = dt.Rows[i]["name"].ToString();
                         modelFlow.createdByUserId = UtilsAppCode.Session.User.empId;
                         //modelFlow.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, modelFlow, false, "");
@@ -113,7 +113,7 @@ namespace eActForm.Controllers
                 TempData["importFlowModel"] = model;
 
                 if (model.importFlowList.Any())
-                resultAjax.Success = true; 
+                    resultAjax.Success = true;
 
 
             }

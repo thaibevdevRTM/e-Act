@@ -12,6 +12,6 @@ namespace eActForm.Models
         public string folder { get; set; }
         public string scriptsName { get; set; }
 
-      
+
     }
 }

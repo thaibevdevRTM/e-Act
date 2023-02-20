@@ -1,12 +1,4 @@
-﻿using eForms.Models.Reports;
-using Microsoft.ApplicationBlocks.Data;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-
-namespace eForms.Presenter.Reports
+﻿namespace eForms.Presenter.Reports
 {
     public class RepPostEvaPresenter : BasePresenter
     {
@@ -111,7 +103,7 @@ namespace eForms.Presenter.Reports
         //        #endregion
 
         //        model.repPostEvaLists = lists.OrderBy(x => x.activityNo).OrderBy(x => x.activityPeriodSt).ToList();
-                
+
 
         //        return model;
         //    }
@@ -120,7 +112,7 @@ namespace eForms.Presenter.Reports
         //        throw new Exception("getDataPostEva >> " + ex.Message);
         //    }
         //}
-    
+
     }
 
 }

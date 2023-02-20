@@ -42,7 +42,7 @@
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
-                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Report_Summary.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
                             }
                             <a onclick="callApproveList('@item.id');">
                                 <i class="btn ink-reaction btn-dark fa fa-eye"></i>

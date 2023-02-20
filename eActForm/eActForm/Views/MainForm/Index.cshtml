@@ -104,6 +104,7 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)
             || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
@@ -187,6 +188,27 @@
     }
 
 
+    if ('@UtilsAppCode.Session.User.isAdminTBM' == 'True' && '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+        if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3') {
+
+            $("#GridPDF :input").prop("disabled", false);
+            $("#txtdescAttach").prop("disabled", false);
+
+            $("#ProductDetail_5").prop("disabled", false);
+            $("#ProductDetail_6").prop("disabled", false);
+
+            var arrayOfElements = document.getElementsByClassName('clstxtIO');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                document.getElementById("activityOfEstimateList[" + i + "].IO").disabled = false;
+                document.getElementById("activityOfEstimateList[" + i + "].IO").readOnly = false;
+                document.getElementById("activityOfEstimateList[" + i + "].unitPriceDisplay").readOnly = true;
+            }
+        }
+
+    }
+
+
     if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
         && '@Model.activityFormTBMMKT.statusId' == '1') {
         console.log('return');
@@ -204,13 +226,6 @@
     }
 
 
-    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-        var arrayOfElements = document.getElementsByClassName('clstxtIO');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].disabled = 'disabled';
-        }
-    }
 
 
 
@@ -372,7 +387,7 @@
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
             if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
-            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
+            /*if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }*/
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }

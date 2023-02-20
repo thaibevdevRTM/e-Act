@@ -121,16 +121,16 @@
     <value>nameEN</value>
   </data>
   <data name="headerTableCost" xml:space="preserve">
-    <value>Cost</value>
+    <value>Expenses</value>
   </data>
   <data name="headerTableObjective" xml:space="preserve">
     <value>Objective</value>
   </data>
   <data name="headerTableSales" xml:space="preserve">
-    <value>Sales</value>
+    <value>Estimate Sales</value>
   </data>
   <data name="headerTableSalesPercent" xml:space="preserve">
-    <value>% Sales</value>
+    <value>% to sales</value>
   </data>
   <data name="toApproveDocument" xml:space="preserve">
     <value>To Approve Document.</value>
@@ -320,5 +320,11 @@
   </data>
   <data name="msgMaximumFilesSave" xml:space="preserve">
     <value>System can't save.Files upload maximum</value>
+  </data>
+  <data name="headerTableDateRequest" xml:space="preserve">
+    <value>Date of Request </value>
+  </data>
+  <data name="toHistoryAppprove" xml:space="preserve">
+    <value>History Appprove</value>
   </data>
 </root>

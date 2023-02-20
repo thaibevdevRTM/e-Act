@@ -23,7 +23,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  name = d["name"].ToString(),
                                  nameShot = d["nameShot"].ToString(),
                                  descEn = d["descEn"].ToString(),
-                                 descTh = "(" + d["name"].ToString() + ")" + d["descTh"].ToString() ,
+                                 descTh = "(" + d["name"].ToString() + ")" + d["descTh"].ToString(),
                                  condition = d["condition"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),

@@ -3,10 +3,11 @@
 @using eActForm.Models;
 @using System.Configuration;
 @{
+    Layout = null;
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
-    var picCheckBoxTrue = "./images/check_b.png";
-    var picCheckBoxFalse = "./images/check.png";
+    var picCheckBoxTrue = "https://eact.thaibev.com/images/check_b.png";
+    var picCheckBoxFalse = "https://eact.thaibev.com/images/check.png";
     var pathWeb = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"];
 
     var CreateByName = "";
@@ -35,13 +36,22 @@
                     CreateByPostition = item.empPositionTitleTH;
                 }
 
-                foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
+
+                if (Model.approveModels.approveDetailLists.Count > 0)
                 {
-                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
+                    foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                     {
-                        CreateByEmpId = item.empId;
-                        CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                        if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
+                        {
+                            CreateByEmpId = item.empId;
+                            CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                        }
                     }
+                }
+                else if(Model.activityFormTBMMKT.createdByUserId == item.empId && item.rangNo == 1)
+                {
+                    CreateByEmpId = item.empId;
+                    CreateByStampDateSignature = DateTime.Today.ToString("dd/MM/yyyy", DateEnglish);
                 }
 
             }
@@ -300,7 +310,7 @@
 
                             @if (CreateByEmpId != "")
                             {
-                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @CreateByEmpId)"/>
+                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @CreateByEmpId)" />
                             }
                         </td>
                     </tr>
@@ -335,7 +345,7 @@
 
                             @if (ApproveByEmpId != "")
                             {
-                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@ApproveByEmpId)"/>
+                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@ApproveByEmpId)" />
                             }
                         </td>
                     </tr>

@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Global {
@@ -376,6 +376,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to วันที่ส่งอนุมัติ.
+        /// </summary>
+        public static string headerTableDateRequest {
+            get {
+                return ResourceManager.GetString("headerTableDateRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to วัตถุประสงค์.
         /// </summary>
         public static string headerTableObjective {
@@ -588,6 +597,15 @@ namespace Resources {
         public static string toDocument {
             get {
                 return ResourceManager.GetString("toDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ประวัติอนุมัติ.
+        /// </summary>
+        public static string toHistoryAppprove {
+            get {
+                return ResourceManager.GetString("toHistoryAppprove", resourceCulture);
             }
         }
         

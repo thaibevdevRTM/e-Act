@@ -123,14 +123,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getSummaryDetailReportByDate(string startDate, string endDate)
+        public static List<ReportSummaryModels.ReportSummaryModel> getSummaryDetailReportByDate(DateTime startDate, DateTime endDate)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDetailSummarybyDate"
                       , new SqlParameter[] {
-                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ReportSummaryModels.ReportSummaryModel()
@@ -260,6 +260,7 @@ namespace eActForm.BusinessLayer
                                 oishi = decimal.Parse(AppCode.checkNullorEmpty(d["oishi"].ToString())),
                                 soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                 water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
+                                oishiFood = decimal.Parse(AppCode.checkNullorEmpty(d["food"].ToString())),
                             }).OrderBy(x => x.activitySales).ToList();
                 List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
                 groupList = list
@@ -278,6 +279,7 @@ namespace eActForm.BusinessLayer
                         oishi = group.Sum(s => s.oishi),
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
+                        oishiFood = group.Sum(s => s.oishiFood),
                     }).ToList();
 
 
@@ -296,12 +298,13 @@ namespace eActForm.BusinessLayer
                         oishi = group.Sum(s => s.oishi),
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
+                        oishiFood = group.Sum(s => s.oishiFood),
                     }).ToList();
 
 
 
-                string txtMonth = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("MMM").ToLower();
-                string txtYear = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("yyyy");
+                string txtMonth = DateTime.ParseExact(txtDate, "dd/MM/yyyy", null).ToString("MMM").ToLower();
+                string txtYear = DateTime.ParseExact(txtDate, "dd/MM/yyyy", null).ToString("yyyy");
                 DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_SaleForcast"
                     , new SqlParameter[] {
                         new SqlParameter("@year",txtYear)
@@ -319,7 +322,7 @@ namespace eActForm.BusinessLayer
 
                 //add Sales Forecast
                 ReportSummaryModels resultModel = new ReportSummaryModels();
-                ReportSummaryModel forecastlist = new ReportSummaryModel();              
+                ReportSummaryModel forecastlist = new ReportSummaryModel();
 
                 if (listForSale != null && listForSale.Count > 0)
                 {
@@ -336,8 +339,9 @@ namespace eActForm.BusinessLayer
                         soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD")).FirstOrDefault().month,
                     });
-                    
+
                 }
                 resultModel.activitySummaryGroupList = groupList.OrderBy(x => x.customerName).ToList();
                 resultModel.activitySummaryList = list.ToList();
@@ -461,6 +465,7 @@ namespace eActForm.BusinessLayer
                         soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
                               listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
                         water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                        oishiFood = listForSale.Where(x => x.brandId.Equals("1DBC6B1E-CF28-47D7-AEA1-338CF2D9F7BD") && x.brandId != null).FirstOrDefault().month,
                     });
 
                 }
@@ -469,7 +474,6 @@ namespace eActForm.BusinessLayer
 
                 }
 
-                groupList.Add(forecastlist);
                 resultModel.activitySummaryForecastList.Add(forecastlist);
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
@@ -483,11 +487,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId,string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId)
         {
             try
             {
-                return lists.Where(r => r.productTypeId == producttypeId && r.companyId.Equals(txtCompanyId)).ToList();
+                return lists.Where(r => r.productTypeId == producttypeId).ToList();
             }
             catch (Exception ex)
             {
@@ -495,11 +499,11 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo,string txtCompanyId)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo)
         {
             try
             {
-                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo) && r.companyId.Equals(txtCompanyId)).ToList();
+                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo)).ToList();
             }
             catch (Exception ex)
             {
@@ -534,19 +538,19 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string insertActivitySummaryDetail(string customerId, string productTypeId, string startDate, string endDate, ReportSummaryModels model)
+        public static string insertActivitySummaryDetail(string customerId, string productTypeId, DateTime startDate, DateTime endDate, ReportSummaryModels model)
         {
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail", "","").FirstOrDefault().docNo));
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail", "", "").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@activityNo",docNo)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
-                        ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate)
                         ,new SqlParameter("@customerId",customerId)
                         ,new SqlParameter("@productTypeId",productTypeId)
                         ,new SqlParameter("@delFlag",false)

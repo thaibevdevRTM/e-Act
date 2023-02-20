@@ -31,7 +31,7 @@ namespace eActForm.Controllers
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
 
-                   
+
 
                     if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
@@ -44,7 +44,7 @@ namespace eActForm.Controllers
                         activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
                         activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = master_type_form_id;
                         activity_TBMMKT_Model.activityFormTBMMKT.activityNoRef = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
-      
+
                         activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
                     }
 
@@ -98,7 +98,7 @@ namespace eActForm.Controllers
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
 
-                    
+
 
                     #endregion
 
@@ -115,7 +115,7 @@ namespace eActForm.Controllers
                     activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
-                    if(activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
+                    if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formEactBeer"])
                     {
                         activityFormTBMMKT.formCompanyId = @UtilsAppCode.Session.User.empCompanyId;
                     }

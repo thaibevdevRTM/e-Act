@@ -280,20 +280,20 @@
             document.getElementById("divCus").style.display = "block";
             document.getElementById("divCate").style.display = "block";
             document.getElementById("divLimit").style.display = "block";
-            if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_OMT"]') {
-                document.getElementById("divCate").style.display = "none";
-                document.getElementById("divLimit").style.display = "none";
-            }
+           
 
         }
         else {
-            if($("#ddlCompany").val() == '3030')
-            {
+            if ($("#ddlCompany").val() == '3030') {
                 document.getElementById("divBrand").style.display = "block";
                 document.getElementById("divChanel").style.display = "block";
                 document.getElementById("divSubject").style.display = "block";
                 document.getElementById("divLimit").style.display = "block";
                 document.getElementById("divEmp").style.display = "block";
+
+                if ($("#ddlSubject option:selected").text().includes('HAS') || $("#ddlSubject option:selected").text().includes('HOS')) {
+                    document.getElementById("divDeparment").style.display = "block";
+                }
 
             }
             else if ($("#ddlCompany").val() == '4800') {
@@ -301,7 +301,12 @@
                 document.getElementById("divSubject").style.display = "block";
                 document.getElementById("divLimit").style.display = "block";
             }
+            else {
+                document.getElementById("divLimit").style.display = "block";
+                document.getElementById("divDeparment").style.display = "block";
 
+
+            }
 
         }
 

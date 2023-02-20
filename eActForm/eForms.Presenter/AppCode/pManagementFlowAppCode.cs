@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebLibrary;
 
 namespace eForms.Presenter.AppCode
@@ -47,7 +45,7 @@ namespace eForms.Presenter.AppCode
             }
         }
 
-        public static int updateSwapByApproveId(string strCon, string approveId, string empId,string updateBy)
+        public static int updateSwapByApproveId(string strCon, string approveId, string empId, string updateBy)
         {
             try
             {
@@ -67,7 +65,7 @@ namespace eForms.Presenter.AppCode
             }
         }
 
-        public static List<ManagentFlowModel.flowSubject> getFlowbyEmpId(string strCon,  string empId)
+        public static List<ManagentFlowModel.flowSubject> getFlowbyEmpId(string strCon, string empId)
         {
             try
             {
@@ -91,7 +89,7 @@ namespace eForms.Presenter.AppCode
             }
         }
 
-        public static int updateCompanyFlowByEmpId(string strCon,string flowId,string companyId, string empId,string updatedByUserId)
+        public static int updateCompanyFlowByEmpId(string strCon, string flowId, string companyId, string empId, string updatedByUserId)
         {
             try
             {

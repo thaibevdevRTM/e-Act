@@ -56,7 +56,7 @@
                                     @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
                                 </td>*@
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.DropDownList("activityOfEstimateList[" + index + "].productGroupId", new SelectList(Model.activityTypeList, "id", "activitySales", item.productGroupId), "", new { @class = "form-control clsActType", @title = "ประเภทกิจกรรม" })
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].productGroupId", new SelectList(Model.activityTypeList, "id", "activitySales", item.productGroupId), "", new { @class = "form-control clsActType clsActType_" + index, @title = "ประเภทกิจกรรม" })
 
                             </td>
 
@@ -76,16 +76,22 @@
                                 <div style="display:inline-block;">
                                     @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isCreator))
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" />
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" />
                                     }
                                     else
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
-                                    <script>
+                                <script>
 
                                           $(document).ready(function () {
                                                 $(function () {
+
+                                                     if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
+                                                     {
+                                                          var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
+                                                          checkIOPV(txtIO,@index,'disable');
+                                                      }
 
                                                     $(".clstxtIO_@index").autocomplete({
                                                         source: function (request, response) {
@@ -122,10 +128,14 @@
                                             });
 
                                         $(".clstxtIO_@index").blur(function () {
-                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                            var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
+                                             checkIOPV(txtIO,@index,'popup');
+                 
                                             getBudgetTotal();
+
+
                                         });
-                                    </script>
+                                </script>
 
                                 </div>
                                 <div>
@@ -195,7 +205,7 @@
                         index++;
                     }
                     <tr>
-                        <td colspan="5" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td colspan="6" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             จำนวนเงินรวม(บาท)&nbsp;
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
@@ -263,20 +273,46 @@
             getBudgetTotal();
         }
 
+
     });
 
+    function checkIOPV(p_IO, index,type) {
+        $.ajax({
+            url: '@Url.Action("checkIOPV", "eAct")',
+            data: {
+                IO: p_IO,
+            },
+            dataType: "json",
+            type: 'POST'
+        }).done(function (response) {
 
+            if (response.Success) {
+                if (type == 'disable') {
+                    document.getElementById("activityOfEstimateList[" + index + "].IO").readOnly = true;
+                }
+                else {
+
+
+                    bootbox.alert({
+                        message: 'IO นี้ถูกใช้งานแล้ว!',
+                        size: 'small'
+                    });
+                   
+                }
+            }
+        });
+    }
 
     function getBudgetTotal(row) {
 
         var getEOBudget = [];
         $('#tableDetailsBG tr').each(function (row, tr) {
 
-
             getEOBudget.push({
                 EO: $(".clstxtEO_" + row).val(),
                 IO: $(".clstxtIO_" + row).val(),
                 total: $(".txttotal_" + row).val(),
+                activityTypeId: $(".clsActType_" + row).val(),
                 UseYearSelect: $(".clstxtYearSelect_" + row).val(),
 
             });

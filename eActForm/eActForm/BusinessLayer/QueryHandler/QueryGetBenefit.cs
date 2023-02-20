@@ -18,15 +18,15 @@ namespace eActForm.BusinessLayer
             try
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkApproveDetailForFormHC"
-                    , new SqlParameter[] { new SqlParameter("@actId", actId )});
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 return obj != null ? (bool)obj : false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getAllowAutoApproveForFormHC >> " + ex.Message);
             }
         }
-        public static List<CashEmpModel> getCashLimitByEmpId(string empId,string empLvl)
+        public static List<CashEmpModel> getCashLimitByEmpId(string empId, string empLvl)
         {
             try
             {
@@ -166,11 +166,11 @@ namespace eActForm.BusinessLayer
                 return new List<CashEmpModel>();
             }
         }
-        public static List<CashEmpModel> getCumulativeByEmpId(string empId,DateTime? docDate)
+        public static List<CashEmpModel> getCumulativeByEmpId(string empId, DateTime? docDate)
         {
             try
             {
-                
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCumulativeByEmpId"
                      , new SqlParameter("@empId", empId)
                      , new SqlParameter("@docDate", docDate));

@@ -1,4 +1,6 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using Microsoft.ApplicationBlocks.Data;
@@ -9,14 +11,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using WebLibrary;
-using System.Threading.Tasks;
-
-using System.Web.Hosting;
-using eActForm.BusinessLayer.Appcodes;
-using eActForm.BusinessLayer.QueryHandler;
-using System.Web;
 
 
 
@@ -318,7 +317,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
-                
+
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetApproveId"
                     , new SqlParameter[] {
@@ -343,13 +342,13 @@ namespace eActForm.Controllers //update 21-04-2020
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId,string budgetActivityId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId, string budgetActivityId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowDetailByFlowId"
-                    , new SqlParameter[] { 
-                        new SqlParameter("@flowId", flowId) 
+                    , new SqlParameter[] {
+                        new SqlParameter("@flowId", flowId)
                         ,new SqlParameter("@budgetActivityId", budgetActivityId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows

@@ -21,14 +21,17 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterFormByStatusId >> " + ex.Message);
             }
         }
-        public static List<Activity_Model.actForm> getApproveListsByEmpId(string empId)
+        public static List<Activity_Model.actForm> getApproveListsByEmpId(string empId, DateTime? startDate, DateTime? endDate)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveFormByEmpId"
-                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+                    , new SqlParameter[] { new SqlParameter("@empId", empId)
+                    , new SqlParameter("@startDate",startDate)
+                     , new SqlParameter("@endDate",endDate)
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -69,6 +72,9 @@ namespace eActForm.BusinessLayer
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
                                  mainAgency = dr["mainAgency"].ToString(),
                                  regionId = dr["region"].ToString(),
+                                 createByUserName = dr["createByName"].ToString(),
+                                 piorityDoc = dr["piorityDoc"].ToString(),
+
                              }).ToList();
 
                 return lists;
@@ -87,7 +93,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveFormBeerByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -128,6 +134,7 @@ namespace eActForm.BusinessLayer
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
                                  mainAgency = dr["mainAgency"].ToString(),
                                  regionId = dr["region"].ToString(),
+                                 createByUserName = dr["createByName"].ToString(),
                              }).ToList();
 
                 return lists;
@@ -146,7 +153,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRejectApproveFormByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Activity_Model.actForm(dr["createdByUserId"].ToString())
+                             select new Activity_Model.actForm()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
@@ -183,6 +190,7 @@ namespace eActForm.BusinessLayer
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
+                                 createByUserName = dr["createByName"].ToString(),
                              }).ToList();
                 return lists;
             }
@@ -221,5 +229,5 @@ namespace eActForm.BusinessLayer
         }
 
 
-    } 
+    }
 }

@@ -67,15 +67,15 @@ namespace eActForm.Controllers //update 21-04-2020
                 ExceptionManager.WriteError("getPdfBudget >>" + ex.Message);
             }
 
-             
+
             return fsResult;
         }
 
         public ActionResult getInvoicePdfBudget(string fileName)
         {
-            string rootPath = "" ;
-            FileStream fileStream = null ;
-            FileStreamResult fsResult = null ;
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
 
             try
             {
@@ -96,7 +96,7 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 ExceptionManager.WriteError("getInvoicePdfBudget >>" + ex.Message);
             }
-             
+
             return fsResult;
         }
 

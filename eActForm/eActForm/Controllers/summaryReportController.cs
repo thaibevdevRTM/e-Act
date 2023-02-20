@@ -12,6 +12,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class SummaryReportController : Controller
     {
         // GET: summaryReport
@@ -32,7 +33,7 @@ namespace eActForm.Controllers
                 ReportSummaryModels model = new ReportSummaryModels();
                 ReportSummaryModels modelResult = new ReportSummaryModels();
 
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
@@ -40,7 +41,8 @@ namespace eActForm.Controllers
 
                 if (model.activitySummaryList.Any())
                 {
-                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL 
+                      || model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.Food)
                     {
                         modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
                         modelResult.producttype_id = AppCode.nonAL;
@@ -67,7 +69,7 @@ namespace eActForm.Controllers
             }
 
 
-            return RedirectToAction(redirect, new { startDate = Request.Form["startDate"] });
+            return RedirectToAction(redirect, new { startDate = startDate });
         }
 
 
@@ -78,6 +80,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -96,6 +99,7 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
@@ -129,18 +133,22 @@ namespace eActForm.Controllers
             try
             {
                 ReportSummaryModels model = new ReportSummaryModels();
-                model.activitySummaryList = ReportSummaryAppCode.getSummaryDetailReportByDate(Request.Form["startDate"], Request.Form["endDate"]);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                model.activitySummaryList = ReportSummaryAppCode.getSummaryDetailReportByDate(startDate, endDate);
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
-
-                if (Request.Form["txtRepDetailNo"] != "")
+                if (model.activitySummaryList.Any())
                 {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"], Request.Form["ddlCompany"]);
-                }
-                if (Request.Form["ddlProductType"] != "")
-                {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"], Request.Form["ddlCompany"]);
+                    if (Request.Form["txtRepDetailNo"] != "")
+                    {
+                        model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
+                    }
+                    if (Request.Form["ddlProductType"] != "")
+                    {
+                        model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
+                    }
                 }
 
                 if (chk == "true")
@@ -205,10 +213,12 @@ namespace eActForm.Controllers
             {
 
                 ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "dd/MM/yyyy", null).ToString("MMM yyyy");
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 ExceptionManager.WriteError(ex.Message);
             }
 
@@ -223,10 +233,12 @@ namespace eActForm.Controllers
             try
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
-                model.activitySummaryList
-                    .Where(r => r.repDetailId == repId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
+                foreach (var item in model.activitySummaryList.Where(r => r.repDetailId == repId))
+                {
+                    item.delFlag = !delFlag;
+                }
+
+
                 Session["SummaryDetailModel"] = model;
                 result.Success = true;
             }
@@ -250,12 +262,15 @@ namespace eActForm.Controllers
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
-                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
+                DateTime p_startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(startDate, "dd/MM/yyyy", null);
+                DateTime p_endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(endDate, "dd/MM/yyyy", null);
+
+                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, p_startDate, p_endDate, model);
                 if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId, model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
                     result.Success = true;
                 }
                 else
@@ -310,7 +325,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false,false);
                     Session["SummaryDetailModel"] = null;
                 }
             }

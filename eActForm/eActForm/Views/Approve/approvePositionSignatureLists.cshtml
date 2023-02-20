@@ -2,6 +2,10 @@
 @using eActForm.Models;
 @using System.Configuration;
 @using eActForm.BusinessLayer;
+@{
+    Layout = null;
+
+}
 <style>
     .line1px {
         border-bottom: groove;
@@ -266,7 +270,7 @@
                                 <div class="fontSigV1">
                                     @item.approveGroupNameTH
                                 </div>
-                                <div  class="fontSigV1">
+                                <div class="fontSigV1">
                                     (@item.approveGroupnameEN)
                                 </div>
                             }
@@ -361,7 +365,7 @@
                                 {
                                     position = Model.approveDetailLists.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
                                 }
-                                
+
                             }
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])

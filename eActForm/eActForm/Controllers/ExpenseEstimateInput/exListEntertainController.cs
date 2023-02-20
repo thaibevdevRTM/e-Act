@@ -35,7 +35,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
-                activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("CashLimitType","");
+                activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("CashLimitType", "");
 
             }
             catch (Exception ex)

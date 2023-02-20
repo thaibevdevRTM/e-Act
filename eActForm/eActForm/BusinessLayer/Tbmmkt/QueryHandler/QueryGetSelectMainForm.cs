@@ -132,7 +132,7 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new DataRequesterToShow(d["empId"].ToString())
                              {
-                                 
+
                                  empId = d["empId"].ToString(),
                                  empDepartment = d["empDepartment"].ToString(),
                                  empPhone = d["empPhone"].ToString(),
@@ -156,7 +156,8 @@ namespace eActForm.BusinessLayer
                              select new ObjGetDataLayoutDoc()
                              {
                                  id = d["id"].ToString()
-                                 ,typeKeys = d["typeKeys"].ToString()
+                                 ,
+                                 typeKeys = d["typeKeys"].ToString()
                                   ,
                                  valuesUse = d["valuesUse"].ToString()
                                   ,

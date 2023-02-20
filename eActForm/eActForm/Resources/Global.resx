@@ -324,4 +324,10 @@
   <data name="msgMaximumFilesSave" xml:space="preserve">
     <value>ไม่สามารถบันทึกได้ ไฟล์อัพโหลดสูงสุดไม่เกิน</value>
   </data>
+  <data name="headerTableDateRequest" xml:space="preserve">
+    <value>วันที่ส่งอนุมัติ</value>
+  </data>
+  <data name="toHistoryAppprove" xml:space="preserve">
+    <value>ประวัติอนุมัติ</value>
+  </data>
 </root>

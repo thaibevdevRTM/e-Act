@@ -26,10 +26,14 @@ namespace eActForm.BusinessLayer
                 if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 || model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
-
+                    
                     if (model.activityFormTBMMKT.statusId != 3)
                     {
                         rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
+                    }
+                    else if(model.activityFormTBMMKT.statusId == 3 && model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
+                    {
+                        rtn = ProcessInsertEstimate(rtn, model, activityId);
                     }
                 }
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
@@ -48,7 +52,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormTBMMKT.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                     model.activityFormTBMMKT.createdByUserId = UtilsAppCode.Session.User.empId;
-                    model.activityFormTBMMKT.createdDate =  DateTime.Now;
+                    model.activityFormTBMMKT.createdDate = DateTime.Now;
                     model.activityFormTBMMKT.updatedByUserId = UtilsAppCode.Session.User.empId;
                     model.activityFormTBMMKT.updatedDate = DateTime.Now;
                     model.activityFormTBMMKT.delFlag = false;
@@ -556,7 +560,7 @@ namespace eActForm.BusinessLayer
                     if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                     {
                         #region FormPos
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] 
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]
                             || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formReturnPosTbm"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
@@ -577,7 +581,7 @@ namespace eActForm.BusinessLayer
                                 }
                                 index_each++;
                             }
-                            
+
 
                             index_each = 0;
                             var brand_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "brand").Count();
@@ -628,7 +632,7 @@ namespace eActForm.BusinessLayer
 
                             activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.select_list_choice_id ?? string.Empty;
-                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.name?? string.Empty;
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault()?.name ?? string.Empty;
 
                             //activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
                             //activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
@@ -645,13 +649,10 @@ namespace eActForm.BusinessLayer
                                 activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
                             }
 
-
-
-
                         }
                         #endregion
                         #region formTrvTbm formTrvHcm
-                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] 
+                        else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                             || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
@@ -695,7 +696,7 @@ namespace eActForm.BusinessLayer
                                     index_each++;
                                 }
                             }
-                            
+
 
                             index_each = 0;
                             tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ProcuretoPay").ToList();
@@ -889,7 +890,7 @@ namespace eActForm.BusinessLayer
                         #endregion
                     }
 
-                    
+
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                     {
                         activity_TBMMKT_Model.dataRequesterToShows = QueryGetSelectMainForm.GetDataRequesterToShow(activityId);
@@ -936,7 +937,7 @@ namespace eActForm.BusinessLayer
 
                     #region Get All EO In Doc
                     List<detailEO> templistEoInDoc = new List<detailEO>();
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] 
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"]
                         || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
                         || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                     {
@@ -993,10 +994,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activity_TBMMKT_Model.activityFormTBMMKT.id);
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
-                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
-                , en
-                , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
 
 
                 bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
@@ -1618,12 +1616,12 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId)
+        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId,string empId)
         {
             try
             {
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
-                models = ApproveAppCode.getApproveByActFormId(activityId);
+                models = ApproveAppCode.getApproveByActFormId(activityId, empId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(SubjectId, activityId);
                 models.approveFlowDetail = flowModel.flowDetail;
 
@@ -2095,6 +2093,8 @@ namespace eActForm.BusinessLayer
                     {
                         rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetAmount"
                         , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    ,new SqlParameter("@typeShowBudget",item.typeShowBudget)
+                    ,new SqlParameter("@yearBG",item.yearBG)
                     ,new SqlParameter("@EO",item.EO)
                     ,new SqlParameter("@activityType",item.activityType)
                     ,new SqlParameter("@budgetTotal",item.budgetTotal)

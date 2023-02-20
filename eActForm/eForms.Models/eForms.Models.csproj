@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>eForms.Models</RootNamespace>
     <AssemblyName>eForms.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\SearchParameterFilterModel.cs" />
+    <Compile Include="MasterData\ApproveModel.cs" />
     <Compile Include="MasterData\DefaultFieldModel.cs" />
     <Compile Include="MasterData\APModel.cs" />
     <Compile Include="MasterData\departmentMasterModel.cs" />

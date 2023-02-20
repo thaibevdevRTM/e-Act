@@ -98,7 +98,7 @@ namespace eActForm.Controllers
         public ActionResult reportDetailListsView(string typeForm)
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
-            
+
             try
             {
                 if (TempData["SearchDataRepDetail"] != null)

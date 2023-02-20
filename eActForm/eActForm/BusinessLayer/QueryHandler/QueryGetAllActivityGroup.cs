@@ -42,11 +42,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Act_ActivityGroup_Model> getActivityGroupBudgetControl()
+        public static List<TB_Act_ActivityGroup_Model> getActivityGroupBudgetControl(string condition)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityGroupBGControl");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityGroupBGControl"
+                    , new SqlParameter("@condition", condition) );
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ActivityGroup_Model()
                              {
@@ -73,7 +74,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Act_ActivityGroup_Model> getActivityGroupByEmpId(string empId , string activityCondition)
+        public static List<TB_Act_ActivityGroup_Model> getActivityGroupByEmpId(string empId, string activityCondition)
         {
             try
             {

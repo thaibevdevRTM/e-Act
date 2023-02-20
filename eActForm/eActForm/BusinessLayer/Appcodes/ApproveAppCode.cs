@@ -1,19 +1,62 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Controllers;
 using eActForm.Models;
+using eForms.Models.MasterData;
+using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using WebLibrary;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Web.Hosting;
+using System.Globalization;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
 
+
+
+        public static string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            var context = HttpContext.Current;
+            var contextBase = new HttpContextWrapper(context);
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", controllerName);
+
+            var controllerContext = new ControllerContext(contextBase,
+                                                          routeData,
+                                                          new MainReportController());
+
+            var razorViewEngine = new RazorViewEngine();
+            var razorViewResult = razorViewEngine.FindView(controllerContext,
+                                                           viewName,
+                                                           "",
+                                                           false);
+
+            var writer = new StringWriter();
+            var viewContext = new ViewContext(controllerContext,
+                                              razorViewResult.View,
+                                              new ViewDataDictionary(viewData),
+                                              new TempDataDictionary(),
+                                              writer);
+            razorViewResult.View.Render(viewContext, writer);
+
+            return writer.ToString();
+        }
 
         public static void setCountWatingApprove()
         {
@@ -202,18 +245,18 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(string actFormId, string statusId, string remark, string approveType)
+        public static int updateApprove(string actFormId, string statusId, string remark, string approveType, string empId)
         {
             try
             {
                 // update approve detail
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
                         , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
-                    , new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
+                    , new SqlParameter("@empId",empId)
                     ,new SqlParameter("@statusId",statusId)
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateBy",empId)
                         });
 
                 if (approveType == AppCode.ApproveType.Report_Detail.ToString())
@@ -227,7 +270,7 @@ namespace eActForm.BusinessLayer
                 else
                 {
                     // default Activity Form
-                    rtn = updateActFormStatus(statusId, actFormId);
+                    rtn = updateActFormStatus(statusId, actFormId, empId);
                 }
 
                 return rtn;
@@ -287,7 +330,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        private static int updateActFormStatus(string statusId, string actFormId)
+        private static int updateActFormStatus(string statusId, string actFormId, string empId)
         {
             try
             {
@@ -296,7 +339,7 @@ namespace eActForm.BusinessLayer
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
-                    rtn += updateActFormWithApproveReject(actFormId);
+                    rtn += updateActFormWithApproveReject(actFormId, empId);
 
                     List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
                     if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
@@ -308,13 +351,10 @@ namespace eActForm.BusinessLayer
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
-                    rtn += updateActFormWithApproveDetail(actFormId);
+                    rtn += updateActFormWithApproveDetail(actFormId, empId);
                 }
 
                 //var result = updateBudgetControl_Balance(actFormId);
-               
-                
-
 
                 return rtn;
             }
@@ -328,7 +368,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetControl_Balance"
-                    ,new SqlParameter[] { new SqlParameter("@actFormId", actId)
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
             }
             catch (Exception ex)
@@ -337,28 +377,28 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int updateActFormWithApproveReject(string actId)
+        public static int updateActFormWithApproveReject(string actId, string empId)
         {
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActFormByApproveReject"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+                    ,new SqlParameter("@updateBy",empId)});
             }
             catch (Exception ex)
             {
                 throw new Exception("updateActFormWithApproveReject >> " + ex.Message);
             }
         }
-        public static int updateActFormWithApproveDetail(string actId)
+        public static int updateActFormWithApproveDetail(string actId, string empId)
         {
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActFormByApproveDetail"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
-                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+                    ,new SqlParameter("@updateBy",empId)});
             }
             catch (Exception ex)
             {
@@ -588,6 +628,155 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("clearStatusApproveAndInsertHistory >> " + ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public static async Task<Controllers.AjaxResult> apiProducerApproveAsync(string empId, string activityId, string status)
+        {
+            var resultAjax = new Controllers.AjaxResult();
+            try
+            {
+                if (ActFormAppCode.OnOff_Func_apiProducerApproveAsync("apiProducerApproveAsync"))
+                {
+                    ConsumerApproverBevAPI response = null;
+                    var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
+                    if (getDetailApprove != null)
+                    {
+
+                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
+
+                        string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                        using (var httpClient = new HttpClient())
+                        {
+                            using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                            {
+                                var contentList = new List<string>();
+
+                                contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                                requestAPI.Content = new StringContent(string.Join("&", contentList));
+                                requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                                var responseAPI = await httpClient.SendAsync(requestAPI);
+                                var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                                response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                                if (response.messageResponse.Contains("SUCCESS"))
+                                {
+                                    resultAjax.Success = true;
+                                }
+                                else
+                                {
+                                    resultAjax.Success = false;
+                                }
+
+                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
+                                var resultLog = insertLog_Kafka(kafka);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return resultAjax;
+            }
+            return resultAjax;
+        }
+
+        public static ApproverModel getWaitApprove(string empId, string activityId)
+        {
+            ApproverModel ApproverModel = new ApproverModel();
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getWaitApprover"
+                     , new SqlParameter[] { new SqlParameter("@empId", empId)
+                      ,new SqlParameter("@activityId",activityId) });
+                var result = (from DataRow dr in ds.Tables[0].Rows
+                              select new ApproverDetailModel()
+                              {
+                                  appId = dr["appId"].ToString(),
+                                  appName = dr["appName"].ToString(),
+                                  docNo = dr["docNo"].ToString(),
+                                  refId = dr["refId"].ToString(),
+                                  orderRank = dr["orderRank"].ToString(),
+                                  subject = dr["brandName"].ToString() +" "+ dr["subject"].ToString(),
+                                  requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                                  totalAmount = dr["totalAmount"].ToString(),
+                                  currency = dr["currency"].ToString(),
+                                  approver = dr["approver"].ToString(),
+                                  requester = dr["requester"].ToString(),
+                                  requesterNameTh = dr["requesterNameTh"].ToString(),
+                                  requesterNameEn = dr["requesterNameEn"].ToString(),
+                                  companyName = dr["companyName"].ToString(),
+                                  organizationUnitName = dr["organizationUnitName"].ToString(),
+                                  detail = dr["detail"].ToString(),
+                              }).ToList();
+
+
+                if (result.Any())
+                {
+
+                    ApproverModel.appId = result.FirstOrDefault().appId;
+                    ApproverModel.appName = result.FirstOrDefault().appName;
+                    ApproverModel.docNo = result.FirstOrDefault().docNo;
+                    ApproverModel.refId = result.FirstOrDefault().refId;
+                    ApproverModel.orderRank = result.FirstOrDefault().orderRank;
+                    ApproverModel.subject = result.FirstOrDefault().subject;
+                    ApproverModel.requestDate = result.FirstOrDefault().requestDate;
+                    ApproverModel.totalAmount = result.FirstOrDefault().totalAmount;
+                    ApproverModel.currency = result.FirstOrDefault().currency;
+                    ApproverModel.approver = result.FirstOrDefault().approver;
+                    ApproverModel.requester = result.FirstOrDefault().requester;
+                    ApproverModel.requesterNameTh = result.FirstOrDefault().requesterNameTh;
+                    ApproverModel.requesterNameEn = result.FirstOrDefault().requesterNameEn;
+                    ApproverModel.companyName = result.FirstOrDefault().companyName;
+
+                    ApproverModel.requestDetail.companyName = result.FirstOrDefault().companyName;
+                    ApproverModel.requestDetail.organizationUnitName = result.FirstOrDefault().organizationUnitName;
+                    ApproverModel.requestDetail.detail = result.FirstOrDefault().detail;
+                    ApproverModel.requestDetail.attachedFileName = "เอกสาร";
+                    ApproverModel.requestDetail.attachedUrl =  string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
+
+                }
+
+                return ApproverModel;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getWaitApprove >>" + ex.Message);
+            }
+
+        }
+
+
+        public static int insertLog_Kafka(SentKafkaLogModel model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertLogKafka"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@empId",model.empId)
+                    ,new SqlParameter("@statusKafka",model.statusKafka)
+                     ,new SqlParameter("@status",model.status)
+                    ,new SqlParameter("@type",model.type)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@path",model.path)
+                    ,new SqlParameter("@massage",model.massage)
+
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertLog_Kafka");
             }
 
             return result;

@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -30,6 +31,7 @@ namespace eActForm.Models
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
+        public static string Food = "6309F37D-03C1-4F2A-9DDC-2D997A440F1B";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
@@ -37,9 +39,9 @@ namespace eActForm.Models
         public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
         public static string[] compPomForm = { Activity_Model.groupCompany.POM.ToString() };
         public static string[] compThaiBevForm = { Activity_Model.groupCompany.THAIBEV.ToString() };
-        public static string[] getEmpSearchBeer =  ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray() ;
+        public static string[] getEmpSearchBeer = ConfigurationManager.AppSettings["setEmpSearchBeer"].Split(',').Select(s => s.Trim()).ToArray();
 
-        
+
         public static string[] checkFormApproveAll =
         {
                   ConfigurationManager.AppSettings["formBgTbmId"]
@@ -105,7 +107,7 @@ namespace eActForm.Models
         public enum ApproveType
         {
             Activity_Form
-                ,ActivityBeer
+                , ActivityBeer
                 , Report_Detail
                 , Report_Summary
                 , Budget_form
@@ -136,6 +138,14 @@ namespace eActForm.Models
         {
             Active = 0,
             Inactive = 1
+        }
+        public enum typeShowBudget
+        {
+            main = 0,
+            subMain = 1,
+            actMain = 2,
+            subActMain = 3,
+
         }
 
 
@@ -382,7 +392,7 @@ namespace eActForm.Models
 
 
 
-        public static string mergePDF(string rootPathOutput, string[] pathFile,string activityId)
+        public static string mergePDF(string rootPathOutput, string[] pathFile, string activityId)
         {
             string result = string.Empty;
             PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
@@ -594,7 +604,7 @@ namespace eActForm.Models
                 byte[] PreviewBytes = new byte[0];
                 var bytes = File.ReadAllBytes(rootPathMap);
                 var loadFont = default(BaseFont);
-                loadFont = BaseFont.CreateFont(server.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                loadFont = BaseFont.CreateFont(HostingEnvironment.MapPath("~/Content/fonts/THSarabun_0.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 var useFont = new Font(loadFont, 80);
 
                 var red = 242;

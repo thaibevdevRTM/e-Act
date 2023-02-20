@@ -285,7 +285,7 @@
         var totalAll = 0.00;
 
         $(".clsTotal").each(function () {
-            totalAll += parseInt(this.value);
+            totalAll += parseFloat(this.value);
             console.log(totalAll);
         });
         document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -385,7 +385,7 @@
         var totalAll2 = 0.00;
 
         $(".clsTotal_tbEtt").each(function () {
-            totalAll2 += parseInt(this.value);
+            totalAll2 += parseFloat(this.value);
             console.log(totalAll2);
         });
 

@@ -1,11 +1,21 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Models.MasterData;
+using eForms.Presenter.AppCode;
+using iTextSharp.tool.xml.html;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using WebLibrary;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace eActForm.Controllers
 {
@@ -17,9 +27,12 @@ namespace eActForm.Controllers
         {
             var resultAjax = new AjaxResult();
 
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+
             string empId = UtilsAppCode.Session.User.empId;
+
             ApproveAppCode.setCountWatingApprove();
-            HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(gridHtml, empId, statusId, activityId));
+            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, empId, statusId, activityId,""));
 
             return Json(resultAjax, "text/plain");
         }
@@ -32,44 +45,9 @@ namespace eActForm.Controllers
         /// <param name="statusId"></param>
         /// <param name="activityId"></param>
         /// <returns></returns>
-        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
-        {
-            var resultAjax = new AjaxResult();
-            try
-            {
-
-                if (statusId == ConfigurationManager.AppSettings["statusReject"])
-                {
-                    var rootPathMap = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    var txtStamp = "เอกสารถูกยกเลิก";
-                    bool success = AppCode.stampCancel(Server , rootPathMap , txtStamp);
-
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
-                }
-                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {
-
-                    GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
-                }
-                resultAjax.Success = true;
-            }
-            catch (Exception ex)
-            {
-                resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
-                
-                throw new Exception("apiApprove genPdfApprove >> " + ex.Message);
-            }
-
-            return resultAjax;
-        }
+        /// 
 
 
-        // GET: ApiApprove
-        public ActionResult Index()
-        {
-            return View();
-        }
+
     }
 }
