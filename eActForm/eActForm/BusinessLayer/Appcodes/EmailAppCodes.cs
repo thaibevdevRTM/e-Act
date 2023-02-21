@@ -370,7 +370,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        if (callKafka)
+                        if (callKafka && !string.IsNullOrEmpty(item.statusId))
                         {
                             ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
                         }
@@ -492,6 +492,12 @@ namespace eActForm.BusinessLayer
                             //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
 
 
+
+                            if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            {
+                                //waiting update budgetControl
+                                bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
+                            }
                         }
                     }
                 }

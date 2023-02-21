@@ -356,11 +356,11 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                    //waiting update budgetControl
-                                    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
-                                }
+                                //if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
+                                //{
+                                //    //waiting update budgetControl
+                                //    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
+                                //}
 
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))

@@ -78,5 +78,11 @@ namespace eActForm.Controllers
 
         }
 
+
+        public ActionResult historyBG()
+        {
+            return PartialView();
+        }
+
     }
 }
