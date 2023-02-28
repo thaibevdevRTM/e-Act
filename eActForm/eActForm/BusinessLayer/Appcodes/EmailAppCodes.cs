@@ -370,19 +370,39 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        if (callKafka && !string.IsNullOrEmpty(item.statusId))
+                        try
                         {
-                            ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                            SentKafkaLogModel kafka = new SentKafkaLogModel(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal, "producer", DateTime.Now, "","", "Log Before Call Kafka");
+                            var resultLog = ApproveAppCode.insertLog_Kafka(kafka);
+
+                            if (callKafka && !string.IsNullOrEmpty(item.statusId))
+                            {
+                                ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            throw new Exception("Call Kafka Producer empId :"+ item.empId + " activityId : "+ actFormId +" >>>>" + ex.Message);
                         }
 
-                        strBody = getEmailBody(item, emailType, actFormId, false);
-                        strSubject = isResend ? "RE: " + strSubject : strSubject;
-                        sendEmailActForm(actFormId
-                            , item.empEmail
-                            , ""
-                            , strSubject
-                            , strBody
-                            , emailType);
+
+
+                        try
+                        {
+                            strBody = getEmailBody(item, emailType, actFormId, false);
+                            strSubject = isResend ? "RE: " + strSubject : strSubject;
+                            sendEmailActForm(actFormId
+                                , item.empEmail
+                                , ""
+                                , strSubject
+                                , strBody
+                                , emailType);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception("Call Email " + ex.Message);
+                        }
+
                     }
                 }
                 else

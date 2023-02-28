@@ -1,6 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Globalization;
-@{ 
+@{
     Layout = null;
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US"); }
@@ -61,13 +61,17 @@
                             {
                                 if (itemGetEO.EO != "")
                                 {
-                                  @itemGetEO.brandName.Replace(".","") @:&nbsp; @itemGetEO.EO &nbsp;<br />
-                                  @*if (indexEO > 0)
-                                      {
-                                          @:<br />
-                            }*@}
-                                   indexEO++;
-                           }
+                                    if (!string.IsNullOrEmpty(itemGetEO.brandName))
+                                    {
+                                        @itemGetEO.brandName.Replace(".", "") @:&nbsp; @itemGetEO.EO &nbsp;<br />
+                                    }
+
+                                    @*if (indexEO > 0)
+                          {
+                              @:<br />
+                }*@}
+                                indexEO++;
+                            }
                             @*&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })*@
                         </td>
                     </tr>

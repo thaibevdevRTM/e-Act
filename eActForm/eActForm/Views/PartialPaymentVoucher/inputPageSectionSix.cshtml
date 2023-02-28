@@ -50,7 +50,6 @@
                                             if(response.Data.tbToAjax.length>0){
                                                 $("#ddlActivityNoSub option[value!='']").remove();
                                                 $("#pvPrevious_totalallPayNo option[value!='']").remove();
-                                                $("#pvPrevious_totalallPayNo option[value!='']").remove();
                                                 $.each(response.Data.tbToAjax,function(){
                                                     $("#ddlActivityNoSub").append($("<option></option>").val(this['activityId']).html(this['activityNo']));
                                                     $("#ddlActivityNoSub").selectpicker('refresh');
@@ -59,7 +58,10 @@
                                                 });
                                             }
                                             else{
-
+                                                $("#ddlActivityNoSub option[value!='']").remove();
+                                                $("#ddlActivityNoSub").selectpicker('refresh');
+                                                ddlActivityNoSubChange();
+                                                
                                             }
                                         },
                                         error:function(data){
@@ -84,7 +86,8 @@
                    {
                        @class = "form-control selectpicker",
                        @title = "สำหรับกรณีสั่งจ่ายตั้งแต่ครั้งที่2ขึ้นไป",
-                       id = "ddlActivityNoSub"
+                       id = "ddlActivityNoSub",
+                       onchange= "ddlActivityNoSubChange();"
                    })
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "totalallPayByIO", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
                    {
@@ -105,21 +108,24 @@
                                     liveSearch: true,
                                 showSubtext: true
                             });
-                            $('#ddlActivityNoSub').change(function () {
-                                        if ($('#ddlActivityNoSub').val() != '') {
-                                            activeLinkViewPreviousPV();
-                                   //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
-                                            $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
-                                            console.log($("#ddlActivityNoSub").val())
+                  
+                            function ddlActivityNoSubChange() {
+                                if ($('#ddlActivityNoSub').val() != '') {
+                                    activeLinkViewPreviousPV();
+                                    //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
+                                    $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
+                                    console.log($("#ddlActivityNoSub").val())
 
                                     $('#linkViewActNoOld').show();
-                                        } else {
+                                } else {
                                     //$("#pvPrevious_totalallPayByIO").val('');//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
                                     $("#pvPrevious_totalallPayNo").val('');
                                     $('#linkViewActNoOld').hide();
-                                        }
-                                        calCulateAll();
-                            });
+                                }
+                                calCulateAll();
+
+                            }
+
                             function activeLinkViewPreviousPV() {
                                 $("#linkViewActNoOld").attr("href", "@ConfigurationManager.AppSettings["renderPathFile"]"+"MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
                             }

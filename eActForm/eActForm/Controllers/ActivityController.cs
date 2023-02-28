@@ -347,6 +347,7 @@ namespace eActForm.Controllers
             {
                 String[] genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
+                string empId = UtilsAppCode.Session.User.empId;
                 if (countresult > 0)
                 {
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
@@ -369,12 +370,17 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                                string empId = UtilsAppCode.Session.User.empId;
+                                
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
                             }
                         }
                     }
+                    else
+                    {
+                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
+                    }
                 }
+
                 ApproveAppCode.setCountWatingApprove(); // เพิ่มให้อัพเดทเอกสารที่ต้องอนุมัติเลย กรณีผู้สร้างเอกสารต้องอนุมัติด้วยหลังจากส่งอนุมัติหนังสือ fream dev date 20200622
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];

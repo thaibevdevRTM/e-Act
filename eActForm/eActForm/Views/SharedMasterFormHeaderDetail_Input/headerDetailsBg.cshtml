@@ -18,23 +18,38 @@
 
                 @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    <label class="control-label col-md-2 col-xs-12" id="lblFromPaper">
-                        From Paper :
-                    </label>
 
-                    <div class="col-md-4 col-xs-12">
-                        <div class="row" style="padding-top:8px;">
-                            <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper">
-                            <script>
+                    <div class="row col-md-6">
+                        <label class="control-label col-md-4" id="lblFromPaper">
+                            From Paper :
+                        </label>
+                        <div class="col-md-2">
+                            <div class="row" style="padding-top:8px;">
+                                <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper">
+                                <script>
                                 $(function () {
                                     var var_cbFromPaper = '@Model.activityFormTBMMKT.statusNote';
                                     if (var_cbFromPaper == "FromPaper") {
                                         document.getElementById("cbFromPaper").checked = true;
                                     }
                                 });
-                            </script>
+                                </script>
+                            </div>
+                        </div>
+
+
+
+                        <label class="control-label col-md-3">
+                            กิจกรรมอื่น :
+                        </label>
+                        <div class="col-md-2">
+                            <div class="row" style="padding-top:8px;">
+                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp) 
+
+                            </div>
                         </div>
                     </div>
+
                 }
 
             </div>
@@ -90,7 +105,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly"})
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
                     </div>
                 </div>
             </div>
@@ -160,7 +175,7 @@
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
 
-                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)|| (UtilsAppCode.Session.User.isAdminTBM))
+                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                         {
                             @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber" })
                         }

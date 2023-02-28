@@ -173,7 +173,8 @@
         $("#ProductDetail_6").prop("disabled", true);
 
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
+            && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);

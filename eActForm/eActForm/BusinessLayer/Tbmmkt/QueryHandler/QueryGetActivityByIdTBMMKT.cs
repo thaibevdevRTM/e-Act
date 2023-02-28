@@ -77,6 +77,7 @@ namespace eActForm.BusinessLayer
                                   actIO = d["actIO"].ToString(),
                                   actEO = d["EO"].ToString(),
                                   statusNote = d["statusNote"].ToString(),
+                                  isTemp = !string.IsNullOrEmpty(d["isTemp"].ToString()) ? bool.Parse(d["isTemp"].ToString()) : false,
                               });
 
                 return result.ToList();

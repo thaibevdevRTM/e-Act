@@ -1226,6 +1226,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade", model.trade)
                     ,new SqlParameter("@statusNote", model.statusNote)
                     ,new SqlParameter("@referenceActNo",model.activityNoRef)
+                    ,new SqlParameter("@isTemp",model.isTemp)
                   });
             }
             catch (Exception ex)
