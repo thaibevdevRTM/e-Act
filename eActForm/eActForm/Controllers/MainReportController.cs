@@ -77,7 +77,6 @@ namespace eActForm.Controllers
 
         public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            Activity_TBMMKT_Model activity_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             try
             {
@@ -88,22 +87,17 @@ namespace eActForm.Controllers
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
                 {
-                    activity_Model = activity_TBMMKT_Model;
-                    activityId = activity_Model.activityFormModel.id;
-                }
-                else
-                {
-                    activity_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                    activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-                    activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                    activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                    activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
                     //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                    activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId, UtilsAppCode.Session.User.empId);
+                    activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId, UtilsAppCode.Session.User.empId);
                     //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 }
 
-                activity_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
-                activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
+                activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
+                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
 
 
                 CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
@@ -124,7 +118,7 @@ namespace eActForm.Controllers
 
                 #region form HC
 
-                if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
                 {
                     decimal? vat = 0, vatsum = 0;
                     #region "ค่าเดินทางของ NUM"
@@ -175,21 +169,21 @@ namespace eActForm.Controllers
                         });
                     }
 
-                    activity_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                    activity_TBMMKT_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
                     #endregion
                 }
-                else if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                 {
                     modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                     {
                         listChoiceId = "",
                         listChoiceName = "",
                         productDetail = "ค่ารักษาพยาบาล",
-                        total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
+                        total = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
                         displayType = "",
                         glCode = QueryGetGL.getGL(lstGL, AppCode.SSGLId.medical, activity_TBMMKT_Model.activityFormModel.empId)//lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
                     });
-                    activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+                    activity_TBMMKT_Model.totalCostThisActivity = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
                 }
 
@@ -210,23 +204,23 @@ namespace eActForm.Controllers
                 #endregion
 
                 modelResult.costDetailLists = modelResult.costDetailLists.ToList();
-                activity_Model.expensesDetailModel = modelResult;
+                activity_TBMMKT_Model.expensesDetailModel = modelResult;
 
 
 
                 //===========Set Language By Document Dev date 20200310 Peerapop=====================
                 //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
-                DocumentsAppCode.setCulture(activity_Model.activityFormModel.languageDoc);
+                DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
                 //====END=======Set Language By Document Dev date 20200310 Peerapop==================
 
                 //return View(activity_Model); // test
-                return PartialView(activity_Model);// production
+
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("ReportPettyCashNum>>" + ex.Message);
             }
-            return PartialView(activity_Model);
+            return PartialView(activity_TBMMKT_Model);
         }
 
         [HttpPost]

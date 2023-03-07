@@ -1,4 +1,4 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @{
     Layout = null;
@@ -6,16 +6,16 @@
     var val2 = "..........................";
     var txt1 = "..........................";
     var txt2 = "..........................";
-    if (Model.costDetailLists[0].total > 0)
+    if (Model.expensesDetailModel.costDetailLists[0].total > 0)
     {
-        val1 = Model.costDetailLists[0].total.ToString("#,###.00");
-        txt1 = DocumentsAppCode.ThaiBahtText(Model.costDetailLists[0].total.ToString());
+        val1 = Model.expensesDetailModel.costDetailLists[0].total.Value.ToString("#,###.00");
+        txt1 = DocumentsAppCode.ThaiBahtText(Model.expensesDetailModel.costDetailLists[0].total.ToString());
     }
 
-    if (Model.costDetailLists[1].total > 0)
+    if (Model.expensesDetailModel.costDetailLists[1].total > 0)
     {
-        val2 = Model.costDetailLists[1].total.ToString("#,###.00");
-        txt2 = DocumentsAppCode.ThaiBahtText(Model.costDetailLists[1].total.ToString());
+        val2 = Model.expensesDetailModel.costDetailLists[1].total.Value.ToString("#,###.00");
+        txt2 = DocumentsAppCode.ThaiBahtText(Model.expensesDetailModel.costDetailLists[1].total.ToString());
     }
 
 }

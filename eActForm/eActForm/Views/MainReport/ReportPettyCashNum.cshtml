@@ -3,7 +3,9 @@
 @using System.Configuration;
 @using System.Globalization;
 @using eActForm.Models;
-
+@{
+    Layout = null;
+}
 @{
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
@@ -291,7 +293,7 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                 if (itemFlowByDoc.approveGroupId == AppCode.ApproveGroup.PettyCashVerify && itemFlowByDoc.statusId == "3")
                                 {
                                     <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
-                                        <img width="80" height="30" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], itemFlowByDoc.empId)"/>
+                                        <img width="80" height="30" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], itemFlowByDoc.empId)" />
                                     </td>
                                     writeoneHit += 1;
                                 }
@@ -312,7 +314,7 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                 if (itemFlowByDoc.approveGroupId == AppCode.ApproveGroup.PettyCashApprover && itemFlowByDoc.statusId == "3")
                                 {
                                     <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
-                                        <img width="80" height="30" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], itemFlowByDoc.empId)"/>
+                                        <img width="80" height="30" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], itemFlowByDoc.empId)" />
                                     </td>
                                     writeoneHit += 1;
                                 }

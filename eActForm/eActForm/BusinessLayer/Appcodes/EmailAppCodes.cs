@@ -372,9 +372,6 @@ namespace eActForm.BusinessLayer
                     {
                         try
                         {
-                            SentKafkaLogModel kafka = new SentKafkaLogModel(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal, "producer", DateTime.Now, "","", "Log Before Call Kafka");
-                            var resultLog = ApproveAppCode.insertLog_Kafka(kafka);
-
                             if (callKafka && !string.IsNullOrEmpty(item.statusId))
                             {
                                 ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);

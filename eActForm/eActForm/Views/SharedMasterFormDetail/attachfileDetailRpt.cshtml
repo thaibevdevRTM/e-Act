@@ -1,21 +1,21 @@
-﻿
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
-@{ 
+@{
     Layout = null;
 }
 
 @{
-    if (Model.val == ConfigurationManager.AppSettings["formExpTrvNumId"])
+    if (Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.val == ConfigurationManager.AppSettings["formExpTrvNumId"])
     {
         <div class=" fontDocSmall " style="padding-left:5em;">
-            <b>ทั้งนี้ได้ส่งหลักฐานการจ่ายมาด้วย @Model.txt ฉบับ และขอรับรองว่าเป็นความจริงทุกประการ</b>
+            <b>ทั้งนี้ได้ส่งหลักฐานการจ่ายมาด้วย @Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt ฉบับ และขอรับรองว่าเป็นความจริงทุกประการ</b>
         </div>
     }
-    else if (Model.val == ConfigurationManager.AppSettings["formExpMedNumId"])
+    else if (Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.val == ConfigurationManager.AppSettings["formExpMedNumId"])
 
     {
         <div class=" fontDocSmall " style="padding-left:5em;">
-            <b>พร้อมนี้ได้แนบใบเสร็จรับเงินและใบรับรองแพทย์จำนวน  @Model.txt ฉบับ และขอรับรองว่าเป็นความจริงทุกประการ</b>
+            <b>พร้อมนี้ได้แนบใบเสร็จรับเงินและใบรับรองแพทย์จำนวน  @Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt ฉบับ และขอรับรองว่าเป็นความจริงทุกประการ</b>
         </div>
     }
 

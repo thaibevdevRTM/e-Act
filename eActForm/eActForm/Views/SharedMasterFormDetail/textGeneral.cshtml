@@ -1,11 +1,12 @@
-﻿@using System.Configuration;
-@{ 
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Configuration;
+@{
     Layout = null;
 }
 <div style="height:15px;"></div>
 @{
-    if (@Model.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
-@Model.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+    if (@Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
+@Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
     {
         <div class=" fontDocSmall ">
             <span style="color:red;">*มีการแก้ไขข้อมูลโดย HC</span>

@@ -91,7 +91,10 @@ namespace eActForm.BusinessLayer
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
-                    activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314(activity_TBMMKT_Model);
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314_page2(activity_TBMMKT_Model);
+
+                    activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId, empId);
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
@@ -389,10 +392,7 @@ namespace eActForm.BusinessLayer
                     }
 
                 }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
-                {
-                    activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activity_TBMMKT_Model.activityFormTBMMKT.id);
-                }
+
                 //===END==layout doc===========
 
                 //===========Set Language By Document Dev date 20200310 Peerapop=====================

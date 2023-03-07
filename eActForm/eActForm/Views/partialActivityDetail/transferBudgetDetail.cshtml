@@ -219,7 +219,7 @@
                         }
 
 
-                        $("#txtTransferBudget").val(parseFloat(v_totalRow).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#txtTransferBudget").val(v_totalRow);
 
 
                     });
@@ -355,7 +355,7 @@
 
     function cashEdit(i) {
 
-
+        bindDropdownSubject();
         $("#txtBudgetEO").val($("#activityOfEstimateList_" + i + "__EO").val());
         $("#txtBudgetIO").val($("#activityOfEstimateList_" + i + "__IO").val());
         $("#ddlUpDown").val($("#activityOfEstimateList_" + i + "__hospId").val());
@@ -367,13 +367,12 @@
         $("#ddlBrand_BG").val($("#activityOfEstimateList_" + i + "__productId").val());
         $("#ddlChannel_BG").val($("#activityOfEstimateList_" + i + "__typeTheme").val());
         $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
-        $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
         $("#txtBGYear").val($("#activityOfEstimateList_" + i + "__UseYearSelect").val());
         
-        bindDropdownSubject();
+        
 
 
-        console.log($("#activityOfEstimateList_" + i + "__QtyName").val());
+        console.log($("#activityOfEstimateList_" + i + "__activityTypeId").val());
      
         setTimeout(function () {
             $("#ddlSubject_BG").val($("#activityOfEstimateList_"+i+"__QtyName").val());
@@ -413,7 +412,7 @@
         }
     }
 
-     function getBudgetNonEO() {
+    function getBudgetNonEO() {
        $.ajax({
                 url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
                 data: {
@@ -427,9 +426,12 @@
            success: function (response) {
                if (response.Data != null) {
                    $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                   $("#txtBudgetBalance").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                   
                }
                else {
                    $("#txtOldBudget").val('');
+                   $("#txtBudgetBalance").val('');
                }
                $("#txtNewBudget").val('');
                getCalBudget();
@@ -484,7 +486,7 @@
     });
 
     $("#ddlActType_BG").change(function () {
-       
+       console.log('acc')
         if ($("#ddlActType_BG").val() != '') {
             $('#ddlChannel_BG').attr("disabled", true); 
             document.getElementById("ddlChannel_BG").selectedIndex = "0";
@@ -575,8 +577,8 @@
     function getCalBudget() {
         var result = "";
         var oldBG = $("#txtOldBudget").val().replace(/,/g, "");
-        var budgetBalance = $("#txtBudgetBalance").val().replace(/,/g, "");
-        var TransferBudget = $("#txtTransferBudget").val().replace(/,/g, "");
+        let budgetBalance = $("#txtBudgetBalance").val().replace(/,/g, "");
+        let TransferBudget = $("#txtTransferBudget").val().replace(/,/g, "");
 
         if (budgetBalance == '' || budgetBalance == "NaN") {
             budgetBalance = "0.00";
@@ -587,21 +589,11 @@
 
 
         if ($("#ddlUpDown").val() == "0") {
-            if (budgetBalance != "0.00") {
-                result = parseFloat(budgetBalance) - parseFloat(TransferBudget);
-            }
-            else {
-
-                result = parseFloat(oldBG) - parseFloat(TransferBudget);
-            }
+             result = parseFloat(budgetBalance) - parseFloat(TransferBudget);
         }
         else {
-            if (budgetBalance != "0.00") {
-                result = parseFloat(budgetBalance) + parseFloat(TransferBudget);
-            }
-            else {
-                result = parseFloat(oldBG) + parseFloat(TransferBudget);
-            }
+             result = parseFloat(budgetBalance) + parseFloat(TransferBudget);
+           
         }
 
         $("#txtNewBudget").val(result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -633,7 +625,7 @@
              success: function (response) {
                  if (response.Data != null) {
                      $("#txtOldBudget").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                     $("#txtBudgetBalance").val(response.Data.paymentBlance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                     $("#txtBudgetBalance").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                  }
                  else {
                      $("#txtOldBudget").val('');
@@ -716,7 +708,7 @@
                 $("#activityOfEstimateList_0__UseYearSelect").val($("#txtBGYear").val());
 
                 
-                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
+                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlActType_BG option:selected").text() + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_0__productName").val(getTxtBrandChannel);
             }
             else {
@@ -795,7 +787,7 @@
                 $("#activityOfEstimateList_" + RowCount + "__total").val($("#txtNewBudget").val().replace(/,/g, ""));
                 $("#activityOfEstimateList_" + RowCount + "__productId").val($("#ddlBrand_BG").val());
                 $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
-                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
+                var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlActType_BG option:selected").text() + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_" + RowCount + "__productName").val(getTxtBrandChannel);
 
                 $("#activityOfEstimateList_" + RowCount + "__QtyName").val($("#ddlSubject_BG").val());
@@ -816,7 +808,6 @@
             $("#ddlBrand_BG").val('');
             $("#ddlChannel_BG").val('');
             $("#ddlSubject_BG").val('');
-            $("#txtBGYear").val('');
             document.getElementById("ddlActType_BG").selectedIndex = "0";
 
         }

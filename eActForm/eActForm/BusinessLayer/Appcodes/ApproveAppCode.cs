@@ -645,43 +645,47 @@ namespace eActForm.BusinessLayer
                     var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
                     if (getDetailApprove != null)
                     {
+                        //if (!string.IsNullOrEmpty(getDetailApprove.appId))
+                        //{
+                            ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
+                            string conjson = JsonConvert.SerializeObject(request).ToString();
 
-                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
-
-                        string conjson = JsonConvert.SerializeObject(request).ToString();
-
-                        using (var httpClient = new HttpClient())
-                        {
-                            using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                            using (var httpClient = new HttpClient())
                             {
-                                var contentList = new List<string>();
-
-                                contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
-                                requestAPI.Content = new StringContent(string.Join("&", contentList));
-                                requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-
-                                var responseAPI = await httpClient.SendAsync(requestAPI);
-                                var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
-                                response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
-                                if (response.messageResponse.Contains("SUCCESS"))
+                                using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
                                 {
-                                    resultAjax.Success = true;
-                                }
-                                else
-                                {
-                                    resultAjax.Success = false;
+                                    var contentList = new List<string>();
+
+                                    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                                    requestAPI.Content = new StringContent(string.Join("&", contentList));
+                                    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                                    var responseAPI = await httpClient.SendAsync(requestAPI);
+                                    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                                    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                                    if (response.messageResponse.Contains("SUCCESS"))
+                                    {
+                                        resultAjax.Success = true;
+                                    }
+                                    else
+                                    {
+                                        resultAjax.Success = false;
+                                    }
+
+                                    SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
+                                    var resultLog = insertLog_Kafka(kafka);
                                 }
 
-                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
-                                var resultLog = insertLog_Kafka(kafka);
                             }
-
-                        }
+                        //}
                     }
                 }
+
             }
             catch (Exception ex)
             {
+                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, "", "error",  ">>>>>>" + ex.Message);
+                var resultLog = insertLog_Kafka(kafka);
                 return resultAjax;
             }
             return resultAjax;
