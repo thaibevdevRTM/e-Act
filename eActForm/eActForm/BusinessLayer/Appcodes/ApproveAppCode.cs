@@ -645,8 +645,8 @@ namespace eActForm.BusinessLayer
                     var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
                     if (getDetailApprove != null)
                     {
-                        //if (!string.IsNullOrEmpty(getDetailApprove.appId))
-                        //{
+                        if (!string.IsNullOrEmpty(getDetailApprove.appId))
+                        {
                             ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
                             string conjson = JsonConvert.SerializeObject(request).ToString();
 
@@ -677,14 +677,14 @@ namespace eActForm.BusinessLayer
                                 }
 
                             }
-                        //}
+                        }
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, "", "error",  ">>>>>>" + ex.Message);
+                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, "", "error", ">>>>>>" + ex.Message);
                 var resultLog = insertLog_Kafka(kafka);
                 return resultAjax;
             }

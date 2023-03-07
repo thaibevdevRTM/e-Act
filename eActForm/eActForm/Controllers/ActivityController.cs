@@ -418,13 +418,13 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"] || statusId == ConfigurationManager.AppSettings["waitApprove"])
                 {
-                    //if (statusId == "3" && approveFrom != "Consumer")
-                    //{
+                    if (statusId == "3" && approveFrom != "Consumer")
+                    {
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
-                    //}
-                    //GenPDFAppCode.doGen(gridHtml, activityId, Server);
+                    }
+                    GenPDFAppCode.doGen(gridHtml, activityId, Server);
 
-                    //EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 
                 }
                 resultAjax.Success = true;
