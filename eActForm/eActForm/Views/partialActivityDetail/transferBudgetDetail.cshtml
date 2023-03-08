@@ -355,7 +355,7 @@
 
     function cashEdit(i) {
 
-        bindDropdownSubject();
+
         $("#txtBudgetEO").val($("#activityOfEstimateList_" + i + "__EO").val());
         $("#txtBudgetIO").val($("#activityOfEstimateList_" + i + "__IO").val());
         $("#ddlUpDown").val($("#activityOfEstimateList_" + i + "__hospId").val());
@@ -368,23 +368,20 @@
         $("#ddlChannel_BG").val($("#activityOfEstimateList_" + i + "__typeTheme").val());
         $("#ddlActType_BG").val($("#activityOfEstimateList_" + i + "__activityTypeId").val());
         $("#txtBGYear").val($("#activityOfEstimateList_" + i + "__UseYearSelect").val());
-        
-        
 
+        bindDropdownSubject();
 
-        console.log($("#activityOfEstimateList_" + i + "__activityTypeId").val());
-     
         setTimeout(function () {
             $("#ddlSubject_BG").val($("#activityOfEstimateList_"+i+"__QtyName").val());
-        }, 5000);
+        }, 3000);
         $("#hdRow").val(i);
 
 
         if ($("#activityOfEstimateList_" + i + "__EO").val() != '') {
-            getBudgetEOIO();
+            getBudgetEOIOEdit();
         }
         else {
-            getBudgetNonEO();
+            getBudgetNonEOEdit();
         }
 
     }
@@ -427,7 +424,6 @@
                if (response.Data != null) {
                    $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                    $("#txtBudgetBalance").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                   
                }
                else {
                    $("#txtOldBudget").val('');
@@ -439,6 +435,34 @@
            }
          });
     }
+
+
+
+     function getBudgetNonEOEdit() {
+       $.ajax({
+                url: '@Url.Action("getBudgetBalanceNonEO", "TransferBudget")',
+                data: {
+                    brandId: $("#ddlBrand_BG").val(),
+                    channelId: $("#ddlChannel_BG").val(),
+                    activityGroupId: $("#ddlActType_BG").val(),
+                    bgYear: $("#txtBGYear").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+           success: function (response) {
+               if (response.Data != null) {
+                   $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));  
+               }
+               else {
+                   $("#txtOldBudget").val('');
+               }
+               $("#txtNewBudget").val('');
+               getCalBudget();
+               $("#WaitDialog").hide();
+           }
+         });
+    }
+
 
     $("#ddlBrand_BG").change(function () {
 
@@ -462,13 +486,13 @@
     $("#ddlChannel_BG").change(function () {
 
         if ($("#ddlChannel_BG").val() != '') {
-            $('#ddlActType_BG').attr("disabled", true); 
+            $('#ddlActType_BG').attr("disabled", true);
             document.getElementById("ddlActType_BG").selectedIndex = "0";
         }
         else {
-            $('#ddlActType_BG').attr("disabled", false); 
+            $('#ddlActType_BG').attr("disabled", false);
         }
-      
+
             bindDropdownSubject();
 
             if ($("#txtBudgetEO").val() != '') {
@@ -488,11 +512,11 @@
     $("#ddlActType_BG").change(function () {
        console.log('acc')
         if ($("#ddlActType_BG").val() != '') {
-            $('#ddlChannel_BG').attr("disabled", true); 
+            $('#ddlChannel_BG').attr("disabled", true);
             document.getElementById("ddlChannel_BG").selectedIndex = "0";
         }
         else {
-            $('#ddlChannel_BG').attr("disabled", false); 
+            $('#ddlChannel_BG').attr("disabled", false);
         }
     });
 
@@ -508,7 +532,7 @@
             getBudgetNonEO();
         }
 
-       
+
 
     });
 
@@ -544,7 +568,7 @@
                     $("#ddlSubject_BG option[value !='']").remove();
 
                     if (response.Data.userList.length > 0) {
-                      
+
                         document.getElementById("divSubject").style.display = "block";
                         document.getElementById("divActType").style.display = "none";
                         //document.getElementById("divBGYear").style.display = "none";
@@ -558,7 +582,7 @@
                         document.getElementById("divActType").style.display = "block";
                         //document.getElementById("divBGYear").style.display = "block";
                     }
-                    
+
                 },
                 error: function (data) {
                     alert("Error Get Subject.");
@@ -593,7 +617,7 @@
         }
         else {
              result = parseFloat(budgetBalance) + parseFloat(TransferBudget);
-           
+
         }
 
         $("#txtNewBudget").val(result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -640,12 +664,49 @@
          });
     }
 
+     function getBudgetEOIOEdit() {
+
+         var required = "กรุณา ระบุ :<br>";
+         var validate = true;
+         if ($("#txtBudgetEO").val() == '') { required += "EO*<br>"; validate = false; }
+
+
+         if (validate != true) {
+             bootbox.alert(required);
+             return false;
+         }
+
+         $.ajax({
+             url: '@Url.Action("getBudgetBalanceByEOIO", "TransferBudget")',
+             data: {
+                 EO: $("#txtBudgetEO").val(),
+                 IO: $("#txtBudgetIO").val(),
+                 fiscalYear: $("#txtBGYear").val(),
+             },
+             dataType: "json",
+             type: 'POST',
+             success: function (response) {
+                 if (response.Data != null) {
+                     $("#txtOldBudget").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                 }
+                 else {
+                     $("#txtOldBudget").val('');
+                     $("#txtNewBudget").val('');
+                     bootbox.alert("ไม่พบ ข้อมูล!");
+                 }
+
+                 getCalBudget();
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+
 
     function addRow(mode) {
         required = "<b>กรุณาระบุ/Please input data :<br></b>";
         var validate = true;
 
-        
+
 
         if ($("#txtBGYear").val() == '') {
             required += "กรุณาเลือก Budget Year! *<br>"; validate = false;
@@ -653,7 +714,7 @@
         if ($("#ddlBrand_BG").val() == '') {
             required += "กรุณาเลือก Brand! *<br>"; validate = false;
         }
-        
+
         if ($("#txtremark").val() == '') {
             required += "กรุณากรอกรายละเอียด! *<br>"; validate = false;
         }
@@ -707,7 +768,7 @@
                 $("#activityOfEstimateList_0__activityTypeId").val($("#ddlActType_BG").val());
                 $("#activityOfEstimateList_0__UseYearSelect").val($("#txtBGYear").val());
 
-                
+
                 var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlActType_BG option:selected").text() + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_0__productName").val(getTxtBrandChannel);
             }
@@ -724,7 +785,7 @@
                 if (mode == "new") {
 
                     var trHTML = $('.tRow_0').html();
-  
+
                     var trHTML = $("#tbl_budgetControl tbody tr").first().clone().find("input").val("").end().html();
                     trHTML = trHTML.replaceAll('[0].row', '[' + RowCount + '].row');
                     trHTML = trHTML.replaceAll('[0].EO', '[' + RowCount + '].EO');
@@ -779,6 +840,8 @@
                     $(".txtUpdown_" + RowCount).val('ลด');
                 }
 
+
+
                 $("#activityOfEstimateList_" + RowCount + "__hospId").val($("#ddlUpDown").val());
                 $("#activityOfEstimateList_" + RowCount + "__remark").val($("#txtremark").val());
                 $("#activityOfEstimateList_" + RowCount + "__normalCost").val($("#txtOldBudget").val().replace(/,/g, ""));
@@ -789,6 +852,8 @@
                 $("#activityOfEstimateList_" + RowCount + "__typeTheme").val($("#ddlChannel_BG").val());
                 var getTxtBrandChannel = $("#ddlBrand_BG option:selected").text() + ',' + $("#ddlActType_BG option:selected").text() + $("#ddlChannel_BG option:selected").text() + ',' + $("#txtBGYear").val();
                 $("#activityOfEstimateList_" + RowCount + "__productName").val(getTxtBrandChannel);
+
+
 
                 $("#activityOfEstimateList_" + RowCount + "__QtyName").val($("#ddlSubject_BG").val());
                 $("#activityOfEstimateList_" + RowCount + "__activityTypeId").val($("#ddlActType_BG").val());

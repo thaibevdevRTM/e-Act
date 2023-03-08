@@ -25,7 +25,7 @@
                         </label>
                         <div class="col-md-2">
                             <div class="row" style="padding-top:8px;">
-                                <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper">
+                                <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper" onchange="chkBox_Onchange(this);">
                                 <script>
                                 $(function () {
                                     var var_cbFromPaper = '@Model.activityFormTBMMKT.statusNote';
@@ -36,19 +36,17 @@
                                 </script>
                             </div>
                         </div>
-
-
-
                         <label class="control-label col-md-3">
                             กิจกรรมอื่น :
                         </label>
                         <div class="col-md-2">
                             <div class="row" style="padding-top:8px;">
-                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp) 
+                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp , new { @onchange = "chkBox_Onchange(this)" })
 
                             </div>
                         </div>
                     </div>
+
 
                 }
 
@@ -61,7 +59,7 @@
                     ชื่อผู้เสนอกิจกรรม :
                 </label>
                 @if (Model.activityFormModel.mode == "new")
-                {
+                                        {
                     <div class="col-md-4 col-xs-12">
                         <div class="row">
                             <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
@@ -204,3 +202,20 @@
         </td>
     </tr>
 </table>
+
+<script type="text/javascript">
+    function chkBox_Onchange(element) {
+
+        if (element.id === 'activityFormTBMMKT_isTemp') {
+            if (element.checked) {
+                document.getElementById("cbFromPaper").checked = false;
+            }
+        }
+        else {
+            if (element.checked) {
+                document.getElementById("activityFormTBMMKT_isTemp").checked = false;
+            }
+        }
+    }
+
+</script>
