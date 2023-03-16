@@ -374,6 +374,13 @@ namespace eActForm.BusinessLayer
                         {
                             if (callKafka && !string.IsNullOrEmpty(item.statusId))
                             {
+                                var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(item.empId, actFormId);
+                                if (!string.IsNullOrEmpty(getEmp))
+                                {
+                                    //check status approve rang -1 
+                                    ApproveAppCode.apiProducerApproveAsync(getEmp, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == "3").FirstOrDefault().displayVal);
+                                }
+
                                 ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
                             }
                         }

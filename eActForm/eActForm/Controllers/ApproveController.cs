@@ -55,6 +55,14 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
+
+                //check status approve rang -1 
+                var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(UtilsAppCode.Session.User.empId, Request.Form["lblActFormId"]);
+                if (!string.IsNullOrEmpty(getEmp))
+                {
+                    ApproveAppCode.apiProducerApproveAsync(getEmp, Request.Form["lblActFormId"], QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == "3").FirstOrDefault().displayVal);
+                }
+
                 if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"], UtilsAppCode.Session.User.empId) > 0)
                 {
                     result.Success = true;

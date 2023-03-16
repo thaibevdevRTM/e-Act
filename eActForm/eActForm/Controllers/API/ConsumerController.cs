@@ -17,6 +17,7 @@ using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
+using static iTextSharp.text.pdf.AcroFields;
 
 
 namespace eActForm.Controllers.API
@@ -52,6 +53,13 @@ namespace eActForm.Controllers.API
 
                 if (response != null)
                 {
+                    //check status approve rang -1 
+                    var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(response.data.approver, response.data.refId);
+                    if (!string.IsNullOrEmpty(getEmp))
+                    {
+                        ApproveAppCode.apiProducerApproveAsync(getEmp, response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == "3").FirstOrDefault().displayVal);
+                    }
+
                     if (ApproveAppCode.updateApprove(response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.message, null, response.data.approver) > 0)
                     {
                         string padding = "", classFont = "";
@@ -151,6 +159,9 @@ namespace eActForm.Controllers.API
                         //outputHtml += "</div>";
                         outputHtml += "</div>";
 
+ 
+                      
+
                         HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
                     }
 
@@ -166,9 +177,12 @@ namespace eActForm.Controllers.API
                 {
                     HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile("<div>Please regen pdf</div>", response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
                 }
-
-                SentKafkaLogModel kafka1 = new SentKafkaLogModel("", "", "", "Consumer", DateTime.Now, "Error", "", getMdodel.messagedata +" >> " + ex.Message);
-                var resultLog1 = ApproveAppCode.insertLog_Kafka(kafka1);
+                else
+                {
+                    SentKafkaLogModel kafka1 = new SentKafkaLogModel("", "", "", "Consumer", DateTime.Now, "Error", "", getMdodel.messagedata + " >> " + ex.Message);
+                    ApproveAppCode.insertLog_Kafka(kafka1);
+                }
+               
 
                 return Ok(consumerMassage);
             }

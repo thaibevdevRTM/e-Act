@@ -341,12 +341,6 @@ namespace eActForm.BusinessLayer
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId, empId);
 
-                    List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
-                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
-                    {
-                        //waiting update budgetControl
-                        bool resultTransfer = TransferBudgetAppcode.transferBudgetForReject(actFormId);
-                    }
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
@@ -784,6 +778,35 @@ namespace eActForm.BusinessLayer
             }
 
             return result;
+        }
+
+        public static string checkStatusBeforeCallKafka(string empId,string activityId)
+        {
+            try
+            {
+                string resultStatus = string.Empty;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CheckStatusBeforeCallKafka"
+                    , new SqlParameter("@p_empId", empId)
+                    , new SqlParameter("@activityId", activityId));
+                var result = (from DataRow dr in ds.Tables[0].Rows
+                            select new 
+                            {
+                                empId = dr["empId"].ToString(),
+                                countApprove = (int)dr["countApprove"]
+                            }).ToList();
+
+                if(result.Any())
+                {
+                    resultStatus = result.FirstOrDefault().countApprove > 0 ? result.FirstOrDefault().empId : "";
+                }
+
+                return resultStatus;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkStatusBeforeCallKafka >> " + ex.Message);
+            }
         }
 
     }
