@@ -286,5 +286,15 @@ namespace eActForm.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult checkApproveByActId(string actId)
+        {
+            var result = new AjaxResult();
+            ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+
+            result.Success = models.approveModel.statusId == "3";
+            return Json(result);
+        }
+
     }
 }
