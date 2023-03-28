@@ -169,6 +169,7 @@ else
     async function confirmQuery(statusId) {
 
 
+        $("#WaitDialog").show();
         const result = await $.ajax({
             type: 'POST',
             url: '@Url.Action("checkApproveByActId", "Approve")',
@@ -176,6 +177,7 @@ else
                 actId: '@actId'
             }
         }).done(function (response) {
+            $("#WaitDialog").hide();
             if (response.Success) {
                 doAlert("เอกสารนี้ ถูกอนุมัติแล้ว")
                 return false;
@@ -390,43 +392,5 @@ else
     }
 
 
-       async function checkApprove(actId) {
-
-        let result = false;
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("checkApproveByActId", "Approve")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            if (response.Success) {
-                result = true;
-                @*bootbox.alert({
-                    size: 'small',
-                    title: 'Warning!',
-                    message: "เอกสารฉบับนี้ ได้ถูกอนุมัติไปแล้ว",
-                    callback: function (result) {
-
-                        if ('@type' == '@AppCode.ApproveType.ActivityBeer.ToString()') {
-                            var url = '@Url.Action("Index", "ApproveBeerLists")';
-                            window.location.replace(url);// = url;
-                        }
-                        else {
-                            var url = '@Url.Action("Index", "ApproveLists")';
-                            window.location.replace(url);// = url;
-                        }
-
-
-                    }
-                });*@
-
-            }
-
-            return result;
-        });
-
-         console.log(result + 'in')
-    }
 
 </script>
