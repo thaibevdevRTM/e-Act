@@ -408,7 +408,7 @@ namespace eActForm.Models
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
-                    int pages = get_pageCcount(pathFile[f]);
+                    int pages = get_pageCount(pathFile[f]);
                     reader = new PdfReader(System.IO.File.ReadAllBytes(pathFile[f]));
                     reader.ConsolidateNamedDestinations();
 
@@ -456,7 +456,7 @@ namespace eActForm.Models
             return result;
         }
 
-        private static int get_pageCcount(string file)
+        public static int get_pageCount(string file)
         {
             //var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             //using (StreamReader sr = new StreamReader(fs))
