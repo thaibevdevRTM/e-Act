@@ -57,7 +57,7 @@ namespace eActForm.Controllers
             {
                 model = new Activity_Model.actForms();
 
-      
+
                 DateTime? startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
                 DateTime? endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
 

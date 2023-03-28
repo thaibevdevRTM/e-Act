@@ -214,7 +214,7 @@ namespace eActForm.BusinessLayer.Appcodes
             return result;
         }
 
-        public static int updateSubject(string subjectId , string subjectTxt)
+        public static int updateSubject(string subjectId, string subjectTxt)
         {
 
             var result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateSubject"

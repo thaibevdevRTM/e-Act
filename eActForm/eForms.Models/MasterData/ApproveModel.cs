@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Web.UI.WebControls.WebParts;
-
-namespace eForms.Models.MasterData
+﻿namespace eForms.Models.MasterData
 {
 
     public class ProducerApproverBevAPI
@@ -123,6 +118,6 @@ namespace eForms.Models.MasterData
         public string timeResponse { get; set; }
         public string messageResponse { get; set; }
     }
-        
+
 
 }

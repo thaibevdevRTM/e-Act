@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActForm", "eActForm\eActForm.csproj", "{F2ED982E-1CCB-455B-AB47-758AEC9C6A25}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActConsoleServiceWeekly", "eActConsoleServiceWeekly\eActConsoleServiceWeekly.csproj", "{0C30C195-A752-4015-A38F-F3E2C82E182B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "updateDataReportTBM", "updateDataReportTBM\updateDataReportTBM.csproj", "{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eForms.UI", "eForms.UI\eForms.UI.csproj", "{E18FE3BD-5394-465A-B2AF-3DAAD8077438}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eForms.UI.Data", "eForms.UI.Data\eForms.UI.Data.csproj", "{6459D92A-E630-4C06-9C34-0A638F9A9943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D17D1720-37CD-4743-84E4-8A8CBC5E7C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18FE3BD-5394-465A-B2AF-3DAAD8077438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18FE3BD-5394-465A-B2AF-3DAAD8077438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18FE3BD-5394-465A-B2AF-3DAAD8077438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18FE3BD-5394-465A-B2AF-3DAAD8077438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6459D92A-E630-4C06-9C34-0A638F9A9943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6459D92A-E630-4C06-9C34-0A638F9A9943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6459D92A-E630-4C06-9C34-0A638F9A9943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6459D92A-E630-4C06-9C34-0A638F9A9943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

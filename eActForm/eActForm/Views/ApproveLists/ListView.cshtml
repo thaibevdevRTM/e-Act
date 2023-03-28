@@ -237,7 +237,7 @@ else
                                 favorite.push($(this).val());
 
                                 console.log(favorite[favorite.length - 1])
-                               // setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
                             }).promise().done(function () {
                                 $("#WaitDialog").show();
                                 setTimeout(alertFunc, 5000);

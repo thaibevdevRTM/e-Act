@@ -103,6 +103,7 @@ namespace eActForm.Controllers
                         , ConfigurationManager.AppSettings["emailApproveCC"] // contactModel[0].emailCashier
                         , ConfigurationManager.AppSettings["subjectEmailConfirm"]
                         , strBody
+                        , model.activityFormModel.id
                         , null);
 
                     resultAjax.Code = 200;

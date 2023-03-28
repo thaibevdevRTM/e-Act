@@ -282,6 +282,7 @@ namespace eActForm.Models
                     , ""
                     , "eAct ApiApprove Error GetFileReportTomail_Preview"
                     , GridHtml + " " + ex.Message
+                    ,""
                     , null);
 
                 return ms;
@@ -429,6 +430,7 @@ namespace eActForm.Models
                     , ""
                     , "eAct ApiApprove mergePDF 1 Error " + activityId
                     , ex.Message
+                    , activityId
                     , null);
                 try
                 {
@@ -447,6 +449,7 @@ namespace eActForm.Models
                     , ""
                     , "eAct ApiApprove mergePDF 2 Error " + activityId
                     , ex.Message
+                    , activityId
                     , null);
                 }
             }

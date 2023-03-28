@@ -36,72 +36,72 @@
 
 <div>
     <table style="width:97%; margin-top:30px; margin-left: 20px;">
-        <tr>
-            <td width="140px;" class="fontDoc12">
-                <b>วันที่เสนอ :</b>
+        <tr style="height:20px;">
+            <td width="140px;" class="fontSigV1">
+                <b>วันที่เสนอ </b>
             </td>
-            <td width="260px;" style="margin-left:10px;">
-                @Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy")
+            <td class="fontSigV1" width="260px;" style="margin-left:10px;">
+                :&nbsp; @Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy")
             </td>
             <td width="20px;"></td>
-            <td class="fontDoc12">
-                <b>เอกสารเลขที่ :</b>
+            <td class="fontSigV1">
+                <b>เอกสารเลขที่ </b>
             </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.activityFormModel.activityNo)
+            <td class="fontSigV1">
+                :&nbsp; @Html.DisplayFor(item => item.activityFormModel.activityNo)
             </td>
 
         </tr>
-        <tr>
-            <td class="fontDoc12">
-                <b> ชื่อผู้เสนอ :</b>
+        <tr style="height:20px;">
+            <td class="fontSigV1">
+                <b> ชื่อผู้เสนอ </b>
             </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.toContact)
+            <td class="fontSigV1">
+                :&nbsp; @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.toContact)
             </td>
             <td></td>
-            <td class="fontDoc12" width="150px;"><b>เบอร์โทรศัพท์ :</b></td>
-            <td class="fontDoc12" width="160px;"> @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityTel) </td>
+            <td class="fontSigV1" width="150px;"><b>เบอร์โทรศัพท์ </b></td>
+            <td class="fontSigV1" width="160px;"> :&nbsp;@Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityTel) </td>
         </tr>
-        <tr>
-            <td class="fontDoc12">
-                <b> สินค้า :</b>
+        <tr style="height:20px;">
+            <td class="fontSigV1">
+                <b> สินค้า </b>
             </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityProduct)
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="fontDoc12">
-                <b>ชื่อกิจกรรม :</b>
-            </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.activityFormTBMMKT.activityName)
+            <td class="fontSigV1">
+                :&nbsp; @Html.DisplayFor(item => item.tB_Act_ActivityForm_DetailOther.activityProduct)
             </td>
             <td></td>
             <td></td>
             <td></td>
         </tr>
-        <tr>
-            <td class="fontDoc12">
-                <b> เลขที่ใบอนุมัติงบกิจกรรม :</b>
+        <tr style="height:20px;">
+            <td class="fontSigV1">
+                <b>ชื่อกิจกรรม </b>
             </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.activityFormTBMMKT.activityDetail)
+            <td class="fontSigV1">
+                :&nbsp;@Html.DisplayFor(item => item.activityFormTBMMKT.activityName)
             </td>
             <td></td>
             <td></td>
             <td></td>
         </tr>
-        <tr>
-            <td class="fontDoc12">
-                <b>วัตถุประสงค์ :</b>
+        <tr style="height:20px;">
+            <td class="fontSigV1">
+                <b> เลขที่ใบอนุมัติงบกิจกรรม </b>
             </td>
-            <td class="fontDoc12">
-                @Html.DisplayFor(item => item.activityFormTBMMKT.objective)
+            <td class="fontSigV1">
+                :&nbsp; @Html.DisplayFor(item => item.activityFormTBMMKT.activityDetail)
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr style="height:20px;">
+            <td class="fontSigV1">
+                <b>วัตถุประสงค์ </b>
+            </td>
+            <td class="fontSigV1">
+                :&nbsp; @Html.DisplayFor(item => item.activityFormTBMMKT.objective)
             </td>
             <td></td>
             <td></td>

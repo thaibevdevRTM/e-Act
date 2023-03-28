@@ -53,7 +53,7 @@
 
 }
 
-@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
+@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper" && Model.activity_TBMMKT_Model.activityFormTBMMKT.isTemp == false)
 {
     <div class="text-center">
         @if (TempData["approvePositionSignatureError"] != null)

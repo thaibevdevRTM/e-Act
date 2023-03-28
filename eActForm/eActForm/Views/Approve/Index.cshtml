@@ -149,6 +149,7 @@ else
 <script>
 
     $(document).ready(function () {
+
         $(".fv").each(function () {
             var v = $(this).val();
             if (v == '') {
@@ -165,43 +166,65 @@ else
 
     });
 
-    function confirmQuery(statusId) {
-
-        //var statusId = $("#ddlStatus").val();
-        var mess = $("#txtRemark").val();
-        $("#lblstatusId").val(statusId);
-        $("#ddlStatus").val(statusId);
-        if (statusId == "5" && mess == "") {
-            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม)")
-            $("#txtRemark").focus();
-            return false;
-        }
-        else if (statusId == "") {
-            doMsgFail("กรุณาระบุ(สถานะ)")
-            $("#ddlStatus").focus();
-            return false;
-        }
+    async function confirmQuery(statusId) {
 
 
-        mess = $("#ddlStatus option:selected").text();
-        bootbox.confirm({
-            message: "คุณต้องดำเนินการ " + mess + " ใช่หรือไม่?",
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                }, cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function (result) {
-                if (result == true) {
-                    $("#formApprove").submit();
-                }
+        $("#WaitDialog").show();
+        const result = await $.ajax({
+            type: 'POST',
+            url: '@Url.Action("checkApproveByActId", "Approve")',
+            data: {
+                actId: '@actId'
+            }
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+            if (response.Success) {
+                doAlert("เอกสารนี้ ถูกอนุมัติแล้ว")
+                return false;
             }
 
         });
+
+
+        if (!result.Success) {
+
+            //var statusId = $("#ddlStatus").val();
+            var mess = $("#txtRemark").val();
+            $("#lblstatusId").val(statusId);
+            $("#ddlStatus").val(statusId);
+            if (statusId == "5" && mess == "") {
+                doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม)")
+                $("#txtRemark").focus();
+                return false;
+            }
+            else if (statusId == "") {
+                doMsgFail("กรุณาระบุ(สถานะ)")
+                $("#ddlStatus").focus();
+                return false;
+            }
+
+
+            mess = $("#ddlStatus option:selected").text();
+            bootbox.confirm({
+                message: "คุณต้องดำเนินการ " + mess + " ใช่หรือไม่?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    }, cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $("#formApprove").submit();
+                    }
+                }
+
+            });
+
+        }
 
     }
 
@@ -346,14 +369,10 @@ else
             type: 'POST',
         }).done(function (reponse) {
 
-            bootbox.confirm({
-                message: "ดำเนินการเรียบร้อย",
-                buttons: {
-                    confirm: {
-                        label: 'OK',
-                        className: 'btn-success'
-                    }
-                },
+            bootbox.alert({
+                size: 'small',
+                title: 'Success',
+                message: "<div class='row'><div class='text-center'><img width='150px' src='https://eact.thaibev.com/images/checkmark.gif' class='text-center'/><br/>Success</div></div>",
                 callback: function (result) {
 
                     if ('@type' == '@AppCode.ApproveType.ActivityBeer.ToString()') {
@@ -371,6 +390,7 @@ else
 
         });
     }
+
 
 
 </script>

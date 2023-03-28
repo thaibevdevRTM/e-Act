@@ -78,7 +78,7 @@ namespace eActForm.Controllers
                 dtBrand = ExcelAppCode.ReadExcel(resultFilePath, "Brand", "A:Z");
                 var resultAjaxBrand_ = ImportBudgetControlAppCode.PrepareData_ImportBudget(AppCode.StrCon, ImportBudgetControlAppCode.brand, dtBrand, model, getLE, UtilsAppCode.Session.User.empId);
                 resultAjax.Success = resultAjaxBrand_.Success;
-                resultAjax.Message += " Brand_"+ resultAjaxBrand_.Message;
+                resultAjax.Message += " Brand_" + resultAjaxBrand_.Message;
 
 
 

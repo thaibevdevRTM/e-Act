@@ -95,9 +95,9 @@ namespace eActForm.BusinessLayer
             for (int i = 0; i < strInteger.Length; i++)
             {
                 string number = strInteger.Substring(i, 1);
-                if(number == "-")
+                if (number == "-")
                 {
-                    number = strInteger.Substring(i+1, 1);
+                    number = strInteger.Substring(i + 1, 1);
                 }
 
 
@@ -177,7 +177,7 @@ namespace eActForm.BusinessLayer
                 {
                     cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     cultureLocal = cultureDoc;
                 }

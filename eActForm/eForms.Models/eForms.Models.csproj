@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\SearchParameterFilterModel.cs" />
+    <Compile Include="MasterData\ActivityModel.cs" />
     <Compile Include="MasterData\ApproveModel.cs" />
     <Compile Include="MasterData\DefaultFieldModel.cs" />
     <Compile Include="MasterData\APModel.cs" />

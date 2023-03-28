@@ -224,7 +224,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(DateTime startDate, DateTime endDate, string typeForm,string productType)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(DateTime startDate, DateTime endDate, string typeForm, string productType)
         {
             try
             {
