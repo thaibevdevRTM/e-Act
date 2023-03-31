@@ -162,6 +162,7 @@ namespace eActForm.Models
         public string[] list_chooseRequest_multi_select { get; set; }
         public Boolean chkTemp { get; set; }
         public string remarkApprove { get; set; }
+        public bool isTemp { get; set; }
 
     }
 

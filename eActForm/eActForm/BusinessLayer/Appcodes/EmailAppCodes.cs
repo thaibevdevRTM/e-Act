@@ -45,11 +45,13 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
-                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+                string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
+                    
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
-                    , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
+                    , getSubject
                     , strBody
+                    , actFormId
                     , null);
             }
             catch (Exception ex)
@@ -75,6 +77,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
+                    ,""
                     , null);
             }
             catch (Exception ex)
@@ -101,6 +104,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
+                    ,""
                     , null);
             }
             catch (Exception ex)
@@ -183,6 +187,7 @@ namespace eActForm.BusinessLayer
                   , ""
                   , "eAct sendApprove non backgroup Error"
                   , actFormId + " " + ex.Message
+                  , actFormId
                   , null);
                 //ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
                 throw new Exception("sendRejectActForm >>" + ex.Message + " " + actFormId);
@@ -321,7 +326,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend,bool callKafka)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend, bool callKafka)
         {
             try
             {
@@ -365,19 +370,43 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        if (callKafka)
+                        try
                         {
-                            ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                            if (callKafka && !string.IsNullOrEmpty(item.statusId))
+                            {
+                                var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(item.empId, actFormId);
+                                if (!string.IsNullOrEmpty(getEmp))
+                                {
+                                    //check status approve rang -1 
+                                    ApproveAppCode.apiProducerApproveAsync(getEmp, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == "3").FirstOrDefault().displayVal);
+                                }
+
+                                ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            throw new Exception("Call Kafka Producer empId :"+ item.empId + " activityId : "+ actFormId +" >>>>" + ex.Message);
                         }
 
-                        strBody = getEmailBody(item, emailType, actFormId, false);
-                        strSubject = isResend ? "RE: " + strSubject : strSubject;
-                        sendEmailActForm(actFormId
-                            , item.empEmail
-                            , ""
-                            , strSubject
-                            , strBody
-                            , emailType);
+
+
+                        try
+                        {
+                            strBody = getEmailBody(item, emailType, actFormId, false);
+                            strSubject = isResend ? "RE: " + strSubject : strSubject;
+                            sendEmailActForm(actFormId
+                                , item.empEmail
+                                , ""
+                                , strSubject
+                                , strBody
+                                , emailType);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception("Call Email " + ex.Message);
+                        }
+
                     }
                 }
                 else
@@ -487,6 +516,12 @@ namespace eActForm.BusinessLayer
                             //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
 
 
+
+                            if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            {
+                                //waiting update budgetControl
+                                bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
+                            }
                         }
                     }
                 }
@@ -569,6 +604,7 @@ namespace eActForm.BusinessLayer
                         , mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , files);
 
             }
@@ -580,6 +616,7 @@ namespace eActForm.BusinessLayer
                         , mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , null);
                 }
                 catch (Exception exs)
@@ -589,6 +626,7 @@ namespace eActForm.BusinessLayer
                    , ""
                    , "eAct sendApprove Catch in Catch"
                    , actFormId + " " + exs.Message
+                   , actFormId
                    , null);
                 }
 
@@ -869,10 +907,21 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
+        public static void sendEmail(string mailTo, string cc, string subject, string body,string actFormId, List<Attachment> files)
         {
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
+
+            string checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + cc;
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+            cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
+
+            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+            {
+                body += checkMail;
+            }
+
+
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;
@@ -1105,6 +1154,7 @@ namespace eActForm.BusinessLayer
                         , mailCC == "" ? ConfigurationManager.AppSettings["emailBudgetApproveCC"] : mailCC
                         , strSubject
                         , strBody
+                        , actFormId
                         , files);
 
             }

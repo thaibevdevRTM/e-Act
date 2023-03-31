@@ -12,6 +12,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public partial class partialActivityDetailController
     {
         public ActionResult partialSetPriceDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)

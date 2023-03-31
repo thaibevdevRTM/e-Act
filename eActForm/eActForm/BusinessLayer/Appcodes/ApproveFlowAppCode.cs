@@ -116,7 +116,7 @@ namespace eActForm.BusinessLayer
                 var getMasterType = getData.activityFormTBMMKT.master_type_form_id;
                 if (getData.tB_Act_ActivityForm_DetailOther != null)
                 {
-                     chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
+                    chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
                 }
 
                 string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";

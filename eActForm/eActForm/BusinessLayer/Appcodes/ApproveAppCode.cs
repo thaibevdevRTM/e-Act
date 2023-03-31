@@ -5,23 +5,23 @@ using eForms.Models.MasterData;
 using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using WebLibrary;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Web;
 using System.Web.Hosting;
-using System.Globalization;
+using System.Web.Mvc;
+using System.Web.Routing;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -341,12 +341,6 @@ namespace eActForm.BusinessLayer
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId, empId);
 
-                    List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actFormId);
-                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formTransferbudget"])
-                    {
-                        //waiting update budgetControl
-                        bool resultTransfer = TransferBudgetAppcode.transferBudgetForReject(actFormId);
-                    }
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
@@ -645,43 +639,49 @@ namespace eActForm.BusinessLayer
                     var getDetailApprove = ApproveAppCode.getWaitApprove(empId, activityId);
                     if (getDetailApprove != null)
                     {
-
-                        ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
-
-                        string conjson = JsonConvert.SerializeObject(request).ToString();
-
-                        using (var httpClient = new HttpClient())
+                        if (!string.IsNullOrEmpty(getDetailApprove.appId))
                         {
-                            using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
+                            ProducerApproverBevAPI request = new ProducerApproverBevAPI(getDetailApprove.docNo, status, "1.0.0", DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture), getDetailApprove);
+                            string conjson = JsonConvert.SerializeObject(request).ToString();
+
+                            using (var httpClient = new HttpClient())
                             {
-                                var contentList = new List<string>();
 
-                                contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
-                                requestAPI.Content = new StringContent(string.Join("&", contentList));
-                                requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-                                var responseAPI = await httpClient.SendAsync(requestAPI);
-                                var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
-                                response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
-                                if (response.messageResponse.Contains("SUCCESS"))
+                                using (var requestAPI = new HttpRequestMessage(new HttpMethod("POST"), ConfigurationManager.AppSettings["urlBevApproval"]))
                                 {
-                                    resultAjax.Success = true;
-                                }
-                                else
-                                {
-                                    resultAjax.Success = false;
+                                    var contentList = new List<string>();
+
+                                    contentList.Add($"messagedata={Uri.EscapeDataString(conjson)}");
+                                    requestAPI.Content = new StringContent(string.Join("&", contentList));
+                                    requestAPI.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                                    var responseAPI = await httpClient.SendAsync(requestAPI);
+                                    var resultAPI = responseAPI.Content.ReadAsStringAsync().Result;
+                                    response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(resultAPI);
+                                    if (response.messageResponse.Contains("SUCCESS"))
+                                    {
+                                        resultAjax.Success = true;
+                                    }
+                                    else
+                                    {
+                                        resultAjax.Success = false;
+                                    }
+
+                                    SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
+                                    var resultLog = insertLog_Kafka(kafka);
                                 }
 
-                                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, getDetailApprove.requestDetail.attachedUrl, resultAjax.Success.ToString(), resultAPI.ToString() + ">>>>>>" + conjson);
-                                var resultLog = insertLog_Kafka(kafka);
                             }
-
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
+                SentKafkaLogModel kafka = new SentKafkaLogModel(empId, activityId, status, "producer", DateTime.Now, "", "error", ">>>>>>" + ex.Message);
+                var resultLog = insertLog_Kafka(kafka);
                 return resultAjax;
             }
             return resultAjax;
@@ -704,7 +704,7 @@ namespace eActForm.BusinessLayer
                                   docNo = dr["docNo"].ToString(),
                                   refId = dr["refId"].ToString(),
                                   orderRank = dr["orderRank"].ToString(),
-                                  subject = dr["brandName"].ToString() +" "+ dr["subject"].ToString(),
+                                  subject = dr["brandName"].ToString() + " " + dr["subject"].ToString(),
                                   requestDate = DateTime.Parse(dr["requesterDate"].ToString()).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                                   totalAmount = dr["totalAmount"].ToString(),
                                   currency = dr["currency"].ToString(),
@@ -740,7 +740,7 @@ namespace eActForm.BusinessLayer
                     ApproverModel.requestDetail.organizationUnitName = result.FirstOrDefault().organizationUnitName;
                     ApproverModel.requestDetail.detail = result.FirstOrDefault().detail;
                     ApproverModel.requestDetail.attachedFileName = "เอกสาร";
-                    ApproverModel.requestDetail.attachedUrl =  string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
+                    ApproverModel.requestDetail.attachedUrl = string.Format(ConfigurationManager.AppSettings["fullPdftURL"], activityId);
 
                 }
 
@@ -780,6 +780,35 @@ namespace eActForm.BusinessLayer
             }
 
             return result;
+        }
+
+        public static string checkStatusBeforeCallKafka(string empId,string activityId)
+        {
+            try
+            {
+                string resultStatus = string.Empty;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CheckStatusBeforeCallKafka"
+                    , new SqlParameter("@p_empId", empId)
+                    , new SqlParameter("@activityId", activityId));
+                var result = (from DataRow dr in ds.Tables[0].Rows
+                            select new 
+                            {
+                                empId = dr["empId"].ToString(),
+                                countApprove = (int)dr["countApprove"]
+                            }).ToList();
+
+                if(result.Any())
+                {
+                    resultStatus = result.FirstOrDefault().countApprove > 0 ? result.FirstOrDefault().empId : "";
+                }
+
+                return resultStatus;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkStatusBeforeCallKafka >> " + ex.Message);
+            }
         }
 
     }

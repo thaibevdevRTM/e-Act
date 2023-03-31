@@ -1,4 +1,5 @@
 ﻿@*@model eActForm.Models.ApproveModel.approveModels*@
+@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
 @using eActForm.Models;
 @{
@@ -7,14 +8,14 @@
     var urlImg1 = "";
     var urlImg2 = "";
 
-    if (Model.approveDetailLists.Count > 0)
+    if (Model.approveModels.approveDetailLists.Count > 0)
     {
-        if (Model.approveDetailLists[0].statusId == Convert.ToString((int)AppCode.ApproveStatus.อนุมัติ))
+        if (Model.approveModels.approveDetailLists[0].statusId == Convert.ToString((int)AppCode.ApproveStatus.อนุมัติ))
         {
             urlImg1 = rootPathWeb + "images/check_b.png";
             urlImg2 = rootPathWeb + "images/check.png";
         }
-        else if (Model.approveDetailLists[0].statusId == Convert.ToString(((int)AppCode.ApproveStatus.ไม่อนุมัติ)))
+        else if (Model.approveModels.approveDetailLists[0].statusId == Convert.ToString(((int)AppCode.ApproveStatus.ไม่อนุมัติ)))
         {
             urlImg1 = rootPathWeb + "images/check.png";
             urlImg2 = rootPathWeb + "images/check_b.png";

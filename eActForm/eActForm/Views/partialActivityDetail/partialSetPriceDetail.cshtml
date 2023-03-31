@@ -275,19 +275,18 @@
         </div>
     </div>
 
+
+
     <div class="col-md-12 col-xs-12">
+       
+
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
                 <div class="radio">
                     <label>
-                        @Html.RadioButtonFor(x => x.activityFormTBMMKT.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        @Html.RadioButtonFor(x => x.activityFormTBMMKT.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                        @Html.RadioButtonFor(x => x.activityFormTBMMKT.trade, "outterm", new { @id = "rdbOutterm", @checked = "checked" }) รายการส่งเสริมการขาย (นอก Trade Term)
                     </label>
                 </div>
             </div>
@@ -741,6 +740,7 @@
     }
 
     function onchangeCustomer() {
+        $("#txtReference").val('')
         getFormatCus();
     }
 
@@ -748,7 +748,7 @@
     function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
-
+        
         if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
@@ -765,6 +765,7 @@
         }
         else {
             document.getElementById("txtReference").readOnly = false;
+            $("#txtReference").val('');
         }
 
         var cus = ["Hyper", "Market", "Mini", "Depot","Donjai","Express","Talad","Hyper"];

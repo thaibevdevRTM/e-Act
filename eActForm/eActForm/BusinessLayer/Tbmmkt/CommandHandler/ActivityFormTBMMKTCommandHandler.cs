@@ -26,12 +26,12 @@ namespace eActForm.BusinessLayer
                 if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && model.activityFormTBMMKT.statusId == 2 || model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
-                    
+
                     if (model.activityFormTBMMKT.statusId != 3)
                     {
                         rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     }
-                    else if(model.activityFormTBMMKT.statusId == 3 && model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
+                    else if (model.activityFormTBMMKT.statusId == 3 && model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                     {
                         rtn = ProcessInsertEstimate(rtn, model, activityId);
                     }
@@ -546,6 +546,7 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                     activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
+                    activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activity_TBMMKT_Model.activityFormTBMMKT.id);
                     activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
                     activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(activity_TBMMKT_Model.activityFormTBMMKT.languageDoc, en, activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = QueryGet_TB_Act_ActivityForm_DetailOtherList.get_TB_Act_ActivityForm_DetailOtherList(activityId);
@@ -1226,6 +1227,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade", model.trade)
                     ,new SqlParameter("@statusNote", model.statusNote)
                     ,new SqlParameter("@referenceActNo",model.activityNoRef)
+                    ,new SqlParameter("@isTemp",model.isTemp)
                   });
             }
             catch (Exception ex)
@@ -1616,7 +1618,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId,string empId)
+        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId, string empId)
         {
             try
             {

@@ -18,23 +18,36 @@
 
                 @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    <label class="control-label col-md-2 col-xs-12" id="lblFromPaper">
-                        From Paper :
-                    </label>
 
-                    <div class="col-md-4 col-xs-12">
-                        <div class="row" style="padding-top:8px;">
-                            <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper">
-                            <script>
+                    <div class="row col-md-6">
+                        <label class="control-label col-md-4" id="lblFromPaper">
+                            From Paper :
+                        </label>
+                        <div class="col-md-2">
+                            <div class="row" style="padding-top:8px;">
+                                <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper" onchange="chkBox_Onchange(this);">
+                                <script>
                                 $(function () {
                                     var var_cbFromPaper = '@Model.activityFormTBMMKT.statusNote';
                                     if (var_cbFromPaper == "FromPaper") {
                                         document.getElementById("cbFromPaper").checked = true;
                                     }
                                 });
-                            </script>
+                                </script>
+                            </div>
+                        </div>
+                        <label class="control-label col-md-3">
+                            กิจกรรมอื่น :
+                        </label>
+                        <div class="col-md-2">
+                            <div class="row" style="padding-top:8px;">
+                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp , new { @onchange = "chkBox_Onchange(this)" })
+
+                            </div>
                         </div>
                     </div>
+
+
                 }
 
             </div>
@@ -46,7 +59,7 @@
                     ชื่อผู้เสนอกิจกรรม :
                 </label>
                 @if (Model.activityFormModel.mode == "new")
-                {
+                                        {
                     <div class="col-md-4 col-xs-12">
                         <div class="row">
                             <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
@@ -90,7 +103,7 @@
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly"})
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
                     </div>
                 </div>
             </div>
@@ -160,7 +173,7 @@
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
 
-                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)|| (UtilsAppCode.Session.User.isAdminTBM))
+                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                         {
                             @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber" })
                         }
@@ -189,3 +202,20 @@
         </td>
     </tr>
 </table>
+
+<script type="text/javascript">
+    function chkBox_Onchange(element) {
+
+        if (element.id === 'activityFormTBMMKT_isTemp') {
+            if (element.checked) {
+                document.getElementById("cbFromPaper").checked = false;
+            }
+        }
+        else {
+            if (element.checked) {
+                document.getElementById("activityFormTBMMKT_isTemp").checked = false;
+            }
+        }
+    }
+
+</script>

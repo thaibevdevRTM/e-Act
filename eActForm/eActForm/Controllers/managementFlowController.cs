@@ -89,7 +89,7 @@ namespace eActForm.Controllers
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
             {
-                
+
                 management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
                 management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
                 management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
@@ -109,9 +109,9 @@ namespace eActForm.Controllers
 
                 TempData["management_Model"] = management_Model;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                TempData["management_Model"] = new ManagementFlow_Model() ;
+                TempData["management_Model"] = new ManagementFlow_Model();
                 ExceptionManager.WriteError("ManagementFlowController >> genDataApproveList => " + ex.Message);
             }
             return RedirectToAction("approveList");
@@ -446,7 +446,7 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult editSubject(string subjectId , string subjectTxt)
+        public JsonResult editSubject(string subjectId, string subjectTxt)
         {
             var result = new AjaxResult();
             try
@@ -454,7 +454,7 @@ namespace eActForm.Controllers
 
                 var lists = managementFlowAppCode.updateSubject(subjectId, subjectTxt);
 
-                if(lists > 0)
+                if (lists > 0)
                 {
                     result.Success = true;
                 }

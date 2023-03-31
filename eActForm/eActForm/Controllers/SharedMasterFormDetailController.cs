@@ -104,16 +104,15 @@ namespace eActForm.Controllers
         }
         public ActionResult confirmDirectorRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ApproveModel.approveModels models = new ApproveModel.approveModels();
-            models = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
+            activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
             //List<approveDetailModel> approveDetailLists = new List<approveDetailModel>();
 
-            if (models.approveDetailLists.Count > 0)
+            if (activity_TBMMKT_Model.approveModels.approveDetailLists.Count > 0)
             {
-                models.approveDetailLists = models.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
+                activity_TBMMKT_Model.approveModels.approveDetailLists = activity_TBMMKT_Model.approveModels.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
             }
             // int count  =   models.approveFlowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).Where(x=>x.statusId == "3").ToList().Count;
-            return PartialView(models);
+            return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult recordByHcRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
@@ -159,22 +158,21 @@ namespace eActForm.Controllers
 
             activity_TBMMKT_Model.expensesDetailModel = model;
 
-            return PartialView(activity_TBMMKT_Model.expensesDetailModel);
+            return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
-
-            TB_Act_ActivityForm_SelectBrandOrChannel models = new TB_Act_ActivityForm_SelectBrandOrChannel();
-            models.txt = lists.Count.ToString();
-            models.val = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-            return PartialView(models);
+            
+            activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt = lists.Count.ToString();
+            activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.val = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+            return PartialView(activity_TBMMKT_Model);
             // return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult textGeneral(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            return PartialView(activity_TBMMKT_Model.activityFormTBMMKT);
+            return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult recordByHcMedRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

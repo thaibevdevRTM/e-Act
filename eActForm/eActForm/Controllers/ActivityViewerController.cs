@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using WebLibrary;
 namespace eActForm.Controllers
 {
-    
+
     public class ActivityViewerController : Controller
     {
         // GET: ActivityViewer
@@ -76,6 +76,12 @@ namespace eActForm.Controllers
                 return File(fileStream, "application/vnd.ms-excel", actId);
             }
 
+        }
+
+
+        public ActionResult historyBG()
+        {
+            return PartialView();
         }
 
     }

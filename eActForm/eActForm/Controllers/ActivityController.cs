@@ -64,7 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-                   
+
                     TempData["actForm" + activityId] = activityModel;
                     ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }
@@ -347,6 +347,7 @@ namespace eActForm.Controllers
             {
                 String[] genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
+                string empId = UtilsAppCode.Session.User.empId;
                 if (countresult > 0)
                 {
                     List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
@@ -356,11 +357,11 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                    //waiting update budgetControl
-                                    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
-                                }
+                                //if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
+                                //{
+                                //    //waiting update budgetControl
+                                //    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
+                                //}
 
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
@@ -369,12 +370,17 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                                string empId = UtilsAppCode.Session.User.empId;
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId,""));
+                                
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
                             }
                         }
                     }
+                    else
+                    {
+                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
+                    }
                 }
+
                 ApproveAppCode.setCountWatingApprove(); // เพิ่มให้อัพเดทเอกสารที่ต้องอนุมัติเลย กรณีผู้สร้างเอกสารต้องอนุมัติด้วยหลังจากส่งอนุมัติหนังสือ fream dev date 20200622
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];
@@ -389,7 +395,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile( string gridHtml, string empId, string statusId, string activityId,string approveFrom)
+        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId, string approveFrom)
         {
             var resultAjax = new AjaxResult();
             try
@@ -417,7 +423,8 @@ namespace eActForm.Controllers
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
                     GenPDFAppCode.doGen(gridHtml, activityId, Server);
-                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false,true);
+
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 
                 }
                 resultAjax.Success = true;

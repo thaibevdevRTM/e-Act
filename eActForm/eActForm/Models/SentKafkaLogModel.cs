@@ -16,7 +16,7 @@ namespace eActForm.Models
         public string statusKafka { get; set; }
         public string massage { get; set; }
 
-        public SentKafkaLogModel(string p_empId , string p_activityId, string p_status, string p_type, DateTime? p_createdDate, string p_path, string p_statusKafka, string massage)
+        public SentKafkaLogModel(string p_empId, string p_activityId, string p_status, string p_type, DateTime? p_createdDate, string p_path, string p_statusKafka, string massage)
         {
             this.empId = p_empId;
             this.activityId = p_activityId;

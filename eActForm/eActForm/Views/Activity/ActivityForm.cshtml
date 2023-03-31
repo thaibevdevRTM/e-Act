@@ -695,6 +695,8 @@
     }
 
     function onchangeCustomer() {
+
+        $("#txtReference").val('')
         getFormatCus();
 
     }
@@ -709,7 +711,7 @@
     function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
-
+      
         if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
@@ -730,7 +732,7 @@
             $("#divRadioRef").append('<input type="checkbox" id="chkCJ" name="formatCus" value="CJ" onchange = "onchangeRdbRef(this);">CJ</input>&nbsp;&nbsp;');
         }
         else {
-            document.getElementById("txtReference").readOnly = false;
+            document.getElementById("txtReference").readOnly = true;
         }
 
         var cus = ["Hyper", "Market", "Mini", "Depot", "Donjai", "Express", "Talad","GoFresh","TD","CJ"];
