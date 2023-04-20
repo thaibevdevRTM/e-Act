@@ -26,9 +26,6 @@ namespace eActForm.Controllers
         public JsonResult doApprove(string gridHtml, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
-
-            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-
             string empId = UtilsAppCode.Session.User.empId;
 
             ApproveAppCode.setCountWatingApprove();

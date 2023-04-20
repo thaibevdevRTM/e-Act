@@ -357,12 +357,6 @@ namespace eActForm.Controllers
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
-                                //if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(model.FirstOrDefault().master_type_form_id))
-                                //{
-                                //    //waiting update budgetControl
-                                //    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(activityId);
-                                //}
-
                                 // case form benefit will auto approve
                                 if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
                                 {
@@ -370,8 +364,14 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                                
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
+                                if (ConfigurationManager.AppSettings["formPaymentVoucherTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
+                                {
+                                    doGenFile(GridHtml1, empId, "2", activityId, "");
+                                }
+                                else
+                                {
+                                    HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
+                                }
                             }
                         }
                     }

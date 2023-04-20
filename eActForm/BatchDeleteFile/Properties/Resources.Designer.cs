@@ -70,7 +70,7 @@ namespace BatchDeleteFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E:\root\eActDev\Uploadfiles\{0}.
+        ///   Looks up a localized string similar to E:\root\eActUAT\Uploadfiles\{0}.
         /// </summary>
         public static string rootUploadfiles {
             get {

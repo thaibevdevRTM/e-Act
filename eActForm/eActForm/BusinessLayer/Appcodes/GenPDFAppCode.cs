@@ -14,17 +14,38 @@ namespace eActForm.BusinessLayer
     {
         public static void doGen(string gridHtml, string activityId, HttpServerUtilityBase server)
         {
-            string log = "";
+            string log = "", htmlHeader="";
             try
             {
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, "");
+
 
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 gridHtml = gridHtml.Replace("undefined", "");
-
-
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 log = "rootPathInsert >>" + rootPathInsert;
-                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), HostingEnvironment.MapPath(rootPathInsert), HostingEnvironment.MapPath("~"));
+
+
+
+                if (activity_TBMMKT_Model != null)
+                {
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                    {
+
+                        htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null);
+                        htmlHeader += " <table style=\"width: 100%;\" id=\"tabel_report\" class=\"formBorderStyle2\"><tr><td>";
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPv", activity_TBMMKT_Model);
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPvDetails", activity_TBMMKT_Model);
+                        htmlHeader += "</td></tr></table>";
+
+                    }
+                }
+
+
+                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 30, 30), HostingEnvironment.MapPath(rootPathInsert), HostingEnvironment.MapPath("~"), htmlHeader);
+                
 
 
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels
@@ -47,9 +68,9 @@ namespace eActForm.BusinessLayer
                 var rootPathOutput = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 log += "rootPathOutput >>" + rootPathOutput;
 
-                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
-                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    && activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     log += "call mergePDF";
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);

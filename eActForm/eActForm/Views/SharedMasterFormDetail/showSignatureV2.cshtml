@@ -4,24 +4,7 @@
     Layout = null;
 }
 
-<div style="height:5px;" id="tbSigPage"></div>
-
-@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-    || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-{
-    <div id="divAddSubject" style="width: 100%; align-content: center; text-align: center;padding:5px;" class="fontRedV1">
-        @Html.Action("headerPv", "PartialPaymentVoucher", new { activity_TBMMKT_Model = Model })
-        @Html.Action("headerPvDetails", "PartialPaymentVoucher", new { activity_TBMMKT_Model = Model })
-
-        <table class="boxTableFormMainV1 fontDocV1">
-            <tr>
-                <td style="width:300px;" class="boxTableFormV1"> </td>
-            </tr>
-        </table>
-    </div>
-    <br />
-}
-
+<br />
 <div style="width: 100%;text-align: left;">
     <div style="margin-bottom: 10px;">
         @if (Model.activityFormModel != null)
@@ -30,42 +13,3 @@
         }
     </div>
 </div>
-
-@*<div id="writeHeight"></div>*@
-<script>
-    $(function () {
-        @if (Model.list_ObjGetDataLayoutDoc != null)
-        {
-            if (Model.list_ObjGetDataLayoutDoc.Count > 0)
-            {
-            @*var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;*@
-            @*var rowCount = parseInt($('table#tbRowCountCheck tr:last').index() + 1);;*@
-            @:var itBreak = false;
-
-                foreach (var data in Model.list_ObjGetDataLayoutDoc)
-                {
-
-
-                @:if ('@data.activityId' == '@Model.activityFormTBMMKT.id' ) {
-                    @:$("#tbSigPage").attr("style", "page-break-after:always");
-                    @:itBreak = true;
-                @:}
-
-
-                }
-            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString());*@
-            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString()+ ",ShowDocName: " + "@countLine.ToString()");*@
-                }
-                else
-                {
-                       @:$("#divAddSubject").remove();
-                }
-            }
-            else
-            {
-             @:$("#divAddSubject").remove();
-            }
-
-
-    });
-</script>
