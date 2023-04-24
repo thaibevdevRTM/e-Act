@@ -522,7 +522,7 @@
                             </tr>
                             <tr>
                                 <td class="paddingRowTableV2N txtRight fontBlueV1">
-                                    @{ 
+                                    @{
                                         decimal? getTotal = Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value + sumVat;
                                     }
                                     @getTotal.Value.ToString("#,##0.00")&nbsp;&nbsp;
@@ -611,3 +611,7 @@
     </tr>
 </table>
 
+@if (Model.listGetDataDetailPaymentAll.Count >= 10)
+{
+    <div style="page-break-after: always;"></div>
+}
