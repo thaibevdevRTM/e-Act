@@ -366,6 +366,7 @@ namespace eActForm.Controllers
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                                 if (ConfigurationManager.AppSettings["formPaymentVoucherTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
                                 {
+                                    //ใบสั่งจ่ายต้อง เอา QueueBackgroundWorkItem ออก เพราะติด Error HttpContext >> RenderViewToString 
                                     doGenFile(GridHtml1, empId, "2", activityId, "");
                                 }
                                 else
