@@ -153,7 +153,7 @@ namespace eActForm.Controllers
             }
             if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
-                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                model.actLists = model.actLists.Where(r => r.activityNo.Contains(Request.Form["txtActivityNo"])).ToList();
             }
 
             if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]))

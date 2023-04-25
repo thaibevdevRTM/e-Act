@@ -204,29 +204,10 @@ namespace eActForm.BusinessLayer
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
-                    int pages = 0;
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-
-                    try
-                    {
-                        pages = AppCode.get_pageCount(HostingEnvironment.MapPath(rootPathInsert));
-                    }
-                    catch (Exception ex)
-                    {
-                        pages = 0;
-                    }
-                    
-
                     ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
                     objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
                     objGetDataLayoutDoc.activityId = activityId;
-                    objGetDataLayoutDoc.valuesUse = Convert.ToString(pages - 1);
-
-                    if (pages > 1)
-                    {
-                        activity_TBMMKT_Model.list_ObjGetDataLayoutDoc.Add(objGetDataLayoutDoc);
-                    }
-                    // activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
+                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
                             activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])

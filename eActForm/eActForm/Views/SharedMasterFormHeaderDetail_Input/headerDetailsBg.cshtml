@@ -209,12 +209,20 @@
         if (element.id === 'activityFormTBMMKT_isTemp') {
             if (element.checked) {
                 document.getElementById("cbFromPaper").checked = false;
+
+                document.getElementById("divShowBudget").innerHTML = "";
+                $("#getQuery").html("");
+            }
+            else {
+                getBudgetTotal();
             }
         }
         else {
             if (element.checked) {
+                getBudgetTotal();
                 document.getElementById("activityFormTBMMKT_isTemp").checked = false;
             }
+
         }
     }
 
