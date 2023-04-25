@@ -121,12 +121,12 @@
     <value>{0}\logs\logs_{1}.txt</value>
   </data>
   <data name="rootUploadfiles" xml:space="preserve">
-    <value>E:\root\eActUAT\Uploadfiles\{0}</value>
+    <value>E:\root\eAct\Uploadfiles\{0}</value>
   </data>
   <data name="rootUploadfiles_Dev" xml:space="preserve">
     <value>D:\Github\e-Act\eActForm\eActForm\Uploadfiles\{0}</value>
   </data>
   <data name="strCon" xml:space="preserve">
-    <value>Data Source=10.5.56.33; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;</value>
+    <value>Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;</value>
   </data>
 </root>
