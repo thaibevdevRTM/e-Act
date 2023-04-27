@@ -350,8 +350,11 @@ namespace eActForm.Controllers
                 string empId = UtilsAppCode.Session.User.empId;
                 if (countresult > 0)
                 {
-                    List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
-                    if (model.FirstOrDefault().statusId != 3)
+                    //List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
+                    Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                    activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, empId);
+
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.statusId != 3)
                     {
                         if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                         {
@@ -364,21 +367,15 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                                if (ConfigurationManager.AppSettings["formPaymentVoucherTbmId"].Equals(model.FirstOrDefault().master_type_form_id))
-                                {
-                                    //ใบสั่งจ่ายต้อง เอา QueueBackgroundWorkItem ออก เพราะติด Error HttpContext >> RenderViewToString 
-                                    doGenFile(GridHtml1, empId, "2", activityId, "");
-                                }
-                                else
-                                {
-                                    HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
-                                }
+                                
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, "", activity_TBMMKT_Model));
+                                
                             }
                         }
                     }
                     else
                     {
-                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, ""));
+                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, "", activity_TBMMKT_Model));
                     }
                 }
 
@@ -396,7 +393,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId, string approveFrom)
+        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId, string approveFrom, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var resultAjax = new AjaxResult();
             try
@@ -423,8 +420,8 @@ namespace eActForm.Controllers
                     {
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
-                    GenPDFAppCode.doGen(gridHtml, activityId, Server);
-
+                    
+                    GenPDFAppCode.doGen(gridHtml, GenPDFAppCode.getHeader(activity_TBMMKT_Model), activityId, Server, activity_TBMMKT_Model);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 
                 }

@@ -82,6 +82,10 @@
                 .pvNoWidth {
                     width: 11%;
                 }
+
+                .pagebreak {
+                    page-break-after: always;
+                }
             </style>
             <table class="borderWidthMaxCollape" cellpadding="-4" cellspacing="-4">
                 <tr>
@@ -117,6 +121,7 @@
                     var filterDataHistoryPayArray = filterDataHistoryPay.ToArray();
                     var havefilterDataHistoryPayArray = filterDataHistoryPay.Count;
                     var NoNeedRow = 0;
+                    string strClass = "";
 
                 }
                 @foreach (var item in Model.listGetDataDetailPaymentAll)
@@ -247,7 +252,15 @@
                     }
                     else
                     {
-                        <tr>
+                        //if (index == 10)
+                        //{
+                        //    strClass = "pagebreak";
+                        //}
+                        //else
+                        //{
+                        //    strClass = "";
+                        //}
+                        <tr class="@strClass">
                             @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
                             {
                                 <td class="dCol1 tdTopLeft">
@@ -611,7 +624,3 @@
     </tr>
 </table>
 
-@if (Model.listGetDataDetailPaymentAll.Count >= 10)
-{
-    <div style="page-break-after: always;"></div>
-}

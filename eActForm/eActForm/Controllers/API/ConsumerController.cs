@@ -39,6 +39,7 @@ namespace eActForm.Controllers.API
         {
             ConsumerApproverBevAPI response = null;
             ConsumerMassage consumerMassage = new ConsumerMassage();
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
             {
                
@@ -63,7 +64,7 @@ namespace eActForm.Controllers.API
                     if (ApproveAppCode.updateApprove(response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.message, null, response.data.approver) > 0)
                     {
                         string padding = "", classFont = "";
-                        Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                        
                         ApproveModel.approveModels approveModels = new ApproveModel.approveModels();
                         activity_TBMMKT_Model = ReportAppCode.mainReport(response.data.refId, response.data.approver);
 
@@ -159,10 +160,8 @@ namespace eActForm.Controllers.API
                         //outputHtml += "</div>";
                         outputHtml += "</div>";
 
- 
-                      
 
-                        HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
+                        HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer", activity_TBMMKT_Model));
                     }
 
                 }
@@ -175,7 +174,7 @@ namespace eActForm.Controllers.API
 
                 if (response != null)
                 {
-                    HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile("<div>Please regen pdf</div>", response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
+                    HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile("<div>Please regen pdf</div>", response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer", activity_TBMMKT_Model));
                 }
                 else
                 {

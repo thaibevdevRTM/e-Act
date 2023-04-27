@@ -1,10 +1,12 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
-@{ 
+@{
     Layout = null;
 }
 
-<br />
+<div style="height:5px;" id="tbSigPage"></div>
+
+
 <div style="width: 100%;text-align: left;">
     <div style="margin-bottom: 10px;">
         @if (Model.activityFormModel != null)
@@ -13,3 +15,43 @@
         }
     </div>
 </div>
+
+
+@*<div id="writeHeight"></div>*@
+<script>
+    $(function () {
+        @if (Model.list_ObjGetDataLayoutDoc != null)
+        {
+            if (Model.list_ObjGetDataLayoutDoc.Count > 0)
+            {
+            @*var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;*@
+            @*var rowCount = parseInt($('table#tbRowCountCheck tr:last').index() + 1);;*@
+            @:var itBreak = false;
+
+                foreach (var data in Model.list_ObjGetDataLayoutDoc)
+                {
+
+
+                @:if ('@data.activityId' == '@Model.activityFormTBMMKT.id' ) {
+                    @:$("#tbSigPage").attr("style", "page-break-after:always");
+                    @:itBreak = true;
+                @:}
+
+
+                }
+            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString());*@
+            @*@:$("#writeHeight").html("RowCount: "+ rowCount.toString()+ ",ShowDocName: " + "@countLine.ToString()");*@
+                }
+                else
+                {
+                       @:$("#divAddSubject").remove();
+                }
+            }
+            else
+            {
+             @:$("#divAddSubject").remove();
+            }
+
+
+    });
+</script>
