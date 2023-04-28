@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
+using iTextSharp.awt.geom;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
@@ -18,6 +19,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
+using System.Web.Services.Description;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -255,6 +257,7 @@ namespace eActForm.Models
                 sw.Flush();
                 sw.Close();
 
+
                 string path = serverMapPath + "\\Content\\" + "tablethin.css";
                 string readText = File.ReadAllText(path);
 
@@ -362,6 +365,26 @@ namespace eActForm.Models
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc, serverMapPath);
             PreviewBytes = msPreview.ToArray();
+
+            //using (MemoryStream stream = new MemoryStream())
+            //{
+            //    PdfReader reader = new PdfReader(PreviewBytes);
+            //    using (PdfStamper stamper = new PdfStamper(reader, stream))
+            //    {
+            //        int pages = reader.NumberOfPages;
+            //        for (int i = 1; i <= pages; i++)
+            //        {
+            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase("eact", GetTHSarabun()), 90f, 15f, 0);
+            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(i.ToString() + " - " + pages, GetTHSarabun()), 310f, 15f, 0);
+            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), GetTHSarabun()), 570f, 15f, 0);
+            //        }
+            //    }
+            //    PreviewBytes = stream.ToArray();
+            //}
+
+
+
+
             //msPreview.Position = 0;
             //save in directory
             if (rootPath != "")
@@ -408,7 +431,7 @@ namespace eActForm.Models
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
-                    int pages = get_pageCcount(pathFile[f]);
+                    int pages = get_pageCount(pathFile[f]);
                     reader = new PdfReader(System.IO.File.ReadAllBytes(pathFile[f]));
                     reader.ConsolidateNamedDestinations();
 
@@ -456,7 +479,7 @@ namespace eActForm.Models
             return result;
         }
 
-        private static int get_pageCcount(string file)
+        public static int get_pageCount(string file)
         {
             //var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             //using (StreamReader sr = new StreamReader(fs))
@@ -645,6 +668,18 @@ namespace eActForm.Models
             {
                 return result = false;
             }
+        }
+
+        public static iTextSharp.text.Font GetTHSarabun()
+        {
+            var fontName = "THSarabun";
+            if (!FontFactory.IsRegistered(fontName))
+            {
+
+                var fontPath = HostingEnvironment.MapPath("~/Content/fonts/THSarabun_0.ttf");
+                FontFactory.Register(fontPath, fontName);
+            }
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         }
     }
 }

@@ -89,6 +89,7 @@ namespace eActForm.Models
             public string channelId { get; set; }
             public string groupId { get; set; }
             public string actRef { get; set; }
+            public string payment { get; set; }
 
         }
 

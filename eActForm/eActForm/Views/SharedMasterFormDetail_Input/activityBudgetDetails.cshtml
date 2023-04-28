@@ -270,7 +270,11 @@
        // $("#divHeaderDetailsCost :input").prop("disabled", false);
 
         if ("@Model.activityFormTBMMKT.id" != '') {
-            getBudgetTotal();
+
+            if ('@Model.activityFormTBMMKT.isTemp' != 'True') {
+                getBudgetTotal();
+            }
+           
         }
 
 
@@ -297,7 +301,7 @@
                         message: 'IO นี้ถูกใช้งานแล้ว!',
                         size: 'small'
                     });
-                   
+
                 }
             }
         });
@@ -305,50 +309,54 @@
 
     function getBudgetTotal(row) {
 
-        var getEOBudget = [];
-        $('#tableDetailsBG tr').each(function (row, tr) {
+        if ($("input[name='activityFormTBMMKT.isTemp']:checked").val() == 'true') {
+        }
+        else { 
+            var getEOBudget = [];
+            $('#tableDetailsBG tr').each(function (row, tr) {
 
-            getEOBudget.push({
-                EO: $(".clstxtEO_" + row).val(),
-                IO: $(".clstxtIO_" + row).val(),
-                total: $(".txttotal_" + row).val(),
-                activityTypeId: $(".clsActType_" + row).val(),
-                UseYearSelect: $(".clstxtYearSelect_" + row).val(),
+                getEOBudget.push({
+                    EO: $(".clstxtEO_" + row).val(),
+                    IO: $(".clstxtIO_" + row).val(),
+                    total: $(".txttotal_" + row).val(),
+                    activityTypeId: $(".clsActType_" + row).val(),
+                    UseYearSelect: $(".clstxtYearSelect_" + row).val(),
+
+                });
 
             });
 
-        });
+            $.ajax({
+                url: '@Url.Action("getBudgetByEO", "SharedMasterFormDetail_Input")',
+                data: {
 
-        $.ajax({
-            url: '@Url.Action("getBudgetByEO", "SharedMasterFormDetail_Input")',
-            data: {
+                    listEO: JSON.stringify(getEOBudget),
+                    companyId: "@Model.activityFormTBMMKT.formCompanyId",
+                    subjectId: document.getElementById("ddlSubject").value,
+                    channelId: document.getElementById("ddlChannel").value,
+                    brandId: document.getElementById("ddlBrand").value,
+                    activityId: "@Model.activityFormModel.id",
+                    status: "@Model.activityFormTBMMKT.statusId",
 
-                listEO: JSON.stringify(getEOBudget),
-                companyId: "@Model.activityFormTBMMKT.formCompanyId",
-                subjectId: document.getElementById("ddlSubject").value,
-                channelId: document.getElementById("ddlChannel").value,
-                brandId: document.getElementById("ddlBrand").value,
-                activityId: "@Model.activityFormModel.id",
-                status: "@Model.activityFormTBMMKT.statusId",
+                },
+                dataType: "json",
+                type: 'POST'
+            }).done(function (response) {
 
-            },
-            dataType: "json",
-            type: 'POST'
-        }).done(function (response) {
+                if (response.Success == true) {
 
-            if (response.Success == true) {
+                    var rowCount = parseInt($('#tableDetailsBG tr').length - 2);
+                    for (i = 0; i < rowCount; i++) {
 
-                var rowCount = parseInt($('#tableDetailsBG tr').length-2);
-                for (i = 0; i < rowCount; i++) {
+                        $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
 
-                    $(".txtTypetheme__" + i).val(response.Data.activityTypeId);
+                    }
+                    document.getElementById("divShowBudget").innerHTML = "";
+                    callPartialBudgetControl("@Model.activityFormModel.id");
 
                 }
-                document.getElementById("divShowBudget").innerHTML = "";
-                callPartialBudgetControl("@Model.activityFormModel.id");
-
-            }
-        });
+            });
+        }
     }
 
     function callPartialBudgetControl(actId) {

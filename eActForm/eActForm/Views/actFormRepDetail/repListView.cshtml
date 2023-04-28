@@ -37,11 +37,12 @@
                                 </tr>
                             </table>
 
-                            <table id="datatable" border="0" style="text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
+                            <table id="datatable" border="0" style="background-color: #ffffff; text-align: center; font-family: Angsana New; font-size: 10pt; " class="table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                     <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
                                         <th rowspan="3">ลำดับที่</th>
                                         <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
+                                        <th rowspan="3" style="text-align:center;">ปันส่วน</th>
                                         <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
                                         <th rowspan="3" style="text-align:center;">reference</th>
                                         <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
@@ -80,7 +81,7 @@
                                 </thead>
                                 <tbody>
                                     @{ var index = 1; string strActNo = "",strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
-                                    @foreach (var item in Model.actFormRepDetailGroupLists)
+                                    @foreach (var item in Model.actFormRepDetailLists)
                                     {
                                         if ((item.delFlag == false && item.typeTheme != "" && item.total > 0) || (item.delFlag == false && item.activityDetail != ""))
                                         {
@@ -96,11 +97,13 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td></td>
                                                 }
                                                 else
                                                 {
                                                     <td>@index</td>
                                                     <td>@item.activityNo</td>
+                                                    <td>@item.payment</td>
                                                     <td>@item.cusNameTH</td>
                                                     <td>@item.reference</td>
                                                     if (item.activityPeriodSt != null)
@@ -175,7 +178,7 @@
                                     }
 
                                     <tr>
-                                        <td colspan="14" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
+                                        <td colspan="15" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
                                         <td></td>
                                         <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
                                         <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
