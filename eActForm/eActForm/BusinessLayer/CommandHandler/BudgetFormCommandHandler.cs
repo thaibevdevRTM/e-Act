@@ -19,7 +19,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetActivityInvoice"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceUpdate"
                     , new SqlParameter[] {new SqlParameter("@id", model.invoiceId)
                     ,new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@activityNo",model.activityNo)
@@ -41,7 +41,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> usp_updateBudgetActivityInvoice");
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceUpdate");
             }
 
             return result;
@@ -56,7 +56,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetActivityInvoice"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceInsert"
                     , new SqlParameter[] {new SqlParameter("@id", Guid.NewGuid().ToString())
                     ,new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@activityNo",model.activityNo)
@@ -77,7 +77,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> usp_insertBudgetActivityInvoice");
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceInsert");
             }
 
             return result;
@@ -92,7 +92,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetActivityInvoice"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceDelete"
                     , new SqlParameter[] {new SqlParameter("@activityId",activityId)
                     ,new SqlParameter("@activityOfEstimateId",estimateId)
                     ,new SqlParameter("@invoiceId",invoiceId)
@@ -101,7 +101,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> usp_deleteBudgetActivityInvoice");
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceDelete");
             }
 
             return result;
@@ -115,7 +115,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetApproveByActNo"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDelete"
                     , new SqlParameter[] {new SqlParameter("@activityNo",activityNo)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });

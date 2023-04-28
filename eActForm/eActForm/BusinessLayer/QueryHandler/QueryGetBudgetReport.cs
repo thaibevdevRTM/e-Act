@@ -15,7 +15,7 @@ namespace eActForm.BusinessLayer.QueryHandler
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetReportActivity"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportBudgetActivity"
                  , new SqlParameter("@act_StatusId", act_StatusId)
                  , new SqlParameter("@act_activityNo", act_activityNo)
                  , new SqlParameter("@companyEN", companyEN)

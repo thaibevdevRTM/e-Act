@@ -1084,7 +1084,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveNextLevel"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveNextLevelSelect"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
@@ -1102,7 +1102,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getEmailNextLevel >> " + ex.Message);
+                throw new Exception("getEmailApproveNextLevelBudget >> " + ex.Message);
             }
         }
 

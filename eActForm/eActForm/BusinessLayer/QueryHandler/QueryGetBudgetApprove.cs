@@ -16,7 +16,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveBudgetByEmpId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveList"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Budget_Approve_Detail_Model.budgetForm()
@@ -85,7 +85,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveDetailByBudgetId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDetailList"
                  , new SqlParameter("@budgetApproveId", budgetApproveId));
 
                 var result = (from DataRow d in ds.Tables[0].Rows
@@ -107,7 +107,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceHistory"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceHistoryList"
                  , new SqlParameter("@activityId", activityId)
                  , new SqlParameter("@budgetApproveId", budgetApproveId)
                  );
@@ -163,7 +163,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getBudgetActivityApprove => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetInvoiceHistory => " + ex.Message);
                 return new List<Budget_Activity_Model.Budget_Invoice_history_Att>();
             }
         }

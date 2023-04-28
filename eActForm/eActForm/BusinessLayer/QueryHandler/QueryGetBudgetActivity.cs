@@ -39,7 +39,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityStstus");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityStatusList");
 
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new Budget_Activity_Model.Budget_Activity_Status_Att()
@@ -62,7 +62,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 //act_budgetStatusIdIn =null;
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivitySelect"
                  , new SqlParameter("@act_approveStatusId", act_approveStatusId)
                  , new SqlParameter("@act_activityId", act_activityId)
                  , new SqlParameter("@act_activityNo", act_activityNo)
@@ -144,7 +144,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityList"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityList"
                  , new SqlParameter("@act_approveStatusId", act_approveStatusId)
                  , new SqlParameter("@act_activityId", act_activityId)
                  , new SqlParameter("@act_activityNo", act_activityNo)
@@ -232,7 +232,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityProduct"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityProductSelect"
                  , new SqlParameter("@activityID", act_activityID)
                  , new SqlParameter("@productID", null)
                  , new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
@@ -263,7 +263,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetActivityProduct => " + ex.Message);
                 return new List<Budget_Activity_Model.Budget_Activity_Product_Att>();
             }
         }
@@ -272,7 +272,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityInvoice"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceSelect"
                  , new SqlParameter("@activityID", activityId)
                  , new SqlParameter("@activityOfEstimateID", activityOfEstimateId)
                  , new SqlParameter("@invoiceID", invoiceId)
@@ -327,7 +327,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("usp_getBudgetActivityInvoice => " + ex.Message);
+                ExceptionManager.WriteError("usp_mtm_BudgetActivityInvoiceSelect => " + ex.Message);
                 return new List<Budget_Activity_Model.Budget_Activity_Invoice_Att>();
             }
         }
@@ -336,7 +336,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByActivityId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfAct"
                  , new SqlParameter("@activityId", act_activityId)
                  //, new SqlParameter("@productID", prd_productID)
                  //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
@@ -362,7 +362,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveLastId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveLastIdSelect"
                  , new SqlParameter("@activityId", act_activityId)
                  //, new SqlParameter("@productID", prd_productID)
                  //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
@@ -387,7 +387,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetReportClaimPDG"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportBudgetActivityClaimPDG"
                  , new SqlParameter("@companyEn", act_companyEn)
                  , new SqlParameter("@activityNo", act_activityNo)
                  , new SqlParameter("@createdEmpId", act_createdEmpId)

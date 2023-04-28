@@ -76,7 +76,7 @@ namespace eActForm.Controllers
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportPostEva_Customer"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportPostEvaCustomerList"
                      , new SqlParameter[]
                      {
                          new SqlParameter("@company_id", @UtilsAppCode.Session.User.empCompanyId),
@@ -137,7 +137,7 @@ namespace eActForm.Controllers
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportPostEvaActivityGroup");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportPostEvaActivityGroup");
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ActivityGroup_Model()
                              {
@@ -267,7 +267,7 @@ namespace eActForm.Controllers
             try
             {
                 RepPostEvaModels model = new RepPostEvaModels();
-                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getReportPostEva"
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_mtm_ReportPostEvaDetail"
                     , new SqlParameter[] {new SqlParameter("@startDate",startDate)
                     , new SqlParameter("@endDate",endDate)
                     , new SqlParameter("@customerId",customerId)
@@ -344,7 +344,7 @@ namespace eActForm.Controllers
             try
             {
                 RepPostEvaGroupBudgetStatusModels model = new RepPostEvaGroupBudgetStatusModels();
-                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getReportPostEvaBudgetStatusSummary"
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_mtm_ReportPostEvaBudgetStatusSummary"
                     , new SqlParameter[] {new SqlParameter("@startDate",startDate)
                     , new SqlParameter("@endDate",endDate)
                     , new SqlParameter("@customerId",customerId)

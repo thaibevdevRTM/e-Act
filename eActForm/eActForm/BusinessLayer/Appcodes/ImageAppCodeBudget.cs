@@ -17,7 +17,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceByApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceList"
                     , new SqlParameter("@budgetApproveId", budgetApproveId)
                     //, new SqlParameter("@activityNo", activityNo)
                     //, new SqlParameter("@createdByUserId", createdByUserId)
@@ -43,7 +43,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getinvoice getBudgetInoiveByApproveId => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetInvoiceByApproveId => " + ex.Message);
                 return new List<TB_Bud_Image_Model.BudImageModel>();
             }
         }
@@ -160,7 +160,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoice"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetInvoiceList"
                     , new SqlParameter("@imageId", imageId)
                     , new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
                     , new SqlParameter("@budgetApproveId", budgetApproveId)
@@ -208,7 +208,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImage budget => " + ex.Message);
+                ExceptionManager.WriteError("getBudgetInvoice => " + ex.Message);
                 return new List<TB_Bud_Image_Model.BudImageModel>();
             }
         }
@@ -218,7 +218,7 @@ namespace eActForm.BusinessLayer
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetImage"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetInvoiceInsert"
                     , new SqlParameter[] {new SqlParameter("@imageType",model.imageType)
                     ,new SqlParameter("@image",model._image)
                     ,new SqlParameter("@fileName",model._fileName)
@@ -235,7 +235,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertImageBudget");
+                ExceptionManager.WriteError(ex.Message + ">> insertBudgetInvoice");
             }
 
             return result;
@@ -246,7 +246,7 @@ namespace eActForm.BusinessLayer
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetImage"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetInvoiceUpdate"
                     , new SqlParameter[] {new SqlParameter("@id",model.id)
                     ,new SqlParameter("@invoiceNo",model.invoiceNo)
                     ,new SqlParameter("@customerId",model.customerId)
@@ -257,7 +257,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertImageBudget");
+                ExceptionManager.WriteError(ex.Message + ">> updateImageBudget");
             }
 
             return result;
@@ -269,14 +269,14 @@ namespace eActForm.BusinessLayer
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetImagebyId"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetInvoiceDelete"
                     , new SqlParameter[] {new SqlParameter("@Id",fileId)
                     ,new SqlParameter("@updatedByUserId",empId)
                     });
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> deleteImageBudget");
+                ExceptionManager.WriteError(ex.Message + ">> deleteImageBudgetById");
             }
 
             return result;

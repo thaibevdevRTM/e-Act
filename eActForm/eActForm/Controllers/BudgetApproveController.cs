@@ -123,7 +123,7 @@ namespace eActForm.Controllers //update 21-04-2020
             try
             {
                 Budget_Approve_Detail_Model models = new Budget_Approve_Detail_Model();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActIdByApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivitySearchId"
                     , new SqlParameter[] {
                         new SqlParameter("@budget_approve_id",budget_approve_Id)
                     });
@@ -145,7 +145,7 @@ namespace eActForm.Controllers //update 21-04-2020
             try
             {
                 Budget_Approve_Detail_Model models = new Budget_Approve_Detail_Model();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveIdSelect"
                     , new SqlParameter[] {
                         new SqlParameter("@budgetActivityId",budgetActivityId)
                     });
@@ -166,7 +166,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateBudgetForm"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCreateUserSelect"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel("")
@@ -194,7 +194,7 @@ namespace eActForm.Controllers //update 21-04-2020
             try
             {
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveDetailByBudgetId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDetailList"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
                 models.approveDetailLists = (from DataRow dr in ds.Tables[0].Rows
                                              select new ApproveModel.approveDetailModel("")
@@ -222,7 +222,7 @@ namespace eActForm.Controllers //update 21-04-2020
 
                 if (models.approveDetailLists.Count > 0)
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveByBudgetApproveId"
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDetailSelect"
                    , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
 
                     var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); //
@@ -259,7 +259,7 @@ namespace eActForm.Controllers //update 21-04-2020
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowByBudgetActivtyId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetFlowSelect"
                     , new SqlParameter[] {
                           new SqlParameter("@subId",subId)
                         , new SqlParameter("@budgetActivityId",budgetActivityId)
@@ -289,7 +289,7 @@ namespace eActForm.Controllers //update 21-04-2020
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowByBudgetActivtyIdOMT"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetFlowSelectOMT"
                     , new SqlParameter[] {
                           new SqlParameter("@subId",subId)
                         , new SqlParameter("@budgetActivityId",budgetActivityId)
@@ -309,7 +309,7 @@ namespace eActForm.Controllers //update 21-04-2020
             }
             catch (Exception ex)
             {
-                throw new Exception("getFlow Budget By BudgetActivityId >>" + ex.Message);
+                throw new Exception("getFlow Budget By OMT >>" + ex.Message);
             }
         }
 
@@ -319,7 +319,7 @@ namespace eActForm.Controllers //update 21-04-2020
             {
 
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetApproveId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetFlowIdSelect"
                     , new SqlParameter[] {
                         new SqlParameter("@budgetApproveId",budget_approve_id)
                     });
@@ -346,7 +346,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowDetailByFlowId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetFlowDetailSelect"
                     , new SqlParameter[] {
                         new SqlParameter("@flowId", flowId)
                         ,new SqlParameter("@budgetActivityId", budgetActivityId)
@@ -483,7 +483,7 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 int rtn = 0;
 
-                SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetApproveDetail"
+                SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInsert"
                 , new SqlParameter[]
                 {
                  new SqlParameter("@budgetActivityId", budgetActivityId)
@@ -592,7 +592,7 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 // update approve detail
                 var var_budget_approve_id = actFormId;
-                int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetApprove"
+                int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveUpdate"
                    , new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
                     , new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@statusId",statusId)
@@ -643,7 +643,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
-                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusBudgetFormByApproveReject"
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveIsReject"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
@@ -658,7 +658,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
-                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusBudgetFormByApproveDetail"
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveIsSubmit"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
@@ -693,7 +693,7 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 if (UtilsAppCode.Session.User != null)
                 {
-                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByEmpId"
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
                         , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
 
                     UtilsAppCode.Session.User.countWatingBudgetForm = "";

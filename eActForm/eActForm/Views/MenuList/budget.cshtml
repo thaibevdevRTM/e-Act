@@ -6,42 +6,65 @@
     <li>
         <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            @*---------05/04/2023-------*@
+            @if (UtilsAppCode.Session.User.isSuperAdmin)
             {
-                <li>
-                    <a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                        Budget Form
-                    </a>
-                </li>
+                <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Budget Form MT</a></li>
+                <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Manage Invoice MT</a></li>
+
+                <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Budget Form OMT</a></li>
+                <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Manage Invoice OMT</a></li>
+
+            }
+            else
+            {
+                if (UtilsAppCode.Session.User.isAdmin)
+                {
+                    <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Budget Form MT</a></li>
+                    <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Manage Invoice MT</a></li>
+                }
+
+                if (UtilsAppCode.Session.User.isAdminOMT)
+                {
+                    <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Budget Form OMT</a></li>
+                    <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Manage Invoice OMT</a></li>
+                }
+
+                if (UtilsAppCode.Session.User.isCreator)
+                {
+                    if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                    {
+                        <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Manage Invoice MT</a></li>
+                    }
+                    if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                    {
+                        <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Manage Invoice OMT</a></li>
+                    }
+                }
             }
 
-            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                        Manage Invoice
-                    </a>
-                </li>
-            }
 
-            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                        Budget Form OMT
-                    </a>
-                </li>
-            }
+            @*---------05/04/2023-------*@
 
-            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                        Manage Invoice OMT
-                    </a>
-                </li>
-            }
+            @*@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Budget Form MT</a></li>
+        }
+
+        @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">Manage Invoice MT</a></li>
+        }
+
+        @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            <li><a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Budget Form OMT</a></li>
+        }
+
+        @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            <li><a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">Manage Invoice OMT</a></li>
+        }*@
         </ul>
     </li>
 }
