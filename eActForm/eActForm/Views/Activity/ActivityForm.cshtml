@@ -475,7 +475,12 @@
         <div class="container">
             <div class="row">
 
-
+                @if (Model.activityFormModel.statusId == 3)
+                {
+                    <div style="display: inline-block">
+                        <button id="btnSaveAs" type="button" class="btn" onclick="copyAndSaveNew('BudgetForm')">&nbsp;Add Budget</button>
+                    </div>
+                }
                 @if (mode != "")
                 {
                     <div style="display: inline-block" id="divSaveAs">
@@ -1174,7 +1179,12 @@
             });
     }
 
-    function copyAndSaveNew() {
+
+
+
+
+
+    function copyAndSaveNew(typeFormId) {
 
         var cusId = '';
         if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
@@ -1246,6 +1256,7 @@
                             actClaim: $("#txtActClaim").val(),
                             subActivity: $("#ddlSubActivity").val(),
                             piorityDoc: $("#ddlPiority").val(),
+                            master_type_form_id: typeFormId,
                         },
                         dataType: "json",
                         type: 'POST',

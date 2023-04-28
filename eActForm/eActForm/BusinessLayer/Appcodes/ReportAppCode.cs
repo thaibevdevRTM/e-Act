@@ -113,6 +113,7 @@ namespace eActForm.BusinessLayer
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                 {
+                    #region BG
                     try
                     {
                         List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
@@ -190,6 +191,7 @@ namespace eActForm.BusinessLayer
                     {
                         ExceptionManager.WriteError("showDetailBudgetRpt => " + ex.Message);
                     }
+                    #endregion
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                 {
@@ -198,11 +200,7 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
                 }
-
-
-                //=====layout doc=============
-               
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
                             activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                 {
                     List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
@@ -217,6 +215,7 @@ namespace eActForm.BusinessLayer
 
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
                     {
+                        #region expensesTrvDetailRpt
                         ApproveModel.approveModels models = new ApproveModel.approveModels();
                         models = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
                         //List<approveDetailModel> approveDetailLists = new List<approveDetailModel>();
@@ -261,7 +260,7 @@ namespace eActForm.BusinessLayer
 
 
 
-                        #region expensesTrvDetailRpt
+                        
 
                         CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
                         {
