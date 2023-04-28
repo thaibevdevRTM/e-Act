@@ -15,7 +15,7 @@
                 <li>@Html.ActionLink("TBM Import Report SAP Budget", "Inddex_ImportBGMarketing", "ImportBudgetControl", new { }, null)</li>
             }
 
-            @if (UtilsAppCode.Session.User.isAdminCVM || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM)
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminCVM || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isAdminNUM)
             {
 
                 <li>@Html.ActionLink("Import Hospital", "Index", "ImportMasterHospital", new { }, null)</li>

@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Org.BouncyCastle.Asn1.Ocsp;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -32,7 +34,11 @@ namespace eActForm.BusinessLayer
                 {
                     stored = "usp_GetActivityRepDetailSetPriceAll";
                 }
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored);
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
+                    , new SqlParameter[] {
+                        new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate.AddDays(1))
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
                              {
@@ -285,6 +291,13 @@ namespace eActForm.BusinessLayer
             return valResult;
         }
 
+
+        public static bool filterActivityForPayment_MT(string activityTxt)
+        {
+            bool result;
+            result = QueryOtherMaster.getOhterMaster("activityMT", "").Where(x => x.val1.Equals(activityTxt)).Any();
+            return result;
+        }
 
 
     }

@@ -49,7 +49,7 @@ namespace eActForm.BusinessLayer
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
+                    && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
                 {
                     log += "call mergePDF";
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
