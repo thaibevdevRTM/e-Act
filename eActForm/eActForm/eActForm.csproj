@@ -3174,7 +3174,7 @@
     <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
     <Content Include="Views\BudgetMyDoc\Index.cshtml" />
     <Content Include="Views\BudgetMyDoc\myDocBudget.cshtml" />
-    <Content Include="Views\BudgetMyDoc\myDocBudgetList.cshtml" />
+    <Content Include="Views\BudgetMyDoc\myDocBudgetEmpApproveList.cshtml" />
     <Content Include="Views\Budget\previewBudgetInvoice.cshtml" />
     <Content Include="Views\BudgetApprove\approvePositionSignatureListsByBudgetApproveId.cshtml" />
     <Content Include="Views\Admin\ProductDetail.cshtml" />

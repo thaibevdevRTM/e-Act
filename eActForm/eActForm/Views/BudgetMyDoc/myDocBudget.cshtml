@@ -15,7 +15,7 @@
       function callApproveList(actId) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("myDocBudgetList", "BudgetMyDoc")',
+            url:  '@Url.Action("myDocBudgetEmpApproveList", "BudgetMyDoc")',
             data: {
                 actId: actId
             }

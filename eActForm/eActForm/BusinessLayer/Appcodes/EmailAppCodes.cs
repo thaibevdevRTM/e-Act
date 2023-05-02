@@ -1131,7 +1131,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(actFormId);
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(actFormId);
                 if (getBudgetImageModel.BudgetInvoiceList.Any())
                 {
                     int i = 1;

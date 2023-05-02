@@ -31,39 +31,6 @@ namespace eActForm.Controllers  //update 21-04-2020
     public class BudgetInvoiceAppCode
     {
 
-        public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetApproveInvoiceList(string budgetApproveId)
-        {
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceList"
-                    , new SqlParameter("@budgetApproveId", budgetApproveId)
-                    );
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
-                             {
-                                 id = d["imageId"].ToString(),
-
-                                 invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
-                                 imageType = d["imageType"].ToString(),
-                                 _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
-                                 _fileName = d["_fileName"].ToString(),
-                                 extension = d["extension"].ToString(),
-                                 remark = d["remark"].ToString(),
-                                 delFlag = bool.Parse(d["delFlag"].ToString()),
-                                 createdDate = DateTime.Parse(d["createdDate"].ToString()),
-                                 createdByUserId = d["createdByUserId"].ToString(),
-                                 updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
-                                 updatedByUserId = d["updatedByUserId"].ToString(),
-                             });
-                return lists.ToList();
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getBudgetInvoiceByApproveId => " + ex.Message);
-                return new List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel>();
-            }
-        }
-
         public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetInvoiceDetail(string imageId, string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId, string company, string customerId, string beginDateyyyymmdd, string endDateyyyymmdd)
         {
             try
@@ -193,6 +160,11 @@ namespace eActForm.Controllers  //update 21-04-2020
     }
 
 
+
+
+
+
+
     public class BudgetApproveListController : Controller
     {
         public ActionResult Index()
@@ -265,21 +237,40 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
             return PartialView(model);
         }
+
+        public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetApproveInvoiceList(string budgetApproveId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceList"
+                    , new SqlParameter("@budgetApproveId", budgetApproveId)
+                    );
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
+                             {
+                                 id = d["imageId"].ToString(),
+
+                                 invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
+                                 imageType = d["imageType"].ToString(),
+                                 _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
+                                 _fileName = d["_fileName"].ToString(),
+                                 extension = d["extension"].ToString(),
+                                 remark = d["remark"].ToString(),
+                                 delFlag = bool.Parse(d["delFlag"].ToString()),
+                                 createdDate = DateTime.Parse(d["createdDate"].ToString()),
+                                 createdByUserId = d["createdByUserId"].ToString(),
+                                 updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+                                 updatedByUserId = d["updatedByUserId"].ToString(),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetInvoiceByApproveId => " + ex.Message);
+                return new List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel>();
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public class BudgetMyDocController : Controller
     {
@@ -289,13 +280,6 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
-        }
-
-        public ActionResult myDocBudgetList(string actId)
-        {
-            var result = new AjaxResult();
-            ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-            return PartialView(models);
         }
 
         public ActionResult searchBudgetForm()
@@ -341,7 +325,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             return RedirectToAction("myDocBudget");
         }
 
-
         public ActionResult myDocBudget()
         {
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
@@ -367,6 +350,13 @@ namespace eActForm.Controllers  //update 21-04-2020
                 }
             }
             return PartialView(model);
+        }
+
+        public ActionResult myDocBudgetEmpApproveList(string actId)
+        {
+            var result = new AjaxResult();
+            ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+            return PartialView(models);
         }
 
         public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, DateTime createdDateStart, DateTime createdDateEnd)
@@ -457,7 +447,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
 
                 TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(budgetApproveId);
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budgetApproveId);
 
                 string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
@@ -878,7 +868,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
 
                 TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(budgetApproveId);
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budgetApproveId);
 
                 string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
@@ -1199,7 +1189,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     BudgetApproveController.updateApproveWaitingByRangNo(budget_approve_id);
 
                     TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                    getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(budget_approve_id);
+                    getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budget_approve_id);
 
 
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
@@ -1279,7 +1269,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
 
                 TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(budget_approve_id);
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budget_approve_id);
 
                 string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
                 pathFile[0] = Server.MapPath(rootPathInsert);
