@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using System.Globalization;
 
 namespace eActForm.BusinessLayer
 {
@@ -463,7 +464,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-
         public static List<TB_Act_AmountBudget> getBudgetAmountList(string activityId)
         {
             try
@@ -498,4 +498,402 @@ namespace eActForm.BusinessLayer
         }
 
     }
+
+    public class QueryGetBudgetApprove
+    {
+
+        public static List<Budget_Approve_Detail_Model.budgetForm> getApproveListsByEmpId(string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveList"
+                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new Budget_Approve_Detail_Model.budgetForm()
+                             {
+                                 activityId = dr["ActivityFormId"].ToString(),
+                                 statusId = dr["statusId"].ToString(),
+                                 statusName = dr["statusName"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
+
+                                 regApproveId = dr["regApproveId"].ToString(),
+                                 regApproveFlowId = dr["regApproveFlowId"].ToString(),
+                                 budgetApproveId = dr["budgetApproveId"].ToString(),
+                                 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
+
+
+                                 reference = dr["reference"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 channelName = dr["channelName"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 productTypeNameEN = dr["productTypeNameEN"].ToString(),
+
+                                 cusShortName = dr["cusShortName"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+
+                                 productCategory = dr["productCateText"].ToString(),
+                                 productGroup = dr["productGroupId"].ToString(),
+                                 productGroupName = dr["productGroupName"].ToString(),
+
+                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
+                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
+                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
+                                 activityName = dr["activityName"].ToString(),
+                                 theme = dr["theme"].ToString(),
+                                 objective = dr["objective"].ToString(),
+                                 trade = dr["trade"].ToString(),
+                                 activityDetail = dr["activityDetail"].ToString(),
+
+                                 budgetActivityId = dr["budgetActivityId"].ToString(),
+                                 //budgetApproveId = dr["budgetApproveId"].ToString(),
+                                 approveId = dr["approveId"].ToString(),
+                                 approveDetailId = dr["approveDetailId"].ToString(),
+
+                                 //delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString(),
+
+                                 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
+                                 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
+                                 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
+                                 totalInvoiceApproveBath = dr["totalInvoiceApproveBath"] is DBNull ? 0 : (decimal?)dr["totalInvoiceApproveBath"]
+
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getApproveListsByEmpId >> " + ex.Message);
+                return new List<Budget_Approve_Detail_Model.budgetForm>();
+            }
+        }
+
+        public static List<Budget_Approve_Detail_Model.Budget_Approve_Detail_Att> getBudgetApproveId(string budgetApproveId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDetailList"
+                 , new SqlParameter("@budgetApproveId", budgetApproveId));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Approve_Detail_Model.Budget_Approve_Detail_Att()
+                              {
+                                  id = d["regApproveId"].ToString(),
+                                  budgetApproveId = d["budgetApproveId"].ToString(),
+                              });
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetActivityApprove => " + ex.Message);
+                return new List<Budget_Approve_Detail_Model.Budget_Approve_Detail_Att>();
+            }
+        }
+
+        public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory(string activityId, string budgetApproveId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceHistoryList"
+                 , new SqlParameter("@activityId", activityId)
+                 , new SqlParameter("@budgetApproveId", budgetApproveId)
+                 );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Activity_Model.Budget_Invoice_history_Att()
+                              {
+                                  budgetActivityId = d["budgetActivityId"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  activityNo = d["activityNo"].ToString(),
+                                  activitEstimateId = d["activitEstimateId"].ToString(),
+                                  productId = d["productId"].ToString(),
+                                  activityTypeTheme = d["activityTypeTheme"].ToString(),
+                                  productDetail = d["productDetail"].ToString(),
+
+                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
+                                  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
+                                  totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
+                                  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
+
+                                  invoiceId = d["invoiceId"].ToString(),
+                                  invoiceNo = d["invoiceNo"].ToString(),
+                                  //invoiceCustomerId d["invoiceCustomerId"].ToString(),
+                                  invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
+
+                                  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
+
+                                  productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
+                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
+
+                                  invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+                                  //invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
+                                  //invoiceActionDate = d["invoiceActionDate"].ToString(),
+
+                                  invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
+                                  invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
+                                  invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
+                                  productCountInvoice = d["productCountInvoice"].ToString() == "" ? 0 : int.Parse(d["productCountInvoice"].ToString()),
+                                  productSumInvoiceBath = d["productSumInvoiceBath"].ToString() == "" ? 0 : decimal.Parse(d["productSumInvoiceBath"].ToString()),
+
+                                  sum_cost_product_inv = d["sum_cost_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_cost_product_inv"].ToString()),
+                                  sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
+                                  sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
+
+                                  invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
+                                  invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
+
+                                  invoiceRemark = d["invoiceRemark"].ToString(),
+
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetInvoiceHistory => " + ex.Message);
+                return new List<Budget_Activity_Model.Budget_Invoice_history_Att>();
+            }
+        }
+
+
+
+
+    }
+
+    public class QueryGetBudgetReport
+    {
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd, string actYear)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportBudgetActivity"
+                 , new SqlParameter("@act_StatusId", act_StatusId)
+                 , new SqlParameter("@act_activityNo", act_activityNo)
+                 , new SqlParameter("@companyEN", companyEN)
+                 , new SqlParameter("@createdDateStart", act_createdDateStart)
+                 , new SqlParameter("@createdDateEnd", act_createdDateEnd)
+                 , new SqlParameter("@actYear", actYear)
+                 );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Report_Model.Report_Budget_Activity_Att()
+                              {
+                                  company = d["company"].ToString(),
+                                  channelName = d["channelName"].ToString(),
+
+                                  reportMMYY = d["reportMMYY"].ToString(),
+                                  claim_actStatus = d["claim_actStatus"].ToString(),
+                                  claim_shareStatus = d["claim_shareStatus"].ToString(),
+                                  claim_actValue = d["claim_actValue"].ToString(),
+                                  claim_actIO = d["claim_actIO"].ToString(),
+                                  product_IO = d["product_IO"].ToString(),
+
+                                  act_activityNo = d["act_activityNo"].ToString(),
+                                  sub_code = d["sub_code"].ToString(),
+                                  act_activityName = d["act_activityName"].ToString(),
+                                  act_reference = d["act_reference"].ToString(),
+                                  brandName = d["brandName"].ToString(),
+                                  themeId = d["themeId"].ToString(),
+                                  Theme = d["Theme"].ToString(),
+
+                                  cus_id = d["cus_id"].ToString(),
+                                  cus_regionId = d["cus_regionId"].ToString(),
+                                  cus_regionName = d["cus_regionName"].ToString(),
+                                  cus_regionDesc = d["cus_regionDesc"].ToString(),
+                                  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+                                  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
+
+                                  prd_typeId = d["prd_typeId"].ToString(),
+                                  prd_groupId = d["prd_groupId"].ToString(),
+                                  prd_productDetail = d["prd_productDetail"].ToString(),
+                                  prd_productDetail50 = d["prd_productDetail50"].ToString(),
+                                  prd_productDetailCount = int.Parse(d["prd_productDetailCount"].ToString()),
+
+                                  activity_Period = d["activity_Period"].ToString(),
+                                  activity_costPeriod = d["activity_costPeriod"].ToString(),
+                                  actCreatedDate = d["actCreatedDate"].ToString(),
+
+                                  activityTotalBath = d["activityTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalBath"].ToString()),
+                                  activityInvoiceTotalBath = d["activityInvoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityInvoiceTotalBath"].ToString()),
+                                  activityBalanceBath = d["activityBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["activityBalanceBath"].ToString()),
+                                  activityCostRemainBath = d["activityCostRemainBath"].ToString() == "" ? 0 : decimal.Parse(d["activityCostRemainBath"].ToString()),
+
+                                  productBudgetStatusGroupId = d["productBudgetStatusGroupId"].ToString(),
+                                  ProductBudgetStatusId = d["ProductBudgetStatusId"].ToString(),
+                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
+                                  invoiceCreatedDate = d["invoiceCreatedDate"].ToString(),
+                                  act_status = d["act_status"].ToString(),
+                                  actForm_CreatedByUserId = d["actForm_CreatedByUserId"].ToString(),
+                                  actForm_CreatedByName = d["actForm_CreatedByName"].ToString(),
+                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString(),
+                                  wait_activityInvoiceTotalBath = d["wait_activityInvoiceTotalBath"].ToString()
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportBudgetActivity => " + ex.Message);
+                return new List<Budget_Report_Model.Report_Budget_Activity_Att>();
+            }
+        }
+
+    }
+
+    //public class QueryGetInvoiceActivityStstus
+    //{
+    //    public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getInvoiceActivityStstus()
+    //    {
+    //        try
+    //        {
+    //            DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getInvoiceActivityStstus");
+
+    //            var result = (from DataRow d in ds.Tables[0].Rows
+    //                          select new Budget_Activity_Model.Budget_Activity_Status_Att()
+    //                          {
+    //                              id = d["id"].ToString(),
+    //                              nameEN = d["NameEN"].ToString(),
+    //                              nameTH = d["NameTH"].ToString(),
+    //                              description = d["description"].ToString(),
+    //                              delFlag = bool.Parse(d["delFlag"].ToString()),
+    //                              createdDate = DateTime.Parse(d["createdDate"].ToString()),
+    //                              createdByUserId = d["createdByUserId"].ToString(),
+    //                              updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+    //                              updatedByUserId = d["updatedByUserId"].ToString(),
+    //                          });
+
+    //            return result.ToList();
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
+    //            return new List<Budget_Activity_Model.Budget_Activity_Status_Att>();
+    //        }
+    //    }
+    //}
+
+    public class BudgetFormCommandHandler
+    {
+        //update Invoice Product
+        public static int updateInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
+        {
+            int result = 0;
+            model.dateInvoiceAction = DateTime.ParseExact(model.invoiceActionDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceUpdate"
+                    , new SqlParameter[] {new SqlParameter("@id", model.invoiceId)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@activityNo",model.activityNo)
+                    ,new SqlParameter("@productId",model.productId)
+                    ,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
+                    ,new SqlParameter("@paymentNo",model.paymentNo)
+
+                    ,new SqlParameter("@budgetImageId",model.budgetImageId)
+
+                    ,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+                    ,new SqlParameter("@invoiceNo",model.invoiceNo)
+                    ,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
+                    ,new SqlParameter("@actionDate",model.dateInvoiceAction) //invoiceActionDate
+                    ,new SqlParameter("@invoiceRemark",model.invoiceRemark)
+
+                    ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceUpdate");
+            }
+
+            return result;
+        }
+
+        public static int insertInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
+        {
+
+            int result = 0;
+            model.dateInvoiceAction = DateTime.ParseExact(model.invoiceActionDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceInsert"
+                    , new SqlParameter[] {new SqlParameter("@id", Guid.NewGuid().ToString())
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@activityNo",model.activityNo)
+                    ,new SqlParameter("@productId",model.productId)
+                    ,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
+                    ,new SqlParameter("@paymentNo",model.paymentNo)
+                    ,new SqlParameter("@budgetImageId",model.budgetImageId)
+
+                    ,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+                    ,new SqlParameter("@invoiceNo",model.invoiceNo)
+                    ,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
+					//,new SqlParameter("@actionDate",model.invoiceActionDate)
+					,new SqlParameter("@actionDate",model.dateInvoiceAction)
+                    ,new SqlParameter("@invoiceRemark",model.invoiceRemark)
+                    ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceInsert");
+            }
+
+            return result;
+        }
+
+        public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceId, string delType)
+        {
+
+            int result = 0;
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceDelete"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    ,new SqlParameter("@activityOfEstimateId",estimateId)
+                    ,new SqlParameter("@invoiceId",invoiceId)
+                    ,new SqlParameter("@delType",delType)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceDelete");
+            }
+
+            return result;
+        }
+
+        public static int deleteBudgetApproveByActNo(string activityNo)
+        {
+
+            int result = 0;
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveDelete"
+                    , new SqlParameter[] {new SqlParameter("@activityNo",activityNo)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteBudgetApproveByActNo");
+            }
+
+            return result;
+        }
+
+    }
+
 }

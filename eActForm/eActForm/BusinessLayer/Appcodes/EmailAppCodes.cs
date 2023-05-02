@@ -1130,12 +1130,12 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(actFormId);
-                if (getBudgetImageModel.BudImageList.Any())
+                TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
+                getBudgetImageModel.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetApproveInvoiceList(actFormId);
+                if (getBudgetImageModel.BudgetInvoiceList.Any())
                 {
                     int i = 1;
-                    foreach (var item in getBudgetImageModel.BudImageList)
+                    foreach (var item in getBudgetImageModel.BudgetInvoiceList)
                     {
                         pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
                         i++;
