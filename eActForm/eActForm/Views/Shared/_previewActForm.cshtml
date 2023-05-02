@@ -47,7 +47,15 @@
         </style>
 
         <div>
-            <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+            @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT"])
+            {
+                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form AddOn)</h5></div>
+            }
+            else
+            {
+                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+            }
+
         </div>
         <div>
             <table style="width:100%; margin-top:30px;">

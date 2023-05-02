@@ -66,7 +66,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 }
                 else if (actType == Activity_Model.activityType.EXPENSE.ToString())
                 {
-                    return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
+                    return ConfigurationManager.AppSettings["companyId_Thaibev"].ToString();
                 }
                 else if (actType == Activity_Model.activityType.HCForm.ToString())
                 {

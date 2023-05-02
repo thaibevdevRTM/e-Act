@@ -425,6 +425,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     });
             }
             catch (Exception ex)

@@ -48,19 +48,21 @@ namespace eActForm.BusinessLayer
                 var rootPathOutput = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 log += "rootPathOutput >>" + rootPathOutput;
 
+                log += "call mergePDF";
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
-                {
-                    log += "call mergePDF";
-                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
-                }
-                else
-                {
-                    log += "delete rootPathOutput >>" + rootPathOutput;
-                    File.Delete(rootPathOutput);
-                    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
-                    File.Copy(replace, rootPathOutput);
-                }
+                //if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                //{
+                //    log += "call mergePDF";
+                //    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
+                //}
+                //else
+                //{
+                //    log += "delete rootPathOutput >>" + rootPathOutput;
+                //    File.Delete(rootPathOutput);
+                //    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                //    File.Copy(replace, rootPathOutput);
+                //}
 
             }
             catch (Exception ex)

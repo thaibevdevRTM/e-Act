@@ -41,12 +41,19 @@
 
 
 <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h4>
-    <p></p>
+    @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT"])
+    {
+        <h4 class="alert-heading">แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form AddOn)</h4>
+    }
+    else
+    {
+        <h4 class="alert-heading">แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h4>
+    }
+
 </div>
 
 
-<div class="row">
+<div id="divMainAct" class="row">
     <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
 
         <div class="form-group">
@@ -478,7 +485,7 @@
                 @if (Model.activityFormModel.statusId == 3)
                 {
                     <div style="display: inline-block">
-                        <button id="btnSaveAs" type="button" class="btn" onclick="copyAndSaveNew('BudgetForm')">&nbsp;Add Budget</button>
+                        <button id="btnSaveAs" type="button" class="btn" onclick="copyAndSaveNew('@ConfigurationManager.AppSettings["formAddOn_MT"]')">&nbsp;Add Budget</button>
                     </div>
                 }
                 @if (mode != "")
@@ -519,6 +526,8 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 
+
+
 <script type="text/javascript">
 
 
@@ -529,6 +538,8 @@
                 $(this).focus();
             }
         });
+
+
 
         fillProductOnChange();
         checkBtn();
@@ -573,16 +584,16 @@
         }
 
 
-        if (@Model.activityFormModel.statusId != "1" || @Model.activityFormModel.statusId == "5" || '@Model.activityFormModel.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-            setTxtReadOnly();
-        }
-
-
         if (!'@Model.activityFormModel.createdByUserId' || '@UtilsAppCode.Session.User.isAdmin' == 'True'
             || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
             setTxtUnReadOnly();
         }
 
+
+        if ('@Model.activityFormModel.master_type_form_id' == '@ConfigurationManager.AppSettings["formAddOn_MT"]') {
+            console.log('addon')
+            setTxtReadOnly();
+        }
 
 
 
@@ -716,7 +727,7 @@
     function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
-      
+
         if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
@@ -866,20 +877,6 @@
             document.getElementById("divSubAct").style.display = "none";
         }
     }
-
-    //$("#ddlTheme").change(function () {
-
-    //     console.log($("#ddlTheme").val());
-    //    if ($("#ddlTheme").val() == '8B5402F5-63D0-46E5-BFDA-9FC72F3CF565') {
-
-    //        document.getElementById("divSubAct").style.display = "block";
-    //    }
-    //    else {
-
-    //        $("#ddlSubActivity").val('')
-    //        document.getElementById("divSubAct").style.display = "none";
-    //    }
-    //});
 
     $("#ddlProductGrp").change(function () {
         var ddlProductBrand = $("#ddlProductBrand");
@@ -1115,6 +1112,7 @@
                     typeForm: '@Model.activityFormModel.typeForm',
                     subActivity: $("#ddlSubActivity").val(),
                     piorityDoc: $("#ddlPiority").val(),
+                    master_type_form_id:'@Model.activityFormModel.master_type_form_id',
                 },
                 dataType: "json",
                 type: 'POST',
@@ -1282,44 +1280,41 @@
 
     function setTxtReadOnly() {
 
-            document.getElementById("ddlProductfilter").disabled = true;
-            document.getElementById("ddlProductSize").disabled = true;
-            document.getElementById("txtdateDoc").disabled = true;
-            document.getElementById("txtReference").disabled = true;
-            document.getElementById("txtActivityNo").disabled = true;
-            document.getElementById("ddlCustomer").disabled = true;
-            document.getElementById("txtActivityName").disabled = true;
-            document.getElementById("ddlTheme").disabled = true;
-            document.getElementById("ddlProductBrand").disabled = true;
-            document.getElementById("ddlProductCate").disabled = true;
-            document.getElementById("txtObjective").disabled = true;
-            document.getElementById("ddlProductGrp").disabled = true;
-            document.getElementById("txtdateActivitySt").disabled = true;
-            document.getElementById("txtdateActivityEnd").disabled = true;
-            document.getElementById("txtdateCostPerSt").disabled = true;
-            document.getElementById("txtdateCostPerEnd").disabled = true;
-            document.getElementById("dropzoneJsForm").disabled = true;
-            document.getElementById("txtActivityDetail").disabled = true;
-            document.getElementById("ddlRegion").disabled = true;
-            document.getElementById("txtCustomerName").disabled = true;
-            document.getElementById("txtActIO").disabled = true;
-            document.getElementById("txtActClaim").disabled = true;
-            document.getElementById("divAddActivityDetail").style.display = "none";
-            document.getElementById("divAddProductCostDetail").style.display = "none";
-            $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-            $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-            document.getElementById("divUploadFiles").style.display = "none";
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+        document.getElementById("txtdateDoc").disabled = true;
+        document.getElementById("txtReference").disabled = true;
+        document.getElementById("txtActivityNo").disabled = true;
+        document.getElementById("ddlCustomer").disabled = true;
+        document.getElementById("txtActivityName").disabled = true;
+        document.getElementById("ddlTheme").disabled = true;
+        document.getElementById("ddlProductBrand").disabled = true;
+        document.getElementById("ddlProductCate").disabled = true;
+        document.getElementById("txtObjective").disabled = true;
+        document.getElementById("ddlProductGrp").disabled = true;
+        document.getElementById("txtdateActivitySt").disabled = true;
+        document.getElementById("txtdateActivityEnd").disabled = true;
+        document.getElementById("txtdateCostPerSt").disabled = true;
+        document.getElementById("txtdateCostPerEnd").disabled = true;
+        document.getElementById("dropzoneJsForm").disabled = true;
+        document.getElementById("txtActivityDetail").disabled = true;
+        document.getElementById("ddlRegion").disabled = true;
+        document.getElementById("txtCustomerName").disabled = true;
+        document.getElementById("txtActIO").disabled = true;
+        document.getElementById("txtActClaim").disabled = true;
+        document.getElementById("divAddActivityDetail").style.display = "none";
+        document.getElementById("divAddProductCostDetail").style.display = "none";
 
+        document.getElementById("divUploadFiles").style.display = "none";
+        document.getElementById("rdbterm").disabled = true;
+        document.getElementById("rdbOutterm").disabled = true;
+        document.getElementById("btnUpdate").style.display = "none";
 
-            document.getElementById("rdbterm").disabled = true;
-            document.getElementById("rdbOutterm").disabled = true;
-            document.getElementById("btnUpdate").style.display = "none";
-
-             var arrayOfElements = document.getElementsByClassName('divDelImg');
-             var lengthOfArray = arrayOfElements.length;
-             for (var i = 0; i < lengthOfArray; i++) {
-                 arrayOfElements[i].style.display = 'none';
-             }
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
 
 
         if ('@Model.activityFormModel.statusId' == '5') {
@@ -1346,19 +1341,40 @@
         }
 
 
+
+
         if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
-             document.getElementById("btnUpdate").style.display = "block";
-             document.getElementById("txtdateActivitySt").disabled = false;
-             document.getElementById("txtdateActivityEnd").disabled = false;
-             document.getElementById("txtdateCostPerSt").disabled = false;
-             document.getElementById("txtdateCostPerEnd").disabled = false;
+            document.getElementById("btnUpdate").style.display = "block";
+            document.getElementById("txtdateActivitySt").disabled = false;
+            document.getElementById("txtdateActivityEnd").disabled = false;
+            document.getElementById("txtdateCostPerSt").disabled = false;
+            document.getElementById("txtdateCostPerEnd").disabled = false;
         }
 
-        if ( '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId') {
-             document.getElementById("btnUpdate").style.display = "block";
-             document.getElementById("divIO").disabled = false;
+        if ('@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId') {
+            document.getElementById("btnUpdate").style.display = "block";
+            document.getElementById("divIO").disabled = false;
             document.getElementById("txtActIO").disabled = false;
             document.getElementById("txtActClaim").disabled = false;
+        }
+
+         if ('@Model.activityFormModel.master_type_form_id' == '@ConfigurationManager.AppSettings["formAddOn_MT"]') {
+            document.getElementById("txtActIO").disabled = true;
+            document.getElementById("txtActClaim").disabled = true;
+             document.getElementById("txtdateActivitySt").disabled = true;
+             document.getElementById("txtdateActivityEnd").disabled = true;
+             document.getElementById("txtdateCostPerSt").disabled = true;
+             document.getElementById("txtdateCostPerEnd").disabled = true;
+             $("#tbl_activityDetail").find("button").attr("disabled", true);
+             $("#tbl_productDetail").find("button").attr("disabled", true);
+
+
+             document.getElementById("divUploadFiles").style.display = "block";
+             var arrayOfElements = document.getElementsByClassName('divDelImg');
+             var lengthOfArray = arrayOfElements.length;
+             for (var i = 0; i < lengthOfArray; i++) {
+                 arrayOfElements[i].style.display = 'block';
+             }
         }
     }
 
