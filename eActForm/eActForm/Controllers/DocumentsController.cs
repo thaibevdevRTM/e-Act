@@ -30,7 +30,9 @@ namespace eActForm.Controllers
                 // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+                    if (typeForm == Activity_Model.activityType.MT.ToString() 
+                        || typeForm == Activity_Model.activityType.SetPrice.ToString()
+                        || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
                     {
                         models.customerslist = QueryGetAllCustomers.getCustomersMT();
                     }

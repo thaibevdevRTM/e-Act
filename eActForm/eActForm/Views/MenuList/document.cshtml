@@ -12,11 +12,13 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
+                <li onclick="waitpopup();">@Html.ActionLink(" Documents AddOn MT", "Index", "Home", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isCreatorMT_OMT || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, null)</li>
+                <li onclick="waitpopup();">@Html.ActionLink(" Documents AddOn OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
@@ -52,16 +54,18 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Report Detail MT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Report Detail SetPrice", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
+                <li onclick="waitpopup();">@Html.ActionLink(" Report Detail MT(AddOn)", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Report Detail OMT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+                <li onclick="waitpopup();">@Html.ActionLink(" Report Detail OMT(AddOn)", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
             }
-           
+
         </ul>
     </li>
 }

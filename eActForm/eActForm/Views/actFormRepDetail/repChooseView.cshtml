@@ -178,7 +178,10 @@
     $(function () {
         $("#btnSelected").click(function () {
             var urlCall = "";
-            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()' || '@Model.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.OMT.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.MT_AddOn.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.OMT_AddOn.ToString()')
             {
                 urlCall = '@Url.Action("repListView", "actFormRepDetail" )';
             }

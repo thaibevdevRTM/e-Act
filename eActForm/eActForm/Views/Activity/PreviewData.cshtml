@@ -15,7 +15,7 @@
 
 
 
-    
+
         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
         {
             @RenderPage("~/Views/Activity/ShowImage.cshtml")
@@ -40,7 +40,7 @@
 <script>
     function submitPreview() {
 
-   
+
 
 
         bootbox.confirm({
@@ -80,6 +80,14 @@
                     }).done(function (response) {
                         if (response.Message == '@Activity_Model.activityType.MT.ToString()') {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT.ToString() }, null)';
+                            window.location.href = url;
+                        }
+                        else if (response.Message == '@Activity_Model.activityType.MT_AddOn.ToString()') {
+                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)';
+                            window.location.href = url;
+                        }
+                        else if (response.Message == '@Activity_Model.activityType.OMT_AddOn.ToString()') {
+                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)';
                             window.location.href = url;
                         }
                         else {

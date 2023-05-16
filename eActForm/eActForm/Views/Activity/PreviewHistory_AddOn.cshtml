@@ -1,0 +1,68 @@
+﻿@model eActForm.Models.Activity_Model.actForms
+
+
+
+<table class="table">
+    <thead>
+        <tr class="bg-info">
+            <th>
+                ประเภท
+            </th>
+            <th>
+                ครั้งที่
+            </th>
+            <th>
+                สถานะ
+            </th>
+            <th>
+                วันที่เอกสาร
+            </th>
+            <th>
+                เลขที่เอกสาร
+            </th>
+            <th>
+                จำนวน
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int count = 0;
+            string strCount = "";}
+        @foreach (var item in Model.actLists.OrderByDescending(x => x.count))
+        {
+            <tr>
+                <td>
+                    @item.type
+                </td>
+                <td>
+                    @if (item.count == "0")
+                    {
+                        strCount = "-";
+                    }
+                    else
+                    {
+                        strCount = item.count;
+                    }
+
+                    @strCount
+                </td>
+                <td>
+                    @item.statusName
+                </td>
+                <td>
+                    @item.documentDate
+                </td>
+                <td>
+                    @item.activityNo
+                </td>
+                <td>
+                    @string.Format("{0:n2}", item.totalCost)
+ 
+                </td>
+            </tr>
+            count++;
+        }
+
+
+    </tbody>
+</table>

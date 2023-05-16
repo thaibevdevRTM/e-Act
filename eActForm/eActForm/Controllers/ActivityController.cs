@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using WebLibrary;
+using static eActForm.Models.Activity_Model;
 
 namespace eActForm.Controllers
 {
@@ -27,7 +28,8 @@ namespace eActForm.Controllers
                 activityModel.activityFormModel = new ActivityForm();
                 activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
 
-                if (typeForm == Activity_Model.activityType.OMT.ToString())
+                if (typeForm == Activity_Model.activityType.OMT.ToString()
+                    || typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
                 {
                     activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT();
                 }
@@ -117,6 +119,14 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             activityModel = ReportAppCode.previewApprove(activityId, UtilsAppCode.Session.User.empId);
             activityModel.activityFormModel.callFrom = "app";
+            return PartialView(activityModel);
+        }
+
+
+        public ActionResult PreviewHistory_AddOn(string activityId)
+        {
+            actForms activityModel = new actForms();
+            activityModel.actLists = ActFormAppCode.historyAddOn_MT_OMT(activityId);
             return PartialView(activityModel);
         }
 
@@ -353,7 +363,7 @@ namespace eActForm.Controllers
                     //List<ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                     activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, empId);
-
+                    var getHeader = GenPDFAppCode.getHeader(activity_TBMMKT_Model);
                     if (activity_TBMMKT_Model.activityFormTBMMKT.statusId != 3)
                     {
                         if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
@@ -367,15 +377,16 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                                
-                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, "", activity_TBMMKT_Model));
+
+                               
+                                HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, getHeader, empId, "2", activityId, "", activity_TBMMKT_Model));
                                 
                             }
                         }
                     }
                     else
                     {
-                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, empId, "2", activityId, "", activity_TBMMKT_Model));
+                        HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, getHeader, empId, "2", activityId, "", activity_TBMMKT_Model));
                     }
                 }
 
@@ -393,7 +404,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId, string approveFrom, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public async Task<AjaxResult> doGenFile(string gridHtml,string getHeader, string empId, string statusId, string activityId, string approveFrom, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var resultAjax = new AjaxResult();
             try
@@ -421,7 +432,7 @@ namespace eActForm.Controllers
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
                     
-                    GenPDFAppCode.doGen(gridHtml, GenPDFAppCode.getHeader(activity_TBMMKT_Model), activityId, Server, activity_TBMMKT_Model);
+                    GenPDFAppCode.doGen(gridHtml, getHeader, activityId, Server, activity_TBMMKT_Model);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 
                 }

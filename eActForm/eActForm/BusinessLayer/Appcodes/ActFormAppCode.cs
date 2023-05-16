@@ -3,12 +3,14 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.AppCode;
 using Microsoft.ApplicationBlocks.Data;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using static eActForm.Models.Activity_Model;
 using static eForms.Models.MasterData.ImportBudgetControlModel;
 
 namespace eActForm.BusinessLayer
@@ -112,6 +114,15 @@ namespace eActForm.BusinessLayer
                     if (isAdmin())
                     {
                         strCall = "usp_getActivityFormAll";
+                    }
+                }
+                else if (typeForm == Activity_Model.activityType.MT_AddOn.ToString() 
+                    || typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
+                {
+                    strCall = "usp_getActivityAddOnByEmpId";
+                    if (isAdmin())
+                    {
+                        strCall = "usp_getActivityFormAll_AddOn";
                     }
                 }
                 else if (typeForm == Activity_Model.activityType.SetPrice.ToString())
@@ -851,6 +862,33 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("checkIOPV >>" + ex.Message);
+            }
+        }
+
+        public static List<actForm> historyAddOn_MT_OMT(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getHistoryAddOn_MT_OMT"
+               , new SqlParameter[] { new SqlParameter("@activityId", activityId)});
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new actForm
+                             {
+                                 type = dr["typeForm"].ToString(),
+                                 statusName = dr["statusName"].ToString(),
+                                 documentDate = (DateTime?)dr["createdDate"],
+                                 activityNo = dr["activityNo"].ToString(),
+                                 totalCost = (decimal?)dr["totalCost"],
+                                 count = dr["number"].ToString(),
+                             });
+                return lists.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new Exception("historyAddOn_MT_OMT >>" + ex.Message);
             }
         }
     }

@@ -35,7 +35,7 @@
                 Start date
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-7), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
+                <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Today.AddDays(-7), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
             End date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Today.AddDays(1), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control">
         </div>
     </div>
 </div>

@@ -32,7 +32,8 @@ namespace eActForm.Controllers
             activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, "");
 
             ApproveAppCode.setCountWatingApprove();
-            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, empId, statusId, activityId, "", activity_TBMMKT_Model));
+            var getHeader = GenPDFAppCode.getHeader(activity_TBMMKT_Model);
+            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, getHeader, empId, statusId, activityId, "", activity_TBMMKT_Model));
 
             return Json(resultAjax, "text/plain");
         }

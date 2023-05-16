@@ -16,16 +16,19 @@
                 {
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Detail MT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
                 }
 
                 if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
                 {
-                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>   
+                    <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+
                 }
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     <li>@Html.ActionLink(" Report Detail OMT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Detail OMT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
                 }
 
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)

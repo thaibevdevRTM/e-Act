@@ -59,7 +59,7 @@ namespace eActForm.Controllers
 
 
                 DateTime? startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
-                DateTime? endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+                DateTime? endDate = Request["endDate"] == null ? DateTime.Today.AddDays(1) : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
 
                 model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate);
                 TempData["ApproveFormLists"] = model.actLists;

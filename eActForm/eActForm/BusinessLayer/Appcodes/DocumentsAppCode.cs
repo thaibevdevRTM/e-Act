@@ -30,6 +30,14 @@ namespace eActForm.BusinessLayer
                 {
                     stored = "usp_GetActivityRepDetailOMTAll";
                 }
+                else if (typeForm == Activity_Model.activityType.MT_AddOn.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailAddOn";
+                }
+                else if (typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailAddOn_OMT";
+                }
                 else
                 {
                     stored = "usp_GetActivityRepDetailSetPriceAll";

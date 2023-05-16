@@ -287,7 +287,8 @@
                                     <i class="btn ink-reaction btn-warning glyphicon glyphicon-stats" title="PostEva" style="height:28px; margin-bottom:5px"></i>
                                 </a>
                                 if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                                     && !DocumentsAppCode.filterActivityForPayment_MT(item.theme))
+                                     && !DocumentsAppCode.filterActivityForPayment_MT(item.theme)
+                                     && item.master_type_form_id != ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
                                         <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
@@ -302,6 +303,14 @@
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.MT_AddOn.ToString())
+                            {
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (Model.typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
+                            {
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             else if (Model.typeForm == Activity_Model.activityType.SetPrice.ToString())
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
@@ -311,7 +320,8 @@
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = AppCode.Mode.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
                                 if (item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"] && item.statusId == "3" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                                    && !DocumentsAppCode.filterActivityForPayment_MT(item.theme))
+                                    && !DocumentsAppCode.filterActivityForPayment_MT(item.theme)
+                                    && item.master_type_form_id != ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
                                 {
                                     <a href="javascript:" onclick="return callSubActivityView('@item.id');">
                                         <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
@@ -335,7 +345,7 @@
 
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
                                 {
-                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", title = "ใบเบิกค่าใช้จ่าย" ,onclick = "waitpopup();", })
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = AppCode.Mode.addNew, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", title = "ใบเบิกค่าใช้จ่าย", onclick = "waitpopup();", })
                                 }
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"] && item.statusId == "3")
                                 {
@@ -356,7 +366,7 @@
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
-                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search",title="View PDF", target = "_blank" })
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", title = "View PDF", target = "_blank" })
                             }
                         </td>
                         <td>@item.statusName</td>

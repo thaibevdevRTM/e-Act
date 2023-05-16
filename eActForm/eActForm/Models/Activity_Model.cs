@@ -99,7 +99,9 @@ namespace eActForm.Models
             ITForm,
             HCForm,
             OtherCompany,
-            Beer
+            Beer,
+            MT_AddOn,
+            OMT_AddOn
         }
         public enum groupCompany
         {
@@ -168,6 +170,8 @@ namespace eActForm.Models
             public string channelId { get; set; }
             public string mainAgency { get; set; }
             public string piorityDoc { get; set; }
+            public string type { get; set; }
+            public string count { get; set; }
 
         }
 
@@ -302,6 +306,7 @@ namespace eActForm.Models
         public decimal? sumTotal { get; set; }
         public string callFrom { get; set; }
         public string piority { get; set; }
+        public string statusName { get; set; }
 
     }
 
