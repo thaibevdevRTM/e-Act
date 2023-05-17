@@ -58,8 +58,8 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
-
                     activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                    activityModel.detailOtherModel = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault();
                     activityModel.activityFormModel.mode = mode;
                     activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
                     activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);

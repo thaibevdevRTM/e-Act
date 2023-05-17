@@ -460,6 +460,15 @@
             @Html.Action("PreviewHistory_AddOn", "Activity", new { activityId = Model.activityFormModel.id })
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <p class="lead">หมายเหตุ</p>
+        </div>
+        <div class="col-md-6">
+            @Html.TextAreaFor(x => x.detailOtherModel.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDetailContact" })
+        </div>
+    </div>
+    <hr />
 }
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
@@ -504,24 +513,24 @@
                     </div>
                 }
 
-            <div style="display:inline-block">
-                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-                else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-                else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT_AddOn.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-                else if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-            </div>
+                <div style="display:inline-block">
+                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT_AddOn.ToString())
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
+                    {
+                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                </div>
 
                 <div style="display:inline-block; text-align:center" id="divSubmit">
                     <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
@@ -544,6 +553,7 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 @Html.HiddenFor(x => x.activityFormModel.companyId)
+@Html.HiddenFor(x => x.detailOtherModel.activityIdNoSub)
 
 
 <script type="text/javascript">
@@ -1123,6 +1133,7 @@
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo: $("#txtActivityNo").val(),
+                    activityNoRef: $("#detailOtherModel_activityIdNoSub").val(),
                     createdByUserId: $("#hdcreateUser").val(),
                     id: '@Model.activityFormModel.id',
                     chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
@@ -1132,7 +1143,8 @@
                     subActivity: $("#ddlSubActivity").val(),
                     piorityDoc: $("#ddlPiority").val(),
                     master_type_form_id: '@Model.activityFormModel.master_type_form_id',
-                    companyId: $("#activityFormModel_companyId").val()
+                    companyId: $("#activityFormModel_companyId").val(),
+                    detailContact: $("#txtDetailContact").val(),
                 },
                 dataType: "json",
                 type: 'POST',
@@ -1215,7 +1227,7 @@
             cusId = $("#customerId").val()
         }
 
-        if ('@Model.activityFormModel.statusId' == "5" || typeFormId == '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
+        if ('@Model.activityFormModel.statusId' == "5" && typeFormId != '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
             $("#hdReferenceActNo").val($("#txtActivityNo").val());
         }
         else {

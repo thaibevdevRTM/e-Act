@@ -37,20 +37,19 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.updatedDate = DateTime.Now;
                 model.activityFormModel.companyId = model.activityFormModel.companyId;
 
-                if (!string.IsNullOrEmpty(model.activityFormModel.activityNoRef))
-                {
-                    TB_Act_ActivityForm_DetailOther detailOtherModel = new TB_Act_ActivityForm_DetailOther();
-                    detailOtherModel.Id = Guid.NewGuid().ToString();
-                    detailOtherModel.activityIdNoSub = model.activityFormModel.activityNoRef;
-                    detailOtherModel.activityId = activityId;
-                    detailOtherModel.createdByUserId = UtilsAppCode.Session.User.empId;
-                    detailOtherModel.createdDate = DateTime.Now;
-                    detailOtherModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    detailOtherModel.updatedDate = DateTime.Now;
-                    rtn = ActivityFormTBMMKTCommandHandler.usp_insertTB_Act_ActivityForm_DetailOther(detailOtherModel);
+
+                TB_Act_ActivityForm_DetailOther detailOtherModel = new TB_Act_ActivityForm_DetailOther();
+                detailOtherModel.Id = Guid.NewGuid().ToString();
+                detailOtherModel.activityIdNoSub = model.activityFormModel.activityNoRef;
+                detailOtherModel.detailContact = model.activityFormModel.detailContact;
+                detailOtherModel.activityId = activityId;
+                detailOtherModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                detailOtherModel.createdDate = DateTime.Now;
+                detailOtherModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                detailOtherModel.updatedDate = DateTime.Now;
+                rtn = ActivityFormTBMMKTCommandHandler.usp_insertTB_Act_ActivityForm_DetailOther(detailOtherModel);
 
 
-                }
 
                 rtn = insertActivityForm(model.activityFormModel);
                 rtnIO = insertCliamIO(model.activityFormModel);
@@ -290,7 +289,7 @@ namespace eActForm.BusinessLayer
                     }
                     else
                     {
-                        result[0] = getActList.FirstOrDefault().activityNo.ToString();           
+                        result[0] = getActList.FirstOrDefault().activityNo.ToString();
                     }
 
 

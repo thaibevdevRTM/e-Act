@@ -216,7 +216,7 @@ namespace eActForm.BusinessLayer
             int insertIndex = 1;
             if (model.tB_Act_ActivityForm_DetailOther != null)
             {
-                rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
+                //rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
                 tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                 tB_Act_ActivityForm_DetailOther.activityId = activityId;
 

@@ -538,6 +538,18 @@
             </table>
         </div>
 
+        @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
+        {
+
+            <div style="margin-top:10px;">
+                Remark
+            </div>
+            <div>
+                @Html.Raw(Model.detailOtherModel.detailContact.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+            </div>
+
+        }
+
         <div>
             <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
         </div>
