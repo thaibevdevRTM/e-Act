@@ -810,7 +810,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static string checkStatusBeforeCallKafka(string empId,string activityId)
+        public static string checkStatusBeforeCallKafka(string empId, string activityId)
         {
             try
             {
@@ -819,13 +819,13 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter("@p_empId", empId)
                     , new SqlParameter("@activityId", activityId));
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                            select new 
-                            {
-                                empId = dr["empId"].ToString(),
-                                countApprove = (int)dr["countApprove"]
-                            }).ToList();
+                              select new
+                              {
+                                  empId = dr["empId"].ToString(),
+                                  countApprove = (int)dr["countApprove"]
+                              }).ToList();
 
-                if(result.Any())
+                if (result.Any())
                 {
                     resultStatus = result.FirstOrDefault().countApprove > 0 ? result.FirstOrDefault().empId : "";
                 }

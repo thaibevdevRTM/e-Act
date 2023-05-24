@@ -84,7 +84,7 @@ namespace eActForm.BusinessLayer
                                  payNo = d["payNo"].ToString(),
                                  statusId = d["statusId"].ToString(),
                                  totalallPayByIO = d["totalallPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString())),
-                                 totalallPayNo = objGetGetDataPVPrevious.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"] ? GetBalancePV(d["activityId"].ToString()) : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()) )
+                                 totalallPayNo = objGetGetDataPVPrevious.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"] ? GetBalancePV(d["activityId"].ToString()) : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()))
                                  //totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()))
                              });
                 return lists.ToList();

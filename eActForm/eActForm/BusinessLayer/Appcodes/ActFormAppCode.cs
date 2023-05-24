@@ -116,7 +116,7 @@ namespace eActForm.BusinessLayer
                         strCall = "usp_getActivityFormAll";
                     }
                 }
-                else if (typeForm == Activity_Model.activityType.MT_AddOn.ToString() 
+                else if (typeForm == Activity_Model.activityType.MT_AddOn.ToString()
                     || typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
                 {
                     strCall = "usp_getActivityAddOnByEmpId";
@@ -870,7 +870,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getHistoryAddOn_MT_OMT"
-               , new SqlParameter[] { new SqlParameter("@activityId", activityId)});
+               , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new actForm

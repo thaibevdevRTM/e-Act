@@ -76,6 +76,7 @@ namespace eActForm.Controllers
                     activityModel.activityFormModel.id = actId;
                     activityModel.activityFormModel.mode = mode;
                     activityModel.activityFormModel.statusId = 1;
+                    activityModel.activityFormModel.companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm);
                     TempData["actForm" + actId] = activityModel;
                 }
 
@@ -378,9 +379,9 @@ namespace eActForm.Controllers
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
 
-                               
+
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, getHeader, empId, "2", activityId, "", activity_TBMMKT_Model));
-                                
+
                             }
                         }
                     }
@@ -404,7 +405,7 @@ namespace eActForm.Controllers
         }
 
 
-        public async Task<AjaxResult> doGenFile(string gridHtml,string getHeader, string empId, string statusId, string activityId, string approveFrom, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public async Task<AjaxResult> doGenFile(string gridHtml, string getHeader, string empId, string statusId, string activityId, string approveFrom, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var resultAjax = new AjaxResult();
             try
@@ -431,7 +432,7 @@ namespace eActForm.Controllers
                     {
                         var resultAPI = ApproveAppCode.apiProducerApproveAsync(empId, activityId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == statusId).FirstOrDefault().displayVal);
                     }
-                    
+
                     GenPDFAppCode.doGen(gridHtml, getHeader, activityId, Server, activity_TBMMKT_Model);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false, true);
 

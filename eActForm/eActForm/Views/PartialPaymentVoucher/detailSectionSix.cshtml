@@ -109,7 +109,7 @@
                     </td>
                 </tr>
                 @{
-                    var index = 0;
+                    int index = 0, getLen = 0;
                     List<GetDataDetailPaymentAll> filterNowPayOnly = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
                     List<GetDataDetailPaymentAll> filterDataHistoryPay = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
                     filterNowPayOnly.RemoveAll(r => r.payNo != Model.tB_Act_ActivityForm_DetailOther.payNo);
@@ -252,15 +252,10 @@
                     }
                     else
                     {
-                        //if (index == 10)
-                        //{
-                        //    strClass = "pagebreak";
-                        //}
-                        //else
-                        //{
-                        //    strClass = "";
-                        //}
-                        <tr class="@strClass">
+
+                        getLen += NowPayOnlyArray[index].productDetail.Length;
+
+                        <tr>
                             @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
                             {
                                 <td class="dCol1 tdTopLeft">
@@ -624,3 +619,9 @@
     </tr>
 </table>
 
+
+@if (getLen > 380 && getLen < 600)
+{
+    strClass = "pagebreak";
+}
+<div class="@strClass"></div>

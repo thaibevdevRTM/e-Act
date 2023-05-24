@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class GenPDFAppCode
     {
-        public static void doGen(string gridHtml,string htmlHeader, string activityId, HttpServerUtilityBase server, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public static void doGen(string gridHtml, string htmlHeader, string activityId, HttpServerUtilityBase server, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             string log = "";
             try

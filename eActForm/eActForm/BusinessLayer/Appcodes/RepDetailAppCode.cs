@@ -284,8 +284,8 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() 
-                    || typeForm == Activity_Model.activityType.OMT.ToString() 
+                return typeForm == Activity_Model.activityType.MT.ToString()
+                    || typeForm == Activity_Model.activityType.OMT.ToString()
                     || typeForm == Activity_Model.activityType.MT_AddOn.ToString()
                     | typeForm == Activity_Model.activityType.OMT_AddOn.ToString() ?
                     dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);

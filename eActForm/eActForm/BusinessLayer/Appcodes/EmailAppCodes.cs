@@ -46,7 +46,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
-                    
+
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , getSubject
@@ -77,7 +77,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
-                    ,""
+                    , ""
                     , null);
             }
             catch (Exception ex)
@@ -104,7 +104,7 @@ namespace eActForm.BusinessLayer
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRejectSubject"]
                     , strBody
-                    ,""
+                    , ""
                     , null);
             }
             catch (Exception ex)
@@ -384,9 +384,9 @@ namespace eActForm.BusinessLayer
                                 ApproveAppCode.apiProducerApproveAsync(item.empId, actFormId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == item.statusId).FirstOrDefault().displayVal);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            throw new Exception("Call Kafka Producer empId :"+ item.empId + " activityId : "+ actFormId +" >>>>" + ex.Message);
+                            throw new Exception("Call Kafka Producer empId :" + item.empId + " activityId : " + actFormId + " >>>>" + ex.Message);
                         }
 
 
@@ -907,7 +907,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static void sendEmail(string mailTo, string cc, string subject, string body,string actFormId, List<Attachment> files)
+        public static void sendEmail(string mailTo, string cc, string subject, string body, string actFormId, List<Attachment> files)
         {
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];

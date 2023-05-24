@@ -271,8 +271,8 @@ namespace eActForm.Models
 
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
-                    if(!string.IsNullOrEmpty(htmlHeader))
-                    writer.PageEvent = new HtmlPageEventHelper(htmlHeader);
+                    if (!string.IsNullOrEmpty(htmlHeader))
+                        writer.PageEvent = new HtmlPageEventHelper(htmlHeader);
 
 
                     pdfDoc.Open();
@@ -366,7 +366,7 @@ namespace eActForm.Models
                     int pages = reader.NumberOfPages;
                     for (int i = 1; i <= pages; i++)
                     {
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(i.ToString() + " - " + pages, GetTHSarabun(8,Font.NORMAL)), 310f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(i.ToString() + " - " + pages, GetTHSarabun(8, Font.NORMAL)), 310f, 15f, 0);
                     }
                 }
                 PreviewBytes = stream.ToArray();

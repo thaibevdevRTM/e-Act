@@ -88,7 +88,7 @@
                         }
 
                         <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft clsProductName", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
-                    
+
                         @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                         {
                             <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft clsMechanics", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
@@ -229,6 +229,26 @@
 </div>
 
 <script>
+
+    $(document).ready(function () {
+
+
+        if ('@Model.activityFormModel.master_type_form_id' == '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
+            $("#tbl_activityDetail").find("button").attr("disabled", true);
+            var elmsDel = document.getElementsByClassName('clsProductName')
+            for (var i = 0; i < elmsDel.length; i++) {
+
+                document.getElementById('lblProductName_' + i).disabled = true;
+            }
+
+            var elmsDel = document.getElementsByClassName('clsMechanics')
+            for (var i = 0; i < elmsDel.length; i++) {
+
+                document.getElementById('lblMechanics_' + i).disabled = true;
+            }
+        }
+    });
+
     function setZero(txtId) {
         if ($(txtId).val() == "0.00") {
             $(txtId).val("");

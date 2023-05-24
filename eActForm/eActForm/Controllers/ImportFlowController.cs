@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class ImportFlowController : Controller
     {
         // GET: ImportFlow
@@ -129,7 +130,7 @@ namespace eActForm.Controllers
         {
             int result = 0;
             var resultAjax = new AjaxResult();
-            string keepFlow = "", strSubject = "", limitBegin = "",channel="", getSubjectId = "";
+            string keepFlow = "", strSubject = "", limitBegin = "", channel = "", getSubjectId = "";
             bool checkSubject = false;
             try
             {
@@ -158,11 +159,11 @@ namespace eActForm.Controllers
                                 else
                                 {
                                     var getSubject = SubjectQuery.getAllSubject(AppCode.StrCon).Where(x => x.nameTH.Contains(item.subject)).ToList();
-                                    
-                                    if(!getSubject.Any())
+
+                                    if (!getSubject.Any())
                                     {
                                         getSubjectId = ImportFlowPresenter.insertSubject(AppCode.StrCon, item);
-                                        item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubject.FirstOrDefault().id);
+                                        item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, getSubjectId);
                                     }
                                     else
                                     {
