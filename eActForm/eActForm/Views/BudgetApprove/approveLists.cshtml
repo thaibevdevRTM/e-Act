@@ -21,11 +21,7 @@
                 <td>
                     @if (@item.remark != "")
                     {
-
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');">Try it 6</button>
-
-                        @*@item.remark.Replace("(\r\n|\n)", "xx").Replace(",","yy").Replace("/", "zz").Replace(";", "zz");*@
-
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></button>
                     }
                 </td>
             </tr>
@@ -58,11 +54,6 @@
 </div>
 
 <script>
-    function onShowRemark_test(txtRemark) {
-        alert(txtRemark);
-        //$("#lblRemark").text(txtRemark);
-        //$("#myModal").modal('show');
-    }
 
     function onShowRemark(txtRemark) {
         console.log(txtRemark);

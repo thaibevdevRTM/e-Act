@@ -1,5 +1,5 @@
 ﻿
-@model eActForm.Models.TB_Bud_Image_Model
+@model eActForm.Models.TB_Bud_Invoice_Document_Model
 @{
     //update 21-04-2020
     ViewBag.Title = "";
@@ -38,11 +38,11 @@
     }
 </style>
 
-@if (Model.BudImage.id != null)
+@if (Model.BudgetInvoice.id != null)
 {
 
     //------------------------------------------------------------------------------------------------
-    @Html.HiddenFor(item => @Model.BudImage.id, new { @id = "hd_imageId" })
+    @Html.HiddenFor(item => @Model.BudgetInvoice.id, new { @id = "hd_imageId" })
 
     <div class="row text-center"></div>
 
@@ -53,19 +53,19 @@
                 <td style="width:20%;text-align:left;"> <h5>ชื่อไฟล์ : </h5></td>
 
                 <td style="width:100%;text-align:left;">
-                    @Html.DisplayFor(item => @Model.BudImage._fileName, new { @id = "txt_fileName" })
-                    @Html.HiddenFor(item => @Model.BudImage.company, new { @id = "hd_company" })
+                    @Html.DisplayFor(item => @Model.BudgetInvoice._fileName, new { @id = "txt_fileName" })
+                    @Html.HiddenFor(item => @Model.BudgetInvoice.company, new { @id = "hd_company" })
                 </td>
             </tr>
 
-            @if (@Model.BudImage.company == "OMT")
+            @if (@Model.BudgetInvoice.company == "OMT")
             {
                 <tr>
                     <td> </td>
                     <td align="left"> <h5>Region : </h5></td>
 
                     <td>
-                        @Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                        @Html.DropDownListFor(x => x.BudgetInvoice.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
                         {
                              @class = "form-control textboxcss wide-nolimit",
                              id = "ddlRegion"
@@ -80,7 +80,7 @@
                 <td>
                     @if (Model.CustomerList != null)
                     {
-                        @Html.DropDownListFor(x => x.BudImage.customerId, new SelectList(Model.CustomerList, "id", "cusNameTH", 0), "Please Select", new
+                        @Html.DropDownListFor(x => x.BudgetInvoice.customerId, new SelectList(Model.CustomerList, "id", "cusNameTH", 0), "Please Select", new
                         {
                                 @class = "form-control textboxcss wide-nolimit",
                                 id = "ddlCustomer"
@@ -93,7 +93,7 @@
                 <td></td>
                 <td> <h5>เลขที่ใบแจ้งหนี้ : </h5></td>
                 <td>
-                    @Html.TextBoxFor(item => item.BudImage.invoiceNo, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_invoice_no" })
+                    @Html.TextBoxFor(item => item.BudgetInvoice.invoiceNo, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_invoice_no" })
                 </td>
             </tr>
 
@@ -102,7 +102,7 @@
                 <td> <h5>หมายเหตุ : </h5></td>
 
                 <td>
-                    @Html.TextBoxFor(item => item.BudImage.remark, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_remark" })
+                    @Html.TextBoxFor(item => item.BudgetInvoice.remark, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_remark" })
                 </td>
             </tr>
         </table>
@@ -119,7 +119,7 @@
 
     <div> <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table> </div>
 
-    @Html.Action("invoicePDFView", "BudgetViewer", new { fileName = Model.BudImage._fileName })
+    @Html.Action("invoicePDFView", "BudgetViewer", new { fileName = Model.BudgetInvoice._fileName })
 
 }
 
@@ -144,7 +144,6 @@
 					$.each(response.Data.getCustomerName, function () {
 						ddlFillCustomer.append($("<option></option>").val(this['Value']).html(this['Text']));
                     });
-					//document.getElementById("ddlCustomer").disabled = false;
                 }
 				else {
 					//document.getElementById("ddlCustomer").disabled = true;

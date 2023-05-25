@@ -1084,7 +1084,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveNextLevel"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveNextLevelSelect"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
@@ -1102,7 +1102,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getEmailNextLevel >> " + ex.Message);
+                throw new Exception("getEmailApproveNextLevelBudget >> " + ex.Message);
             }
         }
 
@@ -1130,12 +1130,12 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
-                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getBudgetInvoiceByApproveId(actFormId);
-                if (getBudgetImageModel.BudImageList.Any())
+                TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(actFormId);
+                if (getBudgetImageModel.BudgetInvoiceList.Any())
                 {
                     int i = 1;
-                    foreach (var item in getBudgetImageModel.BudImageList)
+                    foreach (var item in getBudgetImageModel.BudgetInvoiceList)
                     {
                         pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
                         i++;
