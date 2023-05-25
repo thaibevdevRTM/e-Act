@@ -390,8 +390,8 @@ namespace eActForm.Models //update 21-04-2020
             public DateTime? act_costPeriodEnd { get; set; }
 
             public string act_activityName { get; set; }
-            public string act_theme { get; set; }
-            //public string act_themeName { get; set; }
+            public string act_theme { get; set; }           
+
             public string act_objective { get; set; }
             public string act_trade { get; set; }
             public string act_activityDetail { get; set; }
@@ -419,6 +419,15 @@ namespace eActForm.Models //update 21-04-2020
 
             public string bud_ActivityStatusId { get; set; }
             public string bud_ActivityStatus { get; set; }
+
+            public string act_compensateStatus { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_compensateDateStart { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_compensateDateEnd { get; set; }
 
         }
     }

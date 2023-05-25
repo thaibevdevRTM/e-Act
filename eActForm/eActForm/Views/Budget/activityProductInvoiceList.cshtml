@@ -45,43 +45,28 @@
             foreach (var item in Model.Budget_Activity_Invoice_list)
             {
                 <tr class="gradeX">
-                    <td style="text-align:left;">
+                    <td style="text-align:right;">
 
 
                         @if (item.invoiceApproveStatusId == 1) // draff
                         {
-
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-danger fa fa-trash-o" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-
-                            @*<a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-            </a>*@
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-danger fa fa-trash-o" title="ลบรายการ" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
+                        }
+                        else if (item.invoiceApproveStatusId == 2) // waitapprove
+                        {
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
                         }
                         else if (item.invoiceApproveStatusId == 3) // approve
                         {
-
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-
-                            @*<a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-                <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
-            </a>*@
-
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
                         }
                         else if (item.invoiceApproveStatusId == 5) // not approve
                         {
 
-                            <a href="javascript:" class="disabled anchorDetail btn ink-reaction btn-sm btn-default fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-
-                            <a href="javascript:" class="disabled anchorDetail btn ink-reaction btn-sm btn-default fa fa-edit" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-
-                            @*<a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-                <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
-            </a>*@
-
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
                         }
                         else
                         {
