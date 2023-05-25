@@ -1045,6 +1045,12 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
 
+
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT_AddOn.ToString()'
+        || '@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT_AddOn.ToString()') {
+            if ($("#txtDetailContact").val() == "") { required += "หมายเหตุ*<br>"; validate = false; }
+        }
+
         if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
         {
              if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
