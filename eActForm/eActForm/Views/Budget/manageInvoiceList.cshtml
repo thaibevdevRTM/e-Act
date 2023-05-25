@@ -2,7 +2,7 @@
 @using eActForm.BusinessLayer;
 @using System.Configuration;
 
-@model eActForm.Models.TB_Bud_Image_Model
+@model eActForm.Models.TB_Bud_Invoice_Document_Model
 @{
     //update 21-04-2020
     ViewBag.Title = "";
@@ -25,7 +25,7 @@
         </thead>
 
         <tbody>
-            @foreach (var item in Model.BudImageList)
+            @foreach (var item in Model.BudgetInvoiceList)
             {
             <tr class="gradeX">
                 <td class="text-left">

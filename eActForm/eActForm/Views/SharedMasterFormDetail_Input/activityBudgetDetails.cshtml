@@ -270,7 +270,11 @@
        // $("#divHeaderDetailsCost :input").prop("disabled", false);
 
         if ("@Model.activityFormTBMMKT.id" != '') {
-            getBudgetTotal();
+
+            if ('@Model.activityFormTBMMKT.isTemp' != 'True') {
+                getBudgetTotal();
+            }
+           
         }
 
 

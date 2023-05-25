@@ -282,7 +282,6 @@
     <Compile Include="BusinessLayer\Appcodes\FileExt.cs" />
     <Compile Include="BusinessLayer\Appcodes\GenPDFAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
-    <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\TransferBudgetAppcode.cs" />
@@ -290,9 +289,7 @@
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveRepDetailAppCode.cs" />
-    <Compile Include="BusinessLayer\Appcodes\BudgetMTMAppCode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\AdminCommandHandler.cs" />
-    <Compile Include="BusinessLayer\CommandHandler\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ProductCommand.cs" />
     <Compile Include="BusinessLayer\Appcodes\DashBoardAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\DocumentsAppCode.cs" />
@@ -318,12 +315,9 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllFlowLimit.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
-    <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
-    <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\Appcodes\ExcelAppCode.cs" />
-    <Compile Include="BusinessLayer\QueryHandler\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBenefit.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetProductCostDetail.cs" />
@@ -385,10 +379,7 @@
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\ApproveSummaryDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BudgetApproveController.cs" />
-    <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
-    <Compile Include="Controllers\BudgetMyDocController.cs" />
     <Compile Include="Controllers\BudgetReportController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
@@ -474,8 +465,6 @@
     <Compile Include="Models\AdminUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
-    <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
-    <Compile Include="Models\Budget_Report_Model.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\ManagementFlow_Model.cs" />
@@ -497,8 +486,6 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
-    <Compile Include="Models\TB_Bud_Activity_Model.cs" />
-    <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
     <Compile Include="Models\TB_Reg_FlowLimit_Model.cs" />
     <Compile Include="Models\TB_Act_master_cost_centerModel.cs" />
@@ -3187,7 +3174,7 @@
     <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
     <Content Include="Views\BudgetMyDoc\Index.cshtml" />
     <Content Include="Views\BudgetMyDoc\myDocBudget.cshtml" />
-    <Content Include="Views\BudgetMyDoc\myDocBudgetList.cshtml" />
+    <Content Include="Views\BudgetMyDoc\myDocBudgetEmpApproveList.cshtml" />
     <Content Include="Views\Budget\previewBudgetInvoice.cshtml" />
     <Content Include="Views\BudgetApprove\approvePositionSignatureListsByBudgetApproveId.cshtml" />
     <Content Include="Views\Admin\ProductDetail.cshtml" />
