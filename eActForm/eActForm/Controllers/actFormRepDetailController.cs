@@ -24,7 +24,7 @@ namespace eActForm.Controllers
             models.showUIModel = new searchParameterFilterModel();
 
 
-            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString() || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
             {
                 models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }
@@ -71,7 +71,7 @@ namespace eActForm.Controllers
 
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+                        if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString() || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
                         {
                             model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
                         }
@@ -97,7 +97,7 @@ namespace eActForm.Controllers
                 if (model.actFormRepDetailGroupLists.Any())
                 {
 
-                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
                     {
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
                                                 ConfigurationManager.AppSettings["subjectReportDetailId"]

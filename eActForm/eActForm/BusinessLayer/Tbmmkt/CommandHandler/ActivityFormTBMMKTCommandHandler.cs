@@ -27,7 +27,7 @@ namespace eActForm.BusinessLayer
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
 
-                    if (model.activityFormTBMMKT.statusId != 3)
+                    if (model.activityFormTBMMKT.statusId != 3 && model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                     {
                         rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     }
@@ -216,7 +216,7 @@ namespace eActForm.BusinessLayer
             int insertIndex = 1;
             if (model.tB_Act_ActivityForm_DetailOther != null)
             {
-                rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
+                //rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
                 tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                 tB_Act_ActivityForm_DetailOther.activityId = activityId;
 

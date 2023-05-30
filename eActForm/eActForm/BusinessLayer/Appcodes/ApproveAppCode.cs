@@ -58,6 +58,34 @@ namespace eActForm.BusinessLayer
             return writer.ToString();
         }
 
+        public static string RenderViewToString(string controllerName, string viewName, object viewData, HttpContext conText)
+        {
+            var context = conText;
+            var contextBase = new HttpContextWrapper(context);
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", controllerName);
+
+            var controllerContext = new ControllerContext(contextBase,
+                                                          routeData,
+                                                          new MainReportController());
+
+            var razorViewEngine = new RazorViewEngine();
+            var razorViewResult = razorViewEngine.FindView(controllerContext,
+                                                           viewName,
+                                                           "",
+                                                           false);
+
+            var writer = new StringWriter();
+            var viewContext = new ViewContext(controllerContext,
+                                              razorViewResult.View,
+                                              new ViewDataDictionary(viewData),
+                                              new TempDataDictionary(),
+                                              writer);
+            razorViewResult.View.Render(viewContext, writer);
+
+            return writer.ToString();
+        }
+
         public static void setCountWatingApprove()
         {
             try
@@ -782,7 +810,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static string checkStatusBeforeCallKafka(string empId,string activityId)
+        public static string checkStatusBeforeCallKafka(string empId, string activityId)
         {
             try
             {
@@ -791,13 +819,13 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter("@p_empId", empId)
                     , new SqlParameter("@activityId", activityId));
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                            select new 
-                            {
-                                empId = dr["empId"].ToString(),
-                                countApprove = (int)dr["countApprove"]
-                            }).ToList();
+                              select new
+                              {
+                                  empId = dr["empId"].ToString(),
+                                  countApprove = (int)dr["countApprove"]
+                              }).ToList();
 
-                if(result.Any())
+                if (result.Any())
                 {
                     resultStatus = result.FirstOrDefault().countApprove > 0 ? result.FirstOrDefault().empId : "";
                 }

@@ -48,11 +48,11 @@ namespace eActForm.BusinessLayer.Appcodes
             try
             {
 
-                if (actType == Activity_Model.activityType.MT.ToString())
+                if (actType == Activity_Model.activityType.MT.ToString() || actType == Activity_Model.activityType.MT_AddOn.ToString())
                 {
                     return ConfigurationManager.AppSettings["companyId_MT"].ToString();
                 }
-                else if (actType == Activity_Model.activityType.OMT.ToString())
+                else if (actType == Activity_Model.activityType.OMT.ToString() || actType == Activity_Model.activityType.OMT_AddOn.ToString())
                 {
                     return ConfigurationManager.AppSettings["companyId_OMT"].ToString();
                 }
@@ -66,7 +66,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 }
                 else if (actType == Activity_Model.activityType.EXPENSE.ToString())
                 {
-                    return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
+                    return ConfigurationManager.AppSettings["companyId_Thaibev"].ToString();
                 }
                 else if (actType == Activity_Model.activityType.HCForm.ToString())
                 {

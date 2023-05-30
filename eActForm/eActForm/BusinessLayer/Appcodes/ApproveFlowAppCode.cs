@@ -146,12 +146,16 @@ namespace eActForm.BusinessLayer
                         var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
                         var getLimitAmount = estimateList.Sum(x => x.total);
 
-                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
+                        var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).ToList();
+                        var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
+                        var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
+
+
                         if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                         {
 
                             string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
-                            if (purpose.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
+                            if (chkPurposeTravel.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel && !chkPurposeCostExcess.Any())
                             {
                                 if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
                                 {
@@ -168,7 +172,7 @@ namespace eActForm.BusinessLayer
                                     model.flowDetail.OrderBy(X => X.rangNo);
                                 }
                             }
-                            else if ((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"])) || (purpose.Any() && !chkChannel))
+                            else if ((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"])) || (chkPurposeTravel.Any() && !chkChannel) || chkPurposeCostExcess.Any())
                             {
                                 if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
                                 {

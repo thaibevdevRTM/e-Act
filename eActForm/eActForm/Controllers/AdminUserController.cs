@@ -43,35 +43,41 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] ||
-                            model.companyList[0] == @ConfigurationManager.AppSettings["companyId_HCM"] ||
-                            model.companyList[0] == @ConfigurationManager.AppSettings["companyId_TBM"])
+                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"]
+                            || model.companyList[0] == @ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            if (model.custLi == null)
+
+                            foreach (var itemCompany in model.companyList)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
-                            }
-                            else
-                            {
-                                foreach (var itemCust in model.custLi)
+                                if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"] && model.custLi != null)
                                 {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item, "");
+                                    foreach (var itemCust in model.custLi)
+                                    {
+                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, itemCust, item, "");
+                                    }
+                                }
+
+                                if (itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
+                                {
+                                    if (model.regionList == null)
+                                    {
+                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
+                                    }
+                                    else
+                                    {
+                                        foreach (var region in model.regionList)
+                                        {
+                                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, "", item, region);
+                                        }
+                                    }
                                 }
                             }
+
                         }
                         else
                         {
-                            if (model.regionList == null)
-                            {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
-                            }
-                            else
-                            {
-                                foreach (var region in model.regionList)
-                                {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], "", item, region);
-                                }
-                            }
+                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
+
                         }
                     }
                 }
@@ -110,7 +116,7 @@ namespace eActForm.Controllers
                         customerName = group.First().customerName
                     }).OrderBy(x => x.customerName).ToList(),
                     productTypeList = customerLists,
-                    companyId = customerLists.Any() ? customerLists.FirstOrDefault().companyId : customerLists.FirstOrDefault().companyId,
+                    companyList =  customerLists.ToList(),
                     empId = userModel.userLists.FirstOrDefault().empId
                 };
                 result.Data = resultData;

@@ -82,6 +82,10 @@
                 .pvNoWidth {
                     width: 11%;
                 }
+
+                .pagebreak {
+                    page-break-after: always;
+                }
             </style>
             <table class="borderWidthMaxCollape" cellpadding="-4" cellspacing="-4">
                 <tr>
@@ -105,7 +109,7 @@
                     </td>
                 </tr>
                 @{
-                    var index = 0;
+                    int index = 0, getLen = 0;
                     List<GetDataDetailPaymentAll> filterNowPayOnly = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
                     List<GetDataDetailPaymentAll> filterDataHistoryPay = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
                     filterNowPayOnly.RemoveAll(r => r.payNo != Model.tB_Act_ActivityForm_DetailOther.payNo);
@@ -117,6 +121,7 @@
                     var filterDataHistoryPayArray = filterDataHistoryPay.ToArray();
                     var havefilterDataHistoryPayArray = filterDataHistoryPay.Count;
                     var NoNeedRow = 0;
+                    string strClass = "";
 
                 }
                 @foreach (var item in Model.listGetDataDetailPaymentAll)
@@ -247,6 +252,9 @@
                     }
                     else
                     {
+
+                        getLen += NowPayOnlyArray[index].productDetail.Length;
+
                         <tr>
                             @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
                             {
@@ -522,7 +530,7 @@
                             </tr>
                             <tr>
                                 <td class="paddingRowTableV2N txtRight fontBlueV1">
-                                    @{ 
+                                    @{
                                         decimal? getTotal = Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value + sumVat;
                                     }
                                     @getTotal.Value.ToString("#,##0.00")&nbsp;&nbsp;
@@ -611,3 +619,9 @@
     </tr>
 </table>
 
+
+@if (getLen > 380 && getLen < 600)
+{
+    strClass = "pagebreak";
+}
+<div class="@strClass"></div>

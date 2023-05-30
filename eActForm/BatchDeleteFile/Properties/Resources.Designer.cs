@@ -70,7 +70,7 @@ namespace BatchDeleteFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E:\root\eActDev\Uploadfiles\{0}.
+        ///   Looks up a localized string similar to E:\root\eAct\Uploadfiles\{0}.
         /// </summary>
         public static string rootUploadfiles {
             get {
@@ -88,7 +88,7 @@ namespace BatchDeleteFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=10.5.56.33; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;.
+        ///   Looks up a localized string similar to Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;.
         /// </summary>
         public static string strCon {
             get {

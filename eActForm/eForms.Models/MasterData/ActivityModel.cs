@@ -47,8 +47,8 @@ namespace eForms.Models.MasterData
         public decimal? budgetTotal { get; set; }
         public decimal? useAmount { get; set; }
         public decimal? returnAmount { get; set; }
-        public decimal? amountBalance {get;set;}
-        
+        public decimal? amountBalance { get; set; }
+
     }
 
 }

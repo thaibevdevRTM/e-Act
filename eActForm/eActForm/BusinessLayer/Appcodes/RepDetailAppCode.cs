@@ -236,9 +236,17 @@ namespace eActForm.BusinessLayer
                     {
                         stored = "usp_getReportDetailByCreateDate";
                     }
+                    else if (typeForm == Activity_Model.activityType.MT_AddOn.ToString())
+                    {
+                        stored = "usp_getReportDetail_MT_AddOn";
+                    }
                     else if (typeForm == Activity_Model.activityType.OMT.ToString())
                     {
                         stored = "usp_getReportDetailOMTByCreateDate";
+                    }
+                    else if (typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
+                    {
+                        stored = "usp_getReportDetail_OMT_AddOn";
                     }
                     else
                     {
@@ -276,7 +284,10 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ?
+                return typeForm == Activity_Model.activityType.MT.ToString()
+                    || typeForm == Activity_Model.activityType.OMT.ToString()
+                    || typeForm == Activity_Model.activityType.MT_AddOn.ToString()
+                    | typeForm == Activity_Model.activityType.OMT_AddOn.ToString() ?
                     dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
             }
             catch (Exception ex)

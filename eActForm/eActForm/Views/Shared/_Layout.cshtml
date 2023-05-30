@@ -42,9 +42,10 @@
                     <div class="profile clearfix">
                         <div class="profile_pic">
                             @{
-                                var src = "~/images/numan-logo.png";
+                                var srcImg = "https://beverest.thaibev.com/photo/photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
+                                //var src = "~/images/numan-logo.png";
                             }
-                            <img src="~/images/numan-logo.png" width="50" height="50" class="img-circle profile_img" />
+                            <img src="@srcImg" width="50" height="50" class="img-circle profile_img" />
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>

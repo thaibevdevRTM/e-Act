@@ -30,7 +30,9 @@ namespace eActForm.Controllers
                 // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+                    if (typeForm == Activity_Model.activityType.MT.ToString()
+                        || typeForm == Activity_Model.activityType.SetPrice.ToString()
+                        || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
                     {
                         models.customerslist = QueryGetAllCustomers.getCustomersMT();
                     }
@@ -126,8 +128,10 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                GenPDFAppCode.doGen(GridHtml, activityId, Server);
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                activity_TBMMKT_Model = ReportAppCode.mainReport(activityId, "");
 
+                GenPDFAppCode.doGen(GridHtml, GenPDFAppCode.getHeader(activity_TBMMKT_Model), activityId, Server, activity_TBMMKT_Model);
                 bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
                 if (folderExists)
                     Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)), true);

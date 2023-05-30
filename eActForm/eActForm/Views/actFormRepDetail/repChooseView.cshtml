@@ -60,7 +60,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{ var index = 1; string strActNo = "", activityPeriodSt = "";
+
+
+                        @{
+                            var index = 1; string strActNo = "", activityPeriodSt = "";
                         }
                         @foreach (var item in Model.actFormRepDetailGroupLists)
                         {
@@ -73,12 +76,16 @@
                                     </td>
                                     <td class=" ">@index</td>
                                     <td>
-                                        @if (!DocumentsAppCode.filterActivityForPayment_MT(@item.theme))
+                                        @if (Model.typeForm == Activity_Model.activityType.MT.ToString() || Model.typeForm == Activity_Model.activityType.OMT.ToString())
                                         {
-                                            <a href="javascript:" onclick="return callSubActivityView('@item.actRef');">
-                                                <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
-                                            </a>
+                                            if (!DocumentsAppCode.filterActivityForPayment_MT(@item.theme))
+                                            {
+                                                <a href="javascript:" onclick="return callSubActivityView('@item.actRef');">
+                                                    <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
+                                                </a>
+                                            }
                                         }
+
                                     </td>
                                     <td class=" ">
                                         @item.activityNo@item.payment
@@ -178,7 +185,10 @@
     $(function () {
         $("#btnSelected").click(function () {
             var urlCall = "";
-            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()' || '@Model.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.OMT.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.MT_AddOn.ToString()'
+                || '@Model.typeForm' == '@Activity_Model.activityType.OMT_AddOn.ToString()')
             {
                 urlCall = '@Url.Action("repListView", "actFormRepDetail" )';
             }

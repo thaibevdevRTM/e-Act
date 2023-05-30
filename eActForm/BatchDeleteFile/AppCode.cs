@@ -1,12 +1,5 @@
 ﻿using Microsoft.ApplicationBlocks.Data;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BatchDeleteFile
 {
@@ -42,10 +35,10 @@ namespace BatchDeleteFile
         public static string LogsFileName()
         {
 
-                var location = System.Reflection.Assembly.GetEntryAssembly().Location;
-                string str = string.Format(BatchDeleteFile.Properties.Resources.logsFileName, new string[] { Path.GetDirectoryName(location), DateTime.Now.ToString("ddMMyyyy") });
-                return str;
-            
+            var location = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string str = string.Format(BatchDeleteFile.Properties.Resources.logsFileName, new string[] { Path.GetDirectoryName(location), DateTime.Now.ToString("ddMMyyyy") });
+            return str;
+
         }
     }
 
