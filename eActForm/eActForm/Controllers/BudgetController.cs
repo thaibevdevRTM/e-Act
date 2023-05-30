@@ -340,13 +340,14 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
         {
             Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+
             Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
             Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
             Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-
+            Budget_Activity.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
 
             if (!string.IsNullOrEmpty(invoiceId))
-            {// for get invoice history 
+            {// get invoice for edit 
                 Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault();
             }
             return PartialView(Budget_Activity);
@@ -368,24 +369,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId,  null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
             Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
-
-            //string var_actNo = "";
-            //string var_cusId = "";
-            //var_actNo = Budget_Model.Budget_Activity.act_activityNo;
-            //var_cusId = Budget_Model.Budget_Activity.act_customerId;
-
-            //Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceDetail(null, null, null, var_actNo, null, null, var_cusId, null, null);
-            //List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> Result = new List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel>();
-            //foreach (var inv_his in Budget_Model.Budget_Invoce_History_list) // preview invoice pdf non approved
-            //{
-            //    if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) //draft or wait
-            //    {
-            //        Result.Add(Budget_Model.Budget_Invoice_list.Find(x => (x.invoiceNo == inv_his.invoiceNo)));
-            //    }
-            //}
-            //Result.RemoveAll(item => item == null);
-            //Budget_Model.Budget_Invoice_list.Clear();
-            //Budget_Model.Budget_Invoice_list = Result.Distinct().ToList();
 
             return PartialView(Budget_Model);
         }
@@ -791,7 +774,109 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
+    public class BudgetViewerController : Controller
+    {
+        // GET: BudgetViewer
+        public ActionResult Index()
+        {
+            return View();
+        }
 
+        public ActionResult activityPDFView(string budgetApproveId)
+        {
+
+            //var var_budgetActivityId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
+            TempData["budgetApproveId"] = budgetApproveId;
+            ViewBag.budgetApproveId = budgetApproveId;
+            return PartialView();
+        }
+
+        public PartialViewResult regenBudgetApprovePdf(string budgetApproveId, string activityId)
+        {
+            Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
+            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+
+            Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
+            return PartialView(Budget_Model);
+
+            //budgetApproveId
+            //activityId
+
+        }
+
+        public ActionResult getPdfBudget(string budgetApproveId)
+        {
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
+
+            try
+            {
+                rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
+                {
+                    budgetApproveId = "fileNotFound";
+                }
+
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+                                         FileMode.Open,
+                                         FileAccess.Read
+                                       );
+
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getPdfBudget >>" + ex.Message);
+            }
+
+
+            return fsResult;
+        }
+
+        public ActionResult getInvoicePdfBudget(string fileName)
+        {
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
+
+            try
+            {
+                rootPath = ConfigurationManager.AppSettings["rootUploadfilesBudget"];
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, fileName))))
+                {
+                    fileName = "fileNotFound.pdf";
+                }
+
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, fileName)),
+                                                     FileMode.Open,
+                                                     FileAccess.Read
+                                                   );
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getInvoicePdfBudget >>" + ex.Message);
+            }
+
+            return fsResult;
+        }
+
+        //---------------------------------------------------------------------------------------------------
+
+        public ActionResult invoicePDFView(string fileName)
+        {
+
+            TempData["fileName"] = fileName;
+            ViewBag.fileName = fileName;
+            return PartialView();
+        }
+
+
+    }
 
 
     public class BudgetApproveListController : Controller

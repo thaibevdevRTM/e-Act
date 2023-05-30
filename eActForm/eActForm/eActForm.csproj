@@ -381,7 +381,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetReportController.cs" />
-    <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\ClaimReportController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
