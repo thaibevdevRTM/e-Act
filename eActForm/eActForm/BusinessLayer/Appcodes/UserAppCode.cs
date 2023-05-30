@@ -81,8 +81,10 @@ namespace eActForm.BusinessLayer
 
 
                             UtilsAppCode.Session.User.empCompanyId = !string.IsNullOrEmpty(dr["companyId"].ToString()) ? dr["companyId"].ToString() : UtilsAppCode.Session.User.empCompanyId;
+
+                            UtilsAppCode.Session.User.empCompanyList.Add(dr["companyId"].ToString());
+
                             UtilsAppCode.Session.User.regionId = dr["regionId"].ToString();
-                            UtilsAppCode.Session.User.customerId = dr["customerId"].ToString();
                             UtilsAppCode.Session.User.empCompanyGroup = !string.IsNullOrEmpty(dr["companyId"].ToString()) ? ActFormAppCode.getGrpCompByCompId(dr["companyId"].ToString()) : UtilsAppCode.Session.User.empCompanyGroup;
 
 

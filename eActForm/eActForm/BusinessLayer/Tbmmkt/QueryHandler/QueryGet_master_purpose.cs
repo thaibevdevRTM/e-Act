@@ -24,8 +24,10 @@ namespace eActForm.BusinessLayer
                                  detailTh = d["detailTh"].ToString() + " : " + d["detailEn"].ToString(),
                                  detailEn = d["detailEn"].ToString(),
                                  chk = false,
+                                 order = (int)d["_order"],
+
                              });
-                return lists.OrderBy(x => x.detailTh).ToList();
+                return lists.OrderBy(x => x.order).ToList();
             }
             catch (Exception ex)
             {
@@ -46,8 +48,9 @@ namespace eActForm.BusinessLayer
                                  detailTh = d["detailTh"].ToString() + " : " + d["detailEn"].ToString(),
                                  detailEn = d["detailEn"].ToString(),
                                  chk = d["chk"].ToString() == "1" ? true : false,
+                                 order = (int)d["_order"],
                              });
-                return lists.OrderBy(x => x.detailTh).ToList();
+                return lists.OrderBy(x => x.order).ToList();
             }
             catch (Exception ex)
             {

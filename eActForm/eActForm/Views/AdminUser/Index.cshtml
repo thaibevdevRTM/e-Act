@@ -31,7 +31,9 @@
         </div>
         <div class="col-md-4">
 
-            @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", onchange = "onchangeCompany();" })
+            @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", multiple = "multiple",onchange = "onchangeCompany();" })
+
+          
 
         </div>
     </div>
@@ -224,13 +226,19 @@
 
 
     function onchangeCompany() {
-        if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_OMT"]') {
+
+         if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]') && $("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
+            document.getElementById("divRegion").style.display = "block";
+            document.getElementById("divCustomer").style.display = "block";
+            document.getElementById("divProductType").style.display = "block";
+        }
+        else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
             document.getElementById("divRegion").style.display = "block";
             document.getElementById("divCustomer").style.display = "none";
             document.getElementById("divProductType").style.display = "block";
 
         }
-        else if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_MT"]') {
+        else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]')) {
             document.getElementById("divRegion").style.display = "none";
             document.getElementById("divCustomer").style.display = "block";
             document.getElementById("divProductType").style.display = "block";
@@ -243,6 +251,7 @@
     }
 
     function validateForm() {
+        $("#WaitDialog").show();
         var favorite = [];
         $.each($("input[name='model.chkProductType']:checked"), function () {
             favorite.push($(this).val());
@@ -258,11 +267,19 @@
             $("#frmAdminUser").submit();
         }
     }
+
+
     $(document).ready(function () {
+        $('#ddlCompany').multiselect({
+            numberDisplayed: 2,
+            enableFiltering: true,
+            buttonWidth: '100%'
+        });
+        $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+        $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
 
 
-
-
+        document.getElementById("divCustomer").style.display = "none";
         document.getElementById("divRegion").style.display = "none";
 
             $('#datatable').DataTable({
@@ -287,7 +304,7 @@
                         type: "POST",
                         dataType: "json",
                         data: {
-                            companyId: $("#ddlCompany").val(),
+                            companyId: '@ConfigurationManager.AppSettings["companyId_MT"]',
                             txtCus: $("#txtCustomer").val(),
                         },
                         success: function (data) {
@@ -348,12 +365,15 @@
         });
 
 
-        function onclickDelCusList(id) {
-            document.getElementById(id).remove();
-        }
+    function onclickDelCusList(id) {
+        document.getElementById(id).remove();
+    }
 
     function onClickEdit(empId) {
+        $("#WaitDialog").show();
 
+
+        $("#divRegionLists").html("");
         $("#divCustLists").html("");
         $.ajax({
             url: '@Url.Action("getUserRoleByEmpId", "AdminUser")',
@@ -363,8 +383,25 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                $("#ddlCompany").val(response.Data.companyId);
-                onchangeCompany();
+               // $("#ddlCompany").val(response.Data.companyId);
+
+                $("#ddlCompany").multiselect("clearSelection");
+                $("#ddlCompany").multiselect('refresh');
+
+                var stringArray = [];
+                if (response.Data.companyList.length > 0) {
+                    $.each(response.Data.companyList, function () {
+                        stringArray.push(this['companyId']);
+                    });
+                }
+                var delayInMilliseconds = 1000; //1 second
+                setTimeout(function () {
+                    $("#ddlCompany").multiselect('select', stringArray);
+                    onchangeCompany();
+
+                }, delayInMilliseconds);
+
+
 
 
                 $("#txtEmpCode").val(response.Data.empId);
@@ -439,6 +476,8 @@
                 });
             }
         });
+
+        $("#WaitDialog").hide();
     }
 
 
