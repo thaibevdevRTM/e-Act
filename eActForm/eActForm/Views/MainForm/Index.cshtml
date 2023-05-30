@@ -476,14 +476,20 @@
 
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
+
                 if ($(".clstxtproductDetail_" + i).val() != "" || $(".clstxtEO_" + i).val() != "") {
 
                     if ($(".clstxtYearSelect_" + i).val() == "") {
                         required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
                     }
                     if ($(".clstxtEO_" + i).val() == "") {
-                        required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                        required += "&emsp;EO บรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
                     }
+
+                    if ($(".clstxtEO_" + i).val().substring(0, 15).replaceAll("_", "").length < 15) {
+                        required += "&emsp;EO ไม่ครบ 15 digit >> บรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
+
                 }
             }
         }

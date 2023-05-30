@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class GenPDFAppCode
     {
-        public static void doGen(string gridHtml, string activityId, HttpServerUtilityBase server)
+        public static void doGen(string gridHtml, string htmlHeader, string activityId, HttpServerUtilityBase server, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             string log = "";
             try
@@ -20,11 +20,12 @@ namespace eActForm.BusinessLayer
 
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 gridHtml = gridHtml.Replace("undefined", "");
-
-
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 log = "rootPathInsert >>" + rootPathInsert;
-                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), HostingEnvironment.MapPath(rootPathInsert), HostingEnvironment.MapPath("~"));
+
+
+                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 30, 30), HostingEnvironment.MapPath(rootPathInsert), HostingEnvironment.MapPath("~"), htmlHeader);
+
 
 
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels
@@ -47,20 +48,21 @@ namespace eActForm.BusinessLayer
                 var rootPathOutput = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 log += "rootPathOutput >>" + rootPathOutput;
 
-                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
-                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    && getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formPurchaseTbm"])
-                {
-                    log += "call mergePDF";
-                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
-                }
-                else
-                {
-                    log += "delete rootPathOutput >>" + rootPathOutput;
-                    File.Delete(rootPathOutput);
-                    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
-                    File.Copy(replace, rootPathOutput);
-                }
+                log += "call mergePDF";
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
+
+                //if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                //{
+                //    log += "call mergePDF";
+                //    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, activityId);
+                //}
+                //else
+                //{
+                //    log += "delete rootPathOutput >>" + rootPathOutput;
+                //    File.Delete(rootPathOutput);
+                //    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                //    File.Copy(replace, rootPathOutput);
+                //}
 
             }
             catch (Exception ex)
@@ -68,5 +70,37 @@ namespace eActForm.BusinessLayer
                 throw new Exception("doGen PDF >> " + ex.Message);
             }
         }
+
+
+        public static string getHeader(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            string htmlHeader = string.Empty;
+            try
+            {
+
+
+                if (activity_TBMMKT_Model != null)
+                {
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                    {
+
+                        htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null);
+                        htmlHeader += " <table style=\"width: 100%;\" id=\"tabel_report\" class=\"formBorderStyle2\"><tr><td>";
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPv", activity_TBMMKT_Model);
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPvDetails", activity_TBMMKT_Model);
+                        htmlHeader += "</td></tr></table>";
+
+                    }
+                }
+
+                return htmlHeader;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GenPDFAppCode >> getHeader " + ex.Message);
+            }
+        }
+
     }
 }

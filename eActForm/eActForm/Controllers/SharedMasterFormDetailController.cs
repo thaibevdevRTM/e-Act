@@ -163,7 +163,7 @@ namespace eActForm.Controllers
         public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
-            
+
             activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt = lists.Count.ToString();
             activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.val = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
             return PartialView(activity_TBMMKT_Model);

@@ -47,7 +47,15 @@
         </style>
 
         <div>
-            <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+            @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
+            {
+                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Budget AddOn)</h5></div>
+            }
+            else
+            {
+                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+            }
+
         </div>
         <div>
             <table style="width:100%; margin-top:30px;">
@@ -529,6 +537,18 @@
 
             </table>
         </div>
+
+        @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
+        {
+
+            <div style="margin-top:10px;">
+                หมายเหตุ
+            </div>
+            <div>
+                @Html.Raw(Model.detailOtherModel.detailContact.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+            </div>
+
+        }
 
         <div>
             <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>

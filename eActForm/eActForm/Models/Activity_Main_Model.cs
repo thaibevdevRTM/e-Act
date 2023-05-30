@@ -383,6 +383,7 @@ namespace eActForm.Models
         public string detailTh { get; set; }
         public string detailEn { get; set; }
         public bool chk { get; set; }
+        public int order { get; set; }
 
     }
     //public class CheckboxModels

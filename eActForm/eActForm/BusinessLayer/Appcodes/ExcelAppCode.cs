@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Web;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -12,34 +13,43 @@ namespace eActForm.BusinessLayer
     {
         public static DataTable ReadExcel(string path, string sheetName, string fromColumnToColumn)
         {
-            DataTable dt = new DataTable();
-            using (OleDbConnection conn = new OleDbConnection())
+            try
             {
 
-                //ใช้ xls เท่านั่นจะได้ไม่ติดปัญหา Register OLE หรือต้องติดตั้งอะไรเพิ่มเติม
-
-                // if (path.Contains("xlsx"))
-                // {
-                //conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ path + ";Extended Properties='Excel 12.0 Xml;HDR=YES;IMEX=1;'";
-                // }
-                // else
-                // {
-                //conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= " + path + " ; Extended Properties='Excel 8.0;IMEX=1;HDR=YES'";                
-                conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES\";";
-                // }
-
-                using (OleDbCommand comm = new OleDbCommand())
+                DataTable dt = new DataTable();
+                using (OleDbConnection conn = new OleDbConnection())
                 {
-                    comm.CommandText = "Select * from [" + sheetName + "$" + fromColumnToColumn + "]";
-                    comm.Connection = conn;
-                    comm.CommandType = CommandType.Text;
-                    using (OleDbDataAdapter da = new OleDbDataAdapter())
+
+                    //ใช้ xls เท่านั่นจะได้ไม่ติดปัญหา Register OLE หรือต้องติดตั้งอะไรเพิ่มเติม
+
+                    // if (path.Contains("xlsx"))
+                    // {
+                    //conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ path + ";Extended Properties='Excel 12.0 Xml;HDR=YES;IMEX=1;'";
+                    // }
+                    // else
+                    // {
+                    //conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= " + path + " ; Extended Properties='Excel 8.0;IMEX=1;HDR=YES'";                
+                    conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES\";";
+                    // }
+
+                    using (OleDbCommand comm = new OleDbCommand())
                     {
-                        da.SelectCommand = comm;
-                        da.Fill(dt);
-                        return dt;
+                        comm.CommandText = "Select * from [" + sheetName + "$" + fromColumnToColumn + "]";
+                        comm.Connection = conn;
+                        comm.CommandType = CommandType.Text;
+                        using (OleDbDataAdapter da = new OleDbDataAdapter())
+                        {
+                            da.SelectCommand = comm;
+                            da.Fill(dt);
+                            return dt;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("ReadExcel => " + ex.Message);
+                return null;
             }
         }
 

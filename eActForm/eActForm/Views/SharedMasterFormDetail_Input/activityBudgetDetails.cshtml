@@ -87,11 +87,11 @@
                                           $(document).ready(function () {
                                                 $(function () {
 
-                                                     if ('@Model.activityFormTBMMKT.statusId' == '2' || '@Model.activityFormTBMMKT.statusId' == '3')
+                                                     if ('@Model.activityFormTBMMKT.statusId' == '3')
                                                      {
                                                           var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
                                                           checkIOPV(txtIO,@index,'disable');
-                                                      }
+                                                     }
 
                                                     $(".clstxtIO_@index").autocomplete({
                                                         source: function (request, response) {
@@ -311,7 +311,7 @@
 
         if ($("input[name='activityFormTBMMKT.isTemp']:checked").val() == 'true') {
         }
-        else { 
+        else {
             var getEOBudget = [];
             $('#tableDetailsBG tr').each(function (row, tr) {
 

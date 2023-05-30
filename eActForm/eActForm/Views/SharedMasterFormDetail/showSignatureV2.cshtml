@@ -1,26 +1,11 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
-@{ 
+@{
     Layout = null;
 }
 
 <div style="height:5px;" id="tbSigPage"></div>
 
-@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-    || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-{
-    <div id="divAddSubject" style="width: 100%; align-content: center; text-align: center;padding:5px;" class="fontRedV1">
-        @Html.Action("headerPv", "PartialPaymentVoucher", new { activity_TBMMKT_Model = Model })
-        @Html.Action("headerPvDetails", "PartialPaymentVoucher", new { activity_TBMMKT_Model = Model })
-
-        <table class="boxTableFormMainV1 fontDocV1">
-            <tr>
-                <td style="width:300px;" class="boxTableFormV1"> </td>
-            </tr>
-        </table>
-    </div>
-    <br />
-}
 
 <div style="width: 100%;text-align: left;">
     <div style="margin-bottom: 10px;">
@@ -30,6 +15,7 @@
         }
     </div>
 </div>
+
 
 @*<div id="writeHeight"></div>*@
 <script>

@@ -4,6 +4,13 @@ using iTextSharp.awt.geom;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
+using iTextSharp.tool.xml.css;
+using iTextSharp.tool.xml.html;
+using iTextSharp.tool.xml.parser;
+using iTextSharp.tool.xml.pipeline;
+using iTextSharp.tool.xml.pipeline.css;
+using iTextSharp.tool.xml.pipeline.end;
+using iTextSharp.tool.xml.pipeline.html;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -21,8 +28,11 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Services.Description;
 using System.Web.UI;
+using System.Xml.Linq;
 using WebLibrary;
+using static eActForm.Models.ApproveModel;
 using static eActForm.Models.TB_Act_Image_Model;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace eActForm.Models
 {
@@ -232,7 +242,7 @@ namespace eActForm.Models
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc, string serverMapPath)
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc, string serverMapPath, string htmlHeader)
         {
             MemoryStream ms = new MemoryStream();
             try
@@ -245,14 +255,12 @@ namespace eActForm.Models
                 StringReader sr = new StringReader(sw.ToString());
 
                 StringBuilder GridBuilder = new StringBuilder();
-                GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
                 GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");
                 GridBuilder.Append("</style>");
-                GridBuilder.Append("<body class=\"fontt\">");
+                GridBuilder.Append("<div class=\"fontt\">");
                 GridBuilder.Append(GridHtml);
-                GridBuilder.Append("</body>");
-                GridBuilder.Append("</html>");
+                GridBuilder.Append("</div>");
                 GridBuilder.Append(sw.ToString());
                 sw.Flush();
                 sw.Close();
@@ -263,8 +271,11 @@ namespace eActForm.Models
 
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
+                    if (!string.IsNullOrEmpty(htmlHeader))
+                        writer.PageEvent = new HtmlPageEventHelper(htmlHeader);
+
+
                     pdfDoc.Open();
-                    //pdfDoc = new Document(PageSize.A4, 25, 25, 10, 10);
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
                         writer.CloseStream = false;
@@ -274,6 +285,7 @@ namespace eActForm.Models
 
                         }
                     }
+
                     pdfDoc.Close();
                 }
                 return ms;
@@ -281,111 +293,85 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 //ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview"); backgroud can't write error
-                EmailAppCodes.sendEmail(EmailAppCodes.GetDataEmailIsDev("").FirstOrDefault().e_to
-                    , ""
-                    , "eAct ApiApprove Error GetFileReportTomail_Preview"
-                    , GridHtml + " " + ex.Message
-                    ,""
-                    , null);
+                //EmailAppCodes.sendEmail(EmailAppCodes.GetDataEmailIsDev("").FirstOrDefault().e_to
+                //    , ""
+                //    , "eAct ApiApprove Error GetFileReportTomail_Preview"
+                //    , GridHtml + " " + ex.Message
+                //    ,""
+                //    , null);
 
                 return ms;
             }
         }
-
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc)
+        public class HtmlPageEventHelper : PdfPageEventHelper
         {
-            MemoryStream ms = new MemoryStream();
-            try
+            public HtmlPageEventHelper(string html)
+            {
+                this.html = html;
+            }
+
+            public override void OnStartPage(PdfWriter writer, Document document)
             {
 
-                UserControl LoadControl = new UserControl();
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter myWriter = new HtmlTextWriter(sw);
-                LoadControl.RenderControl(myWriter);
-                StringReader sr = new StringReader(sw.ToString());
-
-
-
-                StringBuilder GridBuilder = new StringBuilder();
-                GridBuilder.Append("<html>");
-                GridBuilder.Append("<style>");
-                GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");
-                GridBuilder.Append("</style>");
-                GridBuilder.Append("<body class=\"fontt\">");
-                GridBuilder.Append(GridHtml);
-                GridBuilder.Append("</body>");
-                GridBuilder.Append("</html>");
-                GridBuilder.Append(sw.ToString());
-                sw.Flush();
-                sw.Close();
-
-                string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
-                string readText = System.IO.File.ReadAllText(path);
-
-                using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
+                if (writer.CurrentPageNumber > 1)
                 {
-                    pdfDoc.Open();
-                    using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
-                    {
 
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
-                        {
-                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
-                        }
-                        pdfDoc.Close();
-                    }
+                    string fontPath = HostingEnvironment.MapPath("~/Content/fonts/THSarabun_0.ttf");
+                    var cssResolver = new StyleAttrCSSResolver();
+                    XMLWorkerFontProvider fontProvider =
+                        new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
+                    fontProvider.Register(fontPath);
+
+                    CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
+                    HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
+                    htmlContext.SetTagFactory(Tags.GetHtmlTagProcessorFactory());
+
+                    PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+                    HtmlPipeline html1 = new HtmlPipeline(htmlContext, pdf);
+
+                    CssResolverPipeline css = new CssResolverPipeline(cssResolver, html1);
+                    XMLWorker worker = new XMLWorker(css, true);
+                    XMLParser p = new XMLParser(worker);
+                    p.Parse(new StringReader(html));
+
                 }
-                return ms;
+
             }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
-                ms.Dispose();
-                ms.Close();
-                return ms;
-            }
+
+            string html = null;
         }
 
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
         {
-            return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
+            return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"), null);
         }
 
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath, string htmlHeader)
         {
-
-            //===========ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
-            //GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
-            //GridHtml = GridHtml.Replace(ConfigurationManager.AppSettings["renderHostPublicIP"], ConfigurationManager.AppSettings["renderHost"]);
-            //====END=======ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
             List<Attachment> files = new List<Attachment>();
 
-            msPreview = GetFileReportTomail_Preview(GridHtml, doc, serverMapPath);
+
+            msPreview = GetFileReportTomail_Preview(GridHtml, doc, serverMapPath, htmlHeader);
             PreviewBytes = msPreview.ToArray();
 
-            //using (MemoryStream stream = new MemoryStream())
-            //{
-            //    PdfReader reader = new PdfReader(PreviewBytes);
-            //    using (PdfStamper stamper = new PdfStamper(reader, stream))
-            //    {
-            //        int pages = reader.NumberOfPages;
-            //        for (int i = 1; i <= pages; i++)
-            //        {
-            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase("eact", GetTHSarabun()), 90f, 15f, 0);
-            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(i.ToString() + " - " + pages, GetTHSarabun()), 310f, 15f, 0);
-            //            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), GetTHSarabun()), 570f, 15f, 0);
-            //        }
-            //    }
-            //    PreviewBytes = stream.ToArray();
-            //}
 
+            using (MemoryStream stream = new MemoryStream())
+            {
+                PdfReader reader = new PdfReader(PreviewBytes);
+                using (PdfStamper stamper = new PdfStamper(reader, stream))
+                {
+                    int pages = reader.NumberOfPages;
+                    for (int i = 1; i <= pages; i++)
+                    {
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(i.ToString() + " - " + pages, GetTHSarabun(8, Font.NORMAL)), 310f, 15f, 0);
+                    }
+                }
+                PreviewBytes = stream.ToArray();
+            }
 
-
-
-            //msPreview.Position = 0;
             //save in directory
             if (rootPath != "")
             {
@@ -403,17 +389,6 @@ namespace eActForm.Models
 
             return files;
         }
-
-
-
-        public static MemoryStream genPdfFileStream(string GridHtml, Document doc)
-        {
-            //GridHtml = GridHtml.Replace("\n", "");
-            MemoryStream msPreview = new MemoryStream();
-            msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            return msPreview;
-        }
-
 
 
         public static string mergePDF(string rootPathOutput, string[] pathFile, string activityId)
@@ -670,7 +645,7 @@ namespace eActForm.Models
             }
         }
 
-        public static iTextSharp.text.Font GetTHSarabun()
+        public static iTextSharp.text.Font GetTHSarabun(int fontSize, int style)
         {
             var fontName = "THSarabun";
             if (!FontFactory.IsRegistered(fontName))
@@ -679,7 +654,7 @@ namespace eActForm.Models
                 var fontPath = HostingEnvironment.MapPath("~/Content/fonts/THSarabun_0.ttf");
                 FontFactory.Register(fontPath, fontName);
             }
-            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, fontSize, style);
         }
     }
 }

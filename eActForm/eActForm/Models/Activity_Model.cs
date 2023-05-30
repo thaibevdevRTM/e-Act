@@ -51,6 +51,7 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> companyList { get; set; }
         public approveFlowModel approveModels { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
+        public TB_Act_ActivityForm_DetailOther detailOtherModel { get; set; }
 
 
         public Activity_Model()
@@ -79,6 +80,7 @@ namespace eActForm.Models
             activityFormModel = new ActivityForm();
             customerModel = new Customers_Model();
             activityModelList = new List<ActivityForm>();
+            detailOtherModel = new TB_Act_ActivityForm_DetailOther();
         }
 
         public enum modeForm
@@ -99,7 +101,9 @@ namespace eActForm.Models
             ITForm,
             HCForm,
             OtherCompany,
-            Beer
+            Beer,
+            MT_AddOn,
+            OMT_AddOn
         }
         public enum groupCompany
         {
@@ -168,6 +172,8 @@ namespace eActForm.Models
             public string channelId { get; set; }
             public string mainAgency { get; set; }
             public string piorityDoc { get; set; }
+            public string type { get; set; }
+            public string count { get; set; }
 
         }
 
@@ -302,6 +308,8 @@ namespace eActForm.Models
         public decimal? sumTotal { get; set; }
         public string callFrom { get; set; }
         public string piority { get; set; }
+        public string statusName { get; set; }
+        public string detailContact { get; set; }
 
     }
 

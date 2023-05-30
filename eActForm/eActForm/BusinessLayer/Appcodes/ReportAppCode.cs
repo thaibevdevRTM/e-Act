@@ -97,22 +97,23 @@ namespace eActForm.BusinessLayer
 
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId, empId);
                 }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"] ||
+                    activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                 {
                     ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
                     objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
                     objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
                     activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
-                }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
-                {
-                    ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
-                    objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
-                    objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
-                    activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
+
+
+                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
+                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
+                    objGetDataLayoutDoc.activityId = activityId;
+                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                 {
+                    #region BG
                     try
                     {
                         List<BudgetTotal> returnAmountList = new List<BudgetTotal>();
@@ -190,6 +191,7 @@ namespace eActForm.BusinessLayer
                     {
                         ExceptionManager.WriteError("showDetailBudgetRpt => " + ex.Message);
                     }
+                    #endregion
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                 {
@@ -197,17 +199,6 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
-                }
-
-
-                //=====layout doc=============
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-                {
-                    ObjGetDataLayoutDoc objGetDataLayoutDoc = new ObjGetDataLayoutDoc();
-                    objGetDataLayoutDoc.typeKeys = "PVFormBreakSignatureNewPage";
-                    objGetDataLayoutDoc.activityId = activityId;
-                    activity_TBMMKT_Model.list_ObjGetDataLayoutDoc = QueryGetSelectMainForm.GetQueryDataMasterLayoutDoc(objGetDataLayoutDoc);
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
                             activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
@@ -224,6 +215,7 @@ namespace eActForm.BusinessLayer
 
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
                     {
+                        #region expensesTrvDetailRpt
                         ApproveModel.approveModels models = new ApproveModel.approveModels();
                         models = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
                         //List<approveDetailModel> approveDetailLists = new List<approveDetailModel>();
@@ -268,7 +260,7 @@ namespace eActForm.BusinessLayer
 
 
 
-                        #region expensesTrvDetailRpt
+
 
                         CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
                         {
@@ -417,6 +409,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+                activityModel.detailOtherModel = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(actId).FirstOrDefault();
                 activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
                 activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();

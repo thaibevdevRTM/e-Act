@@ -23,7 +23,9 @@ namespace eActForm.Controllers
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
 
-            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
+            if (typeForm == Activity_Model.activityType.MT.ToString()
+                || typeForm == Activity_Model.activityType.SetPrice.ToString()
+                || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
             {
                 models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }

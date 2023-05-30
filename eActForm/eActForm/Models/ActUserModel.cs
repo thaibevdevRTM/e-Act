@@ -71,6 +71,7 @@ namespace eActForm.Models
             public string empCategory { get; set; }
             public string empCompanyGroup { get; set; }
             public string empCompanyId { get; set; }
+            public List<string> empCompanyList { get; set; }
             public string empCompanyName { get; set; }
             public string empCompanyNameTH { get; set; }
             public string empDivisionEN { get; set; }
@@ -113,6 +114,13 @@ namespace eActForm.Models
             public string DepartmentNameTH { get; set; }
             public string BUSUName { get; set; }
             public string BUSUNameTH { get; set; }
+
+
+            public User()
+            {
+                empCompanyList = new List<string>();
+            }
         }
+
     }
 }
