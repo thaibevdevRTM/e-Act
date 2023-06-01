@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using static eActForm.Models.AdminUserModel;
 
 namespace eActForm.Controllers
 {
@@ -18,7 +19,7 @@ namespace eActForm.Controllers
             AdminUserModel adminUserModel = new AdminUserModel();
             adminUserModel.userLists = AdminUserAppCode.getAllUserRole();
             adminUserModel.getCompany = AdminUserAppCode.getCompany();
-
+            adminUserModel.roleList = AdminUserAppCode.getAllRole();
             return View(adminUserModel);
 
         }
@@ -106,8 +107,10 @@ namespace eActForm.Controllers
                 var customerLists = AdminUserAppCode.getcustomerRoleByEmpId(empId);
                 userModel.customerLists = customerLists.Where(x => x.cusId != "").ToList();
                 userModel.regionList = QueryGetAllRegion.getRegoinByEmpId(empId);
+                userModel.roleList = AdminUserAppCode.getAllRole();
                 var resultData = new
                 {
+                    roleList = userModel.roleList,
                     userLists = userModel.userLists,
                     regionList = userModel.regionList,
                     customerLists = userModel.customerLists.GroupBy(grp => grp.cusId).Select(group => new

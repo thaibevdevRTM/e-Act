@@ -1782,17 +1782,17 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             try
             {
-                if (UtilsAppCode.Session.User != null)
-                {
-                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
-                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                //if (UtilsAppCode.Session.User != null)
+                //{
+                //    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
+                //        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
 
-                    UtilsAppCode.Session.User.countWatingBudgetForm = "";
-                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                    {
-                        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
-                    }
-                }
+                //    UtilsAppCode.Session.User.countWatingBudgetForm = "";
+                //    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                //    {
+                //        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
+                //    }
+                //}
             }
             catch (Exception ex)
             {
