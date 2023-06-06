@@ -119,7 +119,7 @@ namespace eActForm.Controllers
                         customerName = group.First().customerName
                     }).OrderBy(x => x.customerName).ToList(),
                     productTypeList = customerLists,
-                    companyList =  customerLists.ToList(),
+                    companyList = customerLists.ToList(),
                     empId = userModel.userLists.FirstOrDefault().empId
                 };
                 result.Data = resultData;

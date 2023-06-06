@@ -75,7 +75,7 @@ namespace eActForm.BusinessLayer
                                     UtilsAppCode.Session.User.isAdminCVM = true; break;
                                 case "12":
                                     UtilsAppCode.Session.User.isAdminHCBP = true; break;
-                                
+
                             }
 
 

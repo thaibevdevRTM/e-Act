@@ -1,8 +1,7 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using eActForm.BusinessLayer;
-
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Bud_Activity_Model;
 //using static eActForm.Models.Budget_Approve_Detail_Model;
@@ -390,7 +389,7 @@ namespace eActForm.Models //update 21-04-2020
             public DateTime? act_costPeriodEnd { get; set; }
 
             public string act_activityName { get; set; }
-            public string act_theme { get; set; }           
+            public string act_theme { get; set; }
 
             public string act_objective { get; set; }
             public string act_trade { get; set; }
