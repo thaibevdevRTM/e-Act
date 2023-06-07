@@ -516,8 +516,7 @@ namespace eActForm.BusinessLayer
                             //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
 
 
-
-                            if (ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            if (!isResend && ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                             {
                                 //waiting update budgetControl
                                 bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
