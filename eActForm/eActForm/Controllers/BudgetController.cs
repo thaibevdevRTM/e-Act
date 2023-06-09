@@ -420,12 +420,12 @@ namespace eActForm.Controllers  //update 21-04-2020
             return Json(resultAjax, "text/plain");
         }
 
-        public JsonResult delInvoiceDetail(string actId, string estId, string invId, string delType)
+        public JsonResult budgetProductInvoiceDelete(string actId, string estId, string invId, string delType)
         {
             var result = new AjaxResult();
             try
             {
-                int countSuccess = BudgetFormCommandHandler.deleteInvoiceProduct(actId, estId, invId, delType);
+                int countSuccess = BudgetFormCommandHandler.commBudgetProductInvoiceDelete(actId, estId, invId, delType);
                 result.Success = true;
             }
             catch (Exception ex)

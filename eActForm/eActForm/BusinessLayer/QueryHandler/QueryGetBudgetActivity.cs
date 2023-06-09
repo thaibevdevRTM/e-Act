@@ -110,10 +110,7 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityProductSelect"
                  , new SqlParameter("@activityID", act_activityID)
-                 , new SqlParameter("@productID", null)
                  , new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
-                 //, new SqlParameter("@productID", prd_productID)
-                 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
@@ -310,6 +307,7 @@ namespace eActForm.BusinessLayer
 
                                   invoiceNo = d["invoiceNo"].ToString(),
                                   invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
+                                  productTotalBath = d["productTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["productTotalBath"].ToString()),
                                   productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
                                   productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
                                   productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
@@ -856,7 +854,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceId, string delType)
+        public static int commBudgetProductInvoiceDelete(string activityId, string estimateId, string invoiceId, string delType)
         {
 
             int result = 0;

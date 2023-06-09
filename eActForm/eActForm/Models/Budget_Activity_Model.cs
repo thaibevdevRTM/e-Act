@@ -159,7 +159,7 @@ namespace eActForm.Models //update 21-04-2020
 
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal invoiceTotalBath { get; set; }
-
+            public decimal productTotalBath { get; set; }
             public decimal productBalanceBath { get; set; }
             public Int32 productBudgetStatusId { get; set; }
             public string productBudgetStatusNameTH { get; set; }
