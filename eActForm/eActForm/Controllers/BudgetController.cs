@@ -26,8 +26,6 @@ using Microsoft.ApplicationBlocks.Data;
 namespace eActForm.Controllers  //update 21-04-2020
 {
     [LoginExpire]
-
-
     public class BudgetInvoiceAppCode
     {
 
@@ -202,9 +200,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
-
-
-
+    [LoginExpire]
     public class BudgetController : Controller
     {
 
@@ -364,11 +360,11 @@ namespace eActForm.Controllers  //update 21-04-2020
             Session["activityId"] = activityId;
 
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
-            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
-
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId,  null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+                       
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, activityId,  null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
             Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
+            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
 
             return PartialView(Budget_Model);
         }
@@ -491,15 +487,15 @@ namespace eActForm.Controllers  //update 21-04-2020
         public ActionResult manageInvoiceListSearch()
         {
             TB_Bud_Invoice_Document_Model models = new TB_Bud_Invoice_Document_Model();
-            string companyEN = UtilsAppCode.Session.User.empCompanyGroup;
-
-
             try
             {
                 #region filter
-                DateTime date_inv_start = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
-                DateTime date_inv_end = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
 
+                string companyEN = Request.Form["var_companyEN"];
+
+                DateTime date_inv_start = DateTime.ParseExact(Request.Form["startDate"].Trim(), ConfigurationManager.AppSettings["formatDateUse"], null);
+                DateTime date_inv_end = DateTime.ParseExact(Request.Form["endDate"].Trim(), ConfigurationManager.AppSettings["formatDateUse"], null);
+                
                 string inv_createdDateStart = date_inv_start.ToString("yyyyMMdd");
                 string inv_createdDateEnd = date_inv_end.ToString("yyyyMMdd");
 
@@ -514,7 +510,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
 
             return RedirectToAction("manageInvoiceList");
-            //return PartialView("manageInvoiceIndex",models);
         }
 
         public ActionResult manageInvoiceList(string companyEN)
@@ -547,7 +542,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
             return PartialView(models);
         }
-
 
         public JsonResult getCustomerInvoice(string customerTH, string companyEN, string regionId)
         {
@@ -588,15 +582,17 @@ namespace eActForm.Controllers  //update 21-04-2020
             TB_Bud_Invoice_Document_Model budgetImageModel = new TB_Bud_Invoice_Document_Model();
             try
             {
+
                 budgetImageModel.BudgetInvoice = BudgetInvoiceAppCode.BudgetInvoiceDetail(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
                 budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
+
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
                 }
                 else
                 {
-                    budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+                    budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == budgetImageModel.BudgetInvoice.company).ToList();
                 }
 
                 if (budgetImageModel.BudgetInvoice.company == "MT")
@@ -719,14 +715,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult manageInvoiceEdit(string imageId)
-        {
-            TB_Bud_Invoice_Document_Model.BudgetInvoiceModel getBudImageModel = new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel();
-            getBudImageModel = BudgetInvoiceAppCode.BudgetInvoiceDetail(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
-
-            return PartialView(getBudImageModel);
-        }
-
         public JsonResult manageInvoiceEditSubmit(string id, string invoiceNo, string remark, string companyEN, string regionId, string customerId)
         {
             var resultAjax = new AjaxResult();
@@ -774,6 +762,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
+    [LoginExpire]
     public class BudgetViewerController : Controller
     {
         // GET: BudgetViewer
@@ -795,7 +784,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
             Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
 
             Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
             return PartialView(Budget_Model);
@@ -878,9 +867,10 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
-
+    [LoginExpire]
     public class BudgetApproveListController : Controller
     {
+       
         public ActionResult Index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
@@ -985,6 +975,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
     }
 
+    [LoginExpire]
     public class BudgetMyDocController : Controller
     {
         // GET: BudgetMyDoc
@@ -1198,6 +1189,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
+    [LoginExpire]
     public class BudgetApproveController : Controller
     {
 
@@ -1270,7 +1262,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
             Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null,  budgetApproveId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, null,  budgetApproveId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
             return PartialView(Budget_Model);
         }
@@ -2020,10 +2012,5 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
 
     }
-
-
-
-
-
 
 }

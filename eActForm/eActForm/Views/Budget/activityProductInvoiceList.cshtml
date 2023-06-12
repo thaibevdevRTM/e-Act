@@ -63,8 +63,8 @@
                 else if (item.invoiceApproveStatusId == 3 && item.invoiceBudgetStatusId != 7) // approve
                 {
                     @*
-                <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-                <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
+            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
                     *@
                 }
                 else if (item.invoiceApproveStatusId == 5 && item.invoiceBudgetStatusId != 7) // not approve

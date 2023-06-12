@@ -3273,7 +3273,6 @@
     <Content Include="Views\summaryReport\IndexDoc.cshtml" />
     <Content Include="Views\summaryReport\ListDoc.cshtml" />
     <Content Include="Views\BudgetViewer\invoicePDFView.cshtml" />
-    <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
     <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
     <Content Include="Views\Activity\ShowImage.cshtml" />
     <Content Include="Views\Approve\getApproveComment.cshtml" />

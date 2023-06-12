@@ -181,7 +181,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
         {
             try
             {

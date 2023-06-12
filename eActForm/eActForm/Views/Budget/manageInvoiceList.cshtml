@@ -15,7 +15,7 @@
     <table id="datatable" class="table table-striped table-hover">
         <thead>
             <tr style="background-color:#2B5D95;color:#ffffff;">
-                <th class="text-center" style="width:10%;"></th>
+                <th class="text-center" style="width:100px;"></th>
                 <th class="text-center" style="width:25%;">ชื่อไฟล์</th>
                 <th class="text-center" style="width:15%;">เลขที่ใบแจ้งหนี้</th>
                 <th class="text-center" style="width:15%;">จำนวนกิจกรรม</th>
@@ -34,9 +34,7 @@
 
                     @if (item.count_activityNo <= 0)
                     {
-                        <a href="javascript:" id="delFile" onclick="return onclickDelImageBudget('@item.id','@item._fileName');">
-                            <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                        </a>
+                    <a href="javascript:" id="delFile" class="anchorDetail btn ink-reaction btn-sm btn-danger fa fa-trash-o" onclick="return onclickDelImageBudget('@item.id','@item._fileName');"></a>
                     }
 
                 </td>
