@@ -364,7 +364,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                        เวลากิจกรรม <br />(Activity Period)<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -377,7 +377,7 @@
                 </div>
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลาการให้ทุนพิเศษ (Cost Period)
+                        เวลาการให้ทุนพิเศษ <br />(Cost Period)
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -452,14 +452,18 @@
         <label class="btn ink-reaction btn-danger fa fa-plus"></label>
     </div>
 </div>
-<hr />
+
+<div class="row">
+    <div class="col-md-12" id="divHistoryAddOn">
+        @Html.Action("PreviewHistory_AddOn", "Activity", new { activityId = Model.activityFormModel.id })
+    </div>
+</div>
+
+
 @if (Model.activityFormModel.master_type_form_id == @ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
 {
-    <div class="row">
-        <div class="col-md-12" id="divHistoryAddOn">
-            @Html.Action("PreviewHistory_AddOn", "Activity", new { activityId = Model.activityFormModel.id })
-        </div>
-    </div>
+
+
     <div class="row">
         <div class="col-12">
             <p class="lead">หมายเหตุ</p>
@@ -468,8 +472,10 @@
             @Html.TextAreaFor(x => x.detailOtherModel.detailContact, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtDetailContact" })
         </div>
     </div>
-    <hr />
 }
+
+<hr />
+
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
@@ -1224,6 +1230,7 @@
 
         var cusId = '';
         let txtAlert = '';
+        let refActivityNo = '';
         if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()'
             || '@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT_AddOn.ToString()') {
             cusId = $("#ddlCustomer").val()
@@ -1235,12 +1242,14 @@
 
         if ('@Model.activityFormModel.statusId' == "5" && typeFormId != '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
             $("#hdReferenceActNo").val($("#txtActivityNo").val());
+
         }
         else {
             $("#hdReferenceActNo").val('');
         }
 
         if (typeFormId == '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
+            refActivityNo = $("#txtActivityNo").val();
             txtAlert = "<p class='lead text-center'>คุณต้องการเพิ่ม Budget จากเอกสารฉบับนี้ใช่หรือไม่? <br/> ยืนยัน บันทึกข้อมูล!<p>"
 
         } else {
@@ -1293,7 +1302,7 @@
                             ActivityDetail: $("#txtActivityDetail").val(),
                             regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
-                            activityNoRef: $("#txtActivityNo").val(),
+                            activityNoRef: refActivityNo,
                             id: '@Model.activityFormModel.id',
                             chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
                             actIO: $("#txtActIO").val(),

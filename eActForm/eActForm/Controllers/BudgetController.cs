@@ -2,25 +2,21 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-
+using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
-
-
-using Microsoft.ApplicationBlocks.Data;
 
 
 namespace eActForm.Controllers  //update 21-04-2020
@@ -31,7 +27,7 @@ namespace eActForm.Controllers  //update 21-04-2020
     public class BudgetInvoiceAppCode
     {
 
-        public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetInvoiceListForCreatePDF( string act_form_id)
+        public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetInvoiceListForCreatePDF(string act_form_id)
         {
             try
             {
@@ -365,7 +361,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
             Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
 
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId,  null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
             Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
 
@@ -556,7 +552,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     models.BudgetInvoiceList = BudgetInvoiceAppCode.BudgetInvoiceDetail(null, null, null, null, null, companyEN, null, inv_createdDateStart, inv_createdDateEnd);
                 }
                 TempData["searchBudgetInvoiceList"] = null;
-                
+
             }
             catch (Exception ex)
             {
@@ -1185,7 +1181,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
             Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null,  budgetApproveId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, budgetApproveId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
             return PartialView(Budget_Model);
         }
@@ -1782,17 +1778,17 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             try
             {
-                if (UtilsAppCode.Session.User != null)
-                {
-                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
-                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                //if (UtilsAppCode.Session.User != null)
+                //{
+                //    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
+                //        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
 
-                    UtilsAppCode.Session.User.countWatingBudgetForm = "";
-                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                    {
-                        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
-                    }
-                }
+                //    UtilsAppCode.Session.User.countWatingBudgetForm = "";
+                //    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                //    {
+                //        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
+                //    }
+                //}
             }
             catch (Exception ex)
             {

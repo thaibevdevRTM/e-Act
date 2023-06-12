@@ -17,160 +17,117 @@
 {
 
 
-<div class="row">
-    <div class="form-group">
-        <div class="col-md-2 control-label">
-            EmpCode :
-        </div>
-        <div class="col-md-4">
-            <input type="text" class="form-control" required="required" id="txtEmpCode" name="txtEmpCode" />
-        </div>
-
-        <div class="col-md-2 control-label">
-            Company :
-        </div>
-        <div class="col-md-4">
-
-            @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", multiple = "multiple",onchange = "onchangeCompany();" })
-
-          
-
-        </div>
-    </div>
-
-    <div id="divCustomer">
+    <div class="row">
         <div class="form-group">
             <div class="col-md-2 control-label">
-                Customer :
+                EmpCode :
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="txtCustomer" name="txtCustomer" />
-                <input type="hidden" class="form-control" id="txtCustomerIds" name="txtCustomerIds" />
+                <input type="text" class="form-control" required="required" id="txtEmpCode" name="txtEmpCode" />
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-2 control-label">
-                </div>
-                <div class="col-md-10">
-                    <div id="divCustLists">
 
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="divRegion">
-        <div class="form-group">
             <div class="col-md-2 control-label">
-                Region :
+                Company :
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="txtRegion" name="txtRegion" />
-                <input type="hidden" class="form-control" id="txtRegions" name="txtRegions" />
+
+                @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", multiple = "multiple", onchange = "onchangeCompany();" })
+
+
+
             </div>
         </div>
-        <div class="row">
+
+        <div id="divCustomer">
             <div class="form-group">
                 <div class="col-md-2 control-label">
+                    Customer :
                 </div>
-                <div class="col-md-10">
-                    <div id="divRegionLists">
-
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="txtCustomer" name="txtCustomer" />
+                    <input type="hidden" class="form-control" id="txtCustomerIds" name="txtCustomerIds" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
                     </div>
+                    <div class="col-md-10">
+                        <div id="divCustLists">
+
+                        </div>
+                    </div>
+
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-   
-
-    <div class="form-group">
-        <div class="col-md-2 control-label">
-            <label>
-                Role :
-            </label>
-        </div>
-        <div class="col-md-2">
-            <div>
-                <input id="creater" type="checkbox" name="model.chkRole" value="1">
-                creater
-            </div>
-            <div>
-                <input id="approve" type="checkbox" name="model.chkRole" value="2">
-                approve
-            </div>
-            <div>
-                <input id="admin" type="checkbox" name="model.chkRole" value="3">
-                admin
-            </div>
-            <div>
-                <input id="superAdmin" type="checkbox" name="model.chkRole" value="4">
-                superAdmin
-            </div>
-            <div>
-                <input id="adminOMT" type="checkbox" name="model.chkRole" value="5">
-                adminOMT
-            </div>
-            <div>
-                <input id="adminTBM" type="checkbox" name="model.chkRole" value="6">
-                adminTBM
-            </div>
-            <div>
-                <input id="adminHCM" type="checkbox" name="model.chkRole" value="7">
-                adminHCM
-            </div>
-            <div>
-                <input id="adminNUM" type="checkbox" name="model.chkRole" value="8">
-                adminNUM
-            </div>
-            <div>
-                <input id="adminPOM" type="checkbox" name="model.chkRole" value="9">
-                adminPOM
-            </div>
-            <div>
-                <input id="admin_CHANG_INTER" type="checkbox" name="model.chkRole" value="10">
-                admin_CHANG_INTER
-            </div>
-            <div>
-                <input id="adminCVM" type="checkbox" name="model.chkRole" value="11">
-                adminCVM
-            </div>
-            <div>
-                <input id="adminHCBP" type="checkbox" name="model.chkRole" value="12">
-                adminHCBP
-            </div>
-            <div>
-                <input id="creatorMT_OMT" type="checkbox" name="model.chkRole" value="13">
-                isCreatorMT_OMT
             </div>
         </div>
 
-        <div id="divProductType">
+        <div id="divRegion">
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    Region :
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="txtRegion" name="txtRegion" />
+                    <input type="hidden" class="form-control" id="txtRegions" name="txtRegions" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
+                    </div>
+                    <div class="col-md-10">
+                        <div id="divRegionLists">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
             <div class="col-md-2 control-label">
                 <label>
-                    ProductType :
+                    Role :
                 </label>
             </div>
             <div class="col-md-2">
-                <div>
-                    <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="@AppCode.nonAL">
-                    Non-Alcohol
+                @foreach (var item in Model.roleList)
+                {
+                    <div>
+                        <input id="@item.roleName" type="checkbox" name="model.chkRole" value="@item.id">
+                        @item.roleName
+                    </div>
+                }
+
+
+            </div>
+
+            <div id="divProductType">
+                <div class="col-md-2 control-label">
+                    <label>
+                        ProductType :
+                    </label>
                 </div>
-                <div>
-                    <input id="chkAl" type="checkbox" name="model.chkProductType" value="@AppCode.AL">
-                    Alcohol
+                <div class="col-md-2">
+                    <div>
+                        <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="@AppCode.nonAL">
+                        Non-Alcohol
+                    </div>
+                    <div>
+                        <input id="chkAl" type="checkbox" name="model.chkProductType" value="@AppCode.AL">
+                        Alcohol
+                    </div>
                 </div>
             </div>
+
         </div>
 
+
     </div>
-
-
-</div>
 
 
 
@@ -383,7 +340,7 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
-               // $("#ddlCompany").val(response.Data.companyId);
+                // $("#ddlCompany").val(response.Data.companyId);
 
                 $("#ddlCompany").multiselect("clearSelection");
                 $("#ddlCompany").multiselect('refresh');
@@ -431,48 +388,14 @@
                     }
                 });
 
+
                 $.each(response.Data.userLists, function () {
-                    switch (this['roleId']) {
-                        case '1':
-                            document.getElementById("creater").checked = true;
-                            break;
-                        case '2':
-                            document.getElementById("approve").checked = true;
-                            break;
-                        case '3':
-                            document.getElementById("admin").checked = true;
-                            break;
-                        case '4':
-                            document.getElementById("superAdmin").checked = true;
-                            break;
-                        case '5':
-                            document.getElementById("adminOMT").checked = true;
-                            break;
-                        case '6':
-                            document.getElementById("adminTBM").checked = true;
-                            break;
-                        case '7':
-                            document.getElementById("adminHCM").checked = true;
-                            break;
-                        case '8':
-                            document.getElementById("adminNUM").checked = true;
-                            break;
-                        case "9":
-                            document.getElementById("adminPOM").checked = true;
-                            break;
-                        case "10":
-                            document.getElementById("admin_CHANG_INTER").checked = true;
-                            break;
-                        case "11":
-                            document.getElementById("adminCVM").checked = true;
-                            break;
-                        case "12":
-                            document.getElementById("adminHCBP").checked = true;
-                            break;
-                        case "13":
-                            document.getElementById("creatorMT_OMT").checked = true;
-                            break;
-                    }
+                  var roleId = this['roleId'];
+                    $.each(response.Data.roleList, function () {
+                        if (this['id'] == roleId) {
+                            document.getElementById(this['roleName']).checked = true;
+                        }
+                    });
                 });
             }
         });

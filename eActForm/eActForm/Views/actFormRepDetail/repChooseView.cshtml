@@ -78,7 +78,7 @@
                                     <td>
                                         @if (Model.typeForm == Activity_Model.activityType.MT.ToString() || Model.typeForm == Activity_Model.activityType.OMT.ToString())
                                         {
-                                            if (!DocumentsAppCode.filterActivityForPayment_MT(@item.theme))
+                                            if (!DocumentsAppCode.filterActivityForPayment_MT(@item.theme) && @item.statusId == "3")
                                             {
                                                 <a href="javascript:" onclick="return callSubActivityView('@item.actRef');">
                                                     <i class="btn ink-reaction btn-dark glyphicon glyphicon-usd" title="ปันส่วน" style="height:28px; margin-bottom:5px"></i>
