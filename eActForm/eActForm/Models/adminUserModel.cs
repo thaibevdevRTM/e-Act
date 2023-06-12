@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
 {
@@ -11,11 +12,14 @@ namespace eActForm.Models
         public List<Customer> customerLists { get; set; }
         public List<TB_Act_Other_Model> getCompany { get; set; }
         public List<TB_Act_Region_Model> regionList { get; set; }
+        public List<RoleModel> roleList { get; set; }
+
 
         public AdminUserModel()
         {
             userLists = new List<User>();
             regionList = new List<TB_Act_Region_Model>();
+            roleList = new List<RoleModel>();
         }
 
 
@@ -35,6 +39,7 @@ namespace eActForm.Models
             public string userLName { get; set; }
             public string teamName { get; set; }
             public string roleId { get; set; }
+            public string roleName { get; set; }
             public string companyId { get; set; }
         }
 
@@ -44,6 +49,13 @@ namespace eActForm.Models
             public string customerName { get; set; }
             public string productTypeId { get; set; }
             public string companyId { get; set; }
+
+        }
+
+        public class RoleModel
+        {
+            public string id { get; set; }
+            public string roleName { get; set; }
 
         }
     }

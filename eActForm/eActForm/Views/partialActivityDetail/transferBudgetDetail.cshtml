@@ -423,12 +423,13 @@
            success: function (response) {
                if (response.Data != null) {
                    $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                   $("#txtBudgetBalance").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                   //$("#txtBudgetBalance").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                }
                else {
                    $("#txtOldBudget").val('');
-                   $("#txtBudgetBalance").val('');
+                   //$("#txtBudgetBalance").val('');
                }
+               $("#txtBudgetBalance").val('');
                $("#txtNewBudget").val('');
                getCalBudget();
                $("#WaitDialog").hide();
@@ -649,15 +650,15 @@
              success: function (response) {
                  if (response.Data != null) {
                      $("#txtOldBudget").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                     $("#txtBudgetBalance").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                     //$("#txtBudgetBalance").val(response.Data.budgetPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                  }
                  else {
                      $("#txtOldBudget").val('');
-                     $("#txtBudgetBalance").val('');
+                     //$("#txtBudgetBalance").val('');
                      $("#txtNewBudget").val('');
                      bootbox.alert("ไม่พบ ข้อมูล!");
                  }
-
+                 $("#txtBudgetBalance").val('');
                  getCalBudget();
                  $("#WaitDialog").hide();
              }
@@ -709,17 +710,14 @@
 
 
         if ($("#txtBGYear").val() == '') {
-            required += "กรุณาเลือก Budget Year! *<br>"; validate = false;
+            required += "- เลือก Budget Year! *<br>"; validate = false;
         }
         if ($("#ddlBrand_BG").val() == '') {
-            required += "กรุณาเลือก Brand! *<br>"; validate = false;
+            required += "- เลือก Brand! *<br>"; validate = false;
         }
 
         if ($("#txtremark").val() == '') {
-            required += "กรุณากรอกรายละเอียด! *<br>"; validate = false;
-        }
-        if ($("#txtOldBudget").val() == '') {
-            required += "กรุณากรอกรายละเอียด! *<br>"; validate = false;
+            required += "- รายละเอียด! *<br>"; validate = false;
         }
 
         if ($("#txtOldBudget").val() == '' || $("#txtOldBudget").val() == '0') {
@@ -727,7 +725,11 @@
         }
 
         if ($("#txtNewBudget").val() == '') {
-            required += "กรุณาระบุ โอนงบประมาณ! *<br>"; validate = false;
+            required += "- โอนงบประมาณ! *<br>"; validate = false;
+        }
+
+        if ($("#txtBudgetBalance").val() == '') {
+            required += "- คงเหลือ! *<br>"; validate = false;
         }
 
 

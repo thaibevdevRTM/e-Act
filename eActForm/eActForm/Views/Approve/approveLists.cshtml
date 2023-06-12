@@ -52,9 +52,14 @@
                 </td>
                 <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? DocumentsAppCode.convertDateTHToShowCultureDateEN(item.updatedDate, ConfigurationManager.AppSettings["formatDatetimeUse"]) : "";} @date</td>
                 <td>
-                    @if (@item.remark != "")
+                    @if (item.remark != "")
                     {
-                        <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
+                        <div id="divRemark_@rangNo" style="display:none">
+                            @Html.Raw(@item.remark)
+                        </div>
+
+
+                        <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@rangNo');" ></a>
                     }
                 </td>
             </tr>
@@ -77,7 +82,8 @@
 
                 </div>
                 <div class="modal-body">
-                    <label id="lblRemark" name="lblRemark" class="text-primary"></label>
+                
+                    <div id="lblRemark" name="lblRemark" class="text-primary"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -88,8 +94,9 @@
 </div>
 
 <script>
-    function onShowRemark(txtRemark) {
-        $("#lblRemark").text(txtRemark);
+    function onShowRemark(remark_No) {
+        var getText = document.getElementById('divRemark_' + remark_No).innerText;
+        document.getElementById('lblRemark').innerHTML = getText.replace(/\r/g, '').replace(/\n/g, '<br>');
         $("#myModal").modal('show');
     }
 </script>

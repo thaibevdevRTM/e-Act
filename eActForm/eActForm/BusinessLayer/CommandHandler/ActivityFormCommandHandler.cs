@@ -237,18 +237,6 @@ namespace eActForm.BusinessLayer
                                 result[0] += getYear;
                                 result[0] += string.Format("{0:0000}", genNumber);
 
-                                if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
-                                {
-                                    result[1] = Activity_Model.activityType.SetPrice.ToString();
-                                }
-                                else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
-                                {
-                                    result[1] = Activity_Model.activityType.MT_AddOn.ToString();
-                                }
-                                else
-                                {
-                                    result[1] = Activity_Model.activityType.MT.ToString();
-                                }
 
                             }
                             else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
@@ -271,14 +259,6 @@ namespace eActForm.BusinessLayer
                                 result[0] += getYear;
                                 result[0] += string.Format("{0:0000}", genNumber);
 
-                                if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
-                                {
-                                    result[1] = Activity_Model.activityType.SetPriceOMT.ToString();
-                                }
-                                else
-                                {
-                                    result[1] = Activity_Model.activityType.OMT.ToString();
-                                }
 
                             }
                         }
@@ -300,6 +280,10 @@ namespace eActForm.BusinessLayer
                         {
                             typeFormCompany = Activity_Model.activityType.OMT_AddOn.ToString();
                         }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceOMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPriceOMT.ToString();
+                        }
                         else
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
@@ -310,6 +294,10 @@ namespace eActForm.BusinessLayer
                         if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.MT_AddOn.ToString();
+                        }
+                        else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
                         }
                         else
                         {
@@ -331,7 +319,7 @@ namespace eActForm.BusinessLayer
                     }
                     else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                     {
-                        result[1] = Activity_Model.activityType.ITForm.ToString();
+                        typeFormCompany = Activity_Model.activityType.ITForm.ToString();
                     }
 
                     else

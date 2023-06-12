@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using WebLibrary;
-using System.Globalization;
 
 namespace eActForm.BusinessLayer
 {
@@ -253,7 +253,7 @@ namespace eActForm.BusinessLayer
                                   bud_ActivityStatus = d["bud_ActivityStatus"].ToString(),
 
                                   act_compensateStatus = d["act_compensateStatus"].ToString(),
-                                  act_compensateDateStart = (DateTime?)d["act_compensateDateStart"] ,
+                                  act_compensateDateStart = (DateTime?)d["act_compensateDateStart"],
                                   act_compensateDateEnd = (DateTime?)d["act_compensateDateEnd"]
 
                                   //act_compensateDateStart = d["act_compensateDateStart"] is DBNull ? null : (DateTime?)d["act_compensateDateStart"],
@@ -270,7 +270,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
+
 
         public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
         {

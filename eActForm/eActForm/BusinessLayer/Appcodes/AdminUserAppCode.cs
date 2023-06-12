@@ -95,6 +95,26 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
+        public static List<AdminUserModel.RoleModel> getAllRole()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllRole");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new AdminUserModel.RoleModel()
+                             {
+                                 id = dr["roleId"].ToString(),
+                                 roleName = dr["roleName"].ToString(),
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getAllRole >> " + ex.Message);
+            }
+        }
+
         public static List<AdminUserModel.User> getUserRoleByEmpId(string empId)
         {
             try
