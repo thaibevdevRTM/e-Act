@@ -355,10 +355,11 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             Session["activityId"] = activityId;
 
-            Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
-            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
+            Session["activityId"] = activityId;
 
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId,  null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
+
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
             Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
             Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
             Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
