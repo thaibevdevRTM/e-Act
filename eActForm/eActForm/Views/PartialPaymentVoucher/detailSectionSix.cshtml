@@ -167,6 +167,7 @@
                             {
                                 if (index < haveDataInArrayNowPay)
                                 {
+                                    getLen += NowPayOnlyArray[index].productDetail.Length;
                                     <td class="dCol1 tdTopLeft">
                                         &nbsp;&nbsp;@NowPayOnlyArray[index].IO
                                     </td>
@@ -253,11 +254,12 @@
                     else
                     {
 
-                        getLen += NowPayOnlyArray[index].productDetail.Length;
+
 
                         <tr>
                             @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
                             {
+                                getLen += item.productDetail.Length;
                                 <td class="dCol1 tdTopLeft">
                                     <table style="border-collapse:collapse;">
                                         <tr>
@@ -313,6 +315,7 @@
                             {
                                 if (index < haveDataInArrayNowPay)
                                 {
+                                    getLen += NowPayOnlyArray[index].productDetail.Length;
                                     <td class="dCol1 tdTopLeft">
                                         <table style="border-collapse:collapse;">
                                             <tr>
@@ -620,7 +623,7 @@
 </table>
 
 
-@if (getLen > 380 && getLen < 600)
+@if (getLen > 300 && getLen < 600)
 {
     strClass = "pagebreak";
 }
