@@ -323,7 +323,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceList(string activityId, string activityOfEstimateId)
         {
             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault(); ;
+            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
             budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
             budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 

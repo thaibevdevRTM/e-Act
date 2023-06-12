@@ -1113,13 +1113,13 @@ namespace eActForm.BusinessLayer
             {
 
                 List<Attachment> files = new List<Attachment>();
-                string[] pathFile = new string[10];
-                string[] pathFileAtt = new string[10];
+                string[] pathFile = new string[15];
+                string[] pathFileAtt = new string[15];
 
                 mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
                 mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
 
-                pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
+                pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
                 foreach (var item in pathFile)
                 {
