@@ -22,8 +22,6 @@ using WebLibrary;
 namespace eActForm.Controllers  //update 21-04-2020
 {
     [LoginExpire]
-
-
     public class BudgetInvoiceAppCode
     {
 
@@ -198,9 +196,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
-
-
-
+    [LoginExpire]
     public class BudgetController : Controller
     {
 
@@ -787,9 +783,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
-
-
-
+    [LoginExpire]
     public class BudgetApproveListController : Controller
     {
         public ActionResult Index()
@@ -896,6 +890,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
     }
 
+    [LoginExpire]
     public class BudgetMyDocController : Controller
     {
         // GET: BudgetMyDoc
@@ -1109,6 +1104,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
+    [LoginExpire]
     public class BudgetApproveController : Controller
     {
 
@@ -1778,17 +1774,17 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             try
             {
-                //if (UtilsAppCode.Session.User != null)
-                //{
-                //    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
-                //        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                if (UtilsAppCode.Session.User != null)
+                {
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
+                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
 
-                //    UtilsAppCode.Session.User.countWatingBudgetForm = "";
-                //    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                //    {
-                //        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
-                //    }
-                //}
+                    UtilsAppCode.Session.User.countWatingBudgetForm = "";
+                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1931,10 +1927,6 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
 
     }
-
-
-
-
 
 
 }
