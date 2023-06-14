@@ -73,7 +73,7 @@ namespace eActForm.Controllers.API
                         {
                             approveModels = new ApproveController().getApproveSigList(response.data.refId, activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, response.data.approver);
 
-                            outputHtml += "<div id=\"divForm\" style=\"width:97%;\">";
+                            outputHtml += "<div id=\"divForm\" style=\"width:100%;\">";
                             outputHtml += ApproveAppCode.RenderViewToString("MainReport", "styleView", null);
                             if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                                 || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]

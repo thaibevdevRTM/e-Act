@@ -220,37 +220,40 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
-                            ชื่อกิจกรรม <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
 
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                            Product category<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                       {
-                           @class = "form-control textboxcss",
-                           required = "required",
-                           onchange = "onchangeCate();",
-                           id = "ddlProductCate"
-                       })
-                        </div>
+        </div>
 
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                        ชื่อกิจกรรม <span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                        Product category<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                   {
+                       @class = "form-control textboxcss",
+                       required = "required",
+                       onchange = "onchangeCate();",
+                       id = "ddlProductCate"
+                   })
+                    </div>
+
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
