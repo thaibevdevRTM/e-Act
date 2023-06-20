@@ -91,28 +91,47 @@
 
                 <td style="font-size:12.5px;text-align:right;">
                     @*จำนวนเงินตั้ง*@
-                    @if (item.productCostBath > 0)
+                    @if (item.invoiceType == "ADD")
                     {
-                        string result = String.Format("{0:n2}", @item.productCostBath);
-                        @result.ToString();
+                        if (item.productCostBath > 0)
+                        {
+                            string result = String.Format("{0:n2}", @item.productCostBath);
+                            @result.ToString();
+                        }
                     }
+                    else
+                    { <div>-</div>}
                 </td>
 
                 <td style="font-size:12.5px;text-align:center;">
                     @*ยอดยกมา*@
-                    @if (item.productStandBath > 0)
+                    @if (item.invoiceType == "ADD" && item.row_type == "document_actform")
                     {
-                        string result = String.Format("{0:n2}", @item.productStandBath);
-                        @result.ToString();
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        if (item.productStandBath > 0)
+                        {
+                            string result = String.Format("{0:n2}", @item.productStandBath);
+                            @result.ToString();
+                        }
                     }
                 </td>
 
                 <td style="font-size:12.5px;text-align:right;">
                     @*จำนวนเงินจ่าย*@
-                    @if (item.invoiceTotalBath > 0)
+                    @if (item.invoiceType == "ADD")
                     {
-                        string result = String.Format("{0:n2}", @item.invoiceTotalBath);
-                        @result.ToString();
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        if (item.invoiceTotalBath > 0)
+                        {
+                            string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+                            @result.ToString();
+                        }
                     }
                 </td>
 
