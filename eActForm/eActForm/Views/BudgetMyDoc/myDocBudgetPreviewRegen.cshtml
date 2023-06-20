@@ -1,15 +1,20 @@
-﻿@*@model eActForm.Models.Budget_Activity_Model*@
-
-@using eActForm.BusinessLayer;
+﻿
 @using eActForm.Models
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
+    //update 23-04-2020
     Layout = null;
+    var var_lastApprove = Model.Budget_Activity_Last_Approve;
+
+    var count_wait_approve = 0;
+    var count_req_approve = 0;
+    var count_draft_approve = 0;
+    var count_history_inv = 0;
 }
 
+
+
 <style type="text/css">
-
-
     .my-bootbox-class .modal-dialog {
         width: 400px;
         font-size: 18px;
@@ -17,19 +22,22 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
+@Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
+@Html.HiddenFor(m => m.Budget_Activity.act_form_id, new { id = "Hact_form_id" })
+
+@*@Html.HiddenFor(m => m.Budget_Activity.count_req_approve, new { id = "Hcount_req_approve" })*@
 
 @if (1 == 1)
 {
-
     <div class="modal-dialog modal-lg" style="width:95%;">
         <div class="modal-content">
             <div class="modal-header">
                 <div style=""></div>
-                <button type="button" class="close" data-dismiss="modal" onclick="onClickClose()">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <div class="modal-body">
-                <div id="GridPDFApprove" style="width:97%; margin-left:10px;">
+                <div id="GridPDF" style="width:100%; margin-left:10px;">
                     <style>
 
                         .cssborderbottom {
@@ -54,10 +62,12 @@
                                 <td style="width:50%;">&nbsp;</td>
                             </tr>
 
+
                             <tr>
                                 <td style="text-align:left;"></td>
                                 <td style="text-align:right;">
                                     <label> Activity No : </label>
+
                                     @if (Model.Budget_Activity.act_activityNo.ToString() != "")
                                     {
                                         @Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
@@ -82,7 +92,7 @@
 
                             <tr>
                                 <td style="text-align:left;">
-                                    <label>ประเภทกิจกรรม (Theme) : </label>
+                                    <label> ประเภทกิจกรรม (Theme) : </label>
                                     @if (Model.Budget_Activity.act_theme.ToString() != "")
                                     {
                                         @Html.DisplayFor(x => x.Budget_Activity.act_theme)
@@ -149,7 +159,8 @@
                                         @Html.DisplayFor(x => x.Budget_Activity.act_objective)
                                     }
                                 </td>
-                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;">
+                                </td>
                             </tr>
 
                             <tr>
@@ -175,7 +186,6 @@
                             <table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                             <label> รายละเอียดการใช้จ่ายจริง (Actual) : </label>
                         </div>
-
 
                         <table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
                             <tr>
@@ -310,6 +320,27 @@
                                             @* สถานะ ตัดจ่าย *@
                                             <td style="text-align:center;font-size:11px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
+                                            @* count สถานะอนุมัติ *@
+                                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
+                                            {
+                                                count_history_inv++;
+                                            }
+
+                                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId != 3)
+                                            {
+                                                count_req_approve++;
+                                            }
+
+                                            @if (item.invoiceApproveStatusId == 1)
+                                            {
+                                                count_draft_approve++;
+                                            }
+
+                                            @if (item.invoiceApproveStatusId == 2)
+                                            {
+                                                count_wait_approve++;
+                                            }
+
                                             @* สถานะอนุมัติ *@
                                             @*status == 1 Draft status == 2 รออนุมัติ*@
                                             @if (item.invoiceApproveStatusId == 1)
@@ -358,15 +389,29 @@
                             <table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                         </div>
 
-                        @if (Model.Budget_Approve_detail_list.Count > 0)
+                        @*Model.Budget_Activity.budget_id != null *@
+                        @if (count_history_inv == 0 && count_req_approve == 0)
                         {
-                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId })
-                        }
 
+                        }
+                        @* wait approve in process show signature approved *@
+                        else if (count_wait_approve > 0)
+                        {
+                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
+                        }
+                        @* new approve *@
+                        else if (count_wait_approve == 0 && count_req_approve > 0)
+                        {
+                            @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
+                        }
+                        @* show last signature approved *@
+                        else if (count_wait_approve == 0 && count_req_approve == 0 && count_history_inv >= 0)
+                        {
+                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
+                        }
+                        else { }
 
                     </div>
-
-
                 </div>
             </div>
 
@@ -374,45 +419,59 @@
                 <div>
                     <p class="d-flex justify-content-center">
 
-                        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        <button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitRegenPdf();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Regen Pdf</button>
+
                     </p>
                 </div>
 
-            </div>
+                <div class="row" style="width:97%; margin-left:10px;">
+                    @if (Model.Budget_Invoice_list.Any())
+                    {
+                        <br />
+                        <div style="text-align:left;"><h5>รายการเอกสารแนบ (@Model.Budget_Invoice_list.Count รายการ) </h5></div>
+                        <br />
 
+                        foreach (var item in Model.Budget_Invoice_list)
+                        {
+                            <div class="col-md-6">
+                                <div style="text-align:right;"><h5>เลขที่ใบแจ้งหนี้ @item.invoiceNo</h5></div>
+                                @Html.Action("invoicePDFView", "BudgetViewer", new { fileName = item._fileName })
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
         </div>
     </div>
-
-
 }
 
 <script type="text/javascript">
 
 	$('document').ready(function () {
-		//showCurrentDate();
+
 	});
 
-    function onClickClose() {
-        var url = '@Url.Action("index", "BudgetApproveList")';
-        window.location.href = url;
-    }
+    function onClickSubmitRegenPdf() {
+		$("#WaitDialog").show();
 
-	function genPdfApproveBudget() {
-			$("#WaitDialog").show();
-            $.ajax({
-            url: '@Url.Action("submitPreviewBudgetApprove", "BudgetApprove")',
-            data: {
-				GridHtml: $("#GridPDFApprove").html(),
-                statusId: $("#ddlStatus").val(),
-				budgetApproveId: $("#HbudgetApproveId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log("genPdff");
-                console.log('success');
-                 });
+		$.ajax({
+        url: '@Url.Action("submitPreviewBudgetRegenPdf", "BudgetApprove")',
+        data: {
+			GridHtml: $("#GridPDF").html(),
+			budgetActivityId: $("#HbudgetId").val(),
+            companyEN: $("#HcompanyEN").val(),
+            count_req_approve: $("#Hcount_req_approve").val()
+        },
+        dataType: "json",
+        type: 'POST',
+		}).done(function (response) {
+            $("#WaitDialog").hide();
+
+			var url = '@Url.Action("Index", "BudgetMyDoc")';
+			window.location.href = url;
+		});
 	}
 
 </script>
+
