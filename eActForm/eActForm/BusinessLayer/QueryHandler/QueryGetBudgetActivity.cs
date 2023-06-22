@@ -71,6 +71,10 @@ namespace eActForm.BusinessLayer
                                   act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
                                   act_costPeriodEnd = d["act_costPeriodEnd"] is DBNull ? null : (DateTime?)d["act_costPeriodEnd"],
 
+                                  act_compensateStatus = d["act_compensateStatus"].ToString(),
+                                  act_compensateDateStart = d["act_compensateDateStart"] is DBNull ? null : (DateTime?)d["act_compensateDateStart"],
+                                  act_compensateDateEnd = d["act_compensateDateEnd"] is DBNull ? null : (DateTime?)d["act_compensateDateEnd"],
+
                                   act_activityName = d["act_activityName"].ToString(),
                                   act_theme = d["act_activitySales"].ToString(),
 
@@ -941,6 +945,30 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceDelete");
+            }
+
+            return result;
+        }
+
+        public static int commBudgetCompensateUpdate(string activityId, string compensateStatus, string compensateStartDate, string compensateEndDate)
+        {
+
+            int result = 0;
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityCompensateUpdate"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    ,new SqlParameter("@compensateStatus",compensateStatus)
+                    ,new SqlParameter("@compensateStartDate",compensateStartDate)
+                    ,new SqlParameter("@compensateEndDate",compensateEndDate)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> commBudgetCompensateUpdate");
             }
 
             return result;

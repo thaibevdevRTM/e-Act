@@ -408,6 +408,29 @@ namespace eActForm.Controllers  //update 21-04-2020
             return Json(resultAjax, "text/plain");
         }
 
+
+        public JsonResult submitCompensateSave(string activityId, string compensateStatus, string compensateStartDate, string compensateEndDate)
+        {
+            var resultAjax = new AjaxResult();
+            try
+            {
+
+                compensateStartDate = DateTime.Parse(compensateStartDate).ToString("MM/dd/yyyy");
+                compensateEndDate = DateTime.Parse(compensateEndDate).ToString("MM/dd/yyyy");
+                int countSuccess = BudgetFormCommandHandler.commBudgetCompensateUpdate(activityId, compensateStatus, compensateStartDate, compensateEndDate);
+
+                //xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+            }
+            return Json(resultAjax, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult budgetProductInvoiceDelete(string actId, string estId, string invId, string delType)
         {
             var result = new AjaxResult();

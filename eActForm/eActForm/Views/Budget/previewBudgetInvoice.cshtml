@@ -480,9 +480,11 @@
         dataType: "json",
         type: 'POST',
 		}).done(function (response) {
-			$("#WaitDialog").hide();
+            $("#WaitDialog").hide();
 			var url = '@Url.Action("activityProduct", "Budget")';
-			window.location.href = url;
+            window.location.href = url;
+
+            doMsgSuccess("Update Success");
 		});
 	}
 
@@ -501,7 +503,7 @@
         type: 'POST',
 		}).done(function (response) {
             $("#WaitDialog").hide();
-           
+            doMsgSuccess("Create PDF Success");
 			@*var url = '@Url.Action("activityProduct", "Budget")';
 			window.location.href = url;*@
 		});
