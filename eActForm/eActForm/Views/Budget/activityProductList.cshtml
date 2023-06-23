@@ -369,6 +369,13 @@
                 compensateStatus: var_compensateStatus,
                 compensateStartDate: var_compensateStartDate,
                 compensateEndDate: var_compensateEndDate
+                },
+            success: function (data) {
+                var url = '@Url.Action("activityProductList", "Budget")';
+                window.location.href = url;
+
+                doMsgSuccess("Update Success");
+
             }
         }).done(function (response) {
             //$("#myModalSetActivityDateContent").html(response)
