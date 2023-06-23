@@ -1,0 +1,301 @@
+﻿@model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer
+@using eActForm.Models
+@using System.Configuration;
+@{
+    //update 21-04-2020
+    ViewBag.Title = "";
+    var var_lastApprove = Model.Budget_Activity_Last_Approve;
+    var var_Count_Wait_Approve = Model.Budget_Count_Wait_Approve;
+
+}
+
+@Html.HiddenFor(x => x.Budget_Activity_Product.act_activityId, new { @id = "hd_activityId" })
+
+<div class="alert alert-success" role="alert">
+    @if (Model.Budget_Activity.act_activityNo != null)
+    {
+        <h4 class="alert-heading text-center">
+            แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง
+        </h4>
+
+        <h4 class="alert-heading text-center">
+            กิจกรรมเลขที่ : @Html.DisplayFor(item => Model.Budget_Activity.act_activityNo) (@Html.DisplayFor(item => Model.Budget_Activity.cus_cusNameTH))
+        </h4>
+
+    }
+</div>
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtActivityNo">
+                ประเภทกิจกรรม
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_theme)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ddlStatus">
+                ชื่อกิจกรรม
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_activityName)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtActivityNo">
+                วันที่เริ่มต้นกิจกรรม
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_activityPeriodSt)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ddlStatus">
+                วันที่สิ้นสุดกิจกรรม
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_activityPeriodEnd)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+</div>
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtActivityNo">
+                กิจกรรม
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @if (Model.Budget_Activity.act_compensateStatus == "Y")
+                {<div>Compensate</div>}
+                else
+                {<div>ไม่เป็น Compensate</div>}
+                @*@Html.DisplayFor(item => Model.Budget_Activity.act_compensateStatus)*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="xxxx">
+                &nbsp;
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="txtActivityNo">
+                วันที่เริ่มต้นกิจกรรมจริง
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_compensateDateStart)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ddlStatus">
+                วันที่สิ้นสุดกิจกรรมจริง
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                @Html.DisplayFor(item => Model.Budget_Activity.act_compensateDateEnd)
+                &nbsp;&nbsp;&nbsp;
+                <a onclick="onClickSetActivityDate('@Model.Budget_Activity.act_form_id');">
+                    <i class="btn ink-reaction btn-outline-dark fa fa-edit">&nbsp;แก้ไขวันที่</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+</div>
+
+
+<div id='myModalSetActivityDate' class="modal fade" role="dialog">
+    @*<div id='myModalSetActivityDateContent'>test</div>*@
+
+    <div class="modal-dialog" style="width:40%;">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div style=""></div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>กำหนดวันรที่กิจกรรมที่เกิดขึ้นจริง</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row col-6">
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="control-label col-md-4" for="txtActivityNo">
+                                    กิจกรรม
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="radio">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.Budget_Activity.act_compensateStatus, "Y", new { @id = "rdb_compensateY" }) Compensate
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.Budget_Activity.act_compensateStatus, "N", new { @id = "rdb_compensateN" }) อื่นๆ
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="control-label col-md-4" for="txtActivityNo">
+                                    วันเริ่มต้นกิจกรรมจริง
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" name="date_compensateStartDate" id="date_compensateStartDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="control-label col-md-4" for="ddlStatus">
+                                    วันที่สิ้นสุดกิจกรรมจริง
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" name="date_compensateEndDate" id="date_compensateEndDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="onClickSubmitCompensate('@Model.Budget_Activity.act_form_id');"><i class="fa fa fa-save fa-fw"></i>&nbsp;Save</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                </div>
+                <div style="color:#ffffff;"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('document').ready(function () {
+
+        $('tr').click(function () {
+
+            $('tr').removeClass('info');
+            $(this).addClass('info');
+
+
+            var id = $(this).data('id');
+            $('.links a').each(function () {
+                this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
+            });
+
+        });
+
+        $("#date_compensateStartDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#date_compensateEndDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+
+
+    });
+
+    	@*function callActivityDetail(activityId) {
+		alert("ok มาละ");
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("activityDetail", "Budget")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+            $("#divPreviewActivityDetail").html(htmlResponse);
+        });
+	}*@
+
+   function onClickSetActivityDate(actId) {
+        var options = { "backdrop": "static", keyboard: true };
+
+        $.ajax({
+            type: 'GET',
+            url:  '',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            //$("#myModalSetActivityDateContent").html(response)
+            $('#myModalSetActivityDate').modal(options);
+            $('#myModalSetActivityDate').modal('show');
+        });
+
+    }
+
+    function onClickSubmitCompensate(actId) {
+        var options = { "backdrop": "static", keyboard: true };
+        var var_compensateStatus = $("input[type='radio']:checked").val();
+        var var_compensateStartDate = $("#date_compensateStartDate").val();
+        var var_compensateEndDate = $("#date_compensateEndDate").val();
+
+        //alert(var_compensateStatus);
+        //alert(var_compensateStartDate);
+        //alert(var_compensateEndDate);
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("submitCompensateSave", "Budget")',
+            data: {
+                activityId: actId,
+                compensateStatus: var_compensateStatus,
+                compensateStartDate: var_compensateStartDate,
+                compensateEndDate: var_compensateEndDate
+                },
+            success: function (data) {
+                @*var url = '@Url.Action("activityProductList", "Budget")';
+                window.location.href = url;*@
+                //alert($('#hd_activityId').val());
+                callActivityDetail($('#hd_activityId').val());
+            }
+        }).done(function (response) {
+            //$("#myModalSetActivityDateContent").html(response)
+            //$('#myModalSetActivityDate').modal(options);
+            //$('#myModalSetActivityDate').modal('show');
+            doMsgSuccess("Update Success");
+        });
+
+    }
+</script>

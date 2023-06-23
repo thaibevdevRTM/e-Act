@@ -1,5 +1,7 @@
-﻿
-@model eActForm.Models.Budget_Activity_Model
+﻿@model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer
+@using eActForm.Models
+@using System.Configuration;
 @{
     //update 21-04-2020
     ViewBag.Title = "Edit Page";
@@ -26,7 +28,7 @@
 
 <div class="row">
 
-    <div id="divPreviewProductList">
+    <div id="divPreviewActivityDetail">
 
     </div>
 </div>
@@ -35,6 +37,11 @@
 
 <div id='myModalInvoiceContent'></div>
 
+<div class="row">
+    <div id="divPreviewProductList">
+
+    </div>
+</div>
 
 <div class="row">
     <div id="divPreviewInvoiceList">
@@ -57,8 +64,23 @@
 <script>
 
 	$('document').ready(function () {
+        callActivityDetail($("#hd_activityId").val());
 		callProductList($("#hd_activityId").val());
+       
 	});
+
+	function callActivityDetail(activityId) {
+		alert("ok มาละ");
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("activityDetail", "Budget")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+            $("#divPreviewActivityDetail").html(htmlResponse);
+        });
+	}
 
 	function callApproveList(actId) {
         $.ajax({

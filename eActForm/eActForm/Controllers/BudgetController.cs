@@ -279,7 +279,24 @@ namespace eActForm.Controllers  //update 21-04-2020
 
 
 
+        public ActionResult activityDetail(string activityId)
+        {
 
+            Session["activityId"] = activityId;
+            Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+            try
+            {
+                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
+                //budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
+                //budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
+                //budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return PartialView(budget_activity);
+        }
 
         public ActionResult activityProduct(string activityId)
         {
