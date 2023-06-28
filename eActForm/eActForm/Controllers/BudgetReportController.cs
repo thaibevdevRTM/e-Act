@@ -91,7 +91,7 @@ namespace eActForm.Controllers
 
                 if (String.IsNullOrEmpty(actYear) != true)
                 {
-                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate, actYear);
+                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, actYear);
                 }
 
                 //----------------------------------------------
@@ -163,7 +163,7 @@ namespace eActForm.Controllers
 
                 if (String.IsNullOrEmpty(actYear) != true)
                 {
-                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate, actYear);
+                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, actYear);
                 }
 
                 //----------------------------------------------

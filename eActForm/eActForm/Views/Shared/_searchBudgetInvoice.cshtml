@@ -49,8 +49,8 @@
 
 <script>
     $(function () {
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
+        $("#startDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#endDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
         //$("#ddlFormType").val("OMT");
     });
 

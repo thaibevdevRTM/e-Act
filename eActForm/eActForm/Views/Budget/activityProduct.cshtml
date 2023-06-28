@@ -35,12 +35,14 @@
 
 <hr />
 
-<div id='myModalInvoiceContent'></div>
-
 <div class="row">
     <div id="divPreviewProductList">
 
     </div>
+</div>
+
+<div id='divInvoiceContentEdit'>
+
 </div>
 
 <div class="row">
@@ -70,7 +72,7 @@
 	});
 
 	function callActivityDetail(activityId) {
-		alert("ok มาละ");
+		//alert("callActivityDetail");
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("activityDetail", "Budget")',
@@ -78,7 +80,7 @@
 				activityId: activityId
             }
         }).done(function (htmlResponse) {
-            $("#divPreviewActivityDetail").html(htmlResponse);
+			$("#divPreviewActivityDetail").html(htmlResponse);
         });
 	}
 
@@ -140,7 +142,7 @@
 
 			}
 		}).done(function (htmlResponse) {
-			$("#myModalInvoiceContent").html(htmlResponse);
+			$("#divInvoiceContentEdit").html(htmlResponse);
 		});;
 	}
 

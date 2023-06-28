@@ -742,7 +742,7 @@ namespace eActForm.BusinessLayer
 
     public class QueryGetBudgetReport
     {
-        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd, string actYear)
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN,  string actYear)
         {
             try
             {
@@ -750,8 +750,6 @@ namespace eActForm.BusinessLayer
                  , new SqlParameter("@act_StatusId", act_StatusId)
                  , new SqlParameter("@act_activityNo", act_activityNo)
                  , new SqlParameter("@companyEN", companyEN)
-                 , new SqlParameter("@createdDateStart", act_createdDateStart)
-                 , new SqlParameter("@createdDateEnd", act_createdDateEnd)
                  , new SqlParameter("@actYear", actYear)
                  );
 

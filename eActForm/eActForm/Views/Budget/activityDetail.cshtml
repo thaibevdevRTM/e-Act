@@ -136,16 +136,14 @@
 
 
 <div id='myModalSetActivityDate' class="modal fade" role="dialog">
-    @*<div id='myModalSetActivityDateContent'>test</div>*@
 
     <div class="modal-dialog" style="width:40%;">
-        <!-- Modal content-->
         <div class="modal-content">
 
             <div class="modal-header">
                 <div style=""></div>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4>กำหนดวันรที่กิจกรรมที่เกิดขึ้นจริง</h4>
+                <h4>กำหนดวันกิจกรรมที่เกิดขึ้นจริง</h4>
             </div>
             <div class="modal-body">
                 <div class="row col-6">
@@ -177,7 +175,7 @@
                                     วันเริ่มต้นกิจกรรมจริง
                                 </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="date_compensateStartDate" id="date_compensateStartDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                                    <input type="text" name="date_compensateStartDate" id="date_compensateStartDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_compensateDateStart, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
                                 </div>
                             </div>
                         </div>
@@ -192,7 +190,7 @@
                                     วันที่สิ้นสุดกิจกรรมจริง
                                 </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="date_compensateEndDate" id="date_compensateEndDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                                    <input type="text" name="date_compensateEndDate" id="date_compensateEndDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.Budget_Activity.act_compensateDateEnd, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
                                 </div>
 
                             </div>
@@ -235,38 +233,13 @@
 
     });
 
-    	@*function callActivityDetail(activityId) {
-		alert("ok มาละ");
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("activityDetail", "Budget")',
-            data: {
-				activityId: activityId
-            }
-        }).done(function (htmlResponse) {
-            $("#divPreviewActivityDetail").html(htmlResponse);
-        });
-	}*@
 
    function onClickSetActivityDate(actId) {
-        var options = { "backdrop": "static", keyboard: true };
-
-        $.ajax({
-            type: 'GET',
-            url:  '',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            //$("#myModalSetActivityDateContent").html(response)
-            $('#myModalSetActivityDate').modal(options);
-            $('#myModalSetActivityDate').modal('show');
-        });
-
+        $('#myModalSetActivityDate').modal('show');
     }
 
     function onClickSubmitCompensate(actId) {
-        var options = { "backdrop": "static", keyboard: true };
+        //var options = { "backdrop": "static", keyboard: true };
         var var_compensateStatus = $("input[type='radio']:checked").val();
         var var_compensateStartDate = $("#date_compensateStartDate").val();
         var var_compensateEndDate = $("#date_compensateEndDate").val();
@@ -283,18 +256,25 @@
                 compensateStatus: var_compensateStatus,
                 compensateStartDate: var_compensateStartDate,
                 compensateEndDate: var_compensateEndDate
-                },
-            success: function (data) {
-                @*var url = '@Url.Action("activityProductList", "Budget")';
-                window.location.href = url;*@
-                //alert($('#hd_activityId').val());
-                callActivityDetail($('#hd_activityId').val());
-            }
+                }
         }).done(function (response) {
-            //$("#myModalSetActivityDateContent").html(response)
-            //$('#myModalSetActivityDate').modal(options);
-            //$('#myModalSetActivityDate').modal('show');
-            doMsgSuccess("Update Success");
+            //doMsgSuccess("Update Success");
+            
+            callActivityDetail($('#hd_activityId').val());
+            $('.modal-backdrop').remove();
+
+            //$("#WaitDialog").hide();
+            //$('#myModalSetActivityDate').modal('hide');
+
+            //doMsgSuccess("Update Success");
+
+            var msg = "";
+            msg = "<div class='row text-center'> <h2> บันทึกข้อมูลเรียบร้อย </h2> </div>";
+            bootbox.alert({
+                title: "แจ้งเตือน",
+                message: msg
+            });
+
         });
 
     }
