@@ -16,13 +16,20 @@
                 <li>@Html.ActionLink(" Flow AddOn Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.flowAddOn.ToString() }, null)</li>
             }
 
-            @if (UtilsAppCode.Session.User.isSuperAdmin)
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT)
             {
-                <li>@Html.ActionLink(" Product Setting ", "index", "Admin")</li>
-                <li>@Html.ActionLink(" User Setting ", "index", "AdminUser")</li>
-                <li>@Html.ActionLink(" Flow Swap Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.swap.ToString() }, null)</li>
-                <li>@Html.ActionLink(" Move Company ", "Index_EmpMoveCompany", "ManagementFlow")</li>
-                @*<li>@Html.ActionLink(" History Activity TBM ", "historyBG", "ActivityViewer")</li>*@
+                if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT)
+                {
+                    <li>@Html.ActionLink(" Product Setting ", "index", "Admin")</li>
+                }
+
+                if(UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    <li>@Html.ActionLink(" User Setting ", "index", "AdminUser")</li>
+                    <li>@Html.ActionLink(" Flow Swap Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.swap.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Move Company ", "Index_EmpMoveCompany", "ManagementFlow")</li>
+                    @*<li>@Html.ActionLink(" History Activity TBM ", "historyBG", "ActivityViewer")</li>*@
+                }
             }
 
 

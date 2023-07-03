@@ -80,7 +80,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ var index = 1; string strActNo = "",strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
+                                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
                                     @foreach (var item in Model.actFormRepDetailLists)
                                     {
                                         if ((item.delFlag == false && item.typeTheme != "" && item.total > 0) || (item.delFlag == false && item.activityDetail != ""))
@@ -258,12 +258,17 @@
                     </div>
                     <div class="col-md-offset-3 col-md-2 col-xs-12">
                         <div>
-                            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                            @if (Model.flowList.flowDetail.Count > 0)
                             {
                                 <button type="button" class="btn ink-reaction btn-primary" id="btnSubmitPDF" value="Export" style="width:100%;">
                                     <i class="fa check-square-o"></i>&nbsp;Send to Approve
                                 </button>
                             }
+                            else
+                            {
+                                <p> ไม่พบ Flow กรุณาติดต่อ ทีม OAC </p>
+                            }
+
                         </div>
                     </div>
                     <div class="col-md-2 col-xs-12">

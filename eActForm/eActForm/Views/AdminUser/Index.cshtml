@@ -184,45 +184,62 @@
 
     function onchangeCompany() {
 
-         if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]') && $("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
-            document.getElementById("divRegion").style.display = "block";
-            document.getElementById("divCustomer").style.display = "block";
-            document.getElementById("divProductType").style.display = "block";
-        }
-        else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
-            document.getElementById("divRegion").style.display = "block";
-            document.getElementById("divCustomer").style.display = "none";
-            document.getElementById("divProductType").style.display = "block";
+        if ($('#ddlCompany').val() != null) {
+            if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]') && $("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
+                document.getElementById("divRegion").style.display = "block";
+                document.getElementById("divCustomer").style.display = "block";
+                document.getElementById("divProductType").style.display = "block";
+            }
+            else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
+                document.getElementById("divRegion").style.display = "block";
+                document.getElementById("divCustomer").style.display = "none";
+                document.getElementById("divProductType").style.display = "block";
 
-        }
-        else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]')) {
-            document.getElementById("divRegion").style.display = "none";
-            document.getElementById("divCustomer").style.display = "block";
-            document.getElementById("divProductType").style.display = "block";
-        }
-        else {
-            document.getElementById("divRegion").style.display = "none";
-            document.getElementById("divCustomer").style.display = "none";
-            document.getElementById("divProductType").style.display = "none";
+            }
+            else if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]')) {
+                document.getElementById("divRegion").style.display = "none";
+                document.getElementById("divCustomer").style.display = "block";
+                document.getElementById("divProductType").style.display = "block";
+            }
+            else {
+                document.getElementById("divRegion").style.display = "none";
+                document.getElementById("divCustomer").style.display = "none";
+                document.getElementById("divProductType").style.display = "none";
+            }
         }
     }
 
     function validateForm() {
+
+
         $("#WaitDialog").show();
         var favorite = [];
         $.each($("input[name='model.chkProductType']:checked"), function () {
             favorite.push($(this).val());
         });
 
-        console.log(favorite.length);
-        console.log($("#ddlCompany").val());
-        if (favorite.length == 0 && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_MT"]" && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_OMT"]") {
-            doMsgFail("กรุณาระบุ <br/>ProductType");
-            return false;
+        console.log(favorite);
+
+        if ($('#ddlCompany').val() != null) {
+            if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]') || $("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
+                if (favorite.length == 0) {
+                    doMsgFail("กรุณาระบุ <br/>ProductType");
+                    $("#WaitDialog").hide();
+                }
+                else {
+                    $("#frmAdminUser").submit();
+                }
+            }
+            else {
+                $("#frmAdminUser").submit();
+            }
         }
         else {
-            $("#frmAdminUser").submit();
+            doMsgFail("กรุณาระบุ Company");
+            $("#WaitDialog").hide();
         }
+
+       
     }
 
 

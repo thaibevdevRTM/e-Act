@@ -532,8 +532,7 @@ namespace eActForm.BusinessLayer
             if (ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceOMT"] == masterForm
-                || ConfigurationManager.AppSettings["formReceptions"] == masterForm
-                || ConfigurationManager.AppSettings["formTransferbudget"] == masterForm)
+                || ConfigurationManager.AppSettings["formReceptions"] == masterForm)
             {
                 check = true;
             }

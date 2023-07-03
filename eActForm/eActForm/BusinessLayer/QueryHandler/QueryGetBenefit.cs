@@ -30,19 +30,27 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByEmpId"
-                     , new SqlParameter("@empId", empId)
-                , new SqlParameter("@empLvl", empLvl));
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new CashEmpModel()
-                             {
-                                 empId = d["empId"].ToString(),
-                                 choiceID = d["id"].ToString(),
-                                 choiceName = d["name"].ToString(),
-                                 cashPerDay = d["cashPerDay"] is DBNull ? 0 : decimal.Parse(d["cashPerDay"].ToString()),
-                                 empLevel = d["empLevel"].ToString(),
-                             });
-                return lists.ToList();
+                if (!string.IsNullOrEmpty(empId) && !string.IsNullOrEmpty(empLvl))
+                {
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByEmpId"
+                         , new SqlParameter("@empId", empId)
+                    , new SqlParameter("@empLvl", empLvl));
+                    var lists = (from DataRow d in ds.Tables[0].Rows
+                                 select new CashEmpModel()
+                                 {
+                                     empId = d["empId"].ToString(),
+                                     choiceID = d["id"].ToString(),
+                                     choiceName = d["name"].ToString(),
+                                     cashPerDay = d["cashPerDay"] is DBNull ? 0 : decimal.Parse(d["cashPerDay"].ToString()),
+                                     empLevel = d["empLevel"].ToString(),
+                                 });
+
+                    return lists.ToList();
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {

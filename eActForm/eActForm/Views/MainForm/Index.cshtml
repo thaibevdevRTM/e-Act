@@ -311,6 +311,9 @@
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
             if ($("#ddlTravelling").val() == "") { required += "ระบุความเร่งด่วน*<br>"; validate = false; }
 
+            var desc = CKEDITOR.instances['activityFormTBMMKT_activityDetail'].getData();
+            $("#activityFormTBMMKT_activityDetail").val(desc);
+
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
@@ -379,7 +382,7 @@
             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
-                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'ทรัพย์สิน') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
             }
@@ -581,6 +584,7 @@
 
     function SubmitData() {
         console.log("submit");
+       
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
 
