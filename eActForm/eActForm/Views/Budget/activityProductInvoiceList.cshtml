@@ -39,7 +39,7 @@
         </tr>
     </thead>
 
-    @*------------------------ 09-03-2021 -------------------------------------------------------------------*@
+    @*------------------------ 09-03-2021 ------------------------------------------------------------*@
     <tbody>
         @if (Model.Budget_Invoce_History_list.Count > 0)
         {
@@ -57,17 +57,13 @@
                     }
                     else if (item.invoiceApproveStatusId == 2 && item.invoiceType != "ADD") // waitapprove
                     {
-                        
                         <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activitEstimateId','@item.invoiceId');"></a>
                         <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        
                     }
                     else if (item.invoiceApproveStatusId == 3 && item.invoiceType != "ADD") // approve
                     {
-                        @*
                         <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activitEstimateId','@item.invoiceId');"></a>
-                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        *@
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>                        
                     }
                     else if (item.invoiceApproveStatusId == 5 && item.invoiceType != "ADD") // not approve
                     {

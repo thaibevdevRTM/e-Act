@@ -24,7 +24,6 @@ namespace eActForm.Controllers  //update 21-04-2020
     [LoginExpire]
     public class BudgetInvoiceAppCode
     {
-
         public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetInvoiceListForCreatePDF(string act_form_id)
         {
             try
@@ -89,7 +88,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                              select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
                              {
                                  id = d["imageId"].ToString(),
-
                                  count_budgetActivityId = int.Parse(d["count_budgetActivityId"].ToString()),
                                  count_activityNo = int.Parse(d["count_activityNo"].ToString()),
                                  count_budgetApproveId = int.Parse(d["count_budgetApproveId"].ToString()),
@@ -346,9 +344,10 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
         {
             Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-            Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
             Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
             Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
+            Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
+
 
             if (!string.IsNullOrEmpty(invoiceId))
             {// get invoice for edit 
@@ -718,9 +717,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 
                     int resultImg = BudgetInvoiceAppCode.BudgetInvoiceInsert(imageFormModel);
                 }
-
-                //manageInvoiceList(null);
-                //result.ActivityId = Session["activityId"].ToString();
                 result.Success = true;
             }
             catch (Exception ex)
@@ -737,7 +733,6 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             var result = new AjaxResult();
             var empId = UtilsAppCode.Session.User.empId;
-
             int resultImg = BudgetInvoiceAppCode.BudgetInvoiceDelete(id, empId);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -776,8 +771,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                     resultAjax.Code = 0;
                     resultAjax.Message = null;
                 }
-
-                //resultAjax.ActivityId = Session["activityId"].ToString();
                 resultAjax.Success = true;
             }
             catch (Exception ex)
@@ -864,25 +857,20 @@ namespace eActForm.Controllers  //update 21-04-2020
             {
                 ExceptionManager.WriteError("getInvoicePdfBudget >>" + ex.Message);
             }
-
             return fsResult;
         }
 
         public ActionResult invoicePDFView(string fileName)
         {
-
             TempData["fileName"] = fileName;
             ViewBag.fileName = fileName;
             return PartialView();
         }
-
-
     }
 
     [LoginExpire]
     public class BudgetApproveListController : Controller
     {
-       
         public ActionResult Index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
@@ -893,7 +881,6 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
 
             string count = Request.Form.AllKeys.Count().ToString();
-
             DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
 
@@ -964,7 +951,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                              select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
                              {
                                  id = d["imageId"].ToString(),
-
                                  invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
                                  imageType = d["imageType"].ToString(),
                                  _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
@@ -991,7 +977,6 @@ namespace eActForm.Controllers  //update 21-04-2020
     public class BudgetMyDocController : Controller
     {
         // GET: BudgetMyDoc
-
         public ActionResult Index(string companyEN)
         {
             if (companyEN != null) { Session["var_companyEN"] = companyEN;  }
@@ -1004,12 +989,10 @@ namespace eActForm.Controllers  //update 21-04-2020
             string count = Request.Form.AllKeys.Count().ToString();
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-
-            if (companyEN != null) { Session["var_companyEN"] = companyEN; }
-            //string companyEN = Session["var_companyEN"].ToString();
-
             DateTime startDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
             DateTime endDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
+
+            if (companyEN != null) { Session["var_companyEN"] = companyEN; }
 
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
@@ -1048,12 +1031,10 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-
-            if (companyEN != null){ Session["var_companyEN"] = companyEN; }
-
-            //string companyEN2 = Session["var_companyEN"].ToString();
             DateTime startDate = DateTime.Now.AddDays(-30);
             DateTime endDate = DateTime.Now.AddDays(1);
+
+            if (companyEN != null){ Session["var_companyEN"] = companyEN; }
 
             if (TempData["SearchDataModelBudget"] != null)
             {
@@ -1721,7 +1702,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         [HttpPost]
         [ValidateInput(false)]
-        //public JsonResult genPdfApproveBudget(string GridHtml, string statusId, string budgetApproveId)
         public JsonResult submitPreviewBudgetApprove(string GridHtml, string statusId, string budgetApproveId)
         {
             var resultAjax = new AjaxResult();
@@ -1906,7 +1886,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
                 var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budget_approve_id);
-
 
                 resultAjax.Success = true;
             }

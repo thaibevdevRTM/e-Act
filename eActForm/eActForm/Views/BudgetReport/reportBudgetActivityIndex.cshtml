@@ -31,23 +31,7 @@
 <script type="text/javascript">
 
     function beginQuery() {
-
 		$("#getQuery").fadeOut(300);
-
-         @*if ($("#ddlProductType").val() == "") {
-            doMsgFail("กรุณาระบุ Product Type ครับ");
-            return false;
-         }
-
-        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
-            if ($("#ddlCustomer").val() == "") {
-                doMsgFail("กรุณาระบุ ลูกค้า ครับ");
-                return false;
-            }
-        }
-        else {
-            $("#getQuery").fadeOut(300);
-        }*@
     }
 
     $(function () {

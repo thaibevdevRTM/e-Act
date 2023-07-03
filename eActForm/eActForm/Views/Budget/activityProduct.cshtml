@@ -143,6 +143,14 @@
 			}
 		}).done(function (htmlResponse) {
 			$("#divInvoiceContentEdit").html(htmlResponse);
+
+            var var_count_approved = document.getElementById("txt_count_approved").value;
+
+			//// ถ้ามีคนอนุมัติไปบ้างแล้วไม่ให้แก้ไขตัวเงิน
+            if (var_count_approved > 0) {
+                document.getElementById("txt_invoice_baht").disabled = true;
+            }
+			
 		});;
 	}
 

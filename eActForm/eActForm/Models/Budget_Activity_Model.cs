@@ -158,7 +158,8 @@ namespace eActForm.Models //update 21-04-2020
             public string invoiceApproveStatusName { get; set; }
             public string invoiceRemark { get; set; }
             public string invoiceType { get; set; }
-
+            public Int32 count_approved { get; set; }
+            
 
 
             public string activityId { get; set; }
@@ -508,7 +509,7 @@ namespace eActForm.Models //update 21-04-2020
             public string act_reference { get; set; }
             public string brandName { get; set; }
             public string themeId { get; set; }
-            public string Theme { get; set; }
+            public string act_theme { get; set; }
 
             public string cus_id { get; set; }
             public string cus_regionId { get; set; }
@@ -538,6 +539,10 @@ namespace eActForm.Models //update 21-04-2020
 
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal activityCostRemainBath { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal activityTotalAddonBaht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal activityGrandTotalBaht { get; set; }
             public string productBudgetStatusGroupId { get; set; }
             public string ProductBudgetStatusId { get; set; }
             public string productBudgetStatusNameTH { get; set; }
