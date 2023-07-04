@@ -12,7 +12,6 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetBudgetActivity
     {
-
         public static List<Budget_Activity_Model.Budget_Activity_Year_Att> getYearActivity()
         {
             try
@@ -71,6 +70,10 @@ namespace eActForm.BusinessLayer
                                   act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
                                   act_costPeriodEnd = d["act_costPeriodEnd"] is DBNull ? null : (DateTime?)d["act_costPeriodEnd"],
 
+                                  act_compensateStatus = d["act_compensateStatus"].ToString(),
+                                  act_compensateDateStart = d["act_compensateDateStart"] is DBNull ? null : (DateTime?)d["act_compensateDateStart"],
+                                  act_compensateDateEnd = d["act_compensateDateEnd"] is DBNull ? null : (DateTime?)d["act_compensateDateEnd"],
+
                                   act_activityName = d["act_activityName"].ToString(),
                                   act_theme = d["act_activitySales"].ToString(),
 
@@ -110,10 +113,7 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityProductSelect"
                  , new SqlParameter("@activityID", act_activityID)
-                 , new SqlParameter("@productID", null)
                  , new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
-                 //, new SqlParameter("@productID", prd_productID)
-                 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
@@ -145,21 +145,74 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, DateTime createdDateStart, DateTime createdDateEnd)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetDocumentList"
+                    , new SqlParameter[] {
+                    new SqlParameter("@empId", empId),
+                    new SqlParameter("@companyEN", companyEN),
+                    new SqlParameter("@createdDateStart", createdDateStart),
+                    new SqlParameter("@createdDateEnd", createdDateEnd)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new Budget_Approve_Detail_Model.budgetForm()
+                             {
+                                 statusId = dr["statusId"].ToString(),
+                                 statusName = dr["statusName"].ToString(),
+                                 activityId = dr["activityId"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
 
+                                 budgetApproveId = dr["budgetApproveId"].ToString(),
+                                 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
 
+                                 reference = dr["reference"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 channelName = dr["channelName"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 productTypeNameEN = dr["productTypeNameEN"].ToString(),
 
+                                 cusShortName = dr["cusShortName"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 productCategory = dr["productCateText"].ToString(),
+                                 productGroup = dr["productGroupId"].ToString(),
+                                 productGroupName = dr["productGroupName"].ToString(),
 
+                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
+                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
+                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
+                                 activityName = dr["activityName"].ToString(),
 
+                                 themeId = dr["themeId"].ToString(),
+                                 theme = dr["theme"].ToString(),
+                                 objective = dr["objective"].ToString(),
+                                 trade = dr["trade"].ToString(),
+                                 activityDetail = dr["activityDetail"].ToString(),
 
+                                 budgetActivityId = dr["budgetActivityId"].ToString(),
+                                 approveId = dr["approveId"].ToString(),
 
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString(),
 
+                                 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
+                                 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
+                                 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
+                                 totalInvoiceApproveBath = dr["totalInvoiceApproveBath"] is DBNull ? 0 : (decimal?)dr["totalInvoiceApproveBath"]
 
-
-
-
-
-
-
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getBudgetListsByEmpId >> " + ex.Message);
+                return new List<Budget_Approve_Detail_Model.budgetForm>();
+            }
+        }
 
 
         public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
@@ -184,7 +237,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
         {
             try
             {
@@ -258,10 +311,6 @@ namespace eActForm.BusinessLayer
                                   act_compensateStatus = d["act_compensateStatus"].ToString(),
                                   act_compensateDateStart = (DateTime?)d["act_compensateDateStart"],
                                   act_compensateDateEnd = (DateTime?)d["act_compensateDateEnd"]
-
-                                  //act_compensateDateStart = d["act_compensateDateStart"] is DBNull ? null : (DateTime?)d["act_compensateDateStart"],
-                                  //act_compensateDateEnd = d["act_compensateDateEnd"] is DBNull ? null : (DateTime?)d["act_compensateDateEnd"]
-
                               });
 
                 return result.ToList();
@@ -272,8 +321,6 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Bud_Activity_Model.Budget_Activity_Att>();
             }
         }
-
-
 
         public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
         {
@@ -300,24 +347,18 @@ namespace eActForm.BusinessLayer
                                   themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                   totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
                                   productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
-
-                                  //paymentNo = d["paymentNo"].ToString(),
-                                  //saleActCase = d["saleActCase"].ToString(),
-                                  //saleActBath = d["saleActBath"].ToString(),
-
                                   budgetImageId = d["budgetImageId"].ToString(),
                                   actCustomerId = d["act_customerId"].ToString(),
 
                                   invoiceNo = d["invoiceNo"].ToString(),
                                   invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
+                                  productTotalBath = d["productTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["productTotalBath"].ToString()),
                                   productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
                                   productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
                                   productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
 
-                                  //invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
-                                  invoiceActionDate = d["invoiceActionDate"].ToString(), //is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+                                  invoiceActionDate = d["invoiceActionDate"].ToString(), 
                                   dateInvoiceAction = d["dateInvoiceAction"] is DBNull ? null : (DateTime?)d["dateInvoiceAction"],
-
                                   invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
                                   invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
                                   invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
@@ -326,8 +367,9 @@ namespace eActForm.BusinessLayer
                                   approveInvoiceId = d["approveInvoiceId"].ToString(),
                                   invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
                                   budgetApproveId = d["budgetApproveId"].ToString(),
-
                                   invoiceRemark = d["invoiceRemark"].ToString(),
+                                  invoiceType = d["invoiceType"].ToString(),
+                                  count_approved = d["count_approved"].ToString() == "" ? 0 : int.Parse(d["count_approved"].ToString()),
                               });
 
                 return result.ToList();
@@ -527,7 +569,6 @@ namespace eActForm.BusinessLayer
                                  budgetApproveId = dr["budgetApproveId"].ToString(),
                                  documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
 
-
                                  reference = dr["reference"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  channelName = dr["channelName"].ToString(),
@@ -536,7 +577,6 @@ namespace eActForm.BusinessLayer
 
                                  cusShortName = dr["cusShortName"].ToString(),
                                  cusNameTH = dr["cusNameTH"].ToString(),
-
                                  productCategory = dr["productCateText"].ToString(),
                                  productGroup = dr["productGroupId"].ToString(),
                                  productGroupName = dr["productGroupName"].ToString(),
@@ -552,11 +592,8 @@ namespace eActForm.BusinessLayer
                                  activityDetail = dr["activityDetail"].ToString(),
 
                                  budgetActivityId = dr["budgetActivityId"].ToString(),
-                                 //budgetApproveId = dr["budgetApproveId"].ToString(),
                                  approveId = dr["approveId"].ToString(),
                                  approveDetailId = dr["approveDetailId"].ToString(),
-
-                                 //delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
                                  updatedDate = (DateTime?)dr["updatedDate"],
@@ -599,60 +636,58 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory(string activityId, string budgetApproveId)
+        public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory(string activityId, string activityOfEstimateId, string budgetApproveId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetApproveInvoiceHistoryList"
                  , new SqlParameter("@activityId", activityId)
+                 , new SqlParameter("@activityOfEstimateId", activityOfEstimateId)
                  , new SqlParameter("@budgetApproveId", budgetApproveId)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new Budget_Activity_Model.Budget_Invoice_history_Att()
                               {
-                                  budgetActivityId = d["budgetActivityId"].ToString(),
-                                  activityId = d["activityId"].ToString(),
                                   activityNo = d["activityNo"].ToString(),
-                                  activitEstimateId = d["activitEstimateId"].ToString(),
-                                  productId = d["productId"].ToString(),
                                   activityTypeTheme = d["activityTypeTheme"].ToString(),
                                   productDetail = d["productDetail"].ToString(),
+                                  invoiceNo = d["invoiceNo"].ToString(),
 
+                                  productCostBath = d["productCostBath"].ToString() == "" ? 0 : decimal.Parse(d["productCostBath"].ToString()),
+                                  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
+                                  invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
+                                  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
+
+                                  invoiceType = d["invoiceType"].ToString(),
+                                  row_type = d["row_type"].ToString(),
+                                  invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
+                                  invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
+                                  invoiceRemark = d["invoiceRemark"].ToString(),
+                                  
+                                  budgetActivityId = d["budgetActivityId"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  activitEstimateId = d["activitEstimateId"].ToString(),
                                   normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
                                   themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                   totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
-                                  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
 
                                   invoiceId = d["invoiceId"].ToString(),
-                                  invoiceNo = d["invoiceNo"].ToString(),
-                                  //invoiceCustomerId d["invoiceCustomerId"].ToString(),
-                                  invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
-
-                                  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
-
-                                  productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
-                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
-
-                                  invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
-                                  //invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
-                                  //invoiceActionDate = d["invoiceActionDate"].ToString(),
-
-                                  invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
-                                  invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
                                   invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
-                                  productCountInvoice = d["productCountInvoice"].ToString() == "" ? 0 : int.Parse(d["productCountInvoice"].ToString()),
-                                  productSumInvoiceBath = d["productSumInvoiceBath"].ToString() == "" ? 0 : decimal.Parse(d["productSumInvoiceBath"].ToString()),
-
-                                  sum_cost_product_inv = d["sum_cost_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_cost_product_inv"].ToString()),
-                                  sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
-                                  sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
-
+                                  invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
                                   invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
                                   invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
 
-                                  invoiceRemark = d["invoiceRemark"].ToString(),
+                                  productId = d["productId"].ToString(),
+                                  productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
+                                  productCountInvoice = d["productCountInvoice"].ToString() == "" ? 0 : int.Parse(d["productCountInvoice"].ToString()),
+                                  productSumInvoiceBath = d["productSumInvoiceBath"].ToString() == "" ? 0 : decimal.Parse(d["productSumInvoiceBath"].ToString()),
 
+                                  total_act_product_cost = d["total_act_product_cost"].ToString() == "" ? 0 : decimal.Parse(d["total_act_product_cost"].ToString()),
+                                  total_act_invoice = d["total_act_invoice"].ToString() == "" ? 0 : decimal.Parse(d["total_act_invoice"].ToString()),
+                                  total_act_balance = d["total_act_balance"].ToString() == "" ? 0 : decimal.Parse(d["total_act_balance"].ToString()),
+                                  
                               });
 
                 return result.ToList();
@@ -663,15 +698,11 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Activity_Model.Budget_Invoice_history_Att>();
             }
         }
-
-
-
-
     }
 
     public class QueryGetBudgetReport
     {
-        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd, string actYear)
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN,  string actYear)
         {
             try
             {
@@ -679,63 +710,70 @@ namespace eActForm.BusinessLayer
                  , new SqlParameter("@act_StatusId", act_StatusId)
                  , new SqlParameter("@act_activityNo", act_activityNo)
                  , new SqlParameter("@companyEN", companyEN)
-                 , new SqlParameter("@createdDateStart", act_createdDateStart)
-                 , new SqlParameter("@createdDateEnd", act_createdDateEnd)
                  , new SqlParameter("@actYear", actYear)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new Budget_Report_Model.Report_Budget_Activity_Att()
                               {
-                                  company = d["company"].ToString(),
-                                  channelName = d["channelName"].ToString(),
+                                  company = d["company"].ToString(),                            //company
+                                  reportMMYY = d["reportMMYY"].ToString(),                      //เดือน-ปี
+                                  act_activityNo = d["act_activityNo"].ToString(),              //เลขที่กิจกรรม
+                                  sub_code = d["sub_code"].ToString(),                          //Sub Code
 
-                                  reportMMYY = d["reportMMYY"].ToString(),
-                                  claim_actStatus = d["claim_actStatus"].ToString(),
-                                  claim_shareStatus = d["claim_shareStatus"].ToString(),
-                                  claim_actValue = d["claim_actValue"].ToString(),
-                                  claim_actIO = d["claim_actIO"].ToString(),
-                                  product_IO = d["product_IO"].ToString(),
+                                  claim_actStatus = d["claim_actStatus"].ToString(),            //เคลม Product
+                                  claim_actValue = d["claim_actValue"].ToString(),              //เคลม(%)
+                                  claim_actIO = d["claim_actIO"].ToString(),                    //เคลม IO
 
-                                  act_activityNo = d["act_activityNo"].ToString(),
-                                  sub_code = d["sub_code"].ToString(),
-                                  act_activityName = d["act_activityName"].ToString(),
-                                  act_reference = d["act_reference"].ToString(),
-                                  brandName = d["brandName"].ToString(),
-                                  themeId = d["themeId"].ToString(),
-                                  Theme = d["Theme"].ToString(),
+                                  product_IO = d["product_IO"].ToString(),                      //เลข IO
+                                  act_activityName = d["act_activityName"].ToString(),          //ชื่อกิจกรรม
+                                  brandName = d["brandName"].ToString(),                        //กลุ่มสินค้า
+                                  act_theme = d["act_theme"].ToString(),                        //ประเภทกิจกรรม
 
-                                  cus_id = d["cus_id"].ToString(),
-                                  cus_regionId = d["cus_regionId"].ToString(),
-                                  cus_regionName = d["cus_regionName"].ToString(),
-                                  cus_regionDesc = d["cus_regionDesc"].ToString(),
-                                  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
-                                  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
+                                  cus_regionName = d["cus_regionName"].ToString(),              //ภาค
+                                  cus_regionDesc = d["cus_regionDesc"].ToString(),              //ชื่อภาค
+                                  cus_cusNameTH = d["cus_cusNameTH"].ToString(),                //ลูกค้า
 
-                                  prd_typeId = d["prd_typeId"].ToString(),
-                                  prd_groupId = d["prd_groupId"].ToString(),
-                                  prd_productDetail = d["prd_productDetail"].ToString(),
-                                  prd_productDetail50 = d["prd_productDetail50"].ToString(),
-                                  prd_productDetailCount = int.Parse(d["prd_productDetailCount"].ToString()),
+                                  act_reference = d["act_reference"].ToString(),                //reference
+                                  prd_productDetail = d["prd_productDetail"].ToString(),        //รายละเอียด
+                                  prd_productDetail50 = d["prd_productDetail50"].ToString(),    //รายละเอียด (50)
 
-                                  activity_Period = d["activity_Period"].ToString(),
-                                  activity_costPeriod = d["activity_costPeriod"].ToString(),
-                                  actCreatedDate = d["actCreatedDate"].ToString(),
+                                  activity_Period = d["activity_Period"].ToString(),            //ระยะเวลาการทำกิจกรรม
+                                  activity_costPeriod = d["activity_costPeriod"].ToString(),    //ระยะเวลาการให้ทุน
+                                  actCreatedDate = d["actCreatedDate"].ToString(),              //วันที่สร้างกิจกรรม
 
-                                  activityTotalBath = d["activityTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalBath"].ToString()),
+                                  //งบจัด
+                                  activityTotalBath = d["activityTotalBaht"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalBaht"].ToString()),
+                                  //เพิ่มงบ
+                                  activityTotalAddonBaht = d["activityTotalAddonBaht"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalAddonBaht"].ToString()),
+                                  //รวมงบจัด
+                                  activityGrandTotalBaht = d["activityGrandTotalBaht"].ToString() == "" ? 0 : decimal.Parse(d["activityGrandTotalBaht"].ToString()),
+                                  //งบจ่าย
                                   activityInvoiceTotalBath = d["activityInvoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityInvoiceTotalBath"].ToString()),
+                                  //งบคงเหลือ
                                   activityBalanceBath = d["activityBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["activityBalanceBath"].ToString()),
+                                  //งบจัด vs งบจ่าย
                                   activityCostRemainBath = d["activityCostRemainBath"].ToString() == "" ? 0 : decimal.Parse(d["activityCostRemainBath"].ToString()),
 
+                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),    //สถานะ
+                                  invoiceCreatedDate = d["invoiceCreatedDate"].ToString(),                  //วันที่ทำรายการ (ตัดจ่าย)
+                                  act_status = d["act_status"].ToString(),                                  //สถานะกิจกรรม
+                                  actForm_CreatedByUserId = d["act_createdByUserId"].ToString(),        //รหัสผู้สร้างกิจกรรม
+                                  actForm_CreatedByName = d["act_createdByName"].ToString(),            //ชื่อผู้สร้างกิจกรรม
+                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString(),    //ผู้อนุมัติ รออนุมัติ
+                                  wait_activityInvoiceTotalBath = d["wait_activityInvoiceTotalBaht"].ToString(), //งบจ่ายจ่ายรออนุมัติ
+
+                                  channelName = d["channelName"].ToString(),
+                                  claim_shareStatus = d["claim_shareStatus"].ToString(),
+                                  themeId = d["themeId"].ToString(),
+                                  cus_id = d["cus_id"].ToString(),
+                                  cus_regionId = d["cus_regionId"].ToString(),
+                                  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
+                                  prd_typeId = d["prd_typeId"].ToString(),
+                                  prd_groupId = d["prd_groupId"].ToString(),
+                                  prd_productDetailCount = int.Parse(d["prd_productDetailCount"].ToString()),
                                   productBudgetStatusGroupId = d["productBudgetStatusGroupId"].ToString(),
-                                  ProductBudgetStatusId = d["ProductBudgetStatusId"].ToString(),
-                                  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
-                                  invoiceCreatedDate = d["invoiceCreatedDate"].ToString(),
-                                  act_status = d["act_status"].ToString(),
-                                  actForm_CreatedByUserId = d["actForm_CreatedByUserId"].ToString(),
-                                  actForm_CreatedByName = d["actForm_CreatedByName"].ToString(),
-                                  budget_CurrentApproveName = d["budget_CurrentApproveName"].ToString(),
-                                  wait_activityInvoiceTotalBath = d["wait_activityInvoiceTotalBath"].ToString()
+                                  ProductBudgetStatusId = d["ProductBudgetStatusId"].ToString()
                               });
 
                 return result.ToList();
@@ -746,40 +784,7 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Report_Model.Report_Budget_Activity_Att>();
             }
         }
-
     }
-
-    //public class QueryGetInvoiceActivityStstus
-    //{
-    //    public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getInvoiceActivityStstus()
-    //    {
-    //        try
-    //        {
-    //            DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getInvoiceActivityStstus");
-
-    //            var result = (from DataRow d in ds.Tables[0].Rows
-    //                          select new Budget_Activity_Model.Budget_Activity_Status_Att()
-    //                          {
-    //                              id = d["id"].ToString(),
-    //                              nameEN = d["NameEN"].ToString(),
-    //                              nameTH = d["NameTH"].ToString(),
-    //                              description = d["description"].ToString(),
-    //                              delFlag = bool.Parse(d["delFlag"].ToString()),
-    //                              createdDate = DateTime.Parse(d["createdDate"].ToString()),
-    //                              createdByUserId = d["createdByUserId"].ToString(),
-    //                              updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
-    //                              updatedByUserId = d["updatedByUserId"].ToString(),
-    //                          });
-
-    //            return result.ToList();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
-    //            return new List<Budget_Activity_Model.Budget_Activity_Status_Att>();
-    //        }
-    //    }
-    //}
 
     public class BudgetFormCommandHandler
     {
@@ -798,8 +803,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityNo",model.activityNo)
                     ,new SqlParameter("@productId",model.productId)
                     ,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
-                    ,new SqlParameter("@paymentNo",model.paymentNo)
-
+                    ,new SqlParameter("@paymentNo",null)
                     ,new SqlParameter("@budgetImageId",model.budgetImageId)
 
                     ,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
@@ -825,7 +829,6 @@ namespace eActForm.BusinessLayer
 
             int result = 0;
             model.dateInvoiceAction = DateTime.ParseExact(model.invoiceActionDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-
             try
             {
 
@@ -835,13 +838,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityNo",model.activityNo)
                     ,new SqlParameter("@productId",model.productId)
                     ,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
-                    ,new SqlParameter("@paymentNo",model.paymentNo)
+                    ,new SqlParameter("@paymentNo",null)
                     ,new SqlParameter("@budgetImageId",model.budgetImageId)
 
                     ,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
                     ,new SqlParameter("@invoiceNo",model.invoiceNo)
                     ,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
-					//,new SqlParameter("@actionDate",model.invoiceActionDate)
+
 					,new SqlParameter("@actionDate",model.dateInvoiceAction)
                     ,new SqlParameter("@invoiceRemark",model.invoiceRemark)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -852,18 +855,15 @@ namespace eActForm.BusinessLayer
             {
                 ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceInsert");
             }
-
             return result;
         }
 
-        public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceId, string delType)
+        public static int commBudgetProductInvoiceDelete(string activityId, string estimateId, string invoiceId, string delType)
         {
 
             int result = 0;
-
             try
             {
-
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityInvoiceDelete"
                     , new SqlParameter[] {new SqlParameter("@activityId",activityId)
                     ,new SqlParameter("@activityOfEstimateId",estimateId)
@@ -875,7 +875,28 @@ namespace eActForm.BusinessLayer
             {
                 ExceptionManager.WriteError(ex.Message + ">> usp_mtm_BudgetActivityInvoiceDelete");
             }
+            return result;
+        }
 
+        public static int commBudgetCompensateUpdate(string activityId, string compensateStatus, string compensateStartDate, string compensateEndDate)
+        {
+
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetActivityCompensateUpdate"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    ,new SqlParameter("@compensateStatus",compensateStatus)
+                    ,new SqlParameter("@compensateStartDate",compensateStartDate)
+                    ,new SqlParameter("@compensateEndDate",compensateEndDate)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> commBudgetCompensateUpdate");
+            }
             return result;
         }
 

@@ -10,41 +10,7 @@
         font-size: 18px;
     }
 </style>
-<script>
 
-      function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("myDocBudgetEmpApproveList", "BudgetMyDoc")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-			$("#divModalmyDocBudgetList").html(response)
-			$('#modalmyDocBudgetList').modal('show');
-        });
-    }
-
-    function resendApprove(actId) {
-        $("#WaitDialog").show();
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("resendApproveBudget", "Base")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            $("#WaitDialog").hide();
-            if (response.Success) {
-                doMsgSuccess("ดำเนินการเรียบร้อยครับ")
-            } else {
-                doMsgFail(response.Message);
-            }
-        });
-      }
-
-
-</script>
 <div class="row">
 
     <div class="col-md-12 col-xs-12">
@@ -55,7 +21,7 @@
 
 
         @*<a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
-        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
+            <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
         <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>คือ Regen PDF
         <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
         <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
@@ -84,7 +50,7 @@
 
                                 @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                                 {
-                                    <a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.activityId','@item.statusId');">
+                                    <a href="javascript:" onclick="onClickSubmitRegenPdf('@item.activityId');">
                                         <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                     </a>
                                 }
@@ -117,14 +83,24 @@
 
     </div>
 </div>
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog">
-    <div id="divModalmyDocBudgetList">
-    </div>
+
+@*<div id='myModalInvoiceContent'></div>*@
+
+@*<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+    <div id='myModalInvoicePreviewContent'></div>
+</div>*@
+
+
+@*<div id='myModalRegenPreview' class="modal fade" role="dialog">
+    <div id='myModalRegenContent'></div>
+</div>*@
+
+<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+    <div id='myModalInvoicePreviewContent'></div>
 </div>
 
-<div id="ModalPreviewPDF" style="display:none">
-    <div id="divRegenBudgetApprovePdf">
-    </div>
+<div id='myModalBudgetApproveList' class="modal fade" role="dialog">
+    <div id='myModalBudgetApproveListContent'></div>
 </div>
 
 <script>
@@ -145,41 +121,78 @@
 			}
 		});
 
-	});
-	function waitpopup() {
+    });
+
+
+    function onClickSubmitRegenPdf(actId) {
+		//var $buttonClicked = $(this);
+		//var var_company = companyEN;
+		var var_activityId = actId;
+		var options = { "backdrop": "static", keyboard: true };
+
+		$.ajax({
+			type: "GET",
+			url:  '@Url.Action("myDocBudgetPreviewRegen", "BudgetMyDoc")',
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"activityId": var_activityId
+			},
+			datatype: "json",
+			success: function (data) {
+				debugger;
+				$('#myModalInvoicePreviewContent').html(data);
+				$('#myModalInvoicePreview').modal(options);
+				$('#myModalInvoicePreview').modal('show');
+
+			},
+			error: function () {
+				alert("ไม่พบสายการอนุมัติ กรุณาตรวจสอบ");
+			}
+		});
+    }
+
+
+
+    function callApproveList(actId) {
+
+        var options = { "backdrop": "static", keyboard: true };
+
+        $.ajax({
+            type: 'GET',
+            url:  '@Url.Action("myDocBudgetEmpApproveList", "BudgetMyDoc")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#myModalBudgetApproveListContent").html(response)
+            $('#myModalBudgetApproveList').modal(options);
+            $('#myModalBudgetApproveList').modal('show');
+        });
+
+    }
+
+    function resendApprove(actId) {
+        $("#WaitDialog").show();
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("resendApproveBudget", "Base")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+            if (response.Success) {
+                doMsgSuccess("ดำเนินการเรียบร้อยครับ")
+            } else {
+                doMsgFail(response.Message);
+            }
+        });
+    }
+
+    function waitpopup() {
 		$("#WaitDialog").show();
 	}
 
-	function CallReBudgetApprovePdf(budgetapproveId, activityId, statusId) {
-		$.ajax({
-            type: 'POST',
-            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
-            data: {
-				budgetApproveId: budgetapproveId,
-				activityId: activityId
-            }
-        }).done(function (htmlResponse) {
-			genPdf(budgetapproveId, activityId,statusId, htmlResponse);
-        });
-	}
 
-	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
-        $.ajax({
-            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
-            data: {
-                GridHtml: htmlResponse,
-                budgetApproveId: budgetapproveId,
-
-                //GridHtml: htmlResponse,
-                //statusId: statusId,
-				//budgetApproveId: budgetapproveId,
-				//activityId: activityId,
-            },
-            dataType: "json",
-            type: 'POST',
-        }).done(function (response) {
-            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
-        });
-	}
 
 </script>
