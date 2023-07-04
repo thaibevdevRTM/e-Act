@@ -310,10 +310,6 @@
             if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
             if ($("#ddlTravelling").val() == "") { required += "ระบุความเร่งด่วน*<br>"; validate = false; }
-
-            var desc = CKEDITOR.instances['activityFormTBMMKT_activityDetail'].getData();
-            $("#activityFormTBMMKT_activityDetail").val(desc);
-
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }

@@ -1368,7 +1368,7 @@
         document.getElementById("txtdateActivityEnd").disabled = true;
         document.getElementById("txtdateCostPerSt").disabled = true;
         document.getElementById("txtdateCostPerEnd").disabled = true;
-        document.getElementById("dropzoneJsForm").disabled = true;
+       // document.getElementById("dropzoneJsForm").disabled = true;
         document.getElementById("txtActivityDetail").disabled = true;
         document.getElementById("ddlRegion").disabled = true;
         document.getElementById("txtCustomerName").disabled = true;
@@ -1385,12 +1385,12 @@
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
         document.getElementById("btnUpdate").style.display = "none";
-        document.getElementById("divUploadFiles").style.display = "none";
-        var arrayOfElements = document.getElementsByClassName('divDelImg');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].style.display = 'none';
-        }
+        //document.getElementById("divUploadFiles").style.display = "none";
+        //var arrayOfElements = document.getElementsByClassName('divDelImg');
+        //var lengthOfArray = arrayOfElements.length;
+        //for (var i = 0; i < lengthOfArray; i++) {
+        //    arrayOfElements[i].style.display = 'none';
+        //}
 
         if ('@Model.activityFormModel.statusId' == '5' && '@Model.activityFormModel.master_type_form_id' != '@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]') {
             document.getElementById("divAddActivityDetail").style.display = "block";

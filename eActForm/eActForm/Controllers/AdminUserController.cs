@@ -42,42 +42,40 @@ namespace eActForm.Controllers
 
                 if (model.chkProductType != null)
                 {
-                    foreach (var item in model.chkProductType)
+                    foreach (var itemCompany in model.companyList)
                     {
-                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"]
-                            || model.companyList[0] == @ConfigurationManager.AppSettings["companyId_OMT"])
+                        foreach (var item in model.chkProductType)
                         {
-
-                            foreach (var itemCompany in model.companyList)
+                            if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"])
                             {
-                                if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"] && model.custLi != null)
+                                if (model.custLi != null)
                                 {
                                     foreach (var itemCust in model.custLi)
                                     {
                                         AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, itemCust, item, "");
                                     }
                                 }
-
-                                if (itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
+                                else
                                 {
-                                    if (model.regionList == null)
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
+                                }
+                            }
+      
+                            if (itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
+                            {
+                                if (model.regionList == null)
+                                {
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
+                                }
+                                else
+                                {
+                                    foreach (var region in model.regionList)
                                     {
-                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
-                                    }
-                                    else
-                                    {
-                                        foreach (var region in model.regionList)
-                                        {
-                                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, "", item, region);
-                                        }
+                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, "", item, region);
                                     }
                                 }
                             }
 
-                        }
-                        else
-                        {
-                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
 
                         }
                     }
@@ -85,7 +83,10 @@ namespace eActForm.Controllers
                 else
                 {
                     //other Company
-                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, "", "");
+                    foreach (var itemCompany in model.companyList)
+                    {
+                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, "", "");
+                    }
                 }
             }
             catch (Exception ex)
