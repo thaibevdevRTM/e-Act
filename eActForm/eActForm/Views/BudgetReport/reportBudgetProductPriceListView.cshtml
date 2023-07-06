@@ -1,0 +1,268 @@
+﻿
+@model eActForm.Models.Budget_Report_Model.Report_Budget_Activity
+
+
+@if (Model.Report_Budget_Activity_List != null)
+{
+
+    <div class="row">
+        <p class="d-flex justify-content-center">
+            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                </button>
+            }
+        </p>
+    </div>
+
+    <div class="row">
+        <div id="GridView">
+            <table class="table table-hover border-dark" id="datatable" style="width:100%;">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td> no.</td>
+                        <td style="text-align:left;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:left;"> ประเภทกิจกรรม </td>
+                        <td style="text-align:left;"> ลูกค้า </td>
+                        <td style="text-align:left;"> รายละเอียด (50) </td>
+
+                        <td style="text-align:right;"> รวมงบจัด </td>        @*ยอดยกมา*@
+                        <td style="text-align:right;"> รวมงบจ่าย </td>       @*ยอดตัดจ่าย*@
+                        <td style="text-align:right;"> งบจัดเทียบงบจ่าย </td>  @*ค่าใช้จ่ายคงเหลือ*@
+
+                        <td style="text-align:left;"> สถานะ </td>
+                        <td style="text-align:left;"> สถานะกิจกรรม </td>
+                        <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
+
+                    </tr>
+                </thead>
+                @{ var index_view = 1; }
+                @foreach (var item in Model.Report_Budget_Activity_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index_view</td>
+                        <td>@item.act_activityNo </td>
+                        <td>@item.act_theme </td>
+                        <td>@item.cus_cusNameEN </td>
+                        <td>@item.prd_productDetail50 </td>
+
+                        @*รวมงบจัด*@
+                        <td style="text-align:right;">
+                            @if (@item.activityGrandTotalBaht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityGrandTotalBaht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*รวมงบจ่าย*@
+                        <td style="text-align:right;">
+                            @if (@item.activityInvoiceTotalBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityInvoiceTotalBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*งบจัดเทียบงบจ่าย*@
+                        <td style="text-align:right;">
+                            @if (@item.activityCostRemainBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityCostRemainBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        <td style="text-align:center;">@item.productBudgetStatusNameTH </td>
+                        <td style="text-align:center;">@item.act_status </td>
+                        <td style="text-align:left;">@item.budget_CurrentApproveName </td>
+
+                    </tr>
+                    index_view++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row hide">
+        <div id="GridPDF">
+            <table class="table table-hover border-dark" id="datatable_export">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td> no.</td>
+                        <td style="text-align:center;"> company </td>
+                        <td style="text-align:center;" class="text-hide"> ปี-เดือน </td>
+                        <td style="text-align:left;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:left;"> Sub Code </td>
+                        <td style="text-align:center;"> เคลม Product </td>
+                        <td style="text-align:left;"> เคลม(%) </td>
+                        <td style="text-align:left;"> เคลม IO </td>
+                        <td style="text-align:left;"> เลข IO </td>
+                        <td style="text-align:left;"> ชื่อกิจกรรม </td>
+                        <td style="text-align:left;"> กลุ่มสินค้า </td>
+                        <td style="text-align:left;"> ประเภทกิจกรรม </td>
+                        <td style="text-align:left;"> ภาค </td>
+                        <td style="text-align:left;"> ชื่อภาค </td>
+                        <td style="text-align:left;"> ลูกค้า </td>
+                        <td style="text-align:left;"> reference </td>
+                        <td style="text-align:left;"> รายละเอียด </td>
+                        <td style="text-align:left;"> รายละเอียด (50) </td>
+                        <td style="text-align:left;"> ระยะเวลาการทำกิจกรรม </td>
+                        <td style="text-align:left;"> ระยะเวลาการให้ทุน </td>
+                        <td style="text-align:center;"> วันที่สร้างกิจกรรม </td>
+
+                        <td style="text-align:right;"> งบจัด </td>
+                        <td style="text-align:right;"> เพิ่มงบ </td>
+                        <td style="text-align:right;"> รวมงบจัด </td>
+                        <td style="text-align:right;"> งบจ่าย </td>
+
+                        <td style="text-align:right;"> งบคงเหลือ </td>
+                        <td style="text-align:right;"> งบจัดเทียบงบจ่าย </td>
+                        <td style="text-align:center;"> สถานะ </td>
+                        <td style="text-align:center;"> วันที่ทำรายการ (ตัดจ่าย) </td>
+                        <td style="text-align:center;"> สถานะกิจกรรม </td>
+                        <td style="text-align:center;"> รหัสผู้สร้างกิจกรรม </td>
+                        <td style="text-align:left;"> ชื่อผู้สร้างกิจกรรม </td>
+                        <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
+                        <td style="text-align:left;"> งบจ่ายรออนุมัติ </td>
+                    </tr>
+                </thead>
+                @{ var index = 1;}
+                @foreach (var item in Model.Report_Budget_Activity_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index</td>
+                        <td>@item.company</td>
+                        <td>@item.reportMMYY </td>
+                        <td>@item.act_activityNo </td>
+                        <td>@item.sub_code </td>
+                        <td>@item.claim_actStatus </td>
+                        <td>@item.claim_actValue </td>
+                        <td>@item.claim_actIO </td>
+                        <td>@item.product_IO </td>
+                        <td>@item.act_activityName </td>
+                        <td>@item.brandName </td>
+                        <td>@item.act_theme </td>
+                        <td>@item.cus_regionName </td>
+                        <td>@item.cus_regionDesc </td>
+                        <td>@item.cus_cusNameTH </td>
+                        <td>@item.act_reference </td>
+                        <td>@item.prd_productDetail </td>
+                        <td>@item.prd_productDetail50 </td>
+                        <td>@item.activity_Period </td>
+                        <td>@item.activity_costPeriod </td>
+                        <td>@item.actCreatedDate </td>
+
+                        @*งบจัด*@
+                        <td>
+                            @if (@item.activityTotalBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityTotalBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*เพิ่มงบ*@
+                        <td>
+                            @if (@item.activityTotalAddonBaht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityTotalAddonBaht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @* รวมงบจัด *@
+                        <td>
+                            @if (@item.activityGrandTotalBaht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityGrandTotalBaht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*งบจ่าย*@
+                        <td>
+                            @if (@item.activityInvoiceTotalBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityInvoiceTotalBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*งบคงเหลือ*@
+                        <td>
+                            @if (@item.activityBalanceBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityBalanceBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*งบจัดเทียบงบจ่าย*@
+                        <td>
+                            @if (@item.activityCostRemainBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityCostRemainBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        <td class="text-hide">@item.productBudgetStatusNameTH </td>
+                        <td class="text-hide">@item.invoiceCreatedDate</td>
+                        <td> @item.act_status </td>
+                        <td class="text-hide">@item.actForm_CreatedByUserId </td>
+                        <td class="text-hide">@item.actForm_CreatedByName </td>
+                        <td class="text-hide">@item.budget_CurrentApproveName </td>
+                        <td class="text-hide">@item.wait_activityInvoiceTotalBath </td>
+                    </tr>
+                    index++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+
+
+    //------------------------------------------------------------------------------------------------
+
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+
+}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#datatable').DataTable({
+			"columnDefs": [
+				{ "orderable": true, "targets": 0 }
+				, { "orderable": true, "targets": 1 }
+			],
+			"dom": 'lCfrtip',
+			"order": [],
+			"language": {
+				"lengthMenu": '_MENU_ entries per page',
+				"search": '<i class="fa fa-search"></i>',
+				"paginate": {
+					"previous": '<i class="fa fa-angle-left"></i>',
+					"next": '<i class="fa fa-angle-right"></i>'
+				}
+			}
+		});
+
+	})
+
+	$(function () {
+		$("#btnExportExcel").click(function () {
+			$("input[name='gridHtml']").val($("#GridPDF").html());
+		});
+
+		$("#btnExportPDF").click(function () {
+			$("input[name='gridHtml']").val($("#GridPDF").html());
+		});
+	});
+
+
+</script>

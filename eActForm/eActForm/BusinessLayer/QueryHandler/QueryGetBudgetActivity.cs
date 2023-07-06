@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Activity_Model.Budget_Activity_Year_Att>();
             }
         }
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn, string actYear)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn, string actYear)
         {
             try
             {
@@ -237,7 +237,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn)
         {
             try
             {
