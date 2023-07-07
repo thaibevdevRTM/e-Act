@@ -82,7 +82,9 @@ namespace eActForm.BusinessLayer
                                   act_totalCost = d["act_totalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_totalCost"].ToString()),
                                   act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
                                   act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
-
+                                  act_grandTotalCost = d["act_grandTotalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_grandTotalCost"].ToString()),
+                                  act_grandTotalBalance = d["act_grandTotalBalance"].ToString() == "" ? 0 : decimal.Parse(d["act_grandTotalBalance"].ToString()),
+                                  
                                   act_createdDate = d["act_createdDate"] is DBNull ? null : (DateTime?)d["act_createdDate"],
                                   act_updatedDate = d["act_updatedDate"] is DBNull ? null : (DateTime?)d["act_updatedDate"],
 
@@ -132,6 +134,8 @@ namespace eActForm.BusinessLayer
                                   invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
 
                                   productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
+                                  productGrandTotalaCost = d["productGrandTotalaCost"].ToString() == "" ? 0 : decimal.Parse(d["productGrandTotalaCost"].ToString()),
+                                  
                                   budgetStatusId = d["budgetStatusId"].ToString(), /*สภานะเงินของรายการ product*/
                                   budgetStatusNameTH = d["budgetStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
                               });
