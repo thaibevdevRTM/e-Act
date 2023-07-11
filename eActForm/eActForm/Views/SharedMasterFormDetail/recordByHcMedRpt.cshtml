@@ -1,24 +1,25 @@
-﻿@using eActForm.BusinessLayer;
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
 @using System.Configuration;
 @using eActForm.Models;
 @{
     Layout = null;
-    var percent = Model.hospPercent;
-    var amount = Model.amount > 0 ? Model.amount.ToString("#,###.00") : "0";
-    var limit = Model.amountLimit > 0 ? Model.amountLimit.ToString("#,###.00") : "0";
-    var cumulative = Model.amountCumulative > 0 ? Model.amountCumulative.ToString("#,###.00") : "0";
-    var balance = Model.amountBalance > 0 ? Model.amountBalance.ToString("#,###.00") : "0";
-    var received = Model.amountReceived > 0 ? Model.amountReceived.ToString("#,###.00") : "0";
+    var percent = Model.tB_Act_ActivityForm_DetailOther.hospPercent;
+    var amount = Model.tB_Act_ActivityForm_DetailOther.amount > 0 ? Model.tB_Act_ActivityForm_DetailOther.amount.Value.ToString("#,###.00") : "0";
+    var limit = Model.tB_Act_ActivityForm_DetailOther.amountLimit > 0 ? Model.tB_Act_ActivityForm_DetailOther.amountLimit.Value.ToString("#,###.00") : "0";
+    var cumulative = Model.tB_Act_ActivityForm_DetailOther.amountCumulative > 0 ? Model.tB_Act_ActivityForm_DetailOther.amountCumulative.Value.ToString("#,###.00") : "0";
+    var balance = Model.tB_Act_ActivityForm_DetailOther.amountBalance > 0 ? Model.tB_Act_ActivityForm_DetailOther.amountBalance.Value.ToString("#,###.00") : "0";
+    var received = Model.tB_Act_ActivityForm_DetailOther.amountReceived > 0 ? Model.tB_Act_ActivityForm_DetailOther.amountReceived.Value.ToString("#,###.00") : "0";
 
     var txt = "..........................";
-    txt = DocumentsAppCode.ThaiBahtText(Model.amountReceived.ToString());
+    txt = DocumentsAppCode.ThaiBahtText(Model.tB_Act_ActivityForm_DetailOther.amountReceived.ToString());
 
-    var rootPathWeb = "./";
+    var rootPathWeb = "https://eact.thaibev.com/";
     var urlImg1 = "";
     var urlImg2 = "";
     urlImg2 = rootPathWeb + "images/check.png";
 
-    if (Model.delFlag)
+    if (Model.tB_Act_ActivityForm_DetailOther.delFlag)
     {
         urlImg1 = rootPathWeb + "images/check_b.png";
     }

@@ -134,8 +134,18 @@ namespace eActForm.Controllers.API
 
                                     if (!item.path_action.ToLower().Contains("signature"))
                                     {
-                                        outputHtml += ApproveAppCode.RenderViewToString(item.path_controller, item.path_action, activity_TBMMKT_Model);
+                                        if(item.path_action.ToLower().Equals("reportpettycashnum"))
+                                        {
+                                            activity_TBMMKT_Model = ReportAppCode.reportPettyCashNumAppCode(activity_TBMMKT_Model);
+                                            outputHtml += ApproveAppCode.RenderViewToString(item.path_controller, item.path_action, activity_TBMMKT_Model);
+                                        }
+                                        else
+                                        {
+                                            outputHtml += ApproveAppCode.RenderViewToString(item.path_controller, item.path_action, activity_TBMMKT_Model);
+                                        }
+                                       
                                     }
+                               
 
                                     if (item.path_action == "showSignatureV1")
                                     {

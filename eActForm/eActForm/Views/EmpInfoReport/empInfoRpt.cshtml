@@ -1,83 +1,89 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Configuration;
-@{ 
+@using System.Globalization;
+@{
     Layout = null;
+    CultureInfo DateThai = new CultureInfo("th-TH");
 }
 
 <table style="width: 100%;" class=" fontDocSmall" runat="server" border="0" cellpadding="2" cellspacing="0">
-   
-        <tr>
-            <td style="width: 10%;text-align :right ; ">
-                <b> ข้าพเจ้า</b>
-            </td>
-            <td style="width: 2%;text-align :center ; ">  <b> : </b></td>
-            <td style="width: 28%; text-align :left;">
-                <label>    @Model.requestEmpModel[0].empName</label>
-            </td>
-            <td style="width: 10%;text-align :right ; ">
-                <label>  <b>รหัสพนักงาน</b></label>
-            </td>
-            <td style="width: 2%;text-align :center ; "> <b> : </b></td>
-            <td style="width: 14%; text-align :left;">   @Model.requestEmpModel[0].empId</td>
 
-            <td style="width: 11%;text-align :right ; "></td>
-            <td style="width: 1%;text-align :center ; "></td>
-            <td style="width: 23%; text-align :left;"></td>
-        </tr>
+    <tr>
+        <td style="width: 10%;text-align :right ; ">
+            <b> ข้าพเจ้า</b>
+        </td>
+        <td style="width: 2%;text-align :center ; ">  <b> : </b></td>
+        <td style="width: 28%; text-align :left;">
+            <label>    @Model.requestEmpModel[0].empName</label>
+        </td>
+        <td style="width: 10%;text-align :right ; ">
+            <label>  <b>รหัสพนักงาน</b></label>
+        </td>
+        <td style="width: 2%;text-align :center ; "> <b> : </b></td>
+        <td style="width: 14%; text-align :left;">   @Model.requestEmpModel[0].empId</td>
 
-        <tr>
-            <td style="text-align :right ; ">
-                <b>ตำแหน่ง</b>
-            </td>
-            <td style="text-align :center ; "><b> : </b></td>
-            <td style="text-align :left;">
-                @Model.requestEmpModel[0].position
-            </td>
-            <td style="text-align :right ; ">
-                <b>ระดับ</b>
-            </td>
-            <td style="text-align :center ; "><b> : </b></td>
-            <td style=" text-align :left;">    @Model.requestEmpModel[0].level</td>
+        <td style="width: 11%;text-align :right ; "></td>
+        <td style="width: 1%;text-align :center ; "></td>
+        <td style="width: 23%; text-align :left;"></td>
+    </tr>
 
-            <td style="text-align :right ; "><b>หน่วยงาน</b> </td>
-            <td style="text-align :center ; "><b> : </b></td>
-            <td style=" text-align :left;">   @Model.requestEmpModel[0].bu</td>
-        </tr>
+    <tr>
+        <td style="text-align :right ; ">
+            <b>ตำแหน่ง</b>
+        </td>
+        <td style="text-align :center ; "><b> : </b></td>
+        <td style="text-align :left;">
+            @Model.requestEmpModel[0].position
+        </td>
+        <td style="text-align :right ; ">
+            <b>ระดับ</b>
+        </td>
+        <td style="text-align :center ; "><b> : </b></td>
+        <td style=" text-align :left;">    @Model.requestEmpModel[0].level</td>
 
-        <tr>
-            <td style="text-align :right ; ">
-                <b>สังกัดบริษัท</b>
-            </td>
-            <td style="text-align :center ; "><b> : </b></td>
-            <td style="text-align :left;">
-                @Model.requestEmpModel[0].companyName
-            </td>
-            <td style="text-align :right ; ">
-                <b>โทรศัพท์ติดต่อ</b>
-            </td>
-            <td style="text-align :center ; "><b> : </b></td>
-            <td style=" text-align :left;">    @Model.requestEmpModel[0].empTel</td>
+        <td style="text-align :right ; "><b>หน่วยงาน</b> </td>
+        <td style="text-align :center ; "><b> : </b></td>
+        <td style=" text-align :left;">   @Model.requestEmpModel[0].bu</td>
+    </tr>
 
-            @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
-            {
-                <td style="text-align :right ; "><b>ตามคำสั่ง</b> </td>
-                <td style="text-align :center ; "><b> : </b></td>
-                <td style=" text-align :left;">   @Model.tB_Act_ActivityForm_DetailOther.orderOf</td>
-            }
-            else if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
-            {
-                <td style="text-align :right ; "><b>วันเริ่มเข้าทำงาน</b> </td>
-                <td style="text-align :center ; "><b> : </b></td>
-                <td style=" text-align :left;">   @Model.requestEmpModel[0].hireDate</td>
-            }
-            else
-            {
-                <td style="text-align :right ; "><b></b> </td>
-                <td style="text-align :center ; "><b> : </b></td>
-                <td style="text-align :left;"> </td>
-            }
-        </tr>
-    </table>
+    <tr>
+        <td style="text-align :right ; ">
+            <b>สังกัดบริษัท</b>
+        </td>
+        <td style="text-align :center ; "><b> : </b></td>
+        <td style="text-align :left;">
+            @Model.requestEmpModel[0].companyName
+        </td>
+        <td style="text-align :right ; ">
+            <b>โทรศัพท์ติดต่อ</b>
+        </td>
+        <td style="text-align :center ; "><b> : </b></td>
+        <td style=" text-align :left;">    @Model.requestEmpModel[0].empTel</td>
+
+        @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+        {
+            <td style="text-align :right ; "><b>ตามคำสั่ง</b> </td>
+            <td style="text-align :center ; "><b> : </b></td>
+            <td style=" text-align :left;">   @Model.tB_Act_ActivityForm_DetailOther.orderOf</td>
+        }
+        else if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+        {
+            <td style="text-align :right ; "><b>วันเริ่มเข้าทำงาน</b> </td>
+            <td style="text-align :center ; "><b> : </b></td>
+            <td style=" text-align :left;">
+                @Convert.ToDateTime(@Model.requestEmpModel[0].hireDate).ToString("dd/MM/yyyy")
+                
+            </td>
+
+        }
+        else
+        {
+            <td style="text-align :right ; "><b></b> </td>
+            <td style="text-align :center ; "><b> : </b></td>
+            <td style="text-align :left;"> </td>
+        }
+    </tr>
+</table>
 <div style="height:15px;"></div>
 
