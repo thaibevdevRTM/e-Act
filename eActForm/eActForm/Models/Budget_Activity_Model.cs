@@ -203,6 +203,7 @@ namespace eActForm.Models //update 21-04-2020
             public decimal totalCost { get; set; }
             public decimal invoiceTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
             public decimal productBalanceBath { get; set; } /*ผลต่าง*/
+            public decimal productGrandTotalaCost { get; set; }
             public string budgetStatusId { get; set; }
             public string budgetStatusNameTH { get; set; }
 
@@ -413,7 +414,9 @@ namespace eActForm.Models //update 21-04-2020
             public decimal act_themeCost { get; set; }
             public decimal act_totalCost { get; set; }
             public decimal act_balance { get; set; } /*ผลต่าง*/
-            public decimal act_total_invoive { get; set; }/*ยอดยกมา*/
+            public decimal act_grandTotalCost { get; set; }
+            public decimal act_grandTotalBalance { get; set; }
+            public decimal act_total_invoive { get; set; }/* ยอดยกมา*/
 
             public string act_claimNo { get; set; }
             public string act_claimShare { get; set; }

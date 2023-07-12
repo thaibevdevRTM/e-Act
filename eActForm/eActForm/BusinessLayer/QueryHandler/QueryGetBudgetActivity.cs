@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Activity_Model.Budget_Activity_Year_Att>();
             }
         }
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn, string actYear)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn, string actYear)
         {
             try
             {
@@ -82,7 +82,9 @@ namespace eActForm.BusinessLayer
                                   act_totalCost = d["act_totalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_totalCost"].ToString()),
                                   act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
                                   act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
-
+                                  act_grandTotalCost = d["act_grandTotalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_grandTotalCost"].ToString()),
+                                  act_grandTotalBalance = d["act_grandTotalBalance"].ToString() == "" ? 0 : decimal.Parse(d["act_grandTotalBalance"].ToString()),
+                                  
                                   act_createdDate = d["act_createdDate"] is DBNull ? null : (DateTime?)d["act_createdDate"],
                                   act_updatedDate = d["act_updatedDate"] is DBNull ? null : (DateTime?)d["act_updatedDate"],
 
@@ -132,6 +134,8 @@ namespace eActForm.BusinessLayer
                                   invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
 
                                   productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
+                                  productGrandTotalaCost = d["productGrandTotalaCost"].ToString() == "" ? 0 : decimal.Parse(d["productGrandTotalaCost"].ToString()),
+                                  
                                   budgetStatusId = d["budgetStatusId"].ToString(), /*สภานะเงินของรายการ product*/
                                   budgetStatusNameTH = d["budgetStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
                               });
@@ -237,7 +241,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityDetail(string act_approveStatusId, string act_activityId, string budget_approveId, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn)
         {
             try
             {
