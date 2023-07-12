@@ -147,6 +147,10 @@ namespace eActForm.Controllers
                                 //ใบสั่งจ่าย ช่องทาง brand จะมี subjectId แค่อันเดียว
                                 item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, MainAppCode.subjectPaymentVoucherId);
                             }
+                            else if(model.masterTypeId == ConfigurationManager.AppSettings["formPurchaseTbm"] && !string.IsNullOrEmpty(item.productBrandId))
+                            {
+                                item.flowId = ImportFlowPresenter.getFlowIdByDetail(AppCode.StrCon, item, true, ConfigurationManager.AppSettings["subjectPurchaseTbm"]);
+                            }
                             else if (model.masterTypeId == MainAppCode.masterTypeActivityBudget)
                             {
                                 if (!string.IsNullOrEmpty(item.productBrandId))
