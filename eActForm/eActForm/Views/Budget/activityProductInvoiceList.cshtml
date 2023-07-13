@@ -24,9 +24,11 @@
 <table class="table table-bordered" id="content">
     <thead class="thead-dark">
         <tr>
-            <th class="align-content-center font12B" style="width:10%;"></th>
+            <th class="align-content-center " style="text-align:right; width:85px;"></th>
+            <th class="align-content-center font12B" style="text-align:center;">เลขที่เอกสาร</th>
             <th class="align-content-center font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
-            <th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
+            <th class="align-content-center font12B" style="text-align:right;">ยอดยกมา</th>
+
             <th class="align-content-center font12B" style="text-align:right;">จำนวนเงินจ่าย</th>
             <th class="align-content-center font12B" style="text-align:right;">คงเหลือ</th>
             <th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
@@ -37,107 +39,138 @@
         </tr>
     </thead>
 
-    @*------------------------ 09-03-2021 -------------------------------------------------------------------*@
+    @*------------------------ 09-03-2021 ------------------------------------------------------------*@
     <tbody>
-        @if (Model.Budget_Activity_Invoice_list.Count > 0)
+        @if (Model.Budget_Invoce_History_list.Count > 0)
         {
             var index = 0;
-            foreach (var item in Model.Budget_Activity_Invoice_list)
+            foreach (var item in Model.Budget_Invoce_History_list)
             {
-                <tr class="gradeX">
-                    <td style="text-align:right;">
+            <tr class="gradeX">
+                <td style="text-align:right;">
 
 
-                        @if (item.invoiceApproveStatusId == 1) // draff
-                        {
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-danger fa fa-trash-o" title="ลบรายการ" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        }
-                        else if (item.invoiceApproveStatusId == 2) // waitapprove
-                        {
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        }
-                        else if (item.invoiceApproveStatusId == 3) // approve
-                        {
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        }
-                        else if (item.invoiceApproveStatusId == 5) // not approve
-                        {
+                    @if (item.invoiceApproveStatusId == 1 && item.invoiceType != "ADD") // draff
+                    {
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activitEstimateId','@item.invoiceId');"></a>
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-danger fa fa-trash-o" title="ลบรายการ" onclick="return onDelete('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
+                    }
+                    else if (item.invoiceApproveStatusId == 2 && item.invoiceType != "ADD") // waitapprove
+                    {
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activitEstimateId','@item.invoiceId');"></a>
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
+                    }
+                    else if (item.invoiceApproveStatusId == 3 && item.invoiceType != "ADD") // approve
+                    {
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-info fa fa-edit" title="แก้ไขรายการ" onclick="javascript:onSelectInvoice('@item.activityId','@item.activitEstimateId','@item.invoiceId');"></a>
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>                        
+                    }
+                    else if (item.invoiceApproveStatusId == 5 && item.invoiceType != "ADD") // not approve
+                    {
+                        <a href="javascript:" class="anchorDetail ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activitEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
+                    }
+                    else
+                    {
 
-                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-reply" title="ยกเลิกรายการ" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"></a>
-                        }
-                        else
+                    }
+
+                </td>
+
+                <td style="font-size:12.5px;text-align:left;">
+                    @*เลขที่เอกสาร*@
+                    @if (item.invoiceNo != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.invoiceNo);
+                        @result.ToString();
+                    }
+                </td>
+
+                <td style="font-size:12.5px;text-align:right;">
+                    @*จำนวนเงินตั้ง*@
+                    @if (item.invoiceType == "ADD")
+                    {
+                        if (item.productCostBath > 0)
                         {
-
+                            string result = String.Format("{0:n2}", @item.productCostBath);
+                            @result.ToString();
                         }
+                    }
+                    else
+                    { <div>-</div>}
+                </td>
 
-                    </td>
-                    <td style="font-size:12.5px;text-align:right;">
-                        @if (item.productStandBath != null)
+                <td style="font-size:12.5px;text-align:center;">
+                    @*ยอดยกมา*@
+                    @if (item.invoiceType == "ADD" && item.row_type == "document_actform")
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        if (item.productStandBath > 0)
                         {
                             string result = String.Format("{0:n2}", @item.productStandBath);
                             @result.ToString();
                         }
-                    </td>
-                    <td style="font-size:12.5px;text-align:center;">
-                        @if (item.invoiceNo != null)
-                        {
-                            string result = String.Format("{0:n2}", @item.invoiceNo);
-                            @result.ToString();
-                        }
-                    </td>
+                    }
+                </td>
 
-                    <td style="font-size:12.5px;text-align:right;">
-                        @*จำนวนเงินจ่าย*@
-                        @if (item.invoiceTotalBath != null)
+                <td style="font-size:12.5px;text-align:right;">
+                    @*จำนวนเงินจ่าย*@
+                    @if (item.invoiceType == "ADD")
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        if (item.invoiceTotalBath > 0)
                         {
                             string result = String.Format("{0:n2}", @item.invoiceTotalBath);
                             @result.ToString();
                         }
-                    </td>
+                    }
+                </td>
 
-                    <td style="font-size:12.5px;text-align:right;">
-                        @*ผลต่าง-บาท*@
-                        @if (item.productBalanceBath != null)
+                <td style="font-size:12.5px;text-align:right;">
+                    @*ผลต่าง-บาท*@
+                    @if (item.productBalanceBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.productBalanceBath);
+                        @result.ToString();
+                    }
+                </td>
+                <td style="font-size:12.5px;text-align:center;">
+                    @item.invoiceActionDate.Value.ToString("dd/MM/yyyy")
+                </td>
+
+                @if (item.invoiceBudgetStatusId == 1)
+                {
+                    <td style="font-size:12.5px;text-align:center; color:firebrick;">@item.invoiceBudgetStatusNameTH</td>
+                }
+                else if (item.invoiceBudgetStatusId == 2)
+                {
+                    <td style="font-size:12.5px;text-align:center; color:darkorange;">@item.invoiceBudgetStatusNameTH</td>
+                }
+                else
+                {
+                    <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
+                }
+                
+                <td style="font-size:12.5px;text-align:center;">
+                    @*สถานะการอนุมัติ invoice*@
+                    @if (item.invoiceApproveStatusName != null)
+                    {
+                        if (item.invoiceApproveStatusId != 1)
                         {
-                            string result = String.Format("{0:n2}", @item.productBalanceBath);
+                            string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
                             @result.ToString();
                         }
-                    </td>
-                    <td style="font-size:12.5px;text-align:center;">
-                        @item.dateInvoiceAction.Value.ToString("dd/MM/yyyy")
-                    </td>
 
-                    @if (item.invoiceBudgetStatusId == 1)
-                    {
-                        <td style="font-size:12.5px;text-align:center; color:firebrick;">@item.invoiceBudgetStatusNameTH</td>
                     }
-                    else if (item.invoiceBudgetStatusId == 2)
-                    {
-                        <td style="font-size:12.5px;text-align:center; color:darkorange;">@item.invoiceBudgetStatusNameTH</td>
-                    }
-                    else
-                    {
-                        <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
-                    }
-
-                    <td style="font-size:12.5px;text-align:center;">
-                        @*สถานะการอนุมัติ invoice*@
-                        @if (item.invoiceApproveStatusName != null)
-                        {
-                            if (item.invoiceApproveStatusId != 1)
-                            {
-                                string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
-                                @result.ToString();
-                            }
-
-                        }
-                    </td>
-                    @* หมายเหตุ การตัดจ่าย invoiceRemark *@
-                    <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceRemark</td>
-                </tr>
+                </td>
+                @* หมายเหตุ การตัดจ่าย invoiceRemark *@
+                <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceRemark</td>
+            </tr>
                 index++;
             } @*--- end for ---*@
         }

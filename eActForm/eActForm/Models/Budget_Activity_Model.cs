@@ -93,17 +93,17 @@ namespace eActForm.Models //update 21-04-2020
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal invoiceTotalBath { get; set; }
 
+
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal productBalanceBath { get; set; }
 
+
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal productCostBath { get; set; }
+
             public Int32 productBudgetStatusId { get; set; }
             public string productBudgetStatusNameTH { get; set; }
-
-            //[DataType(DataType.Date)]
-            //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
             public DateTime? invoiceActionDate { get; set; }
-            //public string invoiceActionDate { get; set; }
-
             public Int32 invoiceBudgetStatusId { get; set; }
             public string invoiceBudgetStatusNameTH { get; set; }
             public Int32 invoiceSeq { get; set; }
@@ -112,16 +112,19 @@ namespace eActForm.Models //update 21-04-2020
             public Int32 invoiceApproveStatusId { get; set; }
             public string invoiceApproveStatusName { get; set; }
 
+            public string invoiceType { get; set; }
+            public string row_type { get; set; }
+            
             public string invoiceRemark { get; set; }
 
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal productSumInvoiceBath { get; set; }
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
-            public decimal sum_cost_product_inv { get; set; }
+            public decimal total_act_product_cost { get; set; }
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
-            public decimal sum_total_invoice { get; set; }
+            public decimal total_act_invoice { get; set; }
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
-            public decimal sum_balance_product_inv { get; set; }
+            public decimal total_act_balance { get; set; }
 
         }
 
@@ -136,6 +139,29 @@ namespace eActForm.Models //update 21-04-2020
             public string typeForm { get; set; }
 
             public string invoiceId { get; set; }
+            public string invoiceNo { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal invoiceTotalBath { get; set; }
+            public decimal productTotalBath { get; set; }
+            public decimal productBalanceBath { get; set; }
+            public Int32 productBudgetStatusId { get; set; }
+            public string productBudgetStatusNameTH { get; set; }
+            public string budgetImageId { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? dateInvoiceAction { get; set; }
+            public String invoiceActionDate { get; set; }
+            public Int32 invoiceBudgetStatusId { get; set; }
+            public string invoiceBudgetStatusNameTH { get; set; }
+            public Int32 invoiceSeq { get; set; }
+            public Int32 invoiceApproveStatusId { get; set; }
+            public string invoiceApproveStatusName { get; set; }
+            public string invoiceRemark { get; set; }
+            public string invoiceType { get; set; }
+            public Int32 count_approved { get; set; }
+            
+
+
             public string activityId { get; set; }
             public string activityNo { get; set; }
             public string activityOfEstimateId { get; set; }
@@ -148,34 +174,11 @@ namespace eActForm.Models //update 21-04-2020
             public decimal totalCost { get; set; }
             public decimal productStandBath { get; set; }
 
-            public string paymentNo { get; set; }
+            //public string paymentNo { get; set; }
+            //public decimal saleActCase { get; set; }
+            //public decimal saleActBath { get; set; }
 
-            public string budgetImageId { get; set; }
             public string actCustomerId { get; set; }
-            public string invoiceNo { get; set; }
-            public decimal saleActCase { get; set; }
-            public decimal saleActBath { get; set; }
-
-            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
-            public decimal invoiceTotalBath { get; set; }
-
-            public decimal productBalanceBath { get; set; }
-            public Int32 productBudgetStatusId { get; set; }
-            public string productBudgetStatusNameTH { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? dateInvoiceAction { get; set; }
-            public String invoiceActionDate { get; set; }
-            //public string invoiceActionDate { get; set; }
-            public Int32 invoiceBudgetStatusId { get; set; }
-            public string invoiceBudgetStatusNameTH { get; set; }
-            public Int32 invoiceSeq { get; set; }
-
-            public Int32 invoiceApproveStatusId { get; set; }
-            public string invoiceApproveStatusName { get; set; }
-
-            public string invoiceRemark { get; set; }
             public string approveInvoiceId { get; set; }
             public string budgetApproveId { get; set; }
 
@@ -200,6 +203,7 @@ namespace eActForm.Models //update 21-04-2020
             public decimal totalCost { get; set; }
             public decimal invoiceTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
             public decimal productBalanceBath { get; set; } /*ผลต่าง*/
+            public decimal productGrandTotalaCost { get; set; }
             public string budgetStatusId { get; set; }
             public string budgetStatusNameTH { get; set; }
 
@@ -410,7 +414,9 @@ namespace eActForm.Models //update 21-04-2020
             public decimal act_themeCost { get; set; }
             public decimal act_totalCost { get; set; }
             public decimal act_balance { get; set; } /*ผลต่าง*/
-            public decimal act_total_invoive { get; set; }/*ยอดยกมา*/
+            public decimal act_grandTotalCost { get; set; }
+            public decimal act_grandTotalBalance { get; set; }
+            public decimal act_total_invoive { get; set; }/* ยอดยกมา*/
 
             public string act_claimNo { get; set; }
             public string act_claimShare { get; set; }
@@ -506,7 +512,7 @@ namespace eActForm.Models //update 21-04-2020
             public string act_reference { get; set; }
             public string brandName { get; set; }
             public string themeId { get; set; }
-            public string Theme { get; set; }
+            public string act_theme { get; set; }
 
             public string cus_id { get; set; }
             public string cus_regionId { get; set; }
@@ -536,6 +542,10 @@ namespace eActForm.Models //update 21-04-2020
 
             [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
             public decimal activityCostRemainBath { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal activityTotalAddonBaht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+            public decimal activityGrandTotalBaht { get; set; }
             public string productBudgetStatusGroupId { get; set; }
             public string ProductBudgetStatusId { get; set; }
             public string productBudgetStatusNameTH { get; set; }
