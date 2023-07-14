@@ -321,7 +321,8 @@ namespace eActForm.BusinessLayer
                     {
                         typeFormCompany = Activity_Model.activityType.ITForm.ToString();
                     }
-                    else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                    else if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] 
+                        || getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                     {
                         typeFormCompany = Activity_Model.activityType.HCForm.ToString();
                     }
