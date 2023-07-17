@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.AdminUserModel
-@using System.Configuration;
 @using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -97,10 +98,24 @@
             <div class="col-md-2">
                 @foreach (var item in Model.roleList)
                 {
-                    <div>
-                        <input id="@item.roleName" type="checkbox" name="model.chkRole" value="@item.id">
-                        @item.roleName
-                    </div>
+                    if (@item.roleName.ToLower().Contains("superadmin"))
+                    {
+                        if (AdminUserAppCode.checkEmpRoleSuperAdmin(UtilsAppCode.Session.User.empId))
+                        {
+                            <div>
+                                <input id="@item.roleName" type="checkbox" name="model.chkRole" value="@item.id">
+                                @item.roleName
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <input id="@item.roleName" type="checkbox" name="model.chkRole" value="@item.id">
+                            @item.roleName
+                        </div>
+                    }
+
                 }
 
 
@@ -239,7 +254,7 @@
             $("#WaitDialog").hide();
         }
 
-       
+
     }
 
 

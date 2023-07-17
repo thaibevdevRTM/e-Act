@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
 
-namespace eActForm.BusinessLayer.Appcodes
+namespace eActForm.BusinessLayer
 {
     public class AdminUserAppCode
     {
@@ -211,6 +212,13 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
+
+        public static bool checkEmpRoleSuperAdmin(string empId)
+        {
+            bool result;
+            result = QueryOtherMaster.getOhterMaster("roleuser", "groupSuperAdmin").Where(x => x.val1.Contains(empId)).Any();
+            return result;
+        }
 
     }
 }
