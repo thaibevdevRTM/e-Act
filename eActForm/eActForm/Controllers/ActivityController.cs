@@ -321,11 +321,14 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult deleteImgById(string id)
+        public JsonResult deleteImgById(string id,string filename_)
         {
             var result = new AjaxResult();
 
-            int resultImg = ImageAppCode.deleteImgById(id);
+
+                
+
+            int resultImg = ImageAppCode.deleteImgById(id, filename_);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
