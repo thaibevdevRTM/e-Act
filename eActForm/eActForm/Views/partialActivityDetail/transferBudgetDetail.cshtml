@@ -81,7 +81,7 @@
                 ชื่อผู้เสนอ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact" })
+                @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -89,7 +89,7 @@
                 เบอร์โทรศัพท์ :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
+                @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
                 สินค้า : <span class="required">*</span>
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
+                @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -114,7 +114,7 @@
                 ชื่อกิจกรรม :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
+                @Html.TextBoxFor(m => m.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
 
             </div>
         </div>
@@ -123,7 +123,7 @@
                 เลขที่ใบอนุมัติงบกิจกรรม :
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", autocomplete = "off" })
+                @Html.TextBoxFor(m => m.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", autocomplete = "off" })
             </div>
         </div>
     </div>
@@ -142,7 +142,7 @@
                 วัตถุประสงค์ :
             </label>
             <div class="col-md-8 col-sm-4 col-xs-12">
-                @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                @Html.TextAreaFor(m => m.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
             </div>
         </div>
     </div>

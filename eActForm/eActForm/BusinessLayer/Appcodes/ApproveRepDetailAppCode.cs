@@ -169,20 +169,11 @@ namespace eActForm.BusinessLayer
                 int rtn = 0;
                 ApproveFlowModel.approveFlowModel flowModel = new ApproveFlowModel.approveFlowModel();
 
-                if (typeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    flowModel = ApproveFlowAppCode.getFlowForReportDetail(
-                    ConfigurationManager.AppSettings["subjectReportDetailId"]
-                    , customerId
-                    , productTypeId);
-                }
-                else
-                {
-                    flowModel = ApproveFlowAppCode.getFlowForReportDetailOMT(
-                   ConfigurationManager.AppSettings["subjectReportDetailId"]
-                   , customerId
-                   , productTypeId);
-                }
+
+                flowModel = ApproveFlowAppCode.getFlowForReportDetail(
+                ConfigurationManager.AppSettings["subjectReportDetailId"]
+                , customerId
+                , productTypeId);
 
 
                 if (ApproveAppCode.insertApproveByFlow(flowModel, actId) > 0)

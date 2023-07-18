@@ -22,11 +22,8 @@ using WebLibrary;
 namespace eActForm.Controllers  //update 21-04-2020
 {
     [LoginExpire]
-
-
     public class BudgetInvoiceAppCode
     {
-
         public static List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> BudgetInvoiceListForCreatePDF(string act_form_id)
         {
             try
@@ -91,7 +88,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                              select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
                              {
                                  id = d["imageId"].ToString(),
-
                                  count_budgetActivityId = int.Parse(d["count_budgetActivityId"].ToString()),
                                  count_activityNo = int.Parse(d["count_activityNo"].ToString()),
                                  count_budgetApproveId = int.Parse(d["count_budgetApproveId"].ToString()),
@@ -198,9 +194,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
-
-
-
+    [LoginExpire]
     public class BudgetController : Controller
     {
 
@@ -212,8 +206,10 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         public ActionResult searchBudgetActivityForm(string typeForm)
         {
-            DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
-            DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
+            
+            //string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+            //string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
+
             string act_budgetStatusIdin = null;
             string actYear = null;
 
@@ -235,7 +231,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                 }
                 #endregion
 
-                budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin, actYear).ToList();
+                budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, null, null, act_budgetStatusIdin, actYear).ToList();
                 TempData["searchBudgetActivityForm"] = budget_activity;
             }
             catch (Exception ex)
@@ -248,11 +244,12 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         public ActionResult activityList(string typeForm)
         {
-            Budget_Activity_Model models = new Budget_Activity_Model();
-            DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
-            DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
+            //string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);  
+            //string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]); 
             string act_budgetStatusIdin = null;
             string act_year = null;
+
+            Budget_Activity_Model models = new Budget_Activity_Model();
             try
             {
                 if (TempData["searchBudgetActivityForm"] != null)
@@ -269,7 +266,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                     {
                         act_budgetStatusIdin = "2";
                     }
-                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin, act_year).ToList();
+                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, null, null, act_budgetStatusIdin, act_year).ToList();
                 }
                 TempData["searchBudgetActivityForm"] = null;
                 return PartialView(models);
@@ -283,7 +280,21 @@ namespace eActForm.Controllers  //update 21-04-2020
 
 
 
+        public ActionResult activityDetail(string activityId)
+        {
 
+            Session["activityId"] = activityId;
+            Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+            try
+            {
+                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, null, null, null, null).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return PartialView(budget_activity);
+        }
 
         public ActionResult activityProduct(string activityId)
         {
@@ -297,7 +308,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             {
                 try
                 {
-                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, act_year).ToList();
+                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null,null, null, null, act_year).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -313,7 +324,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
             try
             {
-                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
+                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, null,null, null, null).FirstOrDefault();
                 budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
                 budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
                 budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
@@ -327,8 +338,8 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceList(string activityId, string activityOfEstimateId)
         {
             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault(); ;
-            budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
+            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, null,null, null, null).FirstOrDefault();
+            budget_activity_model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, activityOfEstimateId,null);
             budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 
             return PartialView(budget_activity_model);
@@ -336,55 +347,34 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
         {
             Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-            Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
             Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
             Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
+            Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
 
 
             if (!string.IsNullOrEmpty(invoiceId))
-            {// for get invoice history 
+            {// get invoice for edit 
                 Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault();
             }
             return PartialView(Budget_Activity);
         }
 
-
-
-
-
-
-
         public PartialViewResult previewBudgetInvoice(string activityId)
         {
             Session["activityId"] = activityId;
-
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
-            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null);
 
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, activityId, null, null, null, null, null).FirstOrDefault();
             Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
             Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
-
-            //string var_actNo = "";
-            //string var_cusId = "";
-            //var_actNo = Budget_Model.Budget_Activity.act_activityNo;
-            //var_cusId = Budget_Model.Budget_Activity.act_customerId;
-
-            //Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceDetail(null, null, null, var_actNo, null, null, var_cusId, null, null);
-            //List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> Result = new List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel>();
-            //foreach (var inv_his in Budget_Model.Budget_Invoce_History_list) // preview invoice pdf non approved
-            //{
-            //    if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) //draft or wait
-            //    {
-            //        Result.Add(Budget_Model.Budget_Invoice_list.Find(x => (x.invoiceNo == inv_his.invoiceNo)));
-            //    }
-            //}
-            //Result.RemoveAll(item => item == null);
-            //Budget_Model.Budget_Invoice_list.Clear();
-            //Budget_Model.Budget_Invoice_list = Result.Distinct().ToList();
+            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null, null);
 
             return PartialView(Budget_Model);
         }
+
+
+
+
 
         public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
         {
@@ -433,12 +423,36 @@ namespace eActForm.Controllers  //update 21-04-2020
             return Json(resultAjax, "text/plain");
         }
 
-        public JsonResult delInvoiceDetail(string actId, string estId, string invId, string delType)
+
+        public JsonResult submitCompensateSave(string activityId, string compensateStatus, string compensateStartDate, string compensateEndDate)
+        {
+            var resultAjax = new AjaxResult();
+            try
+            {
+
+                //compensateStartDate = DateTime.Parse(compensateStartDate).ToString("MM/dd/yyyy");
+                //compensateEndDate = DateTime.Parse(compensateEndDate).ToString("MM/dd/yyyy");
+                int countSuccess = BudgetFormCommandHandler.commBudgetCompensateUpdate(activityId, compensateStatus, compensateStartDate, compensateEndDate);
+
+                //xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("submitCompensateSave => " + ex.Message + activityId);
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+            }
+            return Json(resultAjax, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult budgetProductInvoiceDelete(string actId, string estId, string invId, string delType)
         {
             var result = new AjaxResult();
             try
             {
-                int countSuccess = BudgetFormCommandHandler.deleteInvoiceProduct(actId, estId, invId, delType);
+                int countSuccess = BudgetFormCommandHandler.commBudgetProductInvoiceDelete(actId, estId, invId, delType);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -504,15 +518,15 @@ namespace eActForm.Controllers  //update 21-04-2020
         public ActionResult manageInvoiceListSearch()
         {
             TB_Bud_Invoice_Document_Model models = new TB_Bud_Invoice_Document_Model();
-            string companyEN = UtilsAppCode.Session.User.empCompanyGroup;
-
-
             try
             {
                 #region filter
-                DateTime date_inv_start = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
-                DateTime date_inv_end = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
 
+                string companyEN = Request.Form["var_companyEN"];
+
+                DateTime date_inv_start = DateTime.ParseExact(Request.Form["startDate"].Trim(), ConfigurationManager.AppSettings["formatDateUse"], null);
+                DateTime date_inv_end = DateTime.ParseExact(Request.Form["endDate"].Trim(), ConfigurationManager.AppSettings["formatDateUse"], null);
+                
                 string inv_createdDateStart = date_inv_start.ToString("yyyyMMdd");
                 string inv_createdDateEnd = date_inv_end.ToString("yyyyMMdd");
 
@@ -527,7 +541,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
 
             return RedirectToAction("manageInvoiceList");
-            //return PartialView("manageInvoiceIndex",models);
         }
 
         public ActionResult manageInvoiceList(string companyEN)
@@ -560,7 +573,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
             return PartialView(models);
         }
-
 
         public JsonResult getCustomerInvoice(string customerTH, string companyEN, string regionId)
         {
@@ -601,15 +613,17 @@ namespace eActForm.Controllers  //update 21-04-2020
             TB_Bud_Invoice_Document_Model budgetImageModel = new TB_Bud_Invoice_Document_Model();
             try
             {
+
                 budgetImageModel.BudgetInvoice = BudgetInvoiceAppCode.BudgetInvoiceDetail(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
                 budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
+
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
                     budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
                 }
                 else
                 {
-                    budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+                    budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition == budgetImageModel.BudgetInvoice.company).ToList();
                 }
 
                 if (budgetImageModel.BudgetInvoice.company == "MT")
@@ -707,9 +721,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 
                     int resultImg = BudgetInvoiceAppCode.BudgetInvoiceInsert(imageFormModel);
                 }
-
-                //manageInvoiceList(null);
-                //result.ActivityId = Session["activityId"].ToString();
                 result.Success = true;
             }
             catch (Exception ex)
@@ -726,18 +737,9 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             var result = new AjaxResult();
             var empId = UtilsAppCode.Session.User.empId;
-
             int resultImg = BudgetInvoiceAppCode.BudgetInvoiceDelete(id, empId);
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public PartialViewResult manageInvoiceEdit(string imageId)
-        {
-            TB_Bud_Invoice_Document_Model.BudgetInvoiceModel getBudImageModel = new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel();
-            getBudImageModel = BudgetInvoiceAppCode.BudgetInvoiceDetail(imageId, null, null, null, null, null, null, null, null).FirstOrDefault();
-
-            return PartialView(getBudImageModel);
         }
 
         public JsonResult manageInvoiceEditSubmit(string id, string invoiceNo, string remark, string companyEN, string regionId, string customerId)
@@ -773,8 +775,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                     resultAjax.Code = 0;
                     resultAjax.Message = null;
                 }
-
-                //resultAjax.ActivityId = Session["activityId"].ToString();
                 resultAjax.Success = true;
             }
             catch (Exception ex)
@@ -787,9 +787,92 @@ namespace eActForm.Controllers  //update 21-04-2020
 
     }
 
+    [LoginExpire]
+    public class BudgetViewerController : Controller
+    {
+        // GET: BudgetViewer
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult activityPDFView(string budgetApproveId)
+        {
+
+            //var var_budgetActivityId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
+            TempData["budgetApproveId"] = budgetApproveId;
+            ViewBag.budgetApproveId = budgetApproveId;
+            return PartialView();
+        }
+
+        public ActionResult getPdfBudget(string budgetApproveId)
+        {
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
+
+            try
+            {
+                rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
+                {
+                    budgetApproveId = "fileNotFound";
+                }
+
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+                                         FileMode.Open,
+                                         FileAccess.Read
+                                       );
+
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getPdfBudget >>" + ex.Message);
+            }
 
 
+            return fsResult;
+        }
 
+        public ActionResult getInvoicePdfBudget(string fileName)
+        {
+            string rootPath = "";
+            FileStream fileStream = null;
+            FileStreamResult fsResult = null;
+
+            try
+            {
+                rootPath = ConfigurationManager.AppSettings["rootUploadfilesBudget"];
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, fileName))))
+                {
+                    fileName = "fileNotFound.pdf";
+                }
+
+                fileStream = new FileStream(Server.MapPath(string.Format(rootPath, fileName)),
+                                                     FileMode.Open,
+                                                     FileAccess.Read
+                                                   );
+                fsResult = new FileStreamResult(fileStream, "application/pdf");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getInvoicePdfBudget >>" + ex.Message);
+            }
+            return fsResult;
+        }
+
+        public ActionResult invoicePDFView(string fileName)
+        {
+            TempData["fileName"] = fileName;
+            ViewBag.fileName = fileName;
+            return PartialView();
+        }
+    }
+
+    [LoginExpire]
     public class BudgetApproveListController : Controller
     {
         public ActionResult Index()
@@ -802,7 +885,6 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
 
             string count = Request.Form.AllKeys.Count().ToString();
-
             DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
 
@@ -873,7 +955,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                              select new TB_Bud_Invoice_Document_Model.BudgetInvoiceModel()
                              {
                                  id = d["imageId"].ToString(),
-
                                  invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
                                  imageType = d["imageType"].ToString(),
                                  _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
@@ -896,33 +977,34 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
     }
 
+    [LoginExpire]
     public class BudgetMyDocController : Controller
     {
         // GET: BudgetMyDoc
-
-        public ActionResult Index()
+        public ActionResult Index(string companyEN)
         {
+            if (companyEN != null) { Session["var_companyEN"] = companyEN;  }
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
         }
 
-        public ActionResult searchBudgetForm()
+        public ActionResult searchBudgetForm(string companyEN)
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-
-            string companyEN = Session["var_companyEN"].ToString();
             DateTime startDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
             DateTime endDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
 
+            if (companyEN != null) { Session["var_companyEN"] = companyEN; }
+
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
-                model.budgetFormLists = getBudgetListsByEmpId(null, companyEN, startDate, endDate);
+                model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(null, companyEN, startDate, endDate);
             }
             else
             {
-                model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
+                model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
             }
 
             if (Request.Form["txtActivityNo"] != "")
@@ -946,17 +1028,17 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
 
             TempData["SearchDataModelBudget"] = model.budgetFormLists;
-            return RedirectToAction("myDocBudget");
+            return RedirectToAction("myDocBudget", companyEN);
         }
 
-        public ActionResult myDocBudget()
+        public ActionResult myDocBudget(string companyEN)
         {
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-
-            string companyEN = Session["var_companyEN"].ToString();
             DateTime startDate = DateTime.Now.AddDays(-30);
             DateTime endDate = DateTime.Now.AddDays(1);
+
+            if (companyEN != null){ Session["var_companyEN"] = companyEN; }
 
             if (TempData["SearchDataModelBudget"] != null)
             {
@@ -966,11 +1048,11 @@ namespace eActForm.Controllers  //update 21-04-2020
             {
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    model.budgetFormLists = getBudgetListsByEmpId(null, companyEN, startDate, endDate);
+                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(null, companyEN, startDate, endDate);
                 }
                 else
                 {
-                    model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
+                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
                 }
             }
             return PartialView(model);
@@ -983,132 +1065,22 @@ namespace eActForm.Controllers  //update 21-04-2020
             return PartialView(models);
         }
 
-        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, DateTime createdDateStart, DateTime createdDateEnd)
+        public PartialViewResult myDocBudgetPreviewRegen(string activityId)
         {
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetDocumentList"
-                    , new SqlParameter[] {
-                    new SqlParameter("@empId", empId),
-                    new SqlParameter("@companyEN", companyEN),
-                    new SqlParameter("@createdDateStart", createdDateStart),
-                    new SqlParameter("@createdDateEnd", createdDateEnd)
-                    });
-                var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new Budget_Approve_Detail_Model.budgetForm()
-                             {
-                                 statusId = dr["statusId"].ToString(),
-                                 statusName = dr["statusName"].ToString(),
-                                 activityId = dr["activityId"].ToString(),
-                                 activityNo = dr["activityNo"].ToString(),
+            Session["activityId"] = activityId;
+            Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 
-                                 budgetApproveId = dr["budgetApproveId"].ToString(),
-                                 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, activityId, null, null, null, null, null).FirstOrDefault();
+            Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
+            Budget_Model.Budget_Invoice_list = BudgetInvoiceAppCode.BudgetInvoiceListForCreatePDF(Budget_Model.Budget_Activity.act_form_id);
+            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId, null, null);
 
-                                 reference = dr["reference"].ToString(),
-                                 customerId = dr["customerId"].ToString(),
-                                 channelName = dr["channelName"].ToString(),
-                                 productTypeId = dr["productTypeId"].ToString(),
-                                 productTypeNameEN = dr["productTypeNameEN"].ToString(),
-
-                                 cusShortName = dr["cusShortName"].ToString(),
-                                 cusNameTH = dr["cusNameTH"].ToString(),
-                                 productCategory = dr["productCateText"].ToString(),
-                                 productGroup = dr["productGroupId"].ToString(),
-                                 productGroupName = dr["productGroupName"].ToString(),
-
-                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
-                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
-                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
-                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
-                                 activityName = dr["activityName"].ToString(),
-
-                                 themeId = dr["themeId"].ToString(),
-                                 theme = dr["theme"].ToString(),
-                                 objective = dr["objective"].ToString(),
-                                 trade = dr["trade"].ToString(),
-                                 activityDetail = dr["activityDetail"].ToString(),
-
-                                 budgetActivityId = dr["budgetActivityId"].ToString(),
-                                 approveId = dr["approveId"].ToString(),
-
-                                 createdDate = (DateTime?)dr["createdDate"],
-                                 createdByUserId = dr["createdByUserId"].ToString(),
-                                 updatedDate = (DateTime?)dr["updatedDate"],
-                                 updatedByUserId = dr["updatedByUserId"].ToString(),
-
-                                 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
-                                 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
-                                 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 totalInvoiceApproveBath = dr["totalInvoiceApproveBath"] is DBNull ? 0 : (decimal?)dr["totalInvoiceApproveBath"]
-
-                             }).ToList();
-                return lists;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getBudgetListsByEmpId >> " + ex.Message);
-                return new List<Budget_Approve_Detail_Model.budgetForm>();
-            }
-        }
-
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string budgetApproveId)
-        {
-            var resultAjax = new AjaxResult();
-            try
-            {
-
-                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
-                GridHtml = GridHtml.Replace("<br>", "<br/>");
-                AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
-
-                //del signature file
-                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
-                if (folderExists)
-                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
-
-
-                TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budgetApproveId);
-
-                string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
-                pathFile[0] = Server.MapPath(rootPathInsert);
-
-                if (getBudgetImageModel.BudgetInvoiceList.Any())
-                {
-                    int i = 1;
-                    foreach (var item in getBudgetImageModel.BudgetInvoiceList)
-                    {
-                        if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
-                        {
-                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
-                        }
-                        else
-                        {
-                            pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
-                        }
-                        i++;
-                    }
-                }
-
-                var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budgetApproveId);
-
-                resultAjax.Success = true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
-                resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
-            }
-            return Json(resultAjax, "text/plain");
+            return PartialView(Budget_Model);
         }
 
     }
 
+    [LoginExpire]
     public class BudgetApproveController : Controller
     {
 
@@ -1180,8 +1152,8 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult previewApproveBudget(string budgetApproveId)
         {
             Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
-            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
-            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, budgetApproveId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+            Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null,null, budgetApproveId);
+            Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityDetail(null, null,  budgetApproveId, null, null, null, null).FirstOrDefault();
             Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
             return PartialView(Budget_Model);
         }
@@ -1474,71 +1446,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
         }
 
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult genPdfApproveBudget(string GridHtml, string statusId, string budgetApproveId)
-        {
-            var resultAjax = new AjaxResult();
-            try
-            {
-
-                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
-                GridHtml = GridHtml.Replace("<br>", "<br/>");
-                AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
-
-                //del signature file
-                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
-                if (folderExists)
-                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
-
-                TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
-                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budgetApproveId);
-
-                string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
-                pathFile[0] = Server.MapPath(rootPathInsert);
-
-                if (getBudgetImageModel.BudgetInvoiceList.Any())
-                {
-                    int i = 1;
-                    foreach (var item in getBudgetImageModel.BudgetInvoiceList)
-                    {
-                        if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
-                        {
-                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
-                        }
-                        else
-                        {
-                            pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
-                        }
-                        i++;
-                    }
-                }
-
-                var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budgetApproveId);
-
-
-
-                if (statusId == ConfigurationManager.AppSettings["statusReject"])
-                {
-                    EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
-                }
-                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {
-                    EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form, false);
-                }
-
-
-                resultAjax.Success = true;
-            }
-            catch (Exception ex)
-            {
-                resultAjax.Success = false;
-                resultAjax.Message = ex.Message;
-                ExceptionManager.WriteError("genPdfApproveBudget => " + ex.Message);
-            }
-            return Json(resultAjax, "text/plain");
-        }
+        
 
         [HttpPost]
         public JsonResult insertApprove()
@@ -1778,22 +1686,88 @@ namespace eActForm.Controllers  //update 21-04-2020
         {
             try
             {
-                //if (UtilsAppCode.Session.User != null)
-                //{
-                //    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
-                //        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                if (UtilsAppCode.Session.User != null)
+                {
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_BudgetCountWatingApproveOfEmp"
+                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
 
-                //    UtilsAppCode.Session.User.countWatingBudgetForm = "";
-                //    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                //    {
-                //        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
-                //    }
-                //}
+                    UtilsAppCode.Session.User.countWatingBudgetForm = "";
+                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("setCountWatingApproveBudget >>" + ex.Message);
             }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult submitPreviewBudgetApprove(string GridHtml, string statusId, string budgetApproveId)
+        {
+            var resultAjax = new AjaxResult();
+            try
+            {
+
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
+                GridHtml = GridHtml.Replace("<br>", "<br/>");
+                AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+                //del signature file
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
+
+                TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
+                getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budgetApproveId);
+
+                string[] pathFile = new string[getBudgetImageModel.BudgetInvoiceList.Count + 1];
+                pathFile[0] = Server.MapPath(rootPathInsert);
+
+                if (getBudgetImageModel.BudgetInvoiceList.Any())
+                {
+                    int i = 1;
+                    foreach (var item in getBudgetImageModel.BudgetInvoiceList)
+                    {
+                        if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+                        {
+                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+                        }
+                        else
+                        {
+                            pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+                        }
+                        i++;
+                    }
+                }
+
+                var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budgetApproveId);
+
+
+
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
+                }
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
+                {
+                    EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form, false);
+                }
+
+
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+                ExceptionManager.WriteError("genPdfApproveBudget => " + ex.Message);
+            }
+            return Json(resultAjax, "text/plain");
         }
 
         [HttpPost]
@@ -1814,7 +1788,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 
                     TB_Bud_Invoice_Document_Model getBudgetImageModel = new TB_Bud_Invoice_Document_Model();
                     getBudgetImageModel.BudgetInvoiceList = BudgetApproveListController.BudgetApproveInvoiceList(budget_approve_id);
-
 
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
@@ -1918,7 +1891,6 @@ namespace eActForm.Controllers  //update 21-04-2020
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
                 var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile, budget_approve_id);
 
-
                 resultAjax.Success = true;
             }
             catch (Exception ex)
@@ -1931,10 +1903,5 @@ namespace eActForm.Controllers  //update 21-04-2020
         }
 
     }
-
-
-
-
-
 
 }

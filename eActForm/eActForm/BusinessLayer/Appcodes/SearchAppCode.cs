@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Controllers;
 using eActForm.Models;
 using eForms.Models.Forms;
 using System;
@@ -6,8 +7,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+
 namespace eActForm.BusinessLayer
 {
+    [LoginExpire]
     public class SearchAppCode
     {
         public static SearchActivityModels getMasterDataForSearchForDetailReport(string typeForm)
@@ -69,6 +72,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
+ 
         public static SearchActivityModels getMasterDataForSearch()
         {
             string getRegion = "";

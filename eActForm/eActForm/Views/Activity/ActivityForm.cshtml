@@ -220,37 +220,40 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
-                            ชื่อกิจกรรม <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
 
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                            Product category<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                       {
-                           @class = "form-control textboxcss",
-                           required = "required",
-                           onchange = "onchangeCate();",
-                           id = "ddlProductCate"
-                       })
-                        </div>
+        </div>
 
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                        ชื่อกิจกรรม <span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                        Product category<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                   {
+                       @class = "form-control textboxcss",
+                       required = "required",
+                       onchange = "onchangeCate();",
+                       id = "ddlProductCate"
+                   })
+                    </div>
+
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -776,10 +779,6 @@
             $("#divRadioRef").append('<input type="checkbox" id="chkTalad" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
-        }
-        else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusCJ"]") {
-            $("#divRadioRef").append('<input type="checkbox" id="chkTD" name="formatCus" value="TD" onchange = "onchangeRdbRef(this);">TD</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="checkbox" id="chkCJ" name="formatCus" value="CJ" onchange = "onchangeRdbRef(this);">CJ</input>&nbsp;&nbsp;');
         }
         else {
             document.getElementById("txtReference").readOnly = true;
@@ -1405,19 +1404,25 @@
             document.getElementById("txtActIO").disabled = false;
             document.getElementById("txtActClaim").disabled = false;
             document.getElementById("divUploadFiles").style.display = "block";
-            var arrayOfElements = document.getElementsByClassName('divDelImg');
-            var lengthOfArray = arrayOfElements.length;
+         
             for (var i = 0; i < lengthOfArray; i++) {
                 arrayOfElements[i].style.display = 'block';
             }
         }
 
-        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+        if ('@UtilsAppCode.Session.User.isAdmin' == 'True'
+            || '@UtilsAppCode.Session.User.isAdminOMT' == 'True'
+            || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
             document.getElementById("btnUpdate").style.display = "block";
             document.getElementById("txtdateActivitySt").disabled = false;
             document.getElementById("txtdateActivityEnd").disabled = false;
             document.getElementById("txtdateCostPerSt").disabled = false;
             document.getElementById("txtdateCostPerEnd").disabled = false;
+            document.getElementById("divUploadFiles").style.display = "block";
+
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].style.display = 'block';
+            }
         }
 
         if ('@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId') {
@@ -1443,15 +1448,27 @@
            document.getElementById("btnUpdate").style.display = "none";
 
 
-
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
 
         if ('@Model.activityFormModel.statusId' == '2' || '@Model.activityFormModel.statusId' == '3') {
 
-            document.getElementById("divUploadFiles").style.display = "none";
-            var arrayOfElements = document.getElementsByClassName('divDelImg');
-            var lengthOfArray = arrayOfElements.length;
-            for (var i = 0; i < lengthOfArray; i++) {
-                arrayOfElements[i].style.display = 'none';
+            
+           
+            if ('@UtilsAppCode.Session.User.isAdmin' == 'True'
+                || '@UtilsAppCode.Session.User.isAdminOMT' == 'True'
+                || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+
+                document.getElementById("divUploadFiles").style.display = "block";
+                for (var i = 0; i < lengthOfArray; i++) {
+                    arrayOfElements[i].style.display = 'block';
+                }
+            }
+            else {
+                document.getElementById("divUploadFiles").style.display = "none";
+                for (var i = 0; i < lengthOfArray; i++) {
+                    arrayOfElements[i].style.display = 'none';
+                }
             }
 
         } else {
@@ -1471,9 +1488,6 @@
                 document.getElementById('lblMechanics_' + i).disabled = true;
             }
 
-
-            document.getElementById("divUploadFiles").style.display = "block";
-            var arrayOfElements = document.getElementsByClassName('divDelImg');
             var lengthOfArray = arrayOfElements.length;
             for (var i = 0; i < lengthOfArray; i++) {
                 arrayOfElements[i].style.display = 'block';

@@ -1048,28 +1048,33 @@
             getTotal.push({
                 total: $(".txttotal_" + row).val(),
             });
-
         });
 
-        $.ajax({
-            url: '@Url.Action("getBudgetBeer", "partialActivityDetail")',
-            data: {
-                listTotal: JSON.stringify(getTotal),
-                activityId: "@Model.activityFormModel.id",
-                brandId: $("#ddlProductBrand").val(),
-                actType: $("#ddlTheme").val(),
-                center: $("#ddlRegion").val(),
-                channelId: $("#ddlMainAgency").val(),
-                periodEndDate: $("#txtdateActivityEnd").val(),
-                status: "@Model.activityFormTBMMKT.statusId",
+        if ($("#txtdateActivityEnd").val() != '') {
 
-            },
-            dataType: "json",
-            type: 'POST',
-            success: function (Response) {
-                callPartialShowBudget("@Model.activityFormModel.id");
-            }
-        });
+            $.ajax({
+                url: '@Url.Action("getBudgetBeer", "partialActivityDetail")',
+                data: {
+                    listTotal: JSON.stringify(getTotal),
+                    activityId: "@Model.activityFormModel.id",
+                    brandId: $("#ddlProductBrand").val(),
+                    actType: $("#ddlTheme").val(),
+                    center: $("#ddlRegion").val(),
+                    channelId: $("#ddlMainAgency").val(),
+                    periodEndDate: $("#txtdateActivityEnd").val(),
+                    status: "@Model.activityFormTBMMKT.statusId",
+
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (Response) {
+                    callPartialShowBudget("@Model.activityFormModel.id");
+                }
+            });
+        }
+        else {
+
+        }
     }
 
     function callPartialShowBudget(actId) {

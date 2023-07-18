@@ -137,17 +137,6 @@ namespace eActForm.Controllers
 
         public ActionResult expensesMedDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
-            {
-                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-            };
-
-            model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
-
-            model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
-
-            activity_TBMMKT_Model.expensesDetailModel = model;
-
             return PartialView(activity_TBMMKT_Model);
         }
 

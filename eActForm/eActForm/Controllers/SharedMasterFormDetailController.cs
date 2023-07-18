@@ -176,18 +176,8 @@ namespace eActForm.Controllers
         }
         public ActionResult recordByHcMedRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            TB_Act_ActivityForm_DetailOther models = new TB_Act_ActivityForm_DetailOther();
-            ApproveModel.approveModels modelApprove = new ApproveModel.approveModels();
-            modelApprove = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
-            bool delFlag = false;//ยังไม่อนุมัตื
-            modelApprove.approveDetailLists = modelApprove.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder).Where(x => x.statusId == "3").ToList();
-            if (modelApprove.approveDetailLists.Count > 0)
-            {
-                delFlag = true;//อนุมัติแล้ว
-            }
-            models = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther;
-            models.delFlag = delFlag;
-            return PartialView(models);
+            activity_TBMMKT_Model = ReportAppCode.recordByHcRptAppCode(activity_TBMMKT_Model);
+            return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult showDetailBudgetRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)

@@ -116,11 +116,11 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                         <b>
                                             @if (Model.activityFormTBMMKT.chkUseEng)
                                             {
-                                                @Model.activityFormTBMMKT.formNameEn
+                                                @Model.activityFormTBMMKT.formNameEn.Replace("\n", "<br/>").Replace("\r\n", "<br/>")
                                             }
                                             else
                                             {
-                                                @Model.activityFormTBMMKT.formName
+                                                @Model.activityFormTBMMKT.formName.Replace("\n", "<br/>").Replace("\r\n", "<br/>")
                                             }
                                         </b>
                                     </td>

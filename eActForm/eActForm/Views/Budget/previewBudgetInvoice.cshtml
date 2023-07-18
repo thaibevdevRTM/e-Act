@@ -13,57 +13,9 @@
     var count_history_inv = 0;
 }
 
-<script type="text/javascript">
 
-	$('document').ready(function () {
-
-	});
-
-	function onClickSubmitApprove() {
-		$("#WaitDialog").show();
-
-		$.ajax({
-        url: '@Url.Action("submitPreviewBudget", "BudgetApprove")',
-        data: {
-			GridHtml: $("#GridPDF").html(),
-			budgetActivityId: $("#HbudgetId").val(),
-            companyEN: $("#HcompanyEN").val(),
-            count_req_approve: $("#Hcount_req_approve").val()
-        },
-        dataType: "json",
-        type: 'POST',
-		}).done(function (response) {
-			$("#WaitDialog").hide();
-			var url = '@Url.Action("activityProduct", "Budget")';
-			window.location.href = url;
-		});
-	}
-
-    function onClickSubmitRegenPdf() {
-		$("#WaitDialog").show();
-
-		$.ajax({
-        url: '@Url.Action("submitPreviewBudgetRegenPdf", "BudgetApprove")',
-        data: {
-			GridHtml: $("#GridPDF").html(),
-			budgetActivityId: $("#HbudgetId").val(),
-            companyEN: $("#HcompanyEN").val(),
-            count_req_approve: $("#Hcount_req_approve").val()
-        },
-        dataType: "json",
-        type: 'POST',
-		}).done(function (response) {
-			$("#WaitDialog").hide();
-			var url = '@Url.Action("activityProduct", "Budget")';
-			window.location.href = url;
-		});
-	}
-
-</script>
 
 <style type="text/css">
-
-
     .my-bootbox-class .modal-dialog {
         width: 400px;
         font-size: 18px;
@@ -78,8 +30,6 @@
 
 @if (1 == 1)
 {
-
-
     <div class="modal-dialog modal-lg" style="width:95%;">
         <div class="modal-content">
             <div class="modal-header">
@@ -242,7 +192,7 @@
                             <tr>
                                 <td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
                                 <td rowspan="2" style="width:20%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-                                <td colspan="4" style="width:35%; font-size:11px;">จ่ายจริง (Actual)</td>
+                                <td colspan="4" style="width:40%; font-size:11px;">จ่ายจริง (Actual)</td>
 
                                 <td rowspan="2" style="width:8%; font-size:11px;">คงเหลือ</td>
                                 <td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
@@ -251,26 +201,13 @@
                                 <td rowspan="2" style="font-size:11px;">หมายเหตุ</td>
                             </tr>
                             <tr>
+                                <td style="font-size:11px; width:15%;">เลขที่เอกสาร</td>
                                 <td style="font-size:11px; width:60px;">จำนวนเงินที่ตั้ง</td>
-                                <td style="font-size:11px; ">เลขที่ใบแจ้งหนี้</td>
-                                <td style="font-size:11px; width:60px;">เลขที่ใบสำคัญจ่าย</td>
-                                <td style="font-size:11px; width:60px;">จำนวนเงินจ่าย (฿)</td>
+
+                                <td style="font-size:11px; width:60px;">ยอดยกมา</td>
+                                <td style="font-size:11px; width:60px;">จำนวนเงินจ่าย</td>
                             </tr>
 
-
-                            @*<tr>
-                                    <td style="text-align:left;font-size:12px;">1</td>
-                                    <td style="text-align:left;font-size:12px;">2</td>
-                                    <td style="text-align:right;font-size:12px;">3</td>
-                                    <td style="text-align:center;font-size:12px;">4</td>
-                                    <td>5</td>
-                                    <td style="text-align:right;font-size:12px;">6</td>
-                                    <td style="text-align:right;font-size:12px;">7</td>
-                                    <td style="text-align:center;font-size:12px;">8</td>
-                                    <td style="text-align:center;font-size:12px;">&nbsp;9</td>
-                                    <td>10</td>
-                                    <td>11xx</td>
-                                </tr>*@
 
                             @* ----- invoice history loop -------*@
 
@@ -280,44 +217,115 @@
                                 foreach (var item in Model.Budget_Invoce_History_list)
                                 {
 
-                                    if (@item.invoiceNo == "")
+                                    if (@item.invoiceType == "ADD" && @item.row_type == "document_actform")
+                                    {
+                                    <tr>
+                                        @* ประเภทกิจกรรม *@
+                                        <td style="text-align:left;font-size:11px;">&nbsp;@item.activityTypeTheme</td>
+
+                                        @* ชื่อสินค้า *@
+                                        <td style="text-align:left;font-size:11px;">&nbsp;@item.productDetail</td>
+
+                                        @* เลขที่เอกสาร *@
+                                        <td style="text-align:left;font-size:11px;">&nbsp;@item.invoiceNo</td>
+
+                                        @* จำนวนเงิน ตั้ง *@
+                                        <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productCostBath)&nbsp;</td>
+
+                                        @* ยอดยกมา *@
+                                        <td style="text-align:right;font-size:12px;">-&nbsp;</td> 
+
+                                        @* จำนวนเงิน จ่าย *@
+                                        <td style="text-align:right;font-size:12px;">-&nbsp;</td>
+
+                                        @* คงเหลือ *@
+                                        <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+                                        
+                                        @* วันที่ทำรายการ *@
+                                        <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+                                        
+                                        @* สถานะ ตัดจ่าย *@
+                                        <td style="text-align:center;font-size:11px;">&nbsp;ตั้งจ่าย</td>
+
+                                        @* สถานะอนุมัติ *@
+                                        <td style="text-align:center;font-size:11px;">&nbsp;</td>
+
+                                        @* หมายเหตุ *@
+                                        <td style="text-align:left;font-size:11px;">&nbsp;</td>
+                                    </tr>
+                                    }
+                                    else if (@item.invoiceType == "ADD" && @item.row_type == "document_invoice")
                                     {
                                         <tr>
-                                            <td style="text-align:left;font-size:12px;">&nbsp;@item.activityTypeTheme</td>
-                                            <td style="text-align:left;font-size:12px;">&nbsp;@item.productDetail</td>
-                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
-                                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-                                            <td></td>
-                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+                                            @* ประเภทกิจกรรม *@
+                                            <td style="text-align:left;font-size:11px;border-right-style:none;"></td>
+
+                                            @* ชื่อสินค้า *@
+                                            <td style="text-align:left;font-size:11px;border-right-style:none;"></td>
+
+                                            @* เลขที่เอกสาร *@
+                                            <td style="text-align:left;font-size:11px;">&nbsp;@item.invoiceNo</td>
+
+                                            @* จำนวนเงิน ตั้ง *@
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productCostBath)&nbsp;</td>
+
+                                            @* ยอดยกมา *@
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+
+                                            @* จำนวนเงิน จ่าย *@
+                                            <td style="text-align:right;font-size:12px;">-&nbsp;</td>
+                                            
+                                            @* คงเหลือ *@
                                             <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+                                            
+                                            @* วันที่ทำรายการ *@
                                             <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-                                            <td style="text-align:center;font-size:12px;">&nbsp;ตั้งจ่าย</td>
-                                            <td></td>
-                                            <td></td>
+
+                                            @* สถานะ ตัดจ่าย *@
+                                            <td style="text-align:center;font-size:11px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+
+                                            @* สถานะอนุมัติ *@
+                                            <td style="text-align:center;font-size:11px;">&nbsp;</td>
+
+                                            @* หมายเหตุ *@
+                                            <td style="text-align:left;font-size:11px;">&nbsp;</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
-                                            <td style="text-align:left;font-size:12px;border-left-style:none;"></td>
-                                            <td style="text-align:right;font-size:12px;"> @*@string.Format("{0:n2}", item.productStandBath)*@&nbsp;</td>
-                                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-                                            <td></td>
+                                            @* ประเภทกิจกรรม *@
+                                            <td style="text-align:left;font-size:11px;border-right-style:none;"></td>
+
+                                            @* ชื่อสินค้า *@
+                                            <td style="text-align:left;font-size:11px;border-left-style:none;"></td>
+
+                                            @* เลขที่เอกสาร *@
+                                            <td style="text-align:left;font-size:11px;">&nbsp;@item.invoiceNo</td>
+
+                                            @* จำนวนเงิน ตั้ง *@
+                                            <td style="text-align:right;font-size:12px;">-&nbsp;</td>
+
+                                            @* ยอดยกมา *@
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+
+                                            @* จำนวนเงิน จ่าย *@
                                             <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+
+                                            @* คงเหลือ *@
                                             <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+
+                                            @* วันที่ทำรายการ *@
                                             <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-                                            <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
-
-                                            @*@if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId == 3)*@
-                                            @if ( item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
+                                            @* สถานะ ตัดจ่าย *@
+                                            <td style="text-align:center;font-size:11px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+                                            
+                                            @* count สถานะอนุมัติ *@
+                                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
                                             {
                                                 count_history_inv++;
                                             }
-
-                                            @* status == 3 จบรายการ status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
-                                            @*@if (item.invoiceBudgetStatusId != 3 && item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)*@
 
                                             @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId != 3)
                                             {
@@ -334,6 +342,7 @@
                                                 count_wait_approve++;
                                             }
 
+                                            @* สถานะอนุมัติ *@
                                             @*status == 1 Draft status == 2 รออนุมัติ*@
                                             @if (item.invoiceApproveStatusId == 1)
                                             {
@@ -344,7 +353,7 @@
                                                 <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
                                             }
 
-                                            @* remark การตัดจ่ายรายใบ *@
+                                            @* หมายเหตุ *@
                                             <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceRemark</td>
 
                                         </tr>
@@ -356,13 +365,14 @@
                                         <tr>
                                             <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
                                             <td style="text-align:right;font-size:12px;border-left-style:none;">Total &nbsp;</td>
-                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.sum_cost_product_inv)&nbsp;</td>
                                             <td style="text-align:center;font-size:12px;"></td>
-                                            <td></td>
-                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_total_invoice)&nbsp;</td>
-                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_balance_product_inv)&nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.total_act_product_cost)&nbsp;</td>
+
                                             <td style="text-align:center;font-size:12px;"></td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.total_act_invoice)&nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.total_act_balance)&nbsp;</td>
                                             <td style="text-align:center;font-size:12px;"></td>
+                                            <td style="text-align:left;font-size:12px;"></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -449,3 +459,55 @@
         </div>
     </div>
 }
+
+<script type="text/javascript">
+
+	$('document').ready(function () {
+
+	});
+
+	function onClickSubmitApprove() {
+		$("#WaitDialog").show();
+
+		$.ajax({
+        url: '@Url.Action("submitPreviewBudget", "BudgetApprove")',
+        data: {
+			GridHtml: $("#GridPDF").html(),
+			budgetActivityId: $("#HbudgetId").val(),
+            companyEN: $("#HcompanyEN").val(),
+            count_req_approve: $("#Hcount_req_approve").val()
+        },
+        dataType: "json",
+        type: 'POST',
+		}).done(function (response) {
+            $("#WaitDialog").hide();
+			var url = '@Url.Action("activityProduct", "Budget")';
+            window.location.href = url;
+
+            doMsgSuccess("Update Success");
+		});
+	}
+
+    function onClickSubmitRegenPdf() {
+		$("#WaitDialog").show();
+
+		$.ajax({
+        url: '@Url.Action("submitPreviewBudgetRegenPdf", "BudgetApprove")',
+        data: {
+			GridHtml: $("#GridPDF").html(),
+			budgetActivityId: $("#HbudgetId").val(),
+            companyEN: $("#HcompanyEN").val(),
+            count_req_approve: $("#Hcount_req_approve").val()
+        },
+        dataType: "json",
+        type: 'POST',
+		}).done(function (response) {
+            $("#WaitDialog").hide();
+            doMsgSuccess("Create PDF Success");
+			@*var url = '@Url.Action("activityProduct", "Budget")';
+			window.location.href = url;*@
+		});
+	}
+
+</script>
+

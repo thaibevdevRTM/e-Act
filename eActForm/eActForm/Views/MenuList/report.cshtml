@@ -23,8 +23,11 @@
                     <li>@Html.ActionLink(" Report Detail OMT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    @*<li>@Html.ActionLink(" Report Product Price MT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>*@
+                    @*<li>@Html.ActionLink(" Report Product Price OMT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>*@
                     <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                } else 
+                }
+                else
                 {
 
                     if (UtilsAppCode.Session.User.isAdmin)
@@ -32,9 +35,10 @@
                         <li>@Html.ActionLink(" Report Budget Activity MT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Claim PDG MT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                       <li>@Html.ActionLink(" Report Detail MT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
+                        <li>@Html.ActionLink(" Report Detail MT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                        @*<li>@Html.ActionLink(" Report Product Price MT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>*@
                         <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     }
 
@@ -43,7 +47,8 @@
                         <li>@Html.ActionLink(" Report Budget Activity OMT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Claim PDG OMT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Detail OMT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
-                         <li>@Html.ActionLink(" Report Detail OMT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
+                        <li>@Html.ActionLink(" Report Detail OMT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
+                        @*<li>@Html.ActionLink(" Report Product Price OMT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>*@
                     }
 
                     if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
@@ -51,6 +56,8 @@
 
                         <li>@Html.ActionLink(" Report Budget Activity MT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                        @*<li>@Html.ActionLink(" Report Product Price MT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                        <li>@Html.ActionLink(" Report Product Price OMT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>*@
 
                     }
                 }

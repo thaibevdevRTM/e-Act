@@ -83,19 +83,24 @@
             </h5>
 
         </div>
-        @if (Model.Budget_Activity_Invoice_list != null)
-        {
-            <div style="text-align:left;">
-                <h4>
-                    เลขที่ใบแจ้งหนี้ :
-                    @if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
+    </div>
+
+    <div>
+        <div style="text-align:left;">
+            <h4>
+                เลขที่ใบแจ้งหนี้ :
+                @if (Model.Budget_Activity_Invoice != null) // select invoice to edit mode
+                {
+                    if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
                     {
                         @Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceNo)
                     }
-                </h4>
-            </div>
-        }
+                }
+            </h4>
+        </div>
     </div>
+
+
 
     <div>
         <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
@@ -104,7 +109,7 @@
                 <td colspan="5" class="font14">ค่าใช้จ่ายจริง (Estimate)</td>
             </tr>
             <tr>
-                <td width="10%" class="font14">จำนวนเงินที่ตั้ง</td>
+                <td width="10%" class="font14">ยอดยกมา</td>
                 <td width="10%" class="font14">เลขที่ใบแจ้งหนี้</td>
                 <td width="10%" class="font14">จำนวนเงินจ่าย</td>
                 <td width="10%" class="font14">วันที่ทำกิจกรรม</td>
@@ -136,7 +141,6 @@
 
                 @if (Model.Budget_Activity_Invoice != null)
                 {
-                    @*<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>*@
                     <td width="10%">
 
                         @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
@@ -144,10 +148,11 @@
 
                     </td>
 
-                    <td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
                     <td width="10%">
+                        <input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath ,new { disabled = "true"})">
+                    </td>
 
-
+                    <td width="10%">
                         @if (Model.Budget_Activity_Invoice.invoiceActionDate.ToString() != "")
                         {
                             @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action" })
@@ -157,6 +162,11 @@
                     <td width="10%">
                         @Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
                     </td>
+
+                    @Html.HiddenFor(item => item.Budget_Activity_Invoice.invoiceApproveStatusId, new { id = "txt_invoiceApproveStatusId" })
+                    @Html.HiddenFor(item => item.Budget_Activity_Invoice.invoiceApproveStatusName, new { id = "txt_invoiceApproveStatusName" })
+                    @Html.HiddenFor(item => item.Budget_Activity_Invoice.count_approved, new { id = "txt_count_approved" })
+
                 }
                 else
                 {
@@ -164,53 +174,80 @@
                         @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
                         @Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
                     </td>
-                    <td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
+
+                    <td width="10%"><input class="form-control textboxcss font14 disabled" style="text-align:right;" id="txt_invoice_baht"></td>
                     <td width="10%">
                         @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
-
                     </td>
                     <td width="10%">
                         @Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", @onchange = "CallChangefunc(this.value)" })
                     </td>
+
+                    @Html.Hidden("txt_invoiceApproveStatusId", "")
+                    @Html.Hidden("txt_invoiceApproveStatusName", "")
+                    @Html.Hidden("txt_count_approved", "0")
                 }
+
+
+
             </tr>
         </table>
+    </div>
 
-        <p></p>
+    <p></p>
 
-        <div class="row">
-            <div class="col-md-8 col-xs-12">
-            </div>
-
-            <div class="col-md-4 col-xs-12">
-                <div class="form-group">
-                    หมายเหตุ
-
-                    @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceRemark, new { @class = "form-control textboxcss", @id = "txt_invoiceRemark", @name = "txt_invoiceRemark" })
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
         </div>
 
-        @*<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Admin Save</button>
-            <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Admin Refresh</button>*@
+        <div class="col-md-4 col-xs-12">
+            <div class="form-group">
+                หมายเหตุ
 
-
-        @if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)
-        {
-
-        }
-        else
-        {
-            <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
-            <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
-        }
-        <div>
-            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceRemark, new { @class = "form-control textboxcss", @id = "txt_invoiceRemark", @name = "txt_invoiceRemark" })
+            </div>
         </div>
+    </div>
 
-
+    <div>
+        @if (Model.Budget_Activity_Invoice == null) // add new invoice
+        {
+            if (Model.Budget_Count_Wait_Approve.count_wait_approve <= 0)
+            {
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+            }
+        }
+        else // select invoice to edit mode
+        {
+            if (Model.Budget_Activity_Invoice.invoiceApproveStatusId == 1) // invoice draff
+            {
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+            }
+            else if (Model.Budget_Activity_Invoice.invoiceApproveStatusId == 2) // invoice waitapprove
+            {
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+            }
+            else if (Model.Budget_Activity_Invoice.invoiceApproveStatusId == 3) // invoice approved
+            {
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+            }
+            else if (Model.Budget_Activity_Invoice.invoiceApproveStatusId == 5) // invoice not approve
+            {
+                //ไม่ให้แก้
+            }
+        }
 
     </div>
+
+    <div>
+        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+    </div>
+
+
 
 </div>
 
@@ -221,13 +258,10 @@
 	$(document).ready(function () {
 		ObjModel = {};
 
-
 		$("#txt_date_action").datepicker({
 			format: 'dd-mm-yyyy',
 			autoclose: true,
 		});
-
-
 
 		$("#txt_invoice_no").autocomplete({
             source: function (request, response) {
@@ -257,7 +291,7 @@
 					$("#imgInvoiceId").val(ui.item.id)
                            }
                }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
+           $(this).data("uiAutocomplete").search($(this).val());
 		});
 
 		$('tr').click(function () {
@@ -269,7 +303,6 @@
 				this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
 			});
 		});
-
 	});
 
 
@@ -292,6 +325,7 @@
 	function refreshInvoice() {
 		callInvoiceList($('#hd_activityId').val(), $("#hd_activityOfEstimateId").val());
 	}
+
 
 
 </script>

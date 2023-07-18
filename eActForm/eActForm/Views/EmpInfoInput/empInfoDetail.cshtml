@@ -180,6 +180,7 @@
     });
 
     function getEmpDetail() {
+        let checkFlow = true;
 
         $.ajax({
             type: 'POST',
@@ -228,13 +229,15 @@
                 $("#lblDept").text("");
                 $("#lblComp").text("");
                 $("#lblHireDate").text("");
+
+                checkFlow = false;
             }
 
 
 
-            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' && checkFlow) {
                 getCashEmp();
-            } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+            } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' && checkFlow) {
                 getCashDetail();
             }
 
