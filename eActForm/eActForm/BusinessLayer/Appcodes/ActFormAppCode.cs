@@ -376,6 +376,7 @@ namespace eActForm.BusinessLayer
                 || UtilsAppCode.Session.User.isAdminNUM
                 || UtilsAppCode.Session.User.isAdminPOM
                 || UtilsAppCode.Session.User.isAdminCVM
+                || UtilsAppCode.Session.User.isAdminHoreca
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 
