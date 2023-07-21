@@ -911,16 +911,10 @@ namespace eActForm.BusinessLayer
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
 
-            string checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + cc;
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
 
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
-            {
-                body += checkMail;
-            }
-
-
+       
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;
