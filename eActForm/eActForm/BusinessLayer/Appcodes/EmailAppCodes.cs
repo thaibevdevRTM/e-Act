@@ -802,8 +802,8 @@ namespace eActForm.BusinessLayer
                     case AppCode.ApproveType.Report_Detail:
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
-                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , item.activityNo
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
                             , item.customerName
                             , item.productTypeName
@@ -911,15 +911,8 @@ namespace eActForm.BusinessLayer
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
 
-            string checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + cc;
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
-
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
-            {
-                body += checkMail;
-            }
-
 
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
