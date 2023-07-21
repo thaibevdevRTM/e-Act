@@ -204,31 +204,6 @@
         });
 	}
 
-	function onClickManageInvoiceEdit(id) {
-		var imageId = id;
-		var options = { "backdrop": "static", keyboard: true };
-
-		$.ajax({
-			type: "GET",
-			url:  '@Url.Action("manageInvoiceEdit", "Budget")',
-			contentType: "application/json; charset=utf-8",
-			data: {
-				"imageId": imageId,
-			},
-			datatype: "json",
-			success: function (data) {
-
-				$('#myModalInvoiceContent').html(data);
-				$('#myModalInvoice').modal(options);
-				$('#myModalInvoice').modal('show');
-
-			},
-			error: function () {
-				alert("Dynamic content load failed.");
-			}
-		});
-	}
-
 	function refreshInvoice() {
 		callManageInvoiceList();
 		$("#divManageInvoiceView").html("");

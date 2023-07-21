@@ -119,7 +119,7 @@
         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
         {
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Transaction Summary <small>Monthly progress</small></h2>
@@ -130,18 +130,18 @@
                                 <div class="demo-container" style="height:280px">
                                     <canvas id="myChart" height="100"></canvas>
                                 </div>
-                                <div class="tiles">
-                                    <div class="col-md-4 tile">
-                                        <span>Total Spending Product Type Non-Alcohol</span>
+                                <div style="margin-top:50px;" class="tiles">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 tile">
+                                        <span>Total Spending Non-Alcohol</span>
                                         <h3>$@string.Format("{0:n2}", Model.sumSpendingOfYear[0].sumNonAlcoholSpending)<i class="fa fa-pulse red"></i><i class="fa fa-arrow-up red"></i></h3>
                                     </div>
-                                    <div class="col-md-4 tile">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 tile">
                                         <div class="animated flipInY">
-                                            <span>Total Spending Product Type Alcohol</span>
+                                            <span>Total Spending Alcohol</span>
                                             <h3>$@string.Format("{0:n2}", Model.sumSpendingOfYear[0].sumAlcoholSpending)<i class="fa fa-pulse red"></i><i class="fa fa-arrow-up red"></i></h3>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 tile">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 tile">
                                         <span>Total Spending of the year</span>
                                         <h3>$@string.Format("{0:n2}", Model.sumSpendingOfYear[0].sumSpending)<i class="fa fa-pulse red"></i><i class="fa fa-arrow-up red"></i></h3>
                                     </div>
@@ -152,7 +152,7 @@
                             <div class="col-md-3 col-sm-12 col-xs-12">
                                 <div>
                                     <div class="x_title">
-                                        <h2>Top Customer Profiles</h2>
+                                        <h2>Top Customer Profiles of the month</h2>
                                         <div class="clearfix"></div>
                                     </div>
                                     <ul class="list-unstyled top_profiles scroll-view">

@@ -1,5 +1,7 @@
-﻿
-@model eActForm.Models.Budget_Activity_Model
+﻿@model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer
+@using eActForm.Models
+@using System.Configuration;
 @{
     //update 21-04-2020
     ViewBag.Title = "Edit Page";
@@ -10,7 +12,6 @@
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 
 <style type="text/css">
-
 
     .my-bootbox-class .modal-dialog {
         width: 400px;
@@ -23,17 +24,26 @@
 
 @*@Html.HiddenFor(x => x.Budget_Activity_Last_Approve.budgetApproveId, new { @id = "hd_lastApprove" })*@
 
+
+
 <div class="row">
 
-    <div id="divPreviewProductList">
+    <div id="divPreviewActivityDetail">
 
     </div>
 </div>
 
 <hr />
 
-<div id='myModalInvoiceContent'></div>
+<div class="row">
+    <div id="divPreviewProductList">
 
+    </div>
+</div>
+
+<div id='divInvoiceContentEdit'>
+
+</div>
 
 <div class="row">
     <div id="divPreviewInvoiceList">
@@ -56,8 +66,23 @@
 <script>
 
 	$('document').ready(function () {
+        callActivityDetail($("#hd_activityId").val());
 		callProductList($("#hd_activityId").val());
+       
 	});
+
+	function callActivityDetail(activityId) {
+		//alert("callActivityDetail");
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("activityDetail", "Budget")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			$("#divPreviewActivityDetail").html(htmlResponse);
+        });
+	}
 
 	function callApproveList(actId) {
         $.ajax({
@@ -117,7 +142,15 @@
 
 			}
 		}).done(function (htmlResponse) {
-			$("#myModalInvoiceContent").html(htmlResponse);
+			$("#divInvoiceContentEdit").html(htmlResponse);
+
+            var var_count_approved = document.getElementById("txt_count_approved").value;
+
+			//// ถ้ามีคนอนุมัติไปบ้างแล้วไม่ให้แก้ไขตัวเงิน
+            if (var_count_approved > 0) {
+                document.getElementById("txt_invoice_baht").disabled = true;
+            }
+			
 		});;
 	}
 
@@ -192,7 +225,7 @@
 			callback: function (result) {
                 if (result) {
                     $.ajax({
-                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        url: '@Url.Action("budgetProductInvoiceDelete", "Budget")',
                         data: {
                             actId: actId,
 							estId: estId,
@@ -268,7 +301,7 @@
 			callback: function (result) {
                 if (result) {
                     $.ajax({
-                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        url: '@Url.Action("budgetProductInvoiceDelete", "Budget")',
                         data: {
                             actId: actId,
 							estId: estId,
@@ -295,8 +328,6 @@
 		//var var_company = companyEN;
 		var var_activityId = actId;
 		var options = { "backdrop": "static", keyboard: true };
-
-
 
 		$.ajax({
 			type: "GET",

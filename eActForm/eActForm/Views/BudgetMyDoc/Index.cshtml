@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var var_companyEN = Request.QueryString["typeForm"];
+    Session["var_companyEN"] = Request.QueryString["typeForm"];
 }
 
 <h2>My Document (Budget)</h2>
@@ -29,7 +30,8 @@
 </div>
 
 
-<script type="text/javascript">function beginQuery() {
+<script type="text/javascript">
+function beginQuery() {
         $("#getQuery").fadeOut(300);
     }
 

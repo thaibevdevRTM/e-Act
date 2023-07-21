@@ -88,11 +88,29 @@ namespace BatchDeleteFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E:\root\eActAct\RepDetail\{0}.
+        /// </summary>
+        public static string rootUploadfilesReportDetail {
+            get {
+                return ResourceManager.GetString("rootUploadfilesReportDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;.
         /// </summary>
         public static string strCon {
             get {
                 return ResourceManager.GetString("strCon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Source=10.5.56.33; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB101;Max Pool Size=200;.
+        /// </summary>
+        public static string strConDev {
+            get {
+                return ResourceManager.GetString("strConDev", resourceCulture);
             }
         }
     }

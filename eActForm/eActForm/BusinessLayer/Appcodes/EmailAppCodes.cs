@@ -911,16 +911,10 @@ namespace eActForm.BusinessLayer
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
 
-            string checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + cc;
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
 
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
-            {
-                body += checkMail;
-            }
-
-
+       
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;
@@ -1047,7 +1041,7 @@ namespace eActForm.BusinessLayer
                         {
 
                             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
+                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, null, null, null, null).FirstOrDefault();
 
                             string var_link = "";
                             var_link = "activityProduct?activityId=" + budget_activity_model.Budget_Activity.act_form_id + "&activityNo=" + budget_activity_model.Budget_Activity.act_activityNo + "&companyEN=" + budget_activity_model.Budget_Activity.act_companyEN;
@@ -1113,13 +1107,13 @@ namespace eActForm.BusinessLayer
             {
 
                 List<Attachment> files = new List<Attachment>();
-                string[] pathFile = new string[10];
-                string[] pathFileAtt = new string[10];
+                string[] pathFile = new string[15];
+                string[] pathFileAtt = new string[15];
 
                 mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
                 mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
 
-                pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
+                pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
                 foreach (var item in pathFile)
                 {

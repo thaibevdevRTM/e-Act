@@ -96,21 +96,11 @@ namespace eActForm.Controllers
 
                 if (model.actFormRepDetailGroupLists.Any())
                 {
+                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                            ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                            , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                            , Request.Form["ddlProductType"]);
 
-                    if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.MT_AddOn.ToString())
-                    {
-                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                                , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
-                                                , Request.Form["ddlProductType"]);
-                    }
-                    else
-                    {
-                        model.flowList = ApproveFlowAppCode.getFlowForReportDetailOMT(
-                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                                , Request.Form["ddlCustomer"]
-                                                , Request.Form["ddlProductType"]);
-                    }
                 }
 
                 Session["ActFormRepDetail"] = model;

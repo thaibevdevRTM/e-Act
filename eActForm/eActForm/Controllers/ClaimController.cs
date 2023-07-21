@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using System.Configuration;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -17,8 +19,8 @@ namespace eActForm.Controllers
 
         public ActionResult searchClaimActivityForm(string typeForm)
         {
-            DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
-            DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
+            string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+            string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
             string act_budgetStatusIdin = null;
 
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
@@ -28,13 +30,14 @@ namespace eActForm.Controllers
                 #region filter
                 if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
                 {
-                    act_createdDateStart = DateTime.Now.AddYears(-10);
-                    act_createdDateEnd = DateTime.Now.AddYears(2);
+                    act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+                    act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
+
                 }
                 else
                 {
-                    act_createdDateStart = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
-                    act_createdDateEnd = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
+                    act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null), ConfigurationManager.AppSettings["formatDateUse"]);
+                    act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null), ConfigurationManager.AppSettings["formatDateUse"]);
                 }
 
                 if (Request.Form["ddlFormType"] == "Select All")
@@ -65,6 +68,8 @@ namespace eActForm.Controllers
 
         public ActionResult claimList(string typeForm)
         {
+            string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-30), ConfigurationManager.AppSettings["formatDateUse"]);
+            string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
             Budget_Activity_Model models = new Budget_Activity_Model();
 
             try
@@ -75,7 +80,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, DateTime.Now.AddDays(-30), DateTime.Now, null, null).ToList();
+                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, null, null).ToList();
                 }
                 TempData["searchBudgetActivityForm"] = null;
                 return PartialView(models);
@@ -90,6 +95,8 @@ namespace eActForm.Controllers
         public ActionResult claimProduct(string activityId)
         {
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+            string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+            string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
 
             if (activityId == null) { activityId = Session["activityId"].ToString(); }
 
@@ -98,7 +105,7 @@ namespace eActForm.Controllers
             {
                 try
                 {
-                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).ToList();
+                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, act_createdDateStart, act_createdDateEnd, null, null).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -113,9 +120,12 @@ namespace eActForm.Controllers
 
             Session["activityId"] = activityId;
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+            string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+            string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
+
             try
             {
-                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault(); ;
+                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, null, null, null, null).FirstOrDefault(); ;
                 budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
                 budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
                 budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
@@ -130,7 +140,10 @@ namespace eActForm.Controllers
         public PartialViewResult claimProductInvoiceList(string activityId, string activityOfEstimateId)
         {
             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault(); ;
+            string act_createdDateStart = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(-10), ConfigurationManager.AppSettings["formatDateUse"]);
+            string act_createdDateEnd = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddYears(2), ConfigurationManager.AppSettings["formatDateUse"]);
+
+            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, null, null, null, null).FirstOrDefault(); ;
             budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
             //budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 

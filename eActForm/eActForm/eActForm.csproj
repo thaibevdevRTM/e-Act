@@ -457,7 +457,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetReportController.cs" />
-    <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\ClaimReportController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
@@ -3274,12 +3273,10 @@
     <Content Include="Views\summaryReport\IndexDoc.cshtml" />
     <Content Include="Views\summaryReport\ListDoc.cshtml" />
     <Content Include="Views\BudgetViewer\invoicePDFView.cshtml" />
-    <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
     <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
     <Content Include="Views\Activity\ShowImage.cshtml" />
     <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
-    <Content Include="Views\BudgetViewer\regenBudgetApprovePdf.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetActivityListView.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
@@ -3479,6 +3476,10 @@
     <Content Include="Views\MenuList\itForm.cshtml" />
     <Content Include="Views\ActivityViewer\historyBG.cshtml" />
     <Content Include="Views\Activity\PreviewHistory_AddOn.cshtml" />
+    <Content Include="Views\BudgetMyDoc\myDocBudgetPreviewRegen.cshtml" />
+    <Content Include="Views\Budget\activityDetail.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetProductPriceIndex.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetProductPriceListView.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

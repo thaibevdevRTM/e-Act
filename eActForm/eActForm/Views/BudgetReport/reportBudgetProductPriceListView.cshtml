@@ -5,22 +5,22 @@
 @if (Model.Report_Budget_Activity_List != null)
 {
 
-	<div class="row">
-		<p class="d-flex justify-content-center">
-			@using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
-			{
-				<input type="hidden" name="gridHtml" />
-				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
-					<i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
-				</button>
-			}
-		</p>
-	</div>
+    <div class="row">
+        <p class="d-flex justify-content-center">
+            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                </button>
+            }
+        </p>
+    </div>
 
-	<div class="row">
-		<div id="GridView">
-			<table class="table table-hover border-dark" id="datatable" style="width:100%;">
-				<thead>
+    <div class="row">
+        <div id="GridView">
+            <table class="table table-hover border-dark" id="datatable" style="width:100%;">
+                <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         <td> no.</td>
                         <td style="text-align:left;"> เลขที่กิจกรรม </td>
@@ -31,16 +31,16 @@
                         <td style="text-align:right;"> รวมงบจัด </td>        @*ยอดยกมา*@
                         <td style="text-align:right;"> รวมงบจ่าย </td>       @*ยอดตัดจ่าย*@
                         <td style="text-align:right;"> งบจัดเทียบงบจ่าย </td>  @*ค่าใช้จ่ายคงเหลือ*@
-                        
+
                         <td style="text-align:left;"> สถานะ </td>
                         <td style="text-align:left;"> สถานะกิจกรรม </td>
                         <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
 
                     </tr>
-				</thead>
-				@{ var index_view = 1; }
-				@foreach (var item in Model.Report_Budget_Activity_List)
-				{
+                </thead>
+                @{ var index_view = 1; }
+                @foreach (var item in Model.Report_Budget_Activity_List)
+                {
                     <tr class="gradeX">
                         <td>@index_view</td>
                         <td>@item.act_activityNo </td>
@@ -80,17 +80,17 @@
                         <td style="text-align:left;">@item.budget_CurrentApproveName </td>
 
                     </tr>
-					index_view++;
-				}
-			</table>
-		</div>
-	</div>
+                    index_view++;
+                }
+            </table>
+        </div>
+    </div>
 
 
-	<div class="row hide">
-		<div id="GridPDF">
-			<table class="table table-hover border-dark" id="datatable_export">
-				<thead>
+    <div class="row hide">
+        <div id="GridPDF">
+            <table class="table table-hover border-dark" id="datatable_export">
+                <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         <td> no.</td>
                         <td style="text-align:center;"> company </td>
@@ -113,7 +113,7 @@
                         <td style="text-align:left;"> ระยะเวลาการทำกิจกรรม </td>
                         <td style="text-align:left;"> ระยะเวลาการให้ทุน </td>
                         <td style="text-align:center;"> วันที่สร้างกิจกรรม </td>
-                        
+
                         <td style="text-align:right;"> งบจัด </td>
                         <td style="text-align:right;"> เพิ่มงบ </td>
                         <td style="text-align:right;"> รวมงบจัด </td>
@@ -129,11 +129,11 @@
                         <td style="text-align:left;"> ผู้อนุมัติ/รออนุมัติ </td>
                         <td style="text-align:left;"> งบจ่ายรออนุมัติ </td>
                     </tr>
-				</thead>
-				@{ var index = 1;}
-				@foreach (var item in Model.Report_Budget_Activity_List)
-				{
-                        <tr class="gradeX">
+                </thead>
+                @{ var index = 1;}
+                @foreach (var item in Model.Report_Budget_Activity_List)
+                {
+                    <tr class="gradeX">
                         <td>@index</td>
                         <td>@item.company</td>
                         <td>@item.reportMMYY </td>
@@ -218,18 +218,18 @@
                         <td class="text-hide">@item.budget_CurrentApproveName </td>
                         <td class="text-hide">@item.wait_activityInvoiceTotalBath </td>
                     </tr>
-					index++;
-				}
-			</table>
-		</div>
-	</div>
+                    index++;
+                }
+            </table>
+        </div>
+    </div>
 
 
 
 
-	//------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
-	<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 
 }
 
