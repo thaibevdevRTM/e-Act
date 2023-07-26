@@ -149,7 +149,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, DateTime createdDateStart, DateTime createdDateEnd)
+        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetDocumentLists(string empId, string companyEN, string createdDateStart, string createdDateEnd)
         {
             try
             {

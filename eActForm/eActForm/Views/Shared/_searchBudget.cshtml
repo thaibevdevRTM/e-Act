@@ -36,7 +36,7 @@
             Start date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-15), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Today.AddDays(-30), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
         </div>
 
     </div>
@@ -45,7 +45,7 @@
             End date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
         </div>
 
     </div>
@@ -86,7 +86,7 @@
 
 <script>
     $(function () {
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
+        $("#startDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#endDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
     });
 </script>
