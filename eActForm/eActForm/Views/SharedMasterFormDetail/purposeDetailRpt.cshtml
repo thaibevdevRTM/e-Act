@@ -1,9 +1,9 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
-@{ 
+@{
     Layout = null;
 }
-<div id="divPurposeDetail" runat="server" style="width: 100%;" >
-    <table style="width: 100%;border-color:brown;" id="tabelPurposeDetail" runat="server" border="0" class=" fontDocSmall"  cellpadding="2">
+<div id="divPurposeDetail" runat="server" style="width: 100%;">
+    <table style="width: 100%;border-color:brown;" id="tabelPurposeDetail" runat="server" border="0" class=" fontDocSmall" cellpadding="2">
         <tr>
             <td style="width: 18%; text-align:right; ">
                 <b>
@@ -16,16 +16,16 @@
                 </b>
             </td>
             <td style="width: 80%;">
-                <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0"  class=" fontDocSmall" >
+                <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0" class=" fontDocSmall">
 
                     @for (int i = 0; i < @Model.purposeModel.Count; i = i + 2)
-            {
-                var index_1 = i;
-                var index_2 = i + 1;
+                    {
+                        var index_1 = i;
+                        var index_2 = i + 1;
                         <tr>
                             <td style="width: 50%;">
-                              
-                                @if (index_1 < Model.purposeModel.Count )
+
+                                @if (index_1 < Model.purposeModel.Count)
                                 {
 
                                     @Model.purposeModel[index_1].detailTh
@@ -47,11 +47,11 @@
 
             </td>
 
-            </tr>
+        </tr>
         <tr>
             <td colspan="2"></td>
-            <td >
-             @Model.activityFormTBMMKT.objective
+            <td>
+                @Model.activityFormTBMMKT.objective
             </td>
         </tr>
     </table>

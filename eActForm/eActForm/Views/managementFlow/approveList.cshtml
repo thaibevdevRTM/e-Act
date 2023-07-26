@@ -33,9 +33,8 @@
 
                     <tr class="tagTR">
                         <td>
-                            <a href="javascript:" onclick="return checkDelete('@item.id');">
-                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                            </a>
+                            <button id="btnDel_@i" name="btnDel_@i" type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="checkDelete('@item.id');"></button>
+                            
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
@@ -109,6 +108,15 @@
 }
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+     
+        if ('@Model.approveFlow.flowDetail.Any()' == 'True') {
+            document.getElementById('btnDel_0').disabled = true;
+        }
+    });
+
+
     function validateForm() {
 
         required = "<b>กรุณาระบุ/Please input data :<br></b>";
@@ -127,7 +135,6 @@
     }
 
     function changeGetEmp(rowIndex) {
-        console.log('tt');
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getEmpDetailById", "eAct")',
@@ -135,7 +142,6 @@
                 empId: $('#txtempId_' + rowIndex).val(),
             }
         }).done(function (response) {
-            console.log(response);
             $('#txtempName_' + rowIndex).val(response.Data.empName);
         });
 

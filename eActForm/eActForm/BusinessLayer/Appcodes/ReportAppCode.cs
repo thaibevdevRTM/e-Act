@@ -383,6 +383,12 @@ namespace eActForm.BusinessLayer
 
 
                     }
+                    else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                    {
+                        activity_TBMMKT_Model.expensesDetailModel.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
+                        activity_TBMMKT_Model.expensesDetailModel.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(activity_TBMMKT_Model.expensesDetailModel.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+                        activity_TBMMKT_Model = ReportAppCode.recordByHcRptAppCode(activity_TBMMKT_Model);
+                    }
 
                 }
 
@@ -403,6 +409,172 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static Activity_TBMMKT_Model reportPettyCashNumAppCode(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+            try
+            {
+
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
+                {
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                    activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                    activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                    //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                    activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.empId);
+                    //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                }
+
+                activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.empId);
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
+                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
+
+
+                CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
+                {
+                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+                };
+
+                CostDetailOfGroupPriceTBMMKT model2 = new CostDetailOfGroupPriceTBMMKT
+                {
+                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+                };
+
+                #region "ดึงข้อมูล GL "
+                //ฟอร์มที่ใช้เป็นของ saleSupport
+                List<GetDataGL> lstGL = new List<GetDataGL>();
+                lstGL = QueryGetGL.getGLMasterByDivisionId(AppCode.Division.salesSupport);
+                #endregion
+
+                #region form HC
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                {
+                    decimal? vat = 0, vatsum = 0;
+                    #region "ค่าเดินทางของ NUM"
+
+                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
+                    for (int i = 0; i < model2.costDetailLists.Count; i++)
+                    {
+                        if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
+                        {
+                            //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
+
+                            if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                            {
+                                vat = model2.costDetailLists[i].vat;
+                                //  vatsum += model2.costDetailLists[i].vat;
+
+                            }
+                            else
+                            {
+                                vat = (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                                //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                            }
+                            vatsum += vat;
+
+                            modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                            {
+                                listChoiceId = model2.costDetailLists[i].listChoiceId,
+                                listChoiceName = model2.costDetailLists[i].listChoiceName,
+                                productDetail = model2.costDetailLists[i].listChoiceName + " " +
+                               (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
+                               ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
+                               : model2.costDetailLists[i].productDetail),
+                                total = model2.costDetailLists[i].total - (vat),
+                                //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
+                                glCode = QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                            });
+                        }
+                    }
+                    if (vatsum > 0)
+                    {
+                        modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                        {
+                            listChoiceId = "",
+                            listChoiceName = "vat",
+                            productDetail = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.groupGL,
+                            total = vatsum,
+                            glCode = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.GL,
+                        });
+                    }
+
+                    activity_TBMMKT_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                    #endregion
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                {
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = "",
+                        listChoiceName = "",
+                        productDetail = "ค่ารักษาพยาบาล",
+                        total = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
+                        displayType = "",
+                        glCode = QueryGetGL.getGL(lstGL, AppCode.SSGLId.medical, activity_TBMMKT_Model.activityFormModel.empId)//lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
+                    });
+                    activity_TBMMKT_Model.totalCostThisActivity = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
+
+                }
+
+                int rowAdd = 8 - modelResult.costDetailLists.Count;
+                for (int i = 0; i < rowAdd; i++)
+                {
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = "",
+                        listChoiceName = "",
+                        productDetail = "",
+                        total = 0,
+                        displayType = "",
+                        glCode = "",
+                    });
+                }
+
+                #endregion
+
+                modelResult.costDetailLists = modelResult.costDetailLists.ToList();
+                activity_TBMMKT_Model.expensesDetailModel = modelResult;
+
+
+
+                //===========Set Language By Document Dev date 20200310 Peerapop=====================
+                //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
+                DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
+                //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+
+                //return View(activity_Model); // test
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(" ReportPettyCashNumAppCode >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
+
+        public static Activity_TBMMKT_Model recordByHcRptAppCode(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            try
+            {
+                ApproveModel.approveModels modelApprove = new ApproveModel.approveModels();
+                modelApprove = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
+                bool delFlag = false;//ยังไม่อนุมัตื
+                modelApprove.approveDetailLists = modelApprove.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder).Where(x => x.statusId == "3").ToList();
+                if (modelApprove.approveDetailLists.Count > 0)
+                {
+                    delFlag = true;//อนุมัติแล้ว
+                }
+                //models = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.delFlag = delFlag;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("recordByHcRptAppCode >>" + activity_TBMMKT_Model.activityFormTBMMKT.id + "___" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
         public static Activity_Model previewApprove(string actId, string empId)
         {
             Activity_Model activityModel = new Activity_Model();

@@ -5,7 +5,7 @@ Console.WriteLine("Process Delete File");
 
 StreamWriter strLogs = File.AppendText(AppCode.LogsFileName());
 var getListFile = AppCode.getFileList(BatchDeleteFile.Properties.Resources.strCon);
-var pathh = BatchDeleteFile.Properties.Resources.rootUploadfiles;
+var pathh = BatchDeleteFile.Properties.Resources.rootUploadfilesReportDetail;
 int countSuccess = 0, UnSuccess = 0;
 
 foreach (var item in getListFile)

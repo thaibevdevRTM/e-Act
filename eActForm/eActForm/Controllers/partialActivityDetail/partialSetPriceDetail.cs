@@ -106,19 +106,24 @@ namespace eActForm.Controllers
                     getSumAmount = getListTotal.Where(x => x.total > 0).Sum(x => x.total);
                 }
 
-
-                var getBudget = ActFormAppCode.getBudgetActBeer(actType, brandId, center, channelId, periodEndDate);
-
-                foreach (var item in getBudget)
+                if (!string.IsNullOrEmpty(periodEndDate))
                 {
-                    BudgetTotal budgetTotalModel = new BudgetTotal();
-
-                    budgetTotalModel.totalBudget = item.totalBudget;
-                    budgetTotalModel.useAmountTotal = item.useAmountTotal + getSumAmount;
-                    budgetTotalModel.amountBalanceTotal = item.totalBudget - (item.useAmountTotal + getSumAmount);
-                    budgetTotalModel.amountBalancePercen = ((item.useAmountTotal + getSumAmount) / item.totalBudget) * 100;
-                    model.budgetTotalList.Add(budgetTotalModel);
+                    var getBudget = ActFormAppCode.getBudgetActBeer(actType, brandId, center, channelId, periodEndDate);
+                    foreach (var item in getBudget)
+                    {
+                        BudgetTotal budgetTotalModel = new BudgetTotal();
+                        if (item.totalBudget > 0)
+                        {
+                            budgetTotalModel.totalBudget = item.totalBudget;
+                            budgetTotalModel.useAmountTotal = item.useAmountTotal + getSumAmount;
+                            budgetTotalModel.amountBalanceTotal = item.totalBudget - (item.useAmountTotal + getSumAmount);
+                            budgetTotalModel.amountBalancePercen = ((item.useAmountTotal + getSumAmount) / item.totalBudget) * 100;
+                            model.budgetTotalList.Add(budgetTotalModel);
+                        }
+                    }
                 }
+
+                
 
                 TempData["showBudgetBeer" + activityId] = model;
 

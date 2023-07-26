@@ -33,7 +33,7 @@ namespace eActForm.Controllers
 
             ApproveAppCode.setCountWatingApprove();
             var getHeader = GenPDFAppCode.getHeader(activity_TBMMKT_Model);
-            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, getHeader, empId, statusId, activityId, "", activity_TBMMKT_Model));
+            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(gridHtml, getHeader, empId, statusId, activityId, ""));
 
             return Json(resultAjax, "text/plain");
         }

@@ -370,6 +370,7 @@ namespace eActForm.Models
                     }
                 }
                 PreviewBytes = stream.ToArray();
+                reader.Close();
             }
 
             //save in directory

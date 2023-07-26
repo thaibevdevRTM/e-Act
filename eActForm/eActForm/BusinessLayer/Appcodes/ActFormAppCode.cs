@@ -376,6 +376,7 @@ namespace eActForm.BusinessLayer
                 || UtilsAppCode.Session.User.isAdminNUM
                 || UtilsAppCode.Session.User.isAdminPOM
                 || UtilsAppCode.Session.User.isAdminCVM
+                || UtilsAppCode.Session.User.isAdminHoreca
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 
@@ -571,7 +572,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetBalanceByEO"
-                    , new SqlParameter[] { new SqlParameter("@EO", EO)
+               ,new SqlParameter[] { new SqlParameter("@EO", EO)
                ,new SqlParameter("@companyId", companyId)
                ,new SqlParameter("@actTypeId", getActTypeId)
                ,new SqlParameter("@channelId", channelId)
