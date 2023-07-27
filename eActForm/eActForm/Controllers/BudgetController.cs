@@ -200,7 +200,8 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         public ActionResult activityIndex(string typeForm)
         {
-            SearchBudgetActivityModels models = BudgetReportController.getMasterDataForSearch(typeForm);
+            //SearchBudgetActivityModels models = BudgetReportController.getMasterDataForSearchBudgetActivity(typeForm);
+            SearchBudgetActivityModels models = BudgetReportController.getMasterDataForSearchBudgetActivityReportMTM(typeForm);
             return View(models);
         }
 
@@ -978,33 +979,74 @@ namespace eActForm.Controllers  //update 21-04-2020
     }
 
     [LoginExpire]
+
     public class BudgetMyDocController : Controller
     {
-        // GET: BudgetMyDoc
-        public ActionResult Index(string companyEN)
+
+
+        public static SearchActivityModels getMasterDataForBudgetDocumentMTM(string typeForm)
         {
-            if (companyEN != null) { Session["var_companyEN"] = companyEN;  }
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+
+            try
+            {
+                SearchActivityModels models = new SearchActivityModels();
+                models.companyList = ReportSummaryAppCode.getCompanyMTMList();
+                models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+                models.approveStatusList2 = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+                models.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
+
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                { models.customerslist = QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList(); }
+                else
+                { models.customerslist = QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(); }
+
+
+                models.productTypelist = QuerygetAllProductCate.getAllProductType();
+                models.masterTypeFormList = QueryGet_master_type_form.getmastertypeformByEmpId(UtilsAppCode.Session.User.empId);
+                models.productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList();
+                models.departmentList = QueryOtherMaster.getOhterMaster("department", "search").ToList();
+                models.channelList = QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel == "data").ToList();
+
+
+                models.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString()))
+                 .GroupBy(item => item.activitySales)
+                 .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+                return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getMasterDataForSearchBudgetMTM >>" + ex.Message);
+            }
+        }
+
+        // GET: BudgetMyDoc string typeForm
+        public ActionResult Index(string typeForm)
+        {
+            if (typeForm != null) { Session["var_companyEN"] = typeForm;  }
+              SearchActivityModels models = getMasterDataForBudgetDocumentMTM(typeForm);
             return View(models);
         }
 
-        public ActionResult searchBudgetForm(string companyEN)
+        
+        public ActionResult searchBudgetForm(string typeForm)
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-            DateTime startDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
-            DateTime endDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
+            string startDate = Request.Form["startDate"].Trim();
+            string endDate = Request.Form["endDate"].Trim();
 
-            if (companyEN != null) { Session["var_companyEN"] = companyEN; }
-
-            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            if (typeForm != null) { Session["var_companyEN"] = typeForm; }
+            if (typeForm == null) { typeForm = Session["var_companyEN"].ToString(); }
+            
+            if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
-                model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(null, companyEN, startDate, endDate);
+                model.budgetFormLists = QueryGetBudgetActivity.getBudgetDocumentLists(null, typeForm, startDate, endDate);
             }
             else
             {
-                model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
+                model.budgetFormLists = QueryGetBudgetActivity.getBudgetDocumentLists(UtilsAppCode.Session.User.empId, typeForm, startDate, endDate);
             }
 
             if (Request.Form["txtActivityNo"] != "")
@@ -1028,17 +1070,18 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
 
             TempData["SearchDataModelBudget"] = model.budgetFormLists;
-            return RedirectToAction("myDocBudget", companyEN);
+            return RedirectToAction("myDocBudget");
         }
 
-        public ActionResult myDocBudget(string companyEN)
+        public ActionResult myDocBudget(string typeForm)
         {
             Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
             model = new Budget_Approve_Detail_Model.budgetForms();
-            DateTime startDate = DateTime.Now.AddDays(-30);
-            DateTime endDate = DateTime.Now.AddDays(1);
+            string startDate = null;
+            string endDate = null;
 
-            if (companyEN != null){ Session["var_companyEN"] = companyEN; }
+            if (typeForm != null){ Session["var_companyEN"] = typeForm; }
+            if (typeForm == null) { typeForm = Session["var_companyEN"].ToString(); }
 
             if (TempData["SearchDataModelBudget"] != null)
             {
@@ -1046,13 +1089,13 @@ namespace eActForm.Controllers  //update 21-04-2020
             }
             else
             {
-                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(null, companyEN, startDate, endDate);
+                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetDocumentLists(null, typeForm, startDate, endDate);
                 }
                 else
                 {
-                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
+                    model.budgetFormLists = QueryGetBudgetActivity.getBudgetDocumentLists(UtilsAppCode.Session.User.empId, typeForm, startDate, endDate);
                 }
             }
             return PartialView(model);
