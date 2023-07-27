@@ -150,7 +150,6 @@ namespace eActForm.BusinessLayer
                         var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
                         var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
 
-
                         if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                         {
 
@@ -169,7 +168,7 @@ namespace eActForm.BusinessLayer
 
                                     model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
                                     model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
-                                    model.flowDetail.OrderBy(X => X.rangNo);
+                                    model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                                 }
                             }
                             else if ((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"])) || (chkPurposeTravel.Any() && !chkChannel) || chkPurposeCostExcess.Any())
@@ -188,7 +187,7 @@ namespace eActForm.BusinessLayer
                                     model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
                                     model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, false));
                                     model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
-                                    model.flowDetail.OrderBy(X => X.rangNo);
+                                    model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                                 }
                             }
                         }

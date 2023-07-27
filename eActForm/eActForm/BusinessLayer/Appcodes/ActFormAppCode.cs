@@ -372,11 +372,11 @@ namespace eActForm.BusinessLayer
                 UtilsAppCode.Session.User.isAdminOMT
                 || UtilsAppCode.Session.User.isAdmin
                 || UtilsAppCode.Session.User.isAdminTBM
-                || UtilsAppCode.Session.User.isAdminHCM
                 || UtilsAppCode.Session.User.isAdminNUM
                 || UtilsAppCode.Session.User.isAdminPOM
                 || UtilsAppCode.Session.User.isAdminCVM
                 || UtilsAppCode.Session.User.isAdminHoreca
+                || UtilsAppCode.Session.User.isAdminHCBP
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 

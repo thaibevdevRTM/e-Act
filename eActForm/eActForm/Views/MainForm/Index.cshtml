@@ -103,7 +103,7 @@
     @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
-            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM))
             || (Model.activityFormTBMMKT.statusId == 3 && UtilsAppCode.Session.User.isAdminTBM)
             || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
             && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
@@ -491,6 +491,12 @@
 
                 }
             }
+
+            let getTotal = document.getElementById('totalEstimate').innerHTML.split(",").join("")
+            console.log(getTotal)
+            if (getTotal > 50000000 && '@UtilsAppCode.Session.User.isAdminTBM' == 'False') {
+                required += "วงเงินเกิน 50 ล้าน! *<br>"; validate = false;
+            }
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReceptions"]') {
 
@@ -580,7 +586,7 @@
 
     function SubmitData() {
         console.log("submit");
-       
+
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
 

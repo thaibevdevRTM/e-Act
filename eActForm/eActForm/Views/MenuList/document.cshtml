@@ -24,15 +24,15 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents Beer", "Index", "Home", new { typeForm = Activity_Model.activityType.Beer.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
+            @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents TBM", "Index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminHoreca || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"])
+            @if (UtilsAppCode.Session.User.isAdminHoreca || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"])
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents Horeca", "Index", "Home", new { typeForm = Activity_Model.activityType.HCM.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminHCM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            @if (UtilsAppCode.Session.User.isAdminHCBP || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents HC", "Index", "Home", new { typeForm = Activity_Model.activityType.HCForm.ToString() }, null)</li>
                 @*<li onclick="waitpopup();">@Html.ActionLink(" Documents Entertain", "Index", "Home", new { typeForm = Activity_Model.activityType.EXPENSE.ToString() }, null)</li>*@

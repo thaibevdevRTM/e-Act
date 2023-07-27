@@ -120,30 +120,36 @@
     }
 
     function submitPreview() {
-        $("#WaitDialog").show();
 
-         $.ajax({
-            type: 'POST',
-            url: '@Url.Action("genDataApproveList", "ManagementFlow")',
-             data: {
-                 companyId: $("#ddlCompany").val(),
-                 subjectId: $("#ddlSubject").val(),
-                 customerId: $("#ddlCustomer").val(),
-                 flowLimitId: $("#ddlLimit").val(),
-                 productCateId: $("#ddlCate").val(),
-                 channelId: $("#ddlChanelGroup").val(),
-                 productBrandId: $("#ddlBrand").val(),
-                 productTypeId: $("#ddlProductType").val(),
-                 activityGroup: $("#ddlActGroup").val(),
-                 empId: $("#ddlEmployee").val(),
-                 deparmentId: $("#ddlDeparment").val(),
-                 regionId: $("#ddlRegion").val(),
-                 typeFlow: '@typeFlow',
-             }
-        }).done(function (htmlResponse) {
-            $("#divApprove").html(htmlResponse);
-            $("#WaitDialog").hide();
-        });
+
+        if ($("#ddlLimit").val() == '') {
+            alert('ระบุ limit');
+        }
+        else {
+            $("#WaitDialog").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("genDataApproveList", "ManagementFlow")',
+                data: {
+                    companyId: $("#ddlCompany").val(),
+                    subjectId: $("#ddlSubject").val(),
+                    customerId: $("#ddlCustomer").val(),
+                    flowLimitId: $("#ddlLimit").val(),
+                    productCateId: $("#ddlCate").val(),
+                    channelId: $("#ddlChanelGroup").val(),
+                    productBrandId: $("#ddlBrand").val(),
+                    productTypeId: $("#ddlProductType").val(),
+                    activityGroup: $("#ddlActGroup").val(),
+                    empId: $("#ddlEmployee").val(),
+                    deparmentId: $("#ddlDeparment").val(),
+                    regionId: $("#ddlRegion").val(),
+                    typeFlow: '@typeFlow',
+                }
+            }).done(function (htmlResponse) {
+                $("#divApprove").html(htmlResponse);
+                $("#WaitDialog").hide();
+            });
+        }
     }
 
     function setDivHidden() {
