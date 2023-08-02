@@ -12,11 +12,11 @@
 
 	<div class="row tile_count">
 		<div class="col-md-12 col-xs-12">
-			@using (Ajax.BeginForm("reportBudgetProductPriceListView", "BudgetReport", typeForm
+			@using (Ajax.BeginForm("reportBudgetActivityListView", "BudgetReport", typeForm
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
 			{
-				@RenderPage("~/Views/Shared/_searchForBudgetReport.cshtml")
+				@RenderPage("~/Views/Shared/_searchBudgetActivityReport.cshtml")
 			}
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 
 <div class="row tile_count">
 	<div id="getQuery" class="col-md-12 col-xs-12">
-		@Html.Action("reportBudgetProductPriceListView", "BudgetReport", typeForm)
+		@Html.Action("reportBudgetActivityListView", "BudgetReport", typeForm)
 	</div>
 </div>
 
@@ -38,7 +38,7 @@
         //document.getElementById("startDate").disabled = true;
         //document.getElementById("endDate").disabled = true;
         
-        document.getElementById("divdate").style.visibility = "hidden";
+        //document.getElementById("divdate").style.visibility = "hidden";
         document.getElementById("ddlActYear").disabled = false;
 
         var x = document.getElementById("ddlActYear");
