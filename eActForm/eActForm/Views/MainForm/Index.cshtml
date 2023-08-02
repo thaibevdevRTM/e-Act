@@ -473,6 +473,11 @@
             if ($("#txtactivityPeriodEnd").val() == "") { required += "&emsp;วันที่ สิ้นสุดกิจกรรม*<br>"; validate = false; }
 
 
+            var rowBGList = parseInt($('#tbBGList tr.tagCountRowinTable').length);
+            if (rowBGList == 0) {
+                required += "&emsp;กรุณาติดต่อ Admin เนื่องจากไม่พบงบประมาณ *<br>"; validate = false;
+            }
+
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
 
