@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer
                 bool result = false;
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkRowActivityInvoice"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                if (ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables.Count > 0)
                 {
                     result = true;
                 }

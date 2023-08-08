@@ -896,9 +896,10 @@
         document.getElementById("ddlProductSize").disabled = true;
 
         $.ajax({
-            url: '@Url.Action("getProductBrand", "eAct")',
+            url: '@Url.Action("getProductBrandByCompany", "eAct")',
             data: {
                 p_groupId: $("#ddlProductGrp").val(),
+                company:'MT'
             },
             dataType: "json",
             type: 'POST',

@@ -99,6 +99,30 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getProductBrandByCompany(string p_groupId,string company)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Trim() == p_groupId.Trim() && x.companyId == company).ToList();
+                var resultData = new
+                {
+                    getProductname = getProductBrand.Select(x => new
+                    {
+                        Value = x.id,
+                        Text = x.brandName,
+                    }).ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getDetailBrandById(string brandId)
         {
             var result = new AjaxResult();

@@ -49,9 +49,6 @@ namespace eActForm.Controllers.API
                 consumerMassage.messageResponse = "eact :" + response.data.refId;
                 consumerMassage.timeResponse = DateTime.Now.ToString();
 
-
-               
-
                 log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, "Consumer", DateTime.Now, "", "", getMdodel.messagedata);
                 var resultLog1 = ApproveAppCode.insertLog_Kafka(log_kafka);
 

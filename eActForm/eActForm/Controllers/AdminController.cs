@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using static eActForm.Models.Activity_Model;
 
 namespace eActForm.Controllers
 {
@@ -18,7 +19,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.productBrandList = QueryGetAllBrand.GetAllBrand();
+            activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.companyId == activityType.MT.ToString()).ToList();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
 
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();

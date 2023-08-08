@@ -64,7 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
                     activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-                    activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+                    activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId && x.companyId == activityType.MT.ToString()).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
 
                     TempData["actForm" + activityId] = activityModel;
