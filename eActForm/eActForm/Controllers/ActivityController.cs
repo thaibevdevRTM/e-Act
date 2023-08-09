@@ -53,7 +53,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("OMT")).ToList();
+                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(activityType.OMT.ToString())).ToList();
                 }
 
                 if (!string.IsNullOrEmpty(activityId))
