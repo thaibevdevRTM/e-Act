@@ -205,7 +205,7 @@ namespace eActForm.BusinessLayer
                             || getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"]))
                         {
 
-                            DateTime? chkDate = new DateTime(DateTime.Now.Year, 9, 22);
+                            DateTime? chkDate = new DateTime(DateTime.Now.Year, 9, 21);
                             if (getActList.FirstOrDefault().documentDate.Value.Month >= 10)
                             {
                                 //ถ้ามีการเพิ่มเงื่อนไข ต้องเพิ่มที่ stored ด้วย usp_insertDocNoByChanelId
