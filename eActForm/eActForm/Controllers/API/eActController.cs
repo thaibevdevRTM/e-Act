@@ -3,6 +3,7 @@ using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -828,6 +829,18 @@ namespace eActForm.Controllers
 
         }
 
+
+        public JsonResult checkSizeFile(string year)
+        {
+            var result = new AjaxResult();
+            DateTime? stDatee = DateTime.ParseExact(year, "dd/MM/yyyy", null);
+
+
+            var getSize = 
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

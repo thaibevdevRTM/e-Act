@@ -893,5 +893,31 @@ namespace eActForm.BusinessLayer
                 throw new Exception("historyAddOn_MT_OMT >>" + ex.Message);
             }
         }
+
+
+        //public static List<Activity_TBMMKT_Model> getActivityByYear(string year)
+        //{
+        //    try
+        //    {
+        //        DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityByYear"
+        //       , new SqlParameter[] { new SqlParameter("@year", year)});
+
+        //        var lists = (from DataRow dr in ds.Tables[0].Rows
+        //                     select new ActivityFormTBMMKT
+        //                     {
+        //                         unit = string.IsNullOrEmpty(dr["unit"].ToString()) ? 0 : (int)dr["unit"],
+        //                         unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
+
+        //                     });
+        //        return lists.ToList();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //        throw new Exception("callUnitPOSAppCode >>" + ex.Message);
+        //    }
+
+        //}
     }
 }
