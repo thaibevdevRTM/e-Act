@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer;
 using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
 {
@@ -38,6 +39,7 @@ namespace eActForm.Models
             public string remark { get; set; }
             public string typeFiles { get; set; }
             public string sizeFiles { get; set; }
+            public string companyName { get; set; }
         }
 
     }

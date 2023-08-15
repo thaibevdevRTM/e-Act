@@ -3,6 +3,7 @@ using eForms.Models.MasterData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static eActForm.Models.TB_Act_Image_Model;
 
 namespace eActForm.Models
 {

@@ -833,11 +833,7 @@ namespace eActForm.Controllers
         public JsonResult checkSizeFile(string year)
         {
             var result = new AjaxResult();
-            DateTime? stDatee = DateTime.ParseExact(year, "dd/MM/yyyy", null);
-
-
-            var getSize = 
-
+            var getSize = ActFormAppCode.getActivityByYear("2022");
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

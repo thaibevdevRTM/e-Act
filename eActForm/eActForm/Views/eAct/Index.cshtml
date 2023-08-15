@@ -1,81 +1,8 @@
-﻿@{
-    Layout = null;
-}
-
+﻿
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
 @using System.Configuration;
 
 
+<h3>Hello </h3>
 
-
-
-
-@*@RenderPage("~/Views/Shared/_previewMainReport.cshtml")*@
-
-
-<script>
-    $(document).ready(function () {
-        callPreviewApprove();
-    });
-
-
-    function callPreviewApprove('@Model.activityFormTBMMKT.activityId', '@Model.activityFormTBMMKT.statusId', '@Model.activityFormTBMMKT.master_type_form_id') {
-        waitpopup();
-        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpMedNumId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceMT"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formReceptions"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formTransferbudget"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceOMT"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formEactBeer"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formReturnPosTbm"]"
-             || master_type_form_id == "@ConfigurationManager.AppSettings["formPurchaseTbm"]"
-        ) {
-             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Index", "MainReport")',
-                data: {
-                    activityId: actId
-                }
-             }).done(function (htmlResponse) {
-                genPdf(actId, statusId, htmlResponse);
-            });
-        }
-        else {
-             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("previewApprove", "Approve")',
-                data: {
-                    actId: actId
-                }
-            }).done(function (htmlResponse) {
-                genPdf(actId, statusId, htmlResponse);
-            });
-        }
-    }
-
-
-    function genPdf(actId, statusId, htmlResponse) {
-        $("#newGenReportFromMaster").html(htmlResponse);
-        $.ajax({
-            url: '@Url.Action("genPdfApprove", "Documents")',
-            data: {
-                GridHtml: $("#divForm").html(),
-                statusId: statusId,
-                activityId: actId,
-            },
-            dataType: "json",
-            type: 'POST',
-        }).done(function (response) {
-
-        });
-    }
-
-</script>

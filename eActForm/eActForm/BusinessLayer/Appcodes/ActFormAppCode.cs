@@ -895,29 +895,30 @@ namespace eActForm.BusinessLayer
         }
 
 
-        //public static List<Activity_TBMMKT_Model> getActivityByYear(string year)
-        //{
-        //    try
-        //    {
-        //        DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityByYear"
-        //       , new SqlParameter[] { new SqlParameter("@year", year)});
+        public static List<TB_Act_Image_Model.ImageModel> getActivityByYear(string year)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityByYear"
+               , new SqlParameter[] { new SqlParameter("@year", year) });
 
-        //        var lists = (from DataRow dr in ds.Tables[0].Rows
-        //                     select new ActivityFormTBMMKT
-        //                     {
-        //                         unit = string.IsNullOrEmpty(dr["unit"].ToString()) ? 0 : (int)dr["unit"],
-        //                         unitReturn = string.IsNullOrEmpty(dr["unitReturn"].ToString()) ? 0 : (int)dr["unitReturn"],
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new TB_Act_Image_Model.ImageModel
+                             {
+                                 activityId = dr["actId"].ToString(),
+                                 companyName = dr["companyName"].ToString(),
+                                 _fileName = dr["_fileName"].ToString(),
+                                 createdDate = (DateTime?)dr["createdDate"],
 
-        //                     });
-        //        return lists.ToList();
+                             });
+                return lists.ToList();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //        throw new Exception("callUnitPOSAppCode >>" + ex.Message);
-        //    }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActivityByYear >>" + ex.Message);
+            }
 
-        //}
+        }
     }
 }
