@@ -87,6 +87,12 @@ namespace eActForm.BusinessLayer.Appcodes
                             compId += item.val1 + ",";
                         }
 
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.TTM.ToString());
+                        foreach (var item in lst)
+                        {
+                            compId += item.val1 + ",";
+                        }
+
                         if (UtilsAppCode.Session.User.isSuperAdmin)
                         {
                             lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.CVM.ToString());
