@@ -82,42 +82,6 @@
 
                 }
 
-                    function addRow() {
-                        var RowCount = $('#tbl_CashDetail tbody tr').length - 1;
-                        var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
-                        $("#tbl_CashDetail > tbody:first").append(newRow);
-                        newRow.find("input").each(function () {
-                            $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-                            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
-
-                            var elms = document.getElementsByClassName('hindenTypeId')
-                            for (var i = 0; i < elms.length; i++) {
-                                elms[i].setAttribute("value", "1");
-                            }
-
-                            //change id Btn
-                            var elms1 = document.getElementsByClassName('clsDel1')
-                            for (var i = 0; i < elms1.length; i++) {
-                                elms1[i].setAttribute("id", "btnDel1_" + i);
-                                elms1[i].setAttribute("name", "btnDel1_" + i);
-                            }
-
-                        }
-                        );
-                        newRow.insertBefore('#tbl_CashDetail tbody>tr:last');
-
-                        //undisabled Btn
-                        var elmsDel = document.getElementsByClassName('clsDel1')
-                        for (var i = 1; i < elmsDel.length; i++) {
-                            document.getElementById('btnDel1_' + i).disabled = false;
-                        }
-
-
-                        $('.datepicker').datepicker({
-                            format: 'dd/mm/yyyy'
-                        });
-
-                    }
                 </script>
             </div>
         </td>
