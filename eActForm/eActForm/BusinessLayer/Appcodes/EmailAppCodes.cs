@@ -38,17 +38,26 @@ namespace eActForm.BusinessLayer
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
                     , UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH
                     , strLink);
-                string mailTo = "";
+                string mailTo = "", mailCC = "", checkMail = "";
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
+                checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
+                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
+
+                if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+                {
+                    strBody += checkMail;
+                }
+
                 string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
 
                 sendEmail(mailTo
-                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , mailCC
                     , getSubject
                     , strBody
                     , actFormId
