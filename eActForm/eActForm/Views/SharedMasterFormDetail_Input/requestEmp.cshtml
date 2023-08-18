@@ -8,60 +8,71 @@
         <td>
             <div id="divRequestEmp" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
                 <table class="table table-bordered" id="tabelRequestEmp" runat="server">
-                    <tr style="background-color:#E5E2E2;height:25px; ">
-                        <th colspan="6" style="text-align :center;">
-                            Request for permission for the following persons to travel :  รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้
-                        </th>
-                    </tr>
-                    <tr style="height:25px;">
-                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;"></th>
-                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
-                        <th style="width: 22%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
-                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
-                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
-                        <th style="width: 23%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
-                    </tr>
-                    @{ var index = 0;}
-                    @foreach (var item in Model.requestEmpModel)
-                    {
-                        <tr class="tagCountRowinTable">
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                <button id="btnDel_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel" onclick="cashDelete(this);"></button>
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @*<input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
-                                    </td>
-                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">*@
-                                @Html.DropDownList("requestEmpModel[" + index + "].empId",
-                               new SelectList(Model.masterRequestEmp, "empId", Model.activityFormTBMMKT.chkUseEng ? "empNameEN" : "empName", item.empId), ""
-                               , new
-                               {
-                                   @id = "ddlEmp_" + index,
-                                   @class = "form-control selectpicker",
-                                   @onchange = "changeGetEmp(" + index + ")",
-
-                               })
-
-                                @*data-live-search-placeholder="Search" data-max-options="1"*@
-                            </td>
-
-
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.position" id="position_@index" name="requestEmpModel[@index].position" readonly class="form-control position" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.level" id="level_@index" name="requestEmpModel[@index].level" readonly class="form-control textboxcss" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.department" id="department_@index" name="requestEmpModel[@index].department" readonly class="form-control textboxcss" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.bu" id="bu_@index" name="requestEmpModel[@index].bu" readonly class="form-control textboxcss" />
-                            </td>
+                    <thead class="thead-dark">
+                        <tr style="background-color:#E5E2E2;height:25px; ">
+                            <th colspan="6" style="text-align :center;">
+                                Request for permission for the following persons to travel :  รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้
+                            </th>
                         </tr>
-                        index++;
-                    }
+                        <tr style="height:25px;">
+                            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;"></th>
+                            <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
+                            <th style="width: 22%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
+                            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
+                            <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
+                            <th style="width: 23%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
+                        </tr>
+                    </thead>
+                    @{ var index = 0;}
+                    <tbody id="first">
+                        @foreach (var item in Model.requestEmpModel)
+                        {
+                            <tr class="tagCountRowinTable tRow_@index">
+                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                    <button id="btnDel_@index" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel_@index" onclick="cashDelete(this);"></button>
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                 
+                                    @Html.DropDownListFor(x => x.requestEmpModel[@index].empId,
+                                   new SelectList(Model.masterRequestEmp, "empId", Model.activityFormTBMMKT.chkUseEng ? "empNameEN" : "empName", item.empId), ""
+                                   , new
+                                   {
+           
+                                       @class = "form-control selectpicker",
+                                       @onchange = "changeGetEmp(" + index + ")",
+
+                                   })
+
+   
+                                </td>
+
+
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].position, new { @class = "form-control position" , @readonly = true })
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].level, new { @class = "form-control textboxcss", @readonly = true })
+                                   
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].department, new { @class = "form-control textboxcss", @readonly = true })
+                                   
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].bu, new { @class = "form-control textboxcss", @readonly = true })
+
+                                </td>
+                            </tr>
+
+                            index++;
+                        }
+                    </tbody>
                 </table>
+                <div id="addEx" class="row pull-right" style="width:150px" onclick="tbAddRow();">
+                    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+                </div>
                 <script>
 
                     $(document).ready(function () {
@@ -69,28 +80,64 @@
                         document.getElementById('btnDel_0').disabled = true;
                     });
 
-                $('.selectpicker').selectpicker({
-                    liveSearch: true,
-                    showSubtext: true
-                });
-
-                function changeGetEmp(rowIndex) {
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '@Url.Action("getEmpDetailById", "eAct")',
-                        data: {
-                            empId: $('#ddlEmp_' + rowIndex).val(),
-                        }
-                    }).done(function (response) {
-                        $('#position_' + rowIndex).val(response.Data.position);
-                        $('#level_' + rowIndex).val(response.Data.level);
-                        $('#department_' + rowIndex).val(response.Data.department);
-                        $('#bu_' + rowIndex).val(response.Data.bu);
+                    $('.selectpicker').selectpicker({
+                        liveSearch: true,
+                        showSubtext: true
                     });
+
+                    function changeGetEmp(rowIndex) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("getEmpDetailById", "eAct")',
+                            data: {
+                                empId: $('#requestEmpModel_' + rowIndex + '__empId').val(),
+                            }
+                        }).done(function (response) {
+                            $('#requestEmpModel_' + rowIndex + '__position').val(response.Data.position);
+                            $('#requestEmpModel_' + rowIndex + '__level').val(response.Data.level);
+                            $('#requestEmpModel_' + rowIndex + '__department').val(response.Data.department);
+                            $('#requestEmpModel_' + rowIndex + '__bu').val(response.Data.bu);
+                         
+                        });
 
                     }
 
+                    function cashDelete(btn) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+
+
+                    function tbAddRow() {
+                        var nextNoId = parseInt($('#tabelRequestEmp tr.tagCountRowinTable').length).toString();
+                        var trHTML = $('.tRow_0').html();
+
+                    
+                        trHTML = trHTML.replaceAll('[0].', '[' + nextNoId + '].');
+                        trHTML = trHTML.replaceAll('_0__', '_' + nextNoId + '__');
+                        trHTML = trHTML.replaceAll('onchange="changeGetEmp(0)"', 'onchange="changeGetEmp(' + nextNoId +')"');
+                        trHTML = trHTML.replaceAll('id="btnDel_0"', 'id="btnDel_' + nextNoId + '"');
+                        trHTML = trHTML.replaceAll('id="clsDel_0"', 'id="clsDel_' + nextNoId + '"');
+                        trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
+
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__empId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__empId').selectpicker('val',null).selectpicker('refresh');<\/script>");
+                        trHTML = trHTML.replaceAll('data-id="requestEmpModel_' + nextNoId + '__empId" title', 'data-id="requestEmpModel_' + nextNoId + '__empId" style="display:none;" title>');
+
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__position').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__level').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__department').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__bu').val('');<\/script>");
+
+          
+                        trHTML = (trHTML + "</tr>");
+                        $('#tabelRequestEmp').append(trHTML);
+
+                        document.getElementById('btnDel_' + nextNoId).disabled = false;
+
+
+                    }
 
 
                 </script>
