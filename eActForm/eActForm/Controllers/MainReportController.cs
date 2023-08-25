@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -16,7 +17,8 @@ namespace eActForm.Controllers
     [LoginExpire]
     public class MainReportController : Controller
     {
-        public ActionResult Index(string activityId)
+        [HttpPost]
+        public async Task<ActionResult> Index(string activityId)
         {
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
