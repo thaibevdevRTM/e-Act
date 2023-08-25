@@ -118,7 +118,7 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
             {
                 List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
                 }
@@ -135,7 +135,7 @@ namespace eActForm.Controllers
                 {
                     costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                 };
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", QtyName = "", unitPrice = 0, typeTheme = "", unit = 0, total = 0 });
                 }

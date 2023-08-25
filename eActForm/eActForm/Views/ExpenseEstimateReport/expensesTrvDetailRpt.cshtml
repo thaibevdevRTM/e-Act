@@ -58,19 +58,16 @@
             </td>
             <td style="text-align:right; padding-right:5px;">
 
-                @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
-                {
-                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
 
+                @if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.hotelExpense && !string.IsNullOrEmpty(Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay))
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
                 }
                 else
                 {
-                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.hotelExpense && Model.expensesDetailModel.costDetailLists[@index].unit != 0)
-                    {
-                        <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
-                    }
-
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
                 }
+
                 @if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
                 {
                     <span style="color:red">*</span>

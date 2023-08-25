@@ -111,6 +111,7 @@ namespace eActForm.Models
             POM,
             CVM,
             THAIBEV,
+            TTM,
         }
 
         public enum typeFlow

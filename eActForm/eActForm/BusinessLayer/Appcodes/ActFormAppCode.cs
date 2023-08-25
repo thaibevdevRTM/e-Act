@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer
                 bool result = false;
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkRowActivityInvoice"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                if (ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables.Count > 0)
                 {
                     result = true;
                 }
@@ -372,11 +372,12 @@ namespace eActForm.BusinessLayer
                 UtilsAppCode.Session.User.isAdminOMT
                 || UtilsAppCode.Session.User.isAdmin
                 || UtilsAppCode.Session.User.isAdminTBM
-                || UtilsAppCode.Session.User.isAdminHCM
                 || UtilsAppCode.Session.User.isAdminNUM
                 || UtilsAppCode.Session.User.isAdminPOM
                 || UtilsAppCode.Session.User.isAdminCVM
                 || UtilsAppCode.Session.User.isAdminHoreca
+                || UtilsAppCode.Session.User.isAdminHCBP
+                || UtilsAppCode.Session.User.isAdminIT
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 
@@ -891,6 +892,33 @@ namespace eActForm.BusinessLayer
                 return null;
                 throw new Exception("historyAddOn_MT_OMT >>" + ex.Message);
             }
+        }
+
+
+        public static List<TB_Act_Image_Model.ImageModel> getActivityByYear(string year)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityByYear"
+               , new SqlParameter[] { new SqlParameter("@year", year) });
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new TB_Act_Image_Model.ImageModel
+                             {
+                                 activityId = dr["actId"].ToString(),
+                                 companyName = dr["companyName"].ToString(),
+                                 _fileName = dr["_fileName"].ToString(),
+                                 createdDate = (DateTime?)dr["createdDate"],
+
+                             });
+                return lists.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActivityByYear >>" + ex.Message);
+            }
+
         }
     }
 }

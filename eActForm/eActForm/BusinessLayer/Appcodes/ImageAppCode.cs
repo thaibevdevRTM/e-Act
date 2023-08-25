@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace eActForm.BusinessLayer
 {
@@ -106,12 +108,16 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        public static int deleteImgById(string id)
+        public static int deleteImgById(string id, string filename)
         {
 
             int result = 0;
+
             try
             {
+                string getPathFile = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], filename));
+                File.Delete(getPathFile);
+
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteImgbyId"
                     , new SqlParameter[] {new SqlParameter("@id",id)
                     });

@@ -6,7 +6,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using static eActForm.Models.Activity_Model;
 
 namespace eActForm.BusinessLayer
 {
@@ -36,7 +36,7 @@ namespace eActForm.BusinessLayer
                 models.customerslist = typeForm == Activity_Model.activityType.MT.ToString() ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() :
                 QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList();
                 models.productTypelist = QuerygetAllProductCate.getProductTypeByEmpId();
-                models.productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList();
+                models.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.companyId == activityType.MT.ToString()).OrderBy(x => x.brandName).ToList();
                 models.masterTypeFormList = QueryGet_master_type_form.getmastertypeformByEmpId(UtilsAppCode.Session.User.empId);
                 models.departmentList = QueryOtherMaster.getOhterMaster("department", "search").ToList();
                 models.channelList = QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel == "data").ToList();
@@ -72,7 +72,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
- 
+
         public static SearchActivityModels getMasterDataForSearch()
         {
             string getRegion = "";

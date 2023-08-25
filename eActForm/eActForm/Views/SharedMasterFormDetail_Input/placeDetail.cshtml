@@ -1,62 +1,136 @@
 ﻿@using eActForm.BusinessLayer;
 @using System.Configuration;
+@using eActForm.Models
 @model eActForm.Models.Activity_TBMMKT_Model
+
+
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
             <div id="divPlaceDetail" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
                 <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
-                    <tr style="background-color:#E5E2E2;height:25px; ">
-                        <th colspan="5" style="text-align :center;">
-                            Description of activity  :  รายละเอียดของกิจกรรม ดังนี้
-                        </th>
-                    </tr>
-                    <tr style="height:25px;">
-                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Place (Country) / สถานที่ (จังหวัด)</th>
-                        <th style="width: 35%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">For Project / เพื่อโครงการ</th>
-                        <th style="width: 9%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Period /<br /> จำนวนวัน </th>
-                        <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Departure Date /<br /> วันออกเดินทาง</th>
-                        <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Arrival Date /<br /> วันที่กลับ </th>
-                    </tr>
-                    @{ var index = 0;}
-                    @foreach (var item in Model.placeDetailModel)
-                    {
-                        <tr class="tagCountRowinTable">
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.place" id="txtPlace_@index" name="placeDetailModel[@index].place" class="form-control textboxcss" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.forProject" id="txtForProject_@index" name="placeDetailModel[@index].forProject" class="form-control textboxcss" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.period" id="txtPeriod_@index" name="placeDetailModel[@index].period" class="form-control textboxcss" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.departureDateStr" id="txtDepartureDate_@index" name="placeDetailModel[@index].departureDateStr" class="form-control textboxcss   form_datetime" style="width:140px;" />
-                            </td>
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.arrivalDateStr" id="txtArrivalDate_@index" name="placeDetailModel[@index].arrivalDateStr" class="form-control textboxcss  form_datetime" style="width:140px;" />
-                            </td>
+                    <thead class="thead-dark">
+                        <tr style="background-color:#E5E2E2;height:25px; ">
+                            <th colspan="6" style="text-align :center;">
+                                Description of activity  :  รายละเอียดของกิจกรรม ดังนี้
+                            </th>
                         </tr>
-                        index++;
+                        <tr style="height:25px;">
+                            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;"></th>
+                            <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Place (Country) / สถานที่ (จังหวัด)</th>
+                            <th style="width: 35%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">For Project / เพื่อโครงการ</th>
+                            <th style="width: 9%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Period /<br /> จำนวนวัน </th>
+                            <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Departure Date /<br /> วันออกเดินทาง</th>
+                            <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Arrival Date /<br /> วันที่กลับ </th>
+                        </tr>
+                    </thead>
+                    @{ var index = 0;}
+                    <tbody>
+                        @foreach (var item in Model.placeDetailModel)
+                        {
+                            <tr class="tagCountPlace tRowPlace_@index">
+                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                    <button id="btnDelPlace_@index" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDelPlace_@index" onclick="placeDelete(this,'@index');" disabled></button>
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.placeDetailModel[@index].place, new { @class = "form-control" })
+
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.placeDetailModel[@index].forProject, new { @class = "form-control" })
+
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.placeDetailModel[@index].period, new { @class = "form-control" })
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.placeDetailModel[@index].departureDateStr, new { @class = "form-control form_datetime", @style = "width:140px;", autocomplete = "off" })
+
+                                    @*<input type="text" value="@item.departureDateStr" id="txtDepartureDate_@index" name="placeDetailModel[@index].departureDateStr" class="form-control textboxcss   form_datetime" style="width:140px;" />*@
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.TextBoxFor(x => x.placeDetailModel[@index].arrivalDateStr, new { @class = "form-control form_datetime", @style = "width:140px;", autocomplete = "off" })
+
+                                    @* <input type="text" value="@item.arrivalDateStr" id="txtArrivalDate_@index" name="placeDetailModel[@index].arrivalDateStr" class="form-control textboxcss  form_datetime" style="width:140px;" />*@
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                </table>
+                <div id="divAddPlace" class="row pull-right" style="width:150px" onclick="tbAddRow_Place();">
+                    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+                </div>
+                <script>
+
+                    $(document).ready(function () {
+
+                        if ('@Model.activityFormTBMMKT.statusId' == '1' || '@Model.activityFormTBMMKT.statusId' == '5') {
+                            let getRow = parseInt($('#tabelPlaceDetail tr.tagCountPlace').length - 1).toString();
+                            document.getElementById('btnDelPlace_' + getRow).disabled = false;
+                        }
+                        else {
+                            document.getElementById("divAddPlace").style.display = "none";
+                        }
+
+                        setDatetime();
+                    });
+
+                    function setDatetime() {
+                          $('.form_datetime').datetimepicker({
+                            language: 'th',
+                            format: '@ConfigurationManager.AppSettings["formatDatetimeUseJquery"]',
+                            weekStart: 1,
+                            todayBtn: 1,
+                            autoclose: 1,
+                            todayHighlight: 1,
+                            startView: 2,
+                            forceParse: 0,
+                            showMeridian: 1
+                        });
                     }
 
-                </table>
 
-                <script>
-                $(function () {
-                    $('.form_datetime').datetimepicker({
-                        language: 'th',
-                        format: '@ConfigurationManager.AppSettings["formatDatetimeUseJquery"]',
-                        weekStart: 1,
-                        todayBtn: 1,
-                        autoclose: 1,
-                        todayHighlight: 1,
-                        startView: 2,
-                        forceParse: 0,
-                        showMeridian: 1
-                    });
-                });
+                    function placeDelete(btn, numRow) {
+
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+
+                        let getroww = parseInt(numRow - 1);
+                        console.log(getroww)
+                        if (getroww > 2) {
+                            document.getElementById('btnDelPlace_' + getroww).disabled = false;
+                        }
+
+                    }
+
+
+                    function tbAddRow_Place() {
+
+                        var nextNoId_Place = parseInt($('#tabelPlaceDetail tr.tagCountPlace').length).toString();
+                        var trHTML = $('.tRowPlace_0').html();
+                        trHTML = trHTML.replaceAll('[0].', '[' + nextNoId_Place + '].');
+                        trHTML = trHTML.replaceAll('_0__', '_' + nextNoId_Place + '__');
+                        trHTML = trHTML.replaceAll('onclick="placeDelete(this,\'0\');"', 'onclick="placeDelete(this,\'' + nextNoId_Place + '\');"');
+
+                        trHTML = trHTML.replaceAll('id="btnDelPlace_0"', 'id="btnDelPlace_' + nextNoId_Place + '"');
+                        trHTML = trHTML.replaceAll('clsDelPlace_0', 'clsDelPlace_' + nextNoId_Place);
+                        trHTML = ("<tr class=\"tagCountPlace tRowPlace_" + nextNoId_Place + "\">" + trHTML);
+                        trHTML = (trHTML + "</tr>");
+                        $('#tabelPlaceDetail').append(trHTML);
+
+                        let getroww = parseInt(nextNoId_Place - 1);
+                        document.getElementById('btnDelPlace_' + getroww).disabled = true;
+                        document.getElementById('btnDelPlace_' + nextNoId_Place).disabled = false;
+
+                        $('#placeDetailModel_' + nextNoId_Place + '__place').val('');
+                        $('#placeDetailModel_' + nextNoId_Place + '__forProject').val('');
+                        $('#placeDetailModel_' + nextNoId_Place + '__period').val('');
+                        $('#placeDetailModel_' + nextNoId_Place + '__departureDateStr').val('');
+                        $('#placeDetailModel_' + nextNoId_Place + '__arrivalDateStr').val('');
+
+                        setDatetime();
+                    }
 
                 </script>
             </div>

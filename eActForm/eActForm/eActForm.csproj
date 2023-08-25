@@ -84,7 +84,7 @@
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\Release\Package\PackageTmp\bin\System.AppContext.dll</HintPath>
+      <HintPath>bin\System.AppContext.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -3480,6 +3480,7 @@
     <Content Include="Views\Budget\activityDetail.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetProductPriceIndex.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetProductPriceListView.cshtml" />
+    <Content Include="Views\Shared\_searchBudgetActivityReport.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

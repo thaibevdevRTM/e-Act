@@ -27,11 +27,7 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
-
-
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-
-
 
                     if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {

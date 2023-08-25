@@ -119,8 +119,8 @@
                         <td style="text-align:right;"> รวมงบจัด </td>
                         <td style="text-align:right;"> งบจ่าย </td>
 
-                        <td style="text-align:right;"> งบคงเหลือ </td>
                         <td style="text-align:right;"> งบจัดเทียบงบจ่าย </td>
+                        <td style="text-align:right;"> งบคงเหลือ </td>
                         <td style="text-align:center;"> สถานะ </td>
                         <td style="text-align:center;"> วันที่ทำรายการ (ตัดจ่าย) </td>
                         <td style="text-align:center;"> สถานะกิจกรรม </td>
@@ -192,20 +192,20 @@
                             }
                         </td>
 
-                        @*งบคงเหลือ*@
-                        <td>
-                            @if (@item.activityBalanceBath != null)
-                            {
-                                string result = String.Format("{0:n2}", @item.activityBalanceBath);
-                                @result.ToString();
-                            }
-                        </td>
-
                         @*งบจัดเทียบงบจ่าย*@
                         <td>
                             @if (@item.activityCostRemainBath != null)
                             {
                                 string result = String.Format("{0:n2}", @item.activityCostRemainBath);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*งบคงเหลือ*@
+                        <td>
+                            @if (@item.activityBalanceBath != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.activityBalanceBath);
                                 @result.ToString();
                             }
                         </td>

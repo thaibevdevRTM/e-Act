@@ -155,6 +155,7 @@
                 url: $adminPage.urlGetBrand,
                 data: {
                     p_groupId: $("#ddlProductGrp").val(),
+                    company:'MT'
                 },
                 dataType: "json",
                 type: 'POST',
