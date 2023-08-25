@@ -1,13 +1,16 @@
 ﻿@using eActForm.BusinessLayer;
-@model eActForm.Models.CostDetailOfGroupPriceTBMMKT
+@model eActForm.Models.Activity_TBMMKT_Model
 
-    <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
+<table class="table table-bordered" id="tabelExpensesDetail" runat="server">
+    <thead class="thead-dark">
         <tr style="background-color:#E5E2E2;height:25px; ">
-            <th colspan="6" style="text-align :center;">
+            <th colspan="7" style="text-align :center;">
                 Total estimate of travelling expenses (ประมาณการค่าใช้จ่าย เพื่อขอเบิกเงินสำรอง/เงินทดรองจ่ายเท่านั้น ซึ่งยังไม่ใช่การขออนุมัติจ่ายเงิน)
             </th>
         </tr>
         <tr style="height:25px;">
+            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+            </th>
             <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Description / รายละเอียด
             </th>
@@ -17,122 +20,147 @@
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Unit Price / <br />ราคาต่อหน่วย(บาท)
             </th>
-            <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+            <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Exchange Rete /<br />อัตราแลกเปลี่ยน
             </th>
             <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Qty
                 / จำนวน
             </th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+            <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Total
                 /รวม(บาท)
             </th>
         </tr>
-        @{ var index = 0;}
-        @foreach (var item in Model.costDetailLists)
+    </thead>
+    @{ var index = 0;}
+
+    <tbody>
+        @foreach (var item in Model.expensesDetailModel.costDetailLists)
         {
-            <tr class="tagCountRowinTable">
-
-                <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.productDetail" id="txtProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
+            <tr class="tagCountExpenses tRowExpenses_@index">
+                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    <button id="btnDelExpenses_@index" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDelExpenses_@index" onclick="cashDelete(this);"></button>
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.QtyName" id="txtQtyName_@index" name="expensesDetailModel.costDetailLists[@index].QtyName" class="form-control textboxcss" />
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[@index].productDetail, new { @class = "form-control" })
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[@index].QtyName, new { @class = "form-control" })
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.typeTheme" id="txtTypeTheme_@index" name="expensesDetailModel.costDetailLists[@index].typeTheme" class="form-control textboxcss" />
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[@index].unitPriceDisplay, new { @class = "form-control text-right" })
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
-                    <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
-
-                    @*@Html.TextBoxFor(x => item.unit, new
-                        {
-                            @id = "txtUnit_" + index,
-                            Name = "expensesDetailModel[" + index + "].unit",
-                            @class = "form-control textboxcss text-right"
-                        })*@
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[@index].typeTheme, new { @class = "form-control" })
+                </td>
+                <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[@index].unit, new { @class = "form-control text-center" })
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index" />
+
+                    @Html.HiddenFor(x => x.expensesDetailModel.costDetailLists[@index].total, new { @class = "form-control hdTotal_" + @index })
                     @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                       {
-                           @id = "txtTotal_" + @index
-                           ,
-                           Name = "expensesDetailModel.costDetailLists[" + index + "].total"
-                           ,
-                           @class = "form-control textboxcss text-right"
-                           ,
-                           @readonly = "readonly"
-                       })
+                    {
+                        @id = "txtTotal_" + @index,
+                        @class = "form-control textboxcss text-right",
+                        @readonly = "readonly"
+                    })
 
                     <script>
-                            $("#txtUnitPrice_@index").blur(function () {
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                    var v_totalRow = 0.00;
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                    v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
+                        $("#expensesDetailModel.costDetailLists_" + @index +"__unitPriceDisplay").blur(function () {
+                        sumTotal('@index');
+                    });
 
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
-                            $("#txtUnit_@index").blur(function () {
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                    var v_totalRow = 0.00;
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                    v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
+                        $("#expensesDetailModel.costDetailLists_" + @index +"__unit").blur(function () {
+                       sumTotal('@index');
+                    });
 
                     </script>
                 </td>
             </tr>
             index++;
         }
-        <tr>
-            <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                จำนวนเงินรวม(บาท)&nbsp;
-            </td>
-            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
+    </tbody>
+    <tr>
+        <td colspan="6" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            จำนวนเงินรวม(บาท)&nbsp;
+        </td>
+        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+            @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
 
-                <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;
+            <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;
 
-            </td>
-        </tr>
-    </table>
+        </td>
+    </tr>
+</table>
+<div id="divAddExpenses" class="row pull-right" style="width:150px" onclick="tbAddRow_Expenses();">
+    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+</div>
 
 
+<script>
 
-    <script>
-        function sumall() {
-            var totalAll = 0.00;
-            var rowCount = '@Model.costDetailLists.Count';
+    $(document).ready(function () {
+        document.getElementById('btnDelExpenses_0').disabled = true;
 
-            for (i = 0; i < rowCount; i++) {
-                var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                totalAll = totalAll + rowtotal;
-            }
-            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    });
+
+
+    function sumTotal(row) {
+        var v_unitRow = 0.00;
+        var v_unitpriceRow = 0.00;
+        var v_totalRow = 0.00;
+        if ($("#expensesDetailModel.costDetailLists_" + row + "__unit").val() != "" && $("#expensesDetailModel.costDetailLists_" + row + "__unit").val() != "0.00" && $("#expensesDetailModel.costDetailLists_" + row + "__unit").val() != "0") {
+            v_unitRow = parseFloat($("#expensesDetailModel.costDetailLists_" + row + "__unit").val().replace(",", ""));
         }
-    </script>
+        if ($("#expensesDetailModel.costDetailLists_" + row + "__unit").val() != "" && $("#expensesDetailModel.costDetailLists_" + row + "__unitPriceDisplay").val() != "0.00" && $("#expensesDetailModel.costDetailLists_" + row + "__unitPriceDisplay").val() != "0") {
+            v_unitpriceRow = parseFloat($("#expensesDetailModel.costDetailLists_" + row + "__unitPriceDisplay").val().replace(",", ""));
+        }
+        v_totalRow = (v_unitRow * v_unitpriceRow);
+
+        // $("#costDetailLists_" + row +"__total").val(v_totalRow.toFixed(2));
+        $("#txtTotal_" + row).val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        sumall();
+
+    }
+
+    function tbAddRow_Expenses() {
+
+        var nextNoId_Exp = parseInt($('#tabelExpensesDetail tr.tagCountExpenses').length).toString();
+
+        var trHTML = $('.tRowExpenses_0').html();
+        trHTML = trHTML.replaceAll('[0].', '[' + nextNoId_Exp + '].');
+        trHTML = trHTML.replaceAll('_0__', '_' + nextNoId_Exp + '__');
+        trHTML = trHTML.replaceAll('sumTotal(\'0\')', 'sumTotal(' + nextNoId_Exp + ')');
+        trHTML = trHTML.replaceAll('costDetailLists_" + 0', 'costDetailLists_" + ' + nextNoId_Exp);
+
+        trHTML = trHTML.replaceAll('id="btnDelExpenses_0"', 'id="btnDelExpenses_' + nextNoId_Exp + '"');
+        trHTML = trHTML.replaceAll('clsDelExpenses_0', 'clsDelExpenses_' + nextNoId_Exp);
+        trHTML = trHTML.replaceAll('txtTotal_0', 'txtTotal_' + nextNoId_Exp);
+        trHTML = ("<tr class=\"tagCountExpenses tRowExpenses_" + nextNoId_Exp + "\">" + trHTML);
+        trHTML = (trHTML + "</tr>");
+
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__productDetail').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__QtyName').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__unitPriceDisplay').val('0.00');<\/script>");
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__typeTheme').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__unit').val('0');<\/script>");
+        trHTML = (trHTML + "<script> $('#expensesDetailModel.costDetailLists_" + nextNoId_Exp + "__total').val('0.00');<\/script>");
+        trHTML = (trHTML + "<script> $('#txtTotal_" + nextNoId_Exp + "').val('0.00');<\/script>");
+        $('#tabelExpensesDetail').append(trHTML);
+        document.getElementById('btnDelExpenses_' + nextNoId_Exp).disabled = false;
+
+    }
+
+    function sumall() {
+        var totalAll = 0.00;
+        var rowCount = parseInt($('#tabelExpensesDetail tr.tagCountExpenses').length).toString();
+
+        for (i = 0; i < rowCount; i++) {
+            var rowtotal = parseFloat($("#expensesDetailModel.costDetailLists_" + i.toString() + "__total").val().replace(",", ""));
+            totalAll = totalAll + rowtotal;
+        }
+        $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+</script>

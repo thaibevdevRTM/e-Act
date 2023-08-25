@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using eActForm.Models
 @model eActForm.Models.Activity_TBMMKT_Model
 
 <link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
@@ -29,40 +30,32 @@
                         {
                             <tr class="tagCountRowinTable tRow_@index">
                                 <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                    <button id="btnDel_@index" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel_@index" onclick="cashDelete(this);"></button>
+                                    <button id="btnDel_@index" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel_@index" onclick="cashDelete(this,'@index');" disabled></button>
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                 
+
                                     @Html.DropDownListFor(x => x.requestEmpModel[@index].empId,
                                    new SelectList(Model.masterRequestEmp, "empId", Model.activityFormTBMMKT.chkUseEng ? "empNameEN" : "empName", item.empId), ""
                                    , new
                                    {
-           
+
                                        @class = "form-control selectpicker",
                                        @onchange = "changeGetEmp(" + index + ")",
 
                                    })
 
-   
-                                </td>
-
-
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].position, new { @class = "form-control position" , @readonly = true })
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
+                                    @Html.TextBoxFor(x => x.requestEmpModel[@index].position, new { @class = "form-control position", @readonly = true })
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     @Html.TextBoxFor(x => x.requestEmpModel[@index].level, new { @class = "form-control textboxcss", @readonly = true })
-                                   
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                     @Html.TextBoxFor(x => x.requestEmpModel[@index].department, new { @class = "form-control textboxcss", @readonly = true })
-                                   
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
                                     @Html.TextBoxFor(x => x.requestEmpModel[@index].bu, new { @class = "form-control textboxcss", @readonly = true })
-
                                 </td>
                             </tr>
 
@@ -76,8 +69,13 @@
                 <script>
 
                     $(document).ready(function () {
-
-                        document.getElementById('btnDel_0').disabled = true;
+                        if ('@Model.activityFormTBMMKT.statusId' == '1' || '@Model.activityFormTBMMKT.statusId' == '5') {
+                            let getRow = parseInt($('#tabelRequestEmp tr.tagCountRowinTable').length - 1).toString();
+                            document.getElementById('btnDel_' + getRow).disabled = false;
+                        }
+                        else {
+                            document.getElementById("addEx").style.display = "none";
+                        }
                     });
 
                     $('.selectpicker').selectpicker({
@@ -98,44 +96,46 @@
                             $('#requestEmpModel_' + rowIndex + '__level').val(response.Data.level);
                             $('#requestEmpModel_' + rowIndex + '__department').val(response.Data.department);
                             $('#requestEmpModel_' + rowIndex + '__bu').val(response.Data.bu);
-                         
+
                         });
 
                     }
 
-                    function cashDelete(btn) {
+                    function cashDelete(btn,numRow) {
                         var row = btn.parentNode.parentNode;
                         row.parentNode.removeChild(row);
+
+                        let getroww = parseInt(numRow - 1);
+                        if (getroww > 3) {
+                            document.getElementById('btnDel_' + getroww).disabled = false;
+                        }
                     }
 
 
                     function tbAddRow() {
+
                         var nextNoId = parseInt($('#tabelRequestEmp tr.tagCountRowinTable').length).toString();
                         var trHTML = $('.tRow_0').html();
-
-                    
                         trHTML = trHTML.replaceAll('[0].', '[' + nextNoId + '].');
                         trHTML = trHTML.replaceAll('_0__', '_' + nextNoId + '__');
                         trHTML = trHTML.replaceAll('onchange="changeGetEmp(0)"', 'onchange="changeGetEmp(' + nextNoId +')"');
                         trHTML = trHTML.replaceAll('id="btnDel_0"', 'id="btnDel_' + nextNoId + '"');
                         trHTML = trHTML.replaceAll('id="clsDel_0"', 'id="clsDel_' + nextNoId + '"');
+                        trHTML = trHTML.replaceAll('onclick="cashDelete(this,\'0\');"', 'onclick="cashDelete(this,\'' + nextNoId + '\');"');
                         trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
-
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__empId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__empId').selectpicker('val',null).selectpicker('refresh');<\/script>");
                         trHTML = trHTML.replaceAll('data-id="requestEmpModel_' + nextNoId + '__empId" title', 'data-id="requestEmpModel_' + nextNoId + '__empId" style="display:none;" title>');
-
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__position').val('');<\/script>");
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__level').val('');<\/script>");
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__department').val('');<\/script>");
                         trHTML = (trHTML + "<script> $('#requestEmpModel_' + " + nextNoId + " +'__bu').val('');<\/script>");
-
-          
                         trHTML = (trHTML + "</tr>");
                         $('#tabelRequestEmp').append(trHTML);
 
+                        let getroww = parseInt(nextNoId - 1);
+                        document.getElementById('btnDel_' + getroww).disabled = true;
                         document.getElementById('btnDel_' + nextNoId).disabled = false;
-
 
                     }
 
