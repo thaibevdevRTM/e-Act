@@ -1,0 +1,268 @@
+﻿
+
+@model eActForm.Models.Budget_Report_Invoice_Model.Report_Budget_Invoice
+
+
+@if (Model.Report_Budget_Invoice_List != null)
+{
+
+    <div class="row">
+        <p class="d-flex justify-content-center">
+            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                </button>
+            }
+        </p>
+    </div>
+
+    <div class="row">
+        <div id="GridView">
+            <table class="table table-hover border-dark" id="datatable" style="width:100%;">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td>ลำดับ</td>
+
+                        @*<td>วันที่ส่งเอกสาร</td>*@
+
+                        @*<td style="width: 10px;">Vender</td>
+                        <td class="">Vat</td>
+                        <td class="">ส่งตัวจริง</td>*@
+
+                        <td>ห้าง</td>
+                        <td>เลขที่ใบแจ้งหนี้</td>
+                        <td>ว.ด.ป.ใบแจ้งหนี้</td>
+                        @*
+                            <td>วันที่หักหน้าบช.</td>
+                        *@
+
+                        <td>GL Account</td>
+                        <td class="text-right">จำนวนเงิน</td>
+                        <td class="text-right">Vat7%</td>
+                        <td class="text-right">W/Tax</td>
+                        <td class="text-right">เงิน(สุทธิ)</td>
+                        <td class="text-center">WTx</td>
+                        <td>Activity</td>
+
+                        @*<td>ส่งใบเสร็จตัวจริง</td>
+                            <td>ว.ด.ป.ส่งเอกสาร</td>
+                            <td>รายการจ่าย</td>*@
+
+                        <td class="hide">activityId</td>
+                        <td class="hide">activityOfEstimateId</td>
+                        <td class="hide">budgetActivityId</td>
+                        <td class="hide">budgetActivityInvoiceId</td>
+                    </tr>
+                </thead>
+                @{ var index_view = 1; }
+                @foreach (var item in Model.Report_Budget_Invoice_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index_view</td>
+
+                        @*วันที่ส่งเอกสาร*@
+                        @*<td>@item.report_date</td>*@
+
+                        @*Vender*@
+                        @*<td class="">@item.vander</td>*@
+                        @*<td>
+                            @Html.TextBox("Model.vander", item.vander, new { @class = "form-control textboxcss", @id = "txt_vander_" + @index_view, @onchange = "change_vander(" + @index_view + ")" })
+                        </td>*@
+
+                        @*vatStatus*@
+                        @*<td class="">
+                            @Html.CheckBoxFor(model => item.vat_status, new { @class = "form-control textboxcss", @id = "txt_vat_status_" + @index_view, @onchange = "change_vat_status(" + @index_view + ")" })
+                        </td>*@
+
+                        @*ส่งใบเสร็จตัวจริง*@
+                        @*<td class="">
+                            @Html.CheckBoxFor(model => item.commit_paper_status, new { @class = "form-control textboxcss", @id = "txt_commit_paper_status_" + @index_view, @onchange = "change_commit_paper_status(" + @index_view + ")" })
+                        </td>*@
+
+                        @*ห้าง (ชื่อย่อ)*@
+                        <td>@item.customer_short_name</td>
+
+                        @*เลขที่ใบแจ้งหนี้*@
+                        <td>@item.invoice_number</td>
+
+                        @*ว.ด.ป.ใบแจ้งหนี้*@
+                        <td>@item.invoice_action_date</td>
+
+                        @*วันที่หักหน้าบช.*@
+                        @*<td>@item.bank_account_date</td>*@
+
+                        @*GL Account*@
+                        <td>@item.act_gl</td>
+
+                        @*จำนวนเงิน*@
+                        <td class="text-right">
+                            @if (@item.invoice_baht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.invoice_baht);
+                                @result.ToString();
+                            }
+                        </td>
+
+
+                        @*Vat 7%*@
+                        <td class="text-right">
+                            @if (@item.invoice_vat_baht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.invoice_vat_baht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*W/Tax*@
+                        <td class="text-right">
+                            @if (@item.invoice_wtax_baht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.invoice_wtax_baht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*จำนวนเงิน(สุทธิ)*@
+                        <td class="text-right">
+                            @if (@item.invoice_net_baht != null)
+                            {
+                                string result = String.Format("{0:n2}", @item.invoice_net_baht);
+                                @result.ToString();
+                            }
+                        </td>
+
+                        @*WTx*@
+                        <td class="text-center">@item.wtx</td>
+
+                        @*Activity*@
+                        <td>@item.sub_code</td>
+
+                        @*ส่งใบเสร็จตัวจริง*@
+                        @*<td>@item.commit_paper_status</td>*@
+
+                        @*ว.ด.ป.ส่งเอกสาร*@
+                        @*<td>@item.commit_paper_date</td> *@
+
+                        @*รายการจ่าย*@
+                        @*<td>@item.invoice_detail</td> *@
+
+                        @*activityId*@
+                        <td class="hide">@item.activityId</td>
+
+                        @*activityOfEstimateId*@
+                        <td class="hide">@item.activityOfEstimateId</td>
+
+                        @*budgetActivityId*@
+                        <td class="hide">@item.budgetActivityId</td>
+
+                        @*budgetActivityInvoiceId*@
+                        <td class="hide">@item.budgetActivityInvoiceId</td>
+                    </tr>
+                    index_view++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row hide">
+        <div id="GridPDF">
+            <table class="table table-hover border-dark" id="datatable_export">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td>ลำดับ</td>
+                        <td>วันที่ส่งเอกสาร</td>
+                        <td>Vender</td>
+                        <td>ห้าง</td>
+                        <td>เลขที่ใบแจ้งหนี้</td>
+                        <td>ว.ด.ป.ใบแจ้งหนี้</td>
+                        <td>วันที่หักหน้าบช.</td>
+                        <td>GL Account</td>
+                        <td>จำนวนเงิน</td>
+                        <td>Vat 7%</td>
+                        <td>W/Tax</td>
+                        <td>จำนวนเงิน(สุทธิ)</td>
+                        <td>WTx</td>
+                        <td>Activity</td>
+                        <td>ส่งใบเสร็จตัวจริง</td>
+                        <td>ว.ด.ป.ส่งเอกสาร</td>
+                        <td>รายการจ่าย</td>
+
+                    </tr>
+                </thead>
+                @{ var index = 1;}
+                @foreach (var item in Model.Report_Budget_Invoice_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index</td>
+
+                        <td>@item.report_date</td> @*วันที่ส่งเอกสาร*@
+                        <td>@item.vander</td> @*Vender*@
+                        <td>@item.customer_name</td> @*ห้าง*@
+                        <td>@item.invoice_number</td> @*เลขที่ใบแจ้งหนี้*@
+                        <td>@item.invoice_action_date</td> @*ว.ด.ป.ใบแจ้งหนี้*@
+                        <td>@item.bank_account_date</td> @*วันที่หักหน้าบช.*@
+                        <td>@item.act_gl</td> @*GL Account*@
+                        <td>@item.invoice_baht</td> @*จำนวนเงิน*@
+
+                        <td>@item.invoice_vat_baht</td> @*Vat 7%*@
+                        <td>@item.invoice_wtax_baht</td> @*W/Tax*@
+                        <td>@item.invoice_net_baht</td> @*จำนวนเงิน(สุทธิ)*@
+                        <td>@item.wtx</td> @*WTx*@
+                        <td>@item.sub_code</td> @*Activity*@
+                        <td></td> @*ส่งใบเสร็จตัวจริง*@
+                        <td></td> @*ว.ด.ป.ส่งเอกสาร*@
+                        <td>@item.invoice_detail</td> @*รายการจ่าย*@
+
+
+                    </tr>
+                    index++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+
+
+    //------------------------------------------------------------------------------------------------
+
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": true, "targets": 4 }
+                , { "orderable": true, "targets": 5 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+    })
+
+    $(function () {
+        $("#btnExportExcel").click(function () {
+            $("input[name='gridHtml']").val($("#GridPDF").html());
+        });
+
+        $("#btnExportPDF").click(function () {
+            $("input[name='gridHtml']").val($("#GridPDF").html());
+        });
+    });
+
+
+</script>

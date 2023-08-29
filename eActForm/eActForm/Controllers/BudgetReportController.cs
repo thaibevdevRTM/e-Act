@@ -3,6 +3,8 @@ using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -50,6 +52,52 @@ namespace eActForm.Controllers
         {
             return View();
         }
+
+
+        //------------- report budget invoice ----------------------------------------------------|
+        public ActionResult reportBudgetInvoiceIndex(string TypeForm)
+        {
+            SearchBudgetActivityModels models = getMasterDataForSearchBudgetActivityReportMTM(TypeForm);
+            return View(models);
+        }
+
+        public ActionResult reportBudgetInvoiceListView(string typeForm)
+        {
+            Budget_Report_Invoice_Model.Report_Budget_Invoice model = new Budget_Report_Invoice_Model.Report_Budget_Invoice();
+            try
+            {
+                string company = null;
+                string keyword = null;
+
+                company = Request.Form["ddlFormType"];
+                keyword = Request.Form["txtKeyword"];
+
+                if (company != null)
+                {
+
+                DateTime dateStartDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string startDate = dateStartDate.ToString("yyyyMMdd");
+
+                DateTime dateEndDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string endDate = dateEndDate.ToString("yyyyMMdd");
+
+                model.Report_Budget_Invoice_List = QueryGetBudgetReport.getReportBudgetInvoice(company, startDate.ToString(), endDate.ToString(), keyword);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("reportBudgetInvoiceListView => " + ex.Message);
+            }
+            return PartialView(model);
+        }
+
+
+
+
+
+
+
+
 
         //------------- report budget acctivity ----------------------------------------------------|
         public ActionResult reportBudgetActivityIndex(string TypeForm)
