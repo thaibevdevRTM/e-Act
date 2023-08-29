@@ -597,8 +597,7 @@
             document.getElementById("divIO").style.display = "none";
         }
 
-        if (@Model.activityFormModel.statusId == "1" && '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId'
-            || '@string.IsNullOrEmpty(Model.activityFormModel.createdByUserId)' == 'True') {
+        if (@Model.activityFormModel.statusId == "1" && '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId') {
             $("#divSubmit").show();
         }
 

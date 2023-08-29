@@ -107,14 +107,14 @@ namespace eActForm.BusinessLayer
         /// <returns></returns>
         public static ApproveFlowModel.approveFlowModel getFlowId(string subId, string actFormId)
         {
-           
+
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getData = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
                 var getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-               
+
 
                 string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
@@ -152,7 +152,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel checkFlowAddon(ApproveFlowModel.approveFlowModel model, Activity_TBMMKT_Model getData ,string actFormId)
+        public static ApproveFlowModel.approveFlowModel checkFlowAddon(ApproveFlowModel.approveFlowModel model, Activity_TBMMKT_Model getData, string actFormId)
         {
             try
             {
@@ -182,19 +182,19 @@ namespace eActForm.BusinessLayer
                             item.approveGroupNameEN = "Verify by";
                         }
 
-                        if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
+                        if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KNithit"]).Any())
                         {
 
                             if (!chkPurposeCostExcess.Any())
                             {
                                 model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KNithit"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
                                 model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                             }
                             else
                             {
                                 model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 3).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KNithit"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true));
                                 model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false));
                                 model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true));
                                 model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
@@ -213,19 +213,21 @@ namespace eActForm.BusinessLayer
                     {
                         if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
                         {
-                            int conutRow = model.flowDetail.Count();
-                            var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
-                            foreach (var item in changeApproveGroup)
+                            if (!chkChannel)
                             {
-                                item.approveGroupId = AppCode.ApproveGroup.Verifyby;
-                                item.approveGroupName = "ผ่าน";
-                                item.approveGroupNameEN = "Verify by";
+                                int conutRow = model.flowDetail.Count();
+                                var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
+                                foreach (var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+                                model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, false));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                             }
-
-                            model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, false));
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
-                            model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                         }
                     }
                 }
@@ -251,7 +253,7 @@ namespace eActForm.BusinessLayer
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("checkFlowAddon >>" + ex.Message);
             }
