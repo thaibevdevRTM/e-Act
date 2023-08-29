@@ -25,6 +25,7 @@ namespace eActForm.BusinessLayer
                                  digit_EO = d["digit_EO"].ToString(),
                                  digit_IO = d["digit_IO"].ToString(),
                                  no_tbmmkt = d["no_tbmmkt"].ToString(),
+                                 companyId = d["companyId"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

@@ -71,7 +71,8 @@ namespace eActForm.BusinessLayer.Appcodes
                 else if (actType == Activity_Model.activityType.HCForm.ToString())
                 {
                     String compId = "";
-                    if (UtilsAppCode.Session.User.isSuperAdmin)
+                    if (UtilsAppCode.Session.User.isSuperAdmin
+                        || UtilsAppCode.Session.User.isAdminHCBP)
                     {
                         List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
                         lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.NUM.ToString());
@@ -86,10 +87,19 @@ namespace eActForm.BusinessLayer.Appcodes
                             compId += item.val1 + ",";
                         }
 
-                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.CVM.ToString());
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.TTM.ToString());
                         foreach (var item in lst)
                         {
                             compId += item.val1 + ",";
+                        }
+
+                        if (UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.CVM.ToString());
+                            foreach (var item in lst)
+                            {
+                                compId += item.val1 + ",";
+                            }
                         }
 
                         compId = compId.Substring(0, compId.Length - 1);

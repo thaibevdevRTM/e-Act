@@ -94,6 +94,7 @@ namespace eActForm.Models
             public bool isAdminCVM { get; set; }
             public bool isAdminHCBP { get; set; }
             public bool isAdminHoreca { get; set; }
+            public bool isAdminIT { get; set; }
             public bool isCreatorMT_OMT { get; set; }
             public string countWatingActFormBeer { get; set; }
             public string countWatingActForm { get; set; }

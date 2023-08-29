@@ -53,7 +53,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals("OMT")).ToList();
+                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.condition.Equals(activityType.OMT.ToString())).ToList();
                 }
 
                 if (!string.IsNullOrEmpty(activityId))
@@ -64,7 +64,7 @@ namespace eActForm.Controllers
                     activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
                     activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-                    activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+                    activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId && x.companyId == activityType.MT.ToString()).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
 
                     TempData["actForm" + activityId] = activityModel;
@@ -321,11 +321,14 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult deleteImgById(string id)
+        public JsonResult deleteImgById(string id,string filename_)
         {
             var result = new AjaxResult();
 
-            int resultImg = ImageAppCode.deleteImgById(id);
+
+                
+
+            int resultImg = ImageAppCode.deleteImgById(id, filename_);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

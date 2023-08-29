@@ -227,10 +227,7 @@ namespace eActForm.BusinessLayer
 
                             if (models.approveDetailLists.Count > 0)
                             {//อนุมัติแล้ว
-                                CostDetailOfGroupPriceTBMMKT model2 = new CostDetailOfGroupPriceTBMMKT
-                                {
-                                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                                };
+                                CostDetailOfGroupPriceTBMMKT model2 = new CostDetailOfGroupPriceTBMMKT();
 
                                 model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
 
@@ -248,142 +245,63 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
-                        {
-                            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                        };
+                        CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT();
                         model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 1, total = calSum1 });
                         model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 2, total = calSum2 });
-
                         activity_TBMMKT_Model.expensesDetailModel = model;
 
+                        CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT();
+                        CostDetailOfGroupPriceTBMMKT model22 = new CostDetailOfGroupPriceTBMMKT();
+                        CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT();
 
-
-
-
-
-                        CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
-                        {
-                            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                        };
-
-                        CostDetailOfGroupPriceTBMMKT model22 = new CostDetailOfGroupPriceTBMMKT
-                        {
-                            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                        };
-
-                        CostDetailOfGroupPriceTBMMKT modelHistory = new CostDetailOfGroupPriceTBMMKT
-                        {
-                            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                        };
-
-                        CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT
-                        {
-                            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-                        };
-
-
-                        modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
                         model22.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
                         modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
                         modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
-
+                        string multiPrice = "";
                         decimal? total = 0;
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < model22.costDetailLists.Count; i++)
                         {
                             if (model22.costDetailLists[i].total != 0)
                             {
-                                if (modelHistory.costDetailLists.Count > 0)
-                                {
-                                    total = modelHistory.costDetailLists.Where(x => x.listChoiceId == model22.costDetailLists[i].listChoiceId).FirstOrDefault().total;
-                                }
-                                else
-                                {
-                                    total = model22.costDetailLists[i].total;
-                                }
-
+                                total = model22.costDetailLists[i].total;
                                 if (model22.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model22.costDetailLists[i].unit != 0 && model22.costDetailLists[i].unitPrice == 0)
                                 {
-                                    string multiPrice = "";
-
                                     foreach (var item in modelSub.costDetailLists)
                                     {
                                         multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
                                     }
                                     multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
                                     //เป็นค่าที่พักหลายราคา
-                                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                                    {
-                                        listChoiceId = model22.costDetailLists[i].listChoiceId,
-                                        listChoiceName = model22.costDetailLists[i].listChoiceName,
-                                        productDetail = model22.costDetailLists[i].productDetail,
-                                        unit = model22.costDetailLists[i].unit,
-                                        unitPrice = 0,
-                                        unitPriceDisplay = multiPrice,
-                                        total = model22.costDetailLists[i].total,
-                                        displayType = model22.costDetailLists[i].displayType,
-                                        subDisplayType = model22.costDetailLists[i].subDisplayType,
-                                        updatedByUserId = model22.costDetailLists[i].updatedByUserId,
-                                        createdByUserId = model22.costDetailLists[i].createdByUserId,
-                                        statusEdit = model22.costDetailLists[i].createdByUserId == "" ? "" :
-                                                   (model22.costDetailLists[i].createdByUserId != model22.costDetailLists[i].updatedByUserId
-                                                   && model22.costDetailLists[i].total != total ? "*" : ""),
-                                    });
                                 }
-                                else
+
+                                modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                                 {
-                                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                                    {
-                                        listChoiceId = model22.costDetailLists[i].listChoiceId,
-                                        listChoiceName = model22.costDetailLists[i].listChoiceName,
-                                        productDetail = model22.costDetailLists[i].productDetail,
-                                        unit = model22.costDetailLists[i].unit,
-                                        unitPrice = model22.costDetailLists[i].unitPrice + model22.costDetailLists[i].vat,
-                                        unitPriceDisplay = "",
-                                        total = model22.costDetailLists[i].total,
-                                        displayType = model22.costDetailLists[i].displayType,
-                                        subDisplayType = model22.costDetailLists[i].subDisplayType,
-                                        updatedByUserId = model22.costDetailLists[i].updatedByUserId,
-                                        createdByUserId = model22.costDetailLists[i].createdByUserId,
-                                        statusEdit = model22.costDetailLists[i].createdByUserId == "" ? "" :
+                                    listChoiceId = model22.costDetailLists[i].listChoiceId,
+                                    listChoiceName = model22.costDetailLists[i].listChoiceName,
+                                    productDetail = model22.costDetailLists[i].productDetail,
+                                    unit = model22.costDetailLists[i].unit,
+                                    unitPrice = model22.costDetailLists[i].unitPrice + model22.costDetailLists[i].vat,
+                                    unitPriceDisplay = multiPrice,
+                                    total = model22.costDetailLists[i].total,
+                                    displayType = model22.costDetailLists[i].displayType,
+                                    subDisplayType = model22.costDetailLists[i].subDisplayType,
+                                    updatedByUserId = model22.costDetailLists[i].updatedByUserId,
+                                    createdByUserId = model22.costDetailLists[i].createdByUserId,
+                                    statusEdit = model22.costDetailLists[i].createdByUserId == "" ? "" :
                                       (model22.costDetailLists[i].createdByUserId != model22.costDetailLists[i].updatedByUserId
                                       && model22.costDetailLists[i].total != total ? "*" : ""),
-                                    });
-                                }
+                                });
 
                             }
                         }
 
-                        int rowAdd = 8 - modelResult.costDetailLists.Count;
-                        for (int i = 0; i < rowAdd; i++)
-                        {
-
-                            modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                            {
-                                listChoiceId = "",
-                                listChoiceName = "",
-                                productDetail = "",
-                                unit = 0,
-                                unitPrice = 0,
-                                total = 0,
-                                displayType = "",
-                                subDisplayType = "",
-                                statusEdit = ""
-                            });
-
-                        }
-
-
-                        modelResult.costDetailLists = modelResult.costDetailLists.ToList();
-
                         activity_TBMMKT_Model.expensesDetailModel = modelResult;
-
 
                         #endregion
 
 
                     }
-                    else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                     {
                         activity_TBMMKT_Model.expensesDetailModel.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
                         activity_TBMMKT_Model.expensesDetailModel.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(activity_TBMMKT_Model.expensesDetailModel.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;

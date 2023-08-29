@@ -19,7 +19,7 @@
                 <li>@Html.ActionLink("OMT Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li>@Html.ActionLink("OMT Set Price", "Index", "MainForm", new { typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formSetPriceOMT"] }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isAdminBeer || UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
+            @if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
                 <li>@Html.ActionLink(" Beer Activity Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.Beer.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formEactBeer"] }, null)</li>
 
@@ -37,7 +37,7 @@
                 <li>@Html.ActionLink("TBM โอนงบประมาณ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTransferbudget"] }, null)</li>
 
             }
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHCM || (UtilsAppCode.Session.User.isSuperAdmin))
+            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHoreca || (UtilsAppCode.Session.User.isSuperAdmin))
             {
                 <li>@Html.ActionLink("Horeca ยืมเงินทดรอง", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvHcmId"] }, null)</li>
                 <li>@Html.ActionLink("Horeca Travelling Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvHcmId"] }, null)</li>

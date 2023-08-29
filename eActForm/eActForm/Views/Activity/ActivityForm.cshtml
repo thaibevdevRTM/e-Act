@@ -784,7 +784,7 @@
             document.getElementById("txtReference").readOnly = true;
         }
 
-        var cus = ["Hyper", "Market", "Mini", "Depot", "Donjai", "Express", "Talad","GoFresh","TD","CJ"];
+        var cus = ["Hyper", "Market", "Mini", "Depot", "Donjai", "Express", "Talad","GoFresh"];
         cus.forEach(chkTrueRef);
     }
 
@@ -922,9 +922,10 @@
         document.getElementById("ddlProductSize").disabled = true;
 
         $.ajax({
-            url: '@Url.Action("getProductBrand", "eAct")',
+            url: '@Url.Action("getProductBrandByCompany", "eAct")',
             data: {
                 p_groupId: $("#ddlProductGrp").val(),
+                company: 'MT'
             },
             dataType: "json",
             type: 'POST',
@@ -1375,8 +1376,6 @@
         $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", true);
         $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", true);
         $("#divRadioRef").find("input,button,textarea,select").attr("disabled", true);
-        document.getElementById("chkAddIO").disabled = true;
-
 
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
@@ -1419,6 +1418,9 @@
             document.getElementById("txtdateCostPerSt").disabled = false;
             document.getElementById("txtdateCostPerEnd").disabled = false;
             document.getElementById("divUploadFiles").style.display = "block";
+            document.getElementById("divIO").disabled = false;
+            document.getElementById("txtActIO").disabled = false;
+            document.getElementById("txtActClaim").disabled = false;
 
             for (var i = 0; i < lengthOfArray; i++) {
                 arrayOfElements[i].style.display = 'block';

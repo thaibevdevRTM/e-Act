@@ -38,17 +38,26 @@ namespace eActForm.BusinessLayer
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
                     , UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH
                     , strLink);
-                string mailTo = "";
+                string mailTo = "", mailCC = "", checkMail = "";
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
+                checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
+                mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
+
+                if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+                {
+                    strBody += checkMail;
+                }
+
                 string getSubject = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT ? ConfigurationManager.AppSettings["emailRequestCancelByAdmin"] : ConfigurationManager.AppSettings["emailRequestCancelSubject"];
 
                 sendEmail(mailTo
-                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , mailCC
                     , getSubject
                     , strBody
                     , actFormId
@@ -802,8 +811,8 @@ namespace eActForm.BusinessLayer
                     case AppCode.ApproveType.Report_Detail:
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
-                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , item.activityNo
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
                             , item.customerName
                             , item.productTypeName
@@ -914,7 +923,6 @@ namespace eActForm.BusinessLayer
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             cc = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : cc;
 
-       
             GMailer mailer = new GMailer();
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;

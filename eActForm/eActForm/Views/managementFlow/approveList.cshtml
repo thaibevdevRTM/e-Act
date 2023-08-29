@@ -34,14 +34,18 @@
                     <tr class="tagTR">
                         <td>
                             <button id="btnDel_@i" name="btnDel_@i" type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="checkDelete('@item.id');"></button>
-                            
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
                             @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @min = "0", @max = "20", @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
                         </td>
                         <td>
-                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })
+                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss txtempId_" + @i, @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })
+                            <script>
+                                $(".txtempId_@i").blur(function () {
+                                    $(".txtempId_@i").val($(".txtempId_@i").val().replaceAll(" ", ""));
+                                 });
+                            </script>
                         </td>
                         <td>
 
@@ -94,7 +98,7 @@
             @Html.Hidden("Model.p_channelId", Model.p_channelId)
             @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
             @Html.Hidden("Model.customerId", Model.customerId)
-</table>
+    </table>
 
 
     <div class="row form-group  hero-container">
@@ -110,7 +114,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-     
+
         if ('@Model.approveFlow.flowDetail.Any()' == 'True') {
             document.getElementById('btnDel_0').disabled = true;
         }

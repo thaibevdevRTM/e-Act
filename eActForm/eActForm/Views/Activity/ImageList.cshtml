@@ -15,7 +15,7 @@
                 <div class="col-md-2">
                     <div>
                         <div class="col-md-1 divDelImg">
-                            <span id="iconDelFile" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                            <span id="iconDelFile" class="close" onclick="javascript:onclickDelImage('@item.id','@item._fileName');">&times;</span>
                         </div>
                         <a href="@string.Format(url,item._fileName)" target="_blank"><img src="@string.Format(url,item._fileName)" id="catImage" width="100px" height="100px" /></a>
                     </div>
@@ -26,7 +26,7 @@
                 <div class="col-md-2">
                     <div>
                         <div class="col-md-1 divDelImg">
-                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id','@item._fileName');">&times;</span>
                         </div>
                         <a href="@string.Format(url,item._fileName)" target="_blank"><img src="~/images/adobe-acrobat-pdf-file-512.png" width="100px" height="100px" /></a>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="col-md-2">
                     <div>
                         <div class="col-md-1 divDelImg">
-                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id','@item._fileName');">&times;</span>
                         </div>
                         <a href="@string.Format(url,item._fileName)" target="_blank"><img src="~/images/zip.ico" width="100px" height="100px" /></a>
                     </div>
@@ -54,7 +54,7 @@
                 <div class="col-md-2">
                     <div>
                         <div class="col-md-1 divDelImg">
-                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id','@item._fileName');">&times;</span>
                         </div>
                         <img src="~/images/xlx.png" width="100px" height="100px" />
                     </div>
@@ -72,13 +72,14 @@
 
 <script>
 
-    function onclickDelImage(id) {
-        console.log(id);
+    function onclickDelImage(id,fileName) {
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("deleteImgById", "Activity")',
             data: {
                 id: id,
+                filename_: fileName
             }
         }).done(function (response) {
             CallImageView($("#hdActivityId").val());

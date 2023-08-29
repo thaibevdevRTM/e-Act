@@ -2398,7 +2398,7 @@ span.section {
 }
 
 .form-control {
-    border-radius: 0;
+    border-radius: 0.5rem;
     width: 100%
 }
 
@@ -2407,8 +2407,8 @@ span.section {
 }
 
 .form-control:focus {
-    border-color: #CCD0D7;
-    box-shadow: none !important
+    border-color: #8fe39a;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 legend {

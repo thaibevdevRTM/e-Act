@@ -44,39 +44,42 @@ namespace eActForm.Controllers
                 {
                     foreach (var itemCompany in model.companyList)
                     {
-                        foreach (var item in model.chkProductType)
+                        if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"] || itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"])
+                            foreach (var item in model.chkProductType)
                             {
-                                if (model.custLi != null)
+                                if (itemCompany == ConfigurationManager.AppSettings["companyId_MT"])
                                 {
-                                    foreach (var itemCust in model.custLi)
+                                    if (model.custLi != null)
                                     {
-                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, itemCust, item, "");
+                                        foreach (var itemCust in model.custLi)
+                                        {
+                                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, itemCust, item, "");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
                                     }
                                 }
-                                else
+
+                                if (itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
                                 {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
-                                }
-                            }
-      
-                            if (itemCompany == ConfigurationManager.AppSettings["companyId_OMT"])
-                            {
-                                if (model.regionList == null)
-                                {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
-                                }
-                                else
-                                {
-                                    foreach (var region in model.regionList)
+                                    if (model.regionList == null)
                                     {
-                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, "", item, region);
+                                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, null, item, "");
+                                    }
+                                    else
+                                    {
+                                        foreach (var region in model.regionList)
+                                        {
+                                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], itemCompany, "", item, region);
+                                        }
                                     }
                                 }
+
+
                             }
-
-
                         }
                     }
                 }

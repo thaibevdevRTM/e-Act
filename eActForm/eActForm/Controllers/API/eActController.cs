@@ -3,6 +3,7 @@ using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,30 @@ namespace eActForm.Controllers
             try
             {
                 var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Trim() == p_groupId.Trim()).ToList();
+                var resultData = new
+                {
+                    getProductname = getProductBrand.Select(x => new
+                    {
+                        Value = x.id,
+                        Text = x.brandName,
+                    }).ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getProductBrandByCompany(string p_groupId,string company)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId.Trim() == p_groupId.Trim() && x.companyId == company).ToList();
                 var resultData = new
                 {
                     getProductname = getProductBrand.Select(x => new
@@ -804,6 +829,14 @@ namespace eActForm.Controllers
 
         }
 
+
+        public JsonResult checkSizeFile(string year)
+        {
+            var result = new AjaxResult();
+            var getSize = ActFormAppCode.getActivityByYear("2022");
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

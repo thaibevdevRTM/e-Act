@@ -436,7 +436,7 @@ namespace eActForm.BusinessLayer
         /// </summary>
         /// <param name="actId"></param>
         /// <returns></returns>
-        public static int insertApproveForActivityForm(string actId)
+        public static async Task<int> insertApproveForActivityForm(string actId)
         {
             int success = 0;
             try
