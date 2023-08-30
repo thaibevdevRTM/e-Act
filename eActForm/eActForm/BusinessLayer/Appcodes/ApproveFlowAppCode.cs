@@ -173,6 +173,14 @@ namespace eActForm.BusinessLayer
                 if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                 {
                     string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
+
+                    getDataList_Model getDataList = new getDataList_Model();
+                    getDataList.masterTypeId = getData.activityFormTBMMKT.master_type_form_id;
+                    getDataList.amount = getLimitAmount;
+                   // var getRank = getFlowAddOnByType()
+
+
+
                     if ((chkBrand && chkPurposeTravel.Any()) || chkPurposeCostExcess.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) )
                     {
                         var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
