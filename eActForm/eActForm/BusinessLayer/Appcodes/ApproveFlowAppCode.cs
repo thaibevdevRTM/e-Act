@@ -176,15 +176,17 @@ namespace eActForm.BusinessLayer
                     if ((chkBrand && chkPurposeTravel.Any()) || chkPurposeCostExcess.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) )
                     {
                         var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
-                        foreach (var item in changeApproveGroup)
-                        {
-                            item.approveGroupId = AppCode.ApproveGroup.Verifyby;
-                            item.approveGroupName = "ผ่าน";
-                            item.approveGroupNameEN = "Verify by";
-                        }
+                       
 
                         if (chkChannel && chkPurposeCostExcess.Any())
                         {
+                            foreach (var item in changeApproveGroup)
+                            {
+                                item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                item.approveGroupName = "ผ่าน";
+                                item.approveGroupNameEN = "Verify by";
+                            }
+
                             model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 3).ToList();
                             model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, true));
                             model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Verifyby, false));
@@ -193,6 +195,13 @@ namespace eActForm.BusinessLayer
                         }
                         else if (getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
                         {
+                            foreach (var item in changeApproveGroup)
+                            {
+                                item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                item.approveGroupName = "ผ่าน";
+                                item.approveGroupNameEN = "Verify by";
+                            }
+
                             model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
                             model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
                         }
@@ -202,6 +211,13 @@ namespace eActForm.BusinessLayer
                         {
                             if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
                             {
+                                foreach (var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+
                                 model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
                                 model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false));
                                 model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true));
