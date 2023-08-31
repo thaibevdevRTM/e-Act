@@ -370,7 +370,7 @@ namespace eActForm.Controllers
                     var getHeader = GenPDFAppCode.getHeader(activity_TBMMKT_Model);
                     if (activity_TBMMKT_Model.activityFormTBMMKT.statusId != 3)
                     {
-                        if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+                        if (ApproveAppCode.insertApproveForActivityForm(activityId).Result > 0)
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {

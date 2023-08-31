@@ -839,6 +839,59 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<Budget_Report_Product_Price_Model.Report_Budget_Product_Price_Att> getReportBudgetProductPrice(string companyEN, string customerId, string productTypeId, string keyword)
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportPriceList",
+                 new SqlParameter("@companyShortName", companyEN),
+                 new SqlParameter("@customerId", customerId),
+                 new SqlParameter("@productTypeId", productTypeId),
+                 new SqlParameter("@Keyword", SqlDbType.NVarChar, 250) { Value = keyword }
+                );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Report_Product_Price_Model.Report_Budget_Product_Price_Att()
+                              {
+
+                                  company_id = d["company_id"].ToString(),
+                                  cus_chanelGroup = d["cus_chanelGroup"].ToString(),
+                                  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+                                  cus_cusNameEn = d["cus_cusNameEn"].ToString(),
+                                  cus_cusShortName = d["cus_cusShortName"].ToString(),
+                                  prd_productTypeTH = d["prd_productTypeTH"].ToString(),
+                                  prd_productTypeEN = d["prd_productTypeEN"].ToString(),
+                                  prd_cateName = d["prd_cateName"].ToString(),
+                                  prd_cateNameTH = d["prd_cateNameTH"].ToString(),
+                                  prd_groupName = d["prd_groupName"].ToString(),
+                                  brand_brandName = d["brand_brandName"].ToString(),
+                                  brand_brandNameTH = d["brand_brandNameTH"].ToString(),
+                                  prd_productCode = d["prd_productCode"].ToString(),
+                                  prd_productName = d["prd_productName"].ToString(),
+                                  prd_productNameEN = d["prd_productNameEN"].ToString(),
+                                  prd_pack = d["prd_pack"].ToString(),
+                                  prd_unit = d["prd_unit"].ToString(),
+                                  prd_size = d["prd_size"].ToString(),
+                                  prd_digitIO = d["prd_digitIO"].ToString(),
+                                  prd_smellNameTH = d["prd_smellNameTH"].ToString(),
+                                  prd_smellNameEN = d["prd_smellNameEN"].ToString(),
+                                  price_normalCost = d["price_normalCost"].ToString(),
+                                  price_wholeSalesPrice = d["price_wholeSalesPrice"].ToString(),
+                                  price_discount1 = d["price_discount1"].ToString(),
+                                  price_discount2 = d["price_discount2"].ToString(),
+                                  price_discount3 = d["price_discount3"].ToString(),
+                                  price_saleNormal = d["price_saleNormal"].ToString()
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportBudgetProductPrice => " + ex.Message);
+                return new List<Budget_Report_Product_Price_Model.Report_Budget_Product_Price_Att>();
+            }
+        }
     }
 
     public class BudgetFormCommandHandler

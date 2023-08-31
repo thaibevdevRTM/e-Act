@@ -53,6 +53,44 @@ namespace eActForm.Controllers
             return View();
         }
 
+        //------------- report Pending Approve ----------------------------------------------------|
+        public ActionResult reportBudgetWaitApproveIndex(string TypeForm)
+        {
+            SearchBudgetActivityModels models = getMasterDataForSearchBudgetActivityReportMTM(TypeForm);
+            return View(models);
+        }
+
+        public ActionResult reportBudgetWaitApproveListView(string typeForm)
+        {
+            Budget_Report_Invoice_Model.Report_Budget_Invoice model = new Budget_Report_Invoice_Model.Report_Budget_Invoice();
+            try
+            {
+                string company = null;
+                string keyword = null;
+
+                company = Request.Form["ddlFormType"];
+                keyword = Request.Form["txtKeyword"];
+
+                if (company != null)
+                {
+
+                    DateTime dateStartDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string startDate = dateStartDate.ToString("yyyyMMdd");
+
+                    DateTime dateEndDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string endDate = dateEndDate.ToString("yyyyMMdd");
+
+                    model.Report_Budget_Invoice_List = QueryGetBudgetReport.getReportBudgetInvoice(company, startDate.ToString(), endDate.ToString(), keyword);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("reportBudgetInvoiceListView => " + ex.Message);
+            }
+            return PartialView(model);
+        }
+
+
 
         //------------- report budget invoice ----------------------------------------------------|
         public ActionResult reportBudgetInvoiceIndex(string TypeForm)
@@ -90,13 +128,6 @@ namespace eActForm.Controllers
             }
             return PartialView(model);
         }
-
-
-
-
-
-
-
 
 
         //------------- report budget acctivity ----------------------------------------------------|
@@ -167,74 +198,39 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        
         //------------- report budget product price ------------------------------------------------|
         public ActionResult reportBudgetProductPriceIndex(string TypeForm)
         {
             SearchBudgetActivityModels models = getMasterDataForSearchBudgetActivityReportMTM(TypeForm);
             return View(models);
         }
-
         public ActionResult reportBudgetProductPriceListView(string typeForm)
         {
-            Budget_Report_Model.Report_Budget_Activity model = new Budget_Report_Model.Report_Budget_Activity();
+            Budget_Report_Product_Price_Model.Report_Budget_Product_Price model = new Budget_Report_Product_Price_Model.Report_Budget_Product_Price();
             try
             {
-                string startDate = null;
-                string endDate = null;
-                string actNo = null;
-                string actStatus = null;
-                string actProductType = null;
-                string actYear = null;
+                string customer_id = null;
+                string product_type_id = null;
+                string keyword = null;
 
-                #region filter
+                customer_id = Request.Form["ddlCustomer"];
+                product_type_id = Request.Form["ddlProductType"];
+                keyword = Request.Form["txtKeyword"];
 
-                actYear = Request.Form["ddlActYear"];
-                actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
-                actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
+                if (customer_id == "") { customer_id = null; }
+                if (product_type_id == "") { product_type_id = null; }
+                if (keyword == "") { keyword = null; }
 
-                if (String.IsNullOrEmpty(actYear) != true)
-                {
-                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, actYear);
-                }
-
-                //----------------------------------------------
-
-                if (String.IsNullOrEmpty(Request.Form["ddlCustomer"]) != true)
-                {
-                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.cus_id == Request.Form["ddlCustomer"]).ToList();
-                }
-
-                if (String.IsNullOrEmpty(Request.Form["ddlTheme"]) != true)
-                {
-                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
-                }
-
-                if (String.IsNullOrEmpty(Request.Form["ddlProductType"]) != true && Request.Form["ddlProductType"] != ",")
-                {
-                    actProductType = Request["ddlProductType"];
-                    actProductType = actProductType.Replace(",", "");
-                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_typeId == actProductType).ToList();
-                }
-
-                if (string.IsNullOrEmpty(Request.Form["ddlProductGrp"]) != true)
-                {
-                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_groupId == Request.Form["ddlProductGrp"]).ToList();
-                }
-
-                if (string.IsNullOrEmpty(Request.Form["ddlBudgetStatus"]) != true)
-                {
-                    model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.productBudgetStatusGroupId == Request.Form["ddlBudgetStatus"]).ToList();
-                }
-
-
-                #endregion
+                model.Report_Budget_Product_Price_List = QueryGetBudgetReport.getReportBudgetProductPrice(typeForm, customer_id, product_type_id, keyword);
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("searchRptBudgetActivity => " + ex.Message);
+                ExceptionManager.WriteError("reportBudgetProductPriceListView => " + ex.Message);
             }
             return PartialView(model);
         }
+
 
         //------------- report account SE ---------------------------------------------------------|
         public ActionResult reportBudgetAccSeIndex(string TypeForm)
@@ -242,7 +238,6 @@ namespace eActForm.Controllers
             SearchBudgetActivityModels models = getMasterDataForSearchBudgetActivityReportMTM(TypeForm);
             return View(models);
         }
-
         public ActionResult reportBudgetAccSeListView(string typeForm)
         {
             Budget_Report_Model.Report_Budget_Activity model = new Budget_Report_Model.Report_Budget_Activity();
@@ -306,6 +301,7 @@ namespace eActForm.Controllers
             }
             return PartialView(model);
         }
+
 
         //------------- export to excel ------------------------------------------------------------|
         [HttpPost]

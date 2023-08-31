@@ -601,5 +601,53 @@ namespace eActForm.Models //update 21-04-2020
         }
     }
 
+    public class Budget_Report_Product_Price_Model
+    {
+        public class Report_Budget_Product_Price
+        {
+            public List<Report_Budget_Product_Price_Att> Report_Budget_Product_Price_List { get; set; }
+        }
 
+        public class Report_Budget_Product_Price_Att
+        {
+            public string company_id { get; set; }
+            public string cus_chanelGroup { get; set; }
+            public string cus_cusNameTH { get; set; }
+            public string cus_cusNameEn { get; set; }
+            public string cus_cusShortName { get; set; }
+            public string brand_brandName { get; set; }
+            public string brand_brandNameTH { get; set; }
+            public string prd_productTypeTH { get; set; }
+            public string prd_productTypeEN { get; set; }
+            public string prd_cateName { get; set; }
+            public string prd_cateNameTH { get; set; }
+            public string prd_groupName { get; set; }
+            
+            public string prd_productCode { get; set; }
+            public string prd_productName { get; set; }
+            public string prd_productNameEN { get; set; }
+            public string prd_pack { get; set; }
+            public string prd_unit { get; set; }
+            public string prd_size { get; set; }
+            public string prd_digitIO { get; set; }
+            public string prd_smellNameTH { get; set; }
+            public string prd_smellNameEN { get; set; }
+            public string price_normalCost { get; set; }
+            public string price_wholeSalesPrice { get; set; }
+            public string price_discount1 { get; set; }
+            public string price_discount2 { get; set; }
+            public string price_discount3 { get; set; }
+            public string price_saleNormal { get; set; }
+            public string cus_customerId { get; set; }
+            public string cus_chanelId { get; set; }
+            public string cus_regionId { get; set; }
+            public string prd_productId { get; set; }
+            public string prd_productTypeId { get; set; }
+            public string prd_cateId { get; set; }
+            public string prd_brandId { get; set; }
+            public string prd_productGroupId { get; set; }
+            public string prd_smellId { get; set; }
+
+        }
+    }
 }
