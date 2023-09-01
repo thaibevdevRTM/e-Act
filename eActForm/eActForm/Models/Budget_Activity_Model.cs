@@ -650,4 +650,29 @@ namespace eActForm.Models //update 21-04-2020
 
         }
     }
+
+
+    public class Budget_Report_WaitApprove_Model
+    {
+        public class Report_Budget_WaitApprove
+        {
+            public List<Report_Budget_WaitApprove_Att> Report_Budget_WaitApprove_List { get; set; }
+        }
+
+        public class Report_Budget_WaitApprove_Att
+        {
+            public string companyId { get; set; }
+            public string cus_nameEN { get; set; }
+            public string act_activityNo { get; set; }
+            public string act_type { get; set; }
+
+            public string approve_rang_no { get; set; }
+            public string employee_id { get; set; }
+            public string employee_name { get; set; }
+            public string approve_status_name { get; set; }
+            public string approve_updated_date { get; set; }
+
+
+        }
+    }
 }

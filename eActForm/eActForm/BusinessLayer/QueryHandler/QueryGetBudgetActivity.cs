@@ -892,6 +892,43 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Report_Product_Price_Model.Report_Budget_Product_Price_Att>();
             }
         }
+
+        public static List<Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove_Att> getReportBudgetWaitApprove(string companyEN, string customerId, string employeeId, string keyword)
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportBudgetActivityWaitApprove",
+                 new SqlParameter("@companyShortName", companyEN),
+                 new SqlParameter("@customerId", customerId),
+                 new SqlParameter("@empId", employeeId),
+                 new SqlParameter("@Keyword", SqlDbType.NVarChar, 250) { Value = keyword }
+                );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove_Att()
+                              {
+
+                                  companyId = d["companyId"].ToString(),
+                                  cus_nameEN = d["cus_nameEN"].ToString(),
+                                  act_type = d["act_type"].ToString(),
+                                  act_activityNo = d["act_activityNo"].ToString(),
+                                  approve_rang_no = d["approve_rang_no"].ToString(),
+                                  employee_id = d["employee_id"].ToString(),
+                                  employee_name = d["employee_name"].ToString(),
+                                  approve_status_name = d["approve_status_name"].ToString(),
+                                  approve_updated_date = d["approve_updated_date"].ToString()
+                                  
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportBudgetWaitApprove => " + ex.Message);
+                return new List<Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove_Att>();
+            }
+        }
     }
 
     public class BudgetFormCommandHandler

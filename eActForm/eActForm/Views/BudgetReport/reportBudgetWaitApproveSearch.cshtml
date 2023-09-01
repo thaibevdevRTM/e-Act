@@ -26,11 +26,11 @@
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                    Product Type<span class="required"></span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    Employee ID
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Select All", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                    <input type="text" id="txtEmpId" name="txtEmpId" class="form-control textboxcss" placeholder="Employee Id">
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                     Search
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    <input type="text" id="txtKeyword" name="txtKeyword" class="form-control textboxcss" placeholder="Brand Name, Product Name">
+                    <input type="text" id="txtKeyword" name="txtKeyword" class="form-control textboxcss" placeholder="Activity No">
                 </div>
             </div>
         </div>

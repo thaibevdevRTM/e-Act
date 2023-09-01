@@ -62,30 +62,23 @@ namespace eActForm.Controllers
 
         public ActionResult reportBudgetWaitApproveListView(string typeForm)
         {
-            Budget_Report_Invoice_Model.Report_Budget_Invoice model = new Budget_Report_Invoice_Model.Report_Budget_Invoice();
+            Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove model = new Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove();
             try
             {
-                string company = null;
+                string customerId = null;
+                string empId = null;
                 string keyword = null;
 
-                company = Request.Form["ddlFormType"];
+                customerId = Request.Form["ddlCustomer"];
+                empId = Request.Form["txtEmpId"];
                 keyword = Request.Form["txtKeyword"];
 
-                if (company != null)
-                {
+                model.Report_Budget_WaitApprove_List = QueryGetBudgetReport.getReportBudgetWaitApprove(typeForm, customerId, empId, keyword);
 
-                    DateTime dateStartDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    string startDate = dateStartDate.ToString("yyyyMMdd");
-
-                    DateTime dateEndDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    string endDate = dateEndDate.ToString("yyyyMMdd");
-
-                    model.Report_Budget_Invoice_List = QueryGetBudgetReport.getReportBudgetInvoice(company, startDate.ToString(), endDate.ToString(), keyword);
-                }
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("reportBudgetInvoiceListView => " + ex.Message);
+                ExceptionManager.WriteError("reportBudgetWaitApproveListView => " + ex.Message);
             }
             return PartialView(model);
         }

@@ -1,7 +1,7 @@
 ﻿
-@model eActForm.Models.Budget_Report_Product_Price_Model.Report_Budget_Product_Price
 
-@if (Model.Report_Budget_Product_Price_List != null)
+@model eActForm.Models.Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove
+@if (Model.Report_Budget_WaitApprove_List != null)
 {
 
     <div class="row">
@@ -22,52 +22,38 @@
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         <td> no.</td>
-
-                        <td style="text-align:left;"> Customer </td>
-                        <td style="text-align:left;"> Category</td>
-                        @*<td style="text-align:left;"> Group </td>*@
-                        <td style="text-align:left;"> Brand </td>
-                        <td style="text-align:center;"> Poroduct Code </td>
-                        @*<td style="text-align:left;"> Product Name </td>*@
-                        @*<td style="text-align:center;"> IO </td>*@
-
-                        <td style="text-align:right;"> Pack </td>
-                        <td style="text-align:right;"> Size </td>
-                        <td style="text-align:right;"> Unit </td>
-
-                        <td style="text-align:right;"> Normal Cost </td>
-                        <td style="text-align:right;"> Whole Sales Price </td>
-                        @*<td style="text-align:right;"> Discount 1</td>*@
-                        @*<td style="text-align:right;"> Discount 2</td>*@
-                        @*<td style="text-align:right;"> Discount 3</td>*@
-                        <td style="text-align:right;"> Sale Normal</td>
-
+                        <td style="text-align:left;"> ร้านค้า </td>
+                        <td style="text-align:center;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:center;"> ประเภท </td>
+                        <td style="text-align:center;"> ลำดับที่</td>
+                        <td style="text-align:center;"> รหัสพนักงาน </td>
+                        <td style="text-align:left;"> ชื่อนามสกุล </td>
+                        <td style="text-align:center;"> สถานะ </td>
+                        <td style="text-align:center;"> วันที่ </td>
                     </tr>
                 </thead>
                 @{ var index_view = 1; }
-                @foreach (var item in Model.Report_Budget_Product_Price_List)
+                @foreach (var item in Model.Report_Budget_WaitApprove_List)
                 {
                     <tr class="gradeX">
                         <td>@index_view</td>
-                        <td>@item.cus_cusShortName </td>
-                        <td>@item.prd_cateName </td>
-                        @*<td>@item.prd_groupName </td>*@
-                        <td>@item.brand_brandName </td>
-                        <td>@item.prd_productCode </td>
-                        @*<td>@item.prd_productName </td>*@
-                        @*<td>@item.prd_digitIO </td>*@
+                         @*ร้านค้า*@ 
+                        <td style="text-align:left;">@item.cus_nameEN</td>
+                        @* เลขที่กิจกรรม *@
+                        <td style="text-align:center;"> @item.act_activityNo </td>
+                        @* ประเภท *@
+                        <td style="text-align:center;"> @item.act_type </td>
+                        @* ลำดับที่ *@
+                        <td style="text-align:center;"> @item.approve_rang_no </td>
+                        @* รหัสพนักงาน *@
+                        <td style="text-align:center;"> @item.employee_id </td>
+                        @* ชื่อนามสกุล *@
+                        <td style="text-align:left;"> @item.employee_name </td>
+                        @* สถานะ *@
+                        <td style="text-align:center;"> @item.approve_status_name </td>
+                        @* วันที่ *@
+                        <td style="text-align:center;"> @item.approve_updated_date </td>
 
-                        <td style="text-align:right;">@item.prd_pack </td>
-                        <td style="text-align:right;">@item.prd_size </td>
-                        <td style="text-align:right;">@item.prd_unit </td>
-
-                        <td style="text-align:right;">@item.price_normalCost </td>
-                        <td style="text-align:right;">@item.price_wholeSalesPrice </td>
-
-                        @*<td>@item.price_discount1 </td>*@
-                        @*<td>@item.price_discount2 </td>*@
-                        @*<td>@item.price_discount3 </td>*@
-                        <td style="text-align:right;">@item.price_saleNormal </td>
                     </tr>
                     index_view++;
                 }
@@ -82,52 +68,37 @@
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
                         <td> no.</td>
-                        <td style="text-align:left;"> Channel </td>
-                        <td style="text-align:left;"> Customer </td>
-                        <td style="text-align:left;"> Category. </td>
-                        <td style="text-align:left;"> Group </td>
-                        <td style="text-align:left;"> Brand </td>
-                        <td style="text-align:center;"> Poroduct Code </td>
-                        <td style="text-align:left;"> Product Name </td>
-                        <td style="text-align:center;"> IO </td>
-
-                        <td style="text-align:right;"> Pack </td>
-                        <td style="text-align:right;"> Size </td>
-                        <td style="text-align:right;"> Unit </td>
-
-                        <td style="text-align:right;"> Normal Cost </td>
-                        <td style="text-align:right;"> Whole Sales Price </td>
-                        <td style="text-align:right;"> Discount 1</td>
-                        <td style="text-align:right;"> Discount 2</td>
-                        <td style="text-align:right;"> Discount 3</td>
-                        <td style="text-align:right;"> Sale Normal</td>
+                        <td style="text-align:left;"> ร้านค้า </td>
+                        <td style="text-align:center;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:center;"> ประเภท </td>
+                        <td style="text-align:center;"> ลำดับที่</td>
+                        <td style="text-align:center;"> รหัสพนักงาน </td>
+                        <td style="text-align:left;"> ชื่อนามสกุล </td>
+                        <td style="text-align:center;"> สถานะ </td>
+                        <td style="text-align:center;"> วันที่ </td>
                     </tr>
                 </thead>
                 @{ var index = 1;}
-                @foreach (var item in Model.Report_Budget_Product_Price_List)
+                @foreach (var item in Model.Report_Budget_WaitApprove_List)
                 {
                     <tr class="gradeX">
                         <td>@index_view</td>
-                        <td>@item.cus_chanelGroup </td>
-                        <td>@item.cus_cusShortName </td>
-                        <td>@item.prd_cateName </td>
-                        <td>@item.prd_groupName </td>
-                        <td>@item.brand_brandName </td>
-                        <td>@item.prd_productCode </td>
-                        <td>@item.prd_productName </td>
-                        <td>@item.prd_digitIO </td>
-
-                        <td>@item.prd_pack </td>
-                        <td>@item.prd_size </td>
-                        <td>@item.prd_unit </td>
-
-                        <td>@item.price_normalCost </td>
-                        <td>@item.price_wholeSalesPrice </td>
-
-                        <td>@item.price_discount1 </td>
-                        <td>@item.price_discount2 </td>
-                        <td>@item.price_discount3 </td>
-                        <td>@item.price_saleNormal </td>
+                         @*ร้านค้า*@ 
+                        <td style="text-align:left;">@item.cus_nameEN</td>
+                        @* เลขที่กิจกรรม *@
+                        <td style="text-align:center;"> @item.act_activityNo </td>
+                        @* ประเภท *@
+                        <td style="text-align:center;"> @item.act_type </td>
+                        @* ลำดับที่ *@
+                        <td style="text-align:center;"> @item.approve_rang_no </td>
+                        @* รหัสพนักงาน *@
+                        <td style="text-align:center;"> @item.employee_id </td>
+                        @* ชื่อนามสกุล *@
+                        <td style="text-align:left;"> @item.employee_name </td>
+                        @* สถานะ *@
+                        <td style="text-align:center;"> @item.approve_status_name </td>
+                        @* วันที่ *@
+                        <td style="text-align:center;"> @item.approve_updated_date </td>
                     </tr>
                     index++;
                 }

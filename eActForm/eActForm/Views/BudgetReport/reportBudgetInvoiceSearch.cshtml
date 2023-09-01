@@ -7,125 +7,83 @@
 
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
-                Act No.
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
-            </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+            Start date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Today.AddDays(-30), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
         </div>
+
     </div>
     <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                Status
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
-            </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+            End date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
         </div>
+
     </div>
 </div>
+
 
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
         <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlActYear">
-                Year
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlFormType">
+                Company
             </label>
-
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.activityYearlist, new SelectList(Model.activityYearlist, "activityYear", "activityYear"), "Please Select", new { @disabled = "disabled", @class = "form-control textboxcss", id = "ddlActYear", Name = "ddlActYear" })
-                <input type="hidden" id="txtActYear" class="form-control textboxcss" readonly>
+                <select class="form-control" id="ddlFormType" name="ddlFormType">
+                    <option>Select All</option>
+                    <option>TC</option>
+                    <option>MTM</option>
+                </select>
             </div>
-
         </div>
     </div>
+
     <div class="col-md-6 col-xs-12">
         <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                Budget Status<span class="required"></span>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtKeyword">
+                Search
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.budgetStstuslist, new SelectList(Model.budgetStstuslist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBudgetStatus", Name = "ddlBudgetStatus" })
+                <input type="text" id="txtKeyword" name="txtKeyword" class="form-control textboxcss" placeholder="Customer Name, Act no, Invoice No">
             </div>
         </div>
     </div>
 </div>
 
 
-
-@if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"])
-{
-    <div class="form-group">
-        <div class="col-md-6 col-xs-12">
+<div class="form-group">
+    @*<div class="col-md-6 col-xs-12">
             <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                    Customer<span class="required"></span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtKeyword">
+                    Search
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
-                    <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+                    <input type="text" id="txtKeyword" name="txtKeyword" class="form-control textboxcss">
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-                Activity Type<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })
-            </div>
-        </div>
-    </div>
+        </div>*@
 
-    <div class="form-group">
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                    Product Type<span class="required"></span>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlFormType">
+                    Company
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                    Product Group<span class="required"></span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-6 col-xs-12">
-            @*<div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                        Budget Status<span class="required"></span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.budgetStstuslist, new SelectList(Model.budgetStstuslist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBudgetStatus", Name = "ddlBudgetStatus" })
-                    </div>
+                    <select class="form-control" id="ddlFormType" name="ddlFormType">
+                        <option>Select All</option>
+                        <option>TC</option>
+                        <option>MTM</option>
+                    </select>
                 </div>*@
         </div>
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                        Product Group<span class="required"></span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
-                    </div>*@
-            </div>
-        </div>
     </div>
-}
+
+</div>
 
 
 <hr />
