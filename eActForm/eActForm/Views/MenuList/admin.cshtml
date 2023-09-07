@@ -41,8 +41,16 @@
                || UtilsAppCode.Session.User.isAdmin)
             {
                 <li> @Html.ActionLink(" Flow AddOn Setting ", "index", "ManagementFlow", new { typeFlow = Activity_Model.typeFlow.flowAddOn.ToString() }, null) </li>
-                <li> @Html.ActionLink(" Product Setting MT", "index", "Admin", new { typeForm = Activity_Model.activityType.MT.ToString() }, null) </li>
-                <li> @Html.ActionLink(" Product Setting OMT", "index", "Admin", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null) </li>
+
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    <li> @Html.ActionLink(" Product Setting MT", "index", "Admin", new { typeForm = Activity_Model.activityType.MT.ToString() }, null) </li>
+                }
+               
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    <li> @Html.ActionLink(" Product Setting OMT", "index", "Admin", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null) </li>
+                }
 
             }
 
