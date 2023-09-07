@@ -913,7 +913,7 @@ namespace eActForm.BusinessLayer
                                   cus_nameEN = d["cus_nameEN"].ToString(),
                                   act_type = d["act_type"].ToString(),
                                   act_activityNo = d["act_activityNo"].ToString(),
-                                  approve_rang_no = d["approve_rang_no"].ToString(),
+                                  approve_rang_no = d["seq_rang_no"].ToString(),
                                   employee_id = d["employee_id"].ToString(),
                                   employee_name = d["employee_name"].ToString(),
                                   approve_status_name = d["approve_status_name"].ToString(),
