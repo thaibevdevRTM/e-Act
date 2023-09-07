@@ -325,9 +325,6 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
 
-
-                
-
             int resultImg = ImageAppCode.deleteImgById(id, filename_);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -370,7 +367,7 @@ namespace eActForm.Controllers
                     var getHeader = GenPDFAppCode.getHeader(activity_TBMMKT_Model);
                     if (activity_TBMMKT_Model.activityFormTBMMKT.statusId != 3)
                     {
-                        if (ApproveAppCode.insertApproveForActivityForm(activityId).Result > 0)
+                        if (await ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                         {
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
@@ -381,8 +378,6 @@ namespace eActForm.Controllers
                                 }
 
                                 GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-
-
                                 HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(GridHtml1, getHeader, empId, "2", activityId, ""));
 
                             }

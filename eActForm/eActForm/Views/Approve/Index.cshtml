@@ -197,12 +197,6 @@ else
                 $("#txtRemark").focus();
                 return false;
             }
-            else if (statusId == "") {
-                doMsgFail("กรุณาระบุ(สถานะ)")
-                $("#ddlStatus").focus();
-                return false;
-            }
-
 
             mess = $("#ddlStatus option:selected").text();
             bootbox.confirm({

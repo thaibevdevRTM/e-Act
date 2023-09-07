@@ -584,10 +584,7 @@
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
-        $("#divSubmit").hide();
-        $("#divUpdate").hide();
-
-
+ 
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -597,8 +594,7 @@
             document.getElementById("divIO").style.display = "none";
         }
 
-        if (@Model.activityFormModel.statusId == "1" && '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId'
-            || '@string.IsNullOrEmpty(Model.activityFormModel.createdByUserId)' == 'True') {
+        if (@Model.activityFormModel.statusId == "1") {
             $("#divSubmit").show();
         }
 
@@ -615,10 +611,12 @@
 
         if (@Model.activityFormModel.statusId == "2" || @Model.activityFormModel.statusId == "3") {
             setTxtReadOnly();
+            $("#divSubmit").hide();
             $("#divUpdate").show();
         }
         else {
             setTxtUnReadOnly();
+            $("#divSubmit").show();
             $("#divUpdate").hide();
         }
 

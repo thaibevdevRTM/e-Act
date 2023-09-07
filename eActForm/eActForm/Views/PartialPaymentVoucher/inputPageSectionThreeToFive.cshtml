@@ -104,11 +104,10 @@
                     function getGL(indexRow) {
                         //alert('getGl' + indexRow);
                         var IOSelect = $('#tB_Act_ActivityForm_DetailOtherList_' + indexRow + '__IO').val().toString();
-
-                        console.log(IOSelect + 'IOSelect');
                         var dataToBeSend = {
                             IOCode: IOSelect.substring(6, 8)
                             , SubGroupCode: IOSelect.substring(8, 9)
+                            , TypeIO: $("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val()
                         };
                         if (IOSelect != "") {
                             $.ajax('@Url.Action("GetDataGLPaymentVoucher", "GetDataMainForm")',
@@ -119,9 +118,7 @@
                                     type: "POST",
                                     success: function (response) {
                                         if (response.Data.tbToAjax.length > 0) {
-                                            //tB_Act_ActivityForm_DetailOtherList[0].GL
                                             $.each(response.Data.tbToAjax, function () {
-                                                console.log(indexRow);
                                                 $(".txtGL_" + indexRow).val(this['GL']);
                                             });
                                         }

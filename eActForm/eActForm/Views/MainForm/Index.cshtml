@@ -367,7 +367,8 @@
             }
 
         }
-        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+            || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
             if ($("#txtdateDoc").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
             if ($("#txtActivityName").val() == "") { required += "&emsp;ชื่องาน*<br>"; validate = false; }
             if ($("#ddlFiscalYear").val() == "" || $("#ddlFiscalYear").val() == null) { required += "&emsp;ปีงบประมาณ*<br>"; validate = false; }
@@ -397,6 +398,15 @@
                 if ($("#activityOfEstimateList_" + i + "__listChoiceId").val() == '') { required += "&emsp;ส่วนที่6 [VAT]*<br>"; validate = false; }
                 if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
             }
+
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
+                console.log($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val());
+
+                if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") {
+                    required += "&emsp;ชื่อลูกค้า/ชื่อกิจกรรม*<br>"; validate = false;
+                }
+            }
+
         } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }

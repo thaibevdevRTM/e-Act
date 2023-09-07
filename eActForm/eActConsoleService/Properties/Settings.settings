@@ -18,7 +18,7 @@
       <Value Profile="(Default)">thaibevrtm-eact@thaibev.com</Value>
     </Setting>
     <Setting Name="strMailPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Eaf#2160</Value>
+      <Value Profile="(Default)">E@ct#2308</Value>
     </Setting>
     <Setting Name="strUrlApprove" Type="System.String" Scope="User">
       <Value Profile="(Default)">https:\\eact.thaibev.com/?s=approve</Value>
