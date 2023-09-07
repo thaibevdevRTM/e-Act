@@ -572,11 +572,11 @@
 
 <script type="text/javascript">
 
-   
+
     $(document).ready(function () {
 
 
-       
+
 
 
         $(".fv").each(function () {
@@ -585,7 +585,7 @@
                 $(this).focus();
             }
 
-          
+
         });
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
@@ -748,7 +748,7 @@
     function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
-        
+
         if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
             $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
@@ -952,6 +952,15 @@
         }
 
 
+        var customer = "";
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceOMT"]') {
+            customer = "OMT";
+        }
+        else {
+            customer = $("#ddlCustomer").val();
+        }
+
+
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ExpenseEstimateInput")',
@@ -960,7 +969,7 @@
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
-                 cusid: customer = $("#ddlCustomer").val(),
+                 cusid: customer,
                  theme: $("#ddlTheme").val(),
                  actId: '@Model.activityFormModel.id',
                  typeForm: '@Model.activityFormModel.typeForm',

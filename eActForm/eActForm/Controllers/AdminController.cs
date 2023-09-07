@@ -10,13 +10,15 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 using static eActForm.Models.Activity_Model;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.companyId == activityType.MT.ToString()).ToList();
@@ -27,6 +29,8 @@ namespace eActForm.Controllers
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)
                 .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+            ViewBag.TypeForm = typeForm;
 
             return View(activityModel);
         }
@@ -39,11 +43,11 @@ namespace eActForm.Controllers
             return PartialView(productModel);
         }
 
-        public ActionResult productPriceDetail(string productcode)
+        public ActionResult productPriceDetail(string productcode,string typeForm)
         {
             TB_Act_ProductPrice_Model model = new TB_Act_ProductPrice_Model();
 
-            model.ProductPriceList = QueryGetAllPrice.getPriceByProductCode(productcode);
+            model.ProductPriceList = QueryGetAllPrice.getPriceByProductCode(productcode, typeForm);
 
             return PartialView(model);
         }
@@ -106,18 +110,21 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
 
-
-            result.Code = AdminCommandHandler.insertProduct(model);
             //add productprice MT
+            result.Code = AdminCommandHandler.insertProduct(model);
+            
             var getCustomerAll = QueryGetAllCustomers.getAllCustomers();
             if (getCustomerAll.Any())
             {
                 int countinsert = 0;
                 foreach (var item in getCustomerAll)
                 {
+                    //Insert ProductPrice MT
                     countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
                     countinsert++;
                 }
+                //Insert ProductPrice OMT
+                countinsert = AdminCommandHandler.insertProductPrice(model.productCode, Activity_Model.activityType.OMT.ToString());
 
             }
 
@@ -135,7 +142,7 @@ namespace eActForm.Controllers
             result.Code = AdminCommandHandler.updateProduct(model);
 
             List<TB_Act_ProductPrice_Model.ProductPrice> productPriceList = new List<TB_Act_ProductPrice_Model.ProductPrice>();
-            productPriceList = QueryGetAllPrice.getPriceByProductCode(model.productCode);
+            productPriceList = QueryGetAllPrice.getPriceByProductCode(model.productCode,"");
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

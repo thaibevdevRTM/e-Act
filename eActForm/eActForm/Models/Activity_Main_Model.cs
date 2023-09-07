@@ -469,6 +469,7 @@ namespace eActForm.Models
     {
         public string IOCode { get; set; }
         public string SubGroupCode { get; set; }
+        public string TypeIO { get; set; }
     }
 
     public class GetDataGL

@@ -156,30 +156,28 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                bool chkChannel = false, chkBrand = false;
+                
                 string getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-                if (getData.tB_Act_ActivityForm_DetailOther != null)
-                {
-                    chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
-                    chkBrand = getData.tB_Act_ActivityForm_DetailOther.groupName == "Brand" ? true : false;
-                }
-
-                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
-                var getLimitAmount = estimateList.Sum(x => x.total);
-                var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).ToList();
-                var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
-                var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
-
+                
                 if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                 {
+                    bool chkChannel = false, chkBrand = false;
+                    if (getData.tB_Act_ActivityForm_DetailOther != null)
+                    {
+                        chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
+                        chkBrand = getData.tB_Act_ActivityForm_DetailOther.groupName == "Brand" ? true : false;
+                    }
+
+                    var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
+                    var getLimitAmount = estimateList.Sum(x => x.total);
+                    var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).ToList();
+                    var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
+                    var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
                     string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
 
                     getDataList_Model getDataList = new getDataList_Model();
                     getDataList.masterTypeId = getData.activityFormTBMMKT.master_type_form_id;
                     getDataList.amount = getLimitAmount;
-                   // var getRank = getFlowAddOnByType()
-
-
 
                     if ((chkBrand && chkPurposeTravel.Any()) || chkPurposeCostExcess.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) )
                     {

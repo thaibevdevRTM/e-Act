@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var typeForm = ViewBag.TypeForm;
 }
 
 <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
@@ -110,8 +111,8 @@
     </div>
 </div>
 <div class="row form-group">
-    <div  align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="return $adminPage.checkProduct();">
-        <label class="btn ink-reaction btn-success fa fa-plus" style="margin-top:20px; font-size:15px; width:100%" >AddOrEdit</label>
+    <div align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="return $adminPage.checkProduct();">
+        <label class="btn ink-reaction btn-success fa fa-plus" style="margin-top:20px; font-size:15px; width:100%">AddOrEdit</label>
     </div>
 </div>
 
@@ -119,7 +120,7 @@
 
 <div class="row form-group">
     <div id="getQuery" class="col-lg-12">
-        @Html.Action("ProductDetail", "Admin")
+        @Html.Action("ProductDetail", "Admin", new { typeForm = typeForm })
     </div>
 </div>
 
@@ -133,7 +134,7 @@
             $adminPage.urlCheckProduct = '@Url.Action("checkProduct", "Admin")';
             $adminPage.urlUpdateProduct = '@Url.Action("updateProduct", "Admin")';
             $adminPage.urlgetProductSmell = '@Url.Action("getProductSmell", "eAct")';
-            $adminPage.urlIndexAdmin = '@Url.Action("Index", "Admin")';
+            $adminPage.urlIndexAdmin = '@Url.Action("Index", "Admin" , new { typeForm = typeForm })';
             $adminPage.urlDelProduct = '@Url.Action("delProductAndPrice", "Admin")';
 
     });

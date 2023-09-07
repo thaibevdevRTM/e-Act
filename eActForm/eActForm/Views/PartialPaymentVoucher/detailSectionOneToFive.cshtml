@@ -2,7 +2,7 @@
 @using eForms.Presenter.MasterData;
 @using eActForm.Models;
 @using eActForm.BusinessLayer;
-@{ 
+@{
     Layout = null;
 }
 <table class="boxTableFormMainV1 fontDocV1">
@@ -102,6 +102,24 @@
                         &nbsp;@Html.Raw(Model.activityFormTBMMKT.remark.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
                     </td>
                 </tr>
+                @if (!string.IsNullOrEmpty(Model.tB_Act_ActivityForm_DetailOther.IO))
+                {
+                    <tr>
+                        <td class="tdTopLeft fontRedV1 paddingRowTable">
+                            @{
+                                string strTypeIO = Model.tB_Act_ActivityForm_DetailOther.IO == "1" ? "เผยแพร่" : "ขาย";
+                            }
+                            &nbsp;เพื่อ : @strTypeIO
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTopLeft fontRedV1 paddingRowTable">
+                            &nbsp;ชื่อลูกค้า/ชื่อกิจกรรม : @Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.toName)
+                        </td>
+                    </tr>
+                }
+
+
             </table>
         </td>
         <td style="width: 400px;height:20px;" class="boxTableFormV1 borderLeft">
