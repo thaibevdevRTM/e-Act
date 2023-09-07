@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -42,12 +43,14 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<TB_Act_ProductPrice_Model.ProductPrice> getPriceByProductCode(string p_productCode)
+        public static List<TB_Act_ProductPrice_Model.ProductPrice> getPriceByProductCode(string p_productCode,string typeForm)
         {
             try
             {
+                
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "ups_getProductPriceByProductCode"
-                      , new SqlParameter("@productcode", p_productCode));
+                      , new SqlParameter("@productcode", p_productCode)
+                      , new SqlParameter("@companyId", BaseAppCodes.getCompanyIdByactivityType(typeForm)));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ProductPrice_Model.ProductPrice()
                              {

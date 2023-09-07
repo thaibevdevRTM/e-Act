@@ -788,6 +788,57 @@ namespace eActForm.BusinessLayer
                 return new List<Budget_Report_Model.Report_Budget_Activity_Att>();
             }
         }
+
+        public static List<Budget_Report_Invoice_Model.Report_Budget_Invoice_Att> getReportBudgetInvoice(string companyEN, string beginDateYYYYMMDD, string toDateYYYYMMDD , string keyword)
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_mtm_ReportBudgetInvoice",
+                 new SqlParameter("@companyShortName", companyEN),
+                 new SqlParameter("@BeginYYYYMMDD", beginDateYYYYMMDD),
+                 new SqlParameter("@ToYYYYMMDD", toDateYYYYMMDD),
+                 new SqlParameter("@Keyword", SqlDbType.NVarChar, 250) { Value = keyword }
+                );
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Report_Invoice_Model.Report_Budget_Invoice_Att()
+                              {
+                                  row_no = int.Parse(d["row_no"].ToString()),
+                                  report_date = d["report_date"].ToString(),
+                                  customer_name = d["customer_name"].ToString(),
+                                  customer_short_name = d["customer_short_name"].ToString(),
+                                  invoice_number = d["invoice_number"].ToString(),
+                                  invoice_action_date = d["invoice_action_date"].ToString(),
+                                  invoice_create_date = d["invoice_create_date"].ToString(),
+                                  invoice_send_approve_date = d["invoice_send_approve_date"].ToString(),
+                                  bank_account_date = d["bank_account_date"].ToString(),
+                                  act_gl = d["act_gl"].ToString(),
+                                  vat_status = (bool)d["vat_status"],
+                                  invoice_baht = d["invoice_baht"].ToString() == "" ? 0 : decimal.Parse(d["invoice_baht"].ToString()),
+                                  invoice_vat_baht = d["invoice_vat_baht"].ToString() == "" ? 0 : decimal.Parse(d["invoice_vat_baht"].ToString()),
+                                  invoice_wtax_baht = d["invoice_wtax_baht"].ToString() == "" ? 0 : decimal.Parse(d["invoice_wtax_baht"].ToString()),
+                                  invoice_net_baht = d["invoice_net_baht"].ToString() == "" ? 0 : decimal.Parse(d["invoice_net_baht"].ToString()),
+                                  wtx = d["wtx"].ToString(),
+                                  sub_code = d["sub_code"].ToString(),
+                                  commit_paper_status = (bool)d["commit_paper_status"],
+                                  commit_paper_date = d["commit_paper_date"].ToString(),
+                                  invoice_detail = d["invoice_detail"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  activityOfEstimateId = d["activityOfEstimateId"].ToString(),
+                                  budgetActivityId = d["budgetActivityId"].ToString(),
+                                  budgetActivityInvoiceId = d["budgetActivityInvoiceId"].ToString()
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportBudgetInvoice => " + ex.Message);
+                return new List<Budget_Report_Invoice_Model.Report_Budget_Invoice_Att>();
+            }
+        }
+
     }
 
     public class BudgetFormCommandHandler

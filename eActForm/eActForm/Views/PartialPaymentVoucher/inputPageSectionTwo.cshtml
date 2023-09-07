@@ -75,8 +75,76 @@
                                     <div class="row">
                                         @Html.TextAreaFor(x => x.activityFormTBMMKT.remark, new { @class = "form-control textboxcss", @id = "txtRemarks", style = "", @rows = "1" })
                                     </div>
+
                                 </div>
                             </div>
+                            @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                            {
+                                <div class="form-group">
+
+                                    <label class="control-label col-md-2">
+                                        เผยแพร่ :
+                                    </label>
+                                    <div class="col-md-1">
+                                        <div class="row" style="padding-top:8px;">
+                                            @Html.RadioButtonFor(m => m.tB_Act_ActivityForm_DetailOther.IO, "1", new { @checked = "checked", @Onchange = "rdbTypeIO()" })
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-md-1">
+                                        ขาย :
+                                    </label>
+                                    <div class="col-md-2">
+                                        <div class="row" style="padding-top:8px;">
+                                            @Html.RadioButtonFor(m => m.tB_Act_ActivityForm_DetailOther.IO, "2", new { @Onchange = "rdbTypeIO()" })
+
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-md-2 col-xs-12">
+                                        ชื่อลูกค้า/ชื่อกิจกรรม :
+                                    </label>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="row">
+                                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toName, new { @class = "form-control textboxcss" })
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <script>
+
+
+                                    $(document).ready(function () {
+                                        var ddlPV = $('#ddl_EO_PV').val();
+
+                                        if (ddlPV != null) {
+                                            var eoTxt;
+                                            var activityTxt;
+                                            for (var item = 0; item < ddlPV.length; item++) {
+
+                                                eoTxt += '|' + subStringGetEO(ddlPV[item]);
+                                                activityTxt += '|' + subStringGetActId(ddlPV[item]);
+
+                                            }
+
+                                            //varible for dataToBeSend << for inputPageHeaderDetails.cshtml
+                                            //support case change TypeIO for first time(page Load)
+                                            if (activityTxt != "" && eoTxt != "") {
+                                                dataToBeSend = {
+                                                    ActivityByEOSelect: activityTxt.toString()
+                                                    , EOSelect: eoTxt
+                                                };
+                                            }
+                                        }
+                                    });
+
+                                    function rdbTypeIO() {
+                                        removeDropdownIO();
+                                        getDataIO();
+                                    }
+                                </script>
+                            }
                         </td>
                     </tr>
                 </table>

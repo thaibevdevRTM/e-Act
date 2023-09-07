@@ -56,7 +56,10 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataGLPaymentVoucher", new SqlParameter("@IOCode", objGetDataGL.IOCode), new SqlParameter("@SubGroupCode", objGetDataGL.SubGroupCode));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataGLPaymentVoucher", 
+                    new SqlParameter("@IOCode", objGetDataGL.IOCode),
+                    new SqlParameter("@SubGroupCode", objGetDataGL.SubGroupCode),
+                    new SqlParameter("@TypeIO", objGetDataGL.TypeIO));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new GetDataGL()
                              {

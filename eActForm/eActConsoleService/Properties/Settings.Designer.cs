@@ -85,7 +85,7 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Eaf#2160")]
+        [global::System.Configuration.DefaultSettingValueAttribute("E@ct#2308")]
         public string strMailPassword {
             get {
                 return ((string)(this["strMailPassword"]));

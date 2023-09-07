@@ -79,5 +79,8 @@ namespace eActForm.Models
         public string empId { get; set; }
         public string deparmentId { get; set; }
         public string regionId { get; set; }
+        public decimal? amount { get; set; }
+        public string masterTypeId { get; set; }
+        public string condition { get; set; }
     }
 }

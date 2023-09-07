@@ -107,14 +107,14 @@ namespace eActForm.BusinessLayer
         /// <returns></returns>
         public static ApproveFlowModel.approveFlowModel getFlowId(string subId, string actFormId)
         {
-           
+
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getData = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
                 var getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-               
+
 
                 string stor = AppCode.expenseForm.Contains(getMasterType) ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
@@ -152,69 +152,40 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel checkFlowAddon(ApproveFlowModel.approveFlowModel model, Activity_TBMMKT_Model getData ,string actFormId)
+        public static ApproveFlowModel.approveFlowModel checkFlowAddon(ApproveFlowModel.approveFlowModel model, Activity_TBMMKT_Model getData, string actFormId)
         {
             try
             {
-                bool chkChannel = false;
+                
                 string getMasterType = getData.activityFormTBMMKT.master_type_form_id;
-                if (getData.tB_Act_ActivityForm_DetailOther != null)
-                {
-                    chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
-                }
-
-                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
-                var getLimitAmount = estimateList.Sum(x => x.total);
-                var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).ToList();
-                var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
-                var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
-
+                
                 if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formTrvTbmId"] == getMasterType)
                 {
+                    bool chkChannel = false, chkBrand = false;
+                    if (getData.tB_Act_ActivityForm_DetailOther != null)
+                    {
+                        chkChannel = getData.tB_Act_ActivityForm_DetailOther.groupName == "Channel" ? true : false;
+                        chkBrand = getData.tB_Act_ActivityForm_DetailOther.groupName == "Brand" ? true : false;
+                    }
+
+                    var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actFormId);
+                    var getLimitAmount = estimateList.Sum(x => x.total);
+                    var purpose = QueryGet_master_purpose.getPurposeByActivityId(actFormId).ToList();
+                    var chkPurposeTravel = purpose.Where(x => x.id == ConfigurationManager.AppSettings["purposeTravelPlane"] && x.chk == true).ToList();
+                    var chkPurposeCostExcess = purpose.Where(x => x.id == ConfigurationManager.AppSettings["CostExcess"] && x.chk == true).ToList();
                     string getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo.ToString();
-                    if ((chkPurposeTravel.Any() && getLimitAmount < decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel) || (chkChannel && chkPurposeCostExcess.Any()))
+
+                    getDataList_Model getDataList = new getDataList_Model();
+                    getDataList.masterTypeId = getData.activityFormTBMMKT.master_type_form_id;
+                    getDataList.amount = getLimitAmount;
+
+                    if ((chkBrand && chkPurposeTravel.Any()) || chkPurposeCostExcess.Any() || getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) )
                     {
                         var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
-                        foreach (var item in changeApproveGroup)
-                        {
-                            item.approveGroupId = AppCode.ApproveGroup.Verifyby;
-                            item.approveGroupName = "ผ่าน";
-                            item.approveGroupNameEN = "Verify by";
-                        }
+                       
 
-                        if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
+                        if (chkChannel && chkPurposeCostExcess.Any())
                         {
-
-                            if (!chkPurposeCostExcess.Any())
-                            {
-                                model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
-                                model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
-                            }
-                            else
-                            {
-                                model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 3).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true));
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false));
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true));
-                                model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
-                            }
-                        }
-                        else
-                        {
-                            model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, false));
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
-                            model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
-                        }
-
-                    }
-                    else if ((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"])) || (chkPurposeTravel.Any() && !chkChannel) || (!chkChannel && chkPurposeCostExcess.Any()))
-                    {
-                        if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
-                        {
-                            int conutRow = model.flowDetail.Count();
-                            var changeApproveGroup = model.flowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Approveby);
                             foreach (var item in changeApproveGroup)
                             {
                                 item.approveGroupId = AppCode.ApproveGroup.Verifyby;
@@ -222,12 +193,49 @@ namespace eActForm.BusinessLayer
                                 item.approveGroupNameEN = "Verify by";
                             }
 
-                            model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, false));
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
+                            model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 3).ToList();
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true));
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false));
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true));
                             model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                         }
+                        else if (getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
+                        {
+                            if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["KPhirayut"]).Any())
+                            {
+                                foreach (var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+
+                                model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
+                            }
+                        }
+                        else if((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && !chkChannel)  
+                            || (chkPurposeTravel.Any() && chkBrand )
+                            || (chkPurposeCostExcess.Any() && !chkChannel))
+                        {
+                            if (!model.flowDetail.Where(X => X.empId == ConfigurationManager.AppSettings["Kpaparkorn"]).Any())
+                            {
+                                foreach (var item in changeApproveGroup)
+                                {
+                                    item.approveGroupId = AppCode.ApproveGroup.Verifyby;
+                                    item.approveGroupName = "ผ่าน";
+                                    item.approveGroupNameEN = "Verify by";
+                                }
+
+                                model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) , AppCode.ApproveGroup.Verifyby, false));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
+                            }
+                        }
+
                     }
+                  
                 }
                 else if (model.flowDetail.Any() && ConfigurationManager.AppSettings["formReturnPosTbm"] == getMasterType)
                 {
@@ -251,7 +259,7 @@ namespace eActForm.BusinessLayer
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("checkFlowAddon >>" + ex.Message);
             }
@@ -439,6 +447,36 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowAddOn(string flowId, string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, ""
+                    , new SqlParameter[] { new SqlParameter("@flowId", flowId)
+                                            , new SqlParameter("@actFormId",actId)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 empGroup = dr["empGroup"].ToString(),
+                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
+                                
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetail >>" + ex.Message);
+            }
+        }
+
         public static List<ApproveFlowModel.flowApproveDetail> getNewPosition(string empId, string companyId)
         {
             try
@@ -559,7 +597,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
-                    ,new SqlParameter("@productType",model.productTypeId)});
+                    ,new SqlParameter("@productType",model.productTypeId)
+                    
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail("")
                              {

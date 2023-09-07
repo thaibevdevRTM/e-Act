@@ -8,6 +8,147 @@ using static eActForm.Models.TB_Bud_Activity_Model;
 
 namespace eActForm.Models //update 21-04-2020
 {
+    public class TB_Bud_Activity_Model
+    {
+        public class Budget_Activity_Att
+        {
+
+            public string budget_id { get; set; }
+            public string act_form_id { get; set; }
+            public int act_approveStatusId { get; set; }
+            public string act_activityNo { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+            public DateTime? act_documentDate { get; set; }
+            public string act_reference { get; set; }
+            public string act_customerId { get; set; }
+
+            public string act_companyEN { get; set; }
+
+            public string cus_cusShortName { get; set; }
+            public string cus_cusNameEN { get; set; }
+            public string cus_cusNameTH { get; set; }
+
+            public string ch_chanelCust { get; set; }
+            public string ch_chanelGroup { get; set; }
+            public string ch_chanelTradingPartner { get; set; }
+
+            public string prd_groupName { get; set; }
+            public string prd_groupNameTH { get; set; }
+            public string prd_groupShort { get; set; }
+
+            public string act_brandNameTH { get; set; }
+            public string act_brandName { get; set; }
+            public string act_shortBrand { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_activityPeriodSt { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_activityPeriodEnd { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_costPeriodSt { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_costPeriodEnd { get; set; }
+
+            public string act_activityName { get; set; }
+            public string act_theme { get; set; }
+
+            public string act_objective { get; set; }
+            public string act_trade { get; set; }
+            public string act_activityDetail { get; set; }
+            public string act_delFlag { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_createdDate { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_updatedDate { get; set; }
+
+            public string act_createdByUserId { get; set; }
+            public string act_updatedByUserId { get; set; }
+            public decimal act_normalCost { get; set; }
+            public decimal act_themeCost { get; set; }
+            public decimal act_totalCost { get; set; }
+            public decimal act_balance { get; set; } /*ผลต่าง*/
+            public decimal act_grandTotalCost { get; set; }
+            public decimal act_grandTotalBalance { get; set; }
+            public decimal act_total_invoive { get; set; }/* ยอดยกมา*/
+
+            public string act_claimNo { get; set; }
+            public string act_claimShare { get; set; }
+            public string act_claimStatus { get; set; }
+
+            public string bud_ActivityStatusId { get; set; }
+            public string bud_ActivityStatus { get; set; }
+
+            public string act_compensateStatus { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_compensateDateStart { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_compensateDateEnd { get; set; }
+
+        }
+    }
+
+    public class TB_Bud_Invoice_Document_Model
+    {
+        public List<BudgetInvoiceModel> BudgetInvoiceList { get; set; }
+        public List<TB_Act_Region_Model> RegionList { get; set; }
+        public BudgetInvoiceModel BudgetInvoice { get; set; }
+        public List<TB_Act_Customers_Model.Customers_Model> CustomerList { get; set; }
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
+        public class BudgetInvoiceModel : ActBaseModel
+        {
+            public BudgetInvoiceModel()
+            {
+                _image = new byte[0];
+                extension = ".pdf";
+                delFlag = false;
+                createdByUserId = UtilsAppCode.Session.User.empId;
+                createdDate = DateTime.Now;
+                updatedByUserId = UtilsAppCode.Session.User.empId;
+                updatedDate = DateTime.Now;
+            }
+            public string id { get; set; }
+            public string imageType { get; set; }
+            public byte[] _image { get; set; }
+            public string _fileName { get; set; }
+            public string extension { get; set; }
+            public string remark { get; set; }
+            public string typeFiles { get; set; }
+
+            public string companyId { get; set; }
+            public string regionId { get; set; }
+            public string customerId { get; set; }
+
+            public string company { get; set; }
+            public string regionName { get; set; }
+            public string customerName { get; set; }
+
+            public string budgetApproveId { get; set; }
+            public string budgetActivityId { get; set; }
+            public string activityNo { get; set; }
+
+            public int count_budgetApproveId { get; set; }
+            public int count_budgetActivityId { get; set; }
+            public int count_activityNo { get; set; }
+
+            public string invoiceNo { get; set; }
+        }
+    }
 
     public class SearchBudgetActivityPosEVAModels
     {
@@ -39,8 +180,6 @@ namespace eActForm.Models //update 21-04-2020
     {
 
         public List<TB_Bud_Invoice_Document_Model.BudgetInvoiceModel> Budget_InvoiceList { get; set; }
-
-
         public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
         public List<Budget_Activity_Status_Att> Budget_Activity_Ststus_list { get; set; }
         public List<Budget_Activity_Product_Att> Budget_Activity_Product_list { get; set; }
@@ -280,7 +419,6 @@ namespace eActForm.Models //update 21-04-2020
             public string updatedByUserId { get; set; }
         }
 
-
         public class budgetForms
         {
             public List<budgetForm> budgetFormLists { get; set; }
@@ -340,151 +478,6 @@ namespace eActForm.Models //update 21-04-2020
             public decimal? totalInvoiceApproveBath { get; set; }
         }
 
-    }
-
-    public class TB_Bud_Activity_Model
-    {
-        public class Budget_Activity_Att
-        {
-
-            public string budget_id { get; set; }
-            public string act_form_id { get; set; }
-            public int act_approveStatusId { get; set; }
-            public string act_activityNo { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-            public DateTime? act_documentDate { get; set; }
-            public string act_reference { get; set; }
-            public string act_customerId { get; set; }
-
-            public string act_companyEN { get; set; }
-
-            public string cus_cusShortName { get; set; }
-            public string cus_cusNameEN { get; set; }
-            public string cus_cusNameTH { get; set; }
-
-            public string ch_chanelCust { get; set; }
-            public string ch_chanelGroup { get; set; }
-            public string ch_chanelTradingPartner { get; set; }
-
-            public string prd_groupName { get; set; }
-            public string prd_groupNameTH { get; set; }
-            public string prd_groupShort { get; set; }
-
-            public string act_brandNameTH { get; set; }
-            public string act_brandName { get; set; }
-            public string act_shortBrand { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_activityPeriodSt { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_activityPeriodEnd { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_costPeriodSt { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_costPeriodEnd { get; set; }
-
-            public string act_activityName { get; set; }
-            public string act_theme { get; set; }
-
-            public string act_objective { get; set; }
-            public string act_trade { get; set; }
-            public string act_activityDetail { get; set; }
-            public string act_delFlag { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_createdDate { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_updatedDate { get; set; }
-
-            public string act_createdByUserId { get; set; }
-            public string act_updatedByUserId { get; set; }
-            public decimal act_normalCost { get; set; }
-            public decimal act_themeCost { get; set; }
-            public decimal act_totalCost { get; set; }
-            public decimal act_balance { get; set; } /*ผลต่าง*/
-            public decimal act_grandTotalCost { get; set; }
-            public decimal act_grandTotalBalance { get; set; }
-            public decimal act_total_invoive { get; set; }/* ยอดยกมา*/
-
-            public string act_claimNo { get; set; }
-            public string act_claimShare { get; set; }
-            public string act_claimStatus { get; set; }
-
-            public string bud_ActivityStatusId { get; set; }
-            public string bud_ActivityStatus { get; set; }
-
-            public string act_compensateStatus { get; set; }
-
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_compensateDateStart { get; set; }
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-            public DateTime? act_compensateDateEnd { get; set; }
-
-        }
-    }
-
-    public class TB_Bud_Invoice_Document_Model
-    {
-
-        public List<BudgetInvoiceModel> BudgetInvoiceList { get; set; }
-        public List<TB_Act_Region_Model> RegionList { get; set; }
-        public BudgetInvoiceModel BudgetInvoice { get; set; }
-        public List<TB_Act_Customers_Model.Customers_Model> CustomerList { get; set; }
-
-        public List<TB_Act_Region_Model> regionGroupList { get; set; }
-
-        public class BudgetInvoiceModel : ActBaseModel
-        {
-            public BudgetInvoiceModel()
-            {
-                _image = new byte[0];
-                extension = ".pdf";
-                delFlag = false;
-                createdByUserId = UtilsAppCode.Session.User.empId;
-                createdDate = DateTime.Now;
-                updatedByUserId = UtilsAppCode.Session.User.empId;
-                updatedDate = DateTime.Now;
-            }
-            public string id { get; set; }
-            public string imageType { get; set; }
-            public byte[] _image { get; set; }
-            public string _fileName { get; set; }
-            public string extension { get; set; }
-            public string remark { get; set; }
-            public string typeFiles { get; set; }
-
-            public string companyId { get; set; }
-            public string regionId { get; set; }
-            public string customerId { get; set; }
-
-            public string company { get; set; }
-            public string regionName { get; set; }
-            public string customerName { get; set; }
-
-            public string budgetApproveId { get; set; }
-            public string budgetActivityId { get; set; }
-            public string activityNo { get; set; }
-
-            public int count_budgetApproveId { get; set; }
-            public int count_budgetActivityId { get; set; }
-            public int count_activityNo { get; set; }
-
-            public string invoiceNo { get; set; }
-        }
     }
 
     public class Budget_Report_Model
@@ -557,5 +550,56 @@ namespace eActForm.Models //update 21-04-2020
             public string wait_activityInvoiceTotalBath { get; set; }
         }
     }
+
+    public class Budget_Report_Invoice_Model
+    {
+        public class Report_Budget_Invoice
+        {
+            public List<Report_Budget_Invoice_Att> Report_Budget_Invoice_List { get; set; }
+        }
+
+        public class Report_Budget_Invoice_Att
+        {
+
+            public Int32 row_no { get; set; }
+            public string report_date { get; set; }
+            public string vander { get; set; }
+            public string customer_name { get; set; }
+            public string customer_short_name { get; set; }
+            
+            public string invoice_number { get; set; }
+            public string invoice_action_date { get; set; }
+            public string invoice_create_date { get; set; }
+            public string invoice_send_approve_date { get; set; }
+            public string bank_account_date { get; set; }
+            public string act_gl { get; set; }
+            public Boolean vat_status { get; set; }
+
+            public decimal invoice_baht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+
+            public decimal invoice_vat_baht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+
+            public decimal invoice_wtax_baht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+
+            public decimal invoice_net_baht { get; set; }
+            [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+
+            public string wtx { get; set; }
+            public string sub_code { get; set; }
+            public Boolean commit_paper_status { get; set; }
+            public string commit_paper_date { get; set; }
+            public string invoice_detail { get; set; }
+
+            public string activityId { get; set; }
+            public string activityOfEstimateId { get; set; }
+            public string budgetActivityId { get; set; }
+            public string budgetActivityInvoiceId { get; set; }
+
+        }
+    }
+
 
 }
