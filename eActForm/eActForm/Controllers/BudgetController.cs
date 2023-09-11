@@ -279,8 +279,6 @@ namespace eActForm.Controllers  //update 21-04-2020
             return PartialView(models);
         }
 
-
-
         public ActionResult activityDetail(string activityId)
         {
 

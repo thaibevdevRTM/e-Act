@@ -1,0 +1,150 @@
+﻿
+
+@model eActForm.Models.Budget_Report_WaitApprove_Model.Report_Budget_WaitApprove
+@if (Model.Report_Budget_WaitApprove_List != null)
+{
+
+    <div class="row">
+        <p class="d-flex justify-content-center">
+            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                </button>
+            }
+        </p>
+    </div>
+
+    <div class="row">
+        <div id="GridView">
+            <table class="table table-hover border-dark" id="datatable" style="width:100%;">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td> no.</td>
+                        <td style="text-align:left;"> ร้านค้า </td>
+                        <td style="text-align:center;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:center;"> ประเภท </td>
+                        <td style="text-align:center;"> ลำดับที่</td>
+                        <td style="text-align:center;"> รหัสพนักงาน </td>
+                        <td style="text-align:left;"> ชื่อนามสกุล </td>
+                        <td style="text-align:center;"> สถานะ </td>
+                        <td style="text-align:center;"> วันที่ </td>
+                    </tr>
+                </thead>
+                @{ var index_view = 1; }
+                @foreach (var item in Model.Report_Budget_WaitApprove_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index_view</td>
+                         @*ร้านค้า*@ 
+                        <td style="text-align:left;">@item.cus_nameEN</td>
+                        @* เลขที่กิจกรรม *@
+                        <td style="text-align:center;"> @item.act_activityNo </td>
+                        @* ประเภท *@
+                        <td style="text-align:center;"> @item.act_type </td>
+                        @* ลำดับที่ *@
+                        <td style="text-align:center;"> @item.approve_rang_no </td>
+                        @* รหัสพนักงาน *@
+                        <td style="text-align:center;"> @item.employee_id </td>
+                        @* ชื่อนามสกุล *@
+                        <td style="text-align:left;"> @item.employee_name </td>
+                        @* สถานะ *@
+                        <td style="text-align:center;"> @item.approve_status_name </td>
+                        @* วันที่ *@
+                        <td style="text-align:center;"> @item.approve_updated_date </td>
+
+                    </tr>
+                    index_view++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row hide">
+        <div id="GridPDF">
+            <table class="table table-hover border-dark" id="datatable_export">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;">
+                        <td> no.</td>
+                        <td style="text-align:left;"> ร้านค้า </td>
+                        <td style="text-align:center;"> เลขที่กิจกรรม </td>
+                        <td style="text-align:center;"> ประเภท </td>
+                        <td style="text-align:center;"> ลำดับที่</td>
+                        <td style="text-align:center;"> รหัสพนักงาน </td>
+                        <td style="text-align:left;"> ชื่อนามสกุล </td>
+                        <td style="text-align:center;"> สถานะ </td>
+                        <td style="text-align:center;"> วันที่ </td>
+                    </tr>
+                </thead>
+                @{ var index = 1;}
+                @foreach (var item in Model.Report_Budget_WaitApprove_List)
+                {
+                    <tr class="gradeX">
+                        <td>@index_view</td>
+                         @*ร้านค้า*@ 
+                        <td style="text-align:left;">@item.cus_nameEN</td>
+                        @* เลขที่กิจกรรม *@
+                        <td style="text-align:center;"> @item.act_activityNo </td>
+                        @* ประเภท *@
+                        <td style="text-align:center;"> @item.act_type </td>
+                        @* ลำดับที่ *@
+                        <td style="text-align:center;"> @item.approve_rang_no </td>
+                        @* รหัสพนักงาน *@
+                        <td style="text-align:center;"> @item.employee_id </td>
+                        @* ชื่อนามสกุล *@
+                        <td style="text-align:left;"> @item.employee_name </td>
+                        @* สถานะ *@
+                        <td style="text-align:center;"> @item.approve_status_name </td>
+                        @* วันที่ *@
+                        <td style="text-align:center;"> @item.approve_updated_date </td>
+                    </tr>
+                    index++;
+                }
+            </table>
+        </div>
+    </div>
+
+
+
+
+    //------------------------------------------------------------------------------------------------
+
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+
+}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#datatable').DataTable({
+			"columnDefs": [
+				{ "orderable": true, "targets": 0 }
+				, { "orderable": true, "targets": 1 }
+			],
+			"dom": 'lCfrtip',
+			"order": [],
+			"language": {
+				"lengthMenu": '_MENU_ entries per page',
+				"search": '<i class="fa fa-search"></i>',
+				"paginate": {
+					"previous": '<i class="fa fa-angle-left"></i>',
+					"next": '<i class="fa fa-angle-right"></i>'
+				}
+			}
+		});
+
+	})
+
+	$(function () {
+		$("#btnExportExcel").click(function () {
+			$("input[name='gridHtml']").val($("#GridPDF").html());
+		});
+
+		$("#btnExportPDF").click(function () {
+			$("input[name='gridHtml']").val($("#GridPDF").html());
+		});
+	});
+
+
+</script>

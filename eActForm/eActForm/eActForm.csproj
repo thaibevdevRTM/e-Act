@@ -3278,7 +3278,7 @@
     <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetActivityListView.cshtml" />
-    <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetAccSeSearch.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
     <None Include="packages.config" />
@@ -3480,10 +3480,14 @@
     <Content Include="Views\Budget\activityDetail.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetProductPriceIndex.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetProductPriceListView.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetActivityReport.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetActivitySearch.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetInvoiceIndex.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetInvoiceReport.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetInvoiceListView.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetProductPriceSearch.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetWaitApproveSearch.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetWaitApproveIndex.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetWaitApproveListView.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetInvoiceSearch.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

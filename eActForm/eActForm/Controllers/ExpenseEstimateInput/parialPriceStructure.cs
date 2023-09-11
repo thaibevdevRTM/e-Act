@@ -45,7 +45,7 @@ namespace eActForm.Controllers
                     item.activityId = actId;
                     bool calSuccess = calProductDetail(item);
                 }
-                TempData["actForm" + actId] = activityModel;
+            
                 result.Data = productlist.productcostdetaillist1.Count;
                 result.ActivityId = actId;
                 TempData.Keep();

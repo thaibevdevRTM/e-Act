@@ -20,6 +20,8 @@
                     <li>@Html.ActionLink(" Report Detail MT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Price List MT", "reportBudgetProductPriceIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Pending Approval MT", "reportBudgetWaitApproveIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 }
 
@@ -29,11 +31,13 @@
                     @*<li>@Html.ActionLink(" Report Claim PDG OMT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>*@
                     <li>@Html.ActionLink(" Report Detail OMT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Detail OMT (AddOn)", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Pending Approval OMT", "reportBudgetWaitApproveIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 }
 
-                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] 
+                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"]
                 && UtilsAppCode.Session.User.isAdmin == false
-                && UtilsAppCode.Session.User.isAdminOMT == false)
+                && UtilsAppCode.Session.User.isAdminOMT == false
+                && UtilsAppCode.Session.User.isSuperAdmin == false)
                 {
                     <li>@Html.ActionLink(" Report Budget Activity MT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
