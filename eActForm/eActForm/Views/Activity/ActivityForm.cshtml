@@ -53,7 +53,7 @@
 </div>
 
 
-<div id="divMainAct" class="row">
+<div id="divMainAct" class="row" >
     <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
 
         <div class="form-group">
@@ -509,10 +509,11 @@
         <div class="container">
             <div class="row">
 
-                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
+                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"] 
+                            && Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                 {
                     <div style="display: inline-block">
-                        <button id="btnSaveAs" type="button" class="btn btn-primary" onclick="copyAndSaveNew('@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]')">&nbsp;Add Budget</button>
+                        <button id="btnAddBG" type="button" class="btn btn-primary" onclick="copyAndSaveNew('@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]')">&nbsp;Add Budget</button>
                     </div>
                 }
                 @if (mode != "" && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
@@ -523,22 +524,9 @@
                 }
 
                 <div style="display:inline-block">
-                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT_AddOn.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
+
+                    <a href="@Url.Action("index", "Home", new { typeForm = Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+
                 </div>
 
                 <div style="display:inline-block; text-align:center" id="divSubmit">
@@ -584,7 +572,7 @@
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
- 
+
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -1401,7 +1389,7 @@
             document.getElementById("txtActIO").disabled = false;
             document.getElementById("txtActClaim").disabled = false;
             document.getElementById("divUploadFiles").style.display = "block";
-         
+
             for (var i = 0; i < lengthOfArray; i++) {
                 arrayOfElements[i].style.display = 'block';
             }
@@ -1453,8 +1441,8 @@
 
         if ('@Model.activityFormModel.statusId' == '2' || '@Model.activityFormModel.statusId' == '3') {
 
-            
-           
+
+
             if ('@UtilsAppCode.Session.User.isAdmin' == 'True'
                 || '@UtilsAppCode.Session.User.isAdminOMT' == 'True'
                 || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
