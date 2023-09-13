@@ -18,7 +18,7 @@
             {
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 <li onclick="waitpopup();">@Html.ActionLink(" Documents SetPrice OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.SetPriceOMT.ToString() }, null)</li>
-                <li onclick="waitpopup();">@Html.ActionLink(" Documents AddOn OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>
+                @*<li onclick="waitpopup();">@Html.ActionLink(" Documents AddOn OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)</li>*@
             }
             @if (UtilsAppCode.Session.User.isAdminPOM || UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compPomForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
