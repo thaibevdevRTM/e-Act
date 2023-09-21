@@ -200,8 +200,9 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
                 }
-                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
-                            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHome"])
                 {
                     List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
                     activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannelModel.txt = lists.Count.ToString();
@@ -213,7 +214,8 @@ namespace eActForm.BusinessLayer
                         activity_TBMMKT_Model.approveModels.approveDetailLists = activity_TBMMKT_Model.approveModels.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
                     }
 
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHome"])
                     {
                         #region expensesTrvDetailRpt
                         ApproveModel.approveModels models = new ApproveModel.approveModels();
@@ -367,7 +369,8 @@ namespace eActForm.BusinessLayer
 
                 #region form HC
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHome"])
                 {
                     decimal? vat = 0, vatsum = 0;
                     #region "ค่าเดินทางของ NUM"
@@ -418,7 +421,10 @@ namespace eActForm.BusinessLayer
                         });
                     }
 
-                    activity_TBMMKT_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                    {
+                        activity_TBMMKT_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                    }
                     #endregion
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])

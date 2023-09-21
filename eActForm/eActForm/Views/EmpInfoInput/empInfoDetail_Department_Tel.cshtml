@@ -7,9 +7,9 @@
     <tr>
         <td style="">
             <div class="form-group">
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     Department/หน่วยงาน :
-                </label>
+                </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.departmentId, new SelectList(Model.listGetDepartmentMaster, "id", "name", ""), "", new
@@ -25,9 +25,9 @@
                         </script>
                     </div>
                 </div>
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     Phone/เบอร์ติดต่อ :
-                </label>
+                </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
                         @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })

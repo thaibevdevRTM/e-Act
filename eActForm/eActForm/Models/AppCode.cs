@@ -45,7 +45,7 @@ namespace eActForm.Models
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
         public static string Food = "6309F37D-03C1-4F2A-9DDC-2D997A440F1B";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
-        public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
+        public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formTrvHome"] };
         public static string[] expenseForm = { ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString(), Activity_Model.groupCompany.TTM.ToString() };
         public static string[] formApproveAuto = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formReceptions"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"], ConfigurationManager.AppSettings["formPurchaseTbm"] };
@@ -95,7 +95,8 @@ namespace eActForm.Models
            ConfigurationManager.AppSettings["formTrvHcmId"],
            ConfigurationManager.AppSettings["formAdvHcmId"],
            ConfigurationManager.AppSettings["formExpTrvNumId"],
-           ConfigurationManager.AppSettings["formExpMedNumId"]
+           ConfigurationManager.AppSettings["formExpMedNumId"],
+           ConfigurationManager.AppSettings["formTrvHome"]
 
         };
         public static string[] checkDocIT =

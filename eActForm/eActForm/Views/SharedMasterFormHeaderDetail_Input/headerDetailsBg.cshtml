@@ -1,14 +1,15 @@
 ﻿@using eActForm.BusinessLayer;
 @using System.Configuration;
+@using eActForm.Models
 @model eActForm.Models.Activity_TBMMKT_Model
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr>
         <td>
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     วันที่เสนอกิจกรรม :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -20,9 +21,9 @@
                 {
 
                     <div class="row col-md-6">
-                        <label class="control-label col-md-4" id="lblFromPaper">
+                        <div class="control-label col-md-4" id="lblFromPaper">
                             From Paper :
-                        </label>
+                        </div>
                         <div class="col-md-2">
                             <div class="row" style="padding-top:8px;">
                                 <input id="cbFromPaper" type="checkbox" name="activityFormTBMMKT.statusNote" value="FromPaper" onchange="chkBox_Onchange(this);">
@@ -36,12 +37,12 @@
                                 </script>
                             </div>
                         </div>
-                        <label class="control-label col-md-3">
+                        <div class="control-label col-md-3">
                             กิจกรรมอื่น :
-                        </label>
+                        </div>
                         <div class="col-md-2">
                             <div class="row" style="padding-top:8px;">
-                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp , new { @onchange = "chkBox_Onchange(this)" })
+                                @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp, new { @onchange = "chkBox_Onchange(this)" })
 
                             </div>
                         </div>
@@ -55,14 +56,14 @@
 
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     ชื่อผู้เสนอกิจกรรม :
-                </label>
-                @if (Model.activityFormModel.mode == "new")
-                                        {
+                </div>
+                @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
+                {
                     <div class="col-md-4 col-xs-12">
                         <div class="row">
-                            <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
+                            <label class="form-control textboxcss" style="width:320px;">คุณ @UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
                         </div>
                     </div>
                 }
@@ -74,9 +75,9 @@
                         </div>
                     </div>
                 }
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     เบอร์โทรศัพท์ :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -87,9 +88,9 @@
 
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     สินค้า :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -97,9 +98,9 @@
                     </div>
                 </div>
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     เอกสารเลขที่ :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -110,9 +111,9 @@
 
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     ชื่อกิจกรรม :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -127,9 +128,9 @@
                         displayEOOld = "display:none;";
                     }
                 }
-                <label class="control-label col-md-2 col-xs-12" style="@displayEOOld">
+                <div class="control-label col-md-2 col-xs-12" style="@displayEOOld">
                     EO :
-                </label>
+                </div>
                 <div class="col-md-4 col-xs-12" style="@displayEOOld">
                     <div class="row">
                         @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO" })
@@ -141,9 +142,9 @@
 
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     เริ่มกิจกรรม :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
@@ -154,9 +155,9 @@
                                     @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
                                 </div>
                             </div>
-                            <label class="control-label col-md-1 col-xs-12">
+                            <div class="control-label col-md-1 col-xs-12">
                                 ถึง
-                            </label>
+                            </div>
                             <div class="col-md-6 col-xs-12">
                                 <div class="row">
                                     @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })*@
@@ -166,14 +167,14 @@
                         </div>
                     </div>
                 </div>
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     Budget Number :
-                </label>
+                </div>
 
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
 
-                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                        @if ((Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                         {
                             @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber" })
                         }
@@ -189,9 +190,9 @@
 
             <div class="form-group">
 
-                <label class="control-label col-md-2 col-xs-12">
+                <div class="control-label col-md-2 col-xs-12">
                     วัตถุประสงค์ :
-                </label>
+                </div>
 
                 <div class="col-md-10 col-xs-12">
                     <div class="row">
@@ -205,7 +206,7 @@
 
 <script type="text/javascript">
     function chkBox_Onchange(element) {
-      
+
         if (element.id === 'activityFormTBMMKT_isTemp') {
             if (element.checked) {
                 document.getElementById("cbFromPaper").checked = false;

@@ -23,9 +23,9 @@
         }
 </style>
 
-<div class="row">
+<div class="col-md-12 col-xs-12">
     <div class="col-12">
-        <p class="lead">โครงสร้างราคา - ไม่รวม Vat (Product Cost - Bath Per Case)</p>
+        <h4>โครงสร้างราคา - ไม่รวม Vat (Product Cost - Bath Per Case)</h4>
     </div>
     <div class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
         <table class="table table-striped jambo_table bulk_action fixed" id="tbl_productDetail" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
@@ -35,44 +35,44 @@
 
                     @if (Model.activityFormTBMMKT.master_type_form_id == @ConfigurationManager.AppSettings["formEactBeer"])
                     {
-                        <th style="width:5%;" class="align-content-center font10"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </th>
-                        <th style="width:10%;" class="align-content-center font10">รหัสสินค้า</th>
-                        <th style="width:20%;" class="align-content-center font10">ชื่อสินค้า (product Name)</th>
-                        <th style="width:20%;" class="align-content-center font10">Std. Wholesales Price</th>
-                        <th style="width:20%;" class="align-content-center font10">Normal Cost</th>
-                        <th style="width:20%;" class="align-content-center font10">Promotion Cost</th>
+                        <td style="width:5%;" class="align-content-center"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </td>
+                        <td style="width:10%;" class="align-content-center">รหัสสินค้า</td>
+                        <td style="width:20%;" class="align-content-center">ชื่อสินค้า (product Name)</td>
+                        <td style="width:20%;" class="align-content-center">Std. Wholesales Price</td>
+                        <td style="width:20%;" class="align-content-center">Normal Cost</td>
+                        <td style="width:20%;" class="align-content-center">Promotion Cost</td>
                     }
                     else
                     {
-                        <th width="50px" class="align-content-center font10" rowspan="2"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </th>
-                        <th width="170px" class="align-content-center font10" rowspan="2">ชื่อสินค้า (product Name)</th>
-                        <th width="80px" class="align-content-center font10" rowspan="2">Std. Wholesales Price</th>
-                        <th width="120px" class="align-content-center font10" colspan="1">ราคาขาย</th>
-                        <th width="200px" class="align-content-center font10" colspan="3">Normal Discount (Baht)</th>
-                        <th width="80px" class="align-content-center font10">Normal</th>
-                        <th width="80px" class="align-content-center font10">Normal</th>
-                        <th width="80px" class="align-content-center font10">Promotion</th>
+                        <td width="50px" class="align-content-center" rowspan="2"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </td>
+                        <td width="170px" class="align-content-center" rowspan="2">ชื่อสินค้า (product Name)</td>
+                        <td width="80px" class="align-content-center" rowspan="2">Std. Wholesales Price</td>
+                        <td width="120px" class="align-content-center" colspan="1">ราคาขาย</td>
+                        <td width="200px" class="align-content-center" colspan="3">Normal Discount (Baht)</td>
+                        <td width="80px" class="align-content-center">Normal</td>
+                        <td width="80px" class="align-content-center">Normal</td>
+                        <td width="80px" class="align-content-center">Promotion</td>
 
-                        <th width="170px" id="col_Special" class="align-content-center font10" colspan="2">Special Discount %</th>
-                        <th width="80px" id="col_Promotion" class="align-content-center font10">Promotion</th>
-                        <th width="80px" class="align-content-center font10" rowspan="2">RSP</th>
-                        <th width="100px" class="align-content-center font10" rowspan="2">Unit</th>
+                        <td width="170px" id="col_Special" class="align-content-center" colspan="2">Special Discount %</td>
+                        <td width="80px" id="col_Promotion" class="align-content-center">Promotion</td>
+                        <td width="80px" class="align-content-center" rowspan="2">RSP</td>
+                        <td width="100px" class="align-content-center" rowspan="2">Unit</td>
                     }
                 </tr>
                 <tr>
 
                     @if (Model.activityFormTBMMKT.master_type_form_id != @ConfigurationManager.AppSettings["formEactBeer"])
                     {
-                        <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
-                        <th class="align-content-center font10">(1)</th>
-                        <th class="align-content-center font10">(2)</th>
-                        <th class="align-content-center font10">(3)</th>
-                        <th class="align-content-center font10">Cost</th>
-                        <th class="align-content-center font10">GP%</th>
-                        <th class="align-content-center font10">GP%</th>
-                        <th id="col_DisBaht" class="align-content-center font10">บาท</th>
-                        <th id="col_DisPer" class="align-content-center font10">&nbsp;&nbsp;&nbsp;%</th>
-                        <th id="col_Cost" class="align-content-center font10">Cost (BHT)</th>
+                        <td class="align-content-center">&nbsp;&nbsp;Normal&nbsp;&nbsp;</td>
+                        <td class="align-content-center">(1)</td>
+                        <td class="align-content-center">(2)</td>
+                        <td class="align-content-center">(3)</td>
+                        <td class="align-content-center">Cost</td>
+                        <td class="align-content-center">GP%</td>
+                        <td class="align-content-center">GP%</td>
+                        <td id="col_DisBaht" class="align-content-center">บาท</td>
+                        <td id="col_DisPer" class="align-content-center">&nbsp;&nbsp;&nbsp;%</td>
+                        <td id="col_Cost" class="align-content-center">Cost (BHT)</td>
                     }
 
                 </tr>

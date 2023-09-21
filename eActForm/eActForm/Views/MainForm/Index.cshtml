@@ -55,20 +55,10 @@
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
-
-        @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
-        @*=================for test====================*@
-        @*<tr>
-                <td>
-                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                </td>
-            </tr>*@
-        @*=========END========for test==================*@
         @foreach (var item in Model.master_Type_Form_Detail_Models)
         {
             @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
         }
-        @*</table>*@
     </div>
 
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })

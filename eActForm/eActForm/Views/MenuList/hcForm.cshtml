@@ -13,6 +13,7 @@
             @if ((@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup)) || UtilsAppCode.Session.User.isAdminHCBP || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("expense travelling", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formExpTrvNumId"] }, null)</li>
+                <li>@Html.ActionLink("expense travel home", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvHome"] }, null)</li>
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_Cashvan"] || UtilsAppCode.Session.User.isSuperAdmin)
             {

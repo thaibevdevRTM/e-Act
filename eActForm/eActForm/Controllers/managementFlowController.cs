@@ -236,7 +236,9 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                if (subjectId == ConfigurationManager.AppSettings["formTrvHcmId"] || subjectId == ConfigurationManager.AppSettings["formExpMedNumId"])
+                if (subjectId == ConfigurationManager.AppSettings["formTrvHcmId"] 
+                    || subjectId == ConfigurationManager.AppSettings["formExpMedNumId"]
+                    || subjectId == ConfigurationManager.AppSettings["subjectTrvHome"])
                 {
                     companyId = "";
                 }

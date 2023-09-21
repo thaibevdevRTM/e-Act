@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using eActForm.Models
 @model eActForm.Models.Activity_TBMMKT_Model
 
 
@@ -12,16 +13,16 @@
             <div id="divHeaderDetailsCost">
                 <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
-                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
+                        <td style="width: 12%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</td>
                         @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
                                 <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                             <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Activities Group</th>
-                        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
-                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
-                        <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
+                        <td style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Activities Group</td>
+                        <td style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</td>
+                        <td style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</td>
+                        <td style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</td>
+                        <td style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</td>
+                        <td style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</td>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.activityOfEstimateList)
@@ -74,7 +75,7 @@
                                 </div>
 
                                 <div style="display:inline-block;">
-                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isCreator))
+                                    @if ((Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isCreator))
                                     {
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" />
                                     }
@@ -82,7 +83,7 @@
                                     {
                                         <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
-                                <script>
+                                    <script>
 
                                           $(document).ready(function () {
                                                 $(function () {
@@ -130,12 +131,12 @@
                                         $(".clstxtIO_@index").blur(function () {
                                             var txtIO = $(".clstxtIO_@index").val().replaceAll(" ", "");
                                              checkIOPV(txtIO,@index,'popup');
-                 
+
                                             getBudgetTotal();
 
 
                                         });
-                                </script>
+                                    </script>
 
                                 </div>
                                 <div>
@@ -209,7 +210,7 @@
                             จำนวนเงินรวม(บาท)&nbsp;
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                            <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;
+                            <label id="totalEstimate" type="text" readonly="readonly"> @Html.DisplayFor(x => x.totalCostThisActivity) </label>&nbsp;
                         </td>
                     </tr>
                 </table>
@@ -274,7 +275,7 @@
             if ('@Model.activityFormTBMMKT.isTemp' != 'True') {
                 getBudgetTotal();
             }
-           
+
         }
 
 

@@ -121,6 +121,7 @@ namespace eActForm.Models
             budgetTotalActTypeList = new List<BudgetTotal>();
             tB_Act_ActivityForm_SelectBrandOrChannelModel = new TB_Act_ActivityForm_SelectBrandOrChannel();
             list_ObjGetDataLayoutDoc = new List<ObjGetDataLayoutDoc>();
+            activityOfEstimateList = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
         }
 
     }
