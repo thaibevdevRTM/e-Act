@@ -1,3 +1,4 @@
+using Antlr.Runtime;
 using eActForm.BusinessLayer;
 using eActForm.Models;
 using eForms.Presenter.MasterData;
@@ -55,13 +56,14 @@ namespace eActForm.Controllers
                 //สาเหตุที่ต้องให้เลือกย้อนหลังได้1ปี เพราะกรณี เดือน พ.ย. ของทุกปีอาจจะมีการทำจ่ายของปีงบประมาณก่อนหน้าได้ ในส่วนนี้จะไปมีผลกับการดึง EO มาให้เลือกในการทำสั่งจ่าย
                 nowPhysicalYear = FiscalYearPresenter.getFiscalNow(AppCode.StrCon, ConfigurationManager.AppSettings["typePeriodTBVGroup"]).FirstOrDefault().UseYear;
                 yearFrom = (Convert.ToInt32(nowPhysicalYear) - 10).ToString();
-                yearTo = nowPhysicalYear;
+                yearTo = nowPhysicalYear ;
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear == null)
                 {
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear = nowPhysicalYear;
                 }
             }
-            activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderByDescending(m => m.UseYear).ToList();
+            var yearEnd = int.Parse(yearTo) + 2;
+            activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearEnd.ToString()).OrderByDescending(m => m.UseYear).ToList();
 
 
             return PartialView(activity_TBMMKT_Model);
