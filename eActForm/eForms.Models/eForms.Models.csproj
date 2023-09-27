@@ -49,6 +49,7 @@
     <Compile Include="MasterData\DefaultFieldModel.cs" />
     <Compile Include="MasterData\APModel.cs" />
     <Compile Include="MasterData\departmentMasterModel.cs" />
+    <Compile Include="MasterData\EXG_Rate_Model.cs" />
     <Compile Include="MasterData\FiscalYearModel.cs" />
     <Compile Include="MasterData\AmphuresModel.cs" />
     <Compile Include="MasterData\BaseMasterModel.cs" />
