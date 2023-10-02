@@ -67,7 +67,10 @@
             if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
             {
                 var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
-                @genSignatureFromApproveDetail(1);
+                if (countLine > 0)
+                {
+                    @genSignatureFromApproveDetail(1);
+                }
                 if (countLine > 5)
                 {
                     @genSignatureFromApproveDetail(2);
@@ -76,7 +79,11 @@
             else if (Model.approveFlowDetail.Count > 0)
             {
                 var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
-                @Grid(1);
+   
+                if (countLine > 0)
+                {
+                    @Grid(1);
+                }
                 if (countLine > 5)
                 {
                     @Grid(2);

@@ -248,7 +248,7 @@
                 <table style="width:100%">
                     <tr>
                         <td width="50%">
-                            <p class="font13" >
+                            <p class="font13">
                                 @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                             </p>
                         </td>
@@ -347,6 +347,7 @@
                 {
                     foreach (var item in Model.productcostdetaillist1)
                     {
+
                         <tr>
                             @if (item.isShowGroup == true)
                             {
@@ -385,10 +386,11 @@
                         </tr>
 
                     }
-                    <tr>
-                        <td colspan="10" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;"></td>
-                    </tr>
+
                 }
+                <tr>
+                    <td colspan="10" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;"></td>
+                </tr>
             </table>
         </div>
 
