@@ -122,7 +122,7 @@
     function submitPreview() {
 
 
-        if ($("#ddlLimit").val() == '') {
+        if ($("#ddlLimit").val() == '' && $("#ddlCompany").val() != '@System.Configuration.ConfigurationManager.AppSettings["companyId_OMT"]') {
             alert('ระบุ limit');
         }
         else {

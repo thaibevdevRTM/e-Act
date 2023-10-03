@@ -62,7 +62,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear = nowPhysicalYear;
                 }
             }
-            var yearEnd = int.Parse(yearTo) + 2;
+            var yearEnd = int.Parse(yearTo) + 1;
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearEnd.ToString()).OrderByDescending(m => m.UseYear).ToList();
 
 

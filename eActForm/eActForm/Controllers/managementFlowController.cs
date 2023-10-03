@@ -22,7 +22,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
-            if (UtilsAppCode.Session.User.isSuperAdmin)
+            if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminIT)
             {
                 model.companyList = managementFlowAppCode.getCompany();
                 model.subjectList = new List<TB_Reg_Subject_Model>();
@@ -434,8 +434,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
                 var lists = managementFlowAppCode.getSubject(companyId);
+                if(UtilsAppCode.Session.User.isAdminIT)
+                {
+                    lists = lists.Where(x => x.typeFormId.Equals(ConfigurationManager.AppSettings["formCR_IT_FRM_314"])).ToList();
+                }
+
                 result.Data = lists;
             }
             catch (Exception ex)
