@@ -486,6 +486,8 @@ namespace eActForm.Models
     {
         public string master_type_form_id { get; set; }
         public string payNo { get; set; }
+
+        public string fiscalYear { get; set; }
     }
     public class GetDataPVPrevious
     {
