@@ -12,9 +12,9 @@
         <div class="col-md-6 col-xs-12">
         </div>
         <div class="col-md-3 col-xs-12">
-            <label class="control-label pull-right">
+            <div class="control-label pull-right">
                 Doc No. :
-            </label>
+            </div>
         </div>
         <div class="col-md-3 col-xs-12">
             @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "width:5; text-align:center;", @id = "txtActivityNo", @readonly = true })
@@ -26,9 +26,9 @@
             <div class="col-md-6 col-xs-12">
             </div>
             <div class="col-md-3 col-xs-12">
-                <label class="control-label pull-right">
+                <div class="control-label pull-right">
                     เลขที่เอกสารใบยืมเงินทดลอง :
-                </label>
+                </div>
             </div>
             <div class="col-md-3 col-xs-12">
                 @Html.TextBoxFor(m => m.activityFormTBMMKT.reference, new { @class = "form-control textboxcss", Style = "width:5; text-align:center;", @id = "txtReference", @readonly = true })
@@ -39,9 +39,9 @@
         <div class="col-md-6 col-xs-12">
         </div>
         <div class="col-md-3 col-xs-12">
-            <label class="control-label pull-right">
+            <div class="control-label pull-right">
                 ประจำเดือน :
-            </label>
+            </div>
         </div>
         <div class="col-md-3 col-xs-12">
             @if (Model.activityFormModel.documentDate.ToString() != "")

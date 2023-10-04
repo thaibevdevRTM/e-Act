@@ -1,11 +1,13 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
+@using System.Configuration;
 @{
     Layout = null;
     var val1 = "..........................";
     var val2 = "..........................";
     var txt1 = "..........................";
     var txt2 = "..........................";
+    string txtRest = "";
     if (Model.expensesDetailModel.costDetailLists[0].total > 0)
     {
         val1 = Model.expensesDetailModel.costDetailLists[0].total.Value.ToString("#,###.00");
@@ -18,6 +20,8 @@
         txt2 = DocumentsAppCode.ThaiBahtText(Model.expensesDetailModel.costDetailLists[1].total.ToString());
     }
 
+
+
 }
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">
     <tr style="height:25px;">
@@ -28,30 +32,35 @@
 
         </td>
     </tr>
-    <tr style="height:20px;">
-        <td style="width: 15%;text-align: left;border-top: 0px;border-right: 0px;border-bottom: 0px;">
-        </td>
-        <td style="width: 25%;text-align: left; border-width:0px 0px 0px 0px;">
-            1.เห็นควรพิจารณาอนุมัติ ค่าเบี้ยเลี้ยง
-        </td>
-        <td style="width: 5%;text-align: center;border-width: 0px 0px 0px 0px;">
-            จำนวน
-        </td>
-        <td style="padding-right:2em; width: 10%; text-align: right; border-width: 0px 0px 0px 0px;">
-            @val1
-        </td>
-        <td style="width: 20%; text-align: left; border-width: 0px 0px 0px 0px;">
-            บาท (@txt1)
-        </td>
-        <td style="width: 25%;text-align: left;border-top: 0px;border-left: 0px;border-bottom: 0px;">
-            โดยรวมเข้ากับเงินเดือน
-        </td>
-    </tr>
+    @if (Model.activityFormTBMMKT.master_type_form_id != ConfigurationManager.AppSettings["formTrvHome"])
+    {
+        txtRest = "ค่าที่พัก";
+        <tr style="height:20px;">
+            <td style="width: 15%;text-align: left;border-top: 0px;border-right: 0px;border-bottom: 0px;">
+            </td>
+            <td style="width: 25%;text-align: left; border-width:0px 0px 0px 0px;">
+                เห็นควรพิจารณาอนุมัติ ค่าเบี้ยเลี้ยง
+            </td>
+            <td style="width: 5%;text-align: center;border-width: 0px 0px 0px 0px;">
+                จำนวน
+            </td>
+            <td style="padding-right:2em; width: 10%; text-align: right; border-width: 0px 0px 0px 0px;">
+                @val1
+            </td>
+            <td style="width: 20%; text-align: left; border-width: 0px 0px 0px 0px;">
+                บาท (@txt1)
+            </td>
+            <td style="width: 25%;text-align: left;border-top: 0px;border-left: 0px;border-bottom: 0px;">
+                โดยรวมเข้ากับเงินเดือน
+            </td>
+        </tr>
+    }
+
     <tr style="height: 20px;">
-        <td style="text-align:left; border-top:0px;  border-right:0px;">
+        <td style="width: 10%;text-align:right; border-top:0px;  border-right:0px;">
         </td>
-        <td style="width: 30%;text-align: left;border-top: 0px;border-right: 0px;border-left: 0px;">
-            2.เห็นควรพิจารณาอนุมัติ ค่าที่พัก ค่าพาหนะ
+        <td style="width: 30%;text-align:left;  border-top:0px;border-right:0px; border-left:0px;">
+            เห็นควรพิจารณาอนุมัติ @txtRest ค่าพาหนะ
         </td>
         <td style="text-align:center;  border-top:0px;border-right:0px; border-left:0px;">
             จำนวน
@@ -66,5 +75,7 @@
             โดยตั้งเบิกจ่ายต่อไป
         </td>
     </tr>
+
+
 </table>
 <div style="height:15px;"></div>

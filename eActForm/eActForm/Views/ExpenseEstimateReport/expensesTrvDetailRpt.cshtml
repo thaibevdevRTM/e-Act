@@ -1,13 +1,26 @@
 ﻿
 @model eActForm.Models.Activity_TBMMKT_Model
+@using System.Configuration;
 @using eActForm.Models;
-@{ 
+@{
     Layout = null;
+    string txtMsg = "";
 }
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
+@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHome"])
+{
+    txtMsg = "ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายค่าเดินทางกลับภูมิลำเนา ตามรายละเอียดดังนี้";
+}
+else
+{
+    txtMsg = "ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายในการเดินทางไปปฏิบัติงานนอกสถานที่ทำงานปกติของบริษัทฯ ตามรายละเอียดดังนี้";
+}
+
 <div class=" fontDocSmall " style="padding-left:5em;">
-    <b>ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายในการเดินทางไปปฏิบัติงานนอกสถานที่ทำงานปกติของบริษัทฯ ตามรายละเอียดดังนี้</b>
+
+    <b>@txtMsg</b>
+
 </div>
 <div style="height:15px;"></div>
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">

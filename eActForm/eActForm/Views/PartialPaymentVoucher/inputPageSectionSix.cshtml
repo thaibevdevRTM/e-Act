@@ -5,9 +5,9 @@
     <tr>
         <td>
             <div class="form-group">
-                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
+                <div class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
                     ส่วนที่ 6 : รายละเอียด ค่าใช้จ่าย (รวมภาษีมูลค่าเพิ่ม) ในงวดนี้
-                </label>
+                </div>
             </div>
         </td>
     </tr>
@@ -16,9 +16,9 @@
     <tr>
         <td>
             <div class="form-group">
-                <label id="lblCount" class="control-label col-md-2 col-xs-12">
+                <div id="lblCount" class="control-label col-md-2 col-xs-12">
                     สั่งจ่ายครั้งที่ :
-                </label>
+                </div>
 
                 <div class="col-md-3 col-xs-12">
                     <div class="row">
@@ -77,9 +77,9 @@
                         </script>
                     </div>
                 </div>
-                <label id="lblDoc" class="control-label col-md-2 col-xs-12" style="text-align:left;">
+                <div id="lblDoc" class="control-label col-md-2 col-xs-12" style="text-align:left;">
                     สั่งจ่ายต่อจากเอกสาร :
-                </label>
+                </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "activityNo", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
@@ -145,11 +145,11 @@
 <table id="tabelSectionSix" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
 
     <tr style="background-color:#2f74b5;color:white;" class="highHeadFooterTable">
-        <th style="width: 5%;border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">&nbsp;</th>
-        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</th>
-        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
-        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
-        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
+        <td style="width: 5%;border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">&nbsp;</td>
+        <td style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</td>
+        <td style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</td>
+        <td style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</td>
+        <td style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</td>
 
     </tr>
     @{ var index = 0;}

@@ -16,8 +16,8 @@
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
 
-<div class="modal-body">
-    <div id="divForm" style="width:97%; margin-left:20px;">
+<div class="modal-body" style="color:black;">
+    <div id="divForm" style="width: 97%; margin-left: 20px; font-family: 'TH SarabunPSK';">
         <style>
             .cssborderbottom {
                 border-bottom-width: 1px;
@@ -25,12 +25,12 @@
                 border-bottom-color: gray;
             }
 
-            .font8 {
-                font-size: 8px;
+            .font15 {
+                font-size: 15px;
             }
 
-            .font11 {
-                font-size: 11px;
+            .font13 {
+                font-size: 13px;
             }
 
             .textRight {
@@ -49,31 +49,31 @@
         <div>
             @if (Model.activityFormModel.master_type_form_id == ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
             {
-                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Budget AddOn)</h5></div>
+                <div style="text-align:center; font-size:20px;"><b>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Budget AddOn)</b></div>
             }
             else
             {
-                <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+                <div style="text-align: center; font-size: 20px;"><b>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</b></div>
             }
 
         </div>
         <div>
-            <table style="width:100%; margin-top:30px;">
+            <table class="font13" style="width:100%; margin-top:25px;">
                 <tr>
-                    <td width="140px;"></td>
-                    <td width="260px;" style="margin-left:10px;"></td>
-                    <td width="20px;"></td>
-                    <td width="150px;" style="text-align:right; font-size:12.5px;">Activity No.</td>
-                    <td width="5px;"></td>
-                    <td width="160px;" class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.activityNo) </td>
+                    <td width="140px"></td>
+                    <td width="260px" style="margin-left:10px;"></td>
+                    <td width="20px"></td>
+                    <td width="150px" style="text-align:right;">Activity No.</td>
+                    <td width="5px"></td>
+                    <td width="160px" class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.activityNo) </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">Document Date</td>
+                    <td style="text-align:right;">Document Date</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish) </td>
+                    <td class="cssborderbottom">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish) </td>
                 </tr>
                 <tr>
                     <td></td>
@@ -81,22 +81,22 @@
                     <td></td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td style="text-align:right; font-size:12.5px;">Customer Format</td>
+                        <td style="text-align:right;">Customer Format</td>
                     }
                     else
                     {
-                        <td style="text-align:right; font-size:12.5px;">Reference</td>
+                        <td style="text-align:right;">Reference</td>
                     }
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
+                    <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">Referene ActNo.</td>
+                    <td style="text-align:right;">Referene ActNo.</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.referenceActNo) </td>
+                    <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.referenceActNo) </td>
                 </tr>
                 <tr>
                     <td></td>
@@ -109,37 +109,37 @@
                             subAct = "(" + Model.activityFormModel.txtSubActivity + ")";
                         }
                     }
-                    <td style="font-size:12.5px;">ชื่อกิจกรรม</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.activityName  </td>
+                    <td>ชื่อกิจกรรม</td>
+                    <td class="cssborderbottom">@Model.activityFormModel.activityName  </td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ลูกค้า(Customer Name)</td>
+                    <td style="text-align:right;">ลูกค้า(Customer Name)</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.customerName) </td>
+                    <td class="cssborderbottom">@Html.DisplayFor(item => item.activityFormModel.customerName) </td>
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">ประเภทกิจกรรม(Theme)</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.txttheme) &nbsp;&nbsp; @subAct </td>
+                    <td>ประเภทกิจกรรม(Theme)</td>
+                    <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.txttheme) &nbsp;&nbsp; @subAct </td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
+                    <td style="text-align:right;">ช่องทาง(Channel)</td>
                     <td></td>
                     @if (string.IsNullOrEmpty(Model.activityFormModel.chanel))
                     {
-                        <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.regionName) </td>
+                        <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.regionName) </td>
 
                     }
                     else
                     {
-                        <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
+                        <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
                     }
 
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">วัตถุประสงค์</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.objective)</td>
+                    <td>วัตถุประสงค์</td>
+                    <td class="cssborderbottom">@Html.DisplayFor(item => item.activityFormModel.objective)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
+                    <td style="text-align:right;">กลุ่มสินค้า(Product Group)</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+                    <td class="cssborderbottom"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
 
                 </tr>
                 <tr>
@@ -157,11 +157,11 @@
                             <td style="text-align:right"></td>
                         }
                     }
-                    <td style="font-size:12.5px;">รายการส่งเสริมการขาย (Trade Term)</td>
+                    <td>รายการส่งเสริมการขาย (Trade Term)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
+                    <td style="text-align:right;">ระยะเวลากิจกรรม</td>
                     <td></td>
-                    <td style="font-size:12.5px;">
+                    <td>
                         @if (Model.activityFormModel.activityPeriodSt != null)
                         {
                             @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
@@ -185,9 +185,9 @@
                             <td style="text-align:right"></td>
                         }
                     }
-                    <td style="font-size:12.5px;">รายการส่งเสริมการขาย (นอกTrade Term)</td>
+                    <td>รายการส่งเสริมการขาย (นอกTrade Term)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">(Activity Period)</td>
+                    <td style="text-align:right;">(Activity Period)</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -201,11 +201,11 @@
                     {
                         showIO = "IO:" + @Model.activityFormModel.actIO + " / Claim :" + @Model.activityFormModel.actClaim + "%";
                     }
-                    <td td style="font-size:12.5px;">@showIO</td>
+                    <td>@showIO</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
+                    <td style="text-align:right;">ระยะเวลาการให้ทุนพิเศษ</td>
                     <td></td>
-                    <td style="font-size:12.5px;">
+                    <td>
                         @if (Model.activityFormModel.costPeriodSt != null)
                         {
                             @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
@@ -221,7 +221,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">(Cost Period)</td>
+                    <td style="text-align:right;">(Cost Period)</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -232,14 +232,14 @@
             <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
         </div>
 
-        <div style="width:100%; ">
-            <div style="margin-top:5px; font-size:12.5px;">
+        <div style="width:100%;">
+            <b class="font15" style="margin-top:5px;">
                 รายละเอียดของการทำกิจกรรม(Activity Detail)
-            </div>
+            </b>
             @if (string.IsNullOrEmpty(Model.activityFormModel.chanel) && Model.activityFormModel.txttheme == "FOC")
             {
                 <div>
-                    <p style="font-size:12px;">
+                    <p class="font13">
                         @System.Configuration.ConfigurationManager.AppSettings["mssFOCWording"]
                     </p>
                 </div>
@@ -248,7 +248,7 @@
                 <table style="width:100%">
                     <tr>
                         <td width="50%">
-                            <p style="font-size:12px;">
+                            <p class="font13">
                                 @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                             </p>
                         </td>
@@ -294,32 +294,32 @@
             <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
         </div>
 
-        <div style="margin-top:5px; width:100%;">
+        <b class="font15" style="margin-top:5px; width:100%;">
             โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
-        </div>
+        </b>
 
         <div>
-            <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+            <table class="font13" style="width:100%; text-align:center; border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;">
                 <tr>
-                    <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
-                    <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
-                    <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (Baht)</td>
-                    <td style="width:10%;  font-size:12.5px;">Normal</td>
-                    <td style="width:10%;  font-size:12.5px;">Normal</td>
-                    <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 1px; border-collapse: collapse; width: 20%; " rowspan="2">ชื่อสินค้า (product Name)</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width:10%;" rowspan="2">Std. Wholesales Price</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 20%;" colspan="3">Normal Discount (Baht)</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 10%;">Normal</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 10%;">Normal</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 10%;">Promotion</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td style="width:10%;  font-size:12.5px;">Special</td>
-                        <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 10%;">Special</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse; width: 10%;">Promotion</td>
                     }
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">(1)</td>
-                    <td style="font-size:12.5px;">(2)</td>
-                    <td style="font-size:12.5px;">(3)</td>
-                    <td style="font-size:12.5px;">Cost</td>
-                    <td style="font-size:12.5px;">GP%</td>
-                    <td style="font-size:12.5px;">GP%</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">(1)</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">(2)</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">(3)</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">Cost</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">GP%</td>
+                    <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">GP%</td>
 
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
@@ -327,18 +327,18 @@
                         {
                             if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
                             {
-                                <td style="font-size:12.5px;">Discount Baht</td>
+                                <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">Discount Baht</td>
                             }
                             else
                             {
-                                <td style="font-size:12.5px;">Discount %</td>
+                                <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">Discount %</td>
                             }
                         }
                         else
                         {
-                            <td style="font-size:12.5px;">Discount %</td>
+                            <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">Discount %</td>
                         }
-                        <td style="font-size:12.5px;">Cost (BHT)</td>
+                        <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse;">Cost (BHT)</td>
                     }
 
                 </tr>
@@ -347,87 +347,91 @@
                 {
                     foreach (var item in Model.productcostdetaillist1)
                     {
+
                         <tr>
                             @if (item.isShowGroup == true)
                             {
-                                <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;" class="font13 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
                             }
                             else
                             {
                                 if (item.detailGroup.Count >= 1)
                                 {
-                                    <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;" class="font13 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
                                 }
 
 
                             }
 
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.disCount1)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.disCount2)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.disCount3)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.normalCost)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.normalGp)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.promotionGp)&nbsp;</td>
 
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
                                 if (item.specialDiscBaht != 0)
                                 {
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.specialDiscBaht)&nbsp;</td>
                                 }
                                 else
                                 {
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.specialDisc)&nbsp;</td>
                                 }
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@Html.DisplayFor(m => item.promotionCost)&nbsp;</td>
                             }
                         </tr>
 
                     }
+
                 }
+                <tr>
+                    <td colspan="10" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;"></td>
+                </tr>
             </table>
         </div>
 
 
-        <div>
-            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-        </div>
 
-        <div style="margin-top:5px; width:100%;">
+        <div style="height:30px;"></div>
+        <b class="font15">
             รายละเอียดค่าใช้จ่าย (Cost)
-        </div>
+        </b>
+
 
         <div>
-            <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+            <table class="font13" style="width:100%; text-align:center; border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;">
                 <tr>
-                    <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-                    <td rowspan="2" width="20%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 1px; border-collapse: collapse;" rowspan="2" width="15%">ประเภทกิจกรรม</td>
+                    <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" rowspan="2" width="22%">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td rowspan="2" width="12%" style="font-size:12.5px;">Mechanics</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" rowspan="2" width="10%">Mechanics</td>
                     }
 
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td colspan="3" style="font-size:12.5px;">ประมาณการยอดขาย (Estimate)</td>
-                        <td colspan="3" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" colspan="3">ประมาณการยอดขาย (Estimate)</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" colspan="3">ประมาณการค่าใช้จ่าย (Estimate)</td>
                     }
                     else
                     {
-                        <td colspan="3" style="font-size:12.5px;">ประมาณการยอดขาย (Estimate)</td>
-                        <td colspan="2" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" colspan="3">ประมาณการยอดขาย (Estimate)</td>
+                        <td style="border-style: solid; border-width: 0px 1px 0px 0px; border-collapse: collapse;" colspan="2">ประมาณการค่าใช้จ่าย (Estimate)</td>
                     }
                 </tr>
                 <tr>
-                    <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
-                    <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
-                    <td width="6%" style="font-size:12.5px;">% Growth</td>
-                    <td width="10%" style="font-size:12.5px;">Spending Exp. (Case)</td>
-                    <td width="10%" style="font-size:12.5px;">Spending Exp. (Bath)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="10%">ยอดขายปกติ (Case)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="10%">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="6%">% Growth</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="10%">Spending Exp. (Case)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="10%">Spending Exp. (Bath)</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td width="7%" style="font-size:12.5px;">% ยอดขาย</td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" width="7%">% ยอดขาย</td>
                     }
                 </tr>
                 @if (Model.activitydetaillist.Any())
@@ -435,29 +439,28 @@
                     foreach (var item in Model.activitydetaillist)
                     {
                         <tr>
-                            <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;" class="textLeft">@item.typeTheme</td>
                             @if (item.detailGroup != null && item.detailGroup.Count > 0)
                             {
-                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) </td>
                             }
                             else
                             {
-                                <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)  </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textLeft">@Html.DisplayFor(m => item.productName)  </td>
                             }
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
-                                <td class="font11 textLeft">@Html.DisplayFor(m => item.mechanics)</td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textLeft">@Html.DisplayFor(m => item.mechanics)</td>
                             }
 
-                            <td class="font11 textRight">@string.Format("{0:n2}", item.normalCost)</td>
-
-                            <td class="font11 textRight"> @string.Format("{0:n2}", item.themeCost)</td>
-                            <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
-                            <td class="font11 textRight">@string.Format("{0:n2}", item.totalCase)</td>
-                            <td class="font11 textRight">@string.Format("{0:n2}", item.total)</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@string.Format("{0:n2}", item.normalCost)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight"> @string.Format("{0:n2}", item.themeCost)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@string.Format("{0:n2}", item.growth)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@string.Format("{0:n2}", item.totalCase)&nbsp;</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@string.Format("{0:n2}", item.total)&nbsp;</td>
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
-                                <td class="font11 textRight">@string.Format("{0:n2}", item.perTotal)</td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font13 textRight">@string.Format("{0:n2}", item.perTotal)&nbsp;</td>
                             }
                         </tr>
                         perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
@@ -473,25 +476,30 @@
                 <tr>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td style="border:none; border-bottom:none;"></td>
+                        <td colspan="3" style="border-style: solid; border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align: right;">รวม&nbsp;</td>
                     }
-                    <td style="border:none; border-bottom:none;"></td>
-                    <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
-                    <td class="textRight">
+                    else
+                    {
+                        <td colspan="2" style="border-style: solid; border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align: right;">รวม</td>
+                    }
+
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight">
                         @if (costProduct != 0)
                         {
                             string result = String.Format("{0:n2}", @costProduct);
                             @result.ToString();
                         }
+                        &nbsp;
                     </td>
-                    <td class="textRight">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight">
                         @if (costActivity != 0)
                         {
                             string result = String.Format("{0:n2}", @costActivity);
                             @result.ToString();
                         }
+                        &nbsp;
                     </td>
-                    <td class="textRight">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight">
                         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                         {
                             growthPerTotal = sumGrowth;
@@ -507,30 +515,27 @@
                                 @result.ToString();
                             }
                         }
+                        &nbsp;
                     </td>
-                    <td class="textRight">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight">
                         @if (totalCase != 0)
                         {
                             string result = String.Format("{0:n2}", @totalCase);
                             @result.ToString();
                         }
+                        &nbsp;
                     </td>
-                    <td class="textRight">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight">
                         @if (totalActCost != 0)
                         {
                             string result = String.Format("{0:n2}", @totalActCost);
                             @result.ToString();
                         }
+                        &nbsp;
                     </td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td class="textRight">
-                            @*@if (perTotal != 0)
-                                {
-                                    string result = String.Format("{0:n2}%", @perTotal);
-                                    @result.ToString();
-                                }*@
-                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="textRight"></td>
                     }
 
                 </tr>
@@ -550,15 +555,11 @@
 
         }
 
-        <div>
-            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-        </div>
-        <div style="margin-top:10px;">
+        <div style="height:30px;"></div>
+        <b class="font15" style="margin-top:10px;">
             อนุมัติค่าใช้จ่าย(Approve)
-        </div>
-        <div style="margin-bottom:10px;">
-            ประมาณการ(Estimate)
-        </div>
+        </b>
+
 
         @if (Model.activityFormModel.callFrom != null)
         {

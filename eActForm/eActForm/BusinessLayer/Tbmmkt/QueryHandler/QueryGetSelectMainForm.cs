@@ -78,7 +78,11 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetQueryDataPVPrevious", new SqlParameter("@master_type_form_id", objGetGetDataPVPrevious.master_type_form_id), new SqlParameter("@payNo", objGetGetDataPVPrevious.payNo));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetQueryDataPVPrevious"
+                    , new SqlParameter("@master_type_form_id", objGetGetDataPVPrevious.master_type_form_id)
+                    , new SqlParameter("@payNo", objGetGetDataPVPrevious.payNo)
+                    , new SqlParameter("@fiscalYear", objGetGetDataPVPrevious.fiscalYear));
+
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new GetDataPVPrevious()
                              {

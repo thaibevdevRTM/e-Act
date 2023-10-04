@@ -12,9 +12,9 @@
         <div class="col-md-6 col-xs-12">
         </div>
         <div class="col-md-3 col-xs-12">
-            <label class="control-label pull-right">
-                <label id="lblEmpId">รหัสพนักงาน :</label>
-            </label>
+            <div class="control-label pull-right">
+                <div id="lblEmpId">รหัสพนักงาน :</div>
+            </div>
         </div>
         <div class="col-md-3 col-xs-12">
             @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })

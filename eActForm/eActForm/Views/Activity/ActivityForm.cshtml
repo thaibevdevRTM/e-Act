@@ -36,6 +36,10 @@
         width: 100%;
         text-align: center;
     }
+
+    .txtCenter{
+        text-align:center;
+    }
 </style>
 
 
@@ -53,7 +57,7 @@
 </div>
 
 
-<div id="divMainAct" class="row">
+<div id="divMainAct" class="row" >
     <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
 
         <div class="form-group">
@@ -68,9 +72,9 @@
                             &nbsp;
                         </div>
                     </div>
-                    <label class="control-label col-md-3 col-xs-12">
+                    <div class="control-label col-md-3 col-xs-12">
                         @Resources.Global.piorityDoc :
-                    </label>
+                    </div>
                     <div class="col-md-2 col-xs-12">
 
                         <div class="row">
@@ -92,9 +96,9 @@
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
                         Act No.
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
                     </div>
@@ -105,9 +109,9 @@
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
                         Document Date<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
@@ -129,9 +133,9 @@
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReferenceRefActNo">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReferenceRefActNo">
                         Referene ActNo.
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div id="divReference">
                             @Html.TextBoxFor(x => x.activityFormModel.referenceActNo, new { @class = "form-control textboxcss", @id = "txtReferenceActNo", autocomplete = "off", @readonly = "readonly" })
@@ -150,15 +154,15 @@
 
                     @if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
                     {
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
                             Customer Format
-                        </label>
+                        </div>
                     }
                     else
                     {
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
                             Reference
-                        </label>
+                        </div>
                     }
 
                     <div class="col-md-9 col-sm-9 col-xs-12">
@@ -178,9 +182,9 @@
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
                         Region<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
                    {
@@ -199,9 +203,9 @@
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
                         Customer Name<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
 
                         @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
@@ -226,9 +230,9 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
                         ชื่อกิจกรรม <span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
                     </div>
@@ -237,9 +241,9 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
 
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                         Product category<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
                    {
@@ -257,9 +261,9 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
                         ประเภทกิจกรรม<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
                          {
@@ -272,9 +276,9 @@
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
                         Product Group<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
                     </div>
@@ -286,9 +290,9 @@
         <div id="divSubAct" class="col-md-12 col-xs-12" style="display:none">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12">
                         เพื่อกิจกรรม<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(x => x.activityFormModel.subActivity, new SelectList(Model.activityGroupFilterList, "id", "activityAccount", 0), "Please Select", new
                         {
@@ -304,9 +308,9 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
                         วัตถุประสงค์<span class="required">*</span>
-                    </label>
+                    </div>
 
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective", autocomplete = "off" })
@@ -316,9 +320,9 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
 
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
                         Product Brand<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(model => model.activityFormModel.productBrandId, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new { @class = "form-control textboxcss", required = "required", id = "ddlProductBrand" })
                     </div>
@@ -329,46 +333,46 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                    </label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 control-label">
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="radio">
-                            <label>
+                            <div>
                                 @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
-                            </label>
+                            </div>
                         </div>
                         <div class="radio">
-                            <label>
+                            <div>
                                 @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
-                            </label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12">
                         @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" }) IO
-                    </label>
+                    </div>
                     <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
                         <div class="col-md-5 col-sm-5 col-xs-12">
                             @Html.TextBoxFor(x => x.activityFormModel.actIO, new { @class = "form-control textboxcss", id = "txtActIO", autocomplete = "off" })
                         </div>
-                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                        <div class="control-label col-md-2 col-sm-2 col-xs-12">
                             Claim
-                        </label>
+                        </div>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             @Html.TextBoxFor(x => x.activityFormModel.actClaim, new { @class = "form-control textboxcss", id = "txtActClaim", @type = "number", autocomplete = "off" })
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">
+                        <div class="control-label col-md-1 col-sm-1 col-xs-12">
                             %
-                        </label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
                         เวลากิจกรรม <br />(Activity Period)<span class="required">*</span>
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("activityFormModel.activityPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
@@ -379,9 +383,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
                         เวลาการให้ทุนพิเศษ <br />(Cost Period)
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("activityFormModel.costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
@@ -399,7 +403,7 @@
 <hr />
 <div class="row">
     <div class="col-12">
-        <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
+        <h4>รายละเอียดของการทำกิจกรรม (Activity Detail)</h4>
     </div>
     <div class="col-md-6">
         @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
@@ -429,7 +433,7 @@
         @Html.DropDownListFor(model => model.productlist, new SelectList(Model.productlist, "productCode", "productName"), "- เลือกสินค้า -", new { @class = "form-control", required = "required", id = "ddlProductfilter" })
     </div>
     <div class="form-group col-lg-1 col-xs-1" onclick="Additem()">
-        <label class="btn ink-reaction btn-danger fa fa-plus" style="margin-top:20px;"></label>
+        <div class="btn ink-reaction btn-danger fa fa-plus" style="margin-top:20px;"></div>
     </div>
 </div>
 <hr />
@@ -509,10 +513,11 @@
         <div class="container">
             <div class="row">
 
-                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
+                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"] 
+                            && Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                 {
                     <div style="display: inline-block">
-                        <button id="btnSaveAs" type="button" class="btn btn-primary" onclick="copyAndSaveNew('@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]')">&nbsp;Add Budget</button>
+                        <button id="btnAddBG" type="button" class="btn btn-primary" onclick="copyAndSaveNew('@ConfigurationManager.AppSettings["formAddOn_MT_OMT"]')">&nbsp;Add Budget</button>
                     </div>
                 }
                 @if (mode != "" && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"])
@@ -523,22 +528,9 @@
                 }
 
                 <div style="display:inline-block">
-                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.MT_AddOn.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT_AddOn.ToString())
-                    {
-                        <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT_AddOn.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
+
+                    <a href="@Url.Action("index", "Home", new { typeForm = Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+
                 </div>
 
                 <div style="display:inline-block; text-align:center" id="divSubmit">
@@ -584,7 +576,7 @@
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
- 
+
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -1401,7 +1393,7 @@
             document.getElementById("txtActIO").disabled = false;
             document.getElementById("txtActClaim").disabled = false;
             document.getElementById("divUploadFiles").style.display = "block";
-         
+
             for (var i = 0; i < lengthOfArray; i++) {
                 arrayOfElements[i].style.display = 'block';
             }
@@ -1453,8 +1445,8 @@
 
         if ('@Model.activityFormModel.statusId' == '2' || '@Model.activityFormModel.statusId' == '3') {
 
-            
-           
+
+
             if ('@UtilsAppCode.Session.User.isAdmin' == 'True'
                 || '@UtilsAppCode.Session.User.isAdminOMT' == 'True'
                 || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {

@@ -17,40 +17,40 @@
 
 <div class="row">
     <div class="col-12">
-        <p class="lead">โครงสร้างราคา - ไม่รวม Vat (Product Cost - Bath Per Case)</p>
+        <h4>โครงสร้างราคา - ไม่รวม Vat (Product Cost - Bath Per Case)</h4>
     </div>
     <div class="col-12">
         <table class="table table-bordered" id="tbl_productDetail" cellpadding="0" cellspacing="0">
             <thead class="thead-dark">
                 <tr>
-                    <th class="align-content-center font10" rowspan="2" width="5%"> <button class="btn ink-reaction btn-danger fa fa-trash-o" onclick="onDelCostDetail();"></button></th>
-                    <th class="align-content-center font10" rowspan="2" style="width:17%;">ชื่อสินค้า (product Name)</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:7%;">Std. Wholesales Price</th>
-                    <th class="align-content-center font10" colspan="2" style="width:15%;">ราคาขาย</th>
-                    <th class="align-content-center font10" colspan="3" style="width:20%;">Normal Discount (Baht)</th>
-                    <th class="align-content-center font10" style="width:7%;">Normal</th>
-                    <th class="align-content-center font10" style="width:7%;">Normal</th>
-                    <th class="align-content-center font10" style="width:7%;">Promotion</th>
+                    <td class="txtCenter" rowspan="2" width="5%"> <button class="btn ink-reaction btn-danger fa fa-trash-o" onclick="onDelCostDetail();"></button></td>
+                    <td class="txtCenter" rowspan="2" style="width:17%;">ชื่อสินค้า (product Name)</td>
+                    <td class="txtCenter" rowspan="2" style="width:7%;">Std. Wholesales Price</td>
+                    <td class="txtCenter" colspan="2" style="width:15%;">ราคาขาย</td>
+                    <td class="txtCenter" colspan="3" style="width:20%;">Normal Discount (Baht)</td>
+                    <td class="txtCenter" style="width:7%;">Normal</td>
+                    <td class="txtCenter" style="width:7%;">Normal</td>
+                    <td class="txtCenter" style="width:7%;">Promotion</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <th id="col_Special" class="align-content-center font10" colspan="2" style="width:12%;">Special Discount %</th>
-                        <th id="col_Promotion" class="align-content-center font10" style="width:8%;">Promotion</th>
+                        <td id="col_Special" class="txtCenter" colspan="2" style="width:12%;">Special Discount %</td>
+                        <td id="col_Promotion" class="txtCenter" style="width:8%;">Promotion</td>
                     }
                 </tr>
                 <tr>
-                    <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
-                    <th class="align-content-center font8">Promotion</th>
-                    <th class="align-content-center font10">(1)</th>
-                    <th class="align-content-center font10">(2)</th>
-                    <th class="align-content-center font10">(3)</th>
-                    <th class="align-content-center font10">Cost</th>
-                    <th class="align-content-center font10">GP%</th>
-                    <th class="align-content-center font10">GP%</th>
+                    <td class="txtCenter">&nbsp;&nbsp;Normal&nbsp;&nbsp;</td>
+                    <td class="txtCenter">Promotion</td>
+                    <td class="txtCenter">(1)</td>
+                    <td class="txtCenter">(2)</td>
+                    <td class="txtCenter">(3)</td>
+                    <td class="txtCenter">Cost</td>
+                    <td class="txtCenter">GP%</td>
+                    <td class="txtCenter">GP%</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <th id="col_DisBaht" class="align-content-center font10">บาท</th>
-                        <th id="col_DisPer" class="align-content-center font10">&nbsp;&nbsp;&nbsp;%</th>
-                        <th id="col_Cost" class="align-content-center font10">Cost (BHT)</th>
+                        <td id="col_DisBaht" class="txtCenter">บาท</td>
+                        <td id="col_DisPer" class="txtCenter">&nbsp;&nbsp;&nbsp;%</td>
+                        <td id="col_Cost" class="txtCenter">Cost (BHT)</td>
                     }
                 </tr>
             </thead>

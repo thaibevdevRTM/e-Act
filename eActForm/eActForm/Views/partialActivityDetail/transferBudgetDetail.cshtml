@@ -45,9 +45,9 @@
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 วันที่เสนอ :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @if (Model.activityFormModel.documentDate.ToString() != "")
                 {
@@ -66,9 +66,9 @@
         </div>
 
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 เอกสารเลขที่ :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "text-align:center;", @id = "txtActivityNo", @readonly = true })
             </div>
@@ -77,17 +77,17 @@
     </div>
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12 pull-left">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 ชื่อผู้เสนอ :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txtToContact" })
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 เบอร์โทรศัพท์ :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
             </div>
@@ -96,9 +96,9 @@
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 สินค้า : <span class="required">*</span>
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
             </div>
@@ -110,18 +110,18 @@
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
 
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 ชื่อกิจกรรม :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityProduct" })
 
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 เลขที่ใบอนุมัติงบกิจกรรม :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 @Html.TextBoxFor(m => m.activityFormTBMMKT.activityDetail, new { @class = "form-control textboxcss width:200px;", @id = "txtObjective", autocomplete = "off" })
             </div>
@@ -138,9 +138,9 @@
 
     <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:50px;">
         <div class="col-md-6 col-xs-12">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+            <div class="control-label col-md-4 col-sm-4 col-xs-12">
                 วัตถุประสงค์ :
-            </label>
+            </div>
             <div class="col-md-8 col-sm-4 col-xs-12">
                 @Html.TextAreaFor(m => m.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
             </div>
@@ -166,18 +166,18 @@
         @Html.Hidden("hdRow", new { @id = "hdRow" })
         <div class="col-md-12 col-xs-12">
             <div class="col-md-3 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     EO :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtBudgetEO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetEO", @readonly = "true" })
                 </div>
             </div>
             <div class="col-md-3 col-xs-12">
 
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     IO :
-                </label>
+                </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtBudgetIO", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetIO", onchange = "getBudgetEOIO();", @readonly = "true" })
@@ -185,9 +185,9 @@
             </div>
 
             <div class="col-md-3 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     ขอลด/ขอเพิ่ม :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.DropDownList("ddlUpDown", new List<SelectListItem>
                    {
@@ -204,9 +204,9 @@
                 </div>
             </div>
             <div class="col-md-3 col-xs3">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     จำนวนเงินที่ต้องการโอน :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtTransferBudget", "", new { @class = "form-control clsTxtTransferBudget", Style = "text-align:center; width:130;", @id = "txtTransferBudget", onchange = "getCalBudget();" })
                 </div>
@@ -230,25 +230,25 @@
         <div class="col-md-12 col-xs3">
 
             <div class="col-md-4 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     งบประมาณเดิม :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtOldBudget", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtOldBudget", @readonly = "true" })
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     คงเหลือ :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtBudgetBalance", "", new { @class = "form-control", Style = "text-align:center; width:90;", @id = "txtBudgetBalance", onchange = "getCalBudget();" })
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     งบประมาณใหม่ :
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextBox("txtNewBudget", "", new { @class = "form-control", Style = "text-align:center; width:130;", @id = "txtNewBudget", @readonly = "true" })
                 </div>
@@ -257,9 +257,9 @@
 
         <div class="col-md-12 col-xs-12">
             <div class="col-md-12 col-xs-12">
-                <label class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
+                <div class="control-label col-md-12 col-sm-12 col-xs-12" style="text-align:left;">
                     รายละเอียด
-                </label>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @Html.TextAreaFor(x => x.activityFormTBMMKT.remark, new { @class = "form-control areaWidth", @id = "txtremark", rows = 3 })
                 </div>
@@ -350,7 +350,15 @@
 
     });
 
+    $("#txtBudgetBalance").blur(function () {
+        var getBal = $("#txtBudgetBalance").val();
+        $("#txtBudgetBalance").val(getBal.trim())
+    });
 
+    $("#txtTransferBudget").blur(function () {
+        var getTrans = $("#txtTransferBudget").val();
+        $("#txtTransferBudget").val(getTrans.trim())
+    });
 
 
     function cashEdit(i) {
@@ -452,7 +460,7 @@
                 type: 'POST',
            success: function (response) {
                if (response.Data != null) {
-                   $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));  
+                   $("#txtOldBudget").val(response.Data.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                }
                else {
                    $("#txtOldBudget").val('');

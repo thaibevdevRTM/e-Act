@@ -12,9 +12,9 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
                         รหัสพนักงาน :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.empInfoModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
                     </div>
@@ -27,21 +27,21 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpName">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpName">
                         ชื่อ :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <lable id="lblEmpName" class="form-control textboxcss" readonly></lable>
+                        <div id="lblEmpName" class="form-control textboxcss" readonly></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
                         ตำแหน่ง :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <lable id="lblEmpPosition" class="form-control textboxcss" readonly></lable>
+                        <div id="lblEmpPosition" class="form-control textboxcss" readonly></div>
                     </div>
                 </div>
             </div>
@@ -49,21 +49,21 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblLvl">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="lblLvl">
                         ระดับ :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <lable id="lblLvl" class="form-control textboxcss" readonly></lable>
+                        <div id="lblLvl" class="form-control textboxcss" readonly></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblDept">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="lblDept">
                         หน่วยงาน :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <lable id="lblDept" class="form-control textboxcss" readonly></lable>
+                        <div id="lblDept" class="form-control textboxcss" readonly></div>
                     </div>
                 </div>
             </div>
@@ -71,20 +71,20 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblComp">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="lblComp">
                         สังกัดบริษัท :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <input type="hidden" id="hdCompId" name="activityFormTBMMKT.formCompanyId" class="form-control textboxcss" />
-                        <lable id="lblComp" class="form-control textboxcss" readonly></lable>
+                        <div id="lblComp" class="form-control textboxcss" readonly></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12">
                         ภาค :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <input type="hidden" id="hdRegionalId" class="form-control textboxcss" />
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.regionalId
@@ -105,9 +105,9 @@
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEmpTel">
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEmpTel">
                         โทรศัพท์ติดต่อ :
-                    </label>
+                    </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.empInfoModel.empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
                     </div>
@@ -118,9 +118,9 @@
             {
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
                             ตามคำสั่ง :
-                        </label>
+                        </div>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
 
@@ -132,12 +132,12 @@
             {
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
                             วันที่บรรจุ :
-                        </label>
+                        </div>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="hidden" id="hdYears" class="form-control textboxcss" />
-                            <lable id="lblHireDate" class="form-control textboxcss" readonly></lable>
+                            <div id="lblHireDate" class="form-control textboxcss" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -146,9 +146,9 @@
             {
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
-                            :
-                        </label>
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                        
+                        </div>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                         </div>
                     </div>

@@ -20,43 +20,43 @@
 
 <div class="row">
     <div class="col-12">
-        <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
+        <h4>รายละเอียดค่าใช้จ่าย (Cost)</h4>
     </div>
     <div class="col-12">
         <table class="table table-bordered" id="tbl_activityDetail">
             <thead class="thead-dark">
                 <tr>
-                    <th class="align-content-center font10" rowspan="2" width="10px" > <button class="btn ink-reaction btn-danger fa fa-trash-o" onclick="onDelActDetail();"></button></th>
+                    <td class="txtCenter" rowspan="2" width="10px" > <button class="btn ink-reaction btn-danger fa fa-trash-o" onclick="onDelActDetail();"></button></td>
 
-                        <th class="align-content-center font10" rowspan="2" style="width:15%;">ประเภทกิจกรรม</th>
-                        <th class="align-content-center font10" rowspan="2" style="width:14%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                        <td class="txtCenter" rowspan="2" style="width:15%;">ประเภทกิจกรรม</td>
+                        <td class="txtCenter" rowspan="2" style="width:14%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
                         @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                         {
-                            <th class="align-content-center font10" rowspan="2" style="width:10%;">Mechanics</th>
+                            <td class="align-content-center font10" rowspan="2" style="width:10%;">Mechanics</td>
                         }
-                        <th class="align-content-center font10" rowspan="2" style="width:6%;">Unit</th>
-                        <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
+                        <td class="txtCenter" rowspan="2" style="width:6%;">Unit</td>
+                        <td class="txtCenter" rowspan="2" style="width:6%;">Compensate</td>
                         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                         {
-                            <th class="align-content-center font10" colspan="3" style="width:25%;">ประมาณการยอดขาย (Estimate)</th>
-                            <th class="align-content-center font10" colspan="3" style="width:26%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                            <td class="txtCenter" colspan="3" style="width:25%;">ประมาณการยอดขาย (Estimate)</td>
+                            <td class="txtCenter" colspan="3" style="width:26%;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         }
                         else
                         {
-                            <th class="align-content-center font10" colspan="3" style="width:20%;">ประมาณการยอดขาย (Estimate)</th>
-                            <th class="align-content-center font10" colspan="4" style="width:30%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                            <td class="txtCenter" colspan="3" style="width:20%;">ประมาณการยอดขาย (Estimate)</td>
+                            <td class="txtCenter" colspan="4" style="width:30%;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         }
                     </tr>
                 <tr>
-                    <th class="align-content-center font10">ยอดขายปกติ (Case)</th>
-                    <th class="align-content-center font10">ยอดขายข่วงทำกิจกรรม (Case)</th>
-                    <th class="align-content-center font10">% Growth</th>
-                    <th class="align-content-center font10">%SE</th>
-                    <th class="align-content-center font10">Spending Exp. (Case)</th>
-                    <th class="align-content-center font10">Spending Exp. (Bath)</th>
+                    <td class="txtCenter">ยอดขายปกติ (Case)</td>
+                    <td class="txtCenter">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                    <td class="txtCenter">% Growth</td>
+                    <td class="txtCenter">%SE</td>
+                    <td class="txtCenter">Spending Exp. (Case)</td>
+                    <td class="txtCenter">Spending Exp. (Bath)</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <th class="align-content-center font10">% : ยอดขาย</th>
+                        <td class="txtCenter">% : ยอดขาย</td>
                     }
                 </tr>
             </thead>

@@ -21,16 +21,15 @@
                         }
                     </a>
                 }
-                else
-                {
-                    <a href="@Url.Action("Index", "ApproveLists")">
-                        Approve Form
-                        @if (UtilsAppCode.Session.User.countWatingActForm != "0")
-                        {
-                            <span id="txtApproveCount" class='badge bg-green'> @UtilsAppCode.Session.User.countWatingActForm</span>
-                        }
-                    </a>
-                }
+
+                <a href="@Url.Action("Index", "ApproveLists")">
+                    Approve Form
+                    @if (UtilsAppCode.Session.User.countWatingActForm != "0")
+                    {
+                        <span id="txtApproveCount" class='badge bg-green'> @UtilsAppCode.Session.User.countWatingActForm</span>
+                    }
+                </a>
+
             </li>
 
             @if (UtilsAppCode.Session.User.isSuperAdmin
