@@ -28,12 +28,18 @@
                                 checktxtpayNo();
                             });
                             function checktxtpayNo() {
+
                                 if ($('#txtpayNo').val() == "1" || $('#txtpayNo').val().replace(' ', '') == "") {
                                     $('#ddlActivityNoSub').val("");
                                     $('#ddlActivityNoSub').prop('disabled', true);
                                     $('#linkViewActNoOld').hide();
                                     $("#pvPrevious_totalallPayNo").val('');
                                 } else {
+
+                                    $("#ddlActivityNoSub option[value!='']").remove();
+                                    $("#pvPrevious_totalallPayNo option[value!='']").remove();
+                                    $("#ddlActivityNoSub").selectpicker('refresh');
+
                                     var dataToBeSend = {
                                     fiscalYear:$('#ddlFiscalYear').val()
                                     ,master_type_form_id:"@Model.activityFormTBMMKT.master_type_form_id"
@@ -48,8 +54,7 @@
                                         type:"POST",
                                         success:function(response){
                                             if(response.Data.tbToAjax.length>0){
-                                                $("#ddlActivityNoSub option[value!='']").remove();
-                                                $("#pvPrevious_totalallPayNo option[value!='']").remove();
+                                               
                                                 $.each(response.Data.tbToAjax,function(){
                                                     $("#ddlActivityNoSub").append($("<option></option>").val(this['activityId']).html(this['activityNo']));
                                                     $("#ddlActivityNoSub").selectpicker('refresh');
@@ -58,10 +63,7 @@
                                                 });
                                             }
                                             else{
-                                                $("#ddlActivityNoSub option[value!='']").remove();
-                                                $("#ddlActivityNoSub").selectpicker('refresh');
-                                                ddlActivityNoSubChange();
-                                                
+                                                ddlActivityNoSubChange();  
                                             }
                                         },
                                         error:function(data){

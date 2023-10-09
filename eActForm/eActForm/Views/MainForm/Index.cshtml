@@ -657,21 +657,36 @@
 
 
     var fileList = new Array;
+    var chkSpec;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
         maxFilesize: 20,
-        //addRemoveLinks: true,
+        accept: function (file, done) {
+            var specialChars = "#%&*:<>?/{|}'";
+            var name = file.name;
+            for (j = 0; j < specialChars.length; j++) {
+                if (name.indexOf(specialChars[j]) > -1) {
+                    alert("Special Characters [ # % & * : < > ? / { | } '] are not allowed in the file name \n\n\n" + name);
+                    e.preventDefault();
+                    chkSpec = true;
+                }
+            }
+
+            if (chkSpec != true) {
+                done();
+            }
+        },
         init: function () {
 
-        this.on("complete", function (file) {
-            CallImageView($("#hdActivityId").val());
+            this.on("complete", function (file) {
+                CallImageView($("#hdActivityId").val());
 
-        });
-    }
+            });
+        }
 
-};
+    };
 
 function CallImageView(obj) {
         $.ajax({

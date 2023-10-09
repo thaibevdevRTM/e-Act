@@ -1602,16 +1602,44 @@
 
 <script>
 
-    var maxImageHeight = 800;
     var fileList = new Array;
+    var chkSpec;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
         acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         paramName: "file",
         maxFilesize: 10,
+        accept: function (file, done) {
+            var specialChars = "#%&*:<>?/{|}'";
+            var name = file.name;
+            for (j = 0; j < specialChars.length; j++) {
+                if (name.indexOf(specialChars[j]) > -1) {
+                    alert("Special Characters [ # % & * : < > ? / { | } '] are not allowed in the file name \n\n\n" + name);
+                    e.preventDefault();
+                    chkSpec = true;
+                }
+               
+            }
+
+            if (chkSpec != true) {
+                done();
+            }
+
+            //console.log(file.name + 't0')
+            //if (file.name.length > 30) {
+            //    done("Filename exceeds 30 characters!");
+            //}
+            //else { done(); }
+        },
         //addRemoveLinks: true,
         init: function () {
+            this.on("sending", function (file) {
+                console.log(file.name + 't1')
+            });
+
             this.on("complete", function (file) {
+
+                console.log(file.name + 't2')
                 CallImageView($("#hdActivityId").val());
             });
         },
