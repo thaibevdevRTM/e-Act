@@ -2,30 +2,73 @@
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
 
+
 <div class="col-md-12">
     <div><h4>ข้อมูลเดินทาง</h4></div>
     <hr />
-    <div class="col-lg-12 col-xs-12">
-        <div class="col-md-6 col-xs-12">
-            <div> ประเทศหรืองานที่เดินทางไป</div>
-            @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control  textRight", Style = "text-align:center;", id = "txtPack" })
-        </div>
-        <div class="col-lg-3 col-xs-12">
-            <div>วันที่</div>
-            @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodSt, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
-            @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])
-            , new { @class = "form-control textRight datepicker", Style = "text-align:center;", autocomplete = "off" })
-        </div>
-        <div class="col-lg-3 col-xs-12">
-            <div>ถึง</div>
-            @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])
-           , new { @class = "form-control textRight datepicker", Style = "text-align:center;", autocomplete = "off" })
-            @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodEnd, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
+    <div class="form-group">
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-3 col-xs-12">
+                <div> ประเภทการเดินทาง :</div>
+                @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
+           {
+               @class = "form-control selectpicker",
+               id = "ddlTravelling"
+           })
+                @*     @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control  textRight", Style = "text-align:center;", id = "txtPack" })*@
+            </div>
+            <div class="col-lg-3 col-xs-12">
+                <div>วันที่</div>
+                @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodSt, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
+                @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])
+                , new { @class = "form-control textRight clsdatepicker", Style = "text-align:center;", autocomplete = "off" })
+            </div>
+            <div class="col-lg-3 col-xs-12">
+                <div>ถึง</div>
+                @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])
+               , new { @class = "form-control textRight clsdatepicker", Style = "text-align:center;", autocomplete = "off" })
+                @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodEnd, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
+            </div>
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-lg-3 col-xs-12">
+                <div>
+                    ประเทศ :
+                </div>
+                @Html.DropDownListFor(x => x.activityFormTBMMKT.list_1_select, new SelectList(Model.tB_Act_CountryList, "id", "country", ""), "", new
+                             {
+                                 @class = "form-control selectpicker",
+                                 id = "ddlCountry"
+                             })
+            </div>
+            <div class="col-lg-3 col-xs-12">
+                <div>
+                    อัตราแลกเปลี่ยน :
+                </div>
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, "{0:n2}", new { @class = "form-control textboxcss", @id = "txtAmountReceived",  Style = "text-align:center;" })
+                <a style="font-size:10px;" href="https://www.bot.or.th/th/statistics/exchange-rate.html" target="_blank"> คลิกตรวจสอบ อัตราแลกเปลี่ยนเงินตราต่างประเทศ</a>
+                <div id="divRemarkRate"></div>
+            </div>
+            <div class="col-md-5 col-xs-12" style="margin-top:20px;">
+                <div class="control-label col-md-4">
+                    ค่าใช้จ่ายเกินสิทธิ์ :
+                </div>
+                <div class="col-md-2">
+                    <div class="row" style="padding-top:8px;">
+                        @Html.CheckBoxFor(m => m.activityFormTBMMKT.isTemp, new { @onchange = "chkBox_Onchange(this)" })
+
+                    </div>
+                </div>
+
+            </div>
 
 
-    <div class="col-lg-12 col-xs-12" style="margin-top:15px">
+            <div class="col-lg-12 col-xs-12" style="margin-top:15px">
+            </div>
+
+        </div>
     </div>
-
 </div>
+

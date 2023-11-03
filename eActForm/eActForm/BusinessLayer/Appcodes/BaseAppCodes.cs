@@ -191,9 +191,20 @@ namespace eActForm.BusinessLayer.Appcodes
             return DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
         }
 
-        public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
+        public static DateTime? converStrToDatetimeWithFormat(string p_date, string formatDate)
         {
-            return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+            DateTime? conDate;
+            try
+            {
+                conDate = string.IsNullOrEmpty(p_date) ? (DateTime?)null :
+                DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+
+            return conDate;
         }
         public static User getEmpFromApi(string empId)
         {

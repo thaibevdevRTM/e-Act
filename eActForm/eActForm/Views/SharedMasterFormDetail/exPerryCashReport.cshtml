@@ -112,6 +112,12 @@
         </div>
         <br />
         <div class="fontDocV1">
+            Part 1 :   ประมาณการค่าใช้จ่ายในการเดินทาง / Estimate travel expenses
+        </div>
+
+        @Html.Action("expensesTrvDetailRpt", "ExpenseEstimateReport", new { activity_TBMMKT_Model = Model })
+
+        <div class="fontDocV1">
             Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
         </div>
         <div style="margin-bottom:5px;">

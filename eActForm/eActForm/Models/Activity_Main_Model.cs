@@ -21,6 +21,7 @@ namespace eActForm.Models
         public TB_Act_ActivityForm_SelectBrandOrChannel tB_Act_ActivityForm_SelectBrandOrChannelModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList3 { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList { get; set; }
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -35,7 +36,6 @@ namespace eActForm.Models
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel3 { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
-
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
         public List<CompanyModel> companyList { get; set; }
@@ -82,9 +82,10 @@ namespace eActForm.Models
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
         public List<string> listEoInDoc { get; set; }
         public List<detailEO> eoList { get; set; }
-
         public List<ObjGetDataLayoutDoc> list_ObjGetDataLayoutDoc { get; set; }
+        public List<TB_Act_CountryModels> tB_Act_CountryList { get; set; }
 
+        public List<TB_Act_Allowance_Model> tB_Act_AllowanceList { get; set; }
 
         public Activity_TBMMKT_Model()
         {
@@ -122,6 +123,9 @@ namespace eActForm.Models
             tB_Act_ActivityForm_SelectBrandOrChannelModel = new TB_Act_ActivityForm_SelectBrandOrChannel();
             list_ObjGetDataLayoutDoc = new List<ObjGetDataLayoutDoc>();
             activityOfEstimateList = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            tB_Act_CountryList = new List<TB_Act_CountryModels>();
+            tB_Act_AllowanceList = new List<TB_Act_Allowance_Model>();
+
         }
 
     }
@@ -166,6 +170,7 @@ namespace eActForm.Models
         public Boolean chkTemp { get; set; }
         public string remarkApprove { get; set; }
         public bool isTemp { get; set; }
+        public string chkAllowanceTBM { get; set; }
 
     }
 
@@ -258,6 +263,7 @@ namespace eActForm.Models
         public decimal? amountBalance { get; set; }
         public decimal? amountReceived { get; set; }
         public string departmentIdFlow { get; set; }
+        public double? countDays { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel

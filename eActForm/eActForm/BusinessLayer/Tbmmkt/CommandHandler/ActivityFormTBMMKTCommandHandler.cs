@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
+using eActForm.BusinessLayer.Tbmmkt.QueryHandler;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -79,6 +80,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertProduct(rtn, model, activityId);
                     rtn = ProcessInsertCliamIO(rtn, model, activityId);
                     rtn = InsertBudgetAmount(rtn, model, activityId);
+                    rtn = InsertAllownceList(rtn, model, activityId);
 
                 }
 
@@ -103,6 +105,10 @@ namespace eActForm.BusinessLayer
             if (model.activityOfEstimateList2 != null)
             {
                 rtn += insertEstimateToStored(model.activityOfEstimateList2, activityId, model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
+            }
+            if (model.activityOfEstimateList3 != null)
+            {
+                rtn += insertEstimateToStored(model.activityOfEstimateList3, activityId, model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
             }
 
             return rtn;
@@ -326,6 +332,7 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                     tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                     tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_0_select;
+                    tB_Act_ActivityChoiceSelectModel.selectNum = "0";
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
                 if (model.activityFormTBMMKT.list_1_select != "")//VAT[ฟอร์มใบสั่งจ่าย]
@@ -333,6 +340,7 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                     tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                     tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_select;
+                    tB_Act_ActivityChoiceSelectModel.selectNum = "1";
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
 
@@ -461,6 +469,7 @@ namespace eActForm.BusinessLayer
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                         tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_2_select;
+                        tB_Act_ActivityChoiceSelectModel.selectNum = "2";
                         rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                     }
                 }
@@ -481,6 +490,7 @@ namespace eActForm.BusinessLayer
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                         tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_select;
+                        tB_Act_ActivityChoiceSelectModel.selectNum = "3";
                         rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                     }
                 }
@@ -557,6 +567,8 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                     activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+
+                    activity_TBMMKT_Model.tB_Act_AllowanceList = QueryGet_TB_Act_Allowance.getAllowanceListByActId(activityId);
 
                     if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                     {
@@ -654,10 +666,15 @@ namespace eActForm.BusinessLayer
                         #endregion
                         #region formTrvTbm formTrvHcm
                         else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
-                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
+                            || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
                             activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
+
+                            var list_1_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x != null && x.selectNum == "1");
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_select = list_1_select.Any() ? list_1_select.FirstOrDefault().select_list_choice_id : "";
+
                         }
                         #endregion
                         #region formPaymentVoucherTbm
@@ -1427,6 +1444,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@id",model.id)
                     ,new SqlParameter("@actFormId",model.actFormId)
                     ,new SqlParameter("@select_list_choice_id",model.select_list_choice_id)
+                    ,new SqlParameter("@selectNum",model.selectNum)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -2115,6 +2133,39 @@ namespace eActForm.BusinessLayer
 
             return rtn;
         }
+        protected static int InsertAllownceList(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            try
+            {
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteAllowanceList"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                    });
+
+                if (model.tB_Act_AllowanceList.Any())
+                {
+
+                    foreach (var item in model.tB_Act_AllowanceList)
+                    {
+                        rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_InsertAllowanceList"
+                         , new SqlParameter[] {new SqlParameter("@activityId",model.activityFormTBMMKT.id)
+                         ,new SqlParameter("@date",item.date)
+                         ,new SqlParameter("@chkPersonal",item.chkPersonal)
+                         ,new SqlParameter("@chkBreakfast",item.chkBreakfast)
+                         ,new SqlParameter("@chkLunch",item.chkLunch)
+                         ,new SqlParameter("@chkDinner",item.chkDinner)
+                         ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
+                            });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> InsertAllownceList");
+            }
+
+            return rtn;
+        }
+
 
         #region "SubEstimate"
         public static int ProcessInsertEstimateSub(int rtn, Activity_TBMMKT_Model model, string activityId)

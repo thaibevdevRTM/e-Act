@@ -7,5 +7,6 @@
         public string select_list_choice_id { get; set; }
         public string name { get; set; }
         public string type { get; set; }
+        public string selectNum { get; set; }
     }
 }

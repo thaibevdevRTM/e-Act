@@ -36,7 +36,7 @@ namespace eForms.Models.MasterData
 
     public class Data_Detail_Model
     {
-        public string period { get; set; }
+        public DateTime? period { get; set; }
         public string currency_id { get; set; }
         public string currency_name_eng { get; set; }
         public string buying_sight { get; set; }

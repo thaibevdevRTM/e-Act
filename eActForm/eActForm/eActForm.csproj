@@ -419,6 +419,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_ActivityForm_DetailOtherList.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_Allowance.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_cost_center.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_ActivityChoiceSelect.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryProcess_TB_Act_master_material.cs" />
@@ -528,6 +529,7 @@
     <Compile Include="Models\scriptModel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
     <Compile Include="Models\TB_Act_AmountBudget.cs" />
+    <Compile Include="Models\TB_Act_Allowance_Model.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />
     <Compile Include="Models\Master_type_form_Model.cs" />
@@ -559,6 +561,7 @@
     <Compile Include="Models\TB_Act_ProductGroup_Model.cs" />
     <Compile Include="Models\TB_Act_ProductPrice_Model.cs" />
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
+    <Compile Include="Models\TB_Act_CountryGroup_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
@@ -3151,6 +3154,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\View\ExpensesWorksheet\ExpensesWorksheet.js" />
     <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
     <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
     <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
@@ -3489,6 +3493,7 @@
     <Content Include="Views\BudgetReport\reportBudgetWaitApproveIndex.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetWaitApproveListView.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetInvoiceSearch.cshtml" />
+    <Content Include="Views\ExpenseEstimateInput\allowanceDetail.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

@@ -546,10 +546,9 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
-
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
                 //activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
@@ -557,7 +556,7 @@ namespace eActForm.BusinessLayer
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id ||
                     ConfigurationManager.AppSettings["formReceptions"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
                 {
-                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").Value.ToString("dd/MM/yyyy");
                 }
 
             }

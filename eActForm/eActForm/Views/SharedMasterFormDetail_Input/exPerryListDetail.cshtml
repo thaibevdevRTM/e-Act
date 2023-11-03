@@ -21,22 +21,22 @@
             </tr>
         </thead>
 
-        @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
+        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
         {
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
                         <button id="btnDel1_0" name="btnDel_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel1" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].compensate, "{0:0.000}",new { @class = "form-control textboxcss font10 textRight" ,@type = "number", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal", @type = "number", onkeyup = "getValues()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].compensate, "{0:0.000}",new { @class = "form-control textboxcss font10 textRight" ,@type = "number", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal", @type = "number", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
             </tbody>
@@ -107,7 +107,7 @@
             </tr>
         </thead>
 
-        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
+        @for (int i = 0; i < Model.activityOfEstimateList3.Count; i++)
         {
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
@@ -115,16 +115,16 @@
                         <button id="btnDel2_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel2" onclick="cashDelete(this);"></button>
 
                         
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList3[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                        @Html.TextBox("activityOfEstimateList3[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList3[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                  new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal_tbEtt", @type = "number", onkeyup = "getTotal()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal_tbEtt", @type = "number", onkeyup = "getTotal()" })</td>
 
                 </tr>
             </tbody>
@@ -286,21 +286,29 @@
 
         $(".clsTotal").each(function () {
             totalAll += parseFloat(this.value);
-            console.log(totalAll);
         });
-        document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
+        if (isNaN(totalAll)) {
+            totalAll = 0.00;
+        }
+
+        document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
         totalExpenExMaket();
         totalAllExpenses();
     }
 
     function totalExpenExMaket() {
-        var total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
-        var ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
-        total = isNaN(total) ? 0 : parseFloat(total);
-        ExMaket = isNaN(ExMaket) ? 0 : parseFloat(ExMaket);
-        var result = total + ExMaket;
+        let total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
+        let ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
+        let v_totalEstimate = document.getElementById('totalEstimate').innerHTML.split(",").join("");
+
+        total = isNaN(total) ? 0.00 : total == '' ? 0.00 : parseFloat(total);
+        ExMaket = isNaN(ExMaket) ? 0.00 : parseFloat(ExMaket);
+        v_totalEstimate = isNaN(v_totalEstimate) ? 0.00 : parseFloat(v_totalEstimate);
+
+        let result = total + ExMaket + v_totalEstimate;
+
         document.getElementById('lbltotalExpenses').innerHTML = isNaN(result) ? 0 : result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
     }
@@ -308,13 +316,16 @@
     function totalAllExpenses() {
         var ex = parseFloat(document.getElementById('lbltotalExpenses').innerHTML.split(",").join(""));
         var adv = parseFloat(document.getElementById('lbltotalAdvance').innerHTML.split(",").join(""));
+
+        adv = isNaN(adv) ? 0.00 : adv == '' ? 0.00 : parseFloat(adv);
+
         var result = adv - ex;
          //Id for exPerryListEntertainment View
-        if (adv != 0) {
-            document.getElementById('lbltotalAll').innerHTML = result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        if (isNaN(adv)) {
+            document.getElementById('lbltotalAll').innerHTML = ex.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         else {
-            document.getElementById('lbltotalAll').innerHTML = ex.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('lbltotalAll').innerHTML = result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
     }
 
@@ -324,7 +335,7 @@
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
 
         for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].compensate");
+            var x = document.getElementsByName("activityOfEstimateList2[" + i + "].compensate");
             var rowtotal = parseFloat($(x).val());
             if (isNaN(rowtotal)) rowtotal = 0;
             totalAll = totalAll + rowtotal;
@@ -386,13 +397,14 @@
 
         $(".clsTotal_tbEtt").each(function () {
             totalAll2 += parseFloat(this.value);
-            console.log(totalAll2);
         });
 
+        totalAll2 = isNaN(totalAll2) ? 0.00 : totalAll2;
 
         document.getElementById('lbltotalExMaket').innerHTML = totalAll2.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         totalExpenExMaket();
         totalAllExpenses();
+
     }
 
 </script>

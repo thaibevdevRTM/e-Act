@@ -94,8 +94,6 @@ namespace eActForm.Controllers
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
 
-
-
                     #endregion
 
 
@@ -216,10 +214,12 @@ namespace eActForm.Controllers
 
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
                     || (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                     )
                 {
+                    
+
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     activity_TBMMKT_Model.activityOfEstimateSubList = activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -229,12 +229,23 @@ namespace eActForm.Controllers
                         activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;
                     }
                 }
-
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])//ฟอร์มChangeRequest_IT314
+                else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])//ฟอร์มChangeRequest_IT314
                 {
                     activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;
                     string formCompanyIdBySubject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetDataSubjectByid(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId).FirstOrDefault().companyId;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = formCompanyIdBySubject;
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                {
+                    //if uncheck Allowance will clear
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.chkAllowanceTBM == null)
+                    {
+                        activity_TBMMKT_Model.tB_Act_AllowanceList = new List<TB_Act_Allowance_Model>();
+                    }
+
+                    activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityOfEstimateSubList = activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists;
+
                 }
 
                 if (ActFormAppCode.checkFormAddTBDetailOther(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))

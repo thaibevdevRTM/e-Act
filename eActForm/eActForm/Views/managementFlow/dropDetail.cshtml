@@ -367,7 +367,6 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                console.log(response);
                  if (response.length > 0) {
                      $("#ddlEmployee option[value !='']").remove();
                     $.each(response, function () {

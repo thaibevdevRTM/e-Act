@@ -280,6 +280,20 @@ namespace eActForm.BusinessLayer
             }
             return valResult;
         }
+        public static DateTime? convertDateTHToShowCultureDateEN_ReTypeDate(DateTime? dateToShow, string formatDatetime)
+        {
+            DateTime? valResult;
+            if (dateToShow != null)
+            {
+                valResult = DateTime.Parse(dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true)));
+            }
+            else
+            {
+                valResult = new DateTime();
+            }
+            return valResult;
+        }
+
         public static string convertDateTHToShowCultureDateTH(DateTime? dateToShow, string formatDatetime)
         {
             string valResult = "";

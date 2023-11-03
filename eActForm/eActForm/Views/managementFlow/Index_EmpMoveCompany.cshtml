@@ -46,7 +46,6 @@
                 empId: $('#txtempId').val(),
             }
         }).done(function (response) {
-            console.log(response);
             $('#fname').val(response.Data.empName);
         });
 

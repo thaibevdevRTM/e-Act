@@ -48,7 +48,10 @@
 
 <script type="text/javascript">
 
+
+    let globAllowance = 0;
     $(document).ready(function () {
+        console.log('first')
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -56,6 +59,8 @@
         if ($("#txtEmpId").val() == '') {
             $("#txtEmpId").val('@UtilsAppCode.Session.User.empId');
         }
+
+
         getEmpDetail();
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
@@ -110,7 +115,10 @@
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
-             
+
+                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+                    getCashEmp(response.Data.level);
+                }
             }
             else {
                 $("#txtEmpName").val('');
@@ -118,33 +126,46 @@
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
-              
+
             }
         });
 
-        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReceptions"]') {
-            $exEntertain.getDataExpense();
-            $exEntertain.getAmountLimitByEmpId();
-        }*@
+
     }
 
+    function getCashEmp(lv) {
 
+        console.log('getCashEmp')
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCashLimitByEmpId", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                empLvl: lv,
+            }
+        }).done(function (response) {
 
-        //document.getElementById("lblVehicleregis").style.display = "none";
-        //$("#ddlObjective").change(function () {
-        //    if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
-        //        $("#lblVehicleregis").show();
-        //        //document.getElementById("lblVehicleregis").style.display = "block";
-        //        document.getElementById("divCertification").style.display = "none";
-        //        document.getElementById("divCashBill").style.display = "block";
-        //    }
-        //    else {
-        //        $("#lblVehicleregis").hide();
-        //        //document.getElementById("lblVehicleregis").style.display = "none";
-        //        document.getElementById("divCertification").style.display = "block";
-        //        document.getElementById("divCashBill").style.display = "none";
-        //    }
-        //});
+            if (response.Data != null) {
+
+                document.getElementById('ProductDetail_0').innerHTML = response.Data.ProductDetail_0;
+                document.getElementById('ProductDetail_1').innerHTML = response.Data.ProductDetail_1;
+                $("#ProductDetail_0").val(response.Data.ProductDetail_0);
+                $("#ProductDetail_1").val(response.Data.ProductDetail_1);
+
+                document.getElementById('lblBath_0').innerHTML = "บาท/วัน";
+                document.getElementById('lblBath_1').innerHTML = "บาท/วัน";
+                globAllowance = response.Data.ProductDetail_0;
+
+                //ต้องทำในกรณีที่ไม่ใช่ดึงมาครั้งแรก
+                if ($("#txtUnitPrice_0").val() == "" || '@Model.activityFormTBMMKT.id' == "") {
+                    $("#txtUnitPrice_0").val(response.Data.ProductDetail_0);
+                    $("#txtUnitPrice_1").val(response.Data.ProductDetail_1);
+                }
+            }
+         
+        });
+    }
+
 
 
 </script>

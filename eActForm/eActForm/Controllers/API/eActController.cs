@@ -487,21 +487,25 @@ namespace eActForm.Controllers
         public JsonResult getCashLimitByEmpId(string empId, string empLvl)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            
             var result = new AjaxResult();
             try
             {
-
-                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, empLvl).ToList();
-                if (cashEmpList.Count > 0)
+                if (empLvl != "")
                 {
-                    var resultData = new
+                    cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId, empLvl).ToList();
+                    if (cashEmpList.Count > 0)
                     {
-                        ProductDetail_0 = cashEmpList[0].cashPerDay,
-                        ProductDetail_1 = cashEmpList[1].cashPerDay,
-                    };
+                        var resultData = new
+                        {
+                            ProductDetail_0 = cashEmpList[0].cashPerDay,
+                            ProductDetail_1 = cashEmpList[1].cashPerDay,
+                        };
 
-                    result.Data = resultData;
+                        result.Data = resultData;
+                    }
                 }
+
             }
             catch (Exception ex)
             {
