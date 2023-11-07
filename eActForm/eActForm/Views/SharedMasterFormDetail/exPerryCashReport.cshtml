@@ -28,7 +28,7 @@
         font-size: 12.5px;
     }
 
-    .font14{
+    .font14 {
         font-size: 14px;
     }
 </style>
@@ -108,8 +108,57 @@
                         }
                     </td>
                 </tr>
+               
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="fontDocV1">
+                        ข้อมูลเดินทาง
+                    </td>
+                </tr>
+                <tr class="fontDocSmall">
+                    <td>
+                        ประเภทการเดินทาง :
+                    </td>
+                    <td>
+                        @Model.activityFormTBMMKT.list_0_select
+                    </td>
+
+                    <td>
+                        วันที่เดินทาง :
+                    </td>
+
+                    <td class="fontDocSmall">
+                        วันที่/Date :  @if (@Model.activityFormTBMMKT.costPeriodSt != null)
+                        {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy")} -
+                        @if (@Model.activityFormTBMMKT.costPeriodEnd != null)
+                        {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy")}
+
+                    </td>
+                </tr>
+                <tr class="fontDocSmall">
+                    <td>
+                        ประเทศ : 
+                    </td>
+                    <td>
+                        @Model.activityFormTBMMKT.list_1_select
+                    </td>
+                    <td>
+                        อัตราแลกเปลี่ยน :
+                    </td>
+                    <td>
+                        @{
+                            string amountReceived = String.Format("{0:n2}", @Model.tB_Act_ActivityForm_DetailOther.amountReceived);
+                            @amountReceived.ToString();
+                        }
+                    </td>
+                </tr>
             </table>
         </div>
+
+
+
         <br />
         <div class="fontDocV1">
             Part 1 :   ประมาณการค่าใช้จ่ายในการเดินทาง / Estimate travel expenses
@@ -118,14 +167,14 @@
         @Html.Action("expensesTrvDetailRpt", "ExpenseEstimateReport", new { activity_TBMMKT_Model = Model })
 
         <div class="fontDocV1">
-            Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
+            Part 2 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
         </div>
-        <div style="margin-bottom:5px;">
+        <!--<div style="margin-bottom:5px;">
             <table style="width:100%; margin-bottom: 10px;">
                 <tr>
-                    <td width="50%" class="fontDocSmall" style="text-align:left">
-                        - ประเทศหรืองานที่เดินทางไป / Country or For: @Model.activityFormTBMMKT.activityDetail
-                    </td>
+                    <td width="50%" class="fontDocSmall" style="text-align:left">-->
+                        @*- ประเทศหรืองานที่เดินทางไป / Country or For: @Model.activityFormTBMMKT.activityDetail*@
+                    <!--</td>
                     <td width="50%" class="fontDocSmall" style="text-align:right">
                         วันที่/Date :  @if (@Model.activityFormTBMMKT.costPeriodSt != null)
                         {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy")} -
@@ -134,7 +183,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </div>-->
         <div>
             <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;">
                 <tr style="background-color: #E5E2E2; height: 25px;">
@@ -185,7 +234,7 @@
         </div>
         <br />
         <div class="fontDocV1">
-            Part 2 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
+            Part 3 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
         </div>
         <div class="fontDocSmall">
             <lable style="color: red"> * หมายเหตุ:</lable>

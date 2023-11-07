@@ -199,8 +199,10 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
-                    activity_TBMMKT_Model.expensesDetailModel = mergeDetailTrv(activity_TBMMKT_Model);
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "travelling").FirstOrDefault().name;
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_1_select = !String.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select) ? expensesEntertainAppCode.getCountry().Where(x => x.id.Equals(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select)).FirstOrDefault().country : "";
 
+                    activity_TBMMKT_Model.expensesDetailModel = mergeDetailTrv(activity_TBMMKT_Model);
 
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]

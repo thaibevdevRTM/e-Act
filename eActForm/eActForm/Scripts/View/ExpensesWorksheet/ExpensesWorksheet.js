@@ -4,16 +4,18 @@ let diffDays;
 
 $(document).ready(function () {
 
-   
     if ($("#ddlCountry option:selected").val() != '' && $("#ProductDetail_0").val() != '0') {
         //ให้วงเงิน สำหรับเดินทางต่างประเทศ
-        setTimeout(function () {
-           
-            countDiffDate();
-        }, 2000);
+
+        console.log($("#ProductDetail_0").val() + 'callllll')
 
         setTimeout(function () {
             callMultiAllowance();
+           
+        }, 2000);
+
+        setTimeout(function () {
+            countDiffDate();
       
         }, 2500);
     }
@@ -22,7 +24,6 @@ $(document).ready(function () {
 
 function getExchangeRate() {
 
-    console.log('call1');
     $.ajax({
         type: 'POST',
         url: urlExchangeRate,
@@ -239,9 +240,10 @@ function sumRow() {
 
 function callMultiAllowance() {
 
-    console.log('callMultiAllowance')
+    
     var rowCount = parseInt($('#tabelAllowance tr.tagCountRowinTable').length);
-
+    console.log(rowCount + ' row callMultiAllowance')
+    
     if (rowCount > 0) {
         sumRow();
         setDataOrClearAllow("1");

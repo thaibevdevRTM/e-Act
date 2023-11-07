@@ -69,7 +69,7 @@ else
                     <label> สิทธิเบิก @Model.expensesDetailModel.costDetailLists[@index].productDetail  บาท / วัน</label>
                     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                     {
-                        if (Model.activityFormTBMMKT.list_1_select != "")
+                        if (Model.activityFormTBMMKT.list_1_select != "" && Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.AllowanceTBM)
                         {
                             if (Model.expensesDetailModel.costDetailLists[@index].unit > 30)
                             {
@@ -115,6 +115,10 @@ else
                             {
                                 <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
                             }
+                        }
+                        else
+                        {
+                            <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
                         }
                     }
                     else
