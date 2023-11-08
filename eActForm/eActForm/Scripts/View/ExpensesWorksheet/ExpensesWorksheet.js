@@ -177,8 +177,8 @@ function getAmountAllowance(typeDays) {
                     calSumOverAllowance = calAmountAllow + (calAvgAllowanceMon * calDiffOverDay);
 
                     $("#ProductDetail_0").val(calAvgAllowanceMon.toFixed(2));
-                    $("#txtUnitPrice_0").val(calSumOverAllowance.toFixed(2));
-                    $("#txtTotal_0").val(calSumOverAllowance.toFixed(2));
+                    $("#txtUnitPrice_0").val(0);
+                    $("#txtTotal_0").val(calSumOverAllowance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                     $("#hdTotal_0").val(calSumOverAllowance);
                 }
 
