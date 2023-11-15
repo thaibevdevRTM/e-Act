@@ -297,9 +297,35 @@
             }
 
         } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+
             if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
             if ($("#ddlTravelling").val() == "") { required += "ระบุประเภทการเดินทาง*<br>"; validate = false; }
+
+
+            var ProductDetail_0 = 0.00, ProductDetail_1 = 0.00, txtUnitPrice_0 = 0.00, txtUnitPrice_1 = 0.00;
+            if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
+            if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")) + parseFloat($("#txtVat_1").val().replace(",", "")); }
+
+            if ($("input[name='activityFormTBMMKT.isTemp']:checked").val() != 'true') {
+
+                if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
+                    required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
+                }
+            }
+
+
+            let getDay = parseFloat($("#txtUnit_0").val());
+            let getchk = $("input[name='activityFormTBMMKT.chkAllowanceTBM']:checked").val();
+            console.log(getDay);
+            console.log(getchk);
+            if ($("#ddlCountry option:selected").val() != '' && getDay < 30 && getchk != 'on') {
+                required += "&emsp;เบี้ยเลี้ยงตามสัดส่วน*<br>"; validate = false;
+            }
+
+
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }

@@ -204,10 +204,14 @@ namespace eActForm.Controllers
 
         public ActionResult exTravelDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (activity_TBMMKT_Model.list_0 == null || activity_TBMMKT_Model.list_0.Count == 0)
+            try
             {
                 activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "travelling").OrderBy(x => x.name).ToList();
                 activity_TBMMKT_Model.tB_Act_CountryList = expensesEntertainAppCode.getCountry();
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("exTravelDetail");
             }
             return PartialView(activity_TBMMKT_Model);
         }

@@ -205,6 +205,7 @@
                                         <input id="chkAllowanceTBM" type="checkbox" onchange="chkAllowanceTBM_change()" name="activityFormTBMMKT.chkAllowanceTBM"> เบี้ยเลี้ยงแบ่งจ่ายตามสัดส่วน
                                     </div>
                                     <div style="display:inline" id="divShowPerAllow"></div>
+                                    @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative)
                                 }
                             </td>
 
@@ -275,7 +276,7 @@
                                         var v_unitRow = 0.00;
                                         var v_unitpriceRow = 0.00;
                                         var v_totalRow = 0.00;
-                                        if ($("#txtUnit_" + row).val() == "") { $("#txtUnit_" + row).val() == "1"; }
+                                        if ($("#txtUnit_" + row).val() == "" || $("#txtUnit_" + row).val() == "0") { $("#txtUnit_" + row).val() == "1"; }
                                         if ($("#txtUnit_" + row).val() != "" && $("#txtUnit_" + row).val() != "0.00" && $("#txtUnit_" + row).val() != "0") {
                                             v_unitRow = parseFloat($("#txtUnit_" + row).val().replace(",", ""));
                                         }
@@ -286,7 +287,10 @@
                                         $("#hdTotal_" + row).val(v_totalRow.toFixed(2));
                                         $("#txtTotal_" + row).val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumall();
-                                        getValues();
+
+                                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+                                            getValues();
+                                        }
 
                                     }
 
@@ -321,6 +325,9 @@
                             var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
                             totalAll = totalAll + rowtotal;
                         }
+
+                        console.log(totalAll + 'totall')
+
                         $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                         $("#totalEstimate").val(totalAll);
                     }
@@ -558,15 +565,17 @@
             requiredSub += "&emsp;ค่าที่พัก*<br>"; validateSub = false;
         }
 
-        //เช็คถ้ากรอกว่าเกินสิทธิ
-        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
-        var hotelExpense = 0.00
-        if ($("#ProductDetail_1").val() != "") { hotelExpense = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+        if ($("input[name='activityFormTBMMKT.isTemp']:checked").val() != 'true') {
+            //เช็คถ้ากรอกว่าเกินสิทธิ
+            var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+            var hotelExpense = 0.00
+            if ($("#ProductDetail_1").val() != "") { hotelExpense = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
 
-        for (i = 0; i < rowCount; i++) {
-            if ((parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))) > hotelExpense) {
-                requiredSub += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์ลำดับที่ " + (i + 1) + "*<br>";
-                validateSub = false;
+            for (i = 0; i < rowCount; i++) {
+                if ((parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))) > hotelExpense) {
+                    requiredSub += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์ลำดับที่ " + (i + 1) + "*<br>";
+                    validateSub = false;
+                }
             }
         }
 

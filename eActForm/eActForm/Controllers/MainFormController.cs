@@ -141,11 +141,6 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityOfEstimateList = costThemeDetailOfGroupByPriceTBMMKT;
-                    //activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
-                    //activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
-                    //activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = "";
-                    //activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
-                    //activity_TBMMKT_Model.activityFormTBMMKT.brand_select = "";
 
                     //dev date 20200413 fream;
                     //=END==mock data for first input=====

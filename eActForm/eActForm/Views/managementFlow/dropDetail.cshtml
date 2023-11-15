@@ -122,7 +122,8 @@
     function submitPreview() {
 
 
-        if ($("#ddlLimit").val() == '' && $("#ddlCompany").val() != '@System.Configuration.ConfigurationManager.AppSettings["companyId_OMT"]') {
+        if ($("#ddlLimit").val() == '' && $("#ddlCompany").val() != '@System.Configuration.ConfigurationManager.AppSettings["companyId_OMT"]'
+        && '@typeFlow' != '@Activity_Model.typeFlow.flowAddOn.ToString()') {
             alert('ระบุ limit');
         }
         else {

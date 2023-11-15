@@ -246,6 +246,9 @@ namespace eActForm.Controllers
                 activityModel.activityFormModel.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
                 activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 activityModel.activityFormModel.activityPeriodEndStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
+                //clear Date Esitimate2,3 เพราะ Esitimate หลัก เก็บข้อมูลไว้หมดแล้ว  
+                activityModel.activityOfEstimateList2 = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+                activityModel.activityOfEstimateList3 = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activityModel, new_actId);
                 TempData.Keep();
                 result.ActivityId = new_actId;

@@ -6,6 +6,7 @@
     Layout = null;
     string txtMsg = "";
     string gethotelExpense = "";
+    decimal? sumTotal = 0;
 }
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
@@ -77,7 +78,8 @@ else
                             }
                             else
                             {
-                                <label>( คิดตามสัดส่วน )</label>
+
+                                <label>( คิดตามสัดส่วน @Model.tB_Act_ActivityForm_DetailOther.amountCumulative.Value.ToString("#,###.00") % )  </label>
                             }
                         }
                     }
@@ -107,23 +109,18 @@ else
                     {
                         if (Model.activityFormTBMMKT.list_1_select != "")
                         {
-                            if (Model.expensesDetailModel.costDetailLists[@index].unit > 30)
-                            {
-                                <label>-</label>
-                            }
-                            else
-                            {
-                                <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
-                            }
+
+                            <label>-</label>
+
                         }
                         else
                         {
-                            <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
+                            <label>@string.Format("{0:n2}", @Model.expensesDetailModel.costDetailLists[@index].unitPrice) </label>
                         }
                     }
                     else
                     {
-                        <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
+                        <label>@string.Format("{0:n2}", @Model.expensesDetailModel.costDetailLists[@index].unitPrice) </label>
                     }
 
                 }
@@ -137,7 +134,9 @@ else
                 @if (@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") != ".00")
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") </label>
+                    sumTotal += @Model.expensesDetailModel.costDetailLists[@index].total;
                 }
+
             </td>
         </tr>
     }
@@ -147,7 +146,13 @@ else
         </td>
         <td style="width: 15%;text-align:right; padding-right:5px;">
             @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
-            @Model.totalCostThisActivity.Value.ToString("#,###.00")
+            @*@Model.totalCostThisActivity.Value.ToString("#,###.00")*@
+            @{
+                string resultTotal = sumTotal > 0 ? String.Format("{0:n2}", sumTotal) : "-";
+                <label>@resultTotal</label>
+            }
+
+
         </td>
     </tr>
 </table>

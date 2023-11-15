@@ -199,7 +199,7 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
-                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "travelling").FirstOrDefault().name;
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(activity_TBMMKT_Model.activityFormTBMMKT.list_0_select).FirstOrDefault().name;
                     activity_TBMMKT_Model.activityFormTBMMKT.list_1_select = !String.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select) ? expensesEntertainAppCode.getCountry().Where(x => x.id.Equals(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select)).FirstOrDefault().country : "";
 
                     activity_TBMMKT_Model.expensesDetailModel = mergeDetailTrv(activity_TBMMKT_Model);
@@ -325,11 +325,14 @@ namespace eActForm.BusinessLayer
                     total = model22.costDetailLists[i].total;
                     if (AppCode.Expenses.hotelExpense.Contains(model22.costDetailLists[i].listChoiceId) && model22.costDetailLists[i].unit != 0)
                     {
-                        foreach (var item in modelSub.costDetailLists)
+                        if (modelSub.costDetailLists.Any())
                         {
-                            multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
+                            foreach (var item in modelSub.costDetailLists)
+                            {
+                                multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
+                            }
+                            multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
                         }
-                        multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
                         //เป็นค่าที่พักหลายราคา
                     }
 

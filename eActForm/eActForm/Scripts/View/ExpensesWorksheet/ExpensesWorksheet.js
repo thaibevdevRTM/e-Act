@@ -1,23 +1,16 @@
 ﻿
 
 let diffDays;
+let chkSubmit = false;
 
 $(document).ready(function () {
+    document.getElementById("txtAmountReceived").readOnly = true;
 
     if ($("#ddlCountry option:selected").val() != '' && $("#ProductDetail_0").val() != '0') {
-        //ให้วงเงิน สำหรับเดินทางต่างประเทศ
-
-        console.log($("#ProductDetail_0").val() + 'callllll')
-
         setTimeout(function () {
             callMultiAllowance();
-           
         }, 2000);
 
-        setTimeout(function () {
-            countDiffDate();
-      
-        }, 2500);
     }
 
 });
@@ -33,7 +26,6 @@ function getExchangeRate() {
     }).done(function (response) {
         if (response.Data != null) {
             $("#txtAmountReceived").val(parseFloat(response.Data.rate).toFixed(2))
-            console.log(parseFloat(response.Data.rate).toFixed(2) + 'rate')
             var div = document.getElementById('divRemarkRate');
             div.innerHTML = '*อ้างอิงจาก วันที่ ' + response.Data.txtDate;
         }
@@ -42,22 +34,34 @@ function getExchangeRate() {
 
 $('#ddlCountry').change(function () {
     onChangeCountry();
+
+});
+
+$('#ddlTravelling').change(function () {
+
+
+    let getTxtselect = $("#ddlTravelling option:selected").text();
+    if (getTxtselect.includes('Domestic')) {
+        $('#ddlCountry').selectpicker('val', '')
+        document.getElementById("txtAmountReceived").readOnly = true;
+    }
+    else {
+        document.getElementById("txtAmountReceived").readOnly = false;
+    }
+    onChangeCountry();
 });
 
 function onChangeCountry() {
     setDataOrClearAllow("0");
-    if ($("#activityFormModel_str_costPeriodSt").val() == '') {
-        bootbox.alert('กรุณาเลือก วันที่เดินทาง')
-        $("#ddlCountry").val('')
-    }
-
     if ($("#ddlCountry option:selected").val() != '') {
-        countDiffDate();
+        callFucResetValue();
     } else {
+
         document.getElementById("chkAllowanceTBM").disabled = true;
         document.getElementById('divShowPerAllow').innerHTML = '';
         $("#ProductDetail_0").val(globAllowance);
         $("#txtUnitPrice_0").val(globAllowance);
+        callFucResetValue();
         blurTxt(0);
     }
 
@@ -83,20 +87,32 @@ $('.clsdatepicker').datetimepicker({
 });
 
 $("#activityFormModel_str_costPeriodSt").on("change.datetimepicker", ({ date, oldDate }) => {
-    callFucResetValue();
+    onChangeCountry();
 })
 
 $("#activityFormModel_str_costPeriodEnd").on("change.datetimepicker", ({ date, oldDate }) => {
-    callFucResetValue();
+    onChangeCountry();
 })
 
 function callFucResetValue() {
-    getExchangeRate();
+
+    if ($("#ddlCountry option:selected").val() != '') {
+        getExchangeRate();
+    }
+    else {
+        $("#txtAmountReceived").val('');
+    }
+   
+
     setDataOrClearAllow('0');
     countDiffDate();
-    onChangeCountry();
-   
-    blurTxt(0);
+
+    setTimeout(function () {
+        sumall();
+        getValues();
+    }, 1000);
+    
+
 }
 
 
@@ -110,10 +126,9 @@ function countDiffDate() {
     var timeDiff = Math.abs(date2.getTime() - today.getTime());
     diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     diffDays = diffDays + 1;
-    console.log(diffDays)
     $("#txtUnit_0").val(diffDays);
 
-
+   
     if ($("#ddlCountry option:selected").val() != '') {
         if (diffDays > 30) {
 
@@ -123,9 +138,12 @@ function countDiffDate() {
             //ดึงข้อมูลเบี้ยเลี้ยงแบบ เหมา
             getAmountAllowance('month')
         } else {
-            document.getElementById("chkAllowanceTBM").disabled = false;
-            getAmountAllowance('day');
 
+            document.getElementById("chkAllowanceTBM").disabled = false;
+
+            getAmountAllowance('day');
+            document.getElementById("txtUnitPrice_0").readOnly = true;
+            document.getElementById("txtUnit_0").readOnly = true;
         }
     }
 
@@ -134,8 +152,6 @@ function countDiffDate() {
 
 
 function getAmountAllowance(typeDays) {
-    console.log($('#lblLvl').text() + 'lvl getAmountAllowance')
-
     $.ajax({
         type: 'POST',
         url: urlAllowanceOverDays,
@@ -149,25 +165,18 @@ function getAmountAllowance(typeDays) {
 
             let getAllowanceAmount = parseFloat(response.Data.Result.max_amount)
 
-
-            console.log(getAllowanceAmount + 'max_amount')
-            console.log($("#ProductDetail_0").val() + 'dayss')
             if (getAllowanceAmount > 0) {
                 let calAmountAllow = parseFloat($("#txtAmountReceived").val()) * getAllowanceAmount
-
-                console.log(parseFloat($("#txtAmountReceived").val()) + 'txtAmountReceived')
-
                 if (typeDays == 'day') {
 
 
                     $("#ProductDetail_0").val(calAmountAllow.toFixed(2));
                     $("#txtUnitPrice_0").val(calAmountAllow.toFixed(2));
 
-                    console.log($("#ProductDetail_0").val() + 'day')
-
                     let calTotalAllowanceDay = calAmountAllow * diffDays;
-                    $("#txtTotal_0").val(calTotalAllowanceDay.toFixed(2));
+                    $("#txtTotal_0").val(calTotalAllowanceDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                     $("#hdTotal_0").val(calTotalAllowanceDay);
+               
 
                 } else {
                     $("#ProductDetail_0").val(0);
@@ -176,12 +185,14 @@ function getAmountAllowance(typeDays) {
                     calDiffOverDay = diffDays - 30
                     calSumOverAllowance = calAmountAllow + (calAvgAllowanceMon * calDiffOverDay);
 
+
                     $("#ProductDetail_0").val(calAvgAllowanceMon.toFixed(2));
                     $("#txtUnitPrice_0").val(0);
                     $("#txtTotal_0").val(calSumOverAllowance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                     $("#hdTotal_0").val(calSumOverAllowance);
                 }
 
+            
             }
         }
         
@@ -225,8 +236,6 @@ function sumRow() {
 
     daySelect = countRowChk;
 
-    console.log($("#ProductDetail_0").val() + 'sumrow')
-
     let getTotalCashEmp = parseFloat($("#ProductDetail_0").val()) * rowCount;
     getTotalCashEmp = getTotalCashEmp * (sumTotal / rowCount) / 100;
 
@@ -234,22 +243,40 @@ function sumRow() {
     $("#totalAllowance").val(getTotalCashEmp);
     getPerCentAllowance = sumTotal / rowCount;
     document.getElementById('totalAllowancePerCent').innerHTML = getPerCentAllowance.toFixed(2);
+    $("#tB_Act_ActivityForm_DetailOther_amountCumulative").val(getPerCentAllowance.toFixed(2))
 
     sumDataAllow();
 }
 
-function callMultiAllowance() {
+function checkCancel() {
 
-    
+    if (chkSubmit == false) {
+        setDataOrClearAllow("0");
+    }
+}
+
+
+
+function callMultiAllowance() {
     var rowCount = parseInt($('#tabelAllowance tr.tagCountRowinTable').length);
-    console.log(rowCount + ' row callMultiAllowance')
-    
+
     if (rowCount > 0) {
-        sumRow();
+        chkSubmit = true;
         setDataOrClearAllow("1");
+        countDiffDate();
+        setTimeout(function () {
+            sumRow();
+        }, 1000);
+        
 
     } else {
         setDataOrClearAllow("0");
+        countDiffDate();
+
+        setTimeout(function () {
+            sumall();
+            getValues();
+        }, 2000);
     }
 }
 
@@ -258,14 +285,13 @@ function validateSubmit() {
     var validateSub = true;
 
     var totalAllowance = parseFloat($("#totalAllowance").val().replace(",", ""))
-    console.log(totalAllowance)
     if (totalAllowance <= 0.00 || isNaN(totalAllowance)) {
         requiredSub += "&emsp;เลือก สัดส่วนเบี้ยเลี้ยง*<br>"; validateSub = false;
     }
 
     if (validateSub == true) {
         sumDataAllow();
-
+        chkSubmit = true;
         $('#divAllowanceDetail').modal('hide');
         
     }
@@ -281,7 +307,7 @@ function setDataOrClearAllow(val) {
         document.getElementById("chkAllowanceTBM").checked = true;
 
     } else {
-
+        chkSubmit = false;
         document.getElementById("chkAllowanceTBM").checked = false;
         $('#tabelAllowance tr.tagCountRowinTable input[type="checkbox"]').each(function () {
             $(this).prop('checked', false);
@@ -291,10 +317,7 @@ function setDataOrClearAllow(val) {
         $("#txtUnitPrice_0").val($("#ProductDetail_0").val());
         $("#txtUnit_0").val("0");
         $("#txtTotal_0").val("0.00");
-        
-        sumRow();
-        countDiffDate();
-        blurTxt(0);
+        $("#tB_Act_ActivityForm_DetailOther_amountCumulative").val(100)
         document.getElementById('divShowPerAllow').innerHTML = "";
     }
 
@@ -304,7 +327,7 @@ function sumDataAllow() {
 
     $("#txtUnit_0").val(daySelect);
     $("#txtUnitPrice_0").val(parseFloat($("#ProductDetail_0").val()).toFixed(2));
-
+    $("#txtUnitPrice_0").val(0);
 
     var v_total = parseFloat($("#totalAllowance").val().replace(",", ""));
     $("#txtTotal_0").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -315,5 +338,7 @@ function sumDataAllow() {
     if (rowCount > 0) {
         document.getElementById('divShowPerAllow').innerHTML = "<a href=\"#\" onclick=\" $('#divAllowanceDetail').modal('show');\" style=\"width: 100 %\">(" + getPerCentAllowance.toFixed(2) + "%  << คลิกเพื่อดูรายละเอียด) </a>";
     }
-
+    sumall();
+    getValues();
 }
+

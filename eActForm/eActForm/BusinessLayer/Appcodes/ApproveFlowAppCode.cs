@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.AppCode;
 using static eActForm.Models.ApproveFlowModel;
 
 namespace eActForm.BusinessLayer
@@ -135,6 +136,7 @@ namespace eActForm.BusinessLayer
                     if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.expenseForm.Contains(getMasterType)))
                     {
                         model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
+                        model = checkFlowAddon(model, getData, actFormId);
                     }
                     else
                     {
@@ -258,6 +260,31 @@ namespace eActForm.BusinessLayer
 
 
                 }
+                else if (model.flowDetail.Any() && ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                {
+                    var filterList = getData.activityOfEstimateList.Where(x => x.listChoiceId == Expenses.AllowanceTBM).AsEnumerable();
+                    if (filterList.FirstOrDefault().total > 0)
+                    {
+                        getDataList_Model getDataList_Model = new getDataList_Model();
+                        getDataList_Model.subjectId = QueryGetSubject.getAllSubject().Where(x => x.typeFormId == ConfigurationManager.AppSettings["masterEmpExpense"]).FirstOrDefault().id;
+                        getDataList_Model.companyId = model.flowDetail.FirstOrDefault().companyId;
+                        var getFlowAddOn = getFlowApproveGroupByType(getDataList_Model, Activity_Model.typeFlow.flowAddOn.ToString());
+
+                        model.flowDetail.Where(x => x.rangNo > 1).Select(c => c.rangNo = c.rangNo + 2).ToList();
+                        int getRangAddOn = 2;
+                        foreach (var item in getFlowAddOn.flowDetail.Where(x => x.isApproved == true))
+                        {
+                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, getRangAddOn, item.approveGroupId, item.isShowInDoc));
+                            getRangAddOn++;
+                        }
+
+                        foreach (var item in getFlowAddOn.flowDetail.Where(x => x.isApproved == false))
+                        {
+                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, item.rangNo, item.approveGroupId, item.isShowInDoc));
+                        }
+                        model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -267,7 +294,7 @@ namespace eActForm.BusinessLayer
             return model;
         }
 
-        public static flowApproveDetail getAddOn_TrvTBM(string empId, int rangNo, string approveGroupId, bool isShowInDoc)
+        public static flowApproveDetail getAddOn_TrvTBM(string empId, int? rangNo, string approveGroupId, bool isShowInDoc)
         {
             var result = new ApproveFlowModel.flowApproveDetail(empId)
             {
@@ -447,36 +474,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowAddOn(string flowId, string actId)
-        {
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, ""
-                    , new SqlParameter[] { new SqlParameter("@flowId", flowId)
-                                            , new SqlParameter("@actFormId",actId)
-                    });
-                var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
-                             {
-                                 id = dr["id"].ToString(),
-                                 rangNo = int.Parse(dr["rangNo"].ToString()),
-                                 empId = dr["empId"].ToString(),
-                                 empEmail = dr["empEmail"].ToString(),
-                                 approveGroupName = dr["approveGroupName"].ToString(),
-                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
-                                 isShowInDoc = (bool)dr["showInDoc"],
-                                 empGroup = dr["empGroup"].ToString(),
-                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                
-                             }).ToList();
-                return lists;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("getFlowDetail >>" + ex.Message);
-            }
-        }
-
         public static List<ApproveFlowModel.flowApproveDetail> getNewPosition(string empId, string companyId)
         {
             try
@@ -525,6 +522,7 @@ namespace eActForm.BusinessLayer
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  bu = dr["empDivisionTH"].ToString(),
                                  buEN = dr["empDivisionEN"].ToString(),
+                                 companyId = dr["companyId"].ToString()
                                  //empFNameEN = dr["empFNameEN"].ToString(),
                                  //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
@@ -575,49 +573,6 @@ namespace eActForm.BusinessLayer
 
                 var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
                 result = string.IsNullOrEmpty(model.activityGroup) ? lists.Where(x => x.activityGroup == "").ToList() : lists.ToList();
-                approveFlow_Model.flowDetail = result;
-                return approveFlow_Model;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("getFlowApproveGroupByType >>" + ex.Message);
-            }
-        }
-
-        public static ApproveFlowModel.approveFlowModel getFlowAddOnByType(getDataList_Model model)
-        {
-            try
-            {
-                ApproveFlowModel.approveFlowModel approveFlow_Model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowAddOnByType"
-                    , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
-                    ,new SqlParameter("@subjectId",model.subjectId)
-                    ,new SqlParameter("@customerId",model.customerId)
-                    ,new SqlParameter("@productCateId",model.productCateId)
-                    ,new SqlParameter("@flowLimitId",model.flowLimitId)
-                    ,new SqlParameter("@channelId",model.channelId)
-                    ,new SqlParameter("@productBrandId",model.productBrandId)
-                    ,new SqlParameter("@productType",model.productTypeId)
-                    
-                    });
-                var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail("")
-                             {
-                                 id = dr["id"].ToString(),
-                                 companyId = dr["companyId"].ToString(),
-                                 flowId = dr["flowId"].ToString(),
-                                 empId = dr["empId"].ToString(),
-                                 empFNameTH = dr["empName"].ToString(),
-                                 approveGroupId = dr["approveGroupId"].ToString(),
-                                 rangNo = int.Parse(dr["rangNo"].ToString()),
-                                 empGroup = dr["empGroup"].ToString(),
-                                 isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
-                                 isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
-                             }).ToList();
-
-                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
-
-
                 approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }
