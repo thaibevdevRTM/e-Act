@@ -35,7 +35,6 @@
             }).done(function (response) {
                 if (response.Success) {
                     doMsgFail("เอกสารฉบับนี้ไม่สามารถ ยกเลิกได้ <br/> เนื่องจากเปิด Invoice ไปแล้ว");
-                    console.log(response.Success);
                     return false;
                 }
                 else {

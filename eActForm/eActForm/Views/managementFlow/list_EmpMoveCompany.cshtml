@@ -89,9 +89,7 @@
 
 
     function update() {
-        var favorite = [];
         var countDoc = document.querySelectorAll("input[name='chk_approve']:checked").length
-        console.log(countDoc);
 
         if (countDoc > 0) {
 
@@ -138,7 +136,6 @@
 
     function ddlCompany_Onchange() {
 
-        console.log('tt');
         $.each($("input[name='chk_approve']:checked"), function (index, value) {
 
             var row = $(this).val();

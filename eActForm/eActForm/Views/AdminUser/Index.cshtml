@@ -233,8 +233,6 @@
             favorite.push($(this).val());
         });
 
-        console.log(favorite);
-
         if ($('#ddlCompany').val() != null) {
             if ($("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_MT"]') || $("#ddlCompany").val().includes('@ConfigurationManager.AppSettings["companyId_OMT"]')) {
                 if (favorite.length == 0) {
@@ -409,7 +407,6 @@
                 }
                 $('input:checkbox').removeAttr('checked');
                 $.each(response.Data.productTypeList, function () {
-                    console.log(this['productTypeId']);
                     switch (this['productTypeId']) {
                         case '@AppCode.nonAL':
                             document.getElementById("chkNonAl").checked = true;

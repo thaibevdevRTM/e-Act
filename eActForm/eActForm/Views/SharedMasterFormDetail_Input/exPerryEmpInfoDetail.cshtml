@@ -51,7 +51,6 @@
 
     let globAllowance = 0;
     $(document).ready(function () {
-        console.log('first')
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -135,7 +134,6 @@
 
     function getCashEmp(lv) {
 
-        console.log('getCashEmp')
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCashLimitByEmpId", "eAct")',

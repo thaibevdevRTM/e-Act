@@ -206,7 +206,10 @@
                             var getUnit = @item.compensate == 0 ? "-" : string.Format("{0:0.###}", @item.compensate);
                         }
                         <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: right; padding-right: 5px; " class="fontDocSmall"> @getUnit </td>
-                        <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: right; padding-right: 5px; " class="fontDocSmall">@string.Format("{0:n2}", @item.total)</td>
+                        @{
+                            var gettotal = @item.total == 0 ? "-" : string.Format("{0:0.###}", @item.total);
+                        }
+                        <td style="border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: right; padding-right: 5px; " class="fontDocSmall">@string.Format("{0:n2}", gettotal)</td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:left;" class="fontDocSmall">@item.remark</td>
                     </tr>
                     unit = item.compensate + unit;
@@ -343,6 +346,9 @@
         <div id="divBenefit" runat="server" style="width: 100%;">
 
             <table style="width: 100%;" id="tabelBenefit" runat="server" border="0" cellpadding="2" cellspacing="0" class=" fontDocSmall">
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
                 <tr>
                     <td style="width: 18%;   text-align:right;">
                         <b>
@@ -351,7 +357,22 @@
                     </td>
                     <td style="width: 2%;text-align:center;"><b>:</b></td>
                     <td style="width: 80%;">
-                        @Model.tB_Act_ActivityForm_DetailOther.detailContact
+                        @Html.Raw(Model.tB_Act_ActivityForm_DetailOther.detailContact.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                    </td>
+
+                </tr>
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="width: 18%; text-align: right; vertical-align: top;">
+                        <b>
+                            Remarks : หมายเหตุ
+                        </b>
+                    </td>
+                    <td style="width: 2%; text-align: center; vertical-align: top;"><b>:</b></td>
+                    <td style="width: 80%;">
+                        @Html.Raw(Model.activityFormTBMMKT.remark.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                     </td>
 
                 </tr>

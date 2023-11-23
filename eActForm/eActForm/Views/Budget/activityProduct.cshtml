@@ -232,7 +232,6 @@
 							invId: invId,
 						},
 						success: function (response) {
-							console.log(response.success);
 							callProductList(actId);
 							callInvoiceList(actId, estId);
 							//window.location.reload()
@@ -270,7 +269,6 @@
                             actId: actId,
 						},
 						success: function (response) {
-							console.log(response.success);
 							window.location.reload();
 							//callProductList(actId);
 						}
@@ -309,7 +307,6 @@
 							delType: "cancel",
 						},
 						success: function (response) {
-							console.log(response.success);
 							callProductList(actId);
 							callInvoiceList(actId, estId);
 							//window.location.reload()

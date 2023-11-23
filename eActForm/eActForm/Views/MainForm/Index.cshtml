@@ -145,7 +145,6 @@
 
         var arrayOfElements = document.getElementsByClassName('divDelImg');
         var lengthOfArray = arrayOfElements.length;
-        console.log(lengthOfArray)
 
         for (var i = 0; i < lengthOfArray; i++) {
             arrayOfElements[i].style.display = 'none';
@@ -154,7 +153,6 @@
 
 
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
-        console.log('@Model.activityFormTBMMKT.master_type_form_id')
 
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
@@ -216,7 +214,6 @@
 
     if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
         && '@Model.activityFormTBMMKT.statusId' == '1') {
-        console.log('return');
         $("#GridPDF :input").prop("readonly", true);
 
         $("#txttoName").prop("readonly", false);
@@ -302,6 +299,12 @@
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
             if ($("#ddlTravelling").val() == "") { required += "ระบุประเภทการเดินทาง*<br>"; validate = false; }
 
+            let getTxtselect = $("#ddlTravelling option:selected").text();
+            if (getTxtselect.includes('Abroad')) {
+                if ($("#ddlCountry option:selected").val() == '') {
+                    required += "ระบุ ประเทศ*<br>"; validate = false; 
+                }
+            }
 
             var ProductDetail_0 = 0.00, ProductDetail_1 = 0.00, txtUnitPrice_0 = 0.00, txtUnitPrice_1 = 0.00;
             if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
@@ -316,15 +319,11 @@
                 }
             }
 
-
             let getDay = parseFloat($("#txtUnit_0").val());
             let getchk = $("input[name='activityFormTBMMKT.chkAllowanceTBM']:checked").val();
-            console.log(getDay);
-            console.log(getchk);
             if ($("#ddlCountry option:selected").val() != '' && getDay < 30 && getchk != 'on') {
                 required += "&emsp;เบี้ยเลี้ยงตามสัดส่วน*<br>"; validate = false;
             }
-
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
@@ -416,7 +415,6 @@
             }
 
             if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
-                console.log($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val());
 
                 if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") {
                     required += "&emsp;ชื่อลูกค้า/ชื่อกิจกรรม*<br>"; validate = false;
@@ -524,7 +522,6 @@
             }
 
             let getTotal = document.getElementById('totalEstimate').innerHTML.split(",").join("")
-            console.log(getTotal)
             if (getTotal > 50000000 && '@UtilsAppCode.Session.User.isAdminTBM' == 'False') {
                 required += "วงเงินเกิน 50 ล้าน! *<br>"; validate = false;
             }
@@ -616,7 +613,6 @@
 
 
     function SubmitData() {
-        console.log("submit");
 
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
@@ -678,7 +674,6 @@
 
     function failureQuery(data) {
         console.log('fail');
-        console.log(data);
     }
 
 

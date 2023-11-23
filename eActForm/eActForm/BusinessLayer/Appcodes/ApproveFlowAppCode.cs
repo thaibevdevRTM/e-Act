@@ -196,9 +196,9 @@ namespace eActForm.BusinessLayer
                             }
 
                             model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 3).ToList();
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true));
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false));
-                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true));
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Verifyby, true, true));
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Verifyby, false, true));
+                            model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 2, AppCode.ApproveGroup.Approveby, true, true));
                             model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                         }
                         else if (getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && chkChannel)
@@ -213,7 +213,7 @@ namespace eActForm.BusinessLayer
                                 }
 
                                 model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 1).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["KPhirayut"], int.Parse(getLastRang), AppCode.ApproveGroup.Approveby, true, true));
                             }
                         }
                         else if((getLimitAmount > decimal.Parse(ConfigurationManager.AppSettings["limit300000"]) && !chkChannel)  
@@ -230,8 +230,8 @@ namespace eActForm.BusinessLayer
                                 }
 
                                 model.flowDetail.Where(x => x.rangNo == int.Parse(getLastRang)).Select(c => c.rangNo = c.rangNo + 2).ToList();
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) , AppCode.ApproveGroup.Verifyby, false));
-                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpatama"], int.Parse(getLastRang) , AppCode.ApproveGroup.Verifyby, false,true));
+                                model.flowDetail.Add(getAddOn_TrvTBM(ConfigurationManager.AppSettings["Kpaparkorn"], int.Parse(getLastRang) + 1, AppCode.ApproveGroup.Approveby, true,true));
                                 model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                             }
                         }
@@ -274,13 +274,16 @@ namespace eActForm.BusinessLayer
                         int getRangAddOn = 2;
                         foreach (var item in getFlowAddOn.flowDetail.Where(x => x.isApproved == true))
                         {
-                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, getRangAddOn, item.approveGroupId, item.isShowInDoc));
+                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, getRangAddOn, item.approveGroupId, item.isShowInDoc , item.isApproved));
                             getRangAddOn++;
                         }
 
+                        int? getLastRang = model.flowDetail.OrderByDescending(x => x.rangNo).First().rangNo;
+
                         foreach (var item in getFlowAddOn.flowDetail.Where(x => x.isApproved == false))
                         {
-                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, item.rangNo, item.approveGroupId, item.isShowInDoc));
+                            getLastRang = getLastRang + 1;
+                            model.flowDetail.Add(getAddOn_TrvTBM(item.empId, getLastRang, item.approveGroupId, item.isShowInDoc,item.isApproved));
                         }
                         model.flowDetail = model.flowDetail.OrderBy(X => X.rangNo).ToList();
                     }
@@ -294,7 +297,7 @@ namespace eActForm.BusinessLayer
             return model;
         }
 
-        public static flowApproveDetail getAddOn_TrvTBM(string empId, int? rangNo, string approveGroupId, bool isShowInDoc)
+        public static flowApproveDetail getAddOn_TrvTBM(string empId, int? rangNo, string approveGroupId, bool isShowInDoc,bool? isApproved)
         {
             var result = new ApproveFlowModel.flowApproveDetail(empId)
             {
@@ -308,7 +311,7 @@ namespace eActForm.BusinessLayer
                 approveGroupNameEN = QueryGetAllApproveGroup.getAllApproveGroup().Where(X => X.id == approveGroupId).FirstOrDefault().nameEN,
                 isShowInDoc = isShowInDoc,
                 empGroup = "",
-                isApproved = true,
+                isApproved = isApproved,
 
             };
 

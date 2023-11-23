@@ -74,3 +74,17 @@
     </div>
 </div>
 
+<script>
+
+    function getMasterCoutry() {
+
+        var javascriptArray = @Html.Raw(Json.Encode(Model.tB_Act_CountryList));
+        console.log(javascriptArray);
+        var ddlCountry = $("#ddlCountry");
+        if (javascriptArray.length > 0) {
+            $.each(javascriptArray, function () {
+                ddlCountry.append($("<option></option>").val(this['id']).html(this['country']));
+            });
+        }
+    }
+</script>

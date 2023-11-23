@@ -44,12 +44,17 @@ $('#ddlTravelling').change(function () {
     if (getTxtselect.includes('Domestic')) {
         $('#ddlCountry').selectpicker('val', '')
         document.getElementById("txtAmountReceived").readOnly = true;
+        document.getElementById("ddlCountry").disabled = true;
     }
     else {
         document.getElementById("txtAmountReceived").readOnly = false;
+        document.getElementById("ddlCountry").disabled = false;
+        getMasterCoutry();
     }
     onChangeCountry();
 });
+
+
 
 function onChangeCountry() {
     setDataOrClearAllow("0");

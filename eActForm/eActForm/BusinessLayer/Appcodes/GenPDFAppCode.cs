@@ -92,6 +92,13 @@ namespace eActForm.BusinessLayer
                         htmlHeader += "</td></tr></table>";
 
                     }
+                    else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    {
+                        htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null);
+                        htmlHeader += ApproveAppCode.RenderViewToString("SharedMasterFormDetail", "exPerryHeader", activity_TBMMKT_Model);
+
+                        
+                    }
                 }
 
                 return htmlHeader;

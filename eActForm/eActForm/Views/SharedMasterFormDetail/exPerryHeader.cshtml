@@ -1,0 +1,19 @@
+﻿
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_TBMMKT_Model
+@{
+    Layout = null;
+}
+
+<table>
+    <tr>
+        <td class="fontDocSmall" width="540" style="text-align:right;">เลขที่เอกสาร  :</td>
+        <td class="fontDocSmall" width="110" style="text-align:right;">@Model.activityFormModel.activityNo</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class="fontDocSmall" width="540" style="text-align:right"> เลขที่เอกสารใบเคลียร์เงินทดรอง :</td>
+        <td class="fontDocSmall" width="110" style="text-align:right;">@Model.activityFormModel.reference</td>
+    </tr>
+</table>

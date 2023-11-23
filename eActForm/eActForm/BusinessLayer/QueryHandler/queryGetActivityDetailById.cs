@@ -80,6 +80,8 @@ namespace eActForm.BusinessLayer
                              select new CostThemeDetailOfGroupByPrice()
                              {
                                  id = d["Id"].ToString(),
+                                 productId = d["productId"].ToString(),
+                                 productName = d["productDetail"].ToString(),
                                  subActivityId = d["subActivityId"].ToString(),
                                  ref_Estimate = d["ref_Estimate"].ToString(),
                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()),
