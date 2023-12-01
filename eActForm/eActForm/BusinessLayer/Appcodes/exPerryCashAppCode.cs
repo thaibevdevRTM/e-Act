@@ -13,22 +13,7 @@ namespace eActForm.BusinessLayer.Appcodes
 {
     public class exPerryCashAppCode
     {
-        public static Activity_TBMMKT_Model getMaster(Activity_TBMMKT_Model model)
-        {
-            try
-            {
-                //model.requestEmpModel = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);
-                //model.exPerryCashList = getCashPosition(UtilsAppCode.Session.User.empId);
-                //model.exPerryCashModel.rulesCash = getCashPosition(UtilsAppCode.Session.User.empId).Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getMaster" + ex.Message);
-            }
-
-            return model;
-        }
-
+       
         public static List<exPerryCashModel> getCashPosition(string empId)
         {
             try

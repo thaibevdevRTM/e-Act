@@ -327,7 +327,7 @@ namespace eActForm.BusinessLayer
 
             if (okProcessInsert == true)
             {
-                if (model.activityFormTBMMKT.list_0_select != "")//สต๊อก[ฟอร์มPOS,premium]
+                if (!string.IsNullOrEmpty(model.activityFormTBMMKT.list_0_select))//สต๊อก[ฟอร์มPOS,premium]
                 {
                     tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                     tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
@@ -335,7 +335,7 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityChoiceSelectModel.selectNum = "0";
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
-                if (model.activityFormTBMMKT.list_1_select != "")//VAT[ฟอร์มใบสั่งจ่าย]
+                if (!string.IsNullOrEmpty(model.activityFormTBMMKT.list_1_select))//VAT[ฟอร์มใบสั่งจ่าย]
                 {
                     tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                     tB_Act_ActivityChoiceSelectModel.actFormId = activityId;

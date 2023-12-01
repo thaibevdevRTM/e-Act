@@ -151,6 +151,7 @@ namespace eActForm.Models
         public string[] list_8_multi_select { get; set; }
         public string[] brand_multi_select { get; set; }
         public string[] costCenter_multi_select { get; set; }
+        public string[] list_multiSelectYear { get; set; }
 
 
         public string list_1_select { get; set; }
@@ -537,6 +538,7 @@ namespace eActForm.Models
         public string choiceID { get; set; }
         public string choiceName { get; set; }
         public decimal cashPerDay { get; set; }
+        public decimal cashPerDayUs { get; set; }
         public string empLevel { get; set; }
 
     }

@@ -60,14 +60,18 @@ function onChangeCountry() {
     setDataOrClearAllow("0");
     if ($("#ddlCountry option:selected").val() != '') {
         callFucResetValue();
+
     } else {
 
         document.getElementById("chkAllowanceTBM").disabled = true;
         document.getElementById('divShowPerAllow').innerHTML = '';
         $("#ProductDetail_0").val(globAllowance);
         $("#txtUnitPrice_0").val(globAllowance);
+        $("#ProductDetail_1").val(PerDayTH);
+        $("#txtUnitPrice_1").val(PerDayTH);
         callFucResetValue();
         blurTxt(0);
+        blurTxt(1);
     }
 
 }
@@ -113,6 +117,7 @@ function callFucResetValue() {
     countDiffDate();
 
     setTimeout(function () {
+        blurTxt(1);
         sumall();
         getValues();
     }, 1000);
@@ -123,38 +128,91 @@ function callFucResetValue() {
 
 function countDiffDate() {
     diffDays = 0;
-    var today = $("#activityFormModel_str_costPeriodEnd").val()
-    today = new Date(today.split('/')[2], today.split('/')[1] - 1, today.split('/')[0]);
-    var date2 = $("#activityFormModel_str_costPeriodSt").val()
-    date2 = new Date(date2.split('/')[2], date2.split('/')[1] - 1, date2.split('/')[0]);
 
-    var timeDiff = Math.abs(date2.getTime() - today.getTime());
-    diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    diffDays = diffDays + 1;
-    $("#txtUnit_0").val(diffDays);
+    var start = $('#activityFormModel_str_costPeriodSt').val();
+    var end = $('#activityFormModel_str_costPeriodEnd').val();
 
-   
-    if ($("#ddlCountry option:selected").val() != '') {
-        if (diffDays > 30) {
+    if (start != '' && end != '') {
 
-            document.getElementById('divShowPerAllow').innerHTML = "( คิดอัตราแบบเหมาจ่าย )";
-            document.getElementById("chkAllowanceTBM").disabled = true;
+        var fromTime = new Date(convertFormatDateTimetoEn(start));
+        console.log(fromTime + 'st')
 
-            //ดึงข้อมูลเบี้ยเลี้ยงแบบ เหมา
-            getAmountAllowance('month')
-        } else {
+        var toTime = new Date(convertFormatDateTimetoEn(end));
+        console.log(toTime + 'end')
 
-            document.getElementById("chkAllowanceTBM").disabled = false;
+        var diff = (toTime - fromTime) / 1000;
+        diff = Math.abs(Math.floor(diff));
 
-            getAmountAllowance('day');
-            document.getElementById("txtUnitPrice_0").readOnly = true;
-            document.getElementById("txtUnit_0").readOnly = true;
+        var days = Math.floor(diff / (24 * 60 * 60));
+        var leftSec = diff - days * 24 * 60 * 60;
+
+        var hrs = Math.floor(leftSec / (60 * 60));
+        var leftSec = leftSec - hrs * 60 * 60;
+
+        console.log(days + ' days')
+        console.log(hrs + ' hrs')
+
+        if ($("#ddlCountry option:selected").val() == '') {
+            if (hrs >= 6 && hrs < 12) {
+                days = days + 0.5
+            }
+            else if (hrs >= 12) {
+                days = days + 1
+            }
+        }
+
+        console.log(days + 'total days')
+       
+        diffDays = days;
+        $("#txtUnit_0").val(days);
+
+
+        if ($("#ddlCountry option:selected").val() != '') {
+
+            if (diffDays > 30) {
+
+                document.getElementById('divShowPerAllow').innerHTML = "( คิดอัตราแบบเหมาจ่าย )";
+                document.getElementById("chkAllowanceTBM").disabled = true;
+
+                //ดึงข้อมูลเบี้ยเลี้ยงแบบ เหมา
+                getAmountAllowance('month')
+            } else {
+
+                document.getElementById("chkAllowanceTBM").disabled = false;
+
+                getAmountAllowance('day');
+                document.getElementById("txtUnitPrice_0").readOnly = true;
+                document.getElementById("txtUnit_0").readOnly = true;
+            }
+
         }
     }
-
 }
 
+function convertFormatDateTimetoEn(p_date) {
 
+    var splitGetTime = p_date.split(' ')[1];
+    var arrTime = splitGetTime.split(':')
+    var gethour = parseInt(arrTime[0])
+    var getmin = parseInt(arrTime[1])
+
+    var splitGetDate = p_date.split(' ')[0]
+    console.log(splitGetTime + ' time')
+
+    var result = new Date(splitGetDate.split('/')[2], splitGetDate.split('/')[1] - 1, splitGetDate.split('/')[0], gethour, getmin);
+
+    return result;
+
+     //var endDate = $("#activityFormModel_str_costPeriodEnd").val()
+        //endDate = new Date(endDate.split('/')[2], endDate.split('/')[1] - 1, endDate.split('/')[0]);
+        //var stDate = $("#activityFormModel_str_costPeriodSt").val()
+        //stDate = new Date(stDate.split('/')[2], stDate.split('/')[1] - 1, stDate.split('/')[0]);
+
+        //var timeDiff = Math.abs(stDate.getTime() - endDate.getTime());
+        //diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        //diffDays = diffDays + 1;
+
+}
 
 function getAmountAllowance(typeDays) {
     $.ajax({
@@ -168,12 +226,18 @@ function getAmountAllowance(typeDays) {
     }).done(function (response) {
         if (response.Data.Result != null) {
 
+            console.log($("#txtAmountReceived").val() + 'rate')
+            let getRate = parseFloat($("#txtAmountReceived").val());
+
             let getAllowanceAmount = parseFloat(response.Data.Result.max_amount)
 
-            if (getAllowanceAmount > 0) {
-                let calAmountAllow = parseFloat($("#txtAmountReceived").val()) * getAllowanceAmount
-                if (typeDays == 'day') {
+            let exChangePerDayUs = getRate * perDayUs
 
+            $("#ProductDetail_1").val(exChangePerDayUs.toFixed(2));
+            $("#txtUnitPrice_1").val(exChangePerDayUs.toFixed(2));
+            if (getAllowanceAmount > 0) {
+                let calAmountAllow = getRate * getAllowanceAmount
+                if (typeDays == 'day') {
 
                     $("#ProductDetail_0").val(calAmountAllow.toFixed(2));
                     $("#txtUnitPrice_0").val(calAmountAllow.toFixed(2));
@@ -190,7 +254,6 @@ function getAmountAllowance(typeDays) {
                     calDiffOverDay = diffDays - 30
                     calSumOverAllowance = calAmountAllow + (calAvgAllowanceMon * calDiffOverDay);
 
-
                     $("#ProductDetail_0").val(calAvgAllowanceMon.toFixed(2));
                     $("#txtUnitPrice_0").val(0);
                     $("#txtTotal_0").val(calSumOverAllowance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -199,9 +262,11 @@ function getAmountAllowance(typeDays) {
 
             
             }
+
         }
         
     });
+
 }
 
 function sumRow() {

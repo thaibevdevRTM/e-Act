@@ -43,6 +43,7 @@ namespace eActForm.BusinessLayer
                                      choiceName = d["name"].ToString(),
                                      cashPerDay = d["cashPerDay"] is DBNull ? 0 : decimal.Parse(d["cashPerDay"].ToString()),
                                      empLevel = d["empLevel"].ToString(),
+                                     cashPerDayUs = d["cashPerDayUS"] is DBNull ? 0 : decimal.Parse(d["cashPerDayUS"].ToString()),
                                  });
 
                     return lists.ToList();

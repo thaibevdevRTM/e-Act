@@ -105,7 +105,7 @@ namespace eActForm.Controllers
             try
             {
                 DateTime? conDate = string.IsNullOrEmpty(st_date) ? (DateTime?)null :
-                BaseAppCodes.converStrToDatetimeWithFormat(st_date, ConfigurationManager.AppSettings["formatDateUse"]);
+                BaseAppCodes.converStrToDatetimeWithFormat(st_date, "dd/MM/yyyy HH:mm");
                 var response = expensesEntertainAppCode.api_ExchangeRate(conDate);
 
                 if (response.Result.result != null )

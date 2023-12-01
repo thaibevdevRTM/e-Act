@@ -20,15 +20,15 @@
                 @*     @Html.TextBoxFor(x => x.activityFormTBMMKT.activityDetail, new { @class = "form-control  textRight", Style = "text-align:center;", id = "txtPack" })*@
             </div>
             <div class="col-lg-3 col-xs-12">
-                <div>วันที่</div>
+                <div>วันที่เดินทางไป</div>
                 @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodSt, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
                 @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])
-                , new { @class = "form-control textRight clsdatepicker", Style = "text-align:center;", autocomplete = "off" })
+                , new { @class = "form-control textRight form_datetime", Style = "text-align:center;", autocomplete = "off" })
             </div>
             <div class="col-lg-3 col-xs-12">
-                <div>ถึง</div>
+                <div>วันที่เดินทางกลับ</div>
                 @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])
-               , new { @class = "form-control textRight clsdatepicker", Style = "text-align:center;", autocomplete = "off" })
+               , new { @class = "form-control textRight form_datetime", Style = "text-align:center;", autocomplete = "off" })
                 @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodEnd, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <div>
                     อัตราแลกเปลี่ยน :
                 </div>
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, "{0:n2}", new { @class = "form-control textboxcss", @id = "txtAmountReceived",  Style = "text-align:center;" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, "{0:n2}", new { @class = "form-control textboxcss", @id = "txtAmountReceived", Style = "text-align:center;" })
                 <a style="font-size:10px;" href="https://www.bot.or.th/th/statistics/exchange-rate.html" target="_blank"> คลิกตรวจสอบ อัตราแลกเปลี่ยนเงินตราต่างประเทศ</a>
                 <div id="divRemarkRate"></div>
             </div>
@@ -76,10 +76,13 @@
 
 <script>
 
+    $(document).ready(function () {
+        setDatetime();
+    });
+
     function getMasterCoutry() {
 
         var javascriptArray = @Html.Raw(Json.Encode(Model.tB_Act_CountryList));
-        console.log(javascriptArray);
         var ddlCountry = $("#ddlCountry");
         if (javascriptArray.length > 0) {
             $.each(javascriptArray, function () {
@@ -87,4 +90,21 @@
             });
         }
     }
+
+    function setDatetime() {
+        $('.form_datetime').datetimepicker({
+            language: 'th',
+            format: '@ConfigurationManager.AppSettings["formatDatetimeUseJquery"]',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+    }
+
+
+
 </script>

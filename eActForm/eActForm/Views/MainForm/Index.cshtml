@@ -39,7 +39,6 @@
         width: 100%;
     }
 
-    /*==========20200413===========*/
     .hrTab {
         background-color: #d4c8c8;
         height: 35px;
@@ -48,7 +47,10 @@
     .highHeadFooterTable {
         height: 35px;
     }
-    /*====END======20200413===========*/
+    .thead-dark {
+        background-color: #E5E2E2;
+        height: 25px;
+    }
 </style>
 
 @using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
@@ -151,7 +153,7 @@
         }
     }
 
-
+    console.log('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)');
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
 
         $("#GridPDF :input").prop("disabled", true);
@@ -160,9 +162,9 @@
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
 
-
+        console.log('@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' + 'canEdit')
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
-            && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
+            && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) == 'true') {
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);
@@ -302,7 +304,7 @@
             let getTxtselect = $("#ddlTravelling option:selected").text();
             if (getTxtselect.includes('Abroad')) {
                 if ($("#ddlCountry option:selected").val() == '') {
-                    required += "ระบุ ประเทศ*<br>"; validate = false; 
+                    required += "ระบุ ประเทศ*<br>"; validate = false;
                 }
             }
 

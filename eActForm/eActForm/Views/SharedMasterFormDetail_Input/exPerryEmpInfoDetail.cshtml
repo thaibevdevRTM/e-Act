@@ -49,7 +49,7 @@
 <script type="text/javascript">
 
 
-    let globAllowance = 0;
+    let globAllowance, perDayUs , PerDayTH = 0;
     $(document).ready(function () {
 
         $('.datepicker').datepicker({
@@ -153,7 +153,8 @@
                 document.getElementById('lblBath_0').innerHTML = "บาท/วัน";
                 document.getElementById('lblBath_1').innerHTML = "บาท/วัน";
                 globAllowance = response.Data.ProductDetail_0;
-
+                perDayUs = response.Data.PerDayUs;
+                PerDayTH = response.Data.ProductDetail_1;
                 //ต้องทำในกรณีที่ไม่ใช่ดึงมาครั้งแรก
                 if ($("#txtUnitPrice_0").val() == "" || '@Model.activityFormTBMMKT.id' == "") {
                     $("#txtUnitPrice_0").val(response.Data.ProductDetail_0);

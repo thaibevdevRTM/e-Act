@@ -500,6 +500,7 @@ namespace eActForm.Controllers
                         {
                             ProductDetail_0 = cashEmpList[0].cashPerDay,
                             ProductDetail_1 = cashEmpList[1].cashPerDay,
+                            PerDayUs = cashEmpList[1].cashPerDayUs,
                         };
 
                         result.Data = resultData;

@@ -243,15 +243,17 @@ namespace eActForm.BusinessLayer
             {
                 if (UtilsAppCode.Session.User != null)
                 {
-                    if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"] || formTYpeId == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]))
-
-                        || (statusId == 3))
+                    if (UtilsAppCode.Session.User.isSuperAdmin || statusId == 1)
+                    {
+                        chk = true;
+                    }
+                    else if (statusId == 2 || statusId == 3)
                     {
                         chk = false;//แก้ไข้ไม่ได้
                     }
                     else
                     {
-                        chk = true;
+                        chk = false;
                     }
                 }
             }
