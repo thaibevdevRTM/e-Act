@@ -154,18 +154,7 @@
 
                                         </td>
                                     }
-                                    @*else
-                                    {
-
-                                        @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].ref_Estimate", Model.subActivitydetaillist[0][ii].id)
-                                        decimal? calCost = Model.subActivitydetaillist[0][ii].total / Model.activityFormModel.countMonth;
-
-                                        <td style="text-align:right">
-                                            @Html.TextBox("subActivitydetaillist[" + @i + "][" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", @onchange = "sumall()" })
-
-                                        </td>
-                                    }*@
-
+                                  
                                 </tr>
 
                             </tbody>
