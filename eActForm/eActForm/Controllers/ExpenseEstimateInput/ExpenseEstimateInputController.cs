@@ -174,14 +174,14 @@ namespace eActForm.Controllers
 
             if (!activity_TBMMKT_Model.tB_Act_AllowanceList.Any())
             {
-                st_Date = BaseAppCodes.converStrToDatetimeWithFormat(st_date, ConfigurationManager.AppSettings["formatDateUse"]);
-                end_Date = BaseAppCodes.converStrToDatetimeWithFormat(end_date, ConfigurationManager.AppSettings["formatDateUse"]);
+                st_Date = BaseAppCodes.converStrToDatetimeWithFormat(st_date, ConfigurationManager.AppSettings["formatDatetimeUse"]);
+                end_Date = BaseAppCodes.converStrToDatetimeWithFormat(end_date, ConfigurationManager.AppSettings["formatDatetimeUse"]);
 
                 if (st_Date != null && end_Date != null)
                 {
                     var countDays = (end_Date - st_Date).Value.TotalDays + 1;
                    
-                        for (int i = 0; i < countDays; i++)
+                        for (int i = 0; i < Math.Round(countDays); i++)
                         {
                             TB_Act_Allowance_Model allowanceModel = new TB_Act_Allowance_Model();
                             var getDate = st_Date.Value.AddDays(i);

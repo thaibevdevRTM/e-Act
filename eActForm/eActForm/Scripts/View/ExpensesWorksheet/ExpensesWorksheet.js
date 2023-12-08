@@ -10,8 +10,11 @@ $(document).ready(function () {
         setTimeout(function () {
             callMultiAllowance();
         }, 2000);
-
     }
+    else {
+        document.getElementById("chkAllowanceTBM").disabled = true;
+    }
+
 
 });
 
@@ -67,8 +70,8 @@ function onChangeCountry() {
         document.getElementById('divShowPerAllow').innerHTML = '';
         $("#ProductDetail_0").val(globAllowance);
         $("#txtUnitPrice_0").val(globAllowance);
-        $("#ProductDetail_1").val(PerDayTH);
-        $("#txtUnitPrice_1").val(PerDayTH);
+        $("#ProductDetail_1").val(perDayTH);
+        $("#txtUnitPrice_1").val(perDayTH);
         callFucResetValue();
         blurTxt(0);
         blurTxt(1);
@@ -227,6 +230,7 @@ function getAmountAllowance(typeDays) {
         if (response.Data.Result != null) {
 
             console.log($("#txtAmountReceived").val() + 'rate')
+            console.log(diffDays + ' dayss' )
             let getRate = parseFloat($("#txtAmountReceived").val());
 
             let getAllowanceAmount = parseFloat(response.Data.Result.max_amount)
@@ -234,7 +238,9 @@ function getAmountAllowance(typeDays) {
             let exChangePerDayUs = getRate * perDayUs
 
             $("#ProductDetail_1").val(exChangePerDayUs.toFixed(2));
-            $("#txtUnitPrice_1").val(exChangePerDayUs.toFixed(2));
+            sumHotelOV();
+           // $("#txtUnitPrice_1").val(exChangePerDayUs.toFixed(2));
+
             if (getAllowanceAmount > 0) {
                 let calAmountAllow = getRate * getAllowanceAmount
                 if (typeDays == 'day') {

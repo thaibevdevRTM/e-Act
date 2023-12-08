@@ -193,11 +193,14 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static DateTime? converStrToDatetimeWithFormat(string p_date, string formatDate)
         {
-            DateTime? conDate;
+            DateTime? conDate = (DateTime?)null;
             try
             {
-                conDate = string.IsNullOrEmpty(p_date) ? (DateTime?)null :
-                DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+                if (!string.IsNullOrEmpty(p_date))
+                {
+                    formatDate = checkFormatDate(p_date, formatDate);
+                    conDate = DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+                }
             }
             catch(Exception ex)
             {
@@ -206,6 +209,13 @@ namespace eActForm.BusinessLayer.Appcodes
 
             return conDate;
         }
+        public static string checkFormatDate(string p_date,string formatDate)
+        {
+            string getFormat = p_date.Contains(":") ? ConfigurationManager.AppSettings["formatDatetimeUse"] : formatDate;
+            return getFormat;
+        }
+           
+
         public static User getEmpFromApi(string empId)
         {
             ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();

@@ -85,8 +85,8 @@
         <tr>
             <td></td>
             <td colspan="2" class="textRight">
-                รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
-                Expenses (Excluding Entertainment Expenses and Market Visit)
+                <div>รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)</div>
+                <div>Expenses (Excluding Entertainment Expenses and Market Visit)</div>
             </td>
             <td class="textRight">
                 <label id="lblLite"></label>
@@ -110,11 +110,17 @@
 @*<button type="button" class="btn ink-reaction btn-close-white" onclick="divShowandHide()">แสดงเพิ่มเติม</button>*@
 
 
-<div id="divListExpense" style="margin-bottom:50px;" class="tabcontent">
+<div id="divListExpense" style="margin-bottom:20px;" class="tabcontent">
+    <div class="col-md-12 col-xs-12">
+        <fieldset>
+            <legend> ค่าใช้จ่ายในการเดินทาง / Travel Expenses</legend>
+        </fieldset>
+    </div>
+
     <div style="margin-top:50px;">
         @Html.Action("expensesTrvDetail", "ExpenseEstimateInput", new { activity_TBMMKT_Model = Model })
     </div>
-   
+
 
 </div>
 
@@ -135,7 +141,7 @@
             <thead>
                 <tr class="thead-dark">
                     <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
-                    <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</td>
+                    <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่ตามใบเสร็จ</td>
                     <td class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</td>
                     <td class="align-content-center font10" rowspan="2" style="width:25%;">จุดประสงค์</td>
                     <td class="align-content-center font10" rowspan="2" style="width:25%;">ชื่อลูกค้า</td>
@@ -188,11 +194,19 @@
 <div class="col-md-12" style="margin-top:50px;">
     <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
         <tr>
+            <td style="text-align:center">
+                สรุปค่าใช้จ่ายทั้งหมด
+            </td>
+            <td style="width:11%; text-align:center">
+               จำนวนเงิน/บาท
+            </td>
+        </tr>
+        <tr>
             <td class="textRight">
                 รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
                 Total Monthly Expenses (Baht)
             </td>
-            <td class="textRight" style="width:11%;">
+            <td class="textRight">
                 <label id="lbltotalExpenses"></label>
             </td>
         </tr>

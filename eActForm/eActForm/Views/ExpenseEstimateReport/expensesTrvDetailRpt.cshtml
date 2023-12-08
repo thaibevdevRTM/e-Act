@@ -7,6 +7,7 @@
     string txtMsg = "";
     string gethotelExpense = "";
     decimal? sumTotal = 0;
+    decimal? sumOverHotel = 0;
 }
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
@@ -30,9 +31,7 @@ else
 
 
 <div class=" fontDocSmall " style="padding-left:5em;">
-
-    <b>@txtMsg</b>
-
+    @txtMsg
 </div>
 <div style="height:15px;"></div>
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
@@ -49,10 +48,10 @@ else
         <td style="width: 5%;text-align:center;">
             <b>จำนวน/วัน</b>
         </td>
-        <td style="width: 22%;text-align:center;">
+        <td style="width: 20%;text-align:center;">
             <b>ราคา/หน่วย</b>
         </td>
-        <td style="width: 8%; text-align:center;">
+        <td style="width: 10%; text-align:center;">
             <b>    Total/รวม(บาท)</b>
         </td>
     </tr>
@@ -60,7 +59,6 @@ else
     @{ var index = 0;}
     @for (index = 0; index < Model.expensesDetailModel.costDetailLists.Count; index++)
     {
-
         <tr style="height:20px;">
 
             <td style="text-align:left; padding-left:5px;">
@@ -125,11 +123,20 @@ else
 
                 }
 
+                @{
+                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == gethotelExpense)
+                    {
+                        decimal getHotel = !string.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].productDetail) ? decimal.Parse(@Model.expensesDetailModel.costDetailLists[@index].productDetail) : 0;
+                        sumOverHotel = @Model.expensesDetailModel.costDetailLists[@index].total - (getHotel * @Model.expensesDetailModel.costDetailLists[@index].unit);
+                    }
+                }
+
                 @if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
                 {
                     <span style="color:red">*</span>
                 }
             </td>
+
             <td style="text-align:right; padding-right:5px;">
                 @if (@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") != ".00")
                 {
@@ -140,18 +147,35 @@ else
             </td>
         </tr>
     }
+
+    @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+    {
+        <tr>
+            <td colspan="3" style="text-align:right;">
+                <b>ค่าที่พักเกินสิทธิ์รวม(บาท)</b> &nbsp;
+            </td>
+            <td style="text-align:right; padding-right:5px;">
+                @{
+                    string resultOVHotel = sumOverHotel > 0 ? String.Format("{0:n2}", sumOverHotel) : "-";
+                    <label>@resultOVHotel</label>
+                }
+
+            </td>
+        </tr>
+    }
+
     <tr>
-        <td colspan="3" style="width: 85%;text-align:right;">
+
+        <td colspan="3" style="text-align:right;">
             <b>จำนวนเงินรวม(บาท)</b> &nbsp;
         </td>
-        <td style="width: 15%;text-align:right; padding-right:5px;">
+        <td style="text-align:right; padding-right:5px;">
             @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
             @*@Model.totalCostThisActivity.Value.ToString("#,###.00")*@
             @{
                 string resultTotal = sumTotal > 0 ? String.Format("{0:n2}", sumTotal) : "-";
                 <label>@resultTotal</label>
             }
-
 
         </td>
     </tr>

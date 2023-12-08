@@ -111,6 +111,11 @@
     </div>
 </div>
 
+<div class="modal fade" id="previewModal2" style="display:none">
+    <div id="divPreview2">
+    </div>
+</div>
+
 <div id="preview" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -644,9 +649,9 @@
             }
             else {
                 console.log('No Gen');
-                $("#divPreview").html(htmlResponse);
+                $("#divPreview2").html(htmlResponse);
+                $('#previewModal2').modal('show');
                 $("#WaitDialog").hide();
-                $('#previewModal').modal('show');
             }
 
         });

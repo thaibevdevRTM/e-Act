@@ -22,12 +22,12 @@
             <div class="col-lg-3 col-xs-12">
                 <div>วันที่เดินทางไป</div>
                 @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodSt, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
-                @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"])
+                @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDatetimeUse"])
                 , new { @class = "form-control textRight form_datetime", Style = "text-align:center;", autocomplete = "off" })
             </div>
             <div class="col-lg-3 col-xs-12">
                 <div>วันที่เดินทางกลับ</div>
-                @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"])
+                @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDatetimeUse"])
                , new { @class = "form-control textRight form_datetime", Style = "text-align:center;", autocomplete = "off" })
                 @*@Html.TextBoxFor(x => x.activityFormModel.str_costPeriodEnd, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })*@
             </div>

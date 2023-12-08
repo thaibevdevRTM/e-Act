@@ -13,6 +13,9 @@
             $("#totalSubEstimate").text('0.000');
         } else {
             setElement("0");
+            $('#divInt input').val('0');
+            $('#divDecimal input,#totalSubEstimate').val('0.000');
+            $("#totalSubEstimate").text('0.000');
             $('#divDetailSub').modal('hide');
         }
     }
@@ -80,6 +83,10 @@
         $('#divDetailSub').modal('hide');
 
         setElement("1");
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+           sumHotelOV();
+        }
+
 
     }
 
@@ -225,7 +232,18 @@
 
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input  type="number" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" onchange="blurTxt(@index);" />
+
+
+                                @Html.TextBoxFor(x => item.unitPrice, "{0:0.00}", new
+                                {
+                                        @id = "txtUnitPrice_" + @index,
+                                        Name = "expensesDetailModel.costDetailLists[" + index + "].unitPriceDisplay",
+                                        @class = "form-control textboxcss text-right",
+                                        @type = "number",
+                                        @onchange = "blurTxt(" + @index + ");"
+
+                                })
+                                @* <input type="number" value="@item.unitPrice" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" onchange="blurTxt(@index);" />*@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
@@ -256,6 +274,8 @@
 
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
+                                <input type="hidden" value="@item.totalCase" id="hdTotalCase_@index" name="expensesDetailModel.costDetailLists[@index].totalCase" class="form-control textboxcss text-right hdTotalCase_@index " />
+
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new
                            {
                                @id = "txtTotal_" + @index
@@ -271,10 +291,9 @@
 
 
                                     function blurTxt(row) {
+                                        console.log(row + ' row')
+                                        var v_unitRow, v_unitpriceRow, v_totalRow ,v_total_hotelOV  = 0.00;
 
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
                                         if ($("#txtUnit_" + row).val() == "" || $("#txtUnit_" + row).val() == "0") { $("#txtUnit_" + row).val() == "1"; }
                                         if ($("#txtUnit_" + row).val() != "" && $("#txtUnit_" + row).val() != "0.00" && $("#txtUnit_" + row).val() != "0") {
                                             v_unitRow = parseFloat($("#txtUnit_" + row).val().replace(",", ""));
@@ -283,11 +302,13 @@
                                             v_unitpriceRow = parseFloat($("#txtUnitPrice_" + row).val().replace(",", "")) + parseFloat($("#txtVat_" + row).val().replace(",", ""));
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
+                                        v_totalRow = isNaN(v_totalRow) ? 0.00 : v_totalRow;
                                         $("#hdTotal_" + row).val(v_totalRow.toFixed(2));
                                         $("#txtTotal_" + row).val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumall();
 
                                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+                                            sumHotelOV();
                                             getValues();
                                         }
 
@@ -299,6 +320,15 @@
                         </tr>
                         index++;
                     }
+                    <tr>
+                        <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            จำนวนเงินส่วนเกินสิทธิ์&nbsp;
+                        </td>
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                            <label id="lblOverLimit" type="text" readonly="readonly"></label>&nbsp;
+                        </td>
+                    </tr>
+
                     <tr>
                         <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             จำนวนเงินรวม(บาท)&nbsp;
@@ -327,6 +357,33 @@
 
                         $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                         $("#totalEstimate").val(totalAll);
+
+                    }
+
+                    function sumHotelOV() {
+
+                        let getTotalHotel, v_total_hotelOV, getDays = 0.00;
+
+                        console.log($("#hdTotal_1").val() + 'tt')
+                        console.log($("#txtUnit_1").val() + 'unit')
+
+                        if ($("#hdTotal_1").val() != "0.00") {
+                            getTotalHotel = parseFloat($("#hdTotal_1").val());
+                            getDays = parseFloat($("#txtUnit_1").val());
+                            v_total_hotelOV = getDays * parseFloat($("#ProductDetail_1").val().replace(",", ""));
+                            console.log(getTotalHotel)
+                            console.log(v_total_hotelOV)
+                            if (v_total_hotelOV < getTotalHotel) {
+                                v_total_hotelOV = getTotalHotel - v_total_hotelOV;
+                                $("#hdTotalCase_1").val(v_total_hotelOV)
+                            }
+                            else {
+                                v_total_hotelOV = 0.00;
+                            }
+                            $("#lblOverLimit").text(v_total_hotelOV.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        }
+
+
                     }
                     sumall();
                 </script>
@@ -469,6 +526,7 @@
                                         $("#hdSubTotal_@indexSub").val(v_totalRow.toFixed(3));
                                         $("#txtSubTotal_@indexSub").val(v_totalRow.toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumSubAll();
+
                                     });
 
                                 </script>
