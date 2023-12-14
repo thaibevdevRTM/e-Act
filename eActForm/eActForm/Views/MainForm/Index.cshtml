@@ -166,10 +166,13 @@
 
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
+        $("#divTab :input").prop("disabled", false);
 
         console.log('@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' + 'canEdit')
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
             && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) == 'true') {
+
+             console.log('ok')
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);

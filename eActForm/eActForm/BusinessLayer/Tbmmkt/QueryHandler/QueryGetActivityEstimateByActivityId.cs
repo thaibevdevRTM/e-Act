@@ -88,6 +88,7 @@ namespace eActForm.BusinessLayer
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
+                                  totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalCase"].ToString())),
                                   displayType = d["displayType"].ToString(),
                                   subDisplayType = d["subDisplayType"].ToString(),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
@@ -161,6 +162,7 @@ namespace eActForm.BusinessLayer
                                   unitPriceDisplayReport = string.Format("{0:n2}", (decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())) + decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())))),
                                   vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
+                                  totalCase = d["overPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["overPrice"].ToString())),
 
                               });
 

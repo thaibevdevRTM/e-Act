@@ -44,7 +44,7 @@ $('#ddlTravelling').change(function () {
 
 
     let getTxtselect = $("#ddlTravelling option:selected").text();
-    if (getTxtselect.includes('Domestic')) {
+    if (getTxtselect.includes('Domestic') || getTxtselect == '') {
         $('#ddlCountry').selectpicker('val', '')
         document.getElementById("txtAmountReceived").readOnly = true;
         document.getElementById("ddlCountry").disabled = true;
@@ -59,10 +59,10 @@ $('#ddlTravelling').change(function () {
 
 
 
-function onChangeCountry() {
-    setDataOrClearAllow("0");
+async function onChangeCountry() {
+    await setDataOrClearAllow("0");
     if ($("#ddlCountry option:selected").val() != '') {
-        callFucResetValue();
+       await callFucResetValue();
 
     } else {
 
@@ -72,7 +72,7 @@ function onChangeCountry() {
         $("#txtUnitPrice_0").val(globAllowance);
         $("#ProductDetail_1").val(perDayTH);
         $("#txtUnitPrice_1").val(perDayTH);
-        callFucResetValue();
+        await callFucResetValue();
         blurTxt(0);
         blurTxt(1);
     }
@@ -106,24 +106,27 @@ $("#activityFormModel_str_costPeriodEnd").on("change.datetimepicker", ({ date, o
     onChangeCountry();
 })
 
-function callFucResetValue() {
+async function callFucResetValue() {
 
     if ($("#ddlCountry option:selected").val() != '') {
-        getExchangeRate();
+        await getExchangeRate();
     }
     else {
         $("#txtAmountReceived").val('');
     }
-   
 
-    setDataOrClearAllow('0');
-    countDiffDate();
+
+    //await setDataOrClearAllow('0');
+    await countDiffDate();
+
+    //await blurTxt(1);
 
     setTimeout(function () {
-        blurTxt(1);
-        sumall();
-        getValues();
-    }, 1000);
+         sumall();
+         getValues();
+    }, 2000)
+    
+
     
 
 }
@@ -138,10 +141,10 @@ function countDiffDate() {
     if (start != '' && end != '') {
 
         var fromTime = new Date(convertFormatDateTimetoEn(start));
-        console.log(fromTime + 'st')
+        //console.log(fromTime + 'st')
 
         var toTime = new Date(convertFormatDateTimetoEn(end));
-        console.log(toTime + 'end')
+        //console.log(toTime + 'end')
 
         var diff = (toTime - fromTime) / 1000;
         diff = Math.abs(Math.floor(diff));
@@ -152,8 +155,8 @@ function countDiffDate() {
         var hrs = Math.floor(leftSec / (60 * 60));
         var leftSec = leftSec - hrs * 60 * 60;
 
-        console.log(days + ' days')
-        console.log(hrs + ' hrs')
+        //console.log(days + ' days')
+        //console.log(hrs + ' hrs')
 
         if ($("#ddlCountry option:selected").val() == '') {
             if (hrs >= 6 && hrs < 12) {
@@ -163,12 +166,10 @@ function countDiffDate() {
                 days = days + 1
             }
         }
-
-        console.log(days + 'total days')
-       
-        diffDays = days;
+        
         $("#txtUnit_0").val(days);
-
+        console.log(days + 'total days')
+        diffDays = days;
 
         if ($("#ddlCountry option:selected").val() != '') {
 
@@ -200,7 +201,7 @@ function convertFormatDateTimetoEn(p_date) {
     var getmin = parseInt(arrTime[1])
 
     var splitGetDate = p_date.split(' ')[0]
-    console.log(splitGetTime + ' time')
+    //console.log(splitGetTime + ' time')
 
     var result = new Date(splitGetDate.split('/')[2], splitGetDate.split('/')[1] - 1, splitGetDate.split('/')[0], gethour, getmin);
 
@@ -229,8 +230,8 @@ function getAmountAllowance(typeDays) {
     }).done(function (response) {
         if (response.Data.Result != null) {
 
-            console.log($("#txtAmountReceived").val() + 'rate')
-            console.log(diffDays + ' dayss' )
+            //console.log($("#txtAmountReceived").val() + 'rate')
+            //console.log(diffDays + ' dayss' )
             let getRate = parseFloat($("#txtAmountReceived").val());
 
             let getAllowanceAmount = parseFloat(response.Data.Result.max_amount)
@@ -243,6 +244,10 @@ function getAmountAllowance(typeDays) {
 
             if (getAllowanceAmount > 0) {
                 let calAmountAllow = getRate * getAllowanceAmount
+
+                //console.log(getRate + ' getRate')
+                //console.log(getAllowanceAmount + ' getAllowanceAmount')
+
                 if (typeDays == 'day') {
 
                     $("#ProductDetail_0").val(calAmountAllow.toFixed(2));
@@ -252,7 +257,7 @@ function getAmountAllowance(typeDays) {
                     $("#txtTotal_0").val(calTotalAllowanceDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                     $("#hdTotal_0").val(calTotalAllowanceDay);
                
-
+                    //console.log(calTotalAllowanceDay + ' p_day')
                 } else {
                     $("#ProductDetail_0").val(0);
 
@@ -264,6 +269,8 @@ function getAmountAllowance(typeDays) {
                     $("#txtUnitPrice_0").val(0);
                     $("#txtTotal_0").val(calSumOverAllowance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                     $("#hdTotal_0").val(calSumOverAllowance);
+
+                    //console.log(calSumOverAllowance + ' p_month')
                 }
 
             
@@ -335,7 +342,7 @@ function checkCancel() {
 
 function callMultiAllowance() {
     var rowCount = parseInt($('#tabelAllowance tr.tagCountRowinTable').length);
-
+    //console.log(rowCount + 'count row')
     if (rowCount > 0) {
         chkSubmit = true;
         setDataOrClearAllow("1");
@@ -393,8 +400,11 @@ function setDataOrClearAllow(val) {
         $("#txtUnitPrice_0").val($("#ProductDetail_0").val());
         $("#txtUnit_0").val("0");
         $("#txtTotal_0").val("0.00");
+        $("#hdTotal_0").val(0.00);
         $("#tB_Act_ActivityForm_DetailOther_amountCumulative").val(100)
         document.getElementById('divShowPerAllow').innerHTML = "";
+        sumall();
+        getValues();
     }
 
 }

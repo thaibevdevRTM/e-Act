@@ -243,7 +243,7 @@ namespace eActForm.BusinessLayer
             {
                 if (UtilsAppCode.Session.User != null)
                 {
-                    if (UtilsAppCode.Session.User.isSuperAdmin || statusId == 1)
+                    if (UtilsAppCode.Session.User.isSuperAdmin || statusId == 1 || statusId == 5)
                     {
                         chk = true;
                     }
@@ -251,10 +251,7 @@ namespace eActForm.BusinessLayer
                     {
                         chk = false;//แก้ไข้ไม่ได้
                     }
-                    else
-                    {
-                        chk = false;
-                    }
+                   
                 }
             }
             catch (Exception ex)

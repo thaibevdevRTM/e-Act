@@ -2196,6 +2196,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.unitPrice = item.unitPrice == null ? 0 : item.unitPrice;
                 costThemeDetail.vat = item.vat == null ? 0 : item.vat;
                 costThemeDetail.total = item.total == null ? 0 : item.total;
+                costThemeDetail.totalCase = item.totalCase == null ? 0 : item.totalCase;
                 costThemeDetail.delFlag = false;
                 costThemeDetail.createdByUserId = createdByUserId;
                 costThemeDetail.createdDate = createdDate == null ? DateTime.Now : createdDate;
@@ -2223,6 +2224,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
                     ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
                     ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
+                    ,new SqlParameter("@overPrice",decimal.Parse(string.Format("{0:0.00000}", model.totalCase)))
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)

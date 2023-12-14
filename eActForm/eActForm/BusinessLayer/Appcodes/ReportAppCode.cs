@@ -345,6 +345,7 @@ namespace eActForm.BusinessLayer
                         unitPrice = model22.costDetailLists[i].unitPrice + model22.costDetailLists[i].vat,
                         unitPriceDisplay = multiPrice,
                         total = model22.costDetailLists[i].total,
+                        totalCase = model22.costDetailLists[i].totalCase,
                         displayType = model22.costDetailLists[i].displayType,
                         subDisplayType = model22.costDetailLists[i].subDisplayType,
                         updatedByUserId = model22.costDetailLists[i].updatedByUserId,

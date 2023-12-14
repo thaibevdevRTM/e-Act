@@ -33,7 +33,7 @@
 </style>
 
 
-<div class="tab">
+<div id="divTab" class="tab">
     <button type="button" id="defaultOpen" class="tablinks" onclick="openTab(event, 'divTabGenaral')">Genaral</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divListExpense')">Travel Expenses</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divEntertain')">Entertain</button>
@@ -54,7 +54,7 @@
         <thead class="thead-dark">
             <tr>
                 <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
-                <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</td>
+                <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่ตามใบเสร็จ</td>
                 <td class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</td>
                 <td class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</td>
                 <td class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</td>
@@ -86,7 +86,7 @@
             <td></td>
             <td colspan="2" class="textRight">
                 <div>รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)</div>
-                <div>Expenses (Excluding Entertainment Expenses and Market Visit)</div>
+                <div>Total General expenses (Excluding Entertainment Expenses and Market Visit)</div>
             </td>
             <td class="textRight">
                 <label id="lblLite"></label>
@@ -195,7 +195,7 @@
     <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
         <tr>
             <td style="text-align:center">
-                สรุปค่าใช้จ่ายทั้งหมด
+                <b>สรุปค่าใช้จ่ายทั้งหมด</b>
             </td>
             <td style="width:11%; text-align:center">
                จำนวนเงิน/บาท
@@ -203,8 +203,8 @@
         </tr>
         <tr>
             <td class="textRight">
-                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
-                Total Monthly Expenses (Baht)
+                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน
+                Total Monthly Expenses
             </td>
             <td class="textRight">
                 <label id="lbltotalExpenses"></label>
@@ -212,7 +212,7 @@
         </tr>
         <tr>
             <td class="textRight">
-                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)
+                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป /  Cash Advance
             </td>
             <td class="textRight">
                 <label id="lbltotalAdvance">
@@ -394,9 +394,13 @@
     }
 
     function totalExpenExMaket() {
+        
+
         let total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
         let ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
         let v_totalEstimate = document.getElementById('totalEstimate').innerHTML.split(",").join("");
+
+        //console.log(v_totalEstimate + ' total kk')
 
         total = isNaN(total) ? 0.00 : total == '' ? 0.00 : parseFloat(total);
         ExMaket = isNaN(ExMaket) ? 0.00 : parseFloat(ExMaket);

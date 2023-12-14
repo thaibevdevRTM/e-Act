@@ -105,7 +105,7 @@ else
                 {
                     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                     {
-                        if (Model.activityFormTBMMKT.list_1_select != "")
+                        if (Model.activityFormTBMMKT.list_1_select != "" && Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.AllowanceTBM)
                         {
 
                             <label>-</label>
@@ -126,8 +126,7 @@ else
                 @{
                     if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == gethotelExpense)
                     {
-                        decimal getHotel = !string.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].productDetail) ? decimal.Parse(@Model.expensesDetailModel.costDetailLists[@index].productDetail) : 0;
-                        sumOverHotel = @Model.expensesDetailModel.costDetailLists[@index].total - (getHotel * @Model.expensesDetailModel.costDetailLists[@index].unit);
+                       sumOverHotel = Model.expensesDetailModel.costDetailLists[@index].totalCase;
                     }
                 }
 
