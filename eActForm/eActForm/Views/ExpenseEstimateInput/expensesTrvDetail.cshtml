@@ -2,7 +2,7 @@
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
 @using System.Configuration;
-@{ 
+@{
     string getOverHotel = "";
 
 }
@@ -95,7 +95,7 @@
                                         <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
                                     </div>
 
-                                     getOverHotel = item.totalCase != null ? item.totalCase.Value.ToString("#,###") : "0.00";
+                                    getOverHotel = item.totalCase != null ? item.totalCase.Value.ToString("#,###") : "0.00";
 
                                 }
                                 @if (AppCode.Expenses.AllowanceTBM.Equals(item.listChoiceId))
@@ -212,14 +212,17 @@
                         </tr>
                         index++;
                     }
-                    <tr>
-                        <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            จำนวนเงินส่วนเกินสิทธิ์&nbsp;
-                        </td>
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                            <label id="lblOverLimit" type="text" readonly="readonly"></label>&nbsp;
-                        </td>
-                    </tr>
+                    @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    {
+                        <tr>
+                            <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                                จำนวนเงินส่วนเกินสิทธิ์&nbsp;
+                            </td>
+                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                                <label id="lblOverLimit" type="text" readonly="readonly"></label>&nbsp;
+                            </td>
+                        </tr>
+                    }
 
                     <tr>
                         <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">

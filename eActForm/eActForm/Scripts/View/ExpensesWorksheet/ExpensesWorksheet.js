@@ -110,6 +110,7 @@ async function callFucResetValue() {
 
     if ($("#ddlCountry option:selected").val() != '') {
         await getExchangeRate();
+        $("#txtUnitPrice_1").val(0.00);
     }
     else {
         $("#txtAmountReceived").val('');
@@ -151,7 +152,7 @@ function countDiffDate() {
 
         var days = Math.floor(diff / (24 * 60 * 60));
         var leftSec = diff - days * 24 * 60 * 60;
-
+        console.log(days + ' days')
         var hrs = Math.floor(leftSec / (60 * 60));
         var leftSec = leftSec - hrs * 60 * 60;
 
@@ -165,6 +166,8 @@ function countDiffDate() {
             else if (hrs >= 12) {
                 days = days + 1
             }
+        } else {
+            days = days + 1
         }
         
         $("#txtUnit_0").val(days);

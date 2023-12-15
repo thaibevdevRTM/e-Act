@@ -179,7 +179,7 @@ namespace eActForm.Controllers
 
                 if (st_Date != null && end_Date != null)
                 {
-                    var countDays = (end_Date - st_Date).Value.TotalDays + 1;
+                    var countDays = (end_Date - st_Date).Value.TotalDays;
                    
                         for (int i = 0; i < Math.Round(countDays); i++)
                         {
