@@ -56,6 +56,7 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper" || Model.activity_TBMMKT_Model.activityFormTBMMKT.isTemp == false)
 {
+    <br />
     <div class="text-center">
         @if (TempData["approvePositionSignatureError"] != null)
         {
@@ -79,7 +80,7 @@
             else if (Model.approveFlowDetail.Count > 0)
             {
                 var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
-   
+
                 if (countLine > 0)
                 {
                     @Grid(1);
