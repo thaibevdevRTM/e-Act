@@ -39,44 +39,45 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+       
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear)
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_multiSelectYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear"), new
                                         {
-                                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
-                                       {
-                                           @class = "form-control selectpicker",
-                                           id = "ddlFiscalYear"
-                                       })
-                                            <script>
-                                            $('#ddlFiscalYear').change(function () {
-                                                bindDropdownEO();
-                                                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
-                                                || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]')
-                                                {
-                                                    if ($('#ddlFiscalYear').val()=="") {
-                                                       $("#ddl_EO_PV").multiselect('dataprovider', null);
-                                                   }
-                                                }
-                                            });
+                                            @class = "form-control",
+                                            id = "ddlFiscalYear",
+                                            multiple = "multiple"
+                                        })
+                                        <script>
+                                         
+
                                             function bindDropdownEO() {
                                                 var valproductBrandId = '';
                                                 var valchannelId = '';
-                                                if ($('#ddlChannelOrBrand').val() =="Brand") {
+                                                if ($('#ddlChannelOrBrand').val() == "Brand") {
                                                     valproductBrandId = $('#ddlBrand').val();
                                                     valchannelId = '';
                                                 } else {
                                                     valproductBrandId = '';
                                                     valchannelId = $('#ddlChannel').val();
-                                                                        }
+                                                }
+
+                                                let getYear;
+                                                if ($('#ddlFiscalYear').val() != null) {
+                                                    getYear = $('#ddlFiscalYear').val().toString();
+                                                    $('#tB_Act_ActivityForm_DetailOther_fiscalYear').val(getYear);
+                                                } else {
+                                                    getYear = "";
+                                                }
 
                                                 var dataToBeSend = {
-                                                    fiscalYear: $('#ddlFiscalYear').val()
+                                                    fiscalYear: getYear
                                                     , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
                                                     , productBrandId: valproductBrandId
                                                     , channelId: valchannelId
                                                 };
 
-                                                                        var nameDDl = "#ddl_EO_PV";
-                                                                        var ddl_EO_PV = $(nameDDl);
+                                                var nameDDl = "#ddl_EO_PV";
+                                                var ddl_EO_PV = $(nameDDl);
                                                 $.ajax('@Url.Action("GetDataEOPaymentVoucher", "GetDataMainForm")',
                                                     {
                                                         contentType: "application/json; charset=utf-8",
@@ -102,17 +103,8 @@
                                                     });
                                             }
 
-                                            </script>
-                                        }
-                                        else
-                                        {
-                                              @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
-                                              {
-                                                  @class = "form-control selectpicker",
-                                                  id = "ddlFiscalYear"
-                                              })
+                                        </script>
 
-                                        }
                                     </div>
                                 </div>
 
@@ -139,7 +131,7 @@
                                                 id = "ddl_EO_PV",
                                                 multiple = "multiple"
                                             })
-                                        <script>
+                                    <script>
                                             var valuesSelectChoiceFromDb = [];/*ไว้ใช้เก็บค่าที่SelectของMultiSelect Dropdown*/
                                             var EOSelect = [];
                                             var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
@@ -200,6 +192,25 @@
                                                         }
                                                     },
                                                 });
+
+                                                $('#ddlFiscalYear').multiselect({
+                                                    numberDisplayed: 1,
+                                                    enableFiltering: true,
+                                                    nonSelectedText: '',
+                                                    buttonWidth: '100%',
+                                                    onChange: function (option, checked) {
+
+                                                        bindDropdownEO();
+                                                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+                                                            || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
+                                                            if ($('#ddlFiscalYear').val() == "") {
+                                                                $("#ddl_EO_PV").multiselect('dataprovider', null);
+                                                            }
+                                                        }
+                                                    },
+                                                });
+
+
                                                 $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                                 $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                             });
@@ -265,7 +276,7 @@
                                                 calCulateAll();
                                                 //====remove data old in dropdown====
                                             }
-                                        </script>
+                                    </script>
                                         <script>
                                             $(function () {
                                                     @if (Model.activityFormTBMMKT.list_1_multi_select != null)
@@ -277,7 +288,21 @@
                                                         }
                                                          @:$("#ddl_EO_PV").multiselect('select', valuesSelectChoiceFromDb);
                                                     }
+
+                                                      var valuesYear = [];
+                                                     @if (Model.activityFormTBMMKT.list_multiSelectYear != null)
+                                                     {
+                                                         foreach (var itemYear in Model.activityFormTBMMKT.list_multiSelectYear)
+                                                         {
+                                                             @:valuesYear.push("@itemYear");
+                                                         }
+                                                         @:$("#ddlFiscalYear").multiselect('select', valuesYear);
+                                                     }
                                             });
+
+
+
+
                                         </script>
                                     </div>
                                 </div>

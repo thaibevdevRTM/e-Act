@@ -173,6 +173,7 @@ namespace eActForm.Models
         public bool isTemp { get; set; }
         public string chkAllowanceTBM { get; set; }
 
+
     }
 
     public class detailEO
@@ -445,6 +446,7 @@ namespace eActForm.Models
 
     public class ObjGetDataEO
     {
+        public string fiscalYearArr { get; set; }
         public string fiscalYear { get; set; }
         public string master_type_form_id { get; set; }
         public string productBrandId { get; set; }

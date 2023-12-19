@@ -69,32 +69,32 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
                     #endregion
 
-                    #region getEO formPaymentVoucherTbm
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
-                    {
-                        ObjGetDataEO objGetDataEO = new ObjGetDataEO();
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == "") { objGetDataEO.channelId = ""; } else { objGetDataEO.channelId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId; }
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId == "") { objGetDataEO.productBrandId = ""; } else { objGetDataEO.productBrandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; }
-                        if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
-                            || activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
-                        objGetDataEO.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
-                        activity_TBMMKT_Model.listGetDataEO = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
+                    //#region getEO formPaymentVoucherTbm
+                    //if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    //    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                    //{
+                    //    ObjGetDataEO objGetDataEO = new ObjGetDataEO();
+                    //    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == "") { objGetDataEO.channelId = ""; } else { objGetDataEO.channelId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId; }
+                    //    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId == "") { objGetDataEO.productBrandId = ""; } else { objGetDataEO.productBrandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; }
+                    //    if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                    //        || activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+                    //    objGetDataEO.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
+                    //    activity_TBMMKT_Model.listGetDataEO = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
 
-                        ObjGetDataIO objGetDataIO = new ObjGetDataIO();
-                        objGetDataIO.ActivityByEOSelect = "";
-                        objGetDataIO.EOSelect = "";
-                        foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
-                        {
-                            int lenghtCut = 37;
-                            int maxLenght = item.Length;
-                            objGetDataIO.ActivityByEOSelect += (item.Substring(0, 36) + "|");
-                            objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght - lenghtCut) + "|");
-                        }
-                        activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
-                    }
+                    //    ObjGetDataIO objGetDataIO = new ObjGetDataIO();
+                    //    objGetDataIO.ActivityByEOSelect = "";
+                    //    objGetDataIO.EOSelect = "";
+                    //    foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
+                    //    {
+                    //        int lenghtCut = 37;
+                    //        int maxLenght = item.Length;
+                    //        objGetDataIO.ActivityByEOSelect += (item.Substring(0, 36) + "|");
+                    //        objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght - lenghtCut) + "|");
+                    //    }
+                    //    activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
+                    //}
 
-                    #endregion
+                    //#endregion
 
 
 

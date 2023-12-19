@@ -40,8 +40,15 @@
                                     $("#pvPrevious_totalallPayNo option[value!='']").remove();
                                     $("#ddlActivityNoSub").selectpicker('refresh');
 
+                                    let getYear;
+                                    if ($('#ddlFiscalYear').val() != null) {
+                                        getYear = $('#ddlFiscalYear').val().toString();
+                                    } else {
+                                        getYear = "";
+                                    }
+
                                     var dataToBeSend = {
-                                    fiscalYear:$('#ddlFiscalYear').val()
+                                     fiscalYear: getYear
                                     ,master_type_form_id:"@Model.activityFormTBMMKT.master_type_form_id"
                                     ,payNo:$('#txtpayNo').val()
                                     };
@@ -107,7 +114,7 @@
                    })
                         <script>
                             $('#ddlActivityNoSub').selectpicker({
-                                    liveSearch: true,
+                                liveSearch: true,
                                 showSubtext: true
                             });
                   
@@ -192,7 +199,7 @@
                 <script>
                     $(".txtnormalCost_@index").blur(function () {
                          calCulateAll();
-                        });
+                    });
                 </script>
             </td>
         </tr>
@@ -270,7 +277,7 @@
 
 
          @if (Model.listGetDataIO != null)
-                        {
+         {
              @:payByIOSelect.push('');
              foreach (var itemData in Model.listGetDataIO)
              {
