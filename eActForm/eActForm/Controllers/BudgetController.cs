@@ -1078,8 +1078,14 @@ namespace eActForm.Controllers  //update 21-04-2020
             string startDate = null;
             string endDate = null;
 
+            if (typeForm == null && Session["var_companyEN"] == null) {
+                if (UtilsAppCode.Session.User.empCompanyId == "5600") {typeForm = "MT";}
+                if (UtilsAppCode.Session.User.empCompanyId == "5601") { typeForm = "OMT"; }
+            }
+            if (typeForm == null && Session["var_companyEN"] != null) {typeForm = Session["var_companyEN"].ToString(); }
             if (typeForm != null){ Session["var_companyEN"] = typeForm; }
-            if (typeForm == null) { typeForm = Session["var_companyEN"].ToString(); }
+            
+            
 
             if (TempData["SearchDataModelBudget"] != null)
             {
