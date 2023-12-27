@@ -62,6 +62,10 @@
                     <td class="fontDocSmall" width="540" style="text-align:right"> เลขที่เอกสารใบเคลียร์เงินทดรอง :</td>
                     <td class="fontDocSmall" width="110" style="text-align:right;">@Model.activityFormModel.reference</td>
                 </tr>
+                <tr>
+                    <td class="fontDocSmall" width="540" style="text-align:right">Cost Center :</td>
+                    <td class="fontDocSmall" width="110" style="text-align:right;">@Model.tB_Act_ActivityForm_DetailOther.costCenter</td>
+                </tr>
             </table>
         </div>
 
@@ -112,48 +116,52 @@
                 <tr style="height:10px;">
                     <td></td>
                 </tr>
-                <tr>
-                    <td class="fontDocSmall">
-                        <b>ข้อมูลเดินทาง</b>
-                    </td>
-                </tr>
-                <tr class="fontDocSmall">
-                    <td>
-                        ประเภทการเดินทาง :
-                    </td>
-                    <td>
-                        @Model.activityFormTBMMKT.list_0_select
-                    </td>
 
-                    <td>
-                        วันที่เดินทาง :
-                    </td>
+                @if (@Model.activityFormTBMMKT.costPeriodSt != null)
+                {
+                    <tr>
+                        <td class="fontDocSmall">
+                            <b>ข้อมูลเดินทาง</b>
+                        </td>
+                    </tr>
+                    <tr class="fontDocSmall">
+                        <td>
+                            ประเภทการเดินทาง :
+                        </td>
+                        <td>
+                            @Model.activityFormTBMMKT.list_0_select
+                        </td>
 
-                    <td class="fontDocSmall">
-                        @if (@Model.activityFormTBMMKT.costPeriodSt != null)
-                        {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy HH:mm")} -
-                        @if (@Model.activityFormTBMMKT.costPeriodEnd != null)
-                        {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy HH:mm")}
+                        <td>
+                            วันที่เดินทาง :
+                        </td>
 
-                    </td>
-                </tr>
-                <tr class="fontDocSmall">
-                    <td>
-                        ประเทศ :
-                    </td>
-                    <td>
-                        @Model.activityFormTBMMKT.list_1_select
-                    </td>
-                    <td>
-                        อัตราแลกเปลี่ยน :
-                    </td>
-                    <td>
-                        @{
-                            string amountReceived = @Model.tB_Act_ActivityForm_DetailOther.amountReceived > 0 ? String.Format("{0:n2}", @Model.tB_Act_ActivityForm_DetailOther.amountReceived) : "-";
-                            <label>  @amountReceived</label>
-                        }
-                    </td>
-                </tr>
+                        <td class="fontDocSmall">
+                            @if (@Model.activityFormTBMMKT.costPeriodSt != null)
+                            {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy HH:mm")} -
+                            @if (@Model.activityFormTBMMKT.costPeriodEnd != null)
+                            {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy HH:mm")}
+
+                        </td>
+                    </tr>
+                    <tr class="fontDocSmall">
+                        <td>
+                            ประเทศ :
+                        </td>
+                        <td>
+                            @Model.activityFormTBMMKT.list_1_select
+                        </td>
+                        <td>
+                            อัตราแลกเปลี่ยน :
+                        </td>
+                        <td>
+                            @{
+                                string amountReceived = @Model.tB_Act_ActivityForm_DetailOther.amountReceived > 0 ? String.Format("{0:n2}", @Model.tB_Act_ActivityForm_DetailOther.amountReceived) : "-";
+                                <label>  @amountReceived</label>
+                            }
+                        </td>
+                    </tr>
+                }
             </table>
         </div>
         <br />
@@ -200,7 +208,7 @@
                         <tr>
                             <td colspan="2" class="font12" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align:right">
                                 <div>รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด) &nbsp;&nbsp;</div>
-                                <div>Total General expenses (Excluding Entertainment Expenses and Market Visit)&nbsp;&nbsp;</div>
+                                <div>Total General expenses (Excluding Entertainment Expenses and Market Visits)&nbsp;&nbsp;</div>
                             </td>
                             <td class="fontDocSmall" style="border-style: solid; border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align: right; padding-right: 5px;">
                                 @if (unit != 0)
@@ -245,7 +253,7 @@
             if (Model.activityOfEstimateList2[0].date != null)
             {
                 <div class="fontDocV1">
-                    ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
+                    ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visits
                 </div>
                 <div class="fontDocSmall">
                     <lable style="color: red"> * หมายเหตุ:</lable>

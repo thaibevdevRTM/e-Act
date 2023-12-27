@@ -35,5 +35,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<ChannelMasterType> get_channelMasterBySubTypeId(string groupName, string subTypeId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getChannelMasterBySubTypeId"
+                       , new SqlParameter("@groupName", groupName)
+                         , new SqlParameter("@subTypeId", subTypeId));
+                //, new SqlParameter("@groupName", groupName)
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new ChannelMasterType()
+                              {
+                                  groupName = d["groupName"].ToString(),
+                                  costCenter = d["costCenter"].ToString(),
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("get_channelMasterBySubTypeId => " + ex.Message);
+                return new List<ChannelMasterType>();
+            }
+        }
+
     }
 }

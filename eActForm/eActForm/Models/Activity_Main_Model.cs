@@ -434,6 +434,7 @@ namespace eActForm.Models
         public string subTypeId { get; set; }
         public string subTypeName { get; set; }
         public string subName { get; set; }
+        public string costCenter { get; set; }
     }
 
     public class CompanyModel

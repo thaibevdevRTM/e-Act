@@ -262,9 +262,9 @@ namespace eActForm.BusinessLayer
                 }
                 else if (model.flowDetail.Any() && ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
                 {
-                    var filterList = getData.activityOfEstimateList.Where(x => x.listChoiceId == Expenses.AllowanceTBM).AsEnumerable();
-                    
-                    if (filterList.FirstOrDefault().total > 0)
+                    var filterList = getData.activityOfEstimateList.Where(x => x.listChoiceId == Expenses.AllowanceTBM || x.listChoiceId == Expenses.hotelExpense[1]).AsEnumerable();
+
+                    if (filterList.Select(x => x.total).Sum() > 0)
                     {
                         getDataList_Model getDataList_Model = new getDataList_Model();
                         getDataList_Model.subjectId = QueryGetSubject.getAllSubject().Where(x => x.typeFormId == ConfigurationManager.AppSettings["masterEmpExpense"]).FirstOrDefault().id;

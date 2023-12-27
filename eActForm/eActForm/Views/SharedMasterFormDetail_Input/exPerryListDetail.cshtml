@@ -10,37 +10,32 @@
         background-color: #f1f1f1;
     }
 
-    /* Style the buttons inside the tab */
-    .tab button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-        font-size: 17px;
-    }
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
 
-    .tab button:hover {
-        background-color: #ddd;
-    }
+            .tab button:hover {
+                background-color: #ddd;
+            }
 
-    .tab button.active {
-        background-color: #ccc;
-    }
-    
+            .tab button.active {
+                background-color: #ccc;
+            }
 </style>
-
 
 <div id="divTab" class="tab">
     <button type="button" id="defaultOpen" class="tablinks" onclick="openTab(event, 'divTabGenaral')">Genaral</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divListExpense')">Travel Expenses</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divEntertain')">Entertain</button>
-    
 </div>
-
-
 
 
 <div id="divTabGenaral" class="col-md-12 tabcontent">
@@ -56,7 +51,7 @@
                 <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
                 <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่ตามใบเสร็จ</td>
                 <td class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</td>
-                <td class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</td>
+                <td class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนรายการ/จำนวนลิตร</td>
                 <td class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</td>
                 <td class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</td>
             </tr>
@@ -86,7 +81,7 @@
             <td></td>
             <td colspan="2" class="textRight">
                 <div>รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)</div>
-                <div>Total General expenses (Excluding Entertainment Expenses and Market Visit)</div>
+                <div>Total General expenses (Excluding Entertainment Expenses and Market Visits)</div>
             </td>
             <td class="textRight">
                 <label id="lblLite"></label>
@@ -116,6 +111,9 @@
             <legend> ค่าใช้จ่ายในการเดินทาง / Travel Expenses</legend>
         </fieldset>
     </div>
+    <div style="margin-top:50px;">
+        @Html.Action("exTravelDetail", "SharedMasterFormDetail_Input", new { activity_TBMMKT_Model = Model })
+    </div>
 
     <div style="margin-top:50px;">
         @Html.Action("expensesTrvDetail", "ExpenseEstimateInput", new { activity_TBMMKT_Model = Model })
@@ -128,7 +126,7 @@
 <div id="divEntertain" style="margin-bottom:50px;" class="tabcontent">
     <div class="col-lg-12 col-xs-12" style="margin-top:50px;">
         <fieldset>
-            <legend>  ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด /  Entertainment Expenses and Market Visit</legend>
+            <legend>  ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด /  Entertainment Expenses and Market Visits</legend>
         </fieldset>
         <div>
             <lable style="color:red"> * หมายเหตุ:</lable>
@@ -175,7 +173,7 @@
                 <td></td>
                 <td colspan="4" class="textRight">
                     รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                    Total Entertainment Expenses and Market Visit
+                    Total Entertainment Expenses and Market Visits
                 </td>
                 <td class="textRight">
                     <label id="lbltotalExMaket"></label>
@@ -198,7 +196,7 @@
                 <b>สรุปค่าใช้จ่ายทั้งหมด</b>
             </td>
             <td style="width:11%; text-align:center">
-               จำนวนเงิน/บาท
+                จำนวนเงิน/บาท
             </td>
         </tr>
         <tr>
@@ -245,10 +243,10 @@
                 <div style="width: 100%; text-align: left;">
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
-                            <h5>Expected benefit : ประโยชน์ที่คาดว่าจะได้รับ</h5> 
+                            <h5>Expected benefit : ประโยชน์ที่คาดว่าจะได้รับ</h5>
                         </div>
                         <div class="col-md-12 col-xs-12">
-                            @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { rows = "6" ,@class = "form-control textboxcss", @id = "txtExpected" })
+                            @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { rows = "6", @class = "form-control textboxcss", @id = "txtExpected" })
                         </div>
                     </div>
 
@@ -264,7 +262,7 @@
                             <h5>Remarks : หมายเหตุ</h5>
                         </div>
                         <div class="col-md-12 col-xs-12">
-                            @Html.TextAreaFor(x => x.activityFormTBMMKT.remark, new { rows = "6",@class = "form-control textboxcss", @id = "txtRemarks" })
+                            @Html.TextAreaFor(x => x.activityFormTBMMKT.remark, new { rows = "6", @class = "form-control textboxcss", @id = "txtRemarks" })
                         </div>
                     </div>
 
@@ -394,7 +392,7 @@
     }
 
     function totalExpenExMaket() {
-        
+
 
         let total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
         let ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");

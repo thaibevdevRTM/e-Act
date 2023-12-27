@@ -258,6 +258,10 @@
                             getBudgetTotal();
                         }
 
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+                            getCostCenterBySubTypeId($('#ddlChannelOrBrand').val(), $('#ddlChannel').val());
+                        }
+
                     });
                     $('#ddlBrand').change(function () {
                         $('#ddlChannel').val('');
@@ -276,7 +280,9 @@
                             getEOByBrandId();
                         }
 
-
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+                            getCostCenterBySubTypeId($('#ddlChannelOrBrand').val(), $('#ddlBrand').val());
+                        }
                     });
 
                     $('#ddlSubject').change(function () {
@@ -285,6 +291,30 @@
                         }
 
                     });
+
+
+                    function getCostCenterBySubTypeId(groupName ,subTypeId) {
+
+                        var dataToBeSend = {
+                              groupName: groupName
+                            , subTypeId: subTypeId
+                        };
+
+                        $.ajax('@Url.Action("GetChannelMasterBySubTypeId", "GetDataMainForm")',
+                            {
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataToBeSend),
+                                dataType: 'json',
+                                type: "POST",
+                                success: function (response) {
+                                    console.log(response.Data.costCenter)
+                                    $('#txtCostCenter').val(response.Data.costCenter);
+                                },
+                                error: function (data) {
+                                    alert("Error Get getCostCenterBySubTypeId.");
+                                }
+                            });
+                    }
 
                     function bindDropdownSubject() {
                         var valDropdown = '';

@@ -20,6 +20,8 @@ namespace eActForm.Controllers
             public string master_type_form_id { get; set; }
             public string companyId { get; set; }
             public string channelId { get; set; }
+            public string groupName { get; set; }
+            public string subTypeId { get; set; }
         }
 
         public JsonResult GetDataSubjectByChanelOrBrand(objGetDataSubjectByChanelOrBrand objGetDataSubjectBy)
@@ -43,6 +45,35 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        public JsonResult GetChannelMasterBySubTypeId(string groupName, string subTypeId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<TB_Reg_Subject> tB_Reg_Subject = new List<TB_Reg_Subject>();
+                var getChannelMaster = QueryGet_channelMaster.get_channelMasterBySubTypeId(groupName, subTypeId);
+                if (getChannelMaster.Any())
+                {
+                    var resultData = new
+                    {
+                        costCenter = getChannelMaster.FirstOrDefault().costCenter,
+                    };
+                    result.Data = resultData;
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
         public class objGetDataCostCenter
         {
