@@ -26,7 +26,6 @@ namespace eActForm.BusinessLayer
                               {
                                   subTypeId = d["subTypeId"].ToString(),
                                   subName = d["subName"].ToString(),
-                                  costCenter = d["costCenter"].ToString(),
 
                               });
 
