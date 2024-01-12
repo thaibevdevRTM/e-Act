@@ -92,7 +92,7 @@
                                 @if (AppCode.Expenses.hotelExpense.Contains(item.listChoiceId))
                                 {
                                     <div>
-                                        <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
+                                        <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name="chkMultiPrice"> ราคาที่พักต่างกัน
                                     </div>
 
                                     getOverHotel = item.totalCase != null ? item.totalCase.Value.ToString("#,###") : "0.00";
@@ -200,7 +200,11 @@
                                         sumall();
 
                                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-                                            sumHotelOV();
+
+                                            //console.log($("input[name='chkMultiPrice']:checked").val() + 'checkkk')
+                                            if ($("input[name='chkMultiPrice']:checked").val() != 'on') {
+                                                sumHotelOV();
+                                            }
                                             getValues();
                                         }
 
@@ -258,7 +262,6 @@
                     }
 
                     function sumHotelOV() {
-
                         let getTotalHotel, v_total_hotelOV, getDays = 0.00;
 
                         //console.log($("#hdTotal_1").val() + 'tt')
@@ -278,7 +281,10 @@
                             else {
                                 v_total_hotelOV = 0.00;
                             }
+
                             $("#lblOverLimit").text(v_total_hotelOV.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+
+
                         }
 
 
@@ -431,6 +437,8 @@
                                         if (v_totalRow > getOrlHotel) {
                                             let getDiffHotel = v_totalRow - getOrlHotel;
                                             $("#hdSubOVTotal_" + row).val(getDiffHotel.toFixed(3));
+                                            //console.log(v_totalRow + 'Diff v_totalRow');
+                                           // console.log(getOrlHotel + 'Diff getOrlHotel');
                                             //console.log(getDiffHotel + 'Diff Hotel');
                                         }
                                         else {
@@ -505,6 +513,7 @@
                             //console.log(totalAll + ' sub sum')
                             var rowtotalOver = parseFloat($("#hdSubOVTotal_" + i.toString()).val().replace(",", ""));
 
+                            //console.log(rowtotalOver + ' rowtotalOver row ' + i)
                             //console.log(rowtotalOver + ' hdSubOVTotal_')
                             totalOver = totalOver + rowtotalOver;
                         }

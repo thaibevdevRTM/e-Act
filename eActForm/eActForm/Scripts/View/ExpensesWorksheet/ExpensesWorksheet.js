@@ -152,7 +152,7 @@ function countDiffDate() {
 
         var days = Math.floor(diff / (24 * 60 * 60));
         var leftSec = diff - days * 24 * 60 * 60;
-        console.log(days + ' days')
+        //console.log(days + ' days')
         var hrs = Math.floor(leftSec / (60 * 60));
         var leftSec = leftSec - hrs * 60 * 60;
 
@@ -171,7 +171,7 @@ function countDiffDate() {
         }
         
         $("#txtUnit_0").val(days);
-        console.log(days + 'total days')
+        //console.log(days + 'total days')
         diffDays = days;
 
         if ($("#ddlCountry option:selected").val() != '') {

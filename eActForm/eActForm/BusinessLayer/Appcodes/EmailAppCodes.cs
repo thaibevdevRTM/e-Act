@@ -437,7 +437,7 @@ namespace eActForm.BusinessLayer
                             createUsersName = createUsers.FirstOrDefault().empName;
                             emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
                             txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
-                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
+                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null && activity_TBMMKT_Model.activityFormTBMMKT != null)
                             {
                                 if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])// Inter sale
                                 {
@@ -521,15 +521,19 @@ namespace eActForm.BusinessLayer
                                             , emailType);
                                     }
                                 }
+
+
+                                if (!isResend && ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                {
+                                    //waiting update budgetControl
+                                    bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
+                                }
+
                             }
                             //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
 
 
-                            if (!isResend && ConfigurationManager.AppSettings["formTransferbudget"].Equals(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                            {
-                                //waiting update budgetControl
-                                bool resultTransfer = TransferBudgetAppcode.transferBudgetAllApprove(actFormId);
-                            }
+                            
                         }
                     }
                 }
