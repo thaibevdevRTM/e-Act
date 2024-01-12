@@ -1,0 +1,128 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+@using System.Configuration;
+
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+            <h4 class="modal-title">เบี้ยเลี้ยงแบ่งตามสัดส่วน</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered clstabelAllowance" id="tabelAllowance" runat="server" width="80%">
+                @*<tr style="background-color:#E5E2E2;height:20px; ">
+                        <th colspan="4" style="text-align :center;">
+                            ค่าที่พัก
+                        </th>
+                    </tr>*@
+                <tr style="background-color:#E5E2E2;height:20px; ">
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        วันที่
+                    </th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <div>25%</div>
+                        <div>Personal</div>
+                    </th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <div>25%</div>
+                        <div>Breakfast</div>
+                    </th>
+
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <div>25%</div>
+                        <div>Lunch</div>
+                    </th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <div>25%</div>
+                        <div>Dinner</div>
+                    </th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <div>Total%</div>
+                    </th>
+                </tr>
+                @{ var index = 0;}
+                @foreach (var item in Model.tB_Act_AllowanceList)
+                {
+                    <tr class="tagCountRowinTable" style="height:20px;">
+                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            @item.date.Value.ToString("dd/MM/yyyy")
+                            @Html.HiddenFor(x => x.tB_Act_AllowanceList[index].date)
+                            @*@item.date.Value.ToString(ConfigurationManager.AppSettings["formatDateUse"])*@
+                        </td>
+                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <div>
+                                @Html.CheckBoxFor(x => x.tB_Act_AllowanceList[index].chkPersonal, new { @onchange = "sumRow(" + @index + ")" })
+                                @*<input id="chkPersonal_@index" type="checkbox" onchange="sumRow(@index)" name="chk_1_@index">*@
+                            </div>
+                        </td>
+                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <div>
+                                @Html.CheckBoxFor(x => x.tB_Act_AllowanceList[index].chkBreakfast, new { @onchange = "sumRow(" + @index + ")" })
+                                @*<input id="chkBreakfast_@index" type="checkbox" onchange="sumRow(@index)" name="chk_2_@index">*@
+                            </div>
+                        </td>
+                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <div>
+                                @Html.CheckBoxFor(x => x.tB_Act_AllowanceList[index].chkLunch, new { @onchange = "sumRow(" + @index + ")" })
+                                @*<input id="chkLunch_@index" type="checkbox" onchange="sumRow(@index)" name="chk_3_@index">*@
+                            </div>
+                        </td>
+                        <td style=" border-style: solid; border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align: center;">
+                            <div>
+                                @Html.CheckBoxFor(x => x.tB_Act_AllowanceList[index].chkDinner, new { @onchange = "sumRow(" + @index + ")" })
+                                @*<input id="chkDinner_@index" type="checkbox" onchange="sumRow(@index)" name="chk_4_@index">*@
+                            </div>
+                        </td>
+                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            <label id="lblSumAllowance_@index"></label>
+                        </td>
+                    </tr>
+                    index++;
+                }
+                <tr>
+                    <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <b> % รวม</b>&nbsp;
+                    </td>
+                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                        <label id="totalAllowancePerCent" type="text"></label>&nbsp;
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <b> ค่าเบี้ยเลี้ยงที่ใช้จริง รวม(บาท)</b>&nbsp;
+                    </td>
+                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                        <label id="totalAllowance" type="text"></label>&nbsp;
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <div class="modal-footer">
+
+                <div style="margin-left:25px;" class="text-center">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="checkCancel()">
+                        <i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel
+                    </button>
+                    <button id="btnSaveDetailSub" type="button" class="btn ink-reaction btn-success" onclick="validateSubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    let daySelect = 0;
+    let getPerCentAllowance = 0;
+    let countDay = '@Model.tB_Act_AllowanceList.Count';
+
+
+</script>

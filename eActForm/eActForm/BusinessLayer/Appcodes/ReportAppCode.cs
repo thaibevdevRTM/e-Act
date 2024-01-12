@@ -199,6 +199,11 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId == "1").ToList();
                     activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId == "2").ToList();
                     activity_TBMMKT_Model.masterRequestEmp = QueryGet_empDetailById.getEmpDetailById(activity_TBMMKT_Model.activityFormTBMMKT.empId);
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(activity_TBMMKT_Model.activityFormTBMMKT.list_0_select).FirstOrDefault().name;
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_1_select = !String.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select) ? expensesEntertainAppCode.getCountry().Where(x => x.id.Equals(activity_TBMMKT_Model.activityFormTBMMKT.list_1_select)).FirstOrDefault().country : "";
+
+                    activity_TBMMKT_Model.expensesDetailModel = mergeDetailTrv(activity_TBMMKT_Model);
+
                 }
                 else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]
@@ -247,57 +252,9 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT();
-                        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 1, total = calSum1 });
-                        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 2, total = calSum2 });
-                        activity_TBMMKT_Model.expensesDetailModel = model;
+                    
 
-                        CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT();
-                        CostDetailOfGroupPriceTBMMKT model22 = new CostDetailOfGroupPriceTBMMKT();
-                        CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT();
-
-                        model22.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
-                        modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
-                        modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
-                        string multiPrice = "";
-                        decimal? total = 0;
-                        for (int i = 0; i < model22.costDetailLists.Count; i++)
-                        {
-                            if (model22.costDetailLists[i].total != 0)
-                            {
-                                total = model22.costDetailLists[i].total;
-                                if (model22.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model22.costDetailLists[i].unit != 0 && model22.costDetailLists[i].unitPrice == 0)
-                                {
-                                    foreach (var item in modelSub.costDetailLists)
-                                    {
-                                        multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
-                                    }
-                                    multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
-                                    //เป็นค่าที่พักหลายราคา
-                                }
-
-                                modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                                {
-                                    listChoiceId = model22.costDetailLists[i].listChoiceId,
-                                    listChoiceName = model22.costDetailLists[i].listChoiceName,
-                                    productDetail = model22.costDetailLists[i].productDetail,
-                                    unit = model22.costDetailLists[i].unit,
-                                    unitPrice = model22.costDetailLists[i].unitPrice + model22.costDetailLists[i].vat,
-                                    unitPriceDisplay = multiPrice,
-                                    total = model22.costDetailLists[i].total,
-                                    displayType = model22.costDetailLists[i].displayType,
-                                    subDisplayType = model22.costDetailLists[i].subDisplayType,
-                                    updatedByUserId = model22.costDetailLists[i].updatedByUserId,
-                                    createdByUserId = model22.costDetailLists[i].createdByUserId,
-                                    statusEdit = model22.costDetailLists[i].createdByUserId == "" ? "" :
-                                      (model22.costDetailLists[i].createdByUserId != model22.costDetailLists[i].updatedByUserId
-                                      && model22.costDetailLists[i].total != total ? "*" : ""),
-                                });
-
-                            }
-                        }
-
-                        activity_TBMMKT_Model.expensesDetailModel = modelResult;
+                        activity_TBMMKT_Model.expensesDetailModel = mergeDetailTrv(activity_TBMMKT_Model);
 
                         #endregion
 
@@ -327,6 +284,83 @@ namespace eActForm.BusinessLayer
             }
             return activity_TBMMKT_Model;
         }
+
+
+
+        public static CostDetailOfGroupPriceTBMMKT mergeDetailTrv(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+
+            string gethotelExpense = "";
+            decimal? calSum1 = 0;
+            decimal? calSum2 = 0;
+
+            if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+            {
+                gethotelExpense = AppCode.Expenses.hotelExpense[1];
+            }
+            else
+            {
+                gethotelExpense = AppCode.Expenses.hotelExpense[0];
+            }
+
+            CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT();
+            model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 1, total = calSum1 });
+            model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { rowNo = 2, total = calSum2 });
+            activity_TBMMKT_Model.expensesDetailModel = model;
+
+            CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT();
+            CostDetailOfGroupPriceTBMMKT model22 = new CostDetailOfGroupPriceTBMMKT();
+            CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT();
+
+            model22.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
+            modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, gethotelExpense);
+            modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
+            string multiPrice = "";
+            decimal? total = 0;
+            for (int i = 0; i < model22.costDetailLists.Count; i++)
+            {
+                if (model22.costDetailLists[i].total != 0)
+                {
+                    total = model22.costDetailLists[i].total;
+                    if (AppCode.Expenses.hotelExpense.Contains(model22.costDetailLists[i].listChoiceId) && model22.costDetailLists[i].unit != 0)
+                    {
+                        if (modelSub.costDetailLists.Any())
+                        {
+                            foreach (var item in modelSub.costDetailLists)
+                            {
+                                multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
+                            }
+                            multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
+                        }
+                        //เป็นค่าที่พักหลายราคา
+                    }
+
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = model22.costDetailLists[i].listChoiceId,
+                        listChoiceName = model22.costDetailLists[i].listChoiceName,
+                        productDetail = model22.costDetailLists[i].productDetail,
+                        unit = model22.costDetailLists[i].unit,
+                        unitPrice = model22.costDetailLists[i].unitPrice + model22.costDetailLists[i].vat,
+                        unitPriceDisplay = multiPrice,
+                        total = model22.costDetailLists[i].total,
+                        totalCase = model22.costDetailLists[i].totalCase,
+                        displayType = model22.costDetailLists[i].displayType,
+                        subDisplayType = model22.costDetailLists[i].subDisplayType,
+                        updatedByUserId = model22.costDetailLists[i].updatedByUserId,
+                        createdByUserId = model22.costDetailLists[i].createdByUserId,
+                        statusEdit = model22.costDetailLists[i].createdByUserId == "" ? "" :
+                          (model22.costDetailLists[i].createdByUserId != model22.costDetailLists[i].updatedByUserId
+                          && model22.costDetailLists[i].total != total ? "*" : ""),
+                    });
+
+                }
+            }
+
+            return modelResult;
+        }
+
 
 
         public static Activity_TBMMKT_Model reportPettyCashNumAppCode(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -382,7 +416,7 @@ namespace eActForm.BusinessLayer
                         {
                             //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
 
-                            if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                            if (AppCode.Expenses.hotelExpense.Contains(model2.costDetailLists[i].listChoiceId) && model2.costDetailLists[i].unitPrice == 0)
                             {
                                 vat = model2.costDetailLists[i].vat;
                                 //  vatsum += model2.costDetailLists[i].vat;

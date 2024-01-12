@@ -1,6 +1,11 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -21,7 +26,9 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
-            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+            var getResultAdv = !string.IsNullOrEmpty(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId) ? QueryGetSubject.getAllSubject().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId).FirstOrDefault().typeFormId == ConfigurationManager.AppSettings["formAdvTbmId"] : false;
+            if (!activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any() 
+                || getResultAdv)
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
 
@@ -45,33 +52,19 @@ namespace eActForm.Controllers
                     });
                 }
 
-                #region "เพิ่มกรณ๊รายละเอียดของค่าที่พักราคาไม่เท่ากัน ไม่ให้เกิน 7 ราคา"
-
-
-                if (activity_TBMMKT_Model.expensesDetailSubModel == null || activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists.Any())
-                {
-
-                    for (int i = 0; i < 7; i++)
-                    {
-                        modelSub.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-                        {
-                            listChoiceId = AppCode.Expenses.hotelExpense,
-                            rowNo = i + 1,
-                            unit = 0,
-                            unitPrice = 0,
-                            vat = 0,
-                            total = 0,
-
-                        });
-                    }
-                }
-                #endregion
+                modelSub.costDetailLists = buildTBSubChoice(activity_TBMMKT_Model).costDetailLists;
             }
             else
             {
+                var gethotel = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? AppCode.Expenses.hotelExpense[0] : AppCode.Expenses.hotelExpense[1];
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
-                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
+                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, gethotel);
+                if (!modelSub.costDetailLists.Any())
+                {
+                    modelSub.costDetailLists = buildTBSubChoice(activity_TBMMKT_Model).costDetailLists;
+                }
+
 
             }
 
@@ -92,6 +85,32 @@ namespace eActForm.Controllers
             }
 
             return PartialView(activity_TBMMKT_Model);
+        }
+
+
+        protected CostDetailOfGroupPriceTBMMKT buildTBSubChoice(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            #region "เพิ่มกรณ๊รายละเอียดของค่าที่พักราคาไม่เท่ากัน ไม่ให้เกิน 7 ราคา"
+            CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT();
+            if (activity_TBMMKT_Model.expensesDetailSubModel == null || activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists.Any())
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    modelSub.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        //------ hotelExpense[0] == Travelling Expense , hotelExpense[1] == ใบเบิกค่าใช้จ่าย พนักงาน
+                        listChoiceId = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? AppCode.Expenses.hotelExpense[0] : AppCode.Expenses.hotelExpense[1],
+                        rowNo = i + 1,
+                        unit = 0,
+                        unitPrice = 0,
+                        vat = 0,
+                        total = 0,
+                    });
+                }
+            }
+            #endregion
+
+            return modelSub;
         }
 
 
@@ -147,6 +166,51 @@ namespace eActForm.Controllers
         }
 
 
+        public ActionResult allowanceDetail(string st_date,string end_date ,string statusId, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
 
+            TB_Act_Allowance_Model allowanceList = new TB_Act_Allowance_Model();
+            DateTime? st_Date, end_Date;
+
+            if (!activity_TBMMKT_Model.tB_Act_AllowanceList.Any())
+            {
+                st_Date = BaseAppCodes.converStrToDatetimeWithFormat(st_date, ConfigurationManager.AppSettings["formatDatetimeUse"]);
+                end_Date = BaseAppCodes.converStrToDatetimeWithFormat(end_date, ConfigurationManager.AppSettings["formatDatetimeUse"]);
+
+                if (st_Date != null && end_Date != null)
+                {
+                    var countDays = (end_Date - st_Date).Value.TotalDays;
+                   
+                        for (int i = 0; i < Math.Round(countDays); i++)
+                        {
+                            TB_Act_Allowance_Model allowanceModel = new TB_Act_Allowance_Model();
+                            var getDate = st_Date.Value.AddDays(i);
+                            allowanceModel.date = getDate;
+
+                            activity_TBMMKT_Model.tB_Act_AllowanceList.Add(allowanceModel);
+                        }
+                 
+                }
+            }
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public JsonResult getAllowanceOverDays(string countryId, string lvl ,string typeDay)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getCountryDetail = expensesEntertainAppCode.callGetAllowance(countryId, lvl, typeDay);
+                
+                result.Data = getCountryDetail;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

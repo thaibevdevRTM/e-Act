@@ -65,7 +65,8 @@ namespace eActForm
                "~/content/vendors/build/css/custom.min.css",
                "~/Scripts/pnotify/dist/pnotify.min.css",
                "~/Content/vendors/multiselect/bootstrap-multiselect.css",
-               "~/Scripts/bootstrap-select.min.css"
+               "~/Scripts/bootstrap-select.min.css",
+               "~/Scripts/bootstrap-select.css"
                ));
 
             //~/Content/vendors/bootstrap-datepicker/datepicker3.css

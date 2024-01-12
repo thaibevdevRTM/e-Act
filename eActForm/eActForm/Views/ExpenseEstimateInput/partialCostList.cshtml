@@ -153,7 +153,6 @@
             bootbox.alert(required);
             return false;
         }
-        console.log($("#hdActivityId").val() + 'act');
 
         $("#WaitDialog").show();
         $.ajax({
@@ -237,8 +236,6 @@
 
             // case all input change
     function calActivityDetailCost(id, rowIndex, checktotal) {
-
-        console.log(rowIndex);
 
         var name = $('#lblProductName_' + rowIndex).val();
         var mechanics = $('#lblMechanics_' + rowIndex).val();

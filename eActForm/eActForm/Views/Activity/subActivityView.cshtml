@@ -69,7 +69,7 @@
                             เวลากิจกรรม<span class="required">*</span>
                         </label>
 
-                        @if (Model.activitydetaillist_0.Count > 0)
+                        @if (Model.subActivitydetaillist.Count > 0)
                         {
 
                             <div class="col-md-9 col-sm-9 col-xs-12">
@@ -84,15 +84,15 @@
                             if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
                             {
                                 <script>
-                                    document.getElementById('txtdateActivitySt_' + @i).disabled = true;
-                                    document.getElementById('txtdateActivityEnd_' + @i).disabled = true;
+                                    document.getElementById('txtdateActivitySt_@i').disabled = true;
+                                    document.getElementById('txtdateActivityEnd_@i').disabled = true;
                                 </script>
                             }
                             else
                             {
                                 <script>
-                                    document.getElementById('txtdateActivitySt_' + @i).disabled = false;
-                                    document.getElementById('txtdateActivityEnd_' + @i).disabled = false;
+                                    document.getElementById('txtdateActivitySt_@i').disabled = false;
+                                    document.getElementById('txtdateActivityEnd_@i').disabled = false;
                                 </script>
                             }
 
@@ -128,173 +128,71 @@
                         </tr>
                     </thead>
 
-                    @for (int ii = 0; ii < Model.activitydetaillist.Count; ii++)
+                    @if (Model.subActivitydetaillist.Any())
+                    {
+                        for (int ii = 0; ii < Model.subActivitydetaillist[i].Count(); ii++)
+                        {
+
+                            <tbody id=first>
+                                <tr class="tagCountRowBudgetControl tRow_@ii">
+                                    @Html.Hidden("subActivitydetaillist[" + i + "][" + @ii + "].subActivityId", getId)
+                                    @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].productId", Model.subActivitydetaillist[i][ii].productId)
+                                    <td>@Html.DisplayFor(x => x.subActivitydetaillist[i][ii].productName)</td>
+
+                                    @if (Model.subActivitydetaillist.Count > 0 && Model.activityModelList.Count > 0)
+                                    {
+
+                                        <td style="text-align:right">
+                                            @Html.TextBox("subActivitydetaillist[" + @i + "][" + @ii + "].promotionCost", Model.subActivitydetaillist[i][ii].total, "{0:n2}", new { @id = "total_" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", @onchange = "sumall()" })
+                                            @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].id", Model.subActivitydetaillist[i][ii].id)
+                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
+                                            {
+                                                <script>
+                                                        document.getElementById('total_'+@ii).disabled = true;
+                                                </script>
+                                            }
+
+                                        </td>
+                                    }
+                                  
+                                </tr>
+
+                            </tbody>
+
+
+                        }
+                    }
+                    else
                     {
 
-                        <tbody id=first>
-                            <tr class="tagCountRowBudgetControl tRow_@ii">
-                                @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].subActivityId", getId)
-                                @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].productId", Model.activitydetaillist[ii].productId)
+                        for (int ii = 0; ii < Model.activitydetaillist.Count(); ii++)
+                        {
+                            <tbody id=first>
+                                <tr class="tagCountRowBudgetControl tRow_@ii">
+                                    @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].subActivityId", getId)
+                                    @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].productId", Model.activitydetaillist[ii].productId)
+                                    <td>@Html.DisplayFor(x => x.activitydetaillist[ii].productName)</td>
 
-                                <td>@Html.DisplayFor(x => x.activitydetaillist[ii].productName)</td>
+                                    @Html.Hidden("subActivitydetaillist[" + @i + "][" + @ii + "].ref_Estimate", Model.activitydetaillist[ii].id)
+                                    @{
+                                        decimal? calCost = Model.activitydetaillist[ii].total / Model.activityFormModel.countMonth;
 
-                                @if (Model.activitydetaillist_0.Count > 0)
-                                {
-
-                                    if (i == 0)
-                                    {
                                         <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_0[ii].total, "{0:n2}", new { @id = "total_0" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_0[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                        document.getElementById('total_0' +@ii).disabled = true;
-                                                </script>
-                                            }
+                                            @Html.TextBox("subActivitydetaillist[" + @i + "][" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", @onchange = "sumall()" })
 
                                         </td>
                                     }
-                                    else if (i == 1)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_1[ii].total, "{0:n2}", new { @id = "total_1" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", onfocus = "removeComma(total_1" + @ii + ")", onchange = "removeComma(total_1" + @ii + ")" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_1[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                 document.getElementById('total_1' +@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 2)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_2[ii].total, "{0:n2}", new { @id = "total_2" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_2[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_2'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 3)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_3[ii].total, "{0:n2}", new { @id = "total_3" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_3[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_3'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 4)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_4[ii].total, "{0:n2}", new { @id = "total_4" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_4[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_4'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 5)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_5[ii].total, "{0:n2}", new { @id = "total_5" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_5[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_5'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 6)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_6[ii].total, "{0:n2}", new { @id = "total_6" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_6[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_6'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 7)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_7[ii].total, "{0:n2}", new { @id = "total_7" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_7[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_7'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 8)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_8[ii].total, "{0:n2}", new { @id = "total_8" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_8[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_8'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
-                                    else if (i == 9)
-                                    {
-                                        <td style="text-align:right">
-                                            @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", Model.activitydetaillist_9[ii].total, "{0:n2}", new { @id = "total_9" + @ii, @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off" })
-                                            @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].id", Model.activitydetaillist_9[ii].id)
-                                            @if (Model.activityModelList[i].statusNote == "2" || Model.activityModelList[i].statusNote == "3")
-                                            {
-                                                <script>
-                                                    document.getElementById('total_9'+@ii).disabled = true;
-                                                </script>
-                                            }
-                                        </td>
-                                    }
+                                </tr>
 
-                                }
-                                else
-                                {
-                                    @Html.Hidden("activitydetaillist_" + @i + "[" + @ii + "].ref_Estimate", Model.activitydetaillist[ii].id)
-                                    decimal? calCost = Model.activitydetaillist[ii].total / Model.activityFormModel.countMonth;
+                            </tbody>
 
-                                    <td style="text-align:right">
-                                        @Html.TextBox("activitydetaillist_" + @i + "[" + @ii + "].promotionCost", calCost, "{0:n2}", new { @class = "form-control textboxcss font10 textRight clsTotal", placeholder = "จำนวนเงิน", autocomplete = "off", @onchange = "sumall()" })
-
-
-                                    </td>
-                                }
-
-                            </tr>
-
-                        </tbody>
-
+                        }
                     }
                 </table>
                 <br />
 
             }
+
 
         }
         <div class="center" style="margin-left:15px;">

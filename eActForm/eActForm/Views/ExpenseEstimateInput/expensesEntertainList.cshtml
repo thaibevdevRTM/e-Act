@@ -486,7 +486,6 @@
 
     function cashDelete(btn) {
         var rowIndex = $(btn).closest('tr').index();
-        console.log(rowIndex);
         if (rowIndex > 0) {
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);

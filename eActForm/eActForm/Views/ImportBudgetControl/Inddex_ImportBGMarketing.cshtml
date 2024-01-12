@@ -57,7 +57,6 @@
 <script type="text/javascript">
 
     $('#ddlImportType').change(function () {
-        console.log($('#ddlImportType').val());
 
         if ($('#ddlImportType').val() == 'monthly') {
            
@@ -119,7 +118,6 @@
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            console.log(response);
                             if (response.Success) {
                                 callPreviewData();
                             }

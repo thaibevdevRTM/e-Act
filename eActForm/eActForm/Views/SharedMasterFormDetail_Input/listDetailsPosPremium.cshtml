@@ -169,8 +169,6 @@
                             var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replaceAll(",", ""));
                             $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
                             totalAll = totalAll + rowunit;
-
-                            console.log(rowunit);
                         }
 
                         $("#totalEstimate").text(totalAll.format());
@@ -189,7 +187,6 @@
                     //=======END=====format text curency============
 
                     function selectData(indexObj, material, materialDescription, QtyName) {
-                        console.log('test select ');
                         $(".txtInTable_productId_" + indexObj).val(material);
                         $(".txtInTable_productDetail_" + indexObj).val(materialDescription);
                         $(".txtInTable_productDetail_" + indexObj).attr('title', materialDescription)
@@ -199,8 +196,7 @@
                     }
 
                     function getUnitPOS(rowId) {
-                        console.log(rowId);
-
+  
                         $.ajax({
                             url: '@Url.Action("callUnitPOS", "SharedMasterFormDetail_Input")',
                             data: {

@@ -56,7 +56,18 @@
             }
         </div>
     </div>
-
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="control-label pull-right">
+                Cost Center :
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            @Html.TextBoxFor(m => m.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", Style = "width:5; text-align:center;", @id = "txtCostCenter", @readonly = true })
+        </div>
+    </div>
 </div>
 
 

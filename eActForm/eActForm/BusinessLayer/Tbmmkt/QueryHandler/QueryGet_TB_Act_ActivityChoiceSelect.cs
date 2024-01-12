@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                                   id = d["id"].ToString(),
                                   actFormId = d["actFormId"].ToString(),
                                   select_list_choice_id = d["select_list_choice_id"].ToString(),
+                                  selectNum = d["selectNum"].ToString(),
                                   name = d["name"].ToString(),
                                   type = d["type"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),

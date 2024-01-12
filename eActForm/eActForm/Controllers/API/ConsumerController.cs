@@ -16,6 +16,7 @@ using System.Web.Helpers;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 using static iTextSharp.text.pdf.AcroFields;
 
@@ -57,13 +58,18 @@ namespace eActForm.Controllers.API
                 if (response != null)
                 {
                     activity_TBMMKT_Model = ReportAppCode.mainReport(response.data.refId, response.data.approver);
+
+                    //--- check make sure status cuurent must be = 2
+                    var getApproveModel = ApproveAppCode.getApproveByActFormId(response.data.refId, response.data.approver);
+                    bool checkStatusApprove = getApproveModel.approveDetailLists.Where(x => x.rangNo.ToString() == response.data.orderRank 
+                                                                                                     && x.empId == response.data.approver).FirstOrDefault().statusId == "2";
                     //check status approve rang -1 
                     var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(response.data.approver, response.data.refId);
                     if (!string.IsNullOrEmpty(getEmp))
                     {
                         ApproveAppCode.apiProducerApproveAsync(getEmp, response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.val1 == "3").FirstOrDefault().displayVal);
                     }
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.statusId == 2)
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.statusId == 2 && checkStatusApprove)
                     {
                         if (ApproveAppCode.updateApprove(response.data.refId, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.message, null, response.data.approver) > 0)
                         {

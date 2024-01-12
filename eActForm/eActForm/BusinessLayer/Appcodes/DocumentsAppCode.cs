@@ -243,16 +243,15 @@ namespace eActForm.BusinessLayer
             {
                 if (UtilsAppCode.Session.User != null)
                 {
-                    if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"] || formTYpeId == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]))
-
-                        || (statusId == 3))
-                    {
-                        chk = false;//แก้ไข้ไม่ได้
-                    }
-                    else
+                    if (UtilsAppCode.Session.User.isSuperAdmin || statusId == 1 || statusId == 5)
                     {
                         chk = true;
                     }
+                    else if (statusId == 2 || statusId == 3)
+                    {
+                        chk = false;//แก้ไข้ไม่ได้
+                    }
+                   
                 }
             }
             catch (Exception ex)
@@ -280,6 +279,20 @@ namespace eActForm.BusinessLayer
             }
             return valResult;
         }
+        public static DateTime? convertDateTHToShowCultureDateEN_ReTypeDate(DateTime? dateToShow, string formatDatetime)
+        {
+            DateTime? valResult;
+            if (dateToShow != null)
+            {
+                valResult = DateTime.Parse(dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true)));
+            }
+            else
+            {
+                valResult = new DateTime();
+            }
+            return valResult;
+        }
+
         public static string convertDateTHToShowCultureDateTH(DateTime? dateToShow, string formatDatetime)
         {
             string valResult = "";

@@ -45,7 +45,6 @@
     }
     function fillOnChange() {
 
-        console.log($("#ddlProvince option:selected").text());
         $("#provinceName").val($("#ddlProvince option:selected").text());
         $.ajax({
             url: '@Url.Action("getDataSaleTeam", "apiGetDataMaster")',
@@ -66,7 +65,6 @@
         if (response.Data.saleTeamList.length > 0) {
             $("#ddlSaleTeam option[value !='']").remove();
             $.each(response.Data.saleTeamList, function () {
-                console.log(this['id'] + "," +this['nameTH']);
                 $("#ddlSaleTeam").append($("<option></option>").val(this['id']).html(this['nameTH']));
             });
         }

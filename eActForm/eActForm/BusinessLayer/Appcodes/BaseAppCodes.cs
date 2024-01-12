@@ -191,10 +191,31 @@ namespace eActForm.BusinessLayer.Appcodes
             return DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
         }
 
-        public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
+        public static DateTime? converStrToDatetimeWithFormat(string p_date, string formatDate)
         {
-            return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+            DateTime? conDate = (DateTime?)null;
+            try
+            {
+                if (!string.IsNullOrEmpty(p_date))
+                {
+                    formatDate = checkFormatDate(p_date, formatDate);
+                    conDate = DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+                }
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+
+            return conDate;
         }
+        public static string checkFormatDate(string p_date,string formatDate)
+        {
+            string getFormat = p_date.Contains(":") ? ConfigurationManager.AppSettings["formatDatetimeUse"] : formatDate;
+            return getFormat;
+        }
+           
+
         public static User getEmpFromApi(string empId)
         {
             ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();

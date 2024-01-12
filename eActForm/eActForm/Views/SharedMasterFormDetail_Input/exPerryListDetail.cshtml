@@ -2,41 +2,77 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 @using System.Configuration;
-<div class="col-md-12 col-xs-12">
-    <fieldset>
-        <legend> ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses</legend>
-    </fieldset>
+
+<style>
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            .tab button.active {
+                background-color: #ccc;
+            }
+</style>
+
+<div id="divTab" class="tab">
+    <button type="button" id="defaultOpen" class="tablinks" onclick="openTab(event, 'divTabGenaral')">Genaral</button>
+    <button type="button" class="tablinks" onclick="openTab(event, 'divListExpense')">Travel Expenses</button>
+    <button type="button" class="tablinks" onclick="openTab(event, 'divEntertain')">Entertain</button>
 </div>
 
-<div class="col-md-12">
+
+<div id="divTabGenaral" class="col-md-12 tabcontent">
+
+    <div class="col-md-12 col-xs-12" style="margin-top:50px;">
+        <fieldset>
+            <legend> ค่าใช้จ่ายทั่วไป / General expenses</legend>
+        </fieldset>
+    </div>
     <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
         <thead class="thead-dark">
             <tr>
                 <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
-                <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</td>
+                <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่ตามใบเสร็จ</td>
                 <td class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</td>
-                <td class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</td>
+                <td class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนรายการ/จำนวนลิตร</td>
                 <td class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</td>
                 <td class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</td>
             </tr>
         </thead>
 
-        @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
+        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
         {
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
                         <button id="btnDel1_0" name="btnDel_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel1" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].compensate, "{0:0.000}",new { @class = "form-control textboxcss font10 textRight" ,@type = "number", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal", @type = "number", onkeyup = "getValues()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].compensate, "{0:0.000}", new { @class = "form-control textboxcss font10 textRight", @type = "number", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal", @type = "number", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
             </tbody>
@@ -44,8 +80,8 @@
         <tr>
             <td></td>
             <td colspan="2" class="textRight">
-                รวมค่าใช้จ่ายในการเดินทาง/ค่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
-                Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
+                <div>รวมค่าใช้จ่ายทั่วไป (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)</div>
+                <div>Total General expenses (Excluding Entertainment Expenses and Market Visits)</div>
             </td>
             <td class="textRight">
                 <label id="lblLite"></label>
@@ -60,99 +96,121 @@
 
     </table>
     <div id="addEx" class="row pull-right" style="width:150px" onclick="addRow();">
-        <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+        <button type="button" class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</button>
     </div>
-    @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
-    {
-        <div id="divCashBill" class="row">
 
-            @foreach (var item in Model.exPerryCashList)
-            {
-                <div class="col-lg-8">
-                </div>
-                <div class="col-lg-4">
-                    <label style="color:red">
-                        <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
-                    </label>
-                </div>
-            }
+</div>
 
+
+@*<button type="button" class="btn ink-reaction btn-close-white" onclick="divShowandHide()">แสดงเพิ่มเติม</button>*@
+
+
+<div id="divListExpense" style="margin-bottom:20px;" class="tabcontent">
+    <div class="col-md-12 col-xs-12">
+        <fieldset>
+            <legend> ค่าใช้จ่ายในการเดินทาง / Travel Expenses</legend>
+        </fieldset>
+    </div>
+    <div style="margin-top:50px;">
+        @Html.Action("exTravelDetail", "SharedMasterFormDetail_Input", new { activity_TBMMKT_Model = Model })
+    </div>
+
+    <div style="margin-top:50px;">
+        @Html.Action("expensesTrvDetail", "ExpenseEstimateInput", new { activity_TBMMKT_Model = Model })
+    </div>
+
+
+</div>
+
+
+<div id="divEntertain" style="margin-bottom:50px;" class="tabcontent">
+    <div class="col-lg-12 col-xs-12" style="margin-top:50px;">
+        <fieldset>
+            <legend>  ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด /  Entertainment Expenses and Market Visits</legend>
+        </fieldset>
+        <div>
+            <lable style="color:red"> * หมายเหตุ:</lable>
+            <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
         </div>
-    }
-    else
-    {
-        <div id="divCashBill" class="row"></div>
-    }
-</div>
-<div class="col-lg-12 col-xs-12">
-    <fieldset>
-        <legend>  ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด /  Entertainment Expenses and Market Visit</legend>
-    </fieldset>
-    <div>
-        <lable style="color:red"> * หมายเหตุ:</lable>
-        <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
     </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr class="thead-dark">
+                    <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
+                    <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่ตามใบเสร็จ</td>
+                    <td class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</td>
+                    <td class="align-content-center font10" rowspan="2" style="width:25%;">จุดประสงค์</td>
+                    <td class="align-content-center font10" rowspan="2" style="width:25%;">ชื่อลูกค้า</td>
+                    <td class="align-content-center font10" rowspan="2" style="width:10%;">รวมเป็นจำนวนเงิน</td>
+                </tr>
+            </thead>
+
+            @for (int i = 0; i < Model.activityOfEstimateList3.Count; i++)
+            {
+                <tbody id="first1">
+                    <tr class="tagCountRowExpenses">
+                        <td>
+                            <button id="btnDel2_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel2" onclick="cashDelete(this);"></button>
+
+
+                            @Html.HiddenFor(x => x.activityOfEstimateList3[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
+                        </td>
+                        <td style="text-align:right">
+                            @Html.TextBox("activityOfEstimateList3[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList3[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                     new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
+                        </td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList3[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal_tbEtt", @type = "number", onkeyup = "getTotal()" })</td>
+
+                    </tr>
+                </tbody>
+            }
+            <tr>
+                <td></td>
+                <td colspan="4" class="textRight">
+                    รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
+                    Total Entertainment Expenses and Market Visits
+                </td>
+                <td class="textRight">
+                    <label id="lbltotalExMaket"></label>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div id="addEnt" class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
+        <button type="button" class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</button>
+    </div>
+
 </div>
 
-<div class="col-md-12">
+
+<div class="col-md-12" style="margin-top:50px;">
     <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
-        <thead class="thead-dark">
-            <tr>
-                <td class="align-content-center font10" rowspan="2" style="width:5%;"></td>
-                <td class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</td>
-                <td class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</td>
-                <td class="align-content-center font10" rowspan="2" style="width:25%;">จุดประสงค์</td>
-                <td class="align-content-center font10" rowspan="2" style="width:25%;">ชื่อลูกค้า</td>
-                <td class="align-content-center font10" rowspan="2" style="width:10%;">รวมเป็นจำนวนเงิน</td>
-            </tr>
-        </thead>
-
-        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
-        {
-            <tbody id="first1">
-                <tr class="tagCountRowExpenses">
-                    <td>
-                        <button id="btnDel2_0" type="button" class="btn ink-reaction btn-danger fa fa-trash-o clsDel2" onclick="cashDelete(this);"></button>
-
-                        
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
-                    </td>
-                    <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
-                 new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
-                    </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight clsTotal_tbEtt", @type = "number", onkeyup = "getTotal()" })</td>
-
-                </tr>
-            </tbody>
-        }
         <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                Total Entertainment Expenses and Market Visit
+            <td style="text-align:center">
+                <b>สรุปค่าใช้จ่ายทั้งหมด</b>
             </td>
-            <td class="textRight">
-                <label id="lbltotalExMaket"></label>
+            <td style="width:11%; text-align:center">
+                จำนวนเงิน/บาท
             </td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
-                Total Monthly Expenses (Baht)
+            <td class="textRight">
+                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน
+                Total Monthly Expenses
             </td>
             <td class="textRight">
                 <label id="lbltotalExpenses"></label>
             </td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)
+            <td class="textRight">
+                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป /  Cash Advance
             </td>
             <td class="textRight">
                 <label id="lbltotalAdvance">
@@ -165,8 +223,7 @@
             </td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
+            <td class="textRight">
                 รวมค่าใช้จ่ายที่ต้องการเบิก(คืน)ในครั้งนี้ /  Total All Expenses
             </td>
             <td class="textRight">
@@ -174,13 +231,50 @@
             </td>
         </tr>
     </table>
-
-
-    <div id="addEnt" class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
-        <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
-    </div>
-
 </div>
+
+
+
+<div style="margin-bottom:50px;">
+    <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+        <tr style="border-bottom:none;">
+            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                <div style="height:5px;"></div>
+                <div style="width: 100%; text-align: left;">
+                    <div class="form-group">
+                        <div class="col-md-12 col-xs-12">
+                            <h5>Expected benefit : ประโยชน์ที่คาดว่าจะได้รับ</h5>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { rows = "6", @class = "form-control textboxcss", @id = "txtExpected" })
+                        </div>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        <tr style="border-bottom:none;">
+            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                <div style="height:5px;"></div>
+                <div style="width: 100%; text-align: left;">
+                    <div class="form-group">
+                        <div class="col-md-12 col-xs-12">
+                            <h5>Remarks : หมายเหตุ</h5>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            @Html.TextAreaFor(x => x.activityFormTBMMKT.remark, new { rows = "6", @class = "form-control textboxcss", @id = "txtRemarks" })
+                        </div>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
 
 
 <script type="text/javascript">
@@ -188,19 +282,19 @@
         getTotal();
         getLite();
         getValues();
-        document.getElementById("divCashBill").style.display = "none";
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
 
         document.getElementById('btnDel1_0').disabled = true;
         document.getElementById('btnDel2_0').disabled = true;
+
+        document.getElementById("defaultOpen").click();
     });
 
 
 
     function autocompleDetail(i) {
-        console.log(i.id);
         $("#"+i.id).autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -213,7 +307,6 @@
                         text: $("#"+i.id).val(),
                     },
                     success: function (data) {
-                        console.log(data);
                         response($.map(data, function (item) {
                             return { label: item.displayVal, value: item.displayVal, id: item.id };
                         }))
@@ -286,21 +379,33 @@
 
         $(".clsTotal").each(function () {
             totalAll += parseFloat(this.value);
-            console.log(totalAll);
         });
-        document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
+        if (isNaN(totalAll)) {
+            totalAll = 0.00;
+        }
+
+        document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
         totalExpenExMaket();
         totalAllExpenses();
     }
 
     function totalExpenExMaket() {
-        var total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
-        var ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
-        total = isNaN(total) ? 0 : parseFloat(total);
-        ExMaket = isNaN(ExMaket) ? 0 : parseFloat(ExMaket);
-        var result = total + ExMaket;
+
+
+        let total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
+        let ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
+        let v_totalEstimate = document.getElementById('totalEstimate').innerHTML.split(",").join("");
+
+        //console.log(v_totalEstimate + ' total kk')
+
+        total = isNaN(total) ? 0.00 : total == '' ? 0.00 : parseFloat(total);
+        ExMaket = isNaN(ExMaket) ? 0.00 : parseFloat(ExMaket);
+        v_totalEstimate = isNaN(v_totalEstimate) ? 0.00 : parseFloat(v_totalEstimate);
+
+        let result = total + ExMaket + v_totalEstimate;
+
         document.getElementById('lbltotalExpenses').innerHTML = isNaN(result) ? 0 : result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
     }
@@ -308,13 +413,16 @@
     function totalAllExpenses() {
         var ex = parseFloat(document.getElementById('lbltotalExpenses').innerHTML.split(",").join(""));
         var adv = parseFloat(document.getElementById('lbltotalAdvance').innerHTML.split(",").join(""));
-        var result = adv - ex;
+
+        adv = isNaN(adv) ? 0.00 : adv == '' ? 0.00 : parseFloat(adv);
+
+        var result = -(adv - ex);
          //Id for exPerryListEntertainment View
-        if (adv != 0) {
-            document.getElementById('lbltotalAll').innerHTML = result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        if (isNaN(adv)) {
+            document.getElementById('lbltotalAll').innerHTML = ex.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         else {
-            document.getElementById('lbltotalAll').innerHTML = ex.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('lbltotalAll').innerHTML = result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
     }
 
@@ -324,7 +432,7 @@
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
 
         for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].compensate");
+            var x = document.getElementsByName("activityOfEstimateList2[" + i + "].compensate");
             var rowtotal = parseFloat($(x).val());
             if (isNaN(rowtotal)) rowtotal = 0;
             totalAll = totalAll + rowtotal;
@@ -386,13 +494,39 @@
 
         $(".clsTotal_tbEtt").each(function () {
             totalAll2 += parseFloat(this.value);
-            console.log(totalAll2);
         });
 
+        totalAll2 = isNaN(totalAll2) ? 0.00 : totalAll2;
 
         document.getElementById('lbltotalExMaket').innerHTML = totalAll2.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         totalExpenExMaket();
         totalAllExpenses();
+
     }
 
+    //function divShowandHide() {
+    //    var x = document.getElementById("divListExpense");
+    //    if (x.style.display === "none") {
+    //        $("#divListExpense").show(1000);
+    //    } else {
+    //        $("#divListExpense").hide(1000);
+
+    //    }
+    //}
+
+
+    function openTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
 </script>

@@ -79,7 +79,6 @@
 
 
     function importData() {
-        console.log($("#ddlMaster").val());
         var data = new FormData();
         var files = $("#inputFile").get(0).files;
         if (files.length > 0) {
@@ -116,7 +115,6 @@
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            console.log(response);
                             if (response.Success) {
                                 callPreviewData();
                             }

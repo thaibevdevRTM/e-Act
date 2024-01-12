@@ -142,6 +142,7 @@ namespace eActForm.Controllers
                     ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
                     objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                    objGetDataPVPrevious.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
                     getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
 
                 }

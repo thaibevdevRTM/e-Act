@@ -77,7 +77,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                docDate = BaseAppCodes.converStrToDatetimeWithFormat(docDate + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                docDate = BaseAppCodes.converStrToDatetimeWithFormat(docDate + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").Value.ToString("dd/MM/yyyy");
 
                 empCashList = expensesEntertainAppCode.getAmountLimitByEmpId(empId, docDate).ToList();
                 if (empCashList.Any())
@@ -97,5 +97,37 @@ namespace eActForm.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult getExchangeRate(string st_date)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                DateTime? conDate = string.IsNullOrEmpty(st_date) ? (DateTime?)null :
+                BaseAppCodes.converStrToDatetimeWithFormat(st_date, "dd/MM/yyyy HH:mm");
+                var response = expensesEntertainAppCode.api_ExchangeRate(conDate);
+
+                if (response.Result.result != null )
+                {
+                    var resultData = new
+                    {
+                        rate = response.Result.result.data.data_detail.FirstOrDefault().selling.ToString(),
+                        txtDate = response.Result.result.data.data_detail.FirstOrDefault().period.Value.ToString("dd/MM/yyyy")
+                    };
+                    result.Data = resultData;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getExchangeRate => " + ex.Message);
+            }
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

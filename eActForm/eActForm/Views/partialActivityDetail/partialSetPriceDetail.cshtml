@@ -775,7 +775,6 @@
 
     function chkTrueRef(item, index) {
         var txtRef = document.getElementById("txtReference").value.includes(item);
-        console.log(txtRef);
         if (txtRef == true) {
             document.getElementById("chk"+item).checked = true;
         }
@@ -787,7 +786,6 @@
         unionStr += element.value + ',';
 
         if (!element.checked) {
-            console.log(element.value + ',')
             unionStr = document.getElementById("txtReference").value.replace(element.value + ',', '');
         }
 

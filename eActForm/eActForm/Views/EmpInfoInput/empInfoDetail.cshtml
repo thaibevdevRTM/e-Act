@@ -190,7 +190,6 @@
                 typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 $("#lblEmpName").val(response.Data.empName);
                 $("#lblLvl").val(response.Data.level);
@@ -253,7 +252,6 @@
                  empLvl: $("#lblLvl").val(),
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
 
                 document.getElementById('ProductDetail_0').innerHTML = response.Data.ProductDetail_0;
@@ -286,6 +284,7 @@
                 }
             }
         });
+
     }
 
     function getCashLimit() {
@@ -298,7 +297,6 @@
                 jobLevel: $("#lblLvl").val(),
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 document.getElementById('lblLimit').innerHTML = response.Data.cashPerDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 $("#lblLimit").val(response.Data.cashPerDay);
@@ -310,7 +308,6 @@
                     $("#lblLimit").val(0);
                 }
             }
-           // alert($("#lblLimit").val());
         });
 
     }
@@ -325,7 +322,6 @@
 
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 document.getElementById('lblCumulative').innerHTML = response.Data.cashPerDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 $("#lblCumulative").val(response.Data.cashPerDay);
@@ -455,7 +451,6 @@
                 docDate: $("#txtdateDoc").val(),
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 //0 2 3 6 ต้องดึงตามที่เคยสร้าง 1 ,5 ดึงข้อมูลปัจจุบัน
                 if (

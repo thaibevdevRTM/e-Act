@@ -39,7 +39,6 @@
         width: 100%;
     }
 
-    /*==========20200413===========*/
     .hrTab {
         background-color: #d4c8c8;
         height: 35px;
@@ -48,7 +47,10 @@
     .highHeadFooterTable {
         height: 35px;
     }
-    /*====END======20200413===========*/
+    .thead-dark {
+        background-color: #E5E2E2;
+        height: 25px;
+    }
 </style>
 
 @using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
@@ -109,6 +111,11 @@
     </div>
 </div>
 
+<div class="modal fade" id="previewModal2" style="display:none">
+    <div id="divPreview2">
+    </div>
+</div>
+
 <div id="preview" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -145,26 +152,27 @@
 
         var arrayOfElements = document.getElementsByClassName('divDelImg');
         var lengthOfArray = arrayOfElements.length;
-        console.log(lengthOfArray)
 
         for (var i = 0; i < lengthOfArray; i++) {
             arrayOfElements[i].style.display = 'none';
         }
     }
 
-
+    console.log('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)');
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
-        console.log('@Model.activityFormTBMMKT.master_type_form_id')
 
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
 
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
+        $("#divTab :input").prop("disabled", false);
 
-
+        console.log('@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' + 'canEdit')
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
-            && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
+            && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) == 'true') {
+
+             console.log('ok')
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);
@@ -216,7 +224,6 @@
 
     if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReturnPosTbm"]'
         && '@Model.activityFormTBMMKT.statusId' == '1') {
-        console.log('return');
         $("#GridPDF :input").prop("readonly", true);
 
         $("#txttoName").prop("readonly", false);
@@ -297,9 +304,37 @@
             }
 
         } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+
             if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
-            if ($("#ddlTravelling").val() == "") { required += "ระบุความเร่งด่วน*<br>"; validate = false; }
+            //if ($("#ddlTravelling").val() == "") { required += "ระบุประเภทการเดินทาง*<br>"; validate = false; }
+
+            let getTxtselect = $("#ddlTravelling option:selected").text();
+            if (getTxtselect.includes('Abroad')) {
+                if ($("#ddlCountry option:selected").val() == '') {
+                    required += "ระบุ ประเทศ*<br>"; validate = false;
+                }
+            }
+
+            var ProductDetail_0 = 0.00, ProductDetail_1 = 0.00, txtUnitPrice_0 = 0.00, txtUnitPrice_1 = 0.00;
+            if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
+            if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")) + parseFloat($("#txtVat_1").val().replace(",", "")); }
+
+            if ($("input[name='activityFormTBMMKT.isTemp']:checked").val() != 'true') {
+
+                if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
+                    required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
+                }
+            }
+
+            let getDay = parseFloat($("#txtUnit_0").val());
+            let getchk = $("input[name='activityFormTBMMKT.chkAllowanceTBM']:checked").val();
+            if ($("#ddlCountry option:selected").val() != '' && getDay < 30 && getchk != 'on') {
+                required += "&emsp;เบี้ยเลี้ยงตามสัดส่วน*<br>"; validate = false;
+            }
+
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
@@ -390,7 +425,6 @@
             }
 
             if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
-                console.log($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val());
 
                 if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") {
                     required += "&emsp;ชื่อลูกค้า/ชื่อกิจกรรม*<br>"; validate = false;
@@ -498,7 +532,6 @@
             }
 
             let getTotal = document.getElementById('totalEstimate').innerHTML.split(",").join("")
-            console.log(getTotal)
             if (getTotal > 50000000 && '@UtilsAppCode.Session.User.isAdminTBM' == 'False') {
                 required += "วงเงินเกิน 50 ล้าน! *<br>"; validate = false;
             }
@@ -590,7 +623,6 @@
 
 
     function SubmitData() {
-        console.log("submit");
 
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
@@ -620,9 +652,9 @@
             }
             else {
                 console.log('No Gen');
-                $("#divPreview").html(htmlResponse);
+                $("#divPreview2").html(htmlResponse);
+                $('#previewModal2').modal('show');
                 $("#WaitDialog").hide();
-                $('#previewModal').modal('show');
             }
 
         });
@@ -652,26 +684,40 @@
 
     function failureQuery(data) {
         console.log('fail');
-        console.log(data);
     }
 
 
     var fileList = new Array;
+    var chkSpec;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
         maxFilesize: 20,
-        //addRemoveLinks: true,
+        accept: function (file, done) {
+            var specialChars = "#%&*:<>?/{|}'";
+            var name = file.name;
+            for (j = 0; j < specialChars.length; j++) {
+                if (name.indexOf(specialChars[j]) > -1) {
+                    alert("Special Characters [ # % & * : < > ? / { | } '] are not allowed in the file name \n\n\n" + name);
+                    e.preventDefault();
+                    chkSpec = true;
+                }
+            }
+
+            if (chkSpec != true) {
+                done();
+            }
+        },
         init: function () {
 
-        this.on("complete", function (file) {
-            CallImageView($("#hdActivityId").val());
+            this.on("complete", function (file) {
+                CallImageView($("#hdActivityId").val());
 
-        });
-    }
+            });
+        }
 
-};
+    };
 
 function CallImageView(obj) {
         $.ajax({

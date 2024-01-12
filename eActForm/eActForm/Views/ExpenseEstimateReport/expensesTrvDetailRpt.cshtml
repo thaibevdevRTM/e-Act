@@ -5,6 +5,9 @@
 @{
     Layout = null;
     string txtMsg = "";
+    string gethotelExpense = "";
+    decimal? sumTotal = 0;
+    decimal? sumOverHotel = 0;
 }
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
@@ -17,10 +20,18 @@ else
     txtMsg = "ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายในการเดินทางไปปฏิบัติงานนอกสถานที่ทำงานปกติของบริษัทฯ ตามรายละเอียดดังนี้";
 }
 
+@if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+{
+    gethotelExpense = AppCode.Expenses.hotelExpense[1];
+}
+else
+{
+    gethotelExpense = AppCode.Expenses.hotelExpense[0];
+}
+
+
 <div class=" fontDocSmall " style="padding-left:5em;">
-
-    <b>@txtMsg</b>
-
+    @txtMsg
 </div>
 <div style="height:15px;"></div>
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
@@ -37,10 +48,10 @@ else
         <td style="width: 5%;text-align:center;">
             <b>จำนวน/วัน</b>
         </td>
-        <td style="width: 22%;text-align:center;">
+        <td style="width: 20%;text-align:center;">
             <b>ราคา/หน่วย</b>
         </td>
-        <td style="width: 8%; text-align:center;">
+        <td style="width: 10%; text-align:center;">
             <b>    Total/รวม(บาท)</b>
         </td>
     </tr>
@@ -48,7 +59,6 @@ else
     @{ var index = 0;}
     @for (index = 0; index < Model.expensesDetailModel.costDetailLists.Count; index++)
     {
-
         <tr style="height:20px;">
 
             <td style="text-align:left; padding-left:5px;">
@@ -56,6 +66,21 @@ else
                 @if (@Model.expensesDetailModel.costDetailLists[@index].displayType == AppCode.CodeHtml.LabelHtml)
                 {
                     <label> สิทธิเบิก @Model.expensesDetailModel.costDetailLists[@index].productDetail  บาท / วัน</label>
+                    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    {
+                        if (Model.activityFormTBMMKT.list_1_select != "" && Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.AllowanceTBM)
+                        {
+                            if (Model.expensesDetailModel.costDetailLists[@index].unit > 30)
+                            {
+                                <label>( คิดอัตราแบบเหมาจ่าย )</label>
+                            }
+                            else
+                            {
+
+                                <label>( คิดตามสัดส่วน @Model.tB_Act_ActivityForm_DetailOther.amountCumulative.Value.ToString("#,###.00") % )  </label>
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -72,13 +97,37 @@ else
             <td style="text-align:right; padding-right:5px;">
 
 
-                @if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.hotelExpense && !string.IsNullOrEmpty(Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay))
+                @if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == gethotelExpense && !string.IsNullOrEmpty(Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay))
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
                 }
                 else
                 {
-                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
+                    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    {
+                        if (Model.activityFormTBMMKT.list_1_select != "" && Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.AllowanceTBM)
+                        {
+
+                            <label>-</label>
+
+                        }
+                        else
+                        {
+                            <label>@string.Format("{0:n2}", @Model.expensesDetailModel.costDetailLists[@index].unitPrice) </label>
+                        }
+                    }
+                    else
+                    {
+                        <label>@string.Format("{0:n2}", @Model.expensesDetailModel.costDetailLists[@index].unitPrice) </label>
+                    }
+
+                }
+
+                @{
+                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == gethotelExpense)
+                    {
+                       sumOverHotel = Model.expensesDetailModel.costDetailLists[@index].totalCase;
+                    }
                 }
 
                 @if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
@@ -86,21 +135,47 @@ else
                     <span style="color:red">*</span>
                 }
             </td>
+
             <td style="text-align:right; padding-right:5px;">
                 @if (@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") != ".00")
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") </label>
+                    sumTotal += @Model.expensesDetailModel.costDetailLists[@index].total;
                 }
+
             </td>
         </tr>
     }
+
+    @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+    {
+        <tr>
+            <td colspan="3" style="text-align:right;">
+                <b>ค่าที่พักเกินสิทธิ์รวม(บาท)</b> &nbsp;
+            </td>
+            <td style="text-align:right; padding-right:5px;">
+                @{
+                    string resultOVHotel = sumOverHotel > 0 ? String.Format("{0:n2}", sumOverHotel) : "-";
+                    <label>@resultOVHotel</label>
+                }
+
+            </td>
+        </tr>
+    }
+
     <tr>
-        <td colspan="3" style="width: 85%;text-align:right;">
+
+        <td colspan="3" style="text-align:right;">
             <b>จำนวนเงินรวม(บาท)</b> &nbsp;
         </td>
-        <td style="width: 15%;text-align:right; padding-right:5px;">
+        <td style="text-align:right; padding-right:5px;">
             @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
-            @Model.totalCostThisActivity.Value.ToString("#,###.00")
+            @*@Model.totalCostThisActivity.Value.ToString("#,###.00")*@
+            @{
+                string resultTotal = sumTotal > 0 ? String.Format("{0:n2}", sumTotal) : "-";
+                <label>@resultTotal</label>
+            }
+
         </td>
     </tr>
 </table>

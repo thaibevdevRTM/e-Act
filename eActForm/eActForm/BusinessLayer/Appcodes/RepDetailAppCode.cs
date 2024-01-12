@@ -2,6 +2,7 @@
 using iTextSharp.text;
 using Microsoft.ApplicationBlocks.Data;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -345,20 +346,28 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static string getRepdetailByActNo(string actNo)
+        public static List<string> getRepdetailByActNo(string actNo)
         {
-
+            List<string> sList = new List<string>();
             try
             {
-                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailIdByActNo"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailIdByActNo"
                     , new SqlParameter[] { new SqlParameter("@actNo", actNo) });
 
-                return obj.ToString();
+               var getList =  (from DataRow dr in ds.Tables[0].Rows
+                                 select new 
+                                 {
+                                     id = dr["repDetailId"].ToString(),
+
+                                 }).ToList();
+                sList = getList.Select(x => x.id).ToList();
+
+                return sList;
 
             }
             catch (Exception ex)
             {
-                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+                throw new Exception("getRepdetailByActNo >>" + ex.Message);
             }
         }
 

@@ -44,7 +44,8 @@ namespace eActForm.Controllers
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
-                activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activitySales.Contains("FOC")).ToList();
+
+                activityModel.activityGroupFilterList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(Activity_Model.activityType.MT.ToString())).ToList();
                 activityModel.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.orderNum).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
@@ -246,6 +247,9 @@ namespace eActForm.Controllers
                 activityModel.activityFormModel.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
                 activityModel.activityFormModel.activityPeriodStStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 activityModel.activityFormModel.activityPeriodEndStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activityModel.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
+                //clear Date Esitimate2,3 เพราะ Esitimate หลัก เก็บข้อมูลไว้หมดแล้ว  
+                activityModel.activityOfEstimateList2 = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+                activityModel.activityOfEstimateList3 = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activityModel, new_actId);
                 TempData.Keep();
                 result.ActivityId = new_actId;
@@ -321,7 +325,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult deleteImgById(string id,string filename_)
+        public JsonResult deleteImgById(string id, string filename_)
         {
             var result = new AjaxResult();
 
@@ -471,50 +475,25 @@ namespace eActForm.Controllers
 
 
                 activityModel.activityFormModel.delFlag = activityModel.activityModelList.Any() ? true : false;
-                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-                activityModel.activityFormModel.sumTotal = activityModel.activitydetaillist.Select(x => x.total).Sum();
+                var getDeatilList = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                activityModel.activitydetaillist = getDeatilList;
+
+
+                activityModel.activityFormModel.sumTotal = getDeatilList.Select(x => x.total).Sum();
 
 
                 if (activityModel.activityModelList.Any())
                 {
+                    activityModel.subActivitydetaillist = new List<CostThemeDetailOfGroupByPrice[]>();
+                    int subRow = 0;
                     foreach (var item in activityModel.activityModelList)
                     {
-                        switch (item.countAct)
-                        {
-                            case 1:
-                                activityModel.activitydetaillist_0 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 2:
-                                activityModel.activitydetaillist_1 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 3:
-                                activityModel.activitydetaillist_2 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 4:
-                                activityModel.activitydetaillist_3 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 5:
-                                activityModel.activitydetaillist_4 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 6:
-                                activityModel.activitydetaillist_5 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 7:
-                                activityModel.activitydetaillist_6 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 8:
-                                activityModel.activitydetaillist_7 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 9:
-                                activityModel.activitydetaillist_8 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
-                            case 10:
-                                activityModel.activitydetaillist_9 = QueryGetActivityDetailById.getSubActivityDetailById(item.id);
-                                break;
+                        var getArr = QueryGetActivityDetailById.getSubActivityDetailById(item.id).ToArray();
+                        activityModel.subActivitydetaillist.Add(getArr.AsParallel().ToArray());
 
-                        }
-
+                        subRow++;
                     }
+                   
                 }
 
             }
@@ -550,108 +529,19 @@ namespace eActForm.Controllers
                     }
                 }
 
-                if (model.activitydetaillist_0.Any())
+                if (model.subActivitydetaillist.Any())
 
-                    foreach (var item in model.activitydetaillist_0)
+                    foreach (var item in model.subActivitydetaillist)
                     {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
+                        foreach(var arr in item)
                         {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
+                            if (!string.IsNullOrEmpty(arr.promotionCost.ToString()))
+                            {
+                                result.Code = ActFormAppCode.insertSubActivityDetail(arr);
+                            }
                         }
-                    }
 
-
-                if (model.activitydetaillist_1.Any())
-
-                    foreach (var item in model.activitydetaillist_1)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_2.Any())
-
-                    foreach (var item in model.activitydetaillist_2)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_3.Any())
-                    foreach (var item in model.activitydetaillist_3)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_4.Any())
-
-                    foreach (var item in model.activitydetaillist_4)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_5.Any())
-
-                    foreach (var item in model.activitydetaillist_5)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_6.Any())
-                    foreach (var item in model.activitydetaillist_6)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_7.Any())
-                    foreach (var item in model.activitydetaillist_7)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_8.Any())
-                    foreach (var item in model.activitydetaillist_8)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
-                    }
-
-
-                if (model.activitydetaillist_9.Any())
-                    foreach (var item in model.activitydetaillist_9)
-                    {
-                        if (!string.IsNullOrEmpty(item.promotionCost.ToString()))
-                        {
-                            result.Code = ActFormAppCode.insertSubActivityDetail(item);
-                        }
+                        
                     }
 
 

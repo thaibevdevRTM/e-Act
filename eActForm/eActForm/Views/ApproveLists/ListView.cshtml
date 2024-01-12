@@ -2,10 +2,7 @@
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @model eActForm.Models.Activity_Model.actForms
-@{
-    int lvlEmp = 0;
- 
-}
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 <style>
     table th{
@@ -170,14 +167,11 @@ else
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
         var empLvl = parseInt('@UtilsAppCode.Session.User.empLevel');
 
-        console.log('True');
         var favorite = [];
         $.each($("input[name='chk_approve']:checked"), function (index, value) {
             favorite.push($(this).val());
         }).promise().done(function () {
-
             summaryActBeerByActId(favorite);
-          //  document.getElementById("divSubmit").style.display = "block";
         });
 
     }
@@ -189,11 +183,7 @@ else
         $.each($("input[name='chk_approve']:checked"), function (index, value) {
             favorite.push($(this).val());
         }).promise().done(function () {
-
-            console.log(favorite)
-
             summaryActBeerByActId(favorite);
-          //  document.getElementById("divSubmit").style.display = "block";
         });
     }
 

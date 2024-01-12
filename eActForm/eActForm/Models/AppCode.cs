@@ -187,8 +187,10 @@ namespace eActForm.Models
         public class Expenses
         {
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
-            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; //{ get { return groupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; } } //ค่าเบี้ยเลี้ยงเดินทาง
-            public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";//{ get { return groupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1"; } }
+            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
+            public const string AllowanceTBM = "C75B3F65-15CC-4254-9ECF-C85079DC93F1"; 
+            //{ get { return groupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; } } //ค่าเบี้ยเลี้ยงเดินทาง
+            public static string[] hotelExpense = { "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1", "A178B712-9DF3-4E9F-B4C1-BF355F8EE7A1" };//{ get { return groupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1"; } }
             public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";//{ get { return groupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F"; } }
 
 

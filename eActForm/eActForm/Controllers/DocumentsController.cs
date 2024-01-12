@@ -64,8 +64,8 @@ namespace eActForm.Controllers
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    var getId = RepDetailAppCode.getRepdetailByActNo(Request.Form["txtActivityNo"].ToString());
-                    models.actRepDetailLists = models.actRepDetailLists.Where(x => x.id == getId).ToList();
+                    var getIdList = RepDetailAppCode.getRepdetailByActNo(Request.Form["txtActivityNo"].ToString());
+                    models.actRepDetailLists = models.actRepDetailLists.Where(x => getIdList.Contains(x.id)).ToList();
                 }
                 else
                 {

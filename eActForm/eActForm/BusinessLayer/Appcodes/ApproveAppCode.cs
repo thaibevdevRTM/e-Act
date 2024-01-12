@@ -174,9 +174,9 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
                      , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel("")
+                             select new ApproveModel.approveDetailModel(dr["empId"].ToString())
                              {
-                                 empEmail = dr["empEmail"].ToString()
+                                 
                              }).ToList();
 
                 string emailCC = "";

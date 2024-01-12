@@ -37,8 +37,8 @@
         text-align: center;
     }
 
-    .txtCenter{
-        text-align:center;
+    .txtCenter {
+        text-align: center;
     }
 </style>
 
@@ -57,7 +57,7 @@
 </div>
 
 
-<div id="divMainAct" class="row" >
+<div id="divMainAct" class="row">
     <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
 
         <div class="form-group">
@@ -284,25 +284,29 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
 
-        <div id="divSubAct" class="col-md-12 col-xs-12" style="display:none">
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <div class="control-label col-md-3 col-sm-3 col-xs-12">
-                        เพื่อกิจกรรม<span class="required">*</span>
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.subActivity, new SelectList(Model.activityGroupFilterList, "id", "activityAccount", 0), "Please Select", new
-                        {
-                        @class = "form-control textboxcss",
-                        id = "ddlSubActivity"
-                        })
+        <div class="form-group">
+            <div id="divSubAct" class="col-md-12 col-xs-12" style="display:none">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <div class="control-label col-md-3 col-sm-3 col-xs-12">
+                            เพื่อกิจกรรม<span class="required">*</span>
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.subActivity, new SelectList(Model.activityGroupFilterList, "id", "activityAccount", 0), "Please Select", new
+                            {
+                            @class = "form-control textboxcss",
+                            id = "ddlSubActivity"
+                            })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
         <div class="form-group">
@@ -513,7 +517,7 @@
         <div class="container">
             <div class="row">
 
-                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"] 
+                @if (Model.activityFormModel.statusId == 3 && Model.activityFormModel.master_type_form_id != @ConfigurationManager.AppSettings["formAddOn_MT_OMT"]
                             && Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                 {
                     <div style="display: inline-block">
@@ -573,6 +577,8 @@
         fillProductOnChange();
         checkBtn();
         onchangeActivity();
+        document.getElementById("ddlSubActivity").value = '@Model.activityFormModel.subActivity';
+
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
         getFormatCus();
@@ -891,14 +897,32 @@
     }
 
     function onchangeActivity() {
-        if ($("#ddlTheme option:selected").text() == 'FOC') {
 
+        var getArrSubGroup = '@ConfigurationManager.AppSettings["getSubActGroup"]';
+        if (getArrSubGroup.includes($("#ddlTheme option:selected").text().toLowerCase())) {
+            getMasterActGroup();
             document.getElementById("divSubAct").style.display = "block";
         }
         else {
 
             $("#ddlSubActivity").val('')
             document.getElementById("divSubAct").style.display = "none";
+        }
+    }
+
+    function getMasterActGroup() {
+
+        $("#ddlSubActivity option[value !='']").remove();
+        var javascriptArray = @Html.Raw(Json.Encode(Model.activityGroupFilterList));
+        var ddlSubActivity = $("#ddlSubActivity");
+
+        if (javascriptArray.length > 0) {
+            $.each(javascriptArray, function () {
+
+                if ($("#ddlTheme option:selected").text().toLowerCase().includes(this['activitySales'].toLowerCase())) {
+                    ddlSubActivity.append($("<option></option>").val(this['id']).html(this['activityAccount']));
+                }
+            });
         }
     }
 
@@ -1337,7 +1361,7 @@
     }
 
     function setTxtReadOnly() {
-
+        document.getElementById("ddlSubActivity").disabled = true;
         document.getElementById("ddlPiority").disabled = true;
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
@@ -1602,16 +1626,43 @@
 
 <script>
 
-    var maxImageHeight = 800;
     var fileList = new Array;
+    var chkSpec;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
         acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         paramName: "file",
         maxFilesize: 10,
+        accept: function (file, done) {
+            var specialChars = "#%&*:<>?/{|}'";
+            var name = file.name;
+            for (j = 0; j < specialChars.length; j++) {
+                if (name.indexOf(specialChars[j]) > -1) {
+                    alert("Special Characters [ # % & * : < > ? / { | } '] are not allowed in the file name \n\n\n" + name);
+                    e.preventDefault();
+                    chkSpec = true;
+                }
+
+            }
+
+            if (chkSpec != true) {
+                done();
+            }
+
+            //console.log(file.name + 't0')
+            //if (file.name.length > 30) {
+            //    done("Filename exceeds 30 characters!");
+            //}
+            //else { done(); }
+        },
         //addRemoveLinks: true,
         init: function () {
+            this.on("sending", function (file) {
+                console.log(file.name + 't1')
+            });
+
             this.on("complete", function (file) {
+
                 CallImageView($("#hdActivityId").val());
             });
         },

@@ -17,6 +17,8 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Numeric;
 using System.Web.Mvc;
 using System.Security.Cryptography.Xml;
 using System.Runtime.InteropServices.ComTypes;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.Globalization;
 
 namespace eActForm.BusinessLayer.Appcodes
 {
@@ -56,7 +58,7 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             try
             {
-                DateTime date = BaseAppCodes.converStrToDatetimeWithFormat(docDate, ConfigurationManager.AppSettings["formatDateUse"]);
+                DateTime? date = BaseAppCodes.converStrToDatetimeWithFormat(docDate, ConfigurationManager.AppSettings["formatDateUse"]);
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exGetAmountLimitByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId),
                       new SqlParameter("@docDate", date)});
@@ -83,13 +85,59 @@ namespace eActForm.BusinessLayer.Appcodes
 
 
 
-        public static async System.Threading.Tasks.Task<EXG_Rate_Model> api_ExchangeRate(string date)
+
+        public static List<TB_Act_CountryModels> getCountry()
         {
             try
             {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountry");
+                if (ds.Tables.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new TB_Act_CountryModels()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     country = dr["country"].ToString(),
+                                     countryGroup = dr["countryGroup"].ToString(),
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<TB_Act_CountryModels>();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCountry >>" + ex.Message);
+            }
+        }
+
+
+        public static async System.Threading.Tasks.Task<EXG_Rate_Model> api_ExchangeRate(DateTime? conDate)
+        {
+
+            EXG_Rate_Model eXG_Rate_Model = new EXG_Rate_Model();
+            try
+            {
+                
+                switch (conDate.Value.DayOfWeek.ToString().ToLower())
+                {
+                    case "saturday":
+                        conDate = conDate.Value.AddDays(-1);
+                        break;
+                    case "sunday":
+                        conDate = conDate.Value.AddDays(-2);
+                        break;
+
+                }
+
+                string st_date = conDate.Value.ToString("yyyy-MM-dd");
+
                 EXG_Rate_Model responseModel = new EXG_Rate_Model();   
                 string urlExchange = "https://apigw1.bot.or.th/bot/public/Stat-ExchangeRate/v2/DAILY_AVG_EXG_RATE/";
-                string urlParameters = "?start_period=2023-09-25&end_period=2023-09-25";
+                string urlParameters = string.Format("?start_period={0}&end_period={1}&currency=USD", st_date, st_date,"USD");
+                // "?start_period=2023-09-25&end_period=2023-09-25";
 
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlExchange);
@@ -105,8 +153,25 @@ namespace eActForm.BusinessLayer.Appcodes
 
                 client.Dispose();
 
+                if(responseModel.result.data.data_detail.Any())
+                {
+                    foreach(var item in responseModel.result.data.data_detail)
+                    {
+                        if(!string.IsNullOrEmpty(item.selling))
+                        {
+                            eXG_Rate_Model = responseModel;
+                        }
+                        else
+                        {
+                            eXG_Rate_Model = await api_ExchangeRate(conDate.Value.AddDays(-1));
+                        }
+                    }
+           
+                }
 
-                return responseModel;
+
+
+                return eXG_Rate_Model;
 
             }
             catch (Exception ex)
@@ -114,5 +179,39 @@ namespace eActForm.BusinessLayer.Appcodes
                 throw new Exception("api_ExchangeRate >> " + ex.Message);
             }
         }
+
+        public static async System.Threading.Tasks.Task<TB_Act_CountryDetailModels> callGetAllowance(string countryId,string Lvl,string typeDay)
+        {
+            TB_Act_CountryDetailModels tB_Act_CountryDetailModels = new TB_Act_CountryDetailModels();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountryDetail"
+                 , new SqlParameter[] { new SqlParameter("@countryId", countryId),
+                      new SqlParameter("@Lvl", Lvl),
+                 new SqlParameter("@type", typeDay)});
+                if (ds.Tables.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new TB_Act_CountryDetailModels()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     max_amount = decimal.Parse(dr["max_amount"].ToString()),
+                                     countryGroup = dr["countryGroup"].ToString(),
+                                 }).ToList();
+
+                    return lists.ToList().FirstOrDefault();
+                }
+
+
+                return tB_Act_CountryDetailModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCountry >>" + ex.Message);
+            }
+        }
+
+
+
     }
 }
