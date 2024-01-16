@@ -8,6 +8,10 @@
     <li>
         <a><i class="fa fa-tasks"></i>&nbsp;Import Data <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
+            @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li> @Html.ActionLink(" Import Product Price MT", "Index_ImportProductPrice", "Admin", new { typeForm = Activity_Model.activityType.MT.ToString() }, null) </li>
+            }
             @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("TBM Import PRODUCT-POS/PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
@@ -25,7 +29,7 @@
                 <li>@Html.ActionLink(" Import Budget ", "index", "ImportBudgetControl")</li>
             }
             @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminPOM
-                || UtilsAppCode.Session.User.isAdmin ||  UtilsAppCode.Session.User.isAdminCVM ||  UtilsAppCode.Session.User.isAdminHCBP
+                || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminCVM || UtilsAppCode.Session.User.isAdminHCBP
                 || UtilsAppCode.Session.User.isAdminNUM || UtilsAppCode.Session.User.isAdminOMT)
             {
                 <li>@Html.ActionLink(" Import Flow ", "index", "ImportFlow")</li>

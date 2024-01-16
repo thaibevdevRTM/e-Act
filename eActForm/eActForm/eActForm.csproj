@@ -3495,6 +3495,8 @@
     <Content Include="Views\BudgetReport\reportBudgetInvoiceSearch.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\allowanceDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\exPerryHeader.cshtml" />
+    <Content Include="Views\Admin\Index_ImportProductPrice.cshtml" />
+    <Content Include="Views\Admin\View_ProductPrice.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

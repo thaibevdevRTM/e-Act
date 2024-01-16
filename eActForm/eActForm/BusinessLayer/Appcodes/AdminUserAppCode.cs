@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Models.MasterData;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.TB_Act_ProductPrice_Model;
 
 namespace eActForm.BusinessLayer
 {
@@ -163,7 +165,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<TB_Act_Other_Model> getCompany()
+        public static List<Models.TB_Act_Other_Model> getCompany()
         {
             return QueryGetMessage.getOtherByType("company");
         }
@@ -219,6 +221,119 @@ namespace eActForm.BusinessLayer
             result = QueryOtherMaster.getOhterMaster("roleuser", "groupSuperAdmin").Where(x => x.val1.Contains(empId)).Any();
             return result;
         }
+
+        public static int InserToTempProductPrice(string strCon, ProductPrice model)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_insertTempProductPrice"
+                , new SqlParameter[] {new SqlParameter("@cusNameEN",model.customerName)
+                         ,new SqlParameter("@productId",model.productId)
+                         ,new SqlParameter("@normalCost",model.normalCost)
+                         ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
+                         ,new SqlParameter("@discount1",model.discount1)
+                         ,new SqlParameter("@discount2",model.discount2)
+                         ,new SqlParameter("@discount3",model.discount3)
+                         ,new SqlParameter("@saleNormal",model.saleNormal)
+                         ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("InserToTempProductPrice => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static int deleteTempProductPrice(string strCon, string empId)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_deleteTempProductPrice"
+                , new SqlParameter[] {new SqlParameter("@empId",empId)
+                  });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("deleteTempProductPrice => " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public static List<ProductPrice> getProductPriceAterImport(string strCon, string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strCon, CommandType.StoredProcedure, "usp_getProductPriceTemp"
+                    , new SqlParameter[] { new SqlParameter("@empId",empId)
+                    });
+
+
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new ProductPrice()
+                             {
+                                 status = d["status"].ToString(),
+                                 customerId = d["cusId"].ToString(),
+                                 customerName = d["cusNameEN"].ToString(),
+                                 productId = d["productId"].ToString(),
+                                 normalCost = d["normalCost"] is DBNull ? 0 : (decimal?)d["normalCost"],
+                                 old_normalCost = d["old_normalCost"] is DBNull ? 0 : (decimal?)d["old_normalCost"],
+                                 wholeSalesPrice = d["wholeSalesPrice"] is DBNull ? 0 : (decimal?)d["wholeSalesPrice"],
+                                 old_wholeSalesPrice = d["old_wholeSalesPrice"] is DBNull ? 0 : (decimal?)d["old_wholeSalesPrice"],
+                                 discount1 = d["discount1"] is DBNull ? 0 : (decimal?)d["discount1"],
+                                 old_discount1 = d["old_discount1"] is DBNull ? 0 : (decimal?)d["old_discount1"],
+                                 discount2 = d["discount2"] is DBNull ? 0 : (decimal?)d["discount2"],
+                                 old_discount2 = d["old_discount2"] is DBNull ? 0 : (decimal?)d["old_discount2"],
+                                 discount3 = d["discount3"] is DBNull ? 0 : (decimal?)d["discount3"],
+                                 old_discount3 = d["old_discount3"] is DBNull ? 0 : (decimal?)d["old_discount3"],
+                                 saleNormal = d["saleNormal"] is DBNull ? 0 : (decimal?)d["saleNormal"],
+                                 old_saleNormal = d["old_saleNormal"] is DBNull ? 0 : (decimal?)d["old_saleNormal"],
+                                 createdByUserId = d["createdByUserId"].ToString(),
+                             });
+                return lists.ToList();
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getProductPriceAterImport => " + ex.Message);
+                return null;
+            }
+        }
+
+        public static int confirmInsertProductPrice(string strCon, string empId)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(strCon, CommandType.StoredProcedure, "usp_confirmInsertProductPrice"
+                , new SqlParameter[] {new SqlParameter("@empId",empId)
+                     });
+                result++;
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("confirmInsertProductPrice => " + ex.Message);
+            }
+
+            return result;
+        }
+
 
     }
 }

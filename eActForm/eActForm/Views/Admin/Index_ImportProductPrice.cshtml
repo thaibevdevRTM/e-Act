@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align:center;"> <h3> Import Product Price</h3></div>
+<br />
+<div class="row form-group">
+    <div class="col-md-12 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            เลือกไฟล์
+        </label>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <input class="form-control" type="file" id="inputFile" name="inputFile" required accept=".xlsx">
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-5">
+        <button style="width:120px" type="button" id="BtnImport" class="btn btn-primary" onclick="return importDataPrice();">Import</button>
+    </div>
+</div>
+
+
+<div id="divGetPriceList" class="col-lg-12">
+</div>
+
+<script>
+
+
+    function importDataPrice() {
+        var data = new FormData();
+        var files = $("#inputFile").get(0).files;
+        if (files.length > 0) {
+            data.append("InputFile", files[0]);
+        }
+        else {
+            bootbox.alert("กรุณา แนบไฟล์ !")
+            return false;
+        }
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ Import ProducePrice ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $("#WaitDialog").show();
+
+                    $.ajax({
+                        url: '@Url.Action("ImportFlieProductPrice", "Admin")',
+                        data: data,
+                        dataType: 'json',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.Success) {
+                                callPreviewPrice();
+                            }
+                            else {
+                                doAlert(response.Message);
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    function callPreviewPrice(obj) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("View_ProductPrice", "Admin")',
+            data: {
+
+            }
+        }).done(function (htmlResponse) {
+
+            $("#divGetPriceList").html(htmlResponse);
+            $("#WaitDialog").hide();
+        });
+    }
+</script>
