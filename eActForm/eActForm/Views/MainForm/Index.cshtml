@@ -47,6 +47,7 @@
     .highHeadFooterTable {
         height: 35px;
     }
+
     .thead-dark {
         background-color: #E5E2E2;
         height: 25px;
@@ -424,12 +425,11 @@
                 if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
             }
 
-            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPurchaseTbm"]') {
 
                 if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") {
                     required += "&emsp;ชื่อลูกค้า/ชื่อกิจกรรม*<br>"; validate = false;
                 }
-            }
+
 
         } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
 
