@@ -44,9 +44,10 @@
 
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
+
                     <li> @Html.ActionLink(" Product Setting MT", "index", "Admin", new { typeForm = Activity_Model.activityType.MT.ToString() }, null) </li>
                 }
-               
+
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     <li> @Html.ActionLink(" Product Setting OMT", "index", "Admin", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null) </li>

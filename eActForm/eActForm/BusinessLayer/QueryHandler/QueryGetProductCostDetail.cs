@@ -47,21 +47,22 @@ namespace eActForm.BusinessLayer
             {
                 List<ProductCostOfGroupByPrice> groupByPrice = new List<ProductCostOfGroupByPrice>();
                 DataSet ds;
-
-                ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcost"
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcost"
                     , new SqlParameter("@p_brand", brandId)
                     , new SqlParameter("@smellId", smellId)
                     , new SqlParameter("@p_size", size)
                     , new SqlParameter("@p_customerid", p_customerid));
-
-                //else
-                //{
-                //    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcostOMT"
-                //        , new SqlParameter("@p_brand", brandId)
-                //        , new SqlParameter("@smellId", smellId)
-                //        , new SqlParameter("@p_size", size)
-                //        , new SqlParameter("@p_customerid", p_customerid));
-                //}
+                }
+                else
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcostOMT"
+                        , new SqlParameter("@p_brand", brandId)
+                        , new SqlParameter("@smellId", smellId)
+                        , new SqlParameter("@p_size", size)
+                        , new SqlParameter("@p_customerid", p_customerid));
+                }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new ProductCostOfGroupByPrice()

@@ -385,13 +385,13 @@
 
                                     @*<input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />*@
                                     @Html.TextBoxFor(x => item.vat, "{0:n2}", new
-                                     {
-                                         @id = "txtSubVat_" + @indexSub,
-                                         Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat",
-                                         @class = "form-control textboxcss text-right",
-                                         @oncgange = "subBlurTxt(" + @indexSub + ");"
+                               {
+                                   @id = "txtSubVat_" + @indexSub,
+                                   Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat",
+                                   @class = "form-control textboxcss text-right",
+                                   @onchange = "subBlurTxt(" + @indexSub + ");"
 
-                                     })
+                               })
                                 </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
@@ -415,6 +415,10 @@
                                         var v_unitRow = 0.000;
                                         var v_unitpriceRow = 0.000;
                                         var v_totalRow = 0.000;
+
+                                        console.log(row)
+                                        console.log(parseFloat($("#txtSubVat_" + row).val()) + 'subb');
+
                                         if ($("#txtSubUnit_" + row).val() == "") { $("#txtSubUnit_" + row).val() == "1"; }
                                         if ($("#txtSubUnit_" + row).val() != "" && $("#txtSubUnit_" + row).val() != "0.000" && $("#txtSubUnit_" + row).val() != "0") {
                                             v_unitRow = parseFloat($("#txtSubUnit_" + row).val().replace(",", ""));
