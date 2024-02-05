@@ -128,7 +128,7 @@
             </div>
             <div class="modal-body">
 
-                <embed src="@urlWorkFlowTrv" frameborder="0" width="100%" height="400px">
+                <embed src="@urlWorkFlowTrv" frameborder="0" style="width:100%; height:400px;">
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -426,9 +426,20 @@
             }
 
 
-                if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") {
+            if ($("input[name='tB_Act_ActivityForm_DetailOther.IO']:checked").val() == '1' && $("#tB_Act_ActivityForm_DetailOther_toName").val().trim() == "") { 
                     required += "&emsp;ชื่อลูกค้า/ชื่อกิจกรรม*<br>"; validate = false;
-                }
+            }
+
+
+            let getTotal = parseFloat($("#hdtotalallPayByIOBalance").val().replace(",", ""));
+            let countTxtRemark = parseInt($('#tB_Act_ActivityForm_DetailOther_toName').val().length);
+
+            if (getTotal < 0 && countTxtRemark < 10) {
+               
+                required += "&emsp;ข้อมูลสนับสนุน/หมายเหตุ เนื่องจาก ยอดคงเหลือ ติดลบ<br>"; validate = false;
+                document.getElementById("txtRemarks").focus();
+               
+            }
 
 
         } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {

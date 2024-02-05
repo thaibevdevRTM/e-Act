@@ -61,7 +61,7 @@
                                         type:"POST",
                                         success:function(response){
                                             if(response.Data.tbToAjax.length>0){
-                                               
+
                                                 $.each(response.Data.tbToAjax,function(){
                                                     $("#ddlActivityNoSub").append($("<option></option>").val(this['activityId']).html(this['activityNo']));
                                                     $("#ddlActivityNoSub").selectpicker('refresh');
@@ -70,7 +70,7 @@
                                                 });
                                             }
                                             else{
-                                                ddlActivityNoSubChange();  
+                                                ddlActivityNoSubChange();
                                             }
                                         },
                                         error:function(data){
@@ -96,7 +96,7 @@
                        @class = "form-control selectpicker",
                        @title = "สำหรับกรณีสั่งจ่ายตั้งแต่ครั้งที่2ขึ้นไป",
                        id = "ddlActivityNoSub",
-                       onchange= "ddlActivityNoSubChange();"
+                       onchange = "ddlActivityNoSubChange();"
                    })
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "totalallPayByIO", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
                    {
@@ -117,7 +117,7 @@
                                 liveSearch: true,
                                 showSubtext: true
                             });
-                  
+
                             function ddlActivityNoSubChange() {
                                 if ($('#ddlActivityNoSub').val() != '') {
                                     activeLinkViewPreviousPV();
@@ -243,7 +243,7 @@
             @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIO, new { @id = "hdtotalallPayByIO" })
         </td>
     </tr>
-   
+
     <tr class="highHeadFooterTable">
         <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             งบฯ สะสม&nbsp;
@@ -263,9 +263,12 @@
         </td>
     </tr>
 </table>
+
 <div id="addEx" class="row pull-right" style="width:150px;margin-top: 5px;" onclick="tbAddRowSectionSix();">
     <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
 </div>
+
+
 <div style="height:10px;">&nbsp;</div>
 <script>
     $(function () {

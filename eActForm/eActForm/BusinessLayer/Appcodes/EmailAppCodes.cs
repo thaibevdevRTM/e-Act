@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using WebLibrary;
+using static eActForm.Models.Activity_Model;
 
 namespace eActForm.BusinessLayer
 {
@@ -695,6 +696,8 @@ namespace eActForm.BusinessLayer
                 string txtcreateBy = "";
                 string txtCompanyname = "";
                 string strPiority = "";
+                string strPiorityDoc = "";
+                string getFormatEmail = "";
 
                 switch (emailType)
                 {
@@ -720,9 +723,9 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        if (ActFormAppCode.isOtherCompanyMTOfDoc(activity_TBMMKT_Model.activityFormTBMMKT.companyId) && activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc != "")
+                        if (!string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc))
                         {
-                            string strPiorityDoc = "";
+                            
                             strPiorityDoc = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]) ?
                                    QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").Where(x => x.id == activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc).AsEnumerable().FirstOrDefault().nameEN :
                                    QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").Where(x => x.id == activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc).AsEnumerable().FirstOrDefault().name;
@@ -797,6 +800,21 @@ namespace eActForm.BusinessLayer
                         {
                             emailType = AppCode.ApproveType.ActivityBeer;
                         }
+
+                        getFormatEmail = ApproveAppCode.RenderViewToString("Email", "BodyEmail_ActivityMT", new ApproveModel.approveEmailDetailModel("","")
+                        {
+                            empName = item.empPrefix + " " + empNameResult,
+                            statusName = txtApprove,
+                            colorPiority = "#"+ActFormAppCode.getStatusNeedDocColor(activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc),
+                            piority = strPiorityDoc,
+                            typeDoc = emailTypeTxt,
+                            activityName = item.activityName,
+                            activityType = item.activitySales,
+                            activityNo = item.activityNo
+
+                        });
+
+
 
 
                         strBody = string.Format(strBody

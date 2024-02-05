@@ -1,0 +1,54 @@
+﻿@using eActForm.Models
+@model ApproveModel.approveEmailDetailModel
+
+@{
+    Layout = null;
+}
+<style>
+    .fontSize18 {
+        font-size: 18px;
+    }
+</style>
+
+
+<p style="font-size:18px;">
+    เรียน @(Model.empName)
+</p>
+<p style="font-size:18px;">
+    คุณมีรายการ <b>@(Model.statusName) </b> ตามรายละเอียดดังต่อไปนี้
+</p>
+
+<table>
+
+    <tr class="fontSize18">
+        <td>
+            <b>ความเร่งด่วน : </b><b style="color: @(Model.colorPiority)">@(Model.piority)</b>
+        </td>
+    </tr>
+
+    @if (!string.IsNullOrEmpty(Model.activityName))
+    {
+        <tr class="fontSize18">
+            <td>
+                <b>เรื่อง : </b> @(Model.activityName)
+            </td>
+        </tr>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.activitySales))
+    {
+        <tr class="fontSize18">
+            <td>
+                <b>ประเภทกิจกรรม : </b> @(Model.activitySales)
+            </td>
+        </tr>
+    }
+    <tr class="fontSize18">
+        <td>
+            <b>เลขที่เอกสาร : </b> @(Model.activityNo)
+        </td>
+    </tr>
+
+
+
+</table>
