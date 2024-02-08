@@ -102,12 +102,11 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_Product_Model.Product_Model>();
             }
         }
-        public static List<TB_Act_Product_Model.Product_Model> getAllProduct(string productGroupId)
+        public static List<TB_Act_Product_Model.Product_Model> getAllProduct()
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllProduct"
-                    , new SqlParameter[] { new SqlParameter("@productGroupId", productGroupId) });
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllProduct");
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_Product_Model.Product_Model()
                              {
@@ -141,7 +140,44 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_Product_Model.Product_Model>();
             }
         }
-
+        public static List<TB_Act_Product_Model.Product_Model> getAllProductSetting()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "getAllProductSetting");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new TB_Act_Product_Model.Product_Model()
+                             {
+                                 id = d["id"].ToString(),
+                                 productCode = d["productCode"].ToString(),
+                                 productName = d["productName"].ToString(),
+                                 smellId = d["smellId"].ToString(),
+                                 smellname = d["smellname"].ToString(),
+                                 brandId = d["brandId"].ToString(),
+                                 cateId = d["cateId"].ToString(),
+                                 brand = d["brandName"].ToString(),
+                                 groupId = d["groupId"].ToString(),
+                                 productGroup = d["groupName"].ToString(),
+                                 productCate = d["cateName"].ToString(),
+                                 pack = d["pack"].ToString() == "" ? 0 : Convert.ToInt32(d["pack"].ToString()),
+                                 size = d["size"].ToString() == "" ? 0 : Convert.ToInt32(d["size"].ToString()),
+                                 unit = d["unit"].ToString() == "" ? 0 : Convert.ToInt32(d["unit"].ToString()),
+                                 litre = d["litre"].ToString() == "" ? 0 : Convert.ToInt32(d["litre"].ToString()),
+                                 digit_IO = d["digit_IO"].ToString(),
+                                 delFlag = (bool)d["delFlag"],
+                                 createdDate = DateTime.Parse(d["createdDate"].ToString()),
+                                 createdByUserId = d["createdByUserId"].ToString(),
+                                 updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+                                 updatedByUserId = d["updatedByUserId"].ToString(),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllProduct => " + ex.Message);
+                return new List<TB_Act_Product_Model.Product_Model>();
+            }
+        }
         public static List<TB_Act_Product_Model.Product_Model> getProductByBrandId(string brandId)
         {
             try

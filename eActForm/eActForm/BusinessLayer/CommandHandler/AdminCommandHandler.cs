@@ -106,6 +106,7 @@ namespace eActForm.BusinessLayer.CommandHandler
                     ,new SqlParameter("@unit",model.unit)
                     ,new SqlParameter("@digit_IO",model.digit_IO)
                     ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@typeForm",model.typeForm)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });

@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
-            activityModel.productlist = QueryGetAllProduct.getAllProduct("");
+            activityModel.productlist = QueryGetAllProduct.getAllProduct();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate()
                 .Select(group => new TB_Act_ProductCate_Model
                 {

@@ -270,24 +270,24 @@ namespace eActForm.Controllers
 
                     if (smellId != "" && brandId != "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId && x.smellId == smellId && x.size == psize).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => x.brandId == brandId && x.smellId == smellId && x.size == psize).ToList();
                     }
                     else if (smellId == "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId) && x.size == psize).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId) && x.size == psize).ToList();
                     }
                     else if (brandId == "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.smellId == smellId) && x.size == psize).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.smellId == smellId) && x.size == psize).ToList();
                     }
                     else
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == psize).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == psize).ToList();
                     }
                 }
                 else
                 {
-                    productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId).ToList();
+                    productModel = QueryGetAllProduct.getAllProduct().Where(x => x.brandId == brandId).ToList();
                     if (smellId != "")
                     {
                         productModel = productModel.Where(x => x.smellId == smellId).ToList();

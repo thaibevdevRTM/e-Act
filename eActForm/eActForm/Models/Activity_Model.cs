@@ -545,4 +545,15 @@ namespace eActForm.Models
         public string typeShowBudget { get; set; }
     }
 
+    public class invoiceFormat
+    {
+        public string[] invoiceFormatArr {  get; set; }
+    }
+
+        public class invoice
+    {
+        public string invoiceNo { get; set; }
+        public string invoiceDate { get; set;}
+        public string invoiceAmoun { get; set;}
+    }
 }

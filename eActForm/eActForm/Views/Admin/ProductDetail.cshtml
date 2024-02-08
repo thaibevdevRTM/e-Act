@@ -22,9 +22,13 @@
                     <th>Unit</th>
                     <th>Pack</th>
                     <th>IO</th>
+                    <th style="text-align:center;">Disable</th>
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int indexProduct = 0;
+                }
                 @foreach (var item in Model.productLists)
                 {
                     <tr class="gradeX">
@@ -45,8 +49,18 @@
                         <td>@item.unit</td>
                         <td>@item.pack</td>
                         <td>@item.digit_IO</td>
+                        <td style="text-align:center;">
+                            @Html.CheckBoxFor(x => item.delFlag, new
+                       {
+                           @id = "chkDelFlag_" + indexProduct,
+                           onchange = "setDisable(" + @item.productCode + ",this);",
+                       })
+                        </td>
+                        @{
+                            indexProduct++;
+                        }
                     </tr>
-                }
+                    }
             </tbody>
         </table>
     </div>
@@ -74,4 +88,27 @@
             $('#divPreviewPriceModel').modal('show');
         });
     }
+
+    function setDisable(p_productCode, element) {
+        let setDel = false;
+        if (element.checked) {
+            setDel = true;
+        }
+        else {
+            console.log("ff");
+        }
+        
+
+     $.ajax({
+         type: 'POST',
+         url:  '@Url.Action("updateSetDisableProduct", "Admin")',
+         data: {
+             productcode: p_productCode,
+             delFlag: setDel,
+             typeForm: 'disableProduct'
+         }
+     }).done(function (htmlResponse) {
+
+     });
+ }
 </script>

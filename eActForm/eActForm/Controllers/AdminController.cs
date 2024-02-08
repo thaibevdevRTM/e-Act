@@ -42,9 +42,9 @@ namespace eActForm.Controllers
         }
         public ActionResult ProductDetail()
         {
-            TB_Act_Product_Model.ProductList productModel = new TB_Act_Product_Model.ProductList(); ;
+            TB_Act_Product_Model.ProductList productModel = new TB_Act_Product_Model.ProductList(); 
 
-            productModel.productLists = QueryGetAllProduct.getAllProduct("");
+            productModel.productLists = QueryGetAllProduct.getAllProductSetting();
 
             return PartialView(productModel);
         }
@@ -98,7 +98,7 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
             TB_Act_Product_Model.ProductList productModel = new TB_Act_Product_Model.ProductList();
-            if (QueryGetAllProduct.getAllProduct("").Where(x => x.productCode == p_productCode).Any())
+            if (QueryGetAllProduct.getAllProductSetting().Where(x => x.productCode == p_productCode).Any())
             {
                 result.Success = true;
             }
@@ -318,6 +318,26 @@ namespace eActForm.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+
+        public JsonResult updateSetDisableProduct(TB_Act_Product_Model.Product_Model model)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                int countResult = AdminCommandHandler.updateProduct(model);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                ExceptionManager.WriteError("updateSetDisableProduct => " + ex.Message);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
