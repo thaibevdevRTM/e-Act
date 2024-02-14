@@ -432,9 +432,9 @@
 
 
             let getTotal = parseFloat($("#hdtotalallPayByIOBalance").val().replace(",", ""));
-            let countTxtRemark = parseInt($('#tB_Act_ActivityForm_DetailOther_toName').val().length);
+            let countTxtRemark = parseInt($('#txtRemarks').val().trim().length);
 
-            if (getTotal < 0 && countTxtRemark < 10) {
+            if (getTotal < 0 && countTxtRemark < 1) {
                
                 required += "&emsp;ข้อมูลสนับสนุน/หมายเหตุ เนื่องจาก ยอดคงเหลือ ติดลบ<br>"; validate = false;
                 document.getElementById("txtRemarks").focus();
