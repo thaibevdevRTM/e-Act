@@ -801,22 +801,7 @@ namespace eActForm.BusinessLayer
                             emailType = AppCode.ApproveType.ActivityBeer;
                         }
 
-                        getFormatEmail = ApproveAppCode.RenderViewToString("Email", "BodyEmail_ActivityMT", new ApproveModel.approveEmailDetailModel("","")
-                        {
-                            empName = item.empPrefix + " " + empNameResult,
-                            statusName = txtApprove,
-                            colorPiority = "#"+ActFormAppCode.getStatusNeedDocColor(activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc),
-                            piority = strPiorityDoc,
-                            typeDoc = emailTypeTxt,
-                            activityName = item.activityName,
-                            activityType = item.activitySales,
-                            activityNo = item.activityNo
-
-                        });
-
-
-
-
+                      
                         strBody = string.Format(strBody
                         , item.empPrefix + " " + empNameResult
                         , txtApprove
