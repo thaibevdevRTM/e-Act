@@ -1,0 +1,27 @@
+﻿
+@using eActForm.BusinessLayer;
+@using eActForm.Models
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<script src="~/Content/ckeditor4/ckeditor.js"></script>
+
+<div class="card" style="padding:10px 50px 50px 50px">
+
+    <h3>Write your Article Here</h3>
+
+    <div>
+    
+            <div ass="col-md-10">
+
+                <textarea id="editor1" name="activityFormTBMMKT.activityDetail"></textarea>
+                <script>
+                    CKEDITOR.replace('editor1');
+
+
+                </script>
+            </div>
+
+       
+    </div>
+</div>
+

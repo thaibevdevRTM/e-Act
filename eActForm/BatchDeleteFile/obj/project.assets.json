@@ -496,7 +496,7 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "C:\\Users\\70008316\\AppData\\Local\\Programs\\UiPath\\Studio\\Packages": {},
+        "D:\\Github\\e-Act\\eActForm\\packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

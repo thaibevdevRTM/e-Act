@@ -60,8 +60,7 @@ namespace eActForm.BusinessLayer
 
         public static string RenderViewToString(string controllerName, string viewName, object viewData, HttpContext conText)
         {
-            var context = conText;
-            var contextBase = new HttpContextWrapper(context);
+            var contextBase = new HttpContextWrapper(conText);
             var routeData = new RouteData();
             routeData.Values.Add("controller", controllerName);
 

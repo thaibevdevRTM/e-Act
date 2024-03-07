@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using static System.Net.WebRequestMethods;
 
 namespace eActForm.BusinessLayer
 {
@@ -72,12 +73,49 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static string getHeader(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public static string getHeader(Activity_TBMMKT_Model activity_TBMMKT_Model, HttpContext http)
         {
             string htmlHeader = string.Empty;
             try
             {
 
+
+                if (activity_TBMMKT_Model != null)
+                {
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]
+                        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPurchaseTbm"])
+                    {
+
+                        htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null, http);
+                        htmlHeader += " <table style=\"width: 100%;\" id=\"tabel_report\" class=\"formBorderStyle2\"><tr><td>";
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPv", activity_TBMMKT_Model, http);
+                        htmlHeader += ApproveAppCode.RenderViewToString("PartialPaymentVoucher", "headerPvDetails", activity_TBMMKT_Model, http);
+                        htmlHeader += "</td></tr></table>";
+
+                    }
+                    else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    {
+                        htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null, http);
+                        htmlHeader += ApproveAppCode.RenderViewToString("SharedMasterFormDetail", "exPerryHeader", activity_TBMMKT_Model, http);
+
+                        
+                    }
+                }
+
+                return htmlHeader;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GenPDFAppCode >> getHeader " + ex.Message);
+            }
+        }
+
+
+        public static string getHeader(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            string htmlHeader = string.Empty;
+            try
+            {
 
                 if (activity_TBMMKT_Model != null)
                 {
@@ -92,12 +130,12 @@ namespace eActForm.BusinessLayer
                         htmlHeader += "</td></tr></table>";
 
                     }
-                    else if(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                     {
                         htmlHeader = ApproveAppCode.RenderViewToString("MainReport", "styleView", null);
                         htmlHeader += ApproveAppCode.RenderViewToString("SharedMasterFormDetail", "exPerryHeader", activity_TBMMKT_Model);
 
-                        
+
                     }
                 }
 

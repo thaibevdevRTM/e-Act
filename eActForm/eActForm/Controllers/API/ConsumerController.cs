@@ -18,6 +18,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using static eActForm.Controllers.API.ConsumerController;
 using static iTextSharp.text.pdf.AcroFields;
 
 
@@ -26,7 +27,7 @@ namespace eActForm.Controllers.API
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ConsumerController : ApiController
     {
-
+        public static string typeConsumer = "Consumer";
         public class consumerModel
         {
             public string messagedata { get; set; }
@@ -40,7 +41,7 @@ namespace eActForm.Controllers.API
         {
             ConsumerApproverBevAPI response = null;
             ConsumerMassage consumerMassage = new ConsumerMassage();
-            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+
 
             SentKafkaLogModel log_kafka;
             try
@@ -49,11 +50,56 @@ namespace eActForm.Controllers.API
                 response = JsonConvert.DeserializeObject<ConsumerApproverBevAPI>(getMdodel.messagedata);
                 consumerMassage.messageResponse = "eact :" + response.data.refId;
                 consumerMassage.timeResponse = DateTime.Now.ToString();
+                response.data.typeApprove = !string.IsNullOrEmpty(response.data.typeApprove) ? response.data.typeApprove : typeConsumer;
 
-                log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, "Consumer", DateTime.Now, "", "", getMdodel.messagedata);
+
+                log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, response.data.typeApprove, DateTime.Now, "", "", getMdodel.messagedata);
                 var resultLog1 = ApproveAppCode.insertLog_Kafka(log_kafka);
 
                 // ApproveAppCode.apiProducerApproveAsync(response.data.approver, response.data.refId, response.eventName);
+
+                if (response != null)
+                {
+                    new getHTML().genHTML(response, getMdodel);
+
+                }
+
+                return Ok(consumerMassage);
+            }
+            catch (Exception ex)
+            {
+                consumerMassage.messageResponse = "eact :" + ex.Message;
+                consumerMassage.timeResponse = DateTime.Now.ToString();
+
+                if (response != null)
+                {
+                    HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile("<div>Please regen pdf</div>", "", response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, response.data.typeApprove));
+                }
+                else
+                {
+                    SentKafkaLogModel kafka1 = new SentKafkaLogModel("", "", "", response.data.typeApprove, DateTime.Now, "Error", "", getMdodel.messagedata + " >> " + ex.Message);
+                    ApproveAppCode.insertLog_Kafka(kafka1);
+                }
+
+
+                return Ok(consumerMassage);
+            }
+        }
+
+
+
+
+    }
+
+    public class getHTML : ApiController
+    {
+        public void genHTML(ConsumerApproverBevAPI response, consumerModel getMdodel)
+        {
+            SentKafkaLogModel log_kafka;
+            bool checkStatusApprove;
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            try
+            {
 
                 if (response != null)
                 {
@@ -61,8 +107,17 @@ namespace eActForm.Controllers.API
 
                     //--- check make sure status cuurent must be = 2
                     var getApproveModel = ApproveAppCode.getApproveByActFormId(response.data.refId, response.data.approver);
-                    bool checkStatusApprove = getApproveModel.approveDetailLists.Where(x => x.rangNo.ToString() == response.data.orderRank 
+                   
+                    if (response.data.typeApprove == typeConsumer)
+                    {
+                        checkStatusApprove = getApproveModel.approveDetailLists.Where(x => x.rangNo.ToString() == response.data.orderRank
                                                                                                      && x.empId == response.data.approver).FirstOrDefault().statusId == "2";
+                    }
+                    else
+                    {
+                        checkStatusApprove = true;
+                    }
+
                     //check status approve rang -1 
                     var getEmp = ApproveAppCode.checkStatusBeforeCallKafka(response.data.approver, response.data.refId);
                     if (!string.IsNullOrEmpty(getEmp))
@@ -137,7 +192,7 @@ namespace eActForm.Controllers.API
 
                                     if (!item.path_action.ToLower().Contains("signature"))
                                     {
-                                        if(item.path_action.ToLower().Equals("reportpettycashnum"))
+                                        if (item.path_action.ToLower().Equals("reportpettycashnum"))
                                         {
                                             activity_TBMMKT_Model = ReportAppCode.reportPettyCashNumAppCode(activity_TBMMKT_Model);
                                             outputHtml += ApproveAppCode.RenderViewToString(item.path_controller, item.path_action, activity_TBMMKT_Model);
@@ -146,9 +201,9 @@ namespace eActForm.Controllers.API
                                         {
                                             outputHtml += ApproveAppCode.RenderViewToString(item.path_controller, item.path_action, activity_TBMMKT_Model);
                                         }
-                                       
+
                                     }
-                               
+
 
                                     if (item.path_action == "showSignatureV1")
                                     {
@@ -165,7 +220,11 @@ namespace eActForm.Controllers.API
 
 
                                     outputHtml += "</td></tr>";
+
                                 }
+                                outputHtml += "</table>";
+                                //outputHtml += "</div>";
+                                outputHtml += "</div>";
                             }
                             else
                             {
@@ -175,43 +234,25 @@ namespace eActForm.Controllers.API
                                 approveModels = new ApproveController().getApproveSigList(response.data.refId, ConfigurationManager.AppSettings["subjectActivityFormId"], response.data.approver);
                                 outputHtml += ApproveAppCode.RenderViewToString("Approve", "approvePositionSignatureLists", approveModels);
                             }
-                            outputHtml += "</table>";
-                            //outputHtml += "</div>";
-                            outputHtml += "</div>";
+                            
 
-
-                            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, getHeader, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
+                            HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile(outputHtml, getHeader, response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, response.data.typeApprove));
                         }
                     }
-                    else if(activity_TBMMKT_Model.activityFormTBMMKT.statusId == 3)
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.statusId == 3)
                     {
-                        log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, "Consumer", DateTime.Now, "", "", getMdodel.messagedata + "Document status is approved");
+                        log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, response.data.typeApprove, DateTime.Now, "", "", getMdodel.messagedata + "Document status is approved");
                         ApproveAppCode.insertLog_Kafka(log_kafka);
                     }
 
                 }
-                return Ok(consumerMassage);
             }
             catch (Exception ex)
             {
-                consumerMassage.messageResponse = "eact :" + ex.Message;
-                consumerMassage.timeResponse = DateTime.Now.ToString();
-
-                if (response != null)
-                {
-                    HostingEnvironment.QueueBackgroundWorkItem(c => new ActivityController().doGenFile("<div>Please regen pdf</div>", "", response.data.approver, QueryOtherMaster.getOhterMaster("statusAPI", "").Where(x => x.displayVal == response.eventName).FirstOrDefault().val1, response.data.refId, "Consumer"));
-                }
-                else
-                {
-                    SentKafkaLogModel kafka1 = new SentKafkaLogModel("", "", "", "Consumer", DateTime.Now, "Error", "", getMdodel.messagedata + " >> " + ex.Message);
-                    ApproveAppCode.insertLog_Kafka(kafka1);
-                }
-
-
-                return Ok(consumerMassage);
+                log_kafka = new SentKafkaLogModel(response.data.approver, response.data.refId, response.eventName, response.data.typeApprove, DateTime.Now, "", "", getMdodel.messagedata + "Document status is approved");
+                ApproveAppCode.insertLog_Kafka(log_kafka);
             }
 
         }
-
     }
 }
