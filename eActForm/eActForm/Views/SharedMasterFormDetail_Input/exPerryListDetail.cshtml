@@ -32,7 +32,7 @@
 </style>
 
 <div id="divTab" class="tab">
-    <button type="button" id="defaultOpen" class="tablinks" onclick="openTab(event, 'divTabGenaral')">Genaral</button>
+    <button type="button" id="defaultOpen" class="tablinks" onclick="openTab(event, 'divTabGenaral')">General</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divListExpense')">Travel Expenses</button>
     <button type="button" class="tablinks" onclick="openTab(event, 'divEntertain')">Entertain</button>
 </div>
@@ -454,7 +454,7 @@
     }
 
      function addRowEntertainment() {
-        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
+        var RowCount = $('#tbl_Entertainment tbody tr').length - 5;
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
          newRow.find("input").each(function () {

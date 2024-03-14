@@ -8,8 +8,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -100,7 +102,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductBrandByCompany(string p_groupId,string company)
+        public JsonResult getProductBrandByCompany(string p_groupId, string company)
         {
             var result = new AjaxResult();
             try
@@ -487,7 +489,7 @@ namespace eActForm.Controllers
         public JsonResult getCashLimitByEmpId(string empId, string empLvl)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
-            
+
             var result = new AjaxResult();
             try
             {
@@ -843,6 +845,26 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult UploadImage()
+        {
+            var filePath = "";
 
+            HttpFileCollectionBase files = Request.Files;
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                string serverMapPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], files[i].FileName));
+                files[i].SaveAs(serverMapPath);
+
+                filePath = Url.Content("~/Uploadfiles/" + files[i].FileName);
+            }
+
+
+            return Json(new { url = filePath });
+        }
+
+
+       
     }
 }

@@ -4,12 +4,24 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.Forms;
 using eForms.Presenter.MasterData;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Policy;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 using WebLibrary;
+using Flurl.Http;
+using static eActForm.Controllers.API.ConsumerController;
+using eForms.Models.MasterData;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace eActForm.Controllers
 {
@@ -20,12 +32,6 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
-            models.approveStatusList.Add(new ApproveModel.approveStatus()
-            {
-                id = "7",
-                nameTH = "ทั้งหมด",
-                nameEN = "All",
-            });
             return View(models);
         }
         public ActionResult approveListSummaryActBeer(string[] actId)
@@ -208,5 +214,47 @@ namespace eActForm.Controllers
             }
             return Json(result);
         }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public async System.Threading.Tasks.Task<JsonResult> updateApproveAll(string[] actId, string status, string approveType, string empId)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            try
+            {
+                ConsumerMassage ModelData = new ConsumerMassage();
+                ConsumerApproverBevAPI requertModel = new ConsumerApproverBevAPI();
+                requertModel.data = new ApproverConsumerModel();
+                string url = ConfigurationManager.AppSettings["urlConsumerApprove"];
+
+                foreach (var act in actId)
+                {
+
+                    requertModel.data.refId = act;
+                    requertModel.data.approver = empId;
+                    requertModel.eventName = status;
+                    requertModel.data.message = "";
+                    requertModel.data.typeApprove = "web";
+                    string conjson = JsonConvert.SerializeObject(requertModel).ToString();
+
+                    ModelData = await url.WithHeader("Content-Type", "application/json")
+                   .WithHeaders(new { Cookie = "AspxAutoDetectCookieSupport=1", Accept = "application/json" })
+                   .PostJsonAsync(new { messagedata = conjson })
+                   .ReceiveJson<ConsumerMassage>();
+
+                    result.Data = ModelData;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertApproveArr >>" + ex.Message);
+                result.Message = ex.Message;
+            }
+            return Json(result);
+        }
+
     }
 }

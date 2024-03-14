@@ -82,6 +82,7 @@
         public string approver { get; set; }
         public string message { get; set; }
         public string companyName { get; set; }
+        public string typeApprove { get; set; }
         public ProducerDetailModel requestDetail { get; set; }
 
         public ApproverConsumerModel()

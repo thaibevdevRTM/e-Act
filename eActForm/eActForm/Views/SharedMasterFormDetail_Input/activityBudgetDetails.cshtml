@@ -157,7 +157,7 @@
                                 </script>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.TextBoxFor(x => item.unitPriceDisplay, new { @type = "number", @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index  })
+                                @Html.TextBoxFor(x => item.unitPrice, "{0:0.00}", new { @type = "number", @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />

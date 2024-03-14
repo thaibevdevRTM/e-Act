@@ -184,26 +184,6 @@ namespace eActForm.BusinessLayer
 
             //เพื่อเช็คการใช้ภาษาในหน้า input form
             string cultureLocal = "";
-
-            if (HttpContext.Current != null)
-            {
-                try
-                {
-                    cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
-                }
-                catch (Exception ex)
-                {
-                    cultureLocal = cultureDoc;
-                }
-            }
-            else
-            {
-                //เกิดกรณี approve เรียก fn ผ่าน API ใช้ Cookies ไม่ได้
-                cultureLocal = cultureDoc;
-            }
-
-            //   Resources.Global.cultureLocal; 
-            //   Resources.Global.cultureLocal ;
             bool chk = false;
             try
             {
@@ -220,13 +200,6 @@ namespace eActForm.BusinessLayer
                     if (culture == cultureDoc) chk = true;
 
                 }
-
-                //if (culture == "en-US")
-                //{ chk = true; }
-
-                //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
-                //    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
-                //if (ds.Tables[0].Rows.Count > 0) chk = true;
             }
             catch (Exception ex)
             {

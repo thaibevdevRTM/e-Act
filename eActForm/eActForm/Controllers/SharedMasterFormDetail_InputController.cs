@@ -473,5 +473,18 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ckeditor_Input(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult ckeditor4_Input(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
     }
 }

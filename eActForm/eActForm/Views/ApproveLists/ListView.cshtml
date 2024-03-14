@@ -48,7 +48,9 @@ else
             <table width="100%" id="dtApproveList" class="table table-striped table-hover" style="text-align:center;">
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;">
-                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] 
+                            || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
+                            || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
                         {
                             <th>
                                 <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
@@ -79,7 +81,9 @@ else
                     @foreach (var item in Model.actLists)
                     {
                         <tr class="gradeX">
-                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] 
+                                || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"]
+                                || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
                                 <td class="a-center ">
                                     @if (item.statusId == "2" && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"] && item.master_type_form_id != ConfigurationManager.AppSettings["formSetPriceOMT"])
@@ -227,11 +231,14 @@ else
                                 favorite.push($(this).val());
 
                                 console.log(favorite[favorite.length - 1])
-                                setTimeout(insertApprove(favorite[favorite.length - 1]), 300);
+                               // setTimeout(insertApprove(favorite[favorite.length - 1]), 1000);
                             }).promise().done(function () {
                                 $("#WaitDialog").show();
-                                setTimeout(alertFunc, 5000);
+                                //setTimeout(alertFunc, 10000);
+                                console.log(favorite);
+                                insertApproveForAll(favorite);
                             });
+
 
                         }
 
@@ -246,7 +253,7 @@ else
 
     function alertFunc() {
         bootbox.alert({
-            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='http://thaibevss.com/eAct/images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
+            message: "<div class= 'row' > <div class='text-center'><img width='150px' src='https://eact.thaibev.com/images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
             callback: function () {
                 var url = '@Url.Action("Index", "ApproveLists")';
                 window.location.replace(url);
@@ -266,6 +273,24 @@ else
             }
         }).done(function (result) {
             checkFormApprove(actId)
+        });
+    }
+
+    function insertApproveForAll(actId) {
+
+        $.ajax({
+            url: '@Url.Action("updateApproveAll", "ApproveLists")',
+            data: {
+                actId: actId,
+                status: 'APPROVE',
+                approveType: '@AppCode.ApproveType.Activity_Form',
+                empId: '@UtilsAppCode.Session.User.empId'
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (result) {
+            alertFunc();
+            //checkFormApprove(actId)
         });
     }
 
