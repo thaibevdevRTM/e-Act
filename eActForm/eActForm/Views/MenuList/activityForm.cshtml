@@ -8,7 +8,7 @@
     <li>
         <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-            <li>@Html.ActionLink("Approve Form Spirit", "Index", "MainForm", new { master_type_form_id = "CF13FE9E-142B-458B-BD6E-E1FDED8D2102" }, null)</li>
+            @*<li>@Html.ActionLink("Approve Form Spirit", "Index", "MainForm", new { master_type_form_id = "CF13FE9E-142B-458B-BD6E-E1FDED8D2102" }, null)</li>*@
             @if (UtilsAppCode.Session.User.empCompanyList.Where(x => x.Equals(ConfigurationManager.AppSettings["companyId_MT"])).Any() || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("MT Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
