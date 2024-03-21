@@ -1466,7 +1466,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-                    ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
+                    ,new SqlParameter("@unit",model.unit)
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
                     ,new SqlParameter("@QtyName",model.QtyName)
                     ,new SqlParameter("@productId",model.productId)

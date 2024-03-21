@@ -41,7 +41,7 @@ namespace eActForm.Controllers
                 var thisWeekStart = baseDate.AddDays(-(int)baseDate.DayOfWeek).AddDays(+3);
                 var thisWeekEnd = thisWeekStart.AddDays(7).AddSeconds(-1);
                 int countOrderUnit = activityFormOrderProductPresenter.getCountOrderProductOnweek(AppCode.StrCon, model.activityFormModel.empId, thisWeekStart.ToString(), thisWeekEnd.ToString());
-                int sumOrder = model.costthemedetail.Select(x => x.unit).Sum();//(from CostThemeDetail x in model.costthemedetail select x).Sum();
+                decimal? sumOrder = model.costthemedetail.Select(x => x.unit).Sum();//(from CostThemeDetail x in model.costthemedetail select x).Sum();
                 if ((countOrderUnit + sumOrder) > 10)
                 {
                     resultAjax.Code = 501;

@@ -93,7 +93,7 @@
                         {
                             <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft clsMechanics", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
                         }
-                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(model => item.unit,"{0:n0}", new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
                         <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
 
                         <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>

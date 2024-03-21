@@ -328,7 +328,7 @@ namespace eActForm.Models
         public decimal? wholeSalesPrice { get; set; }
         public decimal? LE { get; set; }
         public decimal? compensate { get; set; }
-        public int unit { get; set; }
+        public decimal? unit { get; set; }
         public decimal? normalCost { get; set; }
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
@@ -392,7 +392,7 @@ namespace eActForm.Models
         public decimal? total { get; set; }
         public decimal? totalCase { get; set; }
         public decimal? perTotal { get; set; }
-        public int unit { get; set; }
+        public decimal? unit { get; set; }
         public int unitReturn { get; set; }
         public decimal? compensate { get; set; }
         public decimal? LE { get; set; }

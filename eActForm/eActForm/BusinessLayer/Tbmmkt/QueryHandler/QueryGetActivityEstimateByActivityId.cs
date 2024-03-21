@@ -26,7 +26,7 @@ namespace eActForm.BusinessLayer
                                   activityTypeId = d["activityTypeId"].ToString(),
                                   productId = d["productId"].ToString(),
                                   productDetail = d["productDetail"].ToString(),
-                                  unit = int.Parse(d["unit"].ToString()),
+                                  unit = d["unit"].ToString() == "" ? 0 : decimal.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   unitPriceDisplayReport = "",//ปัจจุบันไม่ได้ใช้งานฟิลด์นี้ เก็บไว้เพื่ออยากเอาไปใช้อนาคต
@@ -84,7 +84,7 @@ namespace eActForm.BusinessLayer
                                   listChoiceId = d["listChoiceId"].ToString(),
                                   listChoiceName = d["listChoiceName"].ToString(),
                                   productDetail = d["productDetail"].ToString(),
-                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
+                                  unit = d["unit"].ToString() == "" ? 0 : decimal.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
@@ -157,7 +157,7 @@ namespace eActForm.BusinessLayer
 
                                   listChoiceId = d["listChoiceId"].ToString(),
                                   rowNo = Convert.ToInt32(d["rowNo"].ToString()),
-                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
+                                  unit = d["unit"].ToString() == "" ? 0 : decimal.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplayReport = string.Format("{0:n2}", (decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())) + decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())))),
                                   vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),

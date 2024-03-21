@@ -41,7 +41,7 @@ namespace eActForm.BusinessLayer
                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()),
                                  totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(d["totalCase"].ToString()),
                                  perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(d["perTotal"].ToString()),
-                                 unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
+                                 unit = d["unit"].ToString() == "" ? 0 : decimal.Parse(d["unit"].ToString()),
                                  compensate = d["compensate"].ToString() == "" ? 0 : decimal.Parse(d["compensate"].ToString()),
                                  LE = d["Le"].ToString() == "" ? 0 : decimal.Parse(d["Le"].ToString()),
                                  IO = d["IO"].ToString(),
